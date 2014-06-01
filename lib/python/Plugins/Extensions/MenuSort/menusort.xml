@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<menusort>
+
+ <entry text="Picture Player" weight="27" hidden="no"/>
+ <entry text="Info Panel" weight="-33" hidden="no"/>
+ <entry text="Timer" weight="29" hidden="no"/>
+ <entry text="Informationen" weight="-28" hidden="no"/>
+ <entry text="Konfiguration" weight="-24" hidden="no"/>
+ <entry text="Erweiterungen" weight="26" hidden="no"/>
+ <entry text="Media Player" weight="27" hidden="no"/>
+ <entry text="Bereitschaft / Neustart" weight="77" hidden="no"/>
+
+</menusort>
