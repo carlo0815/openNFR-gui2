@@ -22,6 +22,8 @@ from Screens.Console import Console
 from Plugins.Plugin import PluginDescriptor
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
+from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
+from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 
 
 language.addCallback(plugins.reloadPlugins)
@@ -55,6 +57,8 @@ class PluginBrowser(Screen):
 
 		self["key_red"] = Button(_("Remove plugins"))
 		self["key_green"] = Button(_("Download plugins"))
+		self["key_yellow"] = Button(_("PluginInstallWizard"))
+		self["key_blue"] = Button(_("PluginDeinstallWizard"))		
 
 		self.list = []
 		self["list"] = PluginList(self.list)
@@ -70,7 +74,9 @@ class PluginBrowser(Screen):
 		self["PluginDownloadActions"] = ActionMap(["ColorActions"],
 		{
 			"red": self.delete,
-			"green": self.download
+			"green": self.download,
+			"yellow": self.wizardinstall,
+			"blue": self.wizarddeinstall			
 		})
 
 		self.onFirstExecBegin.append(self.checkWarnings)
@@ -82,6 +88,12 @@ class PluginBrowser(Screen):
 	def openSetup(self):
 		from Screens.Setup import Setup
 		self.session.open(Setup, "pluginbrowsersetup")
+		
+	def wizardinstall(self):
+		self.session.open(PluginInstall)
+                
+	def wizarddeinstall(self):
+		self.session.open(PluginDeinstall)               		
 
 	def saveListsize(self):
 		listsize = self["list"].instance.size()
