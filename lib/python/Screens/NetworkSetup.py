@@ -28,6 +28,8 @@ from Components.ActionMap import ActionMap, NumberActionMap, HelpableActionMap
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
 from Plugins.Plugin import PluginDescriptor
+from Plugins.Extensions.Infopanel.Softcamedit import vEditor
+from os import path, listdir
 import commands
 
 
@@ -2301,7 +2303,7 @@ class NetworkSamba(Screen):
 		self.Console = Console()
 		self.my_Samba_active = False
 		self.my_Samba_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'yellow': self.activateSamba, 'blue': self.Sambashowlog})
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'yellow': self.activateSamba, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
 		self.service_name = basegroup + '-smbfs'
 		self.onLayoutFinish.append(self.InstallCheck)
 
@@ -2382,6 +2384,12 @@ class NetworkSamba(Screen):
 
 	def Sambashowlog(self):
 		self.session.open(NetworkSambaLog)
+		
+	def Sambaedit(self):
+		if path.exists("/etc/samba/smb.conf"):
+                	self.session.open(vEditor, "/etc/samba/smb.conf")
+                else:
+                	pass        	
 
 	def SambaStartStop(self):
 		commands = []
