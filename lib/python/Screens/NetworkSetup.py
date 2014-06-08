@@ -2300,6 +2300,7 @@ class NetworkSamba(Screen):
 		self['key_red'] = Label(_("Remove Service"))
 		self['key_yellow'] = Label(_("Autostart"))
 		self['key_blue'] = Label(_("Show Log"))
+		self['key_menu'] = Label(_("Samba Config Edit"))
 		self.Console = Console()
 		self.my_Samba_active = False
 		self.my_Samba_run = False
