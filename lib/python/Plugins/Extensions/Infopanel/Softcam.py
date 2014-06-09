@@ -3,8 +3,8 @@ from os import mkdir, path, remove
 from glob import glob
 from Components.config import config, ConfigSubsection, ConfigInteger, ConfigText, getConfigListEntry, ConfigSelection,  ConfigIP, ConfigYesNo, ConfigSequence, ConfigNumber, NoSave, ConfigEnableDisable, configfile
 import os
-config.NFRSoftcam.camdir = ConfigText(default = "/usr/emu")
-config.NFRSoftcam.camconfig = ConfigText(default = "/usr/keys")
+config.NFRSoftcam.camdir = ConfigText(default = "<default>", fixed_size=False)
+config.NFRSoftcam.camconfig = ConfigText(default = "<default>", fixed_size=False)
 def getcamcmd(cam):
 	camname = cam.lower()
 	xcamname = cam
