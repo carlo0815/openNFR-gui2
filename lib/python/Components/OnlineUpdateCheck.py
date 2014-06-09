@@ -65,8 +65,8 @@ class OnlineUpdateCheckPoller:
 					socket.setdefaulttimeout(3)
 					config.softwareupdate.updatefound.setValue(True)
 					try:
-						#config.softwareupdate.updateisunstable.setValue(urlopen("http://enigma2.world-of-satellite.com/feeds/" + getImageVersion() + "/status").read())
-						config.softwareupdate.updateisunstable.setValue(urlopen("http://enigma2.world-of-satellite.com/feeds/3.0/status").read())
+						config.softwareupdate.updateisunstable.setValue(urlopen("http://dev.nachtfalke.biz/nfr/feeds/" + getImageVersion() + "/status").read())
+						
 					except:
 						config.softwareupdate.updateisunstable.setValue(1)
 					socket.setdefaulttimeout(currentTimeoutDefault)
