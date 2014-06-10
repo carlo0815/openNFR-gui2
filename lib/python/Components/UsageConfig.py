@@ -424,13 +424,13 @@ def InitUsageConfig():
 	config.network.uShare_autostart = ConfigYesNo(default = True)
 
 	config.softwareupdate = ConfigSubsection()
-	config.softwareupdate.autosettingsbackup = ConfigYesNo(default = True)
+	config.softwareupdate.autosettingsbackup = ConfigYesNo(default = False)
 	config.softwareupdate.autoimagebackup = ConfigYesNo(default = False)
-	config.softwareupdate.check = ConfigYesNo(default = True)
-	config.softwareupdate.checktimer = ConfigSelectionNumber(min = 1, max = 48, stepwidth = 1, default = 1, wraparound = True)
+	config.softwareupdate.check = ConfigYesNo(default = False)
+	config.softwareupdate.checktimer = ConfigSelectionNumber(min = 1, max = 120, stepwidth = 1, default = 120, wraparound = True)
 	config.softwareupdate.updatelastcheck = ConfigInteger(default=0)
 	config.softwareupdate.updatefound = NoSave(ConfigBoolean(default = False))
-	config.softwareupdate.updatebeta = ConfigYesNo(default = True)
+	config.softwareupdate.updatebeta = ConfigYesNo(default = False)
 	config.softwareupdate.updateisunstable = ConfigInteger(default=0)
 
 	config.timeshift = ConfigSubsection()
