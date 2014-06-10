@@ -74,6 +74,9 @@ def getcamcmd(cam):
 				config.NFRSoftcam.camconfig.value + "/"
 		elif "rucam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -b"
+ 		elif "scam" in camname and not "oscam" in camname:
+			return config.NFRSoftcam.camdir.value + "/" + cam + " -s " + \
+				config.NFRSoftcam.camconfig.value + "/"			
 		else:
 			return config.NFRSoftcam.camdir.value + "/" + cam
 
