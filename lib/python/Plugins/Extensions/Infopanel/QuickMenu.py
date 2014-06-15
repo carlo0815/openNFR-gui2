@@ -789,8 +789,8 @@ class QuickMenu(Screen):
 			else:
 				if len(nimList) == 1:
 					self.session.open(Satfinder)
-				#else:
-				#	self.session.open(SatNimSelection)
+				elif len(nimList) > 1:
+					self.session.open(Satfinder)
 
 		
 ######## SOFTWARE MANAGER TOOLS #######################
