@@ -114,7 +114,7 @@ class UserInterfacePositioner(Screen, ConfigListScreen):
 
 	def layoutFinished(self):
 		self.setTitle(_(self.setup_title))
-		self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
+		#self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
 
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
