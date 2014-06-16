@@ -30,7 +30,8 @@ class UserInterfacePositionerWizard(WizardLanguage, Rc):
 		self.onClose.append(self.__onClose)
 
 	def layoutFinished(self):
-		self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
+		#self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
+		pass
 
 	def exitWizardQuestion(self, ret = False):
 		if ret:
