@@ -10,7 +10,9 @@ from Components.Pixmap import MultiPixmap
 
 profile("LOAD:enigma")
 import enigma
-from boxbranding import getBrandOEM
+from boxbranding import getBoxType, getMachineBrand,getBrandOEM
+
+boxtype = getBoxType()
 
 profile("LOAD:InfoBarGenerics")
 from Screens.InfoBarGenerics import InfoBarShowHide, \
@@ -20,7 +22,7 @@ from Screens.InfoBarGenerics import InfoBarShowHide, \
 	InfoBarSubserviceSelection, InfoBarShowMovies,  \
 	InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, \
 	InfoBarSummarySupport, InfoBarMoviePlayerSummarySupport, InfoBarTimeshiftState, InfoBarTeletextPlugin, InfoBarExtensions, \
-	InfoBarSubtitleSupport, InfoBarSleepTimer, InfoBarPowersaver, InfoBarPiP, InfoBarPlugins, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarZoom, \
+	InfoBarSubtitleSupport, InfoBarSleepTimer, InfoBarPowersaver, InfoBarPiP, InfoBarPlugins, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarZoom, InfoBarHdmi, \
 	setResumePoint, delResumePoint
 
 profile("LOAD:InitBar_Components")
@@ -45,7 +47,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 	HelpableScreen, InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarUnhandledKey,
 	InfoBarSubserviceSelection, InfoBarTimeshift, InfoBarSeek, InfoBarCueSheetSupport,
 	InfoBarSummarySupport, InfoBarTimeshiftState, InfoBarTeletextPlugin, InfoBarExtensions,
-	InfoBarPiP, InfoBarPlugins, InfoBarSleepTimer, InfoBarPowersaver, InfoBarSubtitleSupport, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarZoom,
+	InfoBarPiP, InfoBarPlugins, InfoBarSleepTimer, InfoBarPowersaver, InfoBarSubtitleSupport, InfoBarServiceErrorPopupSupport, InfoBarJobman, InfoBarZoom, InfoBarHdmi,
 	Screen):
 
 	ALLOW_SUSPEND = True
@@ -81,7 +83,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 				InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarTimerButton, InfoBarUnhandledKey, InfoBarVmodeButton,\
 				InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarSubserviceSelection, \
 				InfoBarTimeshift, InfoBarSeek, InfoBarCueSheetSupport, InfoBarSummarySupport, InfoBarTimeshiftState, \
-				InfoBarTeletextPlugin, InfoBarExtensions, InfoBarPiP, InfoBarSubtitleSupport, InfoBarJobman, InfoBarZoom, \
+				InfoBarTeletextPlugin, InfoBarExtensions, InfoBarPiP, InfoBarSubtitleSupport, InfoBarJobman, InfoBarZoom, InfoBarHdmi, \
 				InfoBarPlugins, InfoBarSleepTimer, InfoBarPowersaver, InfoBarServiceErrorPopupSupport:
 			x.__init__(self)
 
@@ -513,33 +515,24 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 			InfoBarSeek.seekBack(self)
 			
 	def showPiP(self):
-		try:
-			service = self.session.nav.getCurrentService()
-			info = service and service.info()
-			xres = str(info.getInfo(enigma.iServiceInformation.sVideoWidth))
-			slist = self.servicelist
+		slist = self.servicelist
+		if self.session.pipshown:
+			if slist and slist.dopipzap:
+				slist.togglePipzap()
 			if self.session.pipshown:
-				if slist and slist.dopipzap:
-					slist.togglePipzap()
-				if self.session.pipshown:
-					del self.session.pip
-					self.session.pipshown = False
+				del self.session.pip
+				self.session.pipshown = False
+		else:
+			from Screens.PictureInPicture import PictureInPicture
+			self.session.pip = self.session.instantiateDialog(PictureInPicture)
+			self.session.pip.show()
+			if self.session.pip.playService(slist.getCurrentSelection()):
+				self.session.pipshown = True
+				self.session.pip.servicePath = slist.getCurrentServicePath()
 			else:
-				if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2':
-					from Screens.PictureInPicture import PictureInPicture
-					self.session.pip = self.session.instantiateDialog(PictureInPicture)
-					self.session.pip.show()
-					if self.session.pip.playService(slist.getCurrentSelection()):
-						self.session.pipshown = True
-						self.session.pip.servicePath = slist.getCurrentServicePath()
-					else:
-						self.session.pipshown = False
-						del self.session.pip
-				else:
-					self.session.open(MessageBox, _("Your %s %s does not support PiP HD") % (enigma.getMachineBrand(), enigma.getMachineName()), type = MessageBox.TYPE_INFO,timeout = 5 )
-		except:
-			pass
-		      
+				self.session.pipshown = False
+				del self.session.pip
+
 	def movePiP(self):
 		if self.session.pipshown:
 			InfoBarPiP.movePiP(self)

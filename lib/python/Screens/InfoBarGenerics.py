@@ -50,7 +50,7 @@ from Tools.Directories import pathExists, fileExists
 from Tools.KeyBindings import getKeyDescription
 
 from enigma import eTimer, eServiceCenter, eDVBServicePMTHandler, iServiceInformation, iPlayableService, eServiceReference, eEPGCache, eActionMap
-from boxbranding import getBoxType, getBrandOEM, getMachineBrand, getMachineName
+from boxbranding import getBoxType, getBrandOEM, getMachineBrand, getMachineName, getMachineProcModel
 
 from time import time, localtime, strftime
 from bisect import insort
@@ -3468,3 +3468,86 @@ class InfoBarSleepTimer:
 	def showSleepTimerSetup(self):
 		from Screens.SleepTimerEdit import SleepTimerEdit
 		self.session.open(SleepTimerEdit)
+		
+class InfoBarHdmi:
+	def __init__(self):
+		self.hdmi_enabled = False
+		self.hdmi_enabled_full = False
+		self.hdmi_enabled_pip = False
+
+		if getMachineProcModel().startswith('ini-90'):
+			if not self.hdmi_enabled_full:
+				self.addExtension((self.getHDMIInFullScreen, self.HDMIInFull, lambda: True), "blue")
+			if not self.hdmi_enabled_pip:
+				self.addExtension((self.getHDMIInPiPScreen, self.HDMIInPiP, lambda: True), "green")
+		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions",
+			{
+				"HDMIin":(self.HDMIIn, _("Switch to HDMI in mode")),
+				"HDMIinLong":(self.HDMIInLong, _("Switch to HDMI in mode")),
+			}, prio=2)
+
+	def HDMIInLong(self):
+		if self.LongButtonPressed:
+			if not hasattr(self.session, 'pip') and not self.session.pipshown:
+				self.session.pip = self.session.instantiateDialog(PictureInPicture)
+				self.session.pip.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+				self.session.pip.show()
+				self.session.pipshown = True
+			else:
+				curref = self.session.pip.getCurrentService()
+				if curref and curref.type != 8192:
+					self.session.pip.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+				else:
+					self.session.pipshown = False
+					del self.session.pip
+
+	def HDMIIn(self):
+		if not self.LongButtonPressed:
+			slist = self.servicelist
+			curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+			if curref and curref.type != 8192:
+				self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+			else:
+				self.session.nav.playService(slist.servicelist.getCurrent())
+
+	def getHDMIInFullScreen(self):
+		if not self.hdmi_enabled_full:
+			return _("Turn on HDMI-IN Full screen mode")
+		else:
+			return _("Turn off HDMI-IN Full screen mode")
+	      
+	def getHDMIInPiPScreen(self):
+		if not self.hdmi_enabled_pip:
+			return _("Turn on HDMI-IN PiP mode")
+		else:
+			return _("Turn off HDMI-IN PiP mode")
+
+	def HDMIInPiP(self):
+		if not hasattr(self.session, 'pip') and not self.session.pipshown:
+			self.hdmi_enabled_pip = True
+			self.session.pip = self.session.instantiateDialog(PictureInPicture)
+			self.session.pip.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+			self.session.pip.show()
+			self.session.pipshown = True
+			self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+		else:
+			curref = self.session.pip.getCurrentService()
+			if curref and curref.type != 8192:
+				self.hdmi_enabled_pip = True
+				self.session.pip.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+				self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+			else:
+				self.hdmi_enabled_pip = False
+				self.session.pipshown = False
+				del self.session.pip
+
+	def HDMIInFull(self):
+		slist = self.servicelist
+		curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		if curref and curref.type != 8192:
+			self.hdmi_enabled_full = True
+			self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
+		else:
+			self.hdmi_enabled_full = False
+			self.session.nav.playService(slist.servicelist.getCurrent())
+		
