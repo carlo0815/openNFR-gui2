@@ -30,8 +30,16 @@ class OpenNFRBluePanel:
 			})
 
 	def showOpenNFRBluePanel(self):
-		from Plugins.Extensions.Infopanel.plugin import *
-		self.session.openWithCallback(self.callEgAction,Infopanel)
+		if config.plugins.infopanel_bluekey.list.getValue() == '0':
+			from Plugins.Extensions.Infopanel.Manager import *
+			from Plugins.Extensions.Infopanel.Softcam import *
+			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
+		elif config.plugins.infopanel_bluekey.list.getValue() == '1':
+                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+		else:
+                        from Plugins.Extensions.Infopanel.plugin import *
+                        self.session.openWithCallback(self.callEgAction,Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -50,9 +58,12 @@ class OpenNFRREDPanel:
 			from Plugins.Extensions.Infopanel.Manager import *
 			from Plugins.Extensions.Infopanel.Softcam import *
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
-                else:        	
-                	from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-			self.session.openWithCallback(self.callEgAction, QuickMenu)
+		elif config.plugins.infopanel_redkey.list.getValue() == '1':
+                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+		else:
+                        from Plugins.Extensions.Infopanel.plugin import *
+                        self.session.openWithCallback(self.callEgAction,Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):

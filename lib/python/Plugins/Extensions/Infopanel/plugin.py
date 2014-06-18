@@ -49,7 +49,9 @@ config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
 config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
 config.NFRSoftcam.waittime = ConfigSelection([('0',_("dont wait")),('1',_("1 second")), ('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='15')
 config.plugins.infopanel_redkey = ConfigSubsection()
-config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Softcam Panel")),('1',_("Default (Quickmenu)"))])
+config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Softcam Panel")),('1',_("Default (Quickmenu)")),('2',_("Infopanel"))])
+config.plugins.infopanel_bluekey = ConfigSubsection()
+config.plugins.infopanel_bluekey.list = ConfigSelection([('0',_("Softcam Panel")),('1',_("Default (Quickmenu)")),('2',_("Infopanel"))])
 config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
 config.plugins.infopanel_frozencheck = ConfigSubsection()
 config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
@@ -293,7 +295,8 @@ class Infopanel(Screen, InfoBarPiP):
 		self["label1"] = Label(INFO_Panel_Version)
 
 		self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))			
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))		
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamPanel'), _("SoftcamPanel"), 'SoftcamPanel')))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("QuickMenu" ), _("Quick-Menu"), ("QuickMenu"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
@@ -457,6 +460,8 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(SwapOverviewScreen)
 		elif menu == "Red-Key-Action":
 			self.session.open(RedPanel)
+		elif menu == "Blue-Key-Action":
+			self.session.open(BluePanel)			
 		elif menu == "KeymapSel":
 			self.session.open(KeymapSel)
 		elif menu == "QuickMenu":
@@ -777,6 +782,93 @@ class RedPanel(ConfigListScreen, Screen):
 		else:
 			self.close()
 
+class BluePanel(ConfigListScreen, Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.session = session
+		self.skinName = "Setup"
+		Screen.setTitle(self, _("Blue Key Action") + "...")
+		self.setup_title = _("Blue Key Action") + "..."
+		self["HelpWindow"] = Pixmap()
+		self["HelpWindow"].hide()
+		self["status"] = StaticText()
+		self['footnote'] = Label("")
+		self["description"] = Label("")
+		self["labelExitsave"] = Label("[Exit] = " +_("Cancel") +"              [Ok] =" +_("Save"))
+
+		self.onChangedEntry = [ ]
+		self.list = []
+		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+		self.createSetup()
+
+		self["actions"] = ActionMap(["SetupActions", 'ColorActions'],
+		{
+			"ok": self.keySave,
+			"cancel": self.keyCancel,
+			"red": self.keyCancel,
+			"green": self.keySave,
+			"menu": self.keyCancel,
+		}, -2)
+
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
+		if not self.selectionChanged in self["config"].onSelectionChanged:
+			self["config"].onSelectionChanged.append(self.selectionChanged)
+		self.selectionChanged()
+
+	def createSetup(self):
+		self.editListEntry = None
+		self.list = []
+		self.list.append(getConfigListEntry(_("Blue Key Action"), config.plugins.infopanel_bluekey.list))
+		
+		self["config"].list = self.list
+		self["config"].setList(self.list)
+		if config.usage.sort_settings.getValue():
+			self["config"].list.sort()
+
+	def selectionChanged(self):
+		self["status"].setText(self["config"].getCurrent()[0])
+
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
+		self.selectionChanged()
+
+	def getCurrentEntry(self):
+		return self["config"].getCurrent()[0]
+
+	def getCurrentValue(self):
+		return str(self["config"].getCurrent()[1].getText())
+
+	def getCurrentDescription(self):
+		return self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2] or ""
+
+	def createSummary(self):
+		from Screens.Setup import SetupSummary
+		return SetupSummary
+
+	def saveAll(self):
+		for x in self["config"].list:
+			x[1].save()
+		configfile.save()
+
+	def keySave(self):
+		self.saveAll()
+		self.close()
+
+	def cancelConfirm(self, result):
+		if not result:
+			return
+		for x in self["config"].list:
+			x[1].cancel()
+		self.close()
+
+	def keyCancel(self):
+		if self["config"].isChanged():
+			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
+		else:
+			self.close()			
+			
 class Info(Screen):
 	def __init__(self, session, info):
 		self.service = None
