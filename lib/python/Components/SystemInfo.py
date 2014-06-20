@@ -43,3 +43,4 @@ SystemInfo["GraphicLCD"] = getMachineProcModel().startswith("ini-90") or getBoxT
 SystemInfo["Blindscan"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/Blindscan/plugin.pyo")
 SystemInfo["Satfinder"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/Satfinder/plugin.pyo")
 SystemInfo["GBWOL"] = fileExists("/usr/bin/gigablue_wol")
+SystemInfo["LCDSKINSetup"] = path.exists("/usr/share/enigma2/display")
