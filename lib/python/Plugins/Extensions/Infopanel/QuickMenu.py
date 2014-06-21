@@ -410,7 +410,8 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Download Plugins",_("Download and install Plugins"),_("Shows available plugins. Here you can download and install them")))
 		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins",_("Delete Plugins"),_("Delete and unstall Plugins. This will remove the Plugin from your box")))
 		self.sublist.append(QuickSubMenuEntryComponent("IPK Installer",_("Install local extension"),_("Scan for local extensions and install them")))
-		self.sublist.append(QuickSubMenuEntryComponent("PackageManager",_("Install local extension"),_("Scan for local tar/rar/zip Package and install them")))		
+		self.sublist.append(QuickSubMenuEntryComponent("PackageManager",_("Install local extension"),_("Scan for local tar/rar/zip Package and install them")))	
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins",_("Move Plugins to HDD or USB"),_("Move Plugins to HDD or USB")))			
 		self["sublist"].l.setList(self.sublist)
 
 ######## Harddisk Menu ##############################
@@ -445,6 +446,14 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("VIDEO",_("Screenshot nur Video"),_("Screenshot nur Video")))		
 		self.sublist.append(QuickSubMenuEntryComponent("ALL",_("Screenshot Video+OSD"),_("Screenshot Video+OSD")))		
 		self["sublist"].l.setList(self.sublist)
+######## moveplugins Menu ##############################		
+	def Qmoveplugins(self):
+		self.sublist = []
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to HDD",_("Move Plugins to HDD"),_("Move Plugins to HDD")))
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to USB",_("Move Plugins to USB"),_("Move Plugins to USB")))		
+		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins from HDD to Box",_("Remove Plugins from HDD to Box"),_("Remove Plugins from HDD to Box")))
+		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins from USB to Box",_("Remove Plugins from USB to Box"),_("Remove Plugins from USB to Box")))
+		self["sublist"].l.setList(self.sublist)		
 #####################################################################
 ######## Make Selection MAIN MENU LIST ##############################
 #####################################################################
@@ -631,7 +640,23 @@ class QuickMenu(Screen):
        		elif item[0] == _("ALL"):
        		        self.Console = Console()
                         self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh ExecuteOnce")
-                      			
+######## Select moveplugins Menu ##############################
+		elif item[0] == _("Move Plugins to HDD"):
+                        self.Console = Console()
+                        self.session.open(MessageBox, _("Please make sure your HDD is mounted\nStart Plugins switch to HDD\nPlease do not unmount HDD or Image can crash.\nStart Switch Plugins?"), MessageBox.TYPE_YESNO)
+                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginHDDi.sh o ExecuteOnce")
+       		elif item[0] == _("Move Plugins to USB"):
+       		        self.Console = Console()
+                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch to USB\nPlease do not unmount USB or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)       		        
+                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginUSBi.sh v ExecuteOnce")
+       		elif item[0] == _("Remove Plugins from HDD to Box"):
+       		        self.Console = Console()
+                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch from HDD to Plugindirektion\nPlease do not unmount HDD or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)         		        
+                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginHDDu.sh ExecuteOnce") 
+       		elif item[0] == _("Remove Plugins from USB to Box"):
+       		        self.Console = Console()
+                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch from USB to Plugindirektion\nPlease do not unmount USB or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)         	       		        
+                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginUSBu.sh ExecuteOnce")                       			
 ######## Select AV Setup Menu ##############################
 		elif item[0] == _("AV Settings"):
 			self.session.open(VideoSetup)
@@ -713,6 +738,9 @@ class QuickMenu(Screen):
 				main(self.session)
 			except:
 				self.session.open(MessageBox, _("Sorry MediaScanner is not installed!"), MessageBox.TYPE_INFO, timeout = 10)
+		elif item[0] == _("Move Plugins"):
+			self.Qmoveplugins()	
+			self["sublist"].moveToIndex(0)				
 ######## Select Harddisk Menu ############################################
 		elif item[0] == _("Harddisk Setup"):
 			self.openSetup("harddisk")
