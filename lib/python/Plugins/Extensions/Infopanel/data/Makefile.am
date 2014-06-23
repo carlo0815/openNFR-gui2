@@ -7,7 +7,7 @@ dist_install_DATA = \
 	ofgwrite \
 	screenshot.sh  \
 	unrar-free  \
-	unzip  
+	unzip  \
 	PluginHDDi.sh \
 	PluginHDDu.sh  \
 	PluginUSBi.sh  \
