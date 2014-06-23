@@ -64,6 +64,14 @@ class PictureInPicture(Screen):
 		del self.pipservice
 		self.setExternalPiP(False)
 		self.setSizePosMainWindow()
+		
+	def relocate(self):
+		x = config.av.pip.value[0]
+		y = config.av.pip.value[1]
+		w = config.av.pip.value[2]
+		h = config.av.pip.value[3]
+		self.move(x, y)
+		self.resize(w, h) 		
 
 	def LayoutFinished(self):
 		self.onLayoutFinish.remove(self.LayoutFinished)
