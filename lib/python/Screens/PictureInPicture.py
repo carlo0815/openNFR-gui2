@@ -1,5 +1,6 @@
 from Screens.Screen import Screen
 from enigma import ePoint, eSize, eServiceCenter, getBestPlayableServiceReference, eServiceReference,eTimer
+from Components.SystemInfo import SystemInfo
 from Components.VideoWindow import VideoWindow
 from Components.config import config, ConfigPosition, ConfigYesNo, ConfigYesNo, ConfigSelection, ConfigInteger
 from Tools import Notifications
