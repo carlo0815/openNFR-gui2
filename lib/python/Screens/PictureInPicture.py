@@ -1,12 +1,42 @@
 from Screens.Screen import Screen
-from enigma import ePoint, eSize, eServiceCenter, getBestPlayableServiceReference, eServiceReference
+from enigma import ePoint, eSize, eServiceCenter, getBestPlayableServiceReference, eServiceReference,eTimer
 from Components.VideoWindow import VideoWindow
-from Components.config import config, ConfigPosition, ConfigYesNo, ConfigInteger
+from Components.config import config, ConfigPosition, ConfigYesNo, ConfigYesNo, ConfigSelection, ConfigInteger
 from Tools import Notifications
 from Screens.MessageBox import MessageBox
 from os import access, W_OK
 
 pip_config_initialized = False
+PipPigModeEnabled = False
+PipPigModeTimer = eTimer()
+
+def timedStopPipPigMode():
+	PipPigModeTimer.stop()
+	from Screens.InfoBar import InfoBar
+	if InfoBar.instance and InfoBar.instance.session:
+		if SystemInfo["hasPIPVisibleProc"]:
+			open(SystemInfo["hasPIPVisibleProc"], "w").write("1")
+		elif hasattr(InfoBar.instance.session, "pip"):
+			InfoBar.instance.session.pip.playService(InfoBar.instance.session.pip.currentService)
+	global PipPigModeEnabled
+	PipPigModeEnabled = False
+
+PipPigModeTimer.callback.append(timedStopPipPigMode)
+
+def PipPigMode(value):
+	from Screens.InfoBar import InfoBar
+	if InfoBar.instance and InfoBar.instance.session and hasattr(InfoBar.instance.session, "pip") and config.av.pip_mode.value != "external":
+		if value:
+			PipPigModeTimer.stop()
+			global PipPigModeEnabled
+			if not PipPigModeEnabled:
+				if SystemInfo["hasPIPVisibleProc"]:
+					open(SystemInfo["hasPIPVisibleProc"], "w").write("0")
+				else:
+					InfoBar.instance.session.pip.pipservice = False
+				PipPigModeEnabled = True
+		else:
+			PipPigModeTimer.start(100)
 
 class PictureInPictureZapping(Screen):
 	skin = """<screen name="PictureInPictureZapping" flags="wfNoBorder" position="50,50" size="90,26" title="PiPZap" zPosition="-1">
