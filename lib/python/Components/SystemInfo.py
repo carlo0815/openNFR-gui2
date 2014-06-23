@@ -1,4 +1,4 @@
-from boxbranding import getBoxType, getMachineProcModel
+from boxbranding import getBoxType, getMachineProcModel, getMachineBuild
 
 from os import path
 
@@ -31,17 +31,16 @@ def countFrontpanelLEDs():
 
 	return leds
 
-SystemInfo["12V_Output"] = Misc_Options.getInstance().detected_12V_output()
-SystemInfo["ZapMode"] = fileCheck("/proc/stb/video/zapmode") or fileCheck("/proc/stb/video/zapping_mode")
+SystemInfo["ZapMode"] = fileExists("/proc/stb/video/zapmode") or fileExists("/proc/stb/video/zapping_mode")
 SystemInfo["NumFrontpanelLEDs"] = countFrontpanelLEDs()
 SystemInfo["FrontpanelDisplay"] = fileExists("/dev/dbox/oled0") or fileExists("/dev/dbox/lcd0")
 SystemInfo["OledDisplay"] = fileExists("/dev/dbox/oled0")
 SystemInfo["LcdDisplay"] = fileExists("/dev/dbox/lcd0") or getMachineProcModel().startswith("ini-10") or getMachineProcModel().startswith("ini-30") or getMachineProcModel().startswith("ini-50") or getMachineProcModel().startswith("ini-70")
 SystemInfo["DeepstandbySupport"] = HardwareInfo().has_deepstandby()
-SystemInfo["Fan"] = fileCheck("/proc/stb/fp/fan")
-SystemInfo["FanPWM"] = SystemInfo["Fan"] and fileCheck("/proc/stb/fp/fan_pwm")
+SystemInfo["Fan"] = fileExists("/proc/stb/fp/fan")
+SystemInfo["FanPWM"] = SystemInfo["Fan"] and fileExists("/proc/stb/fp/fan_pwm")
 SystemInfo["StandbyPowerLed"] = fileExists("/proc/stb/power/standbyled")
-SystemInfo["WakeOnLAN"] = fileCheck("/proc/stb/power/wol") or fileCheck("/proc/stb/fp/wol")
+SystemInfo["WakeOnLAN"] = fileExists("/proc/stb/power/wol") or fileExists("/proc/stb/fp/wol")
 SystemInfo["WOL"] = fileExists("/proc/stb/fp/wol")
 SystemInfo["HDMICEC"] = (path.exists("/dev/hdmi_cec") or path.exists("/dev/misc/hdmi_cec0")) and fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo")
 SystemInfo["SABSetup"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/SABnzbd/plugin.pyo")
@@ -49,8 +48,8 @@ SystemInfo["SeekStatePlay"] = False
 SystemInfo["GraphicLCD"] = getMachineProcModel().startswith("ini-90") or getBoxType() == "vuultimo"
 SystemInfo["Blindscan"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/Blindscan/plugin.pyo")
 SystemInfo["Satfinder"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/Satfinder/plugin.pyo")
-SystemInfo["HasExternalPIP"] = getMachineBuild() != 'et9x00' and fileCheck("/proc/stb/vmpeg/1/external")
-SystemInfo["hasPIPVisibleProc"] = fileCheck("/proc/stb/vmpeg/1/visible")
+SystemInfo["HasExternalPIP"] = getMachineBuild() != 'et9x00' and fileExists("/proc/stb/vmpeg/1/external")
+SystemInfo["hasPIPVisibleProc"] = fileExists("/proc/stb/vmpeg/1/visible")
 SystemInfo["VideoDestinationConfigurable"] = fileExists("/proc/stb/vmpeg/0/dst_left")
 SystemInfo["GBWOL"] = fileExists("/usr/bin/gigablue_wol")
 SystemInfo["LCDSKINSetup"] = path.exists("/usr/share/enigma2/display")
