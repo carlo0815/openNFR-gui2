@@ -6,6 +6,13 @@ from enigma import ePoint, eTimer, iPlayableService
 import os
 
 class Screensaver(Screen):
+
+	skin = """
+            <screen name="Screensaver" position="0,0" size="1280,720" flags="wfNoBorder" transparent="1">
+            <eLabel position="0,0" size="128,72" backgroundColor="backtop" zPosition="0" transparent="1" />
+            <widget name="picture" pixmap="/usr/share/enigma2/distro-logo.png" position="center,center" size="500,500" alphatest="on" zPosition="1" transparent="1" />
+    </screen> """
+	
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		
