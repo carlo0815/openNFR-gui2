@@ -10446,9 +10446,6 @@ msgstr "Das ausgewaehlte Laufwerk ist nicht in EXT2(3/4)-Format, welches unbedin
 msgid "Plugins out of flash"
 msgstr "Plugins auslagern"
 
-msgid "no storage devices found"
-msgstr "Kein Speichermedium gefunden"
-
 msgid "Do you really want to use selected Device for Plugins?\n"
 msgstr "Sollen die Plugins auf das ausgewaehlte Laufwerk verschoben werden ?\n"
 
