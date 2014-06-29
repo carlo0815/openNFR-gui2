@@ -10163,7 +10163,7 @@ msgid ""
 "\n"
 "Please press OK to continue."
 msgstr ""
-"Falls sie Ihren %s %s mit dem Internetverbinden wollen, hilft Ihne dieser Assistent durch die Basis Einstellungen Ihres Netzwerkes vom %s %s.\n"
+"Falls sie Ihren %s %s mit dem Internet verbinden wollen, hilft Ihnen dieser Assistent durch die Basis Einstellungen Ihres Netzwerkes vom %s %s.\n"
 "\n"
 "Bitte wählen sie den Netzwerkadapter den sie fuer die Internetverbindung einstellen moechten.\n"
 "\n"
@@ -10411,5 +10411,56 @@ msgid "Here you can select which files should be updated with a online update"
 msgstr "Hier können Sie auswählen, welche Dateien mit einem Online-Update aktualisiert werden sollten"
 
 msgid "Flash on the fly your Receiver software."
-msgstr "Image flashen über HDD ohne stick zu benutzen"
+msgstr "Image flashen über HDD ohne Stick zu benutzen"
+
+msgid "Move Plugins to HDD/USB"
+msgstr "Verschiebe Plugins auf HDD/USB"
+
+msgid "Extensions outsource to: "
+msgstr "Erweiterungen ausgelagert nach: "
+
+msgid "You seem to be in timeshift, the service will briefly stop as timeshift stops."
+msgstr "Timeshift ist aktiviert. Dieser Dienst wird gestoppt, um die Plugins auslagern ."
+
+msgid "Do you want to continue?"
+msgstr "Moechten Sie fortfahren ?"
+
+msgid "%s Failed to open %s"
+msgstr "%s Problem beim Oeffnen %s"
+
+msgid "On Device is a folder Extensions, do you want to use this?"
+msgstr "Es ist ein Ordner mit Plugins schon enthalten. Wollen Sie diesen nutzen ?"
+
+msgid "Plugins already moved to %s!"
+msgstr "Plugins bereits verschoben auf %s!"
+
+msgid "Something wrong in Image! Please check all again."
+msgstr "Es gibt ein Problem mit dem Image! Bitte alles ueberpruefen."
+
+msgid "Plugins moved to %s ready!"
+msgstr "Plugins erfolgreich verschoben auf %s !"
+
+msgid "Selected Device not in EXT2(3/4)-Format, needed for working!"
+msgstr "Das ausgewaehlte Laufwerk ist nicht in EXT2(3/4)-Format, welches unbedingt benoetigt wird!"
+
+msgid "Plugins out of flash"
+msgstr "Plugins auslagern"
+
+msgid "no storage devices found"
+msgstr "Kein Speichermedium gefunden"
+
+msgid "Do you really want to use selected Device for Plugins?\n"
+msgstr "Sollen die Plugins auf das ausgewaehlte Laufwerk verschoben werden ?\n"
+
+msgid "Move Plugins back to Flash"
+msgstr "Plugins in den Flash verschieben"
+
+msgid "Do you really want move Plugins back to flash?"
+msgstr "Sollen die Plugins wirklich zurueck in den Flash verschoben werden ?"
+
+msgid "Plugins moved back to flash ready!"
+msgstr "Plugins wieder in den Flash verschoben!"
+
+msgid "Plugins already back in flash!"
+msgstr "Plugins sind bereits im Flash!"
 
