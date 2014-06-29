@@ -36,6 +36,7 @@ from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Plugins.Extensions.Infopanel.Manager import *
+from Plugins.Extensions.Infopanel.outofflash import MovePlugins_int, MovePlugins
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
 from Plugins.SystemPlugins.SoftwareManager.plugin import UpdatePlugin, SoftwareManagerSetup
 from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, RestoreScreen, BackupSelection, getBackupPath, getBackupFilename
@@ -449,10 +450,8 @@ class QuickMenu(Screen):
 ######## moveplugins Menu ##############################		
 	def Qmoveplugins(self):
 		self.sublist = []
-		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to HDD",_("Move Plugins to HDD"),_("Move Plugins to HDD")))
-		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to USB",_("Move Plugins to USB"),_("Move Plugins to USB")))		
-		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins from HDD to Box",_("Remove Plugins from HDD to Box"),_("Remove Plugins from HDD to Box")))
-		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins from USB to Box",_("Remove Plugins from USB to Box"),_("Remove Plugins from USB to Box")))
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to HDD/USB",_("Move Plugins to HDD/USB"),_("Move Plugins to HDD/USB")))
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins back to Box",_("Move Plugins back to Box"),_("Move Plugins back to Box")))
 		self["sublist"].l.setList(self.sublist)		
 #####################################################################
 ######## Make Selection MAIN MENU LIST ##############################
@@ -641,23 +640,11 @@ class QuickMenu(Screen):
        		        self.Console = Console()
                         self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh ExecuteOnce")
 ######## Select moveplugins Menu ##############################
-		elif item[0] == _("Move Plugins to HDD"):
-                        self.Console = Console()
-                        self.session.open(MessageBox, _("Please make sure your HDD is mounted\nStart Plugins switch to HDD\nPlease do not unmount HDD or Image can crash.\nStart Switch Plugins?"), MessageBox.TYPE_YESNO)
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginHDDi.sh o ExecuteOnce")
-       		elif item[0] == _("Move Plugins to USB"):
-       		        self.Console = Console()
-                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch to USB\nPlease do not unmount USB or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)       		        
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginUSBi.sh v ExecuteOnce")
-       		elif item[0] == _("Remove Plugins from HDD to Box"):
-       		        self.Console = Console()
-                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch from HDD to Plugindirektion\nPlease do not unmount HDD or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)         		        
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginHDDu.sh ExecuteOnce") 
-       		elif item[0] == _("Remove Plugins from USB to Box"):
-       		        self.Console = Console()
-                        self.session.open(MessageBox, _("Please make sure your USB is mounted\nStart Plugins switch from USB to Plugindirektion\nPlease do not unmount USB or Image can crash.\nStart Switch Plugins?"), type = MessageBox.TYPE_YESNO)         	       		        
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/PluginUSBu.sh ExecuteOnce")                       			
-######## Select AV Setup Menu ##############################
+		elif item[0] == _("Move Plugins to HDD/USB"):
+        		        self.session.open(MovePlugins)
+       		elif item[0] == _("Move Plugins back to Box"):
+       		                self.session.open(MovePlugins_int)
+ ######## Select AV Setup Menu ##############################
 		elif item[0] == _("AV Settings"):
 			self.session.open(VideoSetup)
 		elif item[0] == _("Auto Language"):
