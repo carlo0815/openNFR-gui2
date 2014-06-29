@@ -15,6 +15,7 @@
 #include <lib/base/cfile.h>
 
 #include <lib/dvb/streamserver.h>
+#include <lib/dvb/encoder.h>
 
 eStreamClient::eStreamClient(eStreamServer *handler, int socket)
  : parent(handler), encoderFd(-1), streamFd(socket), streamThread(NULL)
@@ -32,7 +33,9 @@ eStreamClient::~eStreamClient()
 		delete streamThread;
 	}
 	if (encoderFd >= 0)
-		parent->freeEncoder(this, encoderFd);
+	{
+		if (eEncoder::getInstance()) eEncoder::getInstance()->freeEncoder(encoderFd);
+	}
 	if (streamFd >= 0) ::close(streamFd);
 }
 
@@ -47,6 +50,7 @@ void eStreamClient::notifier(int what)
 	if (!(what & eSocketNotifier::Read))
 		return;
 
+	ePtr<eStreamClient> ref = this;
 	char buf[512];
 	int len;
 	if ((len = singleRead(streamFd, buf, sizeof(buf))) <= 0)
@@ -54,7 +58,6 @@ void eStreamClient::notifier(int what)
 		rsn->stop();
 		stop();
 		parent->connectionLost(this);
-		request.clear();
 		return;
 	}
 	request.append(buf, len);
@@ -132,7 +135,6 @@ void eStreamClient::notifier(int what)
 				writeAll(streamFd, reply, strlen(reply));
 				rsn->stop();
 				parent->connectionLost(this);
-				request.clear();
 				return;
 			}
 		}
@@ -182,7 +184,8 @@ void eStreamClient::notifier(int what)
 						pos = request.find("?aspectratio=");
 						if (pos != std::string::npos)
 							sscanf(request.substr(pos).c_str(), "?aspectratio=%d", &aspectratio);
-						encoderFd = parent->allocateEncoder(this, serviceref, bitrate, width, height, framerate, !!interlaced, aspectratio);
+						encoderFd = -1;
+						if (eEncoder::getInstance()) encoderFd = eEncoder::getInstance()->allocateEncoder(serviceref, bitrate, width, height, framerate, !!interlaced, aspectratio);
 						if (encoderFd >= 0)
 						{
 							running = true;
@@ -211,12 +214,14 @@ void eStreamClient::notifier(int what)
 
 void eStreamClient::streamStopped()
 {
+	ePtr<eStreamClient> ref = this;
 	rsn->stop();
 	parent->connectionLost(this);
 }
 
 void eStreamClient::tuneFailed()
 {
+	ePtr<eStreamClient> ref = this;
 	rsn->stop();
 	parent->connectionLost(this);
 }
@@ -226,23 +231,6 @@ DEFINE_REF(eStreamServer);
 eStreamServer::eStreamServer()
  : eServerSocket(8001, eApp)
 {
-	ePtr<iServiceHandler> service_center;
-	eServiceCenter::getInstance(service_center);
-	if (service_center)
-	{
-		int index = 0;
-		while (1)
-		{
-			int decoderindex;
-			FILE *file;
-			char filename[256];
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/decoder", index);
-			if (CFile::parseInt(&decoderindex, filename) < 0) break;
-			navigationInstances.push_back(new eNavigation(service_center, decoderindex));
-			encoderUser.push_back(NULL);
-			index++;
-		}
-	}
 }
 
 eStreamServer::~eStreamServer()
@@ -267,59 +255,6 @@ void eStreamServer::connectionLost(eStreamClient *client)
 	{
 		clients.erase(it);
 	}
-}
-
-int eStreamServer::allocateEncoder(const eStreamClient *client, const std::string &serviceref, const int bitrate, const int width, const int height, const int framerate, const int interlaced, const int aspectratio)
-{
-	unsigned int i;
-	int encoderfd = -1;
-	for (i = 0; i < encoderUser.size(); i++)
-	{
-		if (!encoderUser[i])
-		{
-			char filename[128];
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/bitrate", i);
-			CFile::writeInt(filename, bitrate);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/width", i);
-			CFile::writeInt(filename, width);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/height", i);
-			CFile::writeInt(filename, height);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/framerate", i);
-			CFile::writeInt(filename, framerate);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/interlaced", i);
-			CFile::writeInt(filename, interlaced);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/aspectratio", i);
-			CFile::writeInt(filename, aspectratio);
-			snprintf(filename, sizeof(filename), "/proc/stb/encoder/%d/apply", i);
-			CFile::writeInt(filename, 1);
-			if (navigationInstances[i]->playService(serviceref) >= 0)
-			{
-				snprintf(filename, sizeof(filename), "/dev/encoder%d", i);
-				encoderfd = open(filename, O_RDONLY);
-				encoderUser[i] = client;
-			}
-			break;
-		}
-	}
-	return encoderfd;
-}
-
-void eStreamServer::freeEncoder(const eStreamClient *client, int encoderfd)
-{
-	unsigned int i;
-	for (i = 0; i < encoderUser.size(); i++)
-	{
-		if (encoderUser[i] == client)
-		{
-			encoderUser[i] = NULL;
-			if (navigationInstances[i])
-			{
-				navigationInstances[i]->stopService();
-			}
-			break;
-		}
-	}
-	if (encoderfd >= 0) ::close(encoderfd);
 }
 
 eAutoInitPtr<eStreamServer> init_eStreamServer(eAutoInitNumbers::service + 1, "Stream server");
