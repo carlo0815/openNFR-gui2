@@ -544,10 +544,6 @@ class QuickMenu(Screen):
 			self.openSetup("usage")
 		elif item[0] == _("Button Setup"):
 			self.openSetup("remotesetup")
-		elif item[0] == _("Display Settings"):
-			self.openSetup("display")
-		elif item[0] == _("LCD Skin Setup"):
-			self.session.open(LcdSkinSelector)
 		elif item[0] == _("OSD settings"):
 			self.openSetup("userinterface")
 		elif item[0] == _("Channel selection"):
