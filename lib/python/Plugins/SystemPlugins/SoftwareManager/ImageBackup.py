@@ -86,6 +86,7 @@ class ImageBackup(Screen):
 		
 	def red(self):
 		if self.check_hdd():
+			print "backup wird gestartet1"
 			self.doFullBackup("/hdd")
 
 	def green(self):
@@ -259,7 +260,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/ebox/7358/" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/ebox" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING Venton HDx Model
-		elif self.MODEL == "ventonhdx":
+		elif self.MODEL[:8] == "uniboxhd":
 			self.TYPE = "VENTON"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
