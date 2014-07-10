@@ -86,7 +86,7 @@ class ImageBackup(Screen):
 		
 	def red(self):
 		if self.check_hdd():
-			print "backup wird gestartet"
+			print "backup wird gestartet1"
 			self.doFullBackup("/hdd")
 
 	def green(self):
