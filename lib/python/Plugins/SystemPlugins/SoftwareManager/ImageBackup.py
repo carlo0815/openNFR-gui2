@@ -468,6 +468,16 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+		elif self.MODEL == "gbquadplus":
+			self.TYPE = "GIGABLUE"
+			self.MODEL = "quadplus"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4000"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "GigaBlue %s" %self.MODEL
+			self.MTDKERNEL = "mtd2"
+			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
+			self.EXTRA = "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)			
 		## TESTING THE VU+ MODELS
 		elif self.MODEL == "vusolo" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 			self.TYPE = "VU"
@@ -486,6 +496,14 @@ class ImageBackup(Screen):
 		else:
 			print "No supported receiver found!"
 			return
+		
+		if self.MODEL == "gbquad" or self.MODEL == "gbquadplus" or self.MODEL == "gb800ue" or self.MODEL == "gb800ueplus":
+			lcdwaitkey = '/usr/share/lcdwaitkey.bin'
+			lcdwarning = '/usr/share/lcdwarning.bin'
+			if path.exists(lcdwaitkey):
+				system('cp %s %s/lcdwaitkey.bin' %(lcdwaitkey, self.MAINDEST))
+			if path.exists(lcdwarning):
+				system('cp %s %s/lcdwarning.bin' %(lcdwarning, self.MAINDEST))		
 
 		self.message = "echo -e '\n"
 		self.message += (_("Back-up Tool for a %s\n" %self.SHOWNAME)).upper()
