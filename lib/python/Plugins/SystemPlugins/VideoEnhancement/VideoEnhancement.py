@@ -1,3 +1,4 @@
+from boxbranding import getBoxType
 from os import path as os_path
 
 from Components.config import config, ConfigSubsection, ConfigSlider, ConfigSelection, ConfigBoolean, ConfigNothing, NoSave
