@@ -11363,6 +11363,9 @@ msgstr "Plugins runterladen und installieren"
 msgid "Delete Plugins"
 msgstr "Plugins löschen"
 
+msgid "Choose backup files"
+msgstr "Dateien zum sichern auswählen"
+
 msgid "Move Plugins to HDD or USB"
 msgstr "Plugins auf HDD/USB auslagern"
 
