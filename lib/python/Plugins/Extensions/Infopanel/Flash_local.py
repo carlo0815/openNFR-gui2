@@ -24,7 +24,7 @@ distro =  getImageDistro()
 imagePath = '/hdd/images'
 flashPath = '/hdd/images/flash'
 flashTmp = '/hdd/images/tmp'
-ofgwritePath = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/ofgwrite'
+ofgwritePath = '/usr/bin/ofgwrite'
 #############################################################################################################
 
 
