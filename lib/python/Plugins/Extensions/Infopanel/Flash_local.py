@@ -21,9 +21,9 @@ from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineB
 distro =  getImageDistro()
 
 #############################################################################################################
-imagePath = '/hdd/images'
-flashPath = '/hdd/images/flash'
-flashTmp = '/hdd/images/tmp'
+imagePath = '/media/hdd/images'
+flashPath = '/media/hdd/images/flash'
+flashTmp = '/media/hdd/images/tmp'
 ofgwritePath = '/usr/bin/ofgwrite'
 #############################################################################################################
 
