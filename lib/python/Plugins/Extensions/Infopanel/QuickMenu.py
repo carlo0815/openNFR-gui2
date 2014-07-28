@@ -46,7 +46,7 @@ from Plugins.Extensions.Infopanel.Net_test import Net_test
 from Plugins.Extensions.Infopanel.Softcamedit import vEditor
 from Plugins.Extensions.Infopanel.Satloader import Satloader
 from Plugins.Extensions.Infopanel.InstallTarGZ import InfopanelManagerScreen
-from Plugins.Extensions.Infopanel.Flash_local import doFlashImage
+from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_SKIN
 from Tools.LoadPixmap import LoadPixmap
@@ -397,7 +397,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Select Backup files",_("Choose the files to backup"),_("Here you can select which files should be added to backupfile. (default: E2-setup, channels, network")))
 		self.sublist.append(QuickSubMenuEntryComponent("Software Manager Setup",_("Manage your online update files"),_("Here you can select which files should be updated with a online update")))
 		if not getBoxType().startswith('az') and not getBoxType().startswith('dream') and not getBoxType().startswith('ebox'):
-		    self.sublist.append(QuickSubMenuEntryComponent("Flash Local",_("Flash Local a new image"),_("Flash on the fly your Receiver software.")))		
+		    self.sublist.append(QuickSubMenuEntryComponent("Flash Local-Online",_("Flash Local-Online a new image"),_("Flash on the fly your Receiver software.")))		
 		self["sublist"].l.setList(self.sublist)
 
 ######## Plugins Menu ##############################
@@ -664,7 +664,7 @@ class QuickMenu(Screen):
 		elif item[0] == _("Software Update"):
 			#self.session.open(UpdatePlugin)
 			self.session.open(SoftwarePanel)
-		elif item[0] == _("Flash Local"):
+		elif item[0] == _("Flash Local-Online"):
 			if not os.path.exists("/media/hdd"):
 			        self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
 			        return False
@@ -683,7 +683,7 @@ class QuickMenu(Screen):
                                  os.mkdir(imagePath)
                             if not os.path.exists(dir_path):
                                  os.mkdir(dir_path)
-                                 self.session.open(doFlashImage)
+                                 self.session.open(FlashOnline)
                                			
 		elif item[0] == _("Complete Backup"):
 			if DFLASH == True:
