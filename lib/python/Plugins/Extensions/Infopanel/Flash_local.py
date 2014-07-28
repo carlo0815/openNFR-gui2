@@ -17,16 +17,105 @@ import urllib2
 import os
 from Plugins.Extensions.Infopanel.Extra import shutil
 import math
-from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM
 distro =  getImageDistro()
 
 #############################################################################################################
+image = 0 # 0=openNFR
+if distro.lower() == "opennfr":
+	image = 0
+feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/images'
 imagePath = '/media/hdd/images'
 flashPath = '/media/hdd/images/flash'
 flashTmp = '/media/hdd/images/tmp'
 ofgwritePath = '/usr/bin/ofgwrite'
 #############################################################################################################
+def Freespace(dev):
+	statdev = os.statvfs(dev)
+	space = (statdev.f_bavail * statdev.f_frsize) / 1024
+	print "[Flash Online] Free space on %s = %i kilobytes" %(dev, space)
+	return space
+class FlashOnline(Screen):
+	skin = """
+	<screen position="center,center" size="560,400" title="Flash On the Fly">
+		<ePixmap position="0,360"   zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" transparent="1" alphatest="on" />
+		<ePixmap position="140,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" transparent="1" alphatest="on" />
+		<ePixmap position="280,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" transparent="1" alphatest="on" />
+		<ePixmap position="420,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/blue.png" transparent="1" alphatest="on" />
+		<widget name="key_red" position="0,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="140,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_yellow" position="280,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_blue" position="420,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="info-online" position="10,30" zPosition="1" size="450,100" font="Regular;20" halign="left" valign="top" transparent="1" />
+		<widget name="info-local" position="10,150" zPosition="1" size="450,200" font="Regular;20" halign="left" valign="top" transparent="1" />
+	</screen>"""
 
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.session = session
+
+		Screen.setTitle(self, _("Flash On the Fly"))
+		self["key_yellow"] = Button("Local")
+		self["key_green"] = Button("Online")
+		self["key_red"] = Button(_("Exit"))
+		self["key_blue"] = Button("")
+		self["info-local"] = Label(_("Local = Flash a image from local path /hdd/images"))
+		self["info-online"] = Label(_("Online = Download a image and flash it"))
+
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
+		{
+			"blue": self.blue,
+			"yellow": self.yellow,
+			"green": self.green,
+			"red": self.quit,
+			"cancel": self.quit,
+		}, -2)
+
+	def check_hdd(self):
+		if not os.path.exists("/media/hdd"):
+			self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
+			return False
+		if Freespace('/media/hdd') < 300000:
+			self.session.open(MessageBox, _("Not enough free space on /hdd !!\nYou need at least 300Mb free space.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
+			return False
+		if not os.path.exists(ofgwritePath):
+			self.session.open(MessageBox, _('ofgwrite not found !!\nPlease make sure you have ofgwrite installed in /usr/bin/ofgwrite.\n\nExit plugin.'), type = MessageBox.TYPE_ERROR)
+			return False
+
+		if not os.path.exists(imagePath):
+			try:
+				os.mkdir(imagePath)
+			except:
+				pass
+		
+		if os.path.exists(flashPath):
+			try:
+				os.system('rm -rf ' + flashPath)
+			except:
+				pass
+		try:
+			os.mkdir(flashPath)
+		except:
+			pass
+		return True
+
+	def quit(self):
+		self.close()
+
+	def blue(self):
+		pass
+
+	def green(self):
+		if self.check_hdd():
+			self.session.open(doFlashImage, online = True)
+		else:
+			self.close()
+
+	def yellow(self):
+		if self.check_hdd():
+			self.session.open(doFlashImage, online = False)
+		else:
+			self.close()
 
 
 class doFlashImage(Screen):
@@ -43,7 +132,7 @@ class doFlashImage(Screen):
 		<widget name="imageList" position="10,10" zPosition="1" size="450,450" font="Regular;20" scrollbarMode="showOnDemand" transparent="1" />
 	</screen>"""
 		
-	def __init__(self, session):
+	def __init__(self, session, online):
 		Screen.__init__(self, session)
 		self.session = session
 		Screen.setTitle(self, _("Flash On the fly (select a image)"))
@@ -51,28 +140,36 @@ class doFlashImage(Screen):
 		self["key_red"] = Button(_("Exit"))
 		self["key_blue"] = Button("")
 		self["key_yellow"] = Button("")
-		#self.check_hdd()
 		self.filename = None
 		self.imagelist = []
 		self.simulate = False
+		self.Online = online
 		self.imagePath = imagePath
+		self.feedurl = feedurl_nfr
+		if image == 0:
+			self.feed = "nfr"
 		self["imageList"] = MenuList(self.imagelist)
 		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], 
 		{
 			"green": self.green,
+			"ok": self.green,
 			"yellow": self.yellow,
 			"red": self.quit,
 			"blue": self.blue,
 			"cancel": self.quit,
 		}, -2)
 		self.onLayoutFinish.append(self.layoutFinished)
-			
 
-		
+
 	def quit(self):
-		self.close()	
-		
+		self.close()
+
 	def blue(self):
+		if self.Online:
+			if image == 0:
+				self.feed = "nfr"
+				self.layoutFinished()
+			return
 		sel = self["imageList"].l.getCurrentSelection()
 		if sel == None:
 			print"Nothing to select !!"
@@ -90,11 +187,13 @@ class doFlashImage(Screen):
 	def box(self):
 		box = getBoxType()
 		machinename = getMachineName()
-		if box == 'odinm6':
+		if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
+			box = "ventonhdx"
+		elif box == 'odinm6':
 			box = getMachineName().lower()
 		elif box == "inihde" and machinename.lower() == "xpeedlx":
 			box = "xpeedlx"
-		elif box == "xpeedlx1" or box == "xpeedlx2":
+		elif box in ('xpeedlx1', 'xpeedlx2'):
 			box = "xpeedlx"
 		elif box == "inihde" and machinename.lower() == "hd-1000":
 			box = "sezam-1000hd"
@@ -104,9 +203,9 @@ class doFlashImage(Screen):
 			box = "miraclebox-twin"
 		elif box == "xp1000" and machinename.lower() == "sf8 hd":
 			box = "sf8"
-		elif box.startswith('et') and not box == "et10000":
+		elif box.startswith('et') and not box == "et10000" and not box == "et8000":
 			box = box[0:3] + 'x00'
-		elif box == 'odinm9' and self.feed == "atv2":
+		elif box == 'odinm9' and self.feed == "nfr":
 			box = 'maram9'
 		return box
 
@@ -119,10 +218,36 @@ class doFlashImage(Screen):
 		self.filename = file_name
 		box = self.box()
 		self.hide()
-		if sel == str(flashTmp):
-			self.Start_Flashing()
+		if self.Online:
+			url = self.feedurl + "/" + box + "/" + sel    
+			print "Adresse:%s" % url
+			u = urllib2.urlopen(url)
+			f = open(file_name, 'wb')
+			meta = u.info()
+			#file_size = int(meta.getheaders("Content-Length")[0])
+			print "Downloading: %s" % sel
+			job = ImageDownloadJob(url, file_name, sel)
+			job.afterEvent = "close"
+			job_manager.AddJob(job)
+			job_manager.failed_jobs = []
+			self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable = False, afterEventChangeable = False)
 		else:
-			self.unzip_image(self.filename, flashPath)
+			if sel == str(flashTmp):
+				self.Start_Flashing()
+			else:
+				self.unzip_image(self.filename, flashPath)
+				
+	def ImageDownloadCB(self, ret):
+		if ret:
+			return
+		if job_manager.active_job:
+			job_manager.active_job = None
+			self.close()
+			return
+		if len(job_manager.failed_jobs) == 0:
+			self.session.openWithCallback(self.askUnzipCB, MessageBox, _("The image is downloaded. Do you want to flash now?"), MessageBox.TYPE_YESNO)
+		else:
+			self.session.open(MessageBox, _("Download Failed !!"), type = MessageBox.TYPE_ERROR)
 
 	def askUnzipCB(self, ret):
 		if ret:
@@ -154,8 +279,8 @@ class doFlashImage(Screen):
 				cmd = "%s -r -k %s > /dev/null 2>&1" % (ofgwritePath, flashTmp)
 				message = "echo -e '\n"
 				message += _('ofgwrite will stop enigma2 now to run the flash.\n')
-				message += _('Your STB will freeze during the flashing process.\n')
-				message += _('Please: DO NOT reboot your STB and turn off the power.\n')
+				message += _('Your %s %s will freeze during the flashing process.\n') % (getMachineBrand(), getMachineName())
+				message += _('Please: DO NOT reboot your %s %s and turn off the power.\n') % (getMachineBrand(), getMachineName())
 				message += _('The image or kernel will be flashing and auto booted in few minutes.\n')
 				if self.box() == 'gb800solo':
 					message += _('GB800SOLO takes about 20 mins !!\n')
@@ -164,11 +289,14 @@ class doFlashImage(Screen):
 
 	def prepair_flashtmp(self, tmpPath):
 		if os.path.exists(flashTmp):
+			flashTmpold = flashTmp + 'old'
+			os.system('mv %s %s' %(flashTmp, flashTmpold))
 			os.system('rm -rf ' + flashTmp)
-		os.mkdir(flashTmp)
+		if not os.path.exists(flashTmp):
+			os.mkdir(flashTmp)
 		kernel = True
 		rootfs = True
-		
+
 		for path, subdirs, files in os.walk(tmpPath):
 			for name in files:
 				if name.find('kernel') > -1 and name.endswith('.bin') and kernel:
@@ -181,8 +309,9 @@ class doFlashImage(Screen):
 					dest = flashTmp + '/rootfs.bin'
 					shutil.copyfile(binfile, dest)
 					rootfs = False
-					
+
 	def yellow(self):
+		if not self.Online:
 			self.session.openWithCallback(self.DeviceBrowserClosed, DeviceBrowser, None, matchingPattern="^.*\.(zip|bin|jffs2)", showDirectories=True, showMountpoints=True, inhibitMounts=["/autofs/sr0/"])
 
 	def DeviceBrowserClosed(self, path, filename, binorzip):
@@ -212,21 +341,112 @@ class doFlashImage(Screen):
 	def layoutFinished(self):
 		box = self.box()
 		self.imagelist = []
-		self["key_blue"].setText(_("Delete"))
-		self["key_yellow"].setText(_("Devices"))
-		for name in os.listdir(self.imagePath):
-			if name.endswith(".zip"): # and name.find(box) > 1:
-				self.imagelist.append(name)
-		self.imagelist.sort()
-		if os.path.exists(flashTmp):
-			for file in os.listdir(flashTmp):
-				if file.find(".bin") > -1:
-					self.imagelist.insert( 0, str(flashTmp))
-					break
+		if self.Online:
+			self["key_yellow"].setText("")
+			if image == 0:
+				self.feedurl = feedurl_nfr
+				self["key_blue"].setText("Teamimages")
+			url = '%s/%s' % (self.feedurl,box)
+			req = urllib2.Request(url)
+			try:
+				response = urllib2.urlopen(req)
+			except urllib2.URLError as e:
+				print "URL ERROR: %s" % e
+				return
+
+			try:
+				the_page = response.read()
+
+			except urllib2.HTTPError as e:
+				print "HTTP download ERROR: %s" % e.code
+				return
+
+			lines = the_page.split('\n')
+			tt = len(box)
+			for line in lines:
+				if line.find("<a href='%s/" % box) > -1:
+					t = line.find("<a href='%s/" % box)
+					if self.feed == "nfr1":
+						self.imagelist.append(line[t+tt+10:t+tt+tt+39])
+					else:
+						self.imagelist.append(line[t+tt+10:t+tt+tt+40])
+				else:
+					if line.find('<a href="o') > -1:
+						t = line.find('<a href="o')
+						e = line.find('zip"')
+						self.imagelist.append(line[t+9:e+3])
+
+		else:
+			self["key_blue"].setText(_("Delete"))
+			self["key_yellow"].setText(_("Devices"))
+			for name in os.listdir(self.imagePath):
+				if name.endswith(".zip"): # and name.find(box) > 1:
+					self.imagelist.append(name)
+			self.imagelist.sort()
+			if os.path.exists(flashTmp):
+				for file in os.listdir(flashTmp):
+					if file.find(".bin") > -1:
+						self.imagelist.insert( 0, str(flashTmp))
+						break
 
 		self["imageList"].l.setList(self.imagelist)
 
+class ImageDownloadJob(Job):
+	def __init__(self, url, filename, file):
+		Job.__init__(self, _("Downloading %s" %file))
+		ImageDownloadTask(self, url, filename)
 
+class DownloaderPostcondition(Condition):
+	def check(self, task):
+		return task.returncode == 0
+
+	def getErrorMessage(self, task):
+		return self.error_message
+
+class ImageDownloadTask(Task):
+	def __init__(self, job, url, path):
+		Task.__init__(self, job, _("Downloading"))
+		self.postconditions.append(DownloaderPostcondition())
+		self.job = job
+		self.url = url
+		self.path = path
+		self.error_message = ""
+		self.last_recvbytes = 0
+		self.error_message = None
+		self.download = None
+		self.aborted = False
+
+	def run(self, callback):
+		self.callback = callback
+		self.download = downloadWithProgress(self.url,self.path)
+		self.download.addProgress(self.download_progress)
+		self.download.start().addCallback(self.download_finished).addErrback(self.download_failed)
+		print "[ImageDownloadTask] downloading", self.url, "to", self.path
+
+	def abort(self):
+		print "[ImageDownloadTask] aborting", self.url
+		if self.download:
+			self.download.stop()
+		self.aborted = True
+
+	def download_progress(self, recvbytes, totalbytes):
+		if ( recvbytes - self.last_recvbytes  ) > 10000: # anti-flicker
+			self.progress = int(100*(float(recvbytes)/float(totalbytes)))
+			self.name = _("Downloading") + ' ' + "%d of %d kBytes" % (recvbytes/1024, totalbytes/1024)
+			self.last_recvbytes = recvbytes
+
+	def download_failed(self, failure_instance=None, error_message=""):
+		self.error_message = error_message
+		if error_message == "" and failure_instance is not None:
+			self.error_message = failure_instance.getErrorMessage()
+		Task.processFinished(self, 1)
+
+	def download_finished(self, string=""):
+		if self.aborted:
+			self.finish(aborted = True)
+		else:
+			Task.processFinished(self, 0)
+			
 class DeviceBrowser(Screen, HelpableScreen):
 	skin = """
 		<screen name="DeviceBrowser" position="center,center" size="520,430" >
