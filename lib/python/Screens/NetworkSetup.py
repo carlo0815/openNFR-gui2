@@ -2,7 +2,7 @@ from boxbranding import getBoxType, getMachineBrand, getMachineName
 from os import path as os_path, remove, unlink, rename, chmod, access, X_OK
 from shutil import move
 import time
-
+import os
 from enigma import eTimer
 
 from Screens.Screen import Screen
@@ -29,6 +29,7 @@ from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_
 from Tools.LoadPixmap import LoadPixmap
 from Plugins.Plugin import PluginDescriptor
 from Plugins.Extensions.Infopanel.Softcamedit import vEditor
+from Plugins.Extensions.Infopanel.nfsedit import NFS_EDIT
 from os import path, listdir
 import commands
 
@@ -2002,13 +2003,18 @@ class NetworkNfs(Screen):
 		self['key_green'] = Label(_("Start"))
 		self['key_red'] = Label(_("Remove Service"))
 		self['key_yellow'] = Label(_("Autostart"))
-		self['key_blue'] = Label()
+		self['key_blue'] = Label(_("Edit exports"))
 		self.Console = Console()
 		self.my_nfs_active = False
 		self.my_nfs_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.NfsStartStop, 'yellow': self.Nfsset})
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.NfsStartStop, 'yellow': self.Nfsset, 'blue': self.blue})
 		self.service_name = basegroup + '-nfs'
 		self.onLayoutFinish.append(self.InstallCheck)
+
+
+	def blue(self):
+		self.session.open(NFS_EDIT)
+
 
 	def InstallCheck(self):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
@@ -2084,6 +2090,11 @@ class NetworkNfs(Screen):
 			self.Console.ePopen('/etc/init.d/nfsserver stop', self.StartStopCallback)
 
 	def StartStopCallback(self, result = None, retval = None, extra_args = None):
+	        if fileExists("/etc/exports"):
+	        	pass
+	        else:
+	        	os.system('echo "/media/hdd 192.168.0.0/255.255.255.0(rw,all_squash,anonuid=0,anongid=0,async)">/etc/exports')
+	
 		time.sleep(3)
 		self.updateService()
 
