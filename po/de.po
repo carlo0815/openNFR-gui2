@@ -11371,3 +11371,6 @@ msgstr "Plugins auf HDD/USB auslagern"
 
 msgid "make Screenshot"
 msgstr "Screenshot erstellen"
+
+msgid "Continue in background"
+msgstr "Im Hintergrund fortfahren"
