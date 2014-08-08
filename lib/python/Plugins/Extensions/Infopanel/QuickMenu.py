@@ -58,13 +58,7 @@ import sys
 import NavigationInstance
 
 plugin_path_networkbrowser = eEnv.resolve("${libdir}/enigma2/python/Plugins/SystemPlugins/NetworkBrowser")
-#############################################################################################################
-imagePath = '/hdd/images'
-flashPath = '/hdd/images/flash'
-flashTmp = '/hdd/images/tmp'
-ofgwritePath = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/ofgwrite'
-dir_path = '/media/hdd/images/flash'
-#############################################################################################################
+
 
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/AudioSync"):
 	from Plugins.Extensions.AudioSync.AC3setup import AC3LipSyncSetup
@@ -665,25 +659,7 @@ class QuickMenu(Screen):
 			#self.session.open(UpdatePlugin)
 			self.session.open(SoftwarePanel)
 		elif item[0] == _("Flash Local-Online"):
-			if not os.path.exists("/media/hdd"):
-			        self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
-			        return False
-		        if Freespace('/media/hdd') < 300000:
-			        self.session.open(MessageBox, _("Not enough free space on /hdd !!\nYou need at least 300Mb free space.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
-			        return False
-         		if not os.path.exists(ofgwritePath):
-			        self.session.open(MessageBox, _('ofgwrite not found !!\nPlease make sure you have ofgwrite installed in /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/ofgwrite.\n\nExit plugin.'), type = MessageBox.TYPE_ERROR)
-			        return False
-             		
-			else:
-			   
-                            if os.path.exists(dir_path):
-                                 os.system('rm -rf ' + dir_path)
-		            if not os.path.exists(imagePath):
-                                 os.mkdir(imagePath)
-                            if not os.path.exists(dir_path):
-                                 os.mkdir(dir_path)
-                                 self.session.open(FlashOnline)
+                        self.session.open(FlashOnline)
                                			
 		elif item[0] == _("Complete Backup"):
 			if DFLASH == True:
