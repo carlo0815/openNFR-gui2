@@ -296,7 +296,7 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
-		elif self.MODEL == "ini-9000de" or self.MODEL == "xpeedlx3":
+		elif self.MODEL == "ini-9000de" or self.MODEL == "xpeedlx3" or self.MODEL == "atemionemesis":
 			self.TYPE = "GI"
 			self.MODEL = "xpeedlx3"
 			self.MKUBIFS_ARGS = "-m 4096 -e 1040384 -c 1984"
