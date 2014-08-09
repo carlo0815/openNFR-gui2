@@ -8,7 +8,7 @@ class WOL:
 		pass
 
 	def setWolState(self, value):
-		print '[WakeOnLAN] set:',value
+		print '[WOL] set:',value
 		if fileExists("/proc/stb/fp/wol"):
 			f = open("/proc/stb/fp/wol", "w")
 			f.write(value)
@@ -19,14 +19,14 @@ class WOL:
 			f.close()
 
 def Init():
-	if SystemInfo["WakeOnLAN"] and not getBoxType() in ('gbquadplus', 'gbquad', 'gb800ueplus', 'gb800seplus', 'gbipbox'):
+	if SystemInfo["WOL"] and not getBoxType() in ('gbquadplus', 'gbquad', 'gb800ueplus', 'gb800seplus', 'gbipbox'):
 		def setWOLmode(value):
 			iwol.setWolState(config.network.wol.value)
 		iwol = WOL()
 		config.network.wol = ConfigSelection([("disable", _("No")), ("enable", _("Yes"))], default = "disable")
 		config.network.wol.addNotifier(setWOLmode, initial_call=True)
 
-	elif SystemInfo["WakeOnLAN"] and getBoxType() in ('gbquadplus', 'gbquad', 'gb800ueplus', 'gb800seplus', 'gbipbox'):
+	elif SystemInfo["WOL"] and getBoxType() in ('gbquadplus', 'gbquad', 'gb800ueplus', 'gb800seplus', 'gbipbox'):
 		def setWOLmode(value):
 			iwol.setWolState(config.network.wol.value)
 		iwol = WOL()
