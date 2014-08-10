@@ -152,20 +152,8 @@ class ImageBackup(Screen):
 
 		## TESTING WHICH KIND OF SATELLITE RECEIVER IS USED
 
-		## TESTING THE XTREND AND CLARK TECH MODELS
-		if self.MODEL == "et9x00" or self.MODEL == "et5x00" or self.MODEL == "et6x00" or self.MODEL == "et6500" or self.MODEL == "et4x00":
-			self.TYPE = "ET"
-			if self.MODEL == "et6500":
-				self.MODEL = "et6x00"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "Xtrend %s" %self.MODEL
-			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%sx00" %(self.DIRECTORY, self.MODEL[:-3])
-			self.EXTRA = "%s/fullbackup_%sx00/%s" % (self.DIRECTORY, self.MODEL[:-3], self.DATE)
-			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 		## TESTING THE Odin M9 Model
-		elif self.MODEL == "odinm9":
+		if self.MODEL == "odinm9":
 			self.TYPE = "ODINM9"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
@@ -228,36 +216,6 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)			
-		## TESTING THE Medialink Model
-		elif self.MODEL == "ixussone" or self.MODEL == "ixusszero" or self.MODEL == "ixussduo":
-			self.TYPE = "IXUSS"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "Medialink %s" %self.MODEL
-			self.MTDKERNEL = "mtd1"	
-			self.MAINDESTOLD = "%s/medialink/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/medialink/%s" %(self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
-		## TESTING THE Mixos Model
-		elif self.MODEL == "ebox5000" or self.MODEL == "ebox5100":
-			self.TYPE = "MIXOS"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "Mixos %s" %self.MODEL
-			self.MTDKERNEL = "mtd1"	
-			self.MAINDESTOLD = "%s/ebox/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/ebox/7403/" % self.DIRECTORY
-			self.EXTRA = "%s/fullbackup_%s/%s/ebox" % (self.DIRECTORY, self.TYPE, self.DATE)
-		## TESTING THE Mixos Model
-		elif self.MODEL == "ebox7358":
-			self.TYPE = "MIXOS2"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "Mixos %s" %self.MODEL
-			self.MTDKERNEL = "mtd2"	
-			self.MAINDESTOLD = "%s/ebox/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/ebox/7358/" % self.DIRECTORY
-			self.EXTRA = "%s/fullbackup_%s/%s/ebox" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING Venton HDx Model
 		elif self.MODEL == "uniboxhd1" or self.MODEL == "uniboxhd2" or self.MODEL == "uniboxhd3":
 			self.TYPE = "VENTON"
@@ -307,15 +265,15 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		elif self.MODEL == "ini-8000am" or self.MODEL == "atemionemesis":
-			self.TYPE = "Atemio"
+			self.TYPE = "ATEMIO"
 			self.MODEL = "atemionemesis"
 			self.MKUBIFS_ARGS = "-m 4096 -e 1040384 -c 1984"
 			self.UBINIZE_ARGS = "-m 4096 -p 1024KiB"
-			self.SHOWNAME = "Atemio atemionemesis"
+			self.SHOWNAME = "Atemio Nemesis"
 			self.MTDKERNEL = "mtd2"
-			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)				
+			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s//atemio/8x00" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)				
 		elif self.MODEL == "inihde" and self.MACHINENAME.lower() == "hd-1000":
 			self.TYPE = "SEZAM"
 			self.MODEL = "hde"
@@ -599,7 +557,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ET" or self.TYPE == "VENTON" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "IXUSS":
+		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -618,13 +576,6 @@ class ImageBackup(Screen):
 			self.ROOTFSBIN = "oe_rootfs.bin"
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			self.KERNELBIN = "oe_kernel.bin"
-			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
-			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
-			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
-		elif self.TYPE == "MIXOS" or self.TYPE == "MIXOS2":
-			self.ROOTFSBIN = "root_cfe_auto.bin"
-			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
-			self.KERNELBIN = "kernel_cfe_auto.bin"
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
 			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
@@ -695,9 +646,9 @@ class ImageBackup(Screen):
 				cmdlist.append('echo "This only takes about 1 or 2 minutes"')
 				cmdlist.append('echo " "')
 
-				if self.TYPE == 'ET':
-					cmdlist.append('mkdir -p %s/%sx00' % (self.TARGET, self.MODEL[:-3]))
-					cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.TARGET))
+				if self.TYPE == 'ATEMIO':
+					cmdlist.append('mkdir -p %s/atemio/8x00' % self.TARGET)
+					cmdlist.append('cp -r %s %s/atemio/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'VU':
 					cmdlist.append('mkdir -p %s/vuplus_back/%s' % (self.TARGET, self.MODEL[2:]))
 					cmdlist.append('cp -r %s %s/vuplus_back/' % (self.MAINDEST, self.TARGET))
@@ -727,18 +678,6 @@ class ImageBackup(Screen):
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'MAXDIGITAL' or self.TYPE == 'OCTAGON':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
-					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'IXUSS':
-					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
-					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'IXUSS':
-					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
-					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'MIXOS':
-					cmdlist.append('mkdir -p %s/ebox/7403' % (self.TARGET))
-					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'MIXOS2':
-					cmdlist.append('mkdir -p %s/ebox/7358' % (self.TARGET))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'TECHNO':
 					cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
