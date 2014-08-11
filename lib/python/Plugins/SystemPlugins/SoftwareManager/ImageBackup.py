@@ -5,7 +5,7 @@
 #																				#
 #################################################################################
 from enigma import getEnigmaVersionString
-from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate
+from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel
 from Screens.Screen import Screen
 from Components.Button import Button
 from Components.Label import Label
@@ -45,6 +45,7 @@ class ImageBackup(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.MODEL = getBoxType()
+		self.MODEL1 = getMachineProcModel()
 		self.MACHINENAME = getMachineName()
 		self.MACHINEBRAND = getMachineBrand()
 		print "[FULL BACKUP] BOX MACHINENAME = >%s<" %self.MACHINENAME
@@ -164,7 +165,7 @@ class ImageBackup(Screen):
 			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 			self.EXTRA = "%s/fullbackup_odinm9/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING THE Odin M7 Model
-		elif self.MODEL == "odinm7":
+		elif self.MODEL == "odinm7" or self.MODEL1 == "odinm7":
 			self.TYPE = "ODINM7"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
