@@ -568,7 +568,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON":
+		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -687,7 +687,7 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'E3HD':
 					#cmdlist.append('mkdir -p %s/' % (self.TARGET))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'MAXDIGITAL' or self.TYPE == 'OCTAGON':
+				elif self.TYPE == 'MAXDIGITAL' or self.TYPE == 'OCTAGON' or self.TYPE == 'MK':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'TECHNO':
