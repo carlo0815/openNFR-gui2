@@ -709,9 +709,7 @@ class ImageBackup(Screen):
 			print "TARGET = %s" % self.TARGET
 			if self.TARGET == 'XX':
 				cmdlist.append('echo " "')
-				self.make_zipfile("opennfr-%s-%s-%s_usb.zip" % (getImageVersion(), self.MODEL, strftime("%Y-%m-%d", localtime(self.START))), self.MAINDEST1)
 			else:
-				self.make_zipfile("opennfr-%s-%s-%s_usb.zip" % (getImageVersion(), self.MODEL, strftime("%Y-%m-%d", localtime(self.START))), self.MAINDEST1)
 				cmdlist.append('echo "_________________________________________________\n"')
 				cmdlist.append('echo " "')
 				cmdlist.append('echo "There is a valid USB-flash drive detected in one "')
@@ -778,8 +776,16 @@ class ImageBackup(Screen):
 		DIFF = int(END - self.START)
 		TIMELAP = str(datetime.timedelta(seconds=DIFF))
 		cmdlist.append('echo " Time required for this process: %s"' %TIMELAP)
+		cmdlist.append('echo "Start Zip Files from Backup please wait 1-4min!"')
+		self.session.open(Console, title = self.TITLE, cmdlist = cmdlist,finishedCallback = self.doFullZip, closeOnSuccess = True)
 
+	def doFullZip(self):
+	        cmdlist = []
+	        cmdlist.append(self.message)
+		self.make_zipfile("opennfr-%s-%s-%s_usb.zip" % (getImageVersion(), self.MODEL, strftime("%Y-%m-%d", localtime(self.START))), self.MAINDEST1)
+		cmdlist.append('echo "Build Zip Files is ready!"')
 		self.session.open(Console, title = self.TITLE, cmdlist = cmdlist, closeOnSuccess = False)
+
 
 	def make_zipfile(self, output_filename, source_dir):
 		output_zip = self.EXTRA1 + "/" + output_filename
