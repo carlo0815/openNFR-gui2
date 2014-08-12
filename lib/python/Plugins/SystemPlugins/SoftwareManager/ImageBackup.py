@@ -215,7 +215,7 @@ class ImageBackup(Screen):
 			self.SHOWNAME = "MK %s" %self.MODEL
 			self.MTDKERNEL = "mtd1"	
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/xp1000" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE OCTAGON Model
 		elif self.MODEL == "xp1000" and self.MACHINENAME.lower() == "sf8 hd":
@@ -283,7 +283,7 @@ class ImageBackup(Screen):
 			self.SHOWNAME = "Atemio Nemesis"
 			self.MTDKERNEL = "mtd2"
 			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s//atemio/8x00" % self.DIRECTORY
+			self.MAINDEST = "%s/atemio/8x00" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)				
 		elif self.MODEL == "inihde" and self.MACHINENAME.lower() == "hd-1000":
 			self.TYPE = "SEZAM"
