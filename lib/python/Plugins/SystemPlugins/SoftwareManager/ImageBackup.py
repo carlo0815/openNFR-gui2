@@ -167,6 +167,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/odinm9" % self.DIRECTORY
 			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 			self.EXTRA = "%s/fullbackup_odinm9/%s" % (self.DIRECTORY, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_odinm9/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING THE Odin M7 Model
 		elif self.MODEL == "odinm7" or self.MODEL1 == "odinm7":
 			self.TYPE = "ODINM7"
@@ -179,6 +180,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/en2" % self.DIRECTORY
 			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 			self.EXTRA = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE) 
 		## TESTING THE Odin M6 Model
 		elif self.MODEL == "odinm6":
 			self.TYPE = "ODINM7"
@@ -191,6 +193,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/en2" % self.DIRECTORY
 			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 			self.EXTRA = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE) 
 		## TESTING THE E3 HD Model
 		elif self.MODEL == "e3hd":
 			self.TYPE = "E3HD"
@@ -203,6 +206,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/e3hd" % self.DIRECTORY
 			self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 			self.EXTRA = "%s/fullbackup_e3hd/%s" % (self.DIRECTORY, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_e3hd/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING THE MK Digital Model
 		elif self.MODEL == "xp1000":
 			self.TYPE = "MAXDIGITAL"
@@ -214,6 +218,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE MK Model
 		elif self.MODEL == "xp1000mk":
 			self.TYPE = "MK"
@@ -225,6 +230,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/xp1000" % self.DIRECTORY
 			self.MAINDEST1 = "%s/xp1000" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE OCTAGON Model
 		elif self.MODEL == "xp1000" and self.MACHINENAME.lower() == "sf8 hd":
 			self.TYPE = "OCTAGON"
@@ -235,7 +241,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)			
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING Venton HDx Model
 		elif self.MODEL == "uniboxhd1" or self.MODEL == "uniboxhd2" or self.MODEL == "uniboxhd3":
 			self.TYPE = "VENTON"
@@ -246,6 +253,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/venton/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/venton" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/venton" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "ventonhdx" and self.MACHINENAME.lower() == "hd-5000":
 			self.TYPE = "SEZAM"
 			self.MODEL = "hdx"			
@@ -256,6 +264,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "ventonhdx" and self.MACHINENAME.lower() == "premium twin":
 			self.TYPE = "MICRACLE"
 			self.MODEL = "twin"			
@@ -265,7 +274,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/miraclebox/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/miraclebox" %self.DIRECTORY
-			self.EXTRA = "%s/fullbackup_%s/%s/miraclebox" % (self.DIRECTORY, self.MODEL, self.DATE)			
+			self.EXTRA = "%s/fullbackup_%s/%s/miraclebox" % (self.DIRECTORY, self.MODEL, self.DATE)	
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		## TESTING INI HDe Model
 		elif self.MODEL == "ini-1000de" or self.MODEL == "xpeedlx2" or self.MODEL == "xpeedlx1":
 			self.TYPE = "GI"
@@ -278,6 +288,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "ini-9000de" or self.MODEL == "xpeedlx3":
 			self.TYPE = "GI"
 			self.MODEL = "xpeedlx3"
@@ -288,7 +299,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "ini-8000am" or self.MODEL == "atemionemesis":
 			self.TYPE = "ATEMIO"
 			self.MODEL = "atemionemesis"
@@ -299,7 +311,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/atemio/8x00" % self.DIRECTORY
 			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
-			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)				
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "inihde" and self.MACHINENAME.lower() == "hd-1000":
 			self.TYPE = "SEZAM"
 			self.MODEL = "hde"
@@ -310,7 +323,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)			
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tmtwin":
 			self.TYPE = "TECHNO"
@@ -323,6 +337,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_TECHNO/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_TECHNO/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tmsingle":
 			self.TYPE = "TECHNO"
@@ -335,6 +350,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY 
 			self.EXTRA = "%s/fullbackup_TECHNO/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_TECHNO/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tmnano":
 			self.TYPE = "TECHNO"
@@ -347,6 +363,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_TECHNO/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_TECHNO/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tm2t":
 			self.TYPE = "TECHNO"
@@ -359,6 +376,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_TECHNO/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_TECHNO/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Iqon Model
 		elif self.MODEL == "iqonios100hd":
 			self.TYPE = "IQON"
@@ -371,6 +389,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_IQON/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_IQON/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Iqon Model
 		elif self.MODEL == "iqonios200hd":
 			self.TYPE = "IQON"
@@ -383,6 +402,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_IQON/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_IQON/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Iqon Model
 		elif self.MODEL == "iqonios300hd":
 			self.TYPE = "IQON"
@@ -395,6 +415,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_IQON/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_IQON/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Edison Model
 		elif self.MODEL == "optimussos2":
 			self.TYPE = "EDISION"
@@ -406,6 +427,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_EDISION/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
+			self.EXTRA1 = "%s/fullbackup_EDISION/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING THE Gigablue 800 Solo Model
 		elif self.MODEL == "gb800solo":
 			self.TYPE = "GIGABLUE"
@@ -417,6 +439,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE Gigablue 800 SE Model
 		elif self.MODEL == "gb800se":
 			self.TYPE = "GIGABLUE"
@@ -429,6 +452,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE Gigablue 800 UE Model
 		elif self.MODEL == "gb800ue":
 			self.TYPE = "GIGABLUE"
@@ -441,6 +465,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE Gigablue 800 SE Plus Model
 		elif self.MODEL == "gb800seplus":
 			self.TYPE = "GIGABLUE"
@@ -453,6 +478,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE Gigablue 800 UE Plus Model
 		elif self.MODEL == "gb800ueplus":
 			self.TYPE = "GIGABLUE"
@@ -465,6 +491,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE Gigablue HD Quad Model
 		elif self.MODEL == "gbquad":
 			self.TYPE = "GIGABLUE"
@@ -477,6 +504,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		elif self.MODEL == "gbquadplus":
 			self.TYPE = "GIGABLUE"
 			self.MODEL = "quadplus"
@@ -487,7 +515,8 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/gigablue/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/gigablue" %self.DIRECTORY
-			self.EXTRA = "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)			
+			self.EXTRA = "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE VU+ MODELS
 		elif self.MODEL == "vusolo" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 			self.TYPE = "VU"
@@ -497,6 +526,7 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/vuplus/%s" %(self.DIRECTORY, self.MODEL[2:])
 			self.MAINDEST1 = "%s/vuplus" %self.DIRECTORY
 			self.EXTRA =  "%s/fullbackup_%s/%s/vuplus" % (self.DIRECTORY, self.MODEL[2:], self.DATE)
+			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL[2:], self.DATE)
 			if self.ROOTFSTYPE == "ubifs":
 				self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096 -F"
 				self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
@@ -752,20 +782,18 @@ class ImageBackup(Screen):
 		self.session.open(Console, title = self.TITLE, cmdlist = cmdlist, closeOnSuccess = False)
 
 	def make_zipfile(self, output_filename, source_dir):
-		print 'Start Zip'
-		print 'Pfad: %s' % source_dir
+		output_zip = self.EXTRA1 + "/" + output_filename
 		relroot = os.path.abspath(os.path.join(source_dir, os.pardir))
-		with zipfile.ZipFile(output_filename, "w", zipfile.ZIP_DEFLATED) as zip:
+		with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zip:
 			for root, dirs, files in os.walk(source_dir):
 				# add directory (needed for empty dirs)
 				zip.write(root, os.path.relpath(root, relroot))
-				print 'Ordner: %s' % root
 				for file in files:
 					filename = os.path.join(root, file)
 					if os.path.isfile(filename): # regular files only
 						arcname = os.path.join(os.path.relpath(root, relroot), file)
 						zip.write(filename, arcname)
-						print 'Datei: %s' % filename
+
 					
 	def imageInfo(self):
 		AboutText = _("Full Image Backup ")
