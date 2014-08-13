@@ -195,7 +195,7 @@ class ImageBackup(Screen):
 			self.EXTRA = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_odinm7/%s" % (self.DIRECTORY, self.DATE) 
 		## TESTING THE E3 HD Model
-		elif self.MODEL == "e3hd":
+		elif self.MODEL == "evoe3hd":
 			self.TYPE = "E3HD"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
