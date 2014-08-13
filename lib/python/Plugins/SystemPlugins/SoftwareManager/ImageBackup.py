@@ -250,8 +250,8 @@ class ImageBackup(Screen):
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "%s" %self.MODEL
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/venton/%s" % (self.DIRECTORY, self.MODEL)
-			self.MAINDEST1 = "%s/venton" %self.DIRECTORY
+			self.MAINDEST = "%s/venton-hdx" % self.DIRECTORY
+			self.MAINDEST1 = "%s/venton-hdx" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/venton" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "ventonhdx" and self.MACHINENAME.lower() == "hd-5000":
