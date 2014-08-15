@@ -872,7 +872,7 @@ msgstr ""
 "alles was das System macht."
 
 msgid "Allows you to enable/disable displaying icons on the front panel."
-msgstr "Anzeige von PIcons auf dem Display am Gerät erlauben."
+msgstr "Anzeige von Picons auf dem Display am Gerät erlauben."
 
 msgid "Allows you to hide the extensions of known file types."
 msgstr "Erlaubt es Erweiterungen bekannter Dateitypen zu verstecken."
@@ -1799,7 +1799,7 @@ msgid "Configure if and how service type icons will be shown."
 msgstr "Konfigurieren ob und wie Sendertyp Icons gezeigt werden."
 
 msgid "Configure if picons will be shown in the service list."
-msgstr "Konfigurieren ob und wie PIcons in der Senderliste gezeigt werden."
+msgstr "Konfigurieren ob und wie Picons in der Senderliste gezeigt werden."
 
 msgid "Configure interface"
 msgstr "Netzwerkkarte konfigurieren"
@@ -2053,14 +2053,14 @@ msgstr ""
 "Bildrand."
 
 msgid "Configure the width allocated to the picon."
-msgstr "Konfiguriere die freigehaltene Breite für PIcon."
+msgstr "Konfiguriere die freigehaltene Breite für Picon."
 
 msgid "Configure the width allocated to the service name."
 msgstr "Konfiguriere die freigehaltene Breite für den Sendernamen."
 
 msgid "Configure to show the channel names, picons, or both in the EPG."
 msgstr ""
-"Konfiguriere ob PIcon, Sendername oder beides im EPG angezeigt werden soll."
+"Konfiguriere ob Picon, Sendername oder beides im EPG angezeigt werden soll."
 
 msgid ""
 "Configure whether (and for how long) a second infobar will be shown when OK "
@@ -3820,7 +3820,7 @@ msgid "Install extensions."
 msgstr "Erweiterungen installieren."
 
 msgid "Install lcd picons on"
-msgstr "Installiere LCD PIcon in"
+msgstr "Installiere LCD Picon in"
 
 msgid "Install local extension"
 msgstr "Lokale Erweiterungen installieren"
@@ -5120,13 +5120,13 @@ msgid "PiP"
 msgstr "PiP"
 
 msgid "Picon"
-msgstr "PIcon"
+msgstr "Picon"
 
 msgid "Picon and Service Name"
-msgstr "PIcon und Sendername"
+msgstr "Picon und Sendername"
 
 msgid "Picon width"
-msgstr "PIcon Breite"
+msgstr "Picon Breite"
 
 msgid "Picture in graphics"
 msgstr "Bild in Grafik"
@@ -6840,7 +6840,7 @@ msgid "Show or hide the extended description, (skin dependent)."
 msgstr "Zeige oder verstecke erweiterte Beschreibung (skinabhängig)."
 
 msgid "Show picon background color"
-msgstr "Zeige Hintergrundfarbe von PIcon"
+msgstr "Zeige Hintergrundfarbe von Picon"
 
 msgid "Show positioner movement"
 msgstr "Zeige Rotorbewegung"
@@ -7786,7 +7786,7 @@ msgstr ""
 msgid ""
 "This option allows you choose the background color of transparent picons."
 msgstr ""
-"Diese Option erlaubt es die Hintergrundfarbe von transparenten PIcons "
+"Diese Option erlaubt es die Hintergrundfarbe von transparenten Picons "
 "festzulegen."
 
 msgid "This option allows you set the layout view (Text or Graphics)."
@@ -10595,7 +10595,7 @@ msgid "show mediaplayer on mainmenu"
 msgstr "Zeige Mediaplayer im Hauptmenü"
 
 msgid "show picons in service list"
-msgstr "Zeige PIcon in der Senderliste"
+msgstr "Zeige Picon in der Senderliste"
 
 msgid "show program information..."
 msgstr "Zeige Programminformationen..."
