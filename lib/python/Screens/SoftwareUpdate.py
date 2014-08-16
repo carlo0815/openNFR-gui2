@@ -18,6 +18,8 @@ from Components.Ipkg import IpkgComponent
 from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
 from Components.Slider import Slider
+import time
+import os
 
 
 class UpdatePlugin(Screen):
@@ -200,6 +202,18 @@ class UpdatePlugin(Screen):
 			self.close()
 			return
 		if answer[1] == "cold":
+	                fobj_in = open("/etc/image-version")
+	                fobj_out = open("/etc/image-version_new","w")
+	                for line in fobj_in:
+	                        if "date" in line:
+	        		        line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
+	        		        fobj_out.write(line)
+	        	        else:
+	        		        fobj_out.write(line)
+	        	
+	                fobj_in.close()
+	                fobj_out.close()
+                        os.system("mv /etc/image-version_new /etc/image-version") 
 			self.session.open(TryQuitMainloop,retvalue=42)
 			self.close()
 		elif answer[1] == "channels":
@@ -207,6 +221,18 @@ class UpdatePlugin(Screen):
 			self.slider.setValue(1)
 			self.ipkg.startCmd(IpkgComponent.CMD_LIST, args = {'installed_only': True})
 		else:
+	                fobj_in = open("/etc/image-version")
+	                fobj_out = open("/etc/image-version_new","w")
+	                for line in fobj_in:
+	                        if "date" in line:
+	        		        line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
+	        		        fobj_out.write(line)
+	        	        else:
+	        		        fobj_out.write(line)
+	        	
+	                fobj_in.close()
+	                fobj_out.close()
+                        os.system("mv /etc/image-version_new /etc/image-version") 
 			self.ipkg.startCmd(IpkgComponent.CMD_UPGRADE, args = {'test_only': False})
 
 	def modificationCallback(self, res):
