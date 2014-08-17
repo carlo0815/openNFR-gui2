@@ -257,7 +257,8 @@
 	</map>
 
 	<map context="InfobarPiPActions">
-		<key id="KEY_SCREEN" mapto="activatePiP" flags="b" />
+		<key id="KEY_SCREEN" mapto="activatePiP" flags="m" />
+		<key id="KEY_SCREEN" mapto="activateHDMIPiP" flags="l" />
 	</map>
 
 	<map context="InfobarSubserviceQuickzapActions">
