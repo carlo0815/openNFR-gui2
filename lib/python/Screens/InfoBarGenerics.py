@@ -146,6 +146,18 @@ class InfoBarDish:
 	def __init__(self):
 		self.dishDialog = self.session.instantiateDialog(Dish)
 
+class InfoBarLongKeyDetection:
+	def __init__(self):
+		eActionMap.getInstance().bindAction('', -maxint -1, self.detection) #highest prio
+		self.LongButtonPressed = False
+
+	#this function is called on every keypress!
+	def detection(self, key, flag):
+		if flag == 3:
+			self.LongButtonPressed = True
+		elif flag == 0:
+			self.LongButtonPressed = False
+			
 class InfoBarUnhandledKey:
 	def __init__(self):
 		self.unhandledKeyDialog = self.session.instantiateDialog(UnhandledKey)
@@ -2234,6 +2246,7 @@ class InfoBarJobman:
 # depends on InfoBarExtensions
 class InfoBarPiP:
 	def __init__(self):
+		InfoBarHdmi.__init__(self)
 		try:
 			self.session.pipshown
 		except:
@@ -2242,6 +2255,7 @@ class InfoBarPiP:
 			self["PiPActions"] = HelpableActionMap(self, "InfobarPiPActions",
 				{
 					"activatePiP": (self.showPiP, _("Activate PiP")),
+					"activateHDMIPiP": (self.HDMIInLong, _("Activate HDMI-IN PiP")),
 				})
 			if self.allowPiP:
 				self.addExtension((self.getShowHideName, self.showPiP, lambda: True), "blue")
@@ -2288,54 +2302,36 @@ class InfoBarPiP:
 				self.session.pip.servicePath = currentServicePath
 
 	def showPiP(self):
-		try:
-			service = self.session.nav.getCurrentService()
-			info = service and service.info()
-			xres = str(info.getInfo(iServiceInformation.sVideoWidth))
-			slist = self.servicelist
-
-			if self.session.pipshown:
+	        if not self.LongButtonPressed:
+			try:
+				service = self.session.nav.getCurrentService()
+				info = service and service.info()
+				xres = str(info.getInfo(iServiceInformation.sVideoWidth))
 				slist = self.servicelist
-				if slist and slist.dopipzap:
-					self.togglePipzap()
-				if self.session.pipshown:
-					del self.session.pip
-					if SystemInfo["LCDMiniTV"]:
-						if config.lcd.modepip.value >= "1":
-							f = open("/proc/stb/lcd/mode", "w")
-							f.write(config.lcd.modeminitv.value)
-							f.close()
-					self.session.pipshown = False
-			else:
-				if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2':
-					self.session.pip = self.session.instantiateDialog(PictureInPicture)
-					self.session.pip.show()
-					newservice = self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
-					if self.session.pip.playService(newservice):
-						self.session.pipshown = True
-						self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
-						if SystemInfo["LCDMiniTV"]:
-							if config.lcd.modepip.value >= "1":
-								f = open("/proc/stb/lcd/mode", "w")
-								f.write(config.lcd.modepip.value)
-								f.close()
-								f = open("/proc/stb/vmpeg/1/dst_width", "w")
-								f.write("0")
-								f.close()
-								f = open("/proc/stb/vmpeg/1/dst_height", "w")
-								f.write("0")
-								f.close()
-								f = open("/proc/stb/vmpeg/1/dst_apply", "w")
-								f.write("1")
-								f.close()
-					else:
-						self.session.pipshown = False
-						del self.session.pip
-				else:
-					self.session.open(MessageBox, _("Your %s %s does not support PiP HD") % (getMachineBrand(), getMachineName()), type = MessageBox.TYPE_INFO,timeout = 5 )
-		except:
-			pass
 
+				if self.session.pipshown:
+					slist = self.servicelist
+					if slist and slist.dopipzap:
+						self.togglePipzap()
+					if self.session.pipshown:
+						del self.session.pip
+						self.session.pipshown = False
+				else:
+					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2':
+						self.session.pip = self.session.instantiateDialog(PictureInPicture)
+						self.session.pip.show()
+						newservice = self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
+						if self.session.pip.playService(newservice):
+							self.session.pipshown = True
+							self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
+						else:
+							self.session.pipshown = False
+							del self.session.pip
+					else:
+						self.session.open(MessageBox, _("Your %s %s does not support PiP HD") % (getMachineBrand(), getMachineName()), type = MessageBox.TYPE_INFO,timeout = 5 )
+			except:
+				pass
+			
 	def swapPiP(self):
 		swapservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		pipref = self.session.pip.getCurrentService()
