@@ -260,6 +260,13 @@
 		<key id="KEY_SCREEN" mapto="activatePiP" flags="m" />
 		<key id="KEY_SCREEN" mapto="activateHDMIPiP" flags="l" />
 	</map>
+	
+	<map context="InfobarHDMIActions">
+		<key id="KEY_AUX" mapto="HDMIin" flags="b" />
+		<key id="KEY_AUX" mapto="HDMIinLong" flags="l" />
+		<key id="KEY_F11" mapto="HDMIin" flags="b" />
+		<key id="KEY_F11" mapto="HDMIinLong" flags="l" />
+	</map>
 
 	<map context="InfobarSubserviceQuickzapActions">
 		<key id="KEY_PREVIOUS" mapto="prevSubservice" flags="m" />
