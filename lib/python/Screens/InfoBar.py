@@ -265,7 +265,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		InfoBarMenu, InfoBarEPG,
 		InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, InfoBarAudioSelection, HelpableScreen, InfoBarNotifications,
 		InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, InfoBarLongKeyDetection,
-		InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport, Screen, InfoBarTeletextPlugin,
+		InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport, Screen, InfoBarTeletextPlugin, InfoBarHdmi,
 		InfoBarServiceErrorPopupSupport, InfoBarExtensions, InfoBarPlugins, InfoBarPiP, InfoBarZoom):
 
 	ENABLE_RESUME_SUPPORT = True
@@ -296,7 +296,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		for x in HelpableScreen, InfoBarShowHide, InfoBarMenu, InfoBarEPG, \
 				InfoBarBase, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, \
 				InfoBarAudioSelection, InfoBarNotifications, InfoBarLongKeyDetection, \
-				InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, \
+				InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, InfoBarHdmi, \
 				InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport, \
 				InfoBarTeletextPlugin, InfoBarServiceErrorPopupSupport, InfoBarExtensions, \
 				InfoBarPlugins, InfoBarPiP, InfoBarZoom:
