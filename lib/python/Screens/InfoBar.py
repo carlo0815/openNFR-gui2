@@ -296,7 +296,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		for x in HelpableScreen, InfoBarShowHide, InfoBarMenu, InfoBarEPG, \
 				InfoBarBase, InfoBarSeek, InfoBarShowMovies, InfoBarInstantRecord, \
 				InfoBarAudioSelection, InfoBarNotifications, InfoBarLongKeyDetection, \
-				InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, InfoBarHdmi, \
+				InfoBarServiceNotifications, InfoBarPVRState, InfoBarCueSheetSupport, \
 				InfoBarMoviePlayerSummarySupport, InfoBarSubtitleSupport, \
 				InfoBarTeletextPlugin, InfoBarServiceErrorPopupSupport, InfoBarExtensions, \
 				InfoBarPlugins, InfoBarPiP, InfoBarZoom:
