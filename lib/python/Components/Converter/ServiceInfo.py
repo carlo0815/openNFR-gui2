@@ -29,6 +29,10 @@ class ServiceInfo(Converter, object):
 	FREQ_INFO = 20
 	EDITMODE = 21
 	IS_STREAM = 22
+	IS_SD = 23
+	IS_HD = 24
+	IS_SD_AND_WIDESCREEN = 25
+	IS_SD_AND_NOT_WIDESCREEN = 26
 	
 	def __init__(self, type):
 		Converter.__init__(self, type)
@@ -56,6 +60,10 @@ class ServiceInfo(Converter, object):
 				"Freq_Info": (self.FREQ_INFO, (iPlayableService.evUpdatedInfo,)),
 				"Editmode": (self.EDITMODE, (iPlayableService.evUpdatedInfo,)),
 				"IsStream": (self.IS_STREAM, (iPlayableService.evUpdatedInfo,)),
+				"IsSD": (self.IS_SD, (iPlayableService.evVideoSizeChanged,)),
+				"IsHD": (self.IS_HD, (iPlayableService.evVideoSizeChanged,)),
+				"IsSDAndWidescreen": (self.IS_SD_AND_WIDESCREEN, (iPlayableService.evVideoSizeChanged,)),
+				"IsSDAndNotWidescreen": (self.IS_SD_AND_NOT_WIDESCREEN, (iPlayableService.evVideoSizeChanged,)),
 			}[type]
 
 	def getServiceInfoString(self, info, what, convert = lambda x: "%d" % x):
@@ -111,6 +119,14 @@ class ServiceInfo(Converter, object):
 			return hasattr(self.source, "editmode") and not not self.source.editmode
 		elif self.type == self.IS_STREAM:
 			return service.streamed() is not None
+		elif self.type == self.IS_SD:
+			return info.getInfo(iServiceInformation.sVideoHeight) < 720
+		elif self.type == self.IS_HD:
+			return info.getInfo(iServiceInformation.sVideoHeight) >= 720
+		elif self.type == self.IS_SD_AND_WIDESCREEN:
+			return info.getInfo(iServiceInformation.sVideoHeight) < 720 and info.getInfo(iServiceInformation.sAspect) in WIDESCREEN
+		elif self.type == self.IS_SD_AND_NOT_WIDESCREEN:
+			return info.getInfo(iServiceInformation.sVideoHeight) < 720 and info.getInfo(iServiceInformation.sAspect) not in WIDESCREEN
 		return False
 
 	boolean = property(getBoolean)
@@ -123,9 +139,15 @@ class ServiceInfo(Converter, object):
 			return ""
 
 		if self.type == self.XRES:
-			return self.getServiceInfoString(info, iServiceInformation.sVideoWidth)
+			ret = self.getServiceInfoString(info, iServiceInformation.sVideoWidth)
+			if ret != "65535":
+				return ret
+			return ""	
 		elif self.type == self.YRES:
-			return self.getServiceInfoString(info, iServiceInformation.sVideoHeight)
+			ret = self.getServiceInfoString(info, iServiceInformation.sVideoHeight)
+			if ret != "65535":
+				return ret
+			return ""
 		elif self.type == self.APID:
 			return self.getServiceInfoString(info, iServiceInformation.sAudioPID)
 		elif self.type == self.VPID:
