@@ -533,6 +533,7 @@ class SystemNetworkInfo(Screen):
 				self["statuspic"].show()
 		except:
 			self["statuspic"].setPixmapNum(0)
+			self["statuspic"].show()
 
 	def createSummary(self):
 		return AboutSummary
