@@ -120,6 +120,7 @@
 		<key id="BTN_1" mapto="zapDown" flags="mr" />
 		<key id="KEY_SAT" mapto="openSatellites" flags="m" />
 		<key id="KEY_OK" mapto="switchChannelUp" flags="m" />
+		<key id="KEY_BLUE" mapto="openFIND" flags="l" />
 		<key id="KEY_MEDIA" mapto="showMediaCenter" flags="l" />		
 	</map>
 
