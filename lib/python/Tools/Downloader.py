@@ -1,7 +1,7 @@
 from boxbranding import getMachineBrand, getMachineName
 
 from twisted.web import client
-from twisted.internet import reactor, defer
+from twisted.internet import reactor, defer, ssl
 
 
 class HTTPProgressDownloader(client.HTTPDownloader):
