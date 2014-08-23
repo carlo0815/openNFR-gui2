@@ -3489,13 +3489,22 @@ class InfoBarHdmi:
 		self.hdmi_enabled = False
 		self.hdmi_enabled_full = False
 		self.hdmi_enabled_pip = False
-
+                try:
+                	if self.add_extensions:
+                	        self.add_extensions = True
+                        else:
+                                self.add_extensions = False
+                except:                
+                       self.add_extensions = False
 		if getMachineProcModel().startswith('ini-90') or getMachineProcModel().startswith('ini-80'):
-			if not self.hdmi_enabled_full:
-				self.addExtension((self.getHDMIInFullScreen, self.HDMIInFull, lambda: True), "blue")
-			if not self.hdmi_enabled_pip:
-				self.addExtension((self.getHDMIInPiPScreen, self.HDMIInPiP, lambda: True), "green")
-		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions",
+		        if not self.add_extensions:
+				if not self.hdmi_enabled_full:
+					self.addExtension((self.getHDMIInFullScreen, self.HDMIInFull, lambda: True), "blue")
+				if not self.hdmi_enabled_pip:
+					self.addExtension((self.getHDMIInPiPScreen, self.HDMIInPiP, lambda: True), "green")
+				self.add_extensions = True
+                                        	
+		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions", 
 			{
 				"HDMIin":(self.HDMIIn, _("Switch to HDMI in mode")),
 				"HDMIinLong":(self.HDMIInLong, _("Switch to HDMI in mode")),
@@ -3565,3 +3574,4 @@ class InfoBarHdmi:
 		else:
 			self.hdmi_enabled_full = False
 			self.session.nav.playService(slist.servicelist.getCurrent())
+
