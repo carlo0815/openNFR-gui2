@@ -3570,8 +3570,9 @@ class InfoBarHdmi:
 		curref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		if curref and curref.type != 8192:
 			self.hdmi_enabled_full = True
+			self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
 			self.session.nav.playService(eServiceReference('8192:0:1:0:0:0:0:0:0:0:'))
 		else:
 			self.hdmi_enabled_full = False
-			self.session.nav.playService(slist.servicelist.getCurrent())
+			self.session.nav.playService(self.oldService)
 
