@@ -17,14 +17,15 @@ import urllib2
 import os
 from Plugins.Extensions.Infopanel.Extra import shutil
 import math
-from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion()
 distro =  getImageDistro()
+ImageVersion = getImageVersion()
 
 #############################################################################################################
 image = 0 # 0=openNFR
 if distro.lower() == "opennfr":
 	image = 0
-feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/images'
+feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
 imagePath = '/media/hdd/images'
 flashPath = '/media/hdd/images/flash'
 flashTmp = '/media/hdd/images/tmp'
