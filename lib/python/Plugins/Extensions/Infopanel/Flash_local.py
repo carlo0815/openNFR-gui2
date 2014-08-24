@@ -17,7 +17,7 @@ import urllib2
 import os
 from Plugins.Extensions.Infopanel.Extra import shutil
 import math
-from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion()
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
 distro =  getImageDistro()
 ImageVersion = getImageVersion()
 
