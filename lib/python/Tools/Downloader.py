@@ -40,7 +40,6 @@ class HTTPProgressDownloader(client.HTTPDownloader):
 class downloadWithProgress:
 	def __init__(self, url, outputfile, contextFactory=None, *args, **kwargs):
 		if hasattr(client, '_parse'):
-
 			scheme, host, port, path = client._parse(url)
 		else:
 			from twisted.web.client import _URI
