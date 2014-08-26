@@ -276,6 +276,17 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/miraclebox" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/miraclebox" % (self.DIRECTORY, self.MODEL, self.DATE)	
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
+		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "hdeco":
+			self.TYPE = "VENTONECO"
+			self.MODEL = "hde"			
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8192 -F"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "UNIBOX HDECO"
+			self.MAINDESTOLD = "%s/unibox/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/unibox/%s" % (self.DIRECTORY, self.MODEL)
+			self.MAINDEST1 = "%s/unibox/%s" % (self.DIRECTORY, self.MODEL)
+			self.EXTRA = "%s/fullbackup_%s/%s/unibox/%s/%s" % (self.DIRECTORY, self.MODEL, self.SHOWNAME, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s/unibox/%s/%s" % (self.DIRECTORY, self.MODEL, self.SHOWNAME, self.MODEL, self.DATE)
 		## TESTING INI HDe Model
 		elif self.MODEL == "ini-1000de" or self.MODEL == "xpeedlx2" or self.MODEL == "xpeedlx1":
 			self.TYPE = "GI"
@@ -642,7 +653,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK":
+		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -740,6 +751,9 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'VENTON':
 					cmdlist.append('mkdir -p %s/venton/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/venton/' % (self.MAINDEST, self.TARGET))
+				elif self.TYPE == 'VENTONECO':
+					cmdlist.append('mkdir -p %s/unibox/%s' % (self.TARGET, self.MODEL))
+					cmdlist.append('cp -r %s %s/unibox/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'SEZAM':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
