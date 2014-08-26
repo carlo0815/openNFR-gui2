@@ -285,9 +285,9 @@ class ImageBackup(Screen):
 			self.SHOWNAME = "UNIBOX HDECO"
 			self.MAINDESTOLD = "%s/unibox/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/unibox/%s" % (self.DIRECTORY, self.MODEL)
-			self.MAINDEST1 = "%s/unibox/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s/unibox/%s/%s" % (self.DIRECTORY, self.MODEL, self.SHOWNAME, self.MODEL, self.DATE)
-			self.EXTRA1 = "%s/fullbackup_%s/%s/unibox/%s/%s" % (self.DIRECTORY, self.MODEL, self.SHOWNAME, self.MODEL, self.DATE)
+			self.MAINDEST1 = "%s/unibox" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING INI HDe Model
 		elif self.MODEL == "ini-1000de" or self.MODEL == "xpeedlx2" or self.MODEL == "xpeedlx1":
 			self.TYPE = "GI"
@@ -309,7 +309,7 @@ class ImageBackup(Screen):
 			self.SHOWNAME = "Atemio 5x00"
 			self.MTDKERNEL = "mtd2"
 			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/atemio/5x00" % self.DIRECTORY
+			self.MAINDEST = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
