@@ -362,9 +362,9 @@ class SecConfigure:
 #					pass # nyi in drivers
 
 				if currLnb.increased_voltage.getValue():
-					sec.setLNBIncreasedVoltage(lnbParam.ON)
+					sec.setLNBIncreasedVoltage(True)
 				else:
-					sec.setLNBIncreasedVoltage(lnbParam.OFF)
+					sec.setLNBIncreasedVoltage(False)
 
 				dm = currLnb.diseqcMode.getValue()
 				if dm == "none":
