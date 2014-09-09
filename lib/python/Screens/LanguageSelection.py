@@ -1,4 +1,5 @@
 from Screens.Screen import Screen
+from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
 from Components.Language import language
 from Components.config import config
@@ -11,7 +12,9 @@ from enigma import eTimer
 from Screens.Rc import Rc
 from Tools.Directories import resolveFilename, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
+import gettext
 
+inWizzard = False
 def LanguageEntryComponent(file, name, index):
 	png = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "countries/" + index + ".png"))
 	if png is None:
@@ -28,6 +31,7 @@ class LanguageSelection(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 
+		language.InitLang()
 		self.oldActiveLanguage = language.getActiveLanguage()
 		self.catalog = language.getActiveCatalog()
 
@@ -42,6 +46,8 @@ class LanguageSelection(Screen):
 
 		self["key_red"] = Label(_("Cancel"))
 		self["key_green"] = Label(_("Save"))
+		self["key_yellow"] = Label(_("Update Cache"))
+		self["key_blue"] = Label(_("Delete Language"))
 
 		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
@@ -50,6 +56,7 @@ class LanguageSelection(Screen):
 			"red": self.cancel,
 			"green": self.save,
 			"yellow": self.updateCache,
+			"blue": self.delLang,
 		}, -1)
 		
 	def updateCache(self):
@@ -76,6 +83,16 @@ class LanguageSelection(Screen):
 
 	def save(self):
 		self.run()
+		global inWizzard
+		if inWizzard:
+			inWizzard = False
+			self.session.openWithCallback(self.deletelanguagesCB, MessageBox, _("Do you want to delete all other languages?"), default = False)
+		else:
+			self.close(self.oldActiveLanguage != config.osd.language.value)
+
+	def deletelanguagesCB(self, anwser):
+		if anwser:
+			language.delLanguage()
 		self.close()
 
 	def cancel(self):
@@ -84,6 +101,17 @@ class LanguageSelection(Screen):
 		config.osd.language.save()
 		self.close()
 
+	def delLang(self):
+		self.curlang = self["languages"].getCurrent()[0]
+		print self["languages"].getCurrent()
+		self.session.openWithCallback(self.delLangCB, MessageBox, _("Do you want to delete %s language?") %(self["languages"].getCurrent()[1]), default = False)
+
+	def delLangCB(self, anwser):
+		if anwser:		
+			language.delLanguage(self.curlang)
+			language.activateLanguage(self.oldActiveLanguage)
+			self.updateList()
+			self.selectActiveLanguage()
 	def run(self, justlocal = False):
 		print "updating language..."
 		lang = self["languages"].getCurrent()[0]
@@ -129,6 +157,8 @@ class LanguageWizard(LanguageSelection, Rc):
 	def __init__(self, session):
 		LanguageSelection.__init__(self, session)
 		Rc.__init__(self)
+		global inWizzard
+		inWizzard = True
 		self.onLayoutFinish.append(self.selectKeys)
 
 		self["wizard"] = Pixmap()
