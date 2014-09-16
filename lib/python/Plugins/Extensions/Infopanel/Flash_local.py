@@ -266,6 +266,8 @@ class doFlashImage(Screen):
 
 	def Start_Flashing(self):
 		print "Start Flashing"
+		#######################fix multiboot###################
+		os.system('rm /sbin/init;ln -sfn /sbin/init.sysvinit /sbin/init')
 		if os.path.exists(ofgwritePath):
 			text = _("Flashing: ")
 			if self.simulate:
