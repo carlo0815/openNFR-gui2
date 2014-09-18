@@ -26,6 +26,16 @@ from ServiceReference import ServiceReference
 # description		 (description)
 # event data		 (ONLY for time adjustments etc.)
 
+wasRecTimerWakeup = False
+
+def resetTimerWakeup():
+	global wasRecTimerWakeup
+	if os.path.exists("/tmp/was_rectimer_wakeup"):
+		os.remove("/tmp/was_rectimer_wakeup")
+	wasRecTimerWakeup = False
+	
+# parses an event, and gives out a (begin, end, name, duration, eit)-tuple.
+# begin and end will be corrected
 
 # parses an event, and gives out a (begin, end, name, duration, eit)-tuple.
 # begin and end will be corrected
