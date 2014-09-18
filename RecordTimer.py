@@ -37,8 +37,6 @@ def resetTimerWakeup():
 # parses an event, and gives out a (begin, end, name, duration, eit)-tuple.
 # begin and end will be corrected
 
-# parses an event, and gives out a (begin, end, name, duration, eit)-tuple.
-# begin and end will be corrected
 def parseEvent(ev, description = True):
 	if description:
 		name = ev.getEventName()
@@ -91,8 +89,6 @@ def findSafeRecordPath(dirname):
 # type 10 = advanced codec digital radio sound service
 
 service_types_tv = '1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195)'
-wasRecTimerWakeup = False
-
 # please do not translate log messages
 class RecordTimerEntry(timer.TimerEntry, object):
 	def __init__(self, serviceref, begin, end, name, description, eit, disabled = False, justplay = False, afterEvent = AFTEREVENT.AUTO, checkOldTimers = False, dirname = None, tags = None, descramble = 'notset', record_ecm = 'notset', isAutoTimer = False, always_zap = False):
