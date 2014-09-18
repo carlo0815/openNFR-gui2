@@ -11374,3 +11374,6 @@ msgstr "Screenshot erstellen"
 
 msgid "Continue in background"
 msgstr "Im Hintergrund fortfahren"
+
+msgid "Do you want to delete all other languages?"
+msgstr "Möchtest du alle anderen Sprachen deinstallieren?"
