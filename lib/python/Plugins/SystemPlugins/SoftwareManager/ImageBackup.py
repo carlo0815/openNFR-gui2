@@ -5,7 +5,7 @@
 #																				#
 #################################################################################
 from enigma import getEnigmaVersionString
-from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel
+from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
 from Screens.Screen import Screen
 from Components.Button import Button
 from Components.Label import Label
@@ -50,9 +50,18 @@ class ImageBackup(Screen):
 		self.MODEL1 = getMachineProcModel()
 		self.MACHINENAME = getMachineName()
 		self.MACHINEBRAND = getMachineBrand()
+		self.UBINIZE_ARGS = getMachineUBINIZE()
+		self.MKUBIFS_ARGS = getMachineMKUBIFS()
+		self.MTDKERNEL = getMachineMtdKernel()
+		self.ROOTFSBIN = getMachineRootFile()
+		self.KERNELBIN = getMachineKernelFile()
 		print "[FULL BACKUP] BOX MACHINENAME = >%s<" %self.MACHINENAME
 		print "[FULL BACKUP] BOX MACHINEBRAND = >%s<" %self.MACHINEBRAND
 		print "[FULL BACKUP] BOX MODEL = >%s<" %self.MODEL
+		print "[FULL BACKUP] UBINIZE = >%s<" %self.UBINIZE_ARGS
+		print "[FULL BACKUP] MKUBIFS = >%s<" %self.MKUBIFS_ARGS
+		print "[FULL BACKUP] MTDKERNEL = >%s<" %self.MTDKERNEL
+		print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
 		
 		self["key_green"] = Button("USB")
 		self["key_red"] = Button("HDD")
@@ -335,6 +344,18 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/atemio/8x00" % self.DIRECTORY
 			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "mutant2400":
+			self.TYPE = "MUT@NT"
+			self.MODEL = "mutant2400"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8192"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Mutant 2400"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/Mut@nt/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/hd2400" % self.DIRECTORY
+			self.MAINDEST1 = "%s/hd2400" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "inihde" and self.MACHINENAME.lower() == "hd-1000":
@@ -654,7 +675,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK":
+		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -785,6 +806,9 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'IQON':
 					cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/update/%s/cfe' % (self.MAINDEST, self.TARGET, self.MODEL))
+				elif self.TYPE == 'MUT@NT':
+			                cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
+			                cmdlist.append('cp -r %s %s/update/%s/cfe' % (self.MAINDEST, self.TARGET, self.MODEL))
 				elif self.TYPE == 'EDISION':
 					cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/update/%s/cfe' % (self.MAINDEST, self.TARGET, self.MODEL))
