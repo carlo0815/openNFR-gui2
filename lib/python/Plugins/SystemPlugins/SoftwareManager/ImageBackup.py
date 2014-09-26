@@ -61,7 +61,7 @@ class ImageBackup(Screen):
 		print "[FULL BACKUP] UBINIZE = >%s<" %self.UBINIZE_ARGS
 		print "[FULL BACKUP] MKUBIFS = >%s<" %self.MKUBIFS_ARGS
 		print "[FULL BACKUP] MTDKERNEL = >%s<" %self.MTDKERNEL
-		print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
+		#print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
 		
 		self["key_green"] = Button("USB")
 		self["key_red"] = Button("HDD")
