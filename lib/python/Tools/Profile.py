@@ -63,6 +63,9 @@ def profile(id):
 				elif boxtype in ("mixosf5", "gi9196m"):
 					f = open("/proc/progress", "w")
 					f.write("%d" % perc)
+				elif boxtype in ("xpeedlx3", "atemionemesis"):
+					f = open("/proc/vfd", "w")
+					f.write("Loading %d %%" % perc)
 				else:
 					f = open("/proc/progress", "w")
 					f.write("%d \n" % perc)
