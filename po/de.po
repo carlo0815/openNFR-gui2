@@ -11377,3 +11377,9 @@ msgstr "Im Hintergrund fortfahren"
 
 msgid "Do you want to delete all other languages?"
 msgstr "Möchtest du alle anderen Sprachen deinstallieren?"
+
+msgid "FAN Control"
+msgstr "Lüfter Steuerung"
+
+msgid "Fan mode"
+msgstr "Lüfter Modus"
