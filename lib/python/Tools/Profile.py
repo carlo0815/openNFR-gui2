@@ -45,15 +45,12 @@ def profile(id):
 			else:
 				perc = PERCENTAGE_START
 			try:
-				if boxtype in ("classm", "axodin", "axodinc", "starsatlx", "evo", "genius", "galaxym6" ):
+				if boxtype in ("classm", "ini-2000am", "axodin", "axodinc", "starsatlx", "evo", "genius", "galaxym6" ):
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d" % perc)
-				elif boxtype == "xpeedlx1":
-					f = open("/dev/dbox/oled0", "w")
-					f.write(" %d " % perc)						
-				elif boxtype == "xpeedlx2":
-					f = open("/dev/dbox/oled0", "w")
-					f.write("   %d   " % perc)					
+				elif boxtype == "xpeedlx":
+					f = open("/"/proc/vfd", "w")
+					f.write("%d" % perc)						
 				elif boxtype == "gb800se" or boxtype == "gb800solo":
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d  \n" % perc)
