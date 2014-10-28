@@ -53,6 +53,7 @@ class About(Screen):
 			
 		AboutText += _("Last Upgrade:\t%s") % about.getLastUpdateString() + "\n\n" 
 		AboutText += _("WWW:\t%s") % about.getImageUrlString() + "\n\n"
+		AboutText += _("based on:\t%s") % "OE-Alliance" + "\n\n"
 
 		self["FPVersion"] = StaticText(fp_version)
 
