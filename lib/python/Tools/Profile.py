@@ -49,7 +49,7 @@ def profile(id):
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d" % perc)
 				elif boxtype == "xpeedlx":
-					f = open("/"/proc/vfd", "w")
+					f = open("/proc/vfd", "w")
 					f.write("%d" % perc)						
 				elif boxtype == "gb800se" or boxtype == "gb800solo":
 					f = open("/dev/dbox/oled0", "w")
