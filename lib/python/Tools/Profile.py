@@ -48,9 +48,12 @@ def profile(id):
 				if boxtype in ("classm", "atemio6100", "axodin", "axodinc", "starsatlx", "evo", "genius", "galaxym6" ):
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d" % perc)
-				elif boxtype == "xpeedlx":
+				elif boxtype == "xpeedlx1":
 					f = open("/proc/vfd", "w")
-					f.write("%d" % perc)						
+					f.write( "  %d" % perc)	
+				elif boxtype == "xpeedlx2":
+					f = open("/dev/dbox/oled0", "w")
+					f.write("  %d  " % perc)   					
 				elif boxtype == "gb800se" or boxtype == "gb800solo":
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d  \n" % perc)
