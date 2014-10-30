@@ -11399,8 +11399,8 @@ msgstr "Anzahl von installierten Images in NFR4XBoot:"
 msgid "Here is the list of installed images in Your STB. Please choose an image to boot."
 msgstr "Hier die Liste der installierten Images. Wähle das Image das du booten möchtest."
 
-msgid "Are you sure you want to Boot Image:"
-msgstr "Bist du sicher das du dieses Image booten möchtest:"
+msgid "Are you sure you want to Boot Image:\n"
+msgstr "Bist du sicher das du dieses Image booten möchtest:\n"
 
 msgid "Image will be booted on the next STB boot!"
 msgstr "Das Image wird beim nächsten Neustart des Receivers gestartet!"
@@ -11423,17 +11423,14 @@ msgstr "NFR4XBoot wiederherstellen der Mounts...."
 msgid "NFR4XBoot remove complete...."
 msgstr "NFR4XBoot wurde deinstalliert."
 
-msgid "Welcome to NFR4XBoot 1.00 MultiBoot Plugin installation"
-msgstr "Willkommen zur NFR4XBoot 1.00 MultiBoot Plugin Installation"
+msgid "Welcome to NFR4XBoot MultiBoot Plugin installation."
+msgstr "Willkommen zur NFR4XBoot MultiBoot Plugin Installation"
 
-msgid "Here is the List of mounted devices in Your STB"
-msgstr "Hier ist die Liste der gemounteten Medien deiner STB"
+msgid "Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to install NFR4XBoot:"
+msgstr "Hier ist die Liste der gemounteten Medien deiner STB\n\nBitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
 
-msgid "Please choose a device where You would like to install NFR4XBoot:"
-msgstr "Bitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
-
-msgid "Do You really want to install NFR4XBoot in:"
-msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:"
+msgid "Do You really want to install NFR4XBoot in:\n "
+msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:\n"
 
 msgid "NFR4XBoot has been installed succesfully!"
 msgstr "NFR4XBoot wurde erfolgreich installiert!"
@@ -11441,4 +11438,63 @@ msgstr "NFR4XBoot wurde erfolgreich installiert!"
 msgid "NFR4XBoot deleting images....."
 msgstr "NFR4XBoot deinstalliert die Images...."
 
+msgid "Sorry it seems that there are not Linux formatted devices mounted on your STB. To install NFR4XBoot you need a Linux formatted part1 device. Click on the blue button to open NFR Devices Panel"
+msgstr "Leider scheint es so das kein Linux formatiertes Medium an deiner STB gemounted ist. Um NFR4XBoot zu installieren muss ein Linux formatiertes Medium vorhanden sein. Bitte blaue Taste drücken"
+
+msgid "You are not running NFR Image. You must mount devices Your self."
+msgstr "Es läuft kein openNFR Image. Du must deine Medien selber einbinden."
+
+msgid "The directory %s is not writable.\nMake sure you select a writable directory instead."
+msgstr "Das Verzeichnis %s ist schreibgeschützt.\nBenutze ein beschreibbares Verzeichnis."
+
+msgid "The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\nMake sure you select a valid partition type."
+msgstr "Das Verzeichnis %s ist nicht in EXT2, EXT3, EXT4 oder NTFS formatiert.\nWähle ein entsprechend formatiertes Verzeichnis."
+
+msgid "Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to install NFR4X Multiboot!"
+msgstr"Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine HDD oder einen USB-Stick an um NFR4XBoot zu installieren!"
+
+msgid "Sorry you cannot delete the image currently booted from."
+msgstr "Leider kannst du das Image das gerade gebootet ist nicht löschen."
+
+msgid "Sorry you cannot delete Flash image"
+msgstr "Leider kannst du das Image im Flash nicht löschen"
+
+msgid "Are you sure you want to delete Image:\n "
+msgstr " Bist du sicher das du das Image löschen möchtest:\n "
+
+msgid "Copy Settings to the new Image"
+msgstr "Kopiere die Einstellungen im neuen Image"
+
+msgid "Sorry, an Image with the name ') + target + _(' is already installed.\n Please try another name."
+magstr " Leider ist bereits ein Image mit dem Namen ') + target + _(' installiert.\n Bitte benutze einen anderen Namen"
+
+msgid "You have to select one Image to install.\nPlease, upload your zip file in the folder: /media/nfr4xboot/NFR4XBootUpload and select the image to install."
+msgstr "Du musst ein Image zur Installation auswählen.\nBitte lade die zip-Datei in folgendes Verzeichnis: /media/nfr4xboot/NFR4XBootUpload und wähle ein Image aus."
+
+msgid "You have to provide a name for the new Image."
+msgstr "Du musst einen Namen für das neue Image eintragen."
+
+msgid "Sorry this name is reserved. Choose another name for the new Image."
+msgstr "Leider ist der Name reserviert. Wähle einen anderen Namen für das neue Image."
+
+msgid "Sorry the name of the new Image is too long."
+msgstr "Leider ist der Name des neuen Image zu lang."
+
+msgid "NFR4XBoot will install the new image.\n\n"
+msgstr "NFR4XBoot installiert das neue Image.\n\n"
+
+msgid "Please: DO NOT reboot your STB and turn off the power.\n\n"
+msgstr "Bitte: Die STB nicht neustarten oder ausschalten!\n\n"
+
+msgid "The new image will be installed and auto booted in few minutes.\n\n"
+msgstr "Das neue Image wird installiert und startet in ein paar Minuten.\n\n"
+
+msgid "NFR4XBoot: Install new image"
+msgstr "NFR4XBoot: Installiere neues Image"
+
+msgid "Not enough free space on /media/nfr4xboot/ !!\nYou need at least 300Mb free space.\n\nExit plugin."
+msgstr "Nicht genug freier Speichplatz auf /media/nfr4xboot/ !!\nDu brauchst mindestens 300Mb freien Speicher.\n\nExit Plugin."
+
+msgid "Sorry: Wrong image in flash found. You have to install in flash NFR Image"
+msgstr "Sorry: Kein openNFR Image im Flash gefunden. Du musst openNFR im Flash installieren!"
 
