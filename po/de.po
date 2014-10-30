@@ -11466,7 +11466,7 @@ msgid "Copy Settings to the new Image"
 msgstr "Kopiere die Einstellungen im neuen Image"
 
 msgid "Sorry, an Image with the name ') + target + _(' is already installed.\n Please try another name."
-magstr "Leider ist bereits ein Image mit dem Namen ') + target + _(' installiert.\n Bitte benutze einen anderen Namen"
+msgstr "Leider ist bereits ein Image mit dem Namen ') + target + _(' installiert.\n Bitte benutze einen anderen Namen"
 
 msgid "You have to select one Image to install.\nPlease, upload your zip file in the folder: /media/nfr4xboot/NFR4XBootUpload and select the image to install."
 msgstr "Du musst ein Image zur Installation auswählen.\nBitte lade die zip-Datei in folgendes Verzeichnis: /media/nfr4xboot/NFR4XBootUpload und wähle ein Image aus."
