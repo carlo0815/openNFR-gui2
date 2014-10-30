@@ -351,7 +351,7 @@ class NFR4XBootImageChoose(Screen):
     def boot2(self, yesno):
         if yesno:
             os.system('touch /tmp/.nfr4xreboot')
-            os.system('reboot -f')
+            os.system('reboot -p')
         else:
             os.system('touch /tmp/.nfr4xreboot')
             self.session.open(MessageBox, _('Image will be booted on the next STB boot!'), MessageBox.TYPE_INFO)
