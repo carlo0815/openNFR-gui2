@@ -11383,3 +11383,62 @@ msgstr "Lüfter Steuerung"
 
 msgid "Fan mode"
 msgstr "Lüfter Modus"
+
+msgid "NFR4XBoot is running from:"
+msgstr "NFR4XBoot ist installiert auf:"
+
+msgid "Available:"
+msgstr "Verfügbar:"
+
+msgid "NFR4XBoot is running image:"
+msgstr "im NFR4XBoot läuft folgendes Image:"
+
+msgid "Number of installed images in NFR4XBoot:"
+msgstr "Anzahl von installierten Images in NFR4XBoot:"
+
+msgid "Here is the list of installed images in Your STB. Please choose an image to boot."
+msgstr "Hier die Liste der installierten Images. Wähle das Image das du booten möchtest."
+
+msgid "Are you sure you want to Boot Image:"
+msgstr "Bist du sicher das du dieses Image booten möchtest:"
+
+msgid "Image will be booted on the next STB boot!"
+msgstr "Das Image wird beim nächsten Neustart des Receivers gestartet!"
+
+msgid "Remove NFR4XBoot"
+msgstr "Deinstalliere NFR4XBoot"
+
+msgid "Remove all installed images"
+msgstr "Deinstalliere alle installierten Images"
+
+msgid "NFR4XBoot preparing to remove...."
+msgstr "NFR4XBoot deinstallation wird vorbereitet...."
+
+msgid "NFR4XBoot removing boot manager...."
+msgstr "NFR4XBoot deinstallation des Boot Managers...."
+
+msgid "NFR4XBoot restoring media mounts...."
+msgstr "NFR4XBoot wiederherstellen der Mounts...."
+
+msgid "NFR4XBoot remove complete...."
+msgstr "NFR4XBoot wurde deinstalliert."
+
+msgid "Welcome to NFR4XBoot 2.02 MultiBoot Plugin installation"
+msgstr "Willkommen zur NFR4XBoot 2.02 MultiBoot Plugin Installation"
+
+msgid "Here is the List of mounted devices in Your STB"
+msgstr "Hier ist die Liste der gemounteten Medien deiner STB"
+
+msgid "Please choose a device where You would like to install NFR4XBoot:
+msgstr "Bitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
+
+msgid "Do You really want to install NFR4XBoot in:"
+msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:"
+
+msgid "NFR4XBoot has been installed succesfully!"
+msgstr "NFR4XBoot wurde erfolgreich installiert!"
+
+msgid "NFR4XBoot deleting images....."
+msgstr "NFR4XBoot deinstalliert die Images...."
+
+
