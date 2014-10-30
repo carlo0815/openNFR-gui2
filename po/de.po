@@ -11429,7 +11429,7 @@ msgstr "Willkommen zur NFR4XBoot 2.02 MultiBoot Plugin Installation"
 msgid "Here is the List of mounted devices in Your STB"
 msgstr "Hier ist die Liste der gemounteten Medien deiner STB"
 
-msgid "Please choose a device where You would like to install NFR4XBoot:
+msgid "Please choose a device where You would like to install NFR4XBoot:"
 msgstr "Bitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
 
 msgid "Do You really want to install NFR4XBoot in:"
