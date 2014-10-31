@@ -7583,22 +7583,6 @@ msgstr "Das aktuelle Update könnte instabil sein"
 
 #, python-format
 msgid ""
-"The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\n"
-"Make sure you select a valid partition type."
-msgstr ""
-"Das Verzeichnis %s ist nicht EXT2/3/4 oder NTFS formatiert.\n"
-"Wähle eine passende Formatierung."
-
-#, python-format
-msgid ""
-"The directory %s is not writable.\n"
-"Make sure you select a writable directory instead."
-msgstr ""
-"Das Verzeichnis %s ist nicht beschreibbar.\n"
-"Stelle sicher, dass ein beschreibbares Verzeichnis angegeben wurde."
-
-#, python-format
-msgid ""
 "The following device was found:\n"
 "\n"
 "%s\n"
@@ -11444,11 +11428,21 @@ msgstr "Leider scheint es so das kein Linux formatiertes Medium an deiner STB ge
 msgid "You are not running NFR Image. You must mount devices Your self."
 msgstr "Es läuft kein openNFR Image. Du must deine Medien selber einbinden."
 
-msgid "The directory %s is not writable.\nMake sure you select a writable directory instead."
-msgstr "Das Verzeichnis %s ist schreibgeschützt.\nBenutze ein beschreibbares Verzeichnis."
+#, python-format
+msgid ""
+"The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\n"
+"Make sure you select a valid partition type."
+msgstr ""
+"Das Verzeichnis %s ist nicht EXT2/3/4 oder NTFS formatiert.\n"
+"Wähle eine passende Formatierung."
 
-msgid "The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\nMake sure you select a valid partition type."
-msgstr "Das Verzeichnis %s ist nicht in EXT2, EXT3, EXT4 oder NTFS formatiert.\nWähle ein entsprechend formatiertes Verzeichnis."
+#, python-format
+msgid ""
+"The directory %s is not writable.\n"
+"Make sure you select a writable directory instead."
+msgstr ""
+"Das Verzeichnis %s ist schreibgeschützt.\n"
+"Stelle sicher, dass ein beschreibbares Verzeichnis angegeben wurde."
 
 msgid "Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to install NFR4X Multiboot!"
 msgstr "Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine HDD oder einen USB-Stick an um NFR4XBoot zu installieren!"
