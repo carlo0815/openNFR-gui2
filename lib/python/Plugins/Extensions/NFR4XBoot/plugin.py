@@ -50,7 +50,7 @@ class NFR4XBootInstallation(Screen):
         self.updateList()
 
     def updateList(self):
-        mycf, myusb, myusb2, myusb3, mysd, myhdd = ('', '', '', '', '', '')
+        myusb, myhdd = ('', '')
         myoptions = []
         if fileExists('/proc/mounts'):
             fileExists('/proc/mounts')
@@ -238,12 +238,8 @@ class NFR4XBootImageChoose(Screen):
             mypath = '/media/hdd'
 
         icon = 'dev_usb.png'
-        if 'card' in mypath or 'sd' in mypath:
-            icon = 'dev_sd.png'
-        elif 'hdd' in mypath:
+	if 'hdd' in mypath:
             icon = 'dev_hdd.png'
-        elif 'cf' in mypath:
-            icon = 'dev_cf.png'
         icon = pluginpath + '/images/' + icon
         png = LoadPixmap(icon)
         self['device_icon'].instance.setPixmap(png)
