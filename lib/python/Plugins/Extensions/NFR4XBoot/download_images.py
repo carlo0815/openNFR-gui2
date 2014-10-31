@@ -321,7 +321,10 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openhdf':
             if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk'):
                 box = getBoxType()
-                stb = '1'    
+                stb = '1'
+            elif box in ('xpeedlx1', 'xpeedlx2'):
+                box = 'xpeedlx'
+                stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side'  
         elif self.distro == 'openmips':
