@@ -11501,3 +11501,45 @@ msgid ""
 msgstr ""
 "Das Plugin Webbrowser ist nicht installiert!\n"
 "Bitte installieren."
+
+msgid "feed status"
+msgstr "Feed Status"
+
+msgid "Updates Available:"
+msgstr "Verfügbare Updates:"
+
+msgid "Trying to download a new updatelist. Please wait..."
+msgstr "Versuche eine neue Update-Liste zu laden. Bitte warten..."
+
+msgid "Update and reboot (recommended)"
+msgstr "Aktualisieren und automatisch neu starten (empfohlen)"
+
+msgid "Update and ask to reboot"
+msgstr "Aktualisieren mit anschließender Neustart-Abfrage"
+
+msgid "Ouick Launch Menu"
+msgstr "Schnellstart Menü"
+
+msgid "Local"
+msgstr "Lokal"
+
+msgid "Flash On the fly"
+msgstr "Image Local-Online flashen"
+
+msgid "Flash On the fly (select a image)"
+msgstr "Image zum Flashen auswählen"
+
+msgid "Online = Download a image and flash it"
+msgstr "Online = Image online herunterladen und flashen"
+
+msgid "Local = Flash a image from local path /hdd/images"
+msgstr "Local = Image von HDD oder USB flashen"
+
+msgid "Flash Local-Online a new image"
+msgstr "Image Local-Online flashen"
+
+msgid "DeviceBrowser"
+msgstr "Gerätebrowser"
+
+msgid "Console"
+msgstr "Konsole"
