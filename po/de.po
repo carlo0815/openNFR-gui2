@@ -11492,3 +11492,12 @@ msgstr "Nicht genug freier Speichplatz auf /media/nfr4xboot/ !!\nDu brauchst min
 msgid "Sorry: Wrong image in flash found. You have to install in flash NFR Image"
 msgstr "Sorry: Kein openNFR Image im Flash gefunden. Du musst openNFR im Flash installieren!"
 
+msgid "Your %s %s does not support PiP HD"
+msgstr "Deine %s %s unterstützt kein Bild in Bild HD"
+
+msgid ""
+"The WebBrowser plugin is not installed!\n"
+"Please install it."
+msgstr ""
+"Das Plugin Webbrowser ist nicht installiert!\n"
+"Bitte installieren."
