@@ -11398,8 +11398,6 @@ msgstr "Sorry aber das Image im Flash kannst du nicht löschen."
 msgid "no image to remove"
 msgstr "kein Image zum Löschen ausgewählt"
 
-
-
 msgid "Image will be booted on the next STB boot!"
 msgstr "Das Image wird beim nächsten Neustart des Receivers gestartet!"
 
