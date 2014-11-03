@@ -11389,9 +11389,6 @@ msgstr "Bist du sicher das du dieses Image booten möchtest:\n"
 msgid "now"
 msgstr "jetzt"
 
-msgid "Sorry you cannot delete the image currently booted from."
-msgstr "Sorry aber du kannst das Image das gerade läuft nicht löschen."
-
 msgid "Sorry you cannot delete Flash image"
 msgstr "Sorry aber das Image im Flash kannst du nicht löschen."
 
