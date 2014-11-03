@@ -11396,7 +11396,7 @@ msgid "Sorry you cannot delete Flash image"
 msgstr "Sorry aber das Image im Flash kannst du nicht löschen."
 
 msgid "no image to remove"
-magstr "kein Image zum Löschen ausgewählt"
+msgstr "kein Image zum Löschen ausgewählt"
 
 
 
@@ -11463,9 +11463,6 @@ msgstr "Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine H
 
 msgid "Sorry you cannot delete the image currently booted from."
 msgstr "Leider kannst du das Image das gerade gebootet ist nicht löschen."
-
-msgid "Sorry you cannot delete Flash image"
-msgstr "Leider kannst du das Image im Flash nicht löschen"
 
 msgid "Are you sure you want to delete Image:\n "
 msgstr " Bist du sicher das du das Image löschen möchtest:\n "
