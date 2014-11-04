@@ -11416,8 +11416,8 @@ msgstr "NFR4XBoot wiederherstellen der Mounts...."
 msgid "NFR4XBoot remove complete...."
 msgstr "NFR4XBoot wurde deinstalliert."
 
-msgid "Welcome to NFR4XBoot 1.00 MultiBoot Plugin installation."
-msgstr "Willkommen zur NFR4XBoot 1.00 MultiBoot Plugin Installation"
+msgid "Welcome to NFR4XBoot %s MultiBoot Plugin installation."
+msgstr "Willkommen zur NFR4XBoot %s MultiBoot Plugin Installation"
 
 msgid "Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to install NFR4XBoot:"
 msgstr "Hier ist die Liste der gemounteten Medien deiner STB\n\nBitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
