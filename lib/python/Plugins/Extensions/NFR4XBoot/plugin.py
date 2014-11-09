@@ -411,7 +411,7 @@ class NFR4XBootImageChoose(Screen):
         if images == True:
             self.session.openWithCallback(self.up2, NFR4XBootImageInstall)
         else:
-            mess = _('The /media/nfr4xboot/NFR4XBootUpload directory is EMPTY!\n\nPlease upload one of the file:\nVU+ Solo2 images\n- ZIP format image e.x\nOpenPLi-4.0-beta-vusolo2-20140304_usb.zip\n\nXtrend ET Series images\n- ZIP format image e.x\nOpenVix-4.0-Helios-et9x00-20140424_usb.zip\n\n')
+            mess = _('The /media/nfr4xboot/NFR4XBootUpload directory is EMPTY!\n\nPlease upload a zip file to install')
             self.session.open(MessageBox, mess, MessageBox.TYPE_INFO)
 
     def install(self):
