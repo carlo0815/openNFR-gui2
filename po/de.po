@@ -11453,6 +11453,13 @@ msgstr ""
 "Das Verzeichnis %s ist schreibgeschützt.\n"
 "Stelle sicher, dass ein beschreibbares Verzeichnis angegeben wurde."
 
+msgid ""
+"The /media/nfr4xboot/NFR4XBootUpload directory is EMPTY!\n"
+"Please upload a zip file to install"
+msgstr ""
+"Das Verzeichnis /media/nfr4xboot/NFR4XBootUpload ist leer!\n"
+"Bitte eine zip Datei zum Installieren hochladen"
+
 msgid "Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to install NFR4X Multiboot!"
 msgstr "Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine HDD oder einen USB-Stick an um NFR4XBoot zu installieren!"
 
