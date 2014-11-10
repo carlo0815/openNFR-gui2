@@ -11404,17 +11404,17 @@ msgstr "Deinstalliere NFR4XBoot"
 msgid "Remove all installed images"
 msgstr "Deinstalliere alle installierten Images"
 
-msgid "NFR4XBoot preparing to remove...."
-msgstr "NFR4XBoot deinstallation wird vorbereitet...."
+msgid "\n\nNFR4XBoot preparing to remove...."
+msgstr "\n\nNFR4XBoot deinstallation wird vorbereitet...."
 
-msgid "NFR4XBoot removing boot manager...."
-msgstr "NFR4XBoot deinstallation des Boot Managers...."
+msgid "\n\nNFR4XBoot removing boot manager...."
+msgstr "\n\nNFR4XBoot deinstallation des Boot Managers...."
 
-msgid "NFR4XBoot restoring media mounts...."
-msgstr "NFR4XBoot wiederherstellen der Mounts...."
+msgid "\n\nNFR4XBoot restoring media mounts...."
+msgstr "\n\nNFR4XBoot wiederherstellen der Mounts...."
 
-msgid "NFR4XBoot remove complete...."
-msgstr "NFR4XBoot wurde deinstalliert."
+msgid "\n\nNFR4XBoot remove complete...."
+msgstr "\n\nNFR4XBoot wurde deinstalliert...."
 
 msgid "Welcome to NFR4XBoot %s MultiBoot Plugin installation."
 msgstr "Willkommen zur NFR4XBoot %s MultiBoot Plugin Installation"
@@ -11422,8 +11422,8 @@ msgstr "Willkommen zur NFR4XBoot %s MultiBoot Plugin Installation"
 msgid "Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to install NFR4XBoot:"
 msgstr "Hier ist die Liste der gemounteten Medien deiner STB\n\nBitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
 
-msgid "Do You really want to install NFR4XBoot in:"
-msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:"
+msgid "Do You really want to install NFR4XBoot in:\n"
+msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:\n"
 
 msgid "NFR4XBoot has been installed succesfully!"
 msgstr "NFR4XBoot wurde erfolgreich installiert!"
@@ -11438,20 +11438,12 @@ msgid "You are not running NFR Image. You must mount devices Your self."
 msgstr "Es läuft kein openNFR Image. Du must deine Medien selber einbinden."
 
 #, python-format
-msgid ""
-"The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\n"
-"Make sure you select a valid partition type."
-msgstr ""
-"Das Verzeichnis %s ist nicht EXT2/3/4 oder NTFS formatiert.\n"
-"Wähle eine passende Formatierung."
+msgid "The directory %s is not a EXT2, EXT3, EXT4 or NFS partition.\nMake sure you select a valid partition type."
+msgstr "Das Verzeichnis %s ist nicht EXT2/3/4 oder NTFS formatiert.\nWähle eine passende Formatierung."
 
 #, python-format
-msgid ""
-"The directory %s is not writable.\n"
-"Make sure you select a writable directory instead."
-msgstr ""
-"Das Verzeichnis %s ist schreibgeschützt.\n"
-"Stelle sicher, dass ein beschreibbares Verzeichnis angegeben wurde."
+msgid "The directory %s is not writable.\nMake sure you select a writable directory instead."
+msgstr "Das Verzeichnis %s ist schreibgeschützt.\nStelle sicher, dass ein beschreibbares Verzeichnis angegeben wurde."
 
 msgid "The /media/nfr4xboot/NFR4XBootUpload directory is EMPTY!\n\nPlease upload a zip file to install"
 msgstr "Das Verzeichnis /media/nfr4xboot/NFR4XBootUpload ist leer!\n\nBitte eine zip Datei zum Installieren hochladen"
@@ -11463,7 +11455,7 @@ msgid "Sorry you cannot delete the image currently booted from."
 msgstr "Leider kannst du das Image das gerade gebootet ist nicht löschen."
 
 msgid "Are you sure you want to delete Image:\n "
-msgstr " Bist du sicher das du das Image löschen möchtest:\n "
+msgstr "Bist du sicher das du das Image löschen möchtest:\n "
 
 msgid "Copy Settings to the new Image"
 msgstr "Kopiere die Einstellungen im neuen Image"
