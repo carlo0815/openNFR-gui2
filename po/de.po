@@ -11404,18 +11404,6 @@ msgstr "Deinstalliere NFR4XBoot"
 msgid "Remove all installed images"
 msgstr "Deinstalliere alle installierten Images"
 
-msgid "\n\nNFR4XBoot preparing to remove...."
-msgstr "\n\nNFR4XBoot deinstallation wird vorbereitet...."
-
-msgid "\n\nNFR4XBoot removing boot manager...."
-msgstr "\n\nNFR4XBoot deinstallation des Boot Managers...."
-
-msgid "\n\nNFR4XBoot restoring media mounts...."
-msgstr "\n\nNFR4XBoot wiederherstellen der Mounts...."
-
-msgid "\n\nNFR4XBoot remove complete...."
-msgstr "\n\nNFR4XBoot wurde deinstalliert...."
-
 msgid "Welcome to NFR4XBoot %s MultiBoot Plugin installation."
 msgstr "Willkommen zur NFR4XBoot %s MultiBoot Plugin Installation"
 
