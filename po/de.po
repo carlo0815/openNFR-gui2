@@ -11422,8 +11422,8 @@ msgstr "Willkommen zur NFR4XBoot %s MultiBoot Plugin Installation"
 msgid "Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to install NFR4XBoot:"
 msgstr "Hier ist die Liste der gemounteten Medien deiner STB\n\nBitte wähle ein Medium auf dem du NFR4XBoot installieren möchtest:"
 
-msgid "Do You really want to install NFR4XBoot in:\n"
-msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:\n"
+msgid "Do You really want to install NFR4XBoot in:\n "
+msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:\n "
 
 msgid "NFR4XBoot has been installed succesfully!"
 msgstr "NFR4XBoot wurde erfolgreich installiert!"
