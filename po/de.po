@@ -11472,6 +11472,9 @@ msgstr "Bitte: Die STB nicht neustarten oder ausschalten!\n\n"
 msgid "The new image will be installed and auto booted in few minutes.\n\n"
 msgstr "Das neue Image wird installiert und startet in ein paar Minuten.\n\n"
 
+msgid "Do you want to install this image now?"
+msgstr "Möchtest du diese Image jetzt installieren?"
+
 msgid "NFR4XBoot: Install new image"
 msgstr "NFR4XBoot: Installiere neues Image"
 
