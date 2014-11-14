@@ -11475,6 +11475,9 @@ msgstr "Das neue Image wird installiert und startet in ein paar Minuten.\n\n"
 msgid "Do you want to install this image now?"
 msgstr "Möchtest du diese Image jetzt installieren?"
 
+msgid "Do you want to use Bootmanager by booting?"
+msgstr "Möchtest du den Bootmanager beim Booten nutzen?"
+
 msgid "NFR4XBoot: Install new image"
 msgstr "NFR4XBoot: Installiere neues Image"
 
