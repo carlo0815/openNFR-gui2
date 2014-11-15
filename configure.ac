@@ -451,6 +451,8 @@ lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubifs/Makefile
 lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubifs/nodes/Makefile
 lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi_io/Makefile
 lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ui/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot/NFR4XBoot_client/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot/NFR4XBoot_client/images/Makefile
 lib/python/Plugins/Extensions/PicturePlayer/Makefile
 lib/python/Plugins/Extensions/PicturePlayer/meta/Makefile
 lib/python/Plugins/Extensions/PicturePlayer/data/Makefile
