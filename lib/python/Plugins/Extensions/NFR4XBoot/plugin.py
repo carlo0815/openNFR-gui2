@@ -21,7 +21,7 @@ from skin import parseColor
 from boxbranding import getImageDistro
 PLUGINVERSION = '1.00'
 NFR4XBootInstallation_Skin = '\n\t\t<screen name="NFR4XBootInstallation" position="center,center" size="902,380" title="NFR4XBoot - Installation" >\n\t\t      <widget name="label1" position="10,10" size="840,30" zPosition="1" halign="center" font="Regular;25" backgroundColor="#9f1313" transparent="1"/>\n\t\t      <widget name="label2" position="10,80" size="840,290" zPosition="1" halign="center" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t      <widget name="config" position="10,160" size="840,200" scrollbarMode="showOnDemand" transparent="1"/>\n\t\t      <ePixmap pixmap="skin_default/buttons/red.png" position="10,290" size="140,40" alphatest="on" />\n\t\t      <ePixmap pixmap="skin_default/buttons/green.png" position="150,290" size="140,40" alphatest="on" />\n\t\t      <ePixmap pixmap="skin_default/buttons/blue.png" position="300,290" size="140,40" alphatest="on" />\n\t\t      <widget name="key_red" position="10,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t      <widget name="key_green" position="150,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t      <widget name="key_blue" position="300,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t</screen>'
-NFR4XBootImageChoose_Skin = '\n\t\t<screen name="NFR4XBootImageChoose" position="center,center" size="902,380" title="NFR4XBoot - Menu" >\n\t\t\t<widget name="label2" position="145,10" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="label3" position="145,35" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="label4" position="145,60" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="label5" position="145,85" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="label6" position="420,10" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1"/>\n\t\t\t<widget name="label7" position="420,35" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1"/>\n\t\t\t<widget name="label8" position="420,60" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1"/>\n\t\t\t<widget name="label9" position="420,85" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1"/>\n\t\t\t<widget name="label10" position="145,110" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="label11" position="420,110" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1"/>\n\t\t\t<widget name="label1" position="25,145" size="840,22" zPosition="1" halign="center" font="Regular;18" backgroundColor="#9f1313" transparent="1"/>\n\t\t\t<widget name="device_icon" position="25,20" size="80,80" alphatest="on" />\n\t\t\t<widget name="free_space_progressbar" position="265,42" size="500,13" borderWidth="1" zPosition="3" />\n\t\t\t<widget name="config" position="25,180" size="840,150" scrollbarMode="showOnDemand"/>\n\t\t\t<ePixmap pixmap="skin_default/buttons/red.png" position="10,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/green.png" position="260,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/yellow.png" position="520,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/blue.png" position="750,340" size="150,40" alphatest="on" />\n\t\t\t<widget name="key_red" position="5,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="key_green" position="255,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="key_yellow" position="515,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t\t<widget name="key_blue" position="745,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t</screen>'
+NFR4XBootImageChoose_Skin = '\n\t\t<screen name="NFR4XBootImageChoose" position="center,center" size="902,380" title="NFR4XBoot - Menu">\n\t\t\t<widget name="label2" position="145,10" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="label3" position="145,35" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="label4" position="145,60" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="label5" position="145,85" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="label6" position="420,10" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1" />\n\t\t\t<widget name="label7" position="420,35" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1" />\n\t\t\t<widget name="label8" position="420,60" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1" />\n\t\t\t<widget name="label9" position="420,85" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1" />\n\t\t\t<widget name="label10" position="145,110" size="440,30" zPosition="1" font="Regular;20" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="label11" position="420,110" size="440,30" zPosition="1" halign="right" font="Regular;20" backgroundColor="#9f1313" foregroundColor="#00389416" transparent="1" />\n\t\t\t<widget name="label1" position="25,145" size="840,22" zPosition="1" halign="center" font="Regular;18" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="device_icon" position="25,20" size="80,80" alphatest="on" />\n\t\t\t<widget name="free_space_progressbar" position="265,42" size="500,13" borderWidth="1" zPosition="3" />\n\t\t\t<widget name="config" position="25,180" size="840,150" scrollbarMode="showOnDemand" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/red.png" position="10,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/green.png" position="185,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/yellow.png" position="360,340" size="150,40" alphatest="on" />\n\t\t\t<ePixmap pixmap="skin_default/buttons/blue.png" position="535,340" size="150,40" alphatest="on" />\n\t\t\t<widget name="key_red" position="5,center" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="key_green" position="180,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t<widget name="key_yellow" position="355,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t\t<widget name="key_blue" position="530,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t<widget name="key_menu" position="705,340" zPosition="1" size="160,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" /><ePixmap pixmap="skin_default/buttons/menu.png" position="710,340" size="150,40" alphatest="on" /></screen>'
 NFR4XBootImageInstall_Skin = '\n\t\t    <screen name="NFR4XBootImageInstall" position="center,center" size="770,340" title="NFR4XBoot - Image Installation" >\n\t\t\t      <widget name="config" position="10,10" size="750,220" scrollbarMode="showOnDemand" transparent="1"/>\n\t\t\t      <ePixmap pixmap="skin_default/buttons/red.png" position="10,290" size="140,40" alphatest="on" />\n\t\t\t      <ePixmap pixmap="skin_default/buttons/green.png" position="150,290" size="140,40" alphatest="on" />\n\t\t\t      <ePixmap pixmap="skin_default/buttons/yellow.png" position="290,290" size="140,40" alphatest="on" />\n\t\t\t      <widget name="HelpWindow" position="330,310" zPosition="5" size="1,1" transparent="1" alphatest="on" />      \n\t\t\t      <widget name="key_red" position="10,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t      <widget name="key_green" position="150,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />\n\t\t\t      <widget name="key_yellow" position="290,290" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />\n\t\t    </screen>'
 
 def Freespace(dev):
@@ -151,8 +151,16 @@ class NFR4XBootInstallation(Screen):
                 ybox.setTitle(_('Install Confirmation'))
             else:
                 self.close()
-
+                
     def install2(self, yesno):
+        if yesno:
+            message = _('Do you want to use Bootmanager by booting?\n ')
+            ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
+            ybox.setTitle(_('Install Confirmation'))
+        else:
+            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
+
+    def install3(self, yesno):
         if yesno:
             cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
             os.system(cmd2)
@@ -164,11 +172,9 @@ class NFR4XBootInstallation(Screen):
 		        mntdev = line.split(' ')[0]
                 f.close()
                 mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-                #cmd2 = 'echo "UUID=' + str(mntid) + '" >/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install'     
-                #os.system(cmd2)            
             cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
             os.system(cmd)
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinit /sbin/nfr4xinit')
+            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitboot /sbin/nfr4xinit')
             os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
             os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
             out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
@@ -191,7 +197,40 @@ class NFR4XBootInstallation(Screen):
                     f.close()
             self.myclose2(_('NFR4XBoot has been installed succesfully!'))
         else:
-            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)
+            cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
+            os.system(cmd2)
+            if fileExists('/proc/mounts'):
+                fileExists('/proc/mounts')
+                f = open('/proc/mounts', 'r')
+                for line in f.readlines():
+                    if line.find(self.mysel):
+		        mntdev = line.split(' ')[0]
+                f.close()
+                mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+            cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
+            os.system(cmd)
+            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
+            os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
+            os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
+            out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+            out2.write('Flash')
+            out2.close()
+            out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
+            out.write(self.mysel)
+            out.close()
+            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
+            image = getImageDistro()
+            if fileExists('/etc/image-version'):
+                if 'build' not in image:
+                    f = open('/etc/image-version', 'r')
+                    for line in f.readlines():
+                        if 'build=' in line:
+                            image = image + ' build ' + line[6:-1]
+                            open('/media/nfr4xboot/NFR4XBootI/.Flash', 'w').write(image)
+                            break
+
+                    f.close()
+            self.myclose2(_('NFR4XBoot has been installed succesfully!'))
 
 
 class NFR4XBootImageChoose(Screen):
@@ -209,6 +248,7 @@ class NFR4XBootImageChoose(Screen):
         self['key_green'] = Label(_('Install Image'))
         self['key_yellow'] = Label(_('Remove Image '))
         self['key_blue'] = Label(_('Uninstall'))
+        self['key_menu'] = Label(_('Bootsetup'))        
         self['label2'] = Label(_('NFR4XBoot is running from:'))
         self['label3'] = Label(_('Used:'))
         self['label4'] = Label(_('Available:'))
@@ -220,12 +260,34 @@ class NFR4XBootImageChoose(Screen):
         self['label10'] = Label(_('Number of installed images in NFR4XBoot:'))
         self['label11'] = Label('')
         self['label1'] = Label(_('Here is the list of installed images in Your STB. Please choose an image to boot.'))
-        self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.boot,
+        self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'red': self.boot,
          'green': self.install,
          'yellow': self.remove,
          'blue': self.advanced,
+         'menu': self.bootsetup,         
          'back': self.close})
         self.onShow.append(self.updateList)
+        
+    def bootsetup(self):
+        menulist = []
+        menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
+        menulist.append((_('Boot without Bootmanger'), 'withoutnfr4xboot'))
+        self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
+
+    def menuBootsetupCallback(self, choice):
+        self.show()
+        if choice is None:
+            return
+        else:
+            if choice[1] == 'withnfr4xboot':
+                cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitboot /sbin/nfr4xinit'
+                cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
+                self.session.openWithCallback(self.close, Console, _('NFR4XBoot work with Bootmanager by Booting!'), [cmd0, cmd1])
+            if choice[1] == 'withoutnfr4xboot':
+                cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
+                cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
+                self.session.openWithCallback(self.updateList, Console, _('NFR4XBoot work without Bootmanager by Booting!'), [cmd0, cmd1])
+            return       
 
     def updateList(self):
         self.list = []
@@ -613,8 +675,10 @@ def checkkernel():
         os.system('mkdir /media/usb')
     if getBoxType() in ('axodin', 'starsatlx', 'sf8', 'odinm7', 'odinm6', 'evoe3hd', 'xp1000', 'xp1000mk', 'uniboxhd1','uniboxhd2', 'uniboxhd3', 'uniboxhde', 'ini-1000de', 'xpeedlx2', 'xpeedlx1', 'atemio5x00', 'ini-9000de', 'xpeedlx3', 'ini-8000am', 'atemionemesis', 'iqonios300hd', 'vusolo', 'vuduo', 'vuuno', 'vuultimo', 'vusolo2', 'vuduo2', 'mutant2400', 'quadbox2400',):
        mycheck = 1
-    elif getBoxType() in ('gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se'): 
+    elif getBoxType() in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800se'): 
        mycheck = 1
+    elif getBoxType() in ('gb800seplus'): 
+       mycheck = 2
     else:
         mycheck = 0
     return mycheck

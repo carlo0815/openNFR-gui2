@@ -34,6 +34,10 @@ def NFR4XBootMainEx(source, target, installsettings):
     rc = os.system(cmd)
     cmd = 'rm -rf %s/NFR4XBootI/%s/usr/lib/enigma2/python/Plugins/Extensions/HbbTV' % (nfr4xhome, target)
     rc = os.system(cmd)
+    cmd = 'cp -r /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/NFR4XBoot_client %s/NFR4XBootI/%s/usr/lib/enigma2/python/Plugins/Extensions/ > /dev/null 2>&1' % (nfr4xhome, target)
+    rc = os.system(cmd)
+    cmd = 'cp -r /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location %s/NFR4XBootI/%s/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot_client/.nfr4xboot_location > /dev/null 2>&1' % (nfr4xhome, target)
+    rc = os.system(cmd) 
     if installsettings == 'True':
         cmd = 'mkdir -p %s/NFR4XBootI/%s/etc/enigma2 > /dev/null 2>&1' % (nfr4xhome, target)
         rc = os.system(cmd)
