@@ -351,7 +351,7 @@ class DownloadOnLineImage(Screen):
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
-                url = 'http://v4.hdfreaks.cc/download.php?file=' + box[0] + '/' + sel
+                url = 'http://v4.hdfreaks.cc/' + box[0] + '/' + sel
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -413,7 +413,7 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'opennfr':
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
-            url = '%s/?dir=%s' % (self.feedurl, box)
+            url = '%s/%s' % (self.feedurl, box)
         else:
             url = self.feedurl
         print '[NFR4XBoot] URL: ', url
@@ -466,7 +466,11 @@ class DownloadOnLineImage(Screen):
                 elif line.find('href="opennfr-') > -1:
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                
+                    self.imagelist.append(line[t4 :t5+4])  
+                elif line.find('href="openhdf-') > -1:
+                    t4 = line.find('openhdf-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                       
             #fobj.close()
         else:
             self.imagelist.append(stb)
