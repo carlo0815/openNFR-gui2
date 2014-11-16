@@ -271,7 +271,7 @@ class NFR4XBootImageChoose(Screen):
     def bootsetup(self):
         menulist = []
         menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
-        menulist.append((_('Boot without Bootmanger'), 'withoutnfr4xboot'))
+        menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
         self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
 
     def menuBootsetupCallback(self, choice):
