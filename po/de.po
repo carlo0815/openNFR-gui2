@@ -11383,9 +11383,6 @@ msgstr "Anzahl von installierten Images in NFR4XBoot:"
 msgid "Here is the list of installed images in Your STB. Please choose an image to boot."
 msgstr "Hier die Liste der installierten Images. Wähle das Image das du booten möchtest."
 
-msgid "Are you sure you want to Boot Image:\n"
-msgstr "Bist du sicher das du dieses Image booten möchtest:\n"
-
 msgid "Sorry you cannot delete Flash image"
 msgstr "Sorry aber das Image im Flash kannst du nicht löschen."
 
@@ -11438,9 +11435,6 @@ msgstr "Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine H
 
 msgid "Sorry you cannot delete the image currently booted from."
 msgstr "Leider kannst du das Image das gerade gebootet ist nicht löschen."
-
-msgid "Are you sure you want to delete Image:\n"
-msgstr "Bist du sicher das du das Image löschen möchtest:\n"
 
 msgid "Copy Settings to the new Image"
 msgstr "Kopiere die Einstellungen im neuen Image"
