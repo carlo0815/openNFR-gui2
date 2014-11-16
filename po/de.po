@@ -11383,8 +11383,8 @@ msgstr "Anzahl von installierten Images in NFR4XBoot:"
 msgid "Here is the list of installed images in Your STB. Please choose an image to boot."
 msgstr "Hier die Liste der installierten Images. Wähle das Image das du booten möchtest."
 
-msgid "Are you sure you want to Boot Image:\n  + self.mysel +  now ?"
-msgstr "Bist du sicher das du dieses Image booten möchtest:\n  + self.mysel +  jetzt ?"
+msgid "Are you sure you want to Boot Image:\n "
+msgstr "Bist du sicher das du dieses Image booten möchtest:\n "
 
 msgid "Sorry you cannot delete Flash image"
 msgstr "Sorry aber das Image im Flash kannst du nicht löschen."
@@ -11439,14 +11439,17 @@ msgstr "Leider ist keine Medium in deiner STB gemountet.\nBitte schliesse eine H
 msgid "Sorry you cannot delete the image currently booted from."
 msgstr "Leider kannst du das Image das gerade gebootet ist nicht löschen."
 
-msgid "Are you sure you want to delete Image:\n  + self.mysel +  now ?"
-msgstr "Bist du sicher das du das Image löschen möchtest:\n  + self.mysel +  jetzt ?"
+msgid "Are you sure you want to delete Image:\n "
+msgstr "Bist du sicher das du das Image löschen möchtest:\n "
 
 msgid "Copy Settings to the new Image"
 msgstr "Kopiere die Einstellungen im neuen Image"
 
-msgid "Sorry, an Image with the name  + target +  is already installed.\n Please try another name."
-msgstr "Leider ist bereits ein Image mit dem Namen  + target +  installiert.\n Bitte einen anderen Namen wählen."
+msgid "Sorry, an Image with the name "
+msgstr "Leider ist bereits ein Image mit dem Namen "
+
+msgid " is already installed.\n Please try another name."
+msgstr " installiert.\n Bitte einen anderen Namen wählen."
 
 msgid "You have to select one Image to install.\nPlease, upload your zip file in the folder: /media/nfr4xboot/NFR4XBootUpload and select the image to install."
 msgstr "Du musst ein Image zur Installation auswählen.\nBitte lade die zip-Datei in folgendes Verzeichnis: /media/nfr4xboot/NFR4XBootUpload und wähle ein Image aus."
