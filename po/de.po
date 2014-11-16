@@ -11368,6 +11368,12 @@ msgstr "Lüfter Steuerung"
 msgid "Fan mode"
 msgstr "Lüfter Modus"
 
+msgid "Are you sure you want to Boot Image:\n"
+msgstr "Bist du sicher das du dieses Image booten möchtest:\n"
+
+msgid "Are you sure you want to delete Image:\n "
+msgstr "Bist du sicher das du dieses Image löschen möchtest:\n "
+
 msgid "NFR4XBoot is running from:"
 msgstr "NFR4XBoot ist installiert auf:"
 
