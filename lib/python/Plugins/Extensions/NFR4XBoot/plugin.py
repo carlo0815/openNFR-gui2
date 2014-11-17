@@ -91,6 +91,7 @@ class NFR4XBootInstallation(Screen):
 
     def myclose2(self, message):
         self.session.open(MessageBox, message, MessageBox.TYPE_INFO)
+        os.system('reboot -p')
         self.close()
 
     def checkReadWriteDir(self, configele):
@@ -230,7 +231,7 @@ class NFR4XBootInstallation(Screen):
                             break
 
                     f.close()
-            self.myclose2(_('NFR4XBoot has been installed succesfully!'))
+            self.myclose2(_('NFR4XBoot has been installed succesfully, and Box rebooting now!'))
 
 
 class NFR4XBootImageChoose(Screen):
