@@ -11374,6 +11374,9 @@ msgstr "Bist du sicher das du dieses Image booten möchtest:\n"
 msgid "Are you sure you want to delete Image:\n "
 msgstr "Bist du sicher das du dieses Image löschen möchtest:\n "
 
+msgid "Removing canceled!"
+msgstr "Löschen abgebrochen!"
+
 msgid "NFR4XBoot is running from:"
 msgstr "NFR4XBoot ist installiert auf:"
 
