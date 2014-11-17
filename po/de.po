@@ -11416,8 +11416,8 @@ msgstr "Hier ist die Liste der gemounteten Medien deiner STB\n\nBitte wähle ein
 msgid "Do You really want to install NFR4XBoot in:\n "
 msgstr "Möchtest du NFR4XBoot auf diesem Medium installieren:\n "
 
-msgid "NFR4XBoot has been installed succesfully!"
-msgstr "NFR4XBoot wurde erfolgreich installiert!"
+msgid "NFR4XBoot has been installed succesfully, and Box rebooting now!"
+msgstr "NFR4XBoot wurde erfolgreich installiert und der Receiver startet jetzt neu!"
 
 msgid "NFR4XBoot: Deleting All Images"
 msgstr "NFR4XBoot: Deinstalliert alle Images"
