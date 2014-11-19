@@ -11647,3 +11647,14 @@ msgstr "Kernel dump fehler\n"
 msgid "Please Flash your Kernel new and Backup again"
 msgstr "Bitte den Kernel neu Flashen und Backup wiederholen"
 
+msgid "ofgwrite will stop enigma2 now to run the flash.\n"
+msgstr "ofgwrite stoppt Enigma2 jetzt und beginnt zu flashen.\n"
+
+msgid "Your %s %s will freeze during the flashing process.\n"
+msgstr "Deine %s %s ist während des Flashens nicht zu bedienen.\n"
+
+msgid "Please: DO NOT reboot your %s %s and turn off the power.\n"
+msgstr "Achtung: Bitte deine %s %s weder neustarten noch ausschalten.\n"
+
+msgid "The image or kernel will be flashing and auto booted in few minutes.\n"
+msgstr "Das Image wird geflasht und startet in ein paar Minuten automatisch.\n"
