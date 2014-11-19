@@ -87,6 +87,9 @@ else
 	fi;
 	[ -e /etc/dropbear/dropbear_rsa_host_key ] && /usr/bin/showiframe /usr/share/bootlogo.mvi || /usr/bin/showiframe /usr/share/bootlogo_wait.mvi;
 	) &
+        
+        sleep 10
+        echo "Driverload end"
 
 	if [ -f $LIBDIR/kernel/fs/autofs4/autofs4.ko ]; then
 		/sbin/insmod $LIBDIR/kernel/fs/autofs4/autofs4.ko > /dev/null 2>&1
