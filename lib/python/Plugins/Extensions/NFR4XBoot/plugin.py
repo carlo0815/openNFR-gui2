@@ -155,7 +155,7 @@ class NFR4XBootInstallation(Screen):
                 
     def install2(self, yesno):
         if yesno:
-            message = _('Do you want to use Bootmanager by booting?\n ')
+            message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
             ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
             ybox.setTitle(_('Install Confirmation'))
         else:
