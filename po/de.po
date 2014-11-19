@@ -11478,8 +11478,8 @@ msgstr "Das neue Image wird installiert und startet in ein paar Minuten.\n\n"
 msgid "Do you want to install this image now?"
 msgstr "Möchtest du diese Image jetzt installieren?"
 
-msgid "Do you want to use Bootmanager by booting?\n "
-msgstr "Möchtest du den Bootmanager beim Booten nutzen?\n "
+msgid "Do you want to use Bootmanager by booting?\nBox will reboot after choice "
+msgstr "Möchtest du den Bootmanager beim Booten nutzen?\nDer Receiver startet nach der Auswahl neu "
 
 msgid "NFR4XBoot: Install new image"
 msgstr "NFR4XBoot: Installiere neues Image"
