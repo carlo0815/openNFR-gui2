@@ -27,6 +27,7 @@ from Components.Sources.Progress import Progress
 from Components.Button import Button
 from Components.ActionMap import ActionMap
 from Screens.VirtualKeyBoard import VirtualKeyBoard
+from Screens.Hotkey import HotkeySetup
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
 from __init__ import _
@@ -297,6 +298,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))		
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Multi-Key-Action'), _("Multi Panel"), 'Multi-Key-Action')))		
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamPanel'), _("SoftcamPanel"), 'SoftcamPanel')))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("QuickMenu" ), _("Quick-Menu"), ("QuickMenu"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
@@ -462,6 +464,8 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(RedPanel)
 		elif menu == "Blue-Key-Action":
 			self.session.open(BluePanel)			
+		elif menu == "Multi-Key-Action":
+			self.session.open(HotkeySetup)			
 		elif menu == "KeymapSel":
 			self.session.open(KeymapSel)
 		elif menu == "QuickMenu":
@@ -1111,3 +1115,4 @@ class Info(Screen):
 		except:
 			o = ''
 			return o
+
