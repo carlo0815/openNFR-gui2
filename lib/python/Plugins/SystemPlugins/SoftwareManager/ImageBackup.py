@@ -365,7 +365,7 @@ class ImageBackup(Screen):
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "QuadBox HD2400"
 			self.MTDKERNEL = "mtd1"
-			self.MAINDESTOLD = "%s/Mut@nt/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDESTOLD = "%s/AX/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/hd2400" % self.DIRECTORY
 			self.MAINDEST1 = "%s/hd2400" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
