@@ -3225,7 +3225,7 @@ msgid "Fixed"
 msgstr "Stationär"
 
 msgid "Flash"
-msgstr "Flash"
+msgstr "Flashen"
 
 msgid "Flashing"
 msgstr "blinkend"
@@ -11224,6 +11224,9 @@ msgstr "Sicherung des aktuellen Image"
 msgid "Backup your current settings"
 msgstr "Sicherung der aktuellen Einstellungen"
 
+msgid "Backup done."
+msgstr "Sicherung der Einstellungen beendet!"
+
 msgid "Restore settings from a backup"
 msgstr "Wiederherstellung der Einstellungen"
 
@@ -11507,6 +11510,12 @@ msgstr "Sorry: Kein openNFR Image im Flash gefunden. Du musst openNFR im Flash i
 
 msgid "Choose they way for installation"
 msgstr "Wähle den Weg der Installation"
+
+msgid "Source Image file"
+msgstr "Quell-Image-Datei"
+
+msgid "Boot Confirmation"
+msgstr "Boot-Bestätigung"
 
 msgid "Your %s %s does not support PiP HD"
 msgstr "Deine %s %s unterstützt kein Bild in Bild HD"
