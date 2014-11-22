@@ -716,7 +716,7 @@ def main(session, **kwargs):
         else:
             session.open(NFR4XBootInstallation)
     elif m == 2:
-        session.open(MessageBox, _('Sorry: NFR4XBoot no work by Gigablue!'), MessageBox.TYPE_INFO, 3)
+        session.open(MessageBox, _('Sorry: NFR4XBoot no work by this Box!'), MessageBox.TYPE_INFO, 3)
     else:
         session.open(MessageBox, _('Sorry: Wrong image in flash found. You have to install in flash NFR Image'), MessageBox.TYPE_INFO, 3)
 
