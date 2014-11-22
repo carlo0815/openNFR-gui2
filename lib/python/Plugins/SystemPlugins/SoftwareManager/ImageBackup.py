@@ -358,6 +358,18 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/hd2400" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "quadbox2400":
+			self.TYPE = "AX"
+			self.MODEL = "quadbox2400"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8192"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "QuadBox HD2400"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/Mut@nt/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/hd2400" % self.DIRECTORY
+			self.MAINDEST1 = "%s/hd2400" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		elif self.MODEL == "inihde" and self.MACHINENAME.lower() == "hd-1000":
 			self.TYPE = "SEZAM"
 			self.MODEL = "hde"
