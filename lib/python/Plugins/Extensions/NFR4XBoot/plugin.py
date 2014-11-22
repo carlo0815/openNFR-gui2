@@ -678,7 +678,7 @@ def checkkernel():
        mycheck = 1
     elif getBoxType() in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800se'): 
        mycheck = 1
-    elif getBoxType() in ('gb800seplus'): 
+    elif getBoxType() in ('gb800seplus', 'iqonios300', 'starsat'): 
        mycheck = 2
     else:
         mycheck = 0
