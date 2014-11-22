@@ -401,7 +401,7 @@ class NFR4XBootImageChoose(Screen):
             out.write(self.mysel)
             out.close()
             os.system('rm /tmp/.nfr4xreboot')
-            message = _('Are you sure you want to Boot Image:\n') + self.mysel + ' now ?'
+            message = _('Are you sure you want to Boot Image:\n') + self.mysel + ' ?'
             ybox = self.session.openWithCallback(self.boot2, MessageBox, message, MessageBox.TYPE_YESNO)
             ybox.setTitle(_('Boot Confirmation'))
         else:
@@ -430,7 +430,7 @@ class NFR4XBootImageChoose(Screen):
                     out = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
                     out.write('Flash')
                     out.close()
-                    message = _('Are you sure you want to delete Image:\n ') + self.mysel + ' now ?'
+                    message = _('Are you sure you want to delete Image:\n ') + self.mysel + ' ?'
                     ybox = self.session.openWithCallback(self.remove2, MessageBox, message, MessageBox.TYPE_YESNO)
                     ybox.setTitle(_('Delete Confirmation'))
             except:
