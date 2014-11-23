@@ -156,6 +156,9 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Recording Setup"), "Setup/recording", "Setup"))
 	hotkeyFunctions.append((_("Harddisk Setup"), "Setup/harddisk", "Setup"))
 	hotkeyFunctions.append((_("Subtitles Settings"), "Setup/subtitlesetup", "Setup"))
+	hotkeyFunctions.append((_("SleepTimer edit"), "Infobar/openSleepTimer", "NFR-Spezial"))
+	hotkeyFunctions.append((_("Edit Red Panel"), "Infobar/OpenNFRRedPanelShow", "NFR-Spezial"))	
+	hotkeyFunctions.append((_("Edit Blue Panel"), "Infobar/OpenNFRBluePanelShow", "NFR-Spezial"))	
 	return hotkeyFunctions
 
 class HotkeySetup(Screen):
