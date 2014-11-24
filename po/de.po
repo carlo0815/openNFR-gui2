@@ -11230,6 +11230,16 @@ msgstr "Sicherung der Einstellungen beendet!"
 msgid "Restore settings from a backup"
 msgstr "Wiederherstellung der Einstellungen"
 
+msgid ""
+"Are you sure you want to restore your %s %s backup?\n"
+"STB will restart after the restore"
+msgstr ""
+"Bist du sicher das die Einstellungen deiner %s %s wiederhergestellt werden "
+"sollen?\n"
+"\n"
+"Der Receiver wird neu gestartet, nachdem die Einstellungen wiederhergestellt "
+"wurden!"
+
 msgid "Choose the files to backup"
 msgstr "Wähle Dateien zur Sicherung"
 
