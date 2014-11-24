@@ -5852,7 +5852,7 @@ msgid "Removing"
 msgstr "Entferne"
 
 msgid "Removing Service"
-msgstr "Lösche Sender"
+msgstr "Dienst wird deinstalliert"
 
 #, python-format
 msgid "Removing directory %s failed. (Maybe not empty.)"
