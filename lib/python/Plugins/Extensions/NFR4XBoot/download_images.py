@@ -251,7 +251,7 @@ class DownloadOnLineImage(Screen):
                     stb = '1'
                 elif box in ('vuduo'):
                     box = 'vuduo'
-                    urlbox = 'Vu%2BDuo2'                    
+                    urlbox = 'Vu%2BDuo'                    
                     stb = '1'
                 elif box in ('mutant2400'):
                     box = 'mutant2400'
