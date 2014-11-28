@@ -284,6 +284,8 @@ class AttributeParser:
 				print "[Skin] Attribute not implemented:", attrib, "value:", value
 			except SkinError, ex:
 				print "[Skin] Error:", ex
+			except:
+				print "[Skin] Error:", attrib
 	def conditional(self, value):
 		pass
 	def position(self, value):
@@ -530,7 +532,7 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 
 
 	for c in skin.findall("subtitles"):
-		from enigma import eSubtitleWidget
+		from enigma import eWidget, eSubtitleWidget
 		scale = ((1,1),(1,1))
 		for substyle in c.findall("sub"):
 			get_attr = substyle.attrib.get
