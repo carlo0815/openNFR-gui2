@@ -598,15 +598,15 @@ msgid ""
 "A sleep timer wants to set your\n"
 "%s %s to standby. Do that now?"
 msgstr ""
-"Ein Ausschalttimer möchte die %s %s\n"
-"in Bereitschaft schalten. Jetzt in den Standby gehen?"
+"Ein Ausschalt-Timer möchte die %s %s\n"
+"den Bereitschafts-Modus versetzen. Jetzt ausführen?"
 
 #, python-format
 msgid ""
 "A sleep timer wants to shut down\n"
 "your %s %s. Shutdown now?"
 msgstr ""
-"Ein Ausschalttimer möchte die %s %s ausschalten.\n"
+"Ein Ausschalt-Timer möchte die %s %s ausschalten.\n"
 "Jetzt ausschalten?"
 
 msgid "A small overview of the available icon states and actions."
@@ -673,6 +673,21 @@ msgstr "Aktiviere PiP"
 
 msgid "Activate Picture in Picture"
 msgstr "Aktiviere Bild in Bild"
+
+msgid "Turn on HDMI-IN Full screen mode"
+msgstr "HDMI IN als Vollbild wiedergeben"
+
+msgid "Turn on HDMI-IN PiP mode"
+msgstr "HDMI-IN als Bild in Bild wiedergeben"
+
+msgid "Turn off HDMI-IN Full screen mode"
+msgstr "HDMI-IN Vollbildmodus ausschalten"
+
+msgid "Picture in Picture Setup"
+msgstr "Bild in Bild Einstellungen"
+
+msgid "Custom Subservice Selection Plugin"
+msgstr "Benutzerdefiniertes Unterkanal Auswahl-Plugin"
 
 msgid "Activate current configuration"
 msgstr "Aktiviere aktuelle Konfiguration"
@@ -10886,22 +10901,54 @@ msgstr "Verbinden sie bitte Ihren %s %s mit dem Internet"
 msgid "Your %s %s does not have an internet connection"
 msgstr "Ihre %s %s hat keine Verbindung zum Internet"
 
-msgid "Specify timeframe to ignore inactivity sleeptimer"
+msgid "Sleep timer"
+msgstr "Ausschalt-Timer"
+
+msgid "Sleep Timer"
+msgstr "Ausschalt-Timer"
+
+msgid "The sleep timer has been activated."
+msgstr "Der Ausschalt-Timer wurde aktiviert."
+
+msgid "And will put your receiver in standby over "
+msgstr "Der Receiver geht in Standby nach "
+
+msgid "And will shutdown your receiver over "
+msgstr "Der Receiver wird heruntergefahren in "
+
+msgid "The sleep timer has been disabled."
+msgstr "Der Ausschalt-Timer wurde deaktiviert."
+
+msgid "Your receiver will got to stand by due to the sleeptimer."
 msgstr ""
-"Spezifiziere den Zeitbereich, in dem der Inaktivitaet-Sleeptimer ignoriert "
-"werden soll"
+"Ein Ausschalt-Timer möchte den Receiver in den Standby-Modus versetzen."
+
+msgid "Your receiver will shutdown due to inactivity."
+msgstr "Der Receiver wird heruntergefahren, aufgrund von Inaktivität."
+
+msgid "Your receiver will got to standby due to inactivity."
+msgstr "Der Receiver geht in Standby, aufgrund von Inaktivität."
+
+msgid "Do you want this?"
+msgstr "Möchtest du das?"
+
+msgid "Extend sleeptimer 15 minutes"
+msgstr "Verlängern des Ausschalt-Timer um 15 Minuten"
+
+msgid "Specify timeframe to ignore inactivity sleeptimer"
+msgstr "Zeitraumangabe zum Ignorieren des Inaktivität Ausschalt-Timer"
 
 msgid "Start time to ignore inactivity sleeptimer"
-msgstr "Startzeit zum Ignorieren des Inaktivitaet-AusschaltTimers"
+msgstr "Startzeit zum Ignorieren des Inaktivität-Ausschalt-Timers"
 
 msgid "End time to ignore inactivity sleeptimer"
-msgstr "Endzeit zum Ignorieren des Inaktivitaet-AusschaltTimers"
+msgstr "Endzeit zum Ignorieren des Inaktivität-Ausschalt-Timers"
 
 msgid "Inactivity Sleeptimer"
-msgstr "Inaktivitaet-AusschaltTimer"
+msgstr "Inaktivität-Ausschalt-Timer"
 
 msgid "Sleeptimer"
-msgstr "AusschaltTimer"
+msgstr "Ausschalt-Timer"
 
 msgid "Shutdown when in Standby"
 msgstr "Ausschalten aus dem Standby"
@@ -10910,9 +10957,9 @@ msgid "after"
 msgstr "nach"
 
 msgid "SleepTimer Configuration"
-msgstr "AusschaltTimer Konfiguration"
+msgstr "Ausschalt-Timer Konfiguration"
 
-msgid "Shutown after current event"
+msgid "Shutdown after current event"
 msgstr "Ausschalten nach aktuellen Vorgang"
 
 msgid "Standby after current event"
