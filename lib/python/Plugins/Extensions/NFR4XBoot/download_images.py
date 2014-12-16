@@ -60,6 +60,16 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
+        mypixmap = mypath + 'opendroid.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenDroid')
+        desc = _('Download latest OpenDroid Image')
+        idx = 'opendroid'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
         mypixmap = mypath + 'egami.png'
         png = LoadPixmap(mypixmap)
         name = _('Egami')
@@ -152,6 +162,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk'
+        elif self.distro == 'opendroid':
+            self.feed = 'opendroid'
+            self.feedurl = 'http://droidsat.org/image/'
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
@@ -279,7 +292,23 @@ class DownloadOnLineImage(Screen):
                     stb = '1'                    
    
             else:   
-                stb = 'no Image for this Box on this Side'                     
+                stb = 'no Image for this Box on this Side' 
+        elif self.distro == 'opendroid':
+            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'sf8'):
+                box = getBoxType()
+                urlbox = getBoxType()               
+                stb = '1'
+            elif box in ('xpeedlx1', 'xpeedlx2'):
+                box = 'xpeedlx'
+                urlbox = 'xpeedlx'                
+                stb = '1'
+            elif box in ('vusolo', 'vusolo2', 'vuduo'):
+                box = 'vu%2B'
+                urlbox = 'vu%2B'
+                stb = '1'                
+
+            else:   
+                stb = 'no Image for this Box on this Side'                                      
         elif self.distro == 'openpli':
             if box in ('vusolo2', 'vuuno', 'vuduo2', 'vuduo', 'mutant2400', 'quadbox2400', 'xp1000'):
                if box in ('vusolo2'):
@@ -352,6 +381,8 @@ class DownloadOnLineImage(Screen):
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
                 url = 'http://v4.hdfreaks.cc/' + box[0] + '/' + sel
+            elif self.distro == 'opendroid':
+                url = self.feedurl + '/' + box[1] + '/' + sel                
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -408,6 +439,8 @@ class DownloadOnLineImage(Screen):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)
+        elif self.distro == 'opendroid':
+            url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)        
         elif self.distro == 'openpli':
             url = '%s/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opennfr':
@@ -466,7 +499,11 @@ class DownloadOnLineImage(Screen):
                 elif line.find('href="opennfr-') > -1:
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])  
+                    self.imagelist.append(line[t4 :t5+4])
+                elif line.find('file=opendroid') > -1:
+                    t4 = line.find('opendroid-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                        
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
@@ -539,4 +576,3 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
-            
