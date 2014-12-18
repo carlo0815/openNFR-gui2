@@ -56,7 +56,7 @@ class DMC_MainMenu(Screen):
 		list.append((_("My Pictures"), "MC_PictureViewer", "menu_pictures", "50"))
 		list.append((_("Web Radio"), "MC_WebRadio", "menu_radio", "50"))
 		list.append((_("VLC Player"), "MC_VLCPlayer", "menu_vlc", "50"))
-#		list.append((_("Weather Info"), "MC_WeatherInfo", "menu_weather", "50"))
+		list.append((_("Weather Info"), "MC_WeatherInfo", "menu_weather", "50"))
 #		list.append((_("WebMedia"), "WebMedia", "menu_webmedia", "50"))
 #		list.append((_("TuneIn"), "Webbrowser", "menu_webbrowser", "50"))
 		list.append((_("SHOUTcast"), "SHOUTcast", "menu_shoutcast", "50"))
@@ -87,13 +87,13 @@ class DMC_MainMenu(Screen):
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 1:
 			self["menu"].setIndex(2)
-		if self["menu"].getIndex() == 9:
+		if self["menu"].getIndex() == 10:
 			self["menu"].setIndex(1)
 		self.update()
 	def prev(self):
 		self["menu"].selectPrevious()
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(8)
+			self["menu"].setIndex(9)
 		self.update()
 	def update(self):
 		if self["menu"].getIndex() == 1:
@@ -119,12 +119,16 @@ class DMC_MainMenu(Screen):
 		elif self["menu"].getIndex() == 6:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconRadiosw.png")
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconVLC.png")
-			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconWeathersw.png")
 		elif self["menu"].getIndex() == 7:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconVLCsw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWeather.png")
 			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
-			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconSettingssw.png")
 		elif self["menu"].getIndex() == 8:
+			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWeathersw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcast.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconSettingssw.png")
+		elif self["menu"].getIndex() == 9:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconSettings.png")
 			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")	
@@ -191,6 +195,9 @@ class DMC_MainMenu(Screen):
                                         self.session.open(SHOUTcastWidget)
                                 else:
 					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO)                                        					
+			elif selection[1] == "MC_WeatherInfo":
+				from MC_WeatherInfo import MC_WeatherInfo
+				self.session.open(MC_WeatherInfo)
 			elif selection[1] == "MC_Settings":
 				from MC_Settings import MC_Settings
 				self.session.open(MC_Settings)
