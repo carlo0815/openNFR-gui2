@@ -11727,3 +11727,6 @@ msgstr "Achtung: Bitte deine %s %s weder neustarten noch ausschalten.\n"
 
 msgid "The image or kernel will be flashing and auto booted in few minutes.\n"
 msgstr "Das Image wird geflasht und startet in ein paar Minuten automatisch.\n"
+
+msgid "No config to start, please check /etc/openvpn and try again."
+msgstr "In /etc/openvpn ist keine config, bitte ändern und nochmal starten."
