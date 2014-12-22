@@ -3,6 +3,7 @@ from os import path as os_path, remove, unlink, rename, chmod, access, X_OK
 from shutil import move
 import time
 import os
+import fnmatch
 from enigma import eTimer
 
 from Screens.Screen import Screen
@@ -2237,6 +2238,17 @@ class NetworkOpenvpn(Screen):
 			self.Console.ePopen('/etc/init.d/openvpn stop', self.StartStopCallback)
 
 	def StartStopCallback(self, result = None, retval = None, extra_args = None):
+		openvpnfile = '0'
+		for file in os.listdir('/etc/openvpn'):
+			if fnmatch.fnmatch(file, '*.conf'):
+				print file
+				openvpnfile = '1'
+								
+		if openvpnfile == '0':
+			self.message = self.session.open(MessageBox, _("No config to start, please check /etc/openvpn and try again."), type=MessageBox.TYPE_INFO, close_on_any_key=True)
+		else:
+			print "config in etc/openvpn"
+			
 		time.sleep(3)
 		self.updateService()
 
