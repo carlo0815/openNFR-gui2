@@ -15,6 +15,18 @@ from SystemInfo import SystemInfo
 
 
 def InitUsageConfig():
+	config.NFRSoftcam = ConfigSubsection()
+	config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
+	config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
+	config.NFRSoftcam.waittime = ConfigSelection([('0',_("dont wait")),('1',_("1 second")), ('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='15')
+	config.plugins.infopanel_redkey = ConfigSubsection()
+	config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Default (Softcam Panel")),('1',_("Quickmenu)")),('2',_("Infopanel"))])
+	config.plugins.infopanel_bluekey = ConfigSubsection()
+	config.plugins.infopanel_bluekey.list = ConfigSelection([('1',_("Default (Quickmenu)")),('0',_("Softcam Panel")),('2',_("Infopanel"))])
+	config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
+	config.plugins.infopanel_frozencheck = ConfigSubsection()
+	config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
+
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)	
 
