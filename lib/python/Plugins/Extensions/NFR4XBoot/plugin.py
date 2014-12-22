@@ -676,9 +676,9 @@ def checkkernel():
         os.system('mkdir /media/usb')
     if getBoxType() in ('axodin', 'sf8', 'odinm7', 'odinm6', 'evoe3hd', 'xp1000', 'xp1000mk', 'uniboxhd1','uniboxhd2', 'uniboxhd3', 'uniboxhde', 'ini-1000de', 'xpeedlx2', 'xpeedlx1', 'atemio5x00', 'ini-9000de', 'xpeedlx3', 'ini-8000am', 'atemionemesis', 'vusolo', 'vuduo', 'vuuno', 'vuultimo', 'vusolo2', 'vuduo2', 'mutant2400', 'quadbox2400',):
        mycheck = 1
-    elif getBoxType() in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus'): 
+    elif getBoxType() in ('gb800se', 'gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus'): 
        mycheck = 1
-    elif getBoxType() in ('gb800se', 'iqonios300hd', 'starsatlx'): 
+    elif getBoxType() in ('iqonios300hd', 'starsatlx'): 
        mycheck = 2
     else:
         mycheck = 0
