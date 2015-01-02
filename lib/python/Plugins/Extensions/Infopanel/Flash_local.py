@@ -8,6 +8,7 @@ from Components.Task import Task, Job, job_manager, Condition
 from Components.Sources.StaticText import StaticText
 from Screens.Console import Console
 from Screens.MessageBox import MessageBox
+from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
 from Screens.Console import Console
 from Screens.HelpMenu import HelpableScreen
@@ -15,7 +16,7 @@ from Screens.TaskView import JobView
 from Tools.Downloader import downloadWithProgress
 import urllib2
 import os
-from Plugins.Extensions.Infopanel.Extra import shutil
+import shutil
 import math
 from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
 distro =  getImageDistro()
@@ -31,11 +32,19 @@ flashPath = '/media/hdd/images/flash'
 flashTmp = '/media/hdd/images/tmp'
 ofgwritePath = '/usr/bin/ofgwrite'
 #############################################################################################################
+
 def Freespace(dev):
 	statdev = os.statvfs(dev)
 	space = (statdev.f_bavail * statdev.f_frsize) / 1024
 	print "[Flash Online] Free space on %s = %i kilobytes" %(dev, space)
 	return space
+
+def ReadNewfeed():
+	f = open('/etc/enigma2/newfeed', 'r')
+	newfeed = f.readlines()
+	f.close()
+	return newfeed
+
 class FlashOnline(Screen):
 	skin = """
 	<screen position="center,center" size="560,400" title="Flash On the Fly">
@@ -50,7 +59,7 @@ class FlashOnline(Screen):
 		<widget name="info-online" position="10,30" zPosition="1" size="450,100" font="Regular;20" halign="left" valign="top" transparent="1" />
 		<widget name="info-local" position="10,150" zPosition="1" size="450,200" font="Regular;20" halign="left" valign="top" transparent="1" />
 	</screen>"""
-
+		
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
@@ -62,8 +71,8 @@ class FlashOnline(Screen):
 		self["key_blue"] = Button("")
 		self["info-local"] = Label(_("Local = Flash a image from local path /hdd/images"))
 		self["info-online"] = Label(_("Online = Download a image and flash it"))
-
-		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
+		
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"], 
 		{
 			"blue": self.blue,
 			"yellow": self.yellow,
@@ -101,8 +110,8 @@ class FlashOnline(Screen):
 		return True
 
 	def quit(self):
-		self.close()
-
+		self.close()	
+		
 	def blue(self):
 		pass
 
@@ -118,7 +127,6 @@ class FlashOnline(Screen):
 		else:
 			self.close()
 
-
 class doFlashImage(Screen):
 	skin = """
 	<screen position="center,center" size="560,500" title="Flash On the fly (select a image)">
@@ -133,9 +141,10 @@ class doFlashImage(Screen):
 		<widget name="imageList" position="10,10" zPosition="1" size="450,450" font="Regular;20" scrollbarMode="showOnDemand" transparent="1" />
 	</screen>"""
 		
-	def __init__(self, session, online):
+	def __init__(self, session, online ):
 		Screen.__init__(self, session)
 		self.session = session
+
 		Screen.setTitle(self, _("Flash On the fly (select a image)"))
 		self["key_green"] = Button(_("Flash"))
 		self["key_red"] = Button(_("Exit"))
@@ -160,11 +169,14 @@ class doFlashImage(Screen):
 			"cancel": self.quit,
 		}, -2)
 		self.onLayoutFinish.append(self.layoutFinished)
+		self.newfeed = None
+		if os.path.exists('/etc/enigma2/newfeed'):
+			self.newfeed = ReadNewfeed()
 
-
+		
 	def quit(self):
-		self.close()
-
+		self.close()	
+		
 	def blue(self):
 		if self.Online:
 			if image == 0:
@@ -204,40 +216,63 @@ class doFlashImage(Screen):
 			box = "miraclebox-twin"
 		elif box == "xp1000" and machinename.lower() == "sf8 hd":
 			box = "sf8"
-		elif box.startswith('et') and not box == "et10000" and not box == "et8000":
+		elif box.startswith('et') and not box in ('et8000', 'et10000'):
 			box = box[0:3] + 'x00'
 		elif box == 'odinm9' and self.feed == "nfr":
 			box = 'maram9'
 		return box
 
-	def green(self):
+	def green(self, ret = None):
 		sel = self["imageList"].l.getCurrentSelection()
 		if sel == None:
 			print"Nothing to select !!"
 			return
 		file_name = self.imagePath + "/" + sel
 		self.filename = file_name
+		self.sel = sel
 		box = self.box()
 		self.hide()
 		if self.Online:
-			url = self.feedurl + "/" + box + "/" + sel    
-			print "Adresse:%s" % url
-			u = urllib2.urlopen(url)
-			f = open(file_name, 'wb')
-			meta = u.info()
-			#file_size = int(meta.getheaders("Content-Length")[0])
-			print "Downloading: %s" % sel
-			job = ImageDownloadJob(url, file_name, sel)
-			job.afterEvent = "close"
-			job_manager.AddJob(job)
-			job_manager.failed_jobs = []
-			self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable = False, afterEventChangeable = False)
-		else:
-			if sel == str(flashTmp):
-				self.Start_Flashing()
+			url = self.feedurl + "/" + box + "/" + sel
+			print "[Flash Online] Download image: >%s<" % url
+			if self.newfeed:
+				self.feedurl = self.newfeed[0][:-1]
+				url = self.feedurl + "/" + box + "/" + sel
+				authinfo = urllib2.HTTPPasswordMgrWithDefaultRealm()
+				authinfo.add_password(None, self.feedurl, self.newfeed[1][:-1], self.newfeed[2][:-1])
+				handler = urllib2.HTTPBasicAuthHandler(authinfo)
+				myopener = urllib2.build_opener(handler)
+				opened = urllib2.install_opener(myopener)
+				u = urllib2.urlopen(url)
+				total_size = int(u.info().getheaders("Content-Length")[0])
+				downloaded = 0
+				CHUNK = 256 * 1024
+				with open(file_name, 'wb') as fp:
+					while True:
+						chunk = u.read(CHUNK)
+						downloaded += len(chunk)
+						print "Downloading: %s Bytes of %s" % (downloaded, total_size)
+						if not chunk: break
+						fp.write(chunk)
+				self.ImageDownloadCB(False)
 			else:
-				self.unzip_image(self.filename, flashPath)
-				
+				try:
+					u = urllib2.urlopen(url)
+					f = open(file_name, 'wb')
+					f.close()
+					job = ImageDownloadJob(url, file_name, sel)
+					job.afterEvent = "close"
+					job_manager.AddJob(job)
+					job_manager.failed_jobs = []
+					self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable = False, afterEventChangeable = False)
+				except urllib2.URLError as e:
+					print "[Flash Online] Download failed !!\n%s" % e
+					self.session.openWithCallback(self.ImageDownloadCB, MessageBox, _("Download Failed !!" + "\n%s" % e), type = MessageBox.TYPE_ERROR)
+					self.close()
+		else:
+			self.session.openWithCallback(self.startInstallLocal, MessageBox, _("Do you want to backup your settings now?"), default=False)
+			
+
 	def ImageDownloadCB(self, ret):
 		if ret:
 			return
@@ -246,19 +281,102 @@ class doFlashImage(Screen):
 			self.close()
 			return
 		if len(job_manager.failed_jobs) == 0:
-			self.session.openWithCallback(self.askUnzipCB, MessageBox, _("The image is downloaded. Do you want to flash now?"), MessageBox.TYPE_YESNO)
+			self.flashWithPostFlashActionMode = 'online'
+			self.flashWithPostFlashAction()
 		else:
 			self.session.open(MessageBox, _("Download Failed !!"), type = MessageBox.TYPE_ERROR)
 
-	def askUnzipCB(self, ret):
+	def flashWithPostFlashAction(self, ret = True):
 		if ret:
-			self.unzip_image(self.filename, flashPath)
+			print "flashWithPostFlashAction"
+			title =_("Please select what to do after flashing the image:\n(In addition, if it exists, a local script will be executed as well at /media/hdd/images/config/myrestore.sh)")
+			list = ((_("Flash and start installation wizard"), "wizard"),
+			(_("Flash and restore settings and no plugins"), "restoresettingsnoplugin"),
+			(_("Flash and restore settings and selected plugins (ask user)"), "restoresettings"),
+			(_("Flash and restore settings and all saved plugins"), "restoresettingsandallplugins"),
+			(_("Do not flash image"), "abort"))
+			self.session.openWithCallback(self.postFlashActionCallback, ChoiceBox,title=title,list=list,selection=self.SelectPrevPostFashAction())
+		else:
+			self.show()
+
+	def SelectPrevPostFashAction(self):
+		index = 0
+		Settings = False
+		AllPlugins = False
+		noPlugins = False
+		
+		if os.path.exists('/media/hdd/images/config/settings'):
+			Settings = True
+		if os.path.exists('/media/hdd/images/config/plugins'):
+			AllPlugins = True
+		if os.path.exists('/media/hdd/images/config/noplugins'):
+			noPlugins = True
+
+		if 	Settings and noPlugins:
+			index = 1
+		elif Settings and not AllPlugins and not noPlugins:
+			index = 2
+		elif Settings and AllPlugins:
+			index = 3
+
+		return index
+
+	def postFlashActionCallback(self, answer):
+		print "postFlashActionCallback"
+		restoreSettings   = False
+		restoreAllPlugins = False
+		restoreSettingsnoPlugin = False
+		if answer is not None:
+			if answer[1] == "restoresettings":
+				restoreSettings   = True
+			if answer[1] == "restoresettingsnoplugin":
+				restoreSettings = True
+				restoreSettingsnoPlugin = True
+			if answer[1] == "restoresettingsandallplugins":
+				restoreSettings   = True
+				restoreAllPlugins = True
+			if restoreSettings:
+				self.SaveEPG()
+			if answer[1] != "abort":
+				if restoreSettings:
+					try:
+						os.system('mkdir -p /media/hdd/images/config')
+						os.system('touch /media/hdd/images/config/settings')
+					except:
+						print "postFlashActionCallback: failed to create /media/hdd/images/config/settings"
+				else:
+					if os.path.exists('/media/hdd/images/config/settings'):
+						os.system('rm -f /media/hdd/images/config/settings')
+				if restoreAllPlugins:
+					try:
+						os.system('mkdir -p /media/hdd/images/config')
+						os.system('touch /media/hdd/images/config/plugins')
+					except:
+						print "postFlashActionCallback: failed to create /media/hdd/images/config/plugins"
+				else:
+					if os.path.exists('/media/hdd/images/config/plugins'):
+						os.system('rm -f /media/hdd/images/config/plugins')
+				if restoreSettingsnoPlugin:
+					try:
+						os.system('mkdir -p /media/hdd/images/config')
+						os.system('touch /media/hdd/images/config/noplugins')
+					except:
+						print "postFlashActionCallback: failed to create /media/hdd/images/config/noplugins"
+				else:
+					if os.path.exists('/media/hdd/images/config/noplugins'):
+						os.system('rm -f /media/hdd/images/config/noplugins')
+				if self.flashWithPostFlashActionMode == 'online':
+					self.unzip_image(self.filename, flashPath)
+				else:
+					self.startInstallLocalCB()
+			else:
+				self.show()
 		else:
 			self.show()
 
 	def unzip_image(self, filename, path):
 		print "Unzip %s to %s" %(filename,path)
-		self.session.openWithCallback(self.cmdFinished, Console, title = _("Unzipping files, Please wait ..."), cmdlist = ['unzip ' + filename + ' -d ' + path, "sleep 3"], closeOnSuccess = True)
+		self.session.openWithCallback(self.cmdFinished, Console, title = _("Unzipping files, Please wait ..."), cmdlist = ['unzip ' + filename + ' -o -d ' + path, "sleep 3"], closeOnSuccess = True)
 
 	def cmdFinished(self):
 		self.prepair_flashtmp(flashPath)
@@ -294,12 +412,12 @@ class doFlashImage(Screen):
 		if os.path.exists(flashTmp):
 			flashTmpold = flashTmp + 'old'
 			os.system('mv %s %s' %(flashTmp, flashTmpold))
-			os.system('rm -rf ' + flashTmp)
+			os.system('rm -rf %s' %flashTmpold)
 		if not os.path.exists(flashTmp):
 			os.mkdir(flashTmp)
 		kernel = True
 		rootfs = True
-
+		
 		for path, subdirs, files in os.walk(tmpPath):
 			for name in files:
 				if name.find('kernel') > -1 and name.endswith('.bin') and kernel:
@@ -312,10 +430,38 @@ class doFlashImage(Screen):
 					dest = flashTmp + '/rootfs.bin'
 					shutil.copyfile(binfile, dest)
 					rootfs = False
-
+				elif name.find('uImage') > -1 and kernel:
+					binfile = os.path.join(path, name)
+					dest = flashTmp + '/uImage'
+					shutil.copyfile(binfile, dest)
+					kernel = False
+				elif name.find('e2jffs2') > -1 and name.endswith('.img') and rootfs:
+					binfile = os.path.join(path, name)
+					dest = flashTmp + '/e2jffs2.img'
+					shutil.copyfile(binfile, dest)
+					rootfs = False
+					
 	def yellow(self):
 		if not self.Online:
-			self.session.openWithCallback(self.DeviceBrowserClosed, DeviceBrowser, None, matchingPattern="^.*\.(zip|bin|jffs2)", showDirectories=True, showMountpoints=True, inhibitMounts=["/autofs/sr0/"])
+			self.session.openWithCallback(self.DeviceBrowserClosed, DeviceBrowser, None, matchingPattern="^.*\.(zip|bin|jffs2|img)", showDirectories=True, showMountpoints=True, inhibitMounts=["/autofs/sr0/"])
+		else:
+			from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen
+			self.session.openWithCallback(self.green,BackupScreen, runBackup = True)
+
+	def startInstallLocal(self, ret = None):
+		if ret:
+			from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen
+			self.flashWithPostFlashActionMode = 'local'
+			self.session.openWithCallback(self.flashWithPostFlashAction,BackupScreen, runBackup = True)
+		else:
+			self.flashWithPostFlashActionMode = 'local'
+			self.flashWithPostFlashAction()
+
+	def startInstallLocalCB(self, ret = None):
+		if self.sel == str(flashTmp):
+			self.Start_Flashing()
+		else:
+			self.unzip_image(self.filename, flashPath)
 
 	def DeviceBrowserClosed(self, path, filename, binorzip):
 		if path:
@@ -329,7 +475,7 @@ class doFlashImage(Screen):
 			os.mkdir(flashTmp)
 			if binorzip == 0:
 				for files in os.listdir(self.imagePath):
-					if files.endswith(".bin") or files.endswith('.jffs2'):
+					if files.endswith(".bin") or files.endswith('.jffs2') or files.endswith('.img'):
 						self.prepair_flashtmp(strPath)
 						break
 				self.Start_Flashing()
@@ -354,7 +500,8 @@ class doFlashImage(Screen):
 			try:
 				response = urllib2.urlopen(req)
 			except urllib2.URLError as e:
-				print "URL ERROR: %s" % e
+				print "URL ERROR: %s\n%s" % (e,url)
+				self["imageList"].l.setList(self.imagelist)
 				return
 
 			try:
@@ -393,6 +540,12 @@ class doFlashImage(Screen):
 						break
 
 		self["imageList"].l.setList(self.imagelist)
+
+	def SaveEPG(self):
+		from enigma import eEPGCache
+		epgcache = eEPGCache.getInstance()
+		epgcache.save()
+
 
 class ImageDownloadJob(Job):
 	def __init__(self, url, filename, file):
@@ -449,7 +602,7 @@ class ImageDownloadTask(Task):
 			self.finish(aborted = True)
 		else:
 			Task.processFinished(self, 0)
-			
+
 class DeviceBrowser(Screen, HelpableScreen):
 	skin = """
 		<screen name="DeviceBrowser" position="center,center" size="520,430" >
@@ -520,4 +673,3 @@ class DeviceBrowser(Screen, HelpableScreen):
 
 	def exit(self):
 		self.close(False, False, -1)
-
