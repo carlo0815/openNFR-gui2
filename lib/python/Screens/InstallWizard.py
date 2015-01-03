@@ -5,6 +5,7 @@ from Components.config import config, ConfigSubsection, ConfigBoolean, getConfig
 from Components.Network import iNetwork
 from Components.Ipkg import IpkgComponent
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
+from Plugins.Systemplugins.SoftwareManager.BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getBackupFilename
 from enigma import eDVBDB
 import os
 
@@ -113,8 +114,14 @@ class InstallWizard(Screen, ConfigListScreen):
 						
  
 	def run1(self):
-                self.session.open(PluginInstall)
-                return		
+		if os.path.exists("/media/hdd/images/config/plugins") and config.misc.firstrun.value:
+			self.session.openWithCallback(self.startRestore, MessageBox, _("Are you sure you want to restore the backup?\nYour receiver will restart after the backup has been restored!"))
+		self.session.open(PluginInstall)
+		return		
+
+	def startRestore(self, ret = False):
+		if ret:
+			self.session.open(RestoreScreen, runRestore = True)
 
 
 class InstallWizardIpkgUpdater(Screen):
