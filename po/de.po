@@ -11730,3 +11730,87 @@ msgstr "Das Image wird geflasht und startet in ein paar Minuten automatisch.\n"
 
 msgid "No config to start, please check /etc/openvpn and try again."
 msgstr "In /etc/openvpn ist keine config, bitte ändern und nochmal starten."
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Network Interface"
+msgstr "Netzwerkschnittstelle"
+
+msgid "Network Services"
+msgstr "Netzwerkdienste"
+
+msgid "Setup interface"
+msgstr "Einstellungen Netzwerk"
+
+msgid "Setup Samba"
+msgstr "Einstellungen Samba"
+
+msgid "NetworkSamba"
+msgstr "Samba-Einstellungen"
+
+msgid "Setup NFS"
+msgstr "Einstellungen NFS"
+
+msgid "Setup FTP"
+msgstr "Einstellungen FTP"
+
+msgid "NetworkFtp"
+msgstr "FTP-Einstellungen"
+
+msgid "Setup AFP"
+msgstr "Einstellungen AFP"
+
+msgid "Setup OpenVPN"
+msgstr "Einstellungen OpenVPN"
+
+msgid "Setup MiniDLNA"
+msgstr "Einstellungen MiniDLNA"
+
+msgid "Setup Inadyn"
+msgstr "Einstellungen Inadyn"
+
+msgid "Setup SABnzbd"
+msgstr "Einstellungen SABnzbd"
+
+msgid "Setup uShare"
+msgstr "Einstellungen uShare"
+
+msgid "Setup Telnet"
+msgstr "Einstellungen Telnet"
+
+msgid "NetworkTelnet"
+msgstr "Telnet-Einstellungen"
+
+msgid "AutoMountManager"
+msgstr "Automatische Mount Verwaltung"
+
+msgid "HddFastRemove"
+msgstr "Laufwerk schnell entfernen"
+
+msgid "Plugin browser"
+msgstr "Plugin Browser"
+
+msgid "Move Plugins back to Box"
+msgstr "Plugins in den Flash verschieben"
+
+msgid "Mount point:"
+msgstr "Swap Speicherort:"
+
+msgid "Filename:"
+msgstr "Swap Dateiname:"
+
+msgid "Filesize:"
+msgstr "Swap Dateigröße:"
+
+msgid "Activate boot on startup:"
+msgstr "Aktiviere Swap beim Start der Box:"
+
+msgid "Create swap file"
+msgstr "Swapdatei erstellen"
+
+msgid "Tuner Configuration"
+msgstr "Tuner Konfiguration"
+
+msgid "Choose Tuner"
+msgstr "Tuner auswählen"
