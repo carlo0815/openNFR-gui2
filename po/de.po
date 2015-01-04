@@ -11752,6 +11752,9 @@ msgstr "Samba-Einstellungen"
 msgid "Setup NFS"
 msgstr "Einstellungen NFS"
 
+msgid "NetworkNfs"
+msgstr "NFS-Einstellungen"
+
 msgid "Setup FTP"
 msgstr "Einstellungen FTP"
 
@@ -11761,20 +11764,38 @@ msgstr "FTP-Einstellungen"
 msgid "Setup AFP"
 msgstr "Einstellungen AFP"
 
+msgid "NetworkAfp"
+msgstr "AFP-Einstellungen"
+
 msgid "Setup OpenVPN"
 msgstr "Einstellungen OpenVPN"
+
+msgid "NetworkOpenvpn"
+msgstr "OpenVPN-Einstellungen"
 
 msgid "Setup MiniDLNA"
 msgstr "Einstellungen MiniDLNA"
 
+msgid "NetworkMiniDLNA"
+msgstr "MiniDLNA-Einstellungen"
+
 msgid "Setup Inadyn"
 msgstr "Einstellungen Inadyn"
+
+msgid "NetworkInadyn"
+msgstr "Inadyn-Einstellungen"
 
 msgid "Setup SABnzbd"
 msgstr "Einstellungen SABnzbd"
 
+msgid "NetworkSABnzbd"
+msgstr "SABnzbd-Einstellungen"
+
 msgid "Setup uShare"
 msgstr "Einstellungen uShare"
+
+msgid "NetworkuShare"
+msgstr "uShare-Einstellungen"
 
 msgid "Setup Telnet"
 msgstr "Einstellungen Telnet"
