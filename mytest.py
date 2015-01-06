@@ -517,8 +517,6 @@ def runScreenTest():
 
 	CiHandler.setSession(session)
 
-	screensToRun = [ p.__call__ for p in plugins.getPlugins(PluginDescriptor.WHERE_WIZARD) ]
-
 	profile("wizards")
 	screensToRun = []
 	RestoreSettings = None
