@@ -281,11 +281,19 @@ class doFlashImage(Screen):
 			self.close()
 			return
 		if len(job_manager.failed_jobs) == 0:
-			self.flashWithPostFlashActionMode = 'online'
-			self.flashWithPostFlashAction()
+			self.session.openWithCallback(self.SettingsBack, MessageBox, _("Do you want to backup your settings now?"), default=False)
 		else:
 			self.session.open(MessageBox, _("Download Failed !!"), type = MessageBox.TYPE_ERROR)
-
+			
+	def SettingsBack(self, ret):
+		if ret:
+			from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen
+			self.flashWithPostFlashActionMode = 'online'
+			self.session.openWithCallback(self.flashWithPostFlashAction,BackupScreen, runBackup = True)		
+		else:
+			self.flashWithPostFlashActionMode = 'online'
+			self.flashWithPostFlashAction()
+			
 	def flashWithPostFlashAction(self, ret = True):
 		if ret:
 			print "flashWithPostFlashAction"
