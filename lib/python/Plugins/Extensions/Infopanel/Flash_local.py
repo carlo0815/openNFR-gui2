@@ -31,6 +31,8 @@ imagePath = '/media/hdd/images'
 flashPath = '/media/hdd/images/flash'
 flashTmp = '/media/hdd/images/tmp'
 ofgwritePath = '/usr/bin/ofgwrite'
+strPath = ''
+filename = ''
 #############################################################################################################
 
 def Freespace(dev):
@@ -151,6 +153,7 @@ class doFlashImage(Screen):
 		self["key_blue"] = Button("")
 		self["key_yellow"] = Button("")
 		self.filename = None
+		self.strPath = None
 		self.imagelist = []
 		self.simulate = False
 		self.Online = online
@@ -375,6 +378,8 @@ class doFlashImage(Screen):
 						os.system('rm -f /media/hdd/images/config/noplugins')
 				if self.flashWithPostFlashActionMode == 'online':
 					self.unzip_image(self.filename, flashPath)
+				elif self.flashWithPostFlashActionMode == 'device':
+					self.unzip_image(self.filename, flashPath)
 				else:
 					self.startInstallLocalCB()
 			else:
@@ -488,12 +493,17 @@ class doFlashImage(Screen):
 						break
 				self.Start_Flashing()
 			elif binorzip == 1:
-				self.unzip_image(strPath + '/' + filename, flashPath)
+				from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen
+				self.filename = strPath + '/' + filename
+				self.strPath = strPath
+				self.flashWithPostFlashActionMode = 'device'
+				self.session.openWithCallback(self.flashWithPostFlashAction,BackupScreen, runBackup = True)				
 			else:
 				self.layoutFinished()
 	
 		else:
 			self.imagePath = imagePath
+			
 
 	def layoutFinished(self):
 		box = self.box()
