@@ -11835,3 +11835,12 @@ msgstr "Tuner Konfiguration"
 
 msgid "Choose Tuner"
 msgstr "Tuner auswählen"
+
+msgid "Backup Settings"
+msgstr "Einstellungen sichern"
+
+msgid "PluginInstallwizard"
+msgstr "Plugins installieren"
+
+msgid "PluginDeinstallwizard"
+msgstr "Plugins deinstallieren"
