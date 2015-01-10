@@ -70,6 +70,7 @@ from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
 from Plugins.Extensions.Infopanel.Manager import *
 from Plugins.Extensions.Infopanel.Softcam import *
+from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 from Plugins.Extensions.Infopanel.SoftwarePanel import SoftwarePanel
 from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, RestoreScreen, BackupSelection, getBackupPath, getBackupFilename
@@ -296,18 +297,14 @@ class Infopanel(Screen, InfoBarPiP):
 		self["label1"] = Label(INFO_Panel_Version)
 
 		self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))		
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Multi-Key-Action'), _("Multi Panel"), 'Multi-Key-Action')))		
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamPanel'), _("SoftcamPanel"), 'SoftcamPanel')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamManager'), _("Softcam-Manager"), 'SoftcamManager')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("ImageManager" ), _("Image-Manager"), ("image-manager"))))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("RemoteManager" ), _("Remote-Manager"), ("remote-manager"))))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("PluginManager" ), _("Plugin-Manager"), ("plugin-manager"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("QuickMenu" ), _("Quick-Menu"), ("QuickMenu"))))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software-Manager"), ("software-manager"))))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('KeymapSel'), _("Keymap-Selection"), 'KeymapSel')))	
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Plugins'), _("Plugins"), 'Plugins')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Extras'), _("Extras"), 'Extras')))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Infos'), _("Infos"), 'Infos')))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('PluginInstallwizard'), _("PluginInstallwizard"), 'PluginInstallwizard')))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('PluginDeinstallwizard'), _("PluginDeinstallwizard"), 'PluginDeinstallwizard')))
+		
 		
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1280):
@@ -393,8 +390,8 @@ class Infopanel(Screen, InfoBarPiP):
 		global INFOCONF
 		menu = self['Mlist'].l.getCurrentSelection()[0][2]
 		print '[INFO-Panel] MenuItem: ' + menu
-		if menu == "Plugins":
-			self.Plugins()
+		if menu == "Extras":
+			self.Extras()
 		elif menu == "Pluginbrowser":
 			self.session.open(PluginBrowser)
 		elif menu == "Infos":
@@ -431,10 +428,14 @@ class Infopanel(Screen, InfoBarPiP):
 			self.System()
 		elif menu == "JobManager":
 			self.session.open(ScriptRunner)
-		elif menu == "SoftcamPanel":
+		elif menu == "SoftcamManager":
 			self.session.open(NFRCamManager)
-		elif menu == "software-manager":
-			self.Software_Manager()
+		elif menu == "image-manager":
+			self.Image_Manager()
+		elif menu == "remote-manager":
+			self.Remote_Manager()
+		elif menu == "plugin-manager":
+			self.Plugin_Manager()
 		elif menu == "software-update":
 			self.session.open(SoftwarePanel)
 		elif menu == "backup-image":
@@ -454,6 +455,8 @@ class Infopanel(Screen, InfoBarPiP):
 				self.session.open(MessageBox, _("Sorry no backups found!"), MessageBox.TYPE_INFO, timeout = 10)
 		elif menu == "backup-files":
 			self.session.openWithCallback(self.backupfiles_choosen,BackupSelection)
+		elif menu == "flash-local":
+			self.session.open(FlashOnline)
 		elif menu == "MultiQuickButton":
 			self.session.open(MultiQuickButton)
 		elif menu == "MountManager":
@@ -479,17 +482,18 @@ class Infopanel(Screen, InfoBarPiP):
 		else:
 			pass
 
-	def Plugins(self):
-		#// Create Plugin Menu
+	def Extras(self):
+		#// Create Extras Menu
 		global menu
 		menu = 1
-		self["label1"].setText(_("Plugins"))
+		self["label1"].setText(_("Extras"))
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('MountManager'), _("MountManager"), 'MountManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('JobManager'), _("JobManager"), 'JobManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('SwapManager'), _("SwapManager"), 'SwapManager')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
@@ -543,19 +547,48 @@ class Infopanel(Screen, InfoBarPiP):
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
-	def Software_Manager(self):
-		#// Create Software Manager Menu
+	def Image_Manager(self):
+		#// Create Image Manager Menu
 		global menu
 		menu = 1
-		self["label1"].setText(_("Software Manager"))
+		self["label1"].setText(_("Image Manager"))
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
                 self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
+		self["Mlist"].moveToIndex(0)
+		self["Mlist"].l.setList(self.tlist)
+
+	def Remote_Manager(self):
+		#// Create Keymap Menu
+		global menu
+		menu = 1
+		self["label1"].setText(_("Remote Manager"))
+		self.tlist = []
+		self.oldmlist = []
+		self.oldmlist = self.Mlist
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('Multi-Key-Action'), _("Edit remote buttons"), 'Multi-Key-Action')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('KeymapSel'), _("Keymap-Selection"), 'KeymapSel')))
+		self["Mlist"].moveToIndex(0)
+		self["Mlist"].l.setList(self.tlist)
+
+	def Plugin_Manager(self):
+		#// Create Plugin Menu
+		global menu
+		menu = 1
+		self["label1"].setText(_("Plugin Manager"))
+		self.tlist = []
+		self.oldmlist = []
+		self.oldmlist = self.Mlist
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginInstallwizard'), _("PluginInstallwizard"), 'PluginInstallwizard')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginDeinstallwizard'), _("PluginDeinstallwizard"), 'PluginDeinstallwizard')))
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
