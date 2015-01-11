@@ -170,7 +170,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://openpli.org/download'
         elif self.distro == 'atemio4you':
             self.feed = 'atemio4you'
-            self.feedurl = 'http://image.atemio4you.com'
+            self.feedurl = 'http://nightly.atemio4you.com/2.3/image'        
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
             self.feedurl = 'http://v4.hdfreaks.cc'
@@ -340,13 +340,13 @@ class DownloadOnLineImage(Screen):
                     urlbox = 'maxdigital/xp1000/' 
                     stb = '1'
             else:   
-                stb = 'no Image for this Box on this Side'                   
+                stb = 'no Image for this Box on this Side'
         elif self.distro == 'atemio4you':
             if box in ('atemio5x00', 'atemionemesis'):
                 box = getBoxType()
                 stb = '1'
             else:   
-                stb = 'no Image for this Box on this Side'                    
+                stb = 'no Image for this Box on this Side'                                    
         elif self.distro == 'openhdf':
             if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk'):
                 box = getBoxType()
@@ -376,7 +376,7 @@ class DownloadOnLineImage(Screen):
             box = self.box()
             self.hide()
             if self.distro == 'openvix':
-                url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel
+                url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
@@ -435,8 +435,10 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'atemio4you'):
+        elif self.distro in ('openatv', 'egami', 'openmips'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
+  	elif self.distro == 'atemio4you':
+	    url = '%s/%s/' % (self.feedurl, box)             
         elif self.distro == 'openvix':
             url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)
         elif self.distro == 'opendroid':
@@ -466,23 +468,22 @@ class DownloadOnLineImage(Screen):
         lines = the_page.split('\n')
         
         tt = len(box)
-        #fobj = open("/tmp/ausgabe.txt", "w")
         if stb == '1':
             for line in lines:
-                #fobj.write(line)
                 if line.find("<a href='%s/" % box) > -1:
                     t = line.find("<a href='%s/" % box)
                     t2 = line.find("'>egami")
-                    t3 = line.find("'>atemio")
                     if self.feed in 'openatv':
                         self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
                     elif self.feed in 'egami':
                         self.imagelist.append(line[t + tt + 10:t2])
-                    elif self.feed in 'atemio4you':
-                        self.imagelist.append(line[t + tt + 10:t3])
                     elif self.feed == 'openmips':
                         line = line[t + tt + 10:t + tt + tt + 40]
-                        self.imagelist.append(line)   
+                        self.imagelist.append(line) 
+                elif line.find('href="atemio4you-') > -1:
+                    t4 = line.find('atemio4you-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                             
                 elif line.find('file=openvix-') > -1:
                     t4 = line.find('file=')
                     self.imagelist.append(line[t4 + 5:-2])
@@ -508,7 +509,6 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])                       
-            #fobj.close()
         else:
             self.imagelist.append(stb)
         self['imageList'].l.setList(self.imagelist)
