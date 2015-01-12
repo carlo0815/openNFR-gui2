@@ -11844,3 +11844,71 @@ msgstr "Plugins installieren"
 
 msgid "PluginDeinstallwizard"
 msgstr "Plugins deinstallieren"
+
+msgid "Running Myrestore script, Please wait ..."
+msgstr "Myrestore Script wird ausgeführt..."
+
+msgid "Your %s %s will Reboot..."
+msgstr "Deine %s %s startet neu..."
+
+msgid "Installing plugins..."
+msgstr "Installiere Plugins..."
+
+msgid "Restart Network Adapter"
+msgstr "Neustart des Netzwerkadapters"
+
+msgid "Restore Plugins"
+msgstr "Wiederherstellen der Plugins"
+
+msgid ""
+"Backup plugins found\n"
+"do you want to install now?"
+msgstr ""
+"Gesicherte Plugins gefunden!\n"
+"Sollen die Plugins nun installiert werden?"
+
+msgid "Restart Network"
+msgstr "Netzwerk neu starten"
+
+msgid "Install Plugins"
+msgstr "Installiere Plugins"
+
+msgid "Please wait while we check your installed plugins..."
+msgstr "Bitte warten, die installierten Plugins werden geprüft..."
+
+msgid ""
+"Please select what to do after flashing the image:\n"
+"(In addition, if it exists, a local script will be executed as well at /"
+"media/hdd/images/config/myrestore.sh)"
+msgstr ""
+"Wähle was nach dem flashen geschehen soll:\n"
+"( Wenn ein lokales Skript in\n"
+"/media/hdd/images/config/myrestore.sh\n"
+"vorhanden ist, wird es ausgeführt. )"
+
+msgid "Flash and start installation wizard"
+msgstr "Flashen und Assistenten für die Grundeinstellung benutzen"
+
+msgid "Flash and restore settings and no plugins"
+msgstr "Flashen und Wiederherstellen der Einstellungen, ohne Plugins"
+
+msgid "Flash and restore settings and selected plugins (ask user)"
+msgstr "Flashen und Wiederherstellen der Einstellungen (mit Plugin-Abfrage)"
+
+msgid "Flash and restore settings and all saved plugins"
+msgstr "Flashen und Wiederherstellen der Einstellungen incl. Plugins"
+
+msgid "Do not flash image"
+msgstr "Jetzt nicht flashen"
+
+msgid "Unzipping files, Please wait ..."
+msgstr "Dateien werden entpackt, Bitte warten..."
+
+msgid "Do you want to backup your settings now?"
+msgstr "Möchtest du deine Einstellungen jetzt sichern?"
+
+msgid "Download Failed !!"
+msgstr "Download fehlgeschlagen !!"
+
+msgid "Welcome..."
+msgstr "Willkommen..."
