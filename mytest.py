@@ -524,8 +524,10 @@ def runScreenTest():
 		if autorestoreLoop():
 			RestoreSettings = True
 			from Plugins.SystemPlugins.SoftwareManager.BackupRestore import RestoreScreen
+			os.system("rm /media/hdd/images/config/settings")
 			session.open(RestoreScreen, runRestore = True)
 		else:
+			os.system("rm /media/hdd/images/config/settings")
 			screensToRun = [ p.__call__ for p in plugins.getPlugins(PluginDescriptor.WHERE_WIZARD) ]
 			screensToRun += wizardManager.getWizards()
 	else:
