@@ -35,7 +35,7 @@ class TimerEntry(Screen, ConfigListScreen):
 
 		self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
-
+		self["FreeDiskSpace"] = Label(_("FreeDiskSpace"))
 		self["description"] = Label("")
 		self["oktext"] = Label(_("OK"))
 		self["canceltext"] = Label(_("Cancel"))
