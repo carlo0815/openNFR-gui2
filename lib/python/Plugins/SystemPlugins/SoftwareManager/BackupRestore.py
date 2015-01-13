@@ -559,6 +559,7 @@ class RestorePlugins(Screen):
 	def setWindowTitle(self):
 		self.setTitle(_("Restore Plugins"))
 		if os.path.exists("/media/hdd/images/config/plugins") and config.misc.firstrun.value:
+			os.system("rm /media/hdd/images/config/plugins")
 			self.green()
 
 	def exit(self):
