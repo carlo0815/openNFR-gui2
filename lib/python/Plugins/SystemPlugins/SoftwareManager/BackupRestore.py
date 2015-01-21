@@ -1,6 +1,6 @@
-from os import path, makedirs, listdir, stat, rename, remove
+from os import path, makedirs, listdir, stat, rename, remove, removedirs
 from datetime import date
-
+from time import time, strftime, localtime
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.Console import Console
@@ -25,12 +25,26 @@ from os import system, popen, path, makedirs, listdir, access, stat, rename, rem
 from time import gmtime, strftime, localtime, sleep
 from datetime import date
 from boxbranding import getBoxType, getMachineBrand, getMachineName
+import shutil
 
 boxtype = getBoxType()
-
+START = time()
+dt1 = strftime("%Y%m%d_%H%M", localtime(START))
 config.plugins.configurationbackup = ConfigSubsection()
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
 config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+dirsbackup = config.plugins.configurationbackup.backuplocation.value + 'channellist_' + dt1
+
+def getBackupPathChannel():
+	backuppath = config.plugins.configurationbackup.backuplocation.value
+	if backuppath.endswith('/'):
+		return backuppath + 'backup_channellist'
+	else:
+		return backuppath + '/backup_channellist'
+
+def getBackupFilenameChannel():
+	return "enigma2_backup_channellist" + dt1 + ".tar.gz"
+
 
 def getBackupPath():
 	backuppath = config.plugins.configurationbackup.backuplocation.value
@@ -623,3 +637,72 @@ class RestorePlugins(Screen):
 			return None
 		else:
 			return res.replace("\n", "")
+			
+class Dream_BackupScreen(Screen, ConfigListScreen):
+	skin = """
+		<screen position="135,144" size="350,310" title="Backup is running" >
+		<widget name="config" position="10,10" size="330,250" transparent="1" scrollbarMode="showOnDemand" />
+		</screen>"""
+
+	def __init__(self, session, runBackup = False):
+		Screen.__init__(self, session)
+		self.session = session
+		self.runBackup = runBackup
+		self["actions"] = ActionMap(["WizardActions", "DirectionActions"],
+		{
+			"ok": self.close,
+			"back": self.close,
+			"cancel": self.close,
+		}, -1)
+		self.finished_cb = None
+		self.backuppathChannel = getBackupPathChannel()
+		self.backupfileChannel = getBackupFilenameChannel()
+		self.fullbackupfilenameChannel = self.backuppathChannel + "/" + self.backupfileChannel
+		self.list = []
+		ConfigListScreen.__init__(self, self.list)
+		self.onLayoutFinish.append(self.layoutFinished)
+		if self.runBackup:
+			self.onShown.append(self.doBackup)
+
+	def layoutFinished(self):
+		self.setWindowTitle()
+
+	def setWindowTitle(self):
+		self.setTitle(_("Backup is running..."))
+
+	def doBackup(self):
+		configfile.save()
+		try:
+			if path.exists(self.backuppathChannel) == False:
+				makedirs(self.backuppathChannel)
+                        makedirs(dirsbackup)
+			cmd1 = "cp /etc/enigma2/blacklist /etc/enigma2/lamedb /etc/enigma2/whitelist /etc/enigma2/*.radio  /etc/enigma2/*.tv /etc/tuxbox/*.xml " + dirsbackup
+			cmd2 = "tar -czvf " + self.fullbackupfilenameChannel + " " + dirsbackup + " >/dev/null 2>&1"
+			cmd = [cmd1, cmd2]
+			if path.exists(self.fullbackupfilenameChannel):
+				dt = str(date.fromtimestamp(stat(self.fullbackupfilenameChannel).st_ctime))
+				self.newfilenameChannel = self.backuppathChannel + "/" + dt + '-' + self.backupfileChannel
+				if path.exists(self.newfilenameChannel):
+					remove(self.newfilenameChannel)
+				rename(self.fullbackupfilenameChannel,self.newfilenameChannel)
+			if self.finished_cb:
+				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = cmd,finishedCallback = self.backupFinishedCB,closeOnSuccess = True)
+			else:
+				self.session.open(Console, title = _("Backup is running..."), cmdlist = cmd,finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
+		except OSError:
+			if self.finished_cb:
+				self.session.openWithCallback(self.finished_cb, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
+			else:
+				self.session.openWithCallback(self.backupErrorCB,MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 ) 
+                        
+
+	def backupFinishedCB(self,retval = None):
+	        shutil.rmtree(dirsbackup)
+		self.close(True)
+
+	def backupErrorCB(self,retval = None):
+		self.close(False)
+
+	def runAsync(self, finished_cb):
+		self.finished_cb = finished_cb
+		self.doBackup() 			
