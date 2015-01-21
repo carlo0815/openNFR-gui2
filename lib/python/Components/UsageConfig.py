@@ -27,6 +27,11 @@ def InitUsageConfig():
 	config.plugins.infopanel_frozencheck = ConfigSubsection()
 	config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
 
+	config.plugins.configurationbackup = ConfigSubsection()
+	config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+	config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+
+
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)	
 
