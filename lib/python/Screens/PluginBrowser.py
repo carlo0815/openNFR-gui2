@@ -24,9 +24,19 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
-
+from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
+from Components.ProgressBar import ProgressBar
 
 language.addCallback(plugins.reloadPlugins)
+
+def getVarSpaceKb():
+    try:
+        s = statvfs('/')
+    except OSError:
+        return (0, 0)
+
+    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+
 
 class PluginBrowserSummary(Screen):
 	def __init__(self, session, parent):
@@ -182,6 +192,7 @@ class PluginDownloadBrowser(Screen):
 		self.reload_settings = False
 		self.check_settings = False
 		self.check_bootlogo = False
+		self['spaceused'] = ProgressBar()		
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
 
@@ -324,12 +335,38 @@ class PluginDownloadBrowser(Screen):
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
 
-	def setWindowTitle(self):
-		if self.type == self.DOWNLOAD:
-			self.setTitle(_("Install plugins"))
-		elif self.type == self.REMOVE:
-			self.setTitle(_("Remove plugins"))
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
 
+	def setWindowTitle(self):
+	    if self.type == self.DOWNLOAD:
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)
+	    elif self.type == self.REMOVE:
+ 		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)                       
+                        			
 	def startIpkgListInstalled(self, pkgname = PLUGIN_PREFIX + '*'):
 		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed '%s'" % pkgname)
 

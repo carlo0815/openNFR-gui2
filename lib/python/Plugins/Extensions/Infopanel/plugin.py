@@ -77,6 +77,8 @@ from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, Re
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
+from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
+from Components.ProgressBar import ProgressBar
 
 # Hide Softcam-Panel Setup when no softcams installed
 if (config.plugins.showinfopanelextensions.getValue()):
@@ -91,6 +93,14 @@ if config.usage.keymap.getValue() != eEnv.resolve("${datadir}/enigma2/keymap.xml
 		setDefaultKeymap()
 	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.u80")) and config.usage.keymap.getValue() == eEnv.resolve("${datadir}/enigma2/keymap.u80"):
 		setDefaultKeymap()
+
+def getVarSpaceKb():
+    try:
+        s = statvfs('/')
+    except OSError:
+        return (0, 0)
+
+    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 		
 def setDefaultKeymap():
 	print "[Info-Panel] Set Keymap to Default"
@@ -202,18 +212,19 @@ def Plugins(**kwargs):
 
 #############------- SKINS --------############################
 
-MENU_SKIN = """<screen position="center,center" size="950,470" title="INFO Panel" >
-	<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1"/>
-	<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1"/>
-	<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1"/>
-		<widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="#FFFFFF" halign="right" transparent="1" zPosition="5">
-		<convert type="ClockToText">>Format%H:%M:%S</convert>
-	</widget>
-	<eLabel backgroundColor="#56C856" position="0,330" size="950,1" zPosition="0" />
-	<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="#251e1f20" transparent="1" />
-	<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
-
-</screen>"""
+MENU_SKIN = """<screen position="center,center" size="950,470" title="INFO Panel">
+				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
+				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
+				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
+				<widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="white" halign="right" transparent="1" zPosition="5">
+				<convert type="ClockToText">&gt;Format%H:%M:%S</convert>
+				</widget>
+				<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
+				<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
+				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="unf2e000" halign="left" />
+				<eLabel name="spaceused" text="% Flash Used..." position="12,390" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
+				<widget name="spaceused" position="171,390" size="751,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
+			</screen>"""
 
 CONFIG_SKIN = """<screen position="center,center" size="600,440" title="PANEL Config" >
 	<widget name="config" position="10,10" size="580,377" enableWrapAround="1" scrollbarMode="showOnDemand" />
@@ -266,6 +277,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.skin = MENU_SKIN
 		self.onShown.append(self.setWindowTitle)
 		self.service = None
+		self['spaceused'] = ProgressBar()			
 		global pluginlist
 		global videomode
 		global infook
@@ -315,6 +327,28 @@ class Infopanel(Screen, InfoBarPiP):
 		menu = 0
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
+
+	def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Info Panel'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)		
+		
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
 			selection = self['Mlist'].l.getCurrentSelection()[0]
@@ -324,8 +358,6 @@ class Infopanel(Screen, InfoBarPiP):
 	def selectionChanged(self):
 		item = self.getCurrentEntry()
 
-	def setWindowTitle(self):
-		self.setTitle(_("Info Panel"))
 
 	def up(self):
 		#self["Mlist"].up()

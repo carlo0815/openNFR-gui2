@@ -11,30 +11,35 @@ from enigma import eConsoleAppContainer, eServiceReference, ePicLoad, getDesktop
 import Screens.InfoBar  
 import os
 import shutil
+from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
+from Components.ProgressBar import ProgressBar
+
+def getVarSpaceKb():
+    try:
+        s = statvfs('/')
+    except OSError:
+        return (0, 0)
+
+    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+
+
 class MovePlugins_ext(Screen):
 	skin = """
-		<screen name="MovePlugins_ext" position="0,0" size="1280,720" title="Move Plugins to HDD/USB" flags="wfNoBorder">
-			<ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="menu/back2b.png" />
-			<eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
-			<widget source="session.VideoPicture" render="Pig" position="837,95" zPosition="-8" size="375,214" />
-			<ePixmap position="848,596" size="350,44" pixmap="menu/db.png" transparent="1" alphatest="blend" />
-			<widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
-			<convert type="ClockToText">Default</convert>
-			</widget>
-			<widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
-			<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
-			</widget>
-			<eLabel text="Move Plugins to HDD/USB" position="65,17" size="720,43" font="Regular;26" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
-			<widget source="Title" render="Label" position="65,98" size="670,28" font="Regular;26" backgroundColor="background" transparent="1" />
-			<eLabel position="65,130" size="710,2" backgroundColor="grey" />
-			<widget name="config" position="65,140" size="710,480" font="Regular;35" itemHeight="30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColor="background" transparent="1" />
-			<ePixmap pixmap="buttons/red.png" position=" 70,670" size="30,30" alphatest="blend" />
-			<ePixmap pixmap="buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
-			<widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
-			<widget source="key_green" render="Label" position="395,672" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
-			<ePixmap position="962,431" size="128,128" zPosition="2" pixmap="icons/setup.png" transparent="1" alphatest="blend" />
-			<widget name="introduction" position="123,398" size="600,200" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
-		</screen>"""	
+		<screen name="MovePlugins_ext" position="0,0" size="800,600" title="Move Plugins to HDD/USB">
+				<eLabel text="Move Plugins to HDD/USB" position="66,98" size="720,28" font="Regular;26" backgroundColor="backtop" transparent="1" />
+				<widget source="Title" render="Label" position="65,17" size="721,43" font="Regular; 28" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+				<eLabel position="65,130" size="710,2" backgroundColor="grey" />
+				<widget name="config" position="65,140" size="710,211" font="Regular;35" itemHeight="30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColor="background" transparent="1" />
+				<ePixmap pixmap="skin_default/buttons/red.png" position="64,493" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="515,493" size="30,30" alphatest="blend" />
+				<widget source="key_red" render="Label" position="101,494" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
+				<widget source="key_green" render="Label" position="549,496" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
+				<ePixmap position="962,431" size="128,128" zPosition="2" pixmap="icons/setup.png" transparent="1" alphatest="blend" />
+				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
+				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
+				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
+			</screen>"""	
+  
 	def __init__(self, session, hdd, text, question):
 	        from Components.Sources.StaticText import StaticText
 	        self.skin = MovePlugins_ext.skin	
@@ -45,6 +50,8 @@ class MovePlugins_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Extensions outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
+		self.onShown.append(self.setWindowTitle)		
+		self['spaceused'] = ProgressBar()		
 		self["key_red"] = StaticText(_("Cancel"))
                 self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
@@ -58,6 +65,28 @@ class MovePlugins_ext(Screen):
 			"green": self.hddQuestion			
 		})
 
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
+
+	def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Plugins to HDD/USB'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)		
+		
 	def hddQuestion(self, answer=False):
 		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
 			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
@@ -185,34 +214,29 @@ class MovePlugins(Screen):
 			
 class MovePlugins_int(Screen):
 	skin = """
-		<screen name="MovePlugins_int" position="0,0" size="1280,720" title="Move Plugins back to Flash" flags="wfNoBorder">
-			<ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="menu/back2b.png" />
-			<eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
-			<widget source="session.VideoPicture" render="Pig" position="837,95" zPosition="-8" size="375,214" />
-			<ePixmap position="848,596" size="350,44" pixmap="menu/db.png" transparent="1" alphatest="blend" />
-			<widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
-			<convert type="ClockToText">Default</convert>
-			</widget>
-			<widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
-			<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
-			</widget>
-			<eLabel text="Move Plugins back to Flash" position="65,17" size="720,43" font="Regular;26" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
-			<widget source="Title" render="Label" position="65,98" size="670,28" font="Regular;26" backgroundColor="background" transparent="1" />
-			<eLabel position="65,130" size="710,2" backgroundColor="grey" />
-			<widget name="config" position="65,140" size="710,480" font="Regular;35" itemHeight="30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColor="background" transparent="1" />
-			<ePixmap pixmap="buttons/red.png" position=" 70,670" size="30,30" alphatest="blend" />
-			<ePixmap pixmap="buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
-			<widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
-			<widget source="key_green" render="Label" position="395,672" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
-			<ePixmap position="962,431" size="128,128" zPosition="2" pixmap="icons/setup.png" transparent="1" alphatest="blend" />
-			<widget name="introduction" position="123,398" size="600,200" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
-		</screen>"""	
+		<screen name="MovePlugins_int" position="0,0" size="800,600" title="Move Plugins back to Flash">
+				<eLabel text="Move Plugins back to Flash" position="66,98" size="720,28" font="Regular;26" backgroundColor="backtop" transparent="1" />
+				<widget source="Title" render="Label" position="65,17" size="721,43" font="Regular; 28" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+				<eLabel position="65,130" size="710,2" backgroundColor="grey" />
+				<widget name="config" position="65,140" size="710,211" font="Regular;35" itemHeight="30" scrollbarMode="showOnDemand" enableWrapAround="1" backgroundColor="background" transparent="1" />
+				<ePixmap pixmap="skin_default/buttons/red.png" position="64,493" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="515,493" size="30,30" alphatest="blend" />
+				<widget source="key_red" render="Label" position="101,494" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
+				<widget source="key_green" render="Label" position="549,496" size="240,24" zPosition="1" font="Regular;20" backgroundColor="black" transparent="1" />
+				<ePixmap position="962,431" size="128,128" zPosition="2" pixmap="icons/setup.png" transparent="1" alphatest="blend" />
+				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
+				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
+				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
+			</screen>"""	
+  
 	def __init__(self, session):
 	        from Components.Sources.StaticText import StaticText
 	        self.skin = MovePlugins_int.skin
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Plugins back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Plugins back to flash?"))
+		self.onShown.append(self.setWindowTitle)		
+		self['spaceused'] = ProgressBar()				
                 self["key_red"] = StaticText(_("Cancel"))
                 self["key_green"] = StaticText(_("Ok"))
                 self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
@@ -237,4 +261,24 @@ class MovePlugins_int(Screen):
                         message = _("Plugins already back in flash!")
                         self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
                          
-                         			
+ 	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
+
+	def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Plugins back to Flash'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)		                        			

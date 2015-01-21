@@ -26,22 +26,34 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
 from Components.Ipkg import IpkgComponent
 from Components.ScrollLabel import ScrollLabel
-#from os import system, _exit
+from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
+from Components.ProgressBar import ProgressBar
 
 language.addCallback(plugins.reloadPlugins)
+
+def getVarSpaceKb():
+    try:
+        s = statvfs('/')
+    except OSError:
+        return (0, 0)
+
+    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+
 class PluginInstall(Screen):
 	skin = """
-               <screen name="PluginInstall" position="80,160" size="1100,400" title="Installiere Plugins">
-               <widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
-               <widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
-               <eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Installierenden Plugins" zPosition="3" halign="center" />
-               <widget name="text" position="580,345" size="519,60" zPosition="1" font="Regular;20" halign="center" valign="center" foregroundColor="green" transparent="1" />
-               <widget name="key_green" render="Label" position="46,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <ePixmap position="5,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_green.png" alphatest="blend" zPosition="2" />
-               <widget name="key_blue" render="Label" position="360,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <ePixmap position="320,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_blue.png" alphatest="blend" zPosition="2" />			   
-               <eLabel name="new eLabel" position="570,0" size="2,400" zPosition="5" foregroundColor="unc0c0c0" backgroundColor="darkgrey" />
-               </screen>"""
+               <screen name="PluginInstall" position="80,160" size="1100,450" title="Installiere Plugins">
+				<widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
+				<widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
+				<eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Installierenden Plugins" zPosition="3" halign="center" />
+				<widget name="text" position="580,345" size="519,60" zPosition="1" font="Regular;20" halign="center" valign="center" foregroundColor="green" transparent="1" />
+				<widget name="key_green" render="Label" position="46,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
+				<ePixmap position="5,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_green.png" alphatest="blend" zPosition="2" />
+				<widget name="key_blue" render="Label" position="360,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
+				<ePixmap position="320,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_blue.png" alphatest="blend" zPosition="2" />
+				<eLabel name="new eLabel" position="570,0" size="2,400" zPosition="5" foregroundColor="unc0c0c0" backgroundColor="darkgrey" />
+				<eLabel name="spaceused" text="% Flash Used..." position="45,414" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
+				<widget name="spaceused" position="201,415" size="894,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
+			</screen>"""
 		  
 	DOWNLOAD = 0
 	PLUGIN_PREFIX = 'enigma2-plugin-'
@@ -70,6 +82,7 @@ class PluginInstall(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
+		self['spaceused'] = ProgressBar()		
                 self["status"] = ScrollLabel()
 		self['key_green']  = Label(_('Install'))	
 		self['key_blue']  = Label(_('Exit'))
@@ -236,10 +249,28 @@ class PluginInstall(Screen):
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
 
-	def setWindowTitle(self):
-		if self.type == self.DOWNLOAD:
-			self.setTitle(_("Install plugins"))
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
 
+	def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)
+		
 	def startIpkgListInstalled(self, pkgname = PLUGIN_PREFIX + '*'):
 		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed '%s'" % pkgname)
 
@@ -434,17 +465,19 @@ class IpkgInstaller(Screen):
 
 class PluginDeinstall(Screen):
 	skin = """
-               <screen name="PluginDeinstall" position="80,160" size="1100,400" title="Deinstalliere Plugins">
-               <widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
-               <widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
-               <eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Deinstallierenden Plugins" zPosition="3" halign="center" />
-               <widget name="text" position="580,345" size="519,60" zPosition="1" font="Regular;20" halign="center" valign="center" foregroundColor="green" transparent="1" />
-               <widget name="key_green" render="Label" position="46,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <ePixmap position="5,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_green.png" alphatest="blend" zPosition="2" />
-               <widget name="key_blue" render="Label" position="360,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <ePixmap position="320,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_blue.png" alphatest="blend" zPosition="2" />			   
-               <eLabel name="new eLabel" position="570,0" size="2,400" zPosition="5" foregroundColor="unc0c0c0" backgroundColor="darkgrey" />
-               </screen>"""
+               <screen name="PluginDeinstall" position="80,160" size="1100,450" title="Deinstalliere Plugins">
+				<widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
+				<widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
+				<eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Deinstallierenden Plugins" zPosition="3" halign="center" />
+				<widget name="text" position="580,345" size="519,60" zPosition="1" font="Regular;20" halign="center" valign="center" foregroundColor="green" transparent="1" />
+				<widget name="key_green" render="Label" position="46,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
+				<ePixmap position="5,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_green.png" alphatest="blend" zPosition="2" />
+				<widget name="key_blue" render="Label" position="360,366" zPosition="2" size="190,22" valign="center" halign="left" font="Regular;21" transparent="1" backgroundColor="foreground" />
+				<ePixmap position="320,365" size="35,27" pixmap="/usr/share/enigma2/skin_default/buttons/key_blue.png" alphatest="blend" zPosition="2" />
+				<eLabel name="new eLabel" position="570,0" size="2,400" zPosition="5" foregroundColor="unc0c0c0" backgroundColor="darkgrey" />
+				<eLabel name="spaceused" text="% Flash Used..." position="45,414" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
+				<widget name="spaceused" position="201,415" size="894,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
+			</screen>"""
                
 	REMOVE = 1		  
 	DOWNLOAD = 0
@@ -474,6 +507,7 @@ class PluginDeinstall(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
+		self['spaceused'] = ProgressBar()		
                 self["status"] = ScrollLabel()
 		self['key_green']  = Label(_('Deinstall'))	
 		self['key_blue']  = Label(_('Exit'))
@@ -669,9 +703,27 @@ class PluginDeinstall(Screen):
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
 
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
+
 	def setWindowTitle(self):
-		if self.type == self.DOWNLOAD:
-			self.setTitle(_("Install plugins"))
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)
 
 	def startIpkgListInstalled(self, pkgname = PLUGIN_PREFIX + '*'):
 		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed '%s'" % pkgname)
