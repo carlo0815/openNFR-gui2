@@ -285,11 +285,11 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/miraclebox" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/miraclebox" % (self.DIRECTORY, self.MODEL, self.DATE)	
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
-		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "hdeco":
+		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "HDECO+":
 			self.TYPE = "VENTONECO"
 			self.MODEL = "hde"
 			self.MTDKERNEL = "mtd8"	
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8192 -F"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8160 -F"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "UNIBOX HDECO"
 			self.MAINDESTOLD = "%s/unibox/%s" %(self.DIRECTORY, self.MODEL)
