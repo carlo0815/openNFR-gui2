@@ -285,7 +285,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/miraclebox" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/miraclebox" % (self.DIRECTORY, self.MODEL, self.DATE)	
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
-		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "HDECO+":
+		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "hdeco+":
 			self.TYPE = "VENTONECO"
 			self.MODEL = "hde"
 			self.MTDKERNEL = "mtd8"	
