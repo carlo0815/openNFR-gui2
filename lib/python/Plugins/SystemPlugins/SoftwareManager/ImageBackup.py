@@ -288,7 +288,7 @@ class ImageBackup(Screen):
 		elif self.MODEL == "uniboxhde" and self.MACHINENAME.lower() == "hdeco+":
 			self.TYPE = "VENTONECO"
 			self.MODEL = "hde"
-			self.MTDKERNEL = "mtd8"	
+			self.MTDKERNEL = "mtd7"	
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8160 -F"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "UNIBOX HDECO"
