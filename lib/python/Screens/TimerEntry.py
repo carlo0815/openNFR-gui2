@@ -22,7 +22,7 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.Setup import SetupSummary
 from RecordTimer import AFTEREVENT
-
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 
 class TimerEntry(Screen, ConfigListScreen):
 	def __init__(self, session, timer):
@@ -42,7 +42,9 @@ class TimerEntry(Screen, ConfigListScreen):
 		self["ok"] = Pixmap()
 		self["cancel"] = Pixmap()
 		self["key_yellow"] = Label(_("Timer type"))
-
+		self["key_blue"] = Label(_("Use VirtualKeyboard"))
+		self.VirtualKeyBoard = VirtualKeyBoard
+		
 		self.createConfig()
 
 		self["actions"] = NumberActionMap(["SetupActions", "GlobalActions", "PiPSetupActions", "ColorActions"],
@@ -54,7 +56,8 @@ class TimerEntry(Screen, ConfigListScreen):
 			"volumeDown": self.decrementStart,
 			"size+": self.incrementEnd,
 			"size-": self.decrementEnd,
-			"yellow": self.changeTimerType
+			"yellow": self.changeTimerType,
+			"blue": self.blue			
 		}, -2)
 
 		self.onChangedEntry = [ ]
@@ -226,6 +229,20 @@ class TimerEntry(Screen, ConfigListScreen):
 		self[widget].list = self.list
 		self[widget].l.setList(self.list)
 
+	#def blue(self):
+        	#if self.timerentry_name == self.timerentry_name: 
+            		#self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your Timer'))
+	def blue(self):
+        	if self["config"].getCurrent() == getConfigListEntry(_("Name"), self.timerentry_name, _("Set the name the recording will get.")): 
+            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your Timer'), text=self.timer.name)
+        	elif self["config"].getCurrent() == getConfigListEntry(_("Description"), self.timerentry_description, _("Set the description of the recording.")): 
+            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your Timer'), text=self.timer.description)
+
+	def VirtualKeyBoardCallback(self, callback = None):
+		if callback is not None and len(callback):
+			self["config"].getCurrent()[1].setValue(callback)
+			self["config"].invalidate(self["config"].getCurrent())		
+		
 	def selectionChanged(self):
 		if self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2]:
 			self["description"].setText(self["config"].getCurrent()[2])
