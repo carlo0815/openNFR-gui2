@@ -16,6 +16,7 @@ from os import path
 import os
 import Softcam
 import shutil
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 class NFRCamManager(Screen):
 	skin = """
   <screen name="NFRCamManager" position="center,center" size="820,410" title="NFR SoftCam Manager">
@@ -320,19 +321,23 @@ class NFRCamManager(Screen):
 
 class ConfigEdit(Screen, ConfigListScreen):
 	skin = """
-<screen name="ConfigEdit" position="center,center" size="620,180" title="SoftCam path configuration">
-  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-red-on.png" position="7,121" size="295,40" alphatest="blend" zPosition="-1" />
-  <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/big-green-on.png" position="313,122" size="295,40" alphatest="blend" zPosition="-1" />
-  <widget name="key_red" position="7,121" zPosition="2" size="295,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-  <widget name="key_green" position="313,122" zPosition="2" size="295,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-  <widget name="config" position="6,10" size="600,100" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
-</screen>"""
+		<screen name="ConfigEdit" position="center,center" size="620,250" title="SoftCam path configuration">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-red-on.png" position="7,121" size="295,40" alphatest="blend" zPosition="-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/big-green-on.png" position="313,122" size="295,40" alphatest="blend" zPosition="-1" />
+		<widget name="key_red" position="7,121" zPosition="2" size="295,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="313,122" zPosition="2" size="295,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="config" position="6,10" size="600,100" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
+		<widget name="key_blue" position="168,170" zPosition="4" size="295,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/big-green-on.png" position="168,170" size="295,40" alphatest="blend" zPosition="-1" />
+		</screen>"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("SoftCam path configuration"))
 		self["key_red"] = Label(_("Exit"))
 		self["key_green"] = Label(_("Ok"))
+		self["key_blue"] = Label(_("Use VirtualKeyboard"))
+		self.VirtualKeyBoard = VirtualKeyBoard		
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=session)
 		self.createsetup()
@@ -342,6 +347,7 @@ class ConfigEdit(Screen, ConfigListScreen):
 				"red": self.cancel,
 				"ok": self.ok,
 				"green": self.ok,
+				"blue": self.blue,				
 			}, -2)
 
 	def createsetup(self):
@@ -352,7 +358,7 @@ class ConfigEdit(Screen, ConfigListScreen):
 			config.NFRSoftcam.camdir))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
-
+		self.config = config
 	def ok(self):
 		msg = [ ]
 		if not path.exists(config.NFRSoftcam.camconfig.value):
@@ -384,3 +390,14 @@ class ConfigEdit(Screen, ConfigListScreen):
 			for x in self["config"].list:
 				x[1].cancel()
 			self.close()
+
+	def blue(self):
+        	if self["config"].getCurrent() == getConfigListEntry(_("SoftCam config directory"),config.NFRSoftcam.camconfig):
+            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your KEY Path'), text=self.config.NFRSoftcam.camconfig.value)
+        	elif self["config"].getCurrent() == getConfigListEntry(_("SoftCam directory"),config.NFRSoftcam.camdir):
+            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your EMU Path'), text=self.config.NFRSoftcam.camdir.value)
+				
+	def VirtualKeyBoardCallback(self, callback = None):
+		if callback is not None and len(callback):
+			self["config"].getCurrent()[1].setValue(callback)
+			self["config"].invalidate(self["config"].getCurrent())				

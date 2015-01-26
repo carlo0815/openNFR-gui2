@@ -33,8 +33,6 @@ from Plugins.Extensions.Infopanel.Softcamedit import vEditor
 from Plugins.Extensions.Infopanel.nfsedit import NFS_EDIT
 from os import path, listdir
 import commands
-from Screens.VirtualKeyBoard import VirtualKeyBoard
-from Components.Button import Button
 
 
 if float(getVersionString()) >= 4.0:
@@ -413,8 +411,6 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 		HelpableScreen.__init__(self)
 		Screen.setTitle(self, _("Adapter settings"))
 		self.session = session
-		self.VirtualKeyBoard = VirtualKeyBoard
-		self["key_yellow"] = Label(_("Use VirtualKeyboard"))
 		if isinstance(networkinfo, (list, tuple)):
 			self.iface = networkinfo[0]
 			self.essid = networkinfo[1]
@@ -441,7 +437,6 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 			"red": (self.keyCancel, _("exit network adapter configuration")),
 			"green": (self.keySave, _("activate network adapter configuration")),
 			"blue": (self.KeyBlue, _("open nameserver configuration")),
-			"yellow": self.yellow,
 			})
 
 		self["actions"] = NumberActionMap(["SetupActions"],
@@ -610,17 +605,6 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def KeyBlue(self):
 		self.session.openWithCallback(self.NameserverSetupClosed, NameserverSetup)
-
-	def yellow(self):
-        	if self["config"].getCurrent() == self.wlanSSID:
-            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your Config'), text=self.essid)
-                elif self["config"].getCurrent() == self.encryptionKey:
-                        self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your Config'), text=self.wsconfig['key'])
-                        
-	def VirtualKeyBoardCallback(self, callback = None):
-		if callback is not None and len(callback):
-			self["config"].getCurrent()[1].setValue(callback)
-			self["config"].invalidate(self["config"].getCurrent())
 
 	def newConfig(self):
 		if self["config"].getCurrent() == self.InterfaceEntry:
