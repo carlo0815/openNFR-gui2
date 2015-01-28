@@ -15,7 +15,7 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Pixmap import Pixmap
 from Components.AVSwitch import AVSwitch
 from Tools.LoadPixmap import LoadPixmap
-from Components.config import config, ConfigSubsection, ConfigText, ConfigSelection, getConfigListEntry, configfile
+from Components.config import config, ConfigSubsection, ConfigText, ConfigYesNo, ConfigSelection, getConfigListEntry, configfile
 from Tools.Directories import fileExists, pathExists, resolveFilename, SCOPE_PLUGINS
 from Tools.HardwareInfo import HardwareInfo
 from ServiceReference import ServiceReference
@@ -36,6 +36,7 @@ import os
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 
 config.NFRTelnet.command = ConfigText(visible_width = 200, fixed_size=False)
+config.NFRTelnet.execute = ConfigYesNo(default = False)
 	
 class TelnetCommand(Screen, ConfigListScreen):
 	skin = """
@@ -72,16 +73,21 @@ class TelnetCommand(Screen, ConfigListScreen):
 		self.list = []
 		self.list.append(getConfigListEntry(_("Telnet Command: "),
 			config.NFRTelnet.command))
+		self.list.append(getConfigListEntry(_("Execute Command: "),
+			config.NFRTelnet.execute))			
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 		self.config = config
 
 	def ok(self):
-		config.NFRTelnet.command.value
-		config.NFRTelnet.save()
-		target = config.NFRTelnet.command.value
-                self.session.open(Console, title=_("Telnet Command."), cmdlist = [target], closeOnSuccess = False)
-                
+		if config.NFRTelnet.execute.value == True:
+			config.NFRTelnet.command.value
+			config.NFRTelnet.save()
+			target = config.NFRTelnet.command.value
+                	self.session.open(Console, title=_("Telnet Command."), cmdlist = [target], closeOnSuccess = False)
+                else:
+                        self.session.open(MessageBox, _('Your Choice is no Command execute!'), type=MessageBox.TYPE_INFO, timeout=10)                
+
 	def cancel(self):
 	        self.close()
 	        
