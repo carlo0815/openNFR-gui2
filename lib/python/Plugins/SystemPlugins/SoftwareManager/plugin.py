@@ -38,7 +38,8 @@ from ImageWizard import ImageWizard
 from ImageBackup import ImageBackup
 from BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getBackupFilename, Dream_BackupScreen
 from SoftwareTools import iSoftwareTools
-
+from Screens.VirtualKeyBoard import VirtualKeyBoard	
+from Components.Label import Label	
 
 config.plugins.configurationbackup = ConfigSubsection()
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
@@ -1437,9 +1438,7 @@ class IPKGSource(Screen):
 	skin = """
 		<screen name="IPKGSource" position="center,center" size="560,80" title="Edit upgrade source url." >
 			<ePixmap pixmap="buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-			<ePixmap pixmap="buttons/green.png" position="140,0" size="140,40" alphatest="on" />
 			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 			<widget name="text" position="5,50" size="550,25" font="Regular;20" backgroundColor="background" foregroundColor="#cccccc" />
 		</screen>"""
 
@@ -1455,83 +1454,50 @@ class IPKGSource(Screen):
 				if sources:
 					text = sources[0]
 				fp.close()
+ 		
 			except IOError:
 				pass
-
+				
 		desk = getDesktop(0)
 		x= int(desk.size().width())
 		y= int(desk.size().height())
-
 		self["key_red"] = StaticText(_("Cancel"))
-		self["key_green"] = StaticText(_("Save"))
-
+		self.VirtualKeyBoard = VirtualKeyBoard		
+		
 		if y>=720:
 			self["text"] = Input(text, maxSize=False, type=Input.TEXT)
 		else:
 			self["text"] = Input(text, maxSize=False, visible_width = 55, type=Input.TEXT)
 
-		self["actions"] = NumberActionMap(["WizardActions", "InputActions", "TextEntryActions", "KeyboardInputActions","ShortcutActions"],
+		self["actions"] = ActionMap(["OkCancelActions", "ColorActions"],
 		{
-			"ok": self.go,
-			"back": self.close,
-			"red": self.close,
-			"green": self.go,
-			"left": self.keyLeft,
-			"right": self.keyRight,
-			"home": self.keyHome,
-			"end": self.keyEnd,
-			"deleteForward": self.keyDeleteForward,
-			"deleteBackward": self.keyDeleteBackward,
-			"1": self.keyNumberGlobal,
-			"2": self.keyNumberGlobal,
-			"3": self.keyNumberGlobal,
-			"4": self.keyNumberGlobal,
-			"5": self.keyNumberGlobal,
-			"6": self.keyNumberGlobal,
-			"7": self.keyNumberGlobal,
-			"8": self.keyNumberGlobal,
-			"9": self.keyNumberGlobal,
-			"0": self.keyNumberGlobal
-		}, -1)
+			"ok": self.ok,
+			"red": self.keyCancel,
+			"cancel": self.keyCancel,			
+		}, -2)			
 
-		self.onLayoutFinish.append(self.layoutFinished)
+	def keyCancel(self):
+		self.close()
 
-	def layoutFinished(self):
-		self.setWindowTitle()
-		self["text"].right()
-
+	def Exit(self):
+		self.close()
+		
 	def setWindowTitle(self):
 		self.setTitle(_("Edit upgrade source url."))
 
-	def go(self):
+	def ok(self):	
+	    if self.configfile:				
+                    self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit upgrade source url.'), text=self["text"].getText())	
+							   
+	def VirtualKeyBoardCallback(self, callback = None):
+           if callback is not None and len(callback):	
 		text = self["text"].getText()
 		if text:
 			fp = file(self.configfile, 'w')
-			fp.write(text)
-			fp.write("\n")
-			fp.close()
+                        fp.write(callback)
+                        fp.flush()
+                        fp.close()
 		self.close()
-
-	def keyLeft(self):
-		self["text"].left()
-
-	def keyRight(self):
-		self["text"].right()
-
-	def keyHome(self):
-		self["text"].home()
-
-	def keyEnd(self):
-		self["text"].end()
-
-	def keyDeleteForward(self):
-		self["text"].delete()
-
-	def keyDeleteBackward(self):
-		self["text"].deleteBackward()
-
-	def keyNumberGlobal(self, number):
-		self["text"].number(number)
 
 
 class PacketManager(Screen, NumericalTextInput):

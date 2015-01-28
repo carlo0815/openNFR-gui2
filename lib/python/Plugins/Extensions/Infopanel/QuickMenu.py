@@ -21,7 +21,6 @@ from Screens.ScanSetup import ScanSimple, ScanSetup
 from Screens.Setup import Setup, getSetupTitle
 from Screens.HarddiskSetup import HarddiskSelection, HarddiskFsckSelection, HarddiskConvertExt4Selection
 from Screens.SkinSelector import LcdSkinSelector
-from Screens.LogManager import *
 
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.PositionerSetup.plugin import PositionerSetup, RotorNimSelection
@@ -48,6 +47,8 @@ from Plugins.Extensions.Infopanel.Softcamedit import vEditor
 from Plugins.Extensions.Infopanel.Satloader import Satloader
 from Plugins.Extensions.Infopanel.InstallTarGZ import InfopanelManagerScreen
 from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
+from Plugins.Extensions.Infopanel.TelnetCommand import TelnetCommand
+
 
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_SKIN
 from Tools.LoadPixmap import LoadPixmap
@@ -252,6 +253,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Network Restart",_("Restart network to with current setup"),_("Restart network and remount connections")))
 		self.sublist.append(QuickSubMenuEntryComponent("Network Services",_("Setup Network Services"),_("Setup Network Services (Samba, Ftp, NFS, ...)")))
 		self.sublist.append(QuickSubMenuEntryComponent("iperf Net_test",_("Downloadgeschwindigkeit_test"),_("zusaetzlich die iperf.7z aus Extensions/Infopanel/data auf Pc kopieren und mit iperf.exe -s aus Dos fenster starten")))		
+		self.sublist.append(QuickSubMenuEntryComponent("Telnet Command",_("Telnet in Screen"),_("Try Telnet Commands in Gui")))
 		self["sublist"].l.setList(self.sublist)
 
 #### Network Services Menu ##############################
@@ -425,7 +427,6 @@ class QuickMenu(Screen):
 	def Qe2log(self):
 		self.sublist = []
 		self.sublist.append(QuickSubMenuEntryComponent("E2 Log",_("E2 Loggen for Errors"),_("E2 Loggen for Errors")))
-		self.sublist.append(QuickSubMenuEntryComponent("LogManager",_("Log-Viewer"),_("Show your Logfiles")))
 		self["sublist"].l.setList(self.sublist)
 ######## Tar.gz Menu ##############################
 	def Qtar(self):
@@ -512,7 +513,9 @@ class QuickMenu(Screen):
 			self.Qnetworkservices()
 			self["sublist"].moveToIndex(0)
 		elif item[0] == _("iperf Net_test"):
-			self.session.open(Net_test)			
+			self.session.open(Net_test)
+		elif item[0] == _("Telnet Command"):
+			self.session.open(TelnetCommand)                        			
 		elif item[0] == _("Samba"):
 			self.session.open(NetworkSamba)
 		elif item[0] == _("NFS"):
@@ -710,8 +713,6 @@ class QuickMenu(Screen):
 ######## Select E2-Log Menu ############################################
 		elif item[0] == _("E2 Log"):
 			self.session.open(E2log)
-		elif item[0] == _("LogManager"):
-			self.session.open(LogManager)
 ######## Select tar Menu ############################################
 		elif item[0] == _("PackageManager"):
 			self.session.open(InfopanelManagerScreen)			

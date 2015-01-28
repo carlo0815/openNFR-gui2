@@ -15,6 +15,8 @@ from SystemInfo import SystemInfo
 
 
 def InitUsageConfig():
+        config.NFRTelnet = ConfigSubsection()
+        config.NFRTelnet.command = ConfigText(visible_width = 200)
 	config.NFRSoftcam = ConfigSubsection()
 	config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
 	config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
