@@ -21,7 +21,7 @@ from Screens.ScanSetup import ScanSimple, ScanSetup
 from Screens.Setup import Setup, getSetupTitle
 from Screens.HarddiskSetup import HarddiskSelection, HarddiskFsckSelection, HarddiskConvertExt4Selection
 from Screens.SkinSelector import LcdSkinSelector
-
+from Screens.LogManager import *
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.PositionerSetup.plugin import PositionerSetup, RotorNimSelection
 from Plugins.SystemPlugins.Satfinder.plugin import Satfinder
@@ -427,6 +427,7 @@ class QuickMenu(Screen):
 	def Qe2log(self):
 		self.sublist = []
 		self.sublist.append(QuickSubMenuEntryComponent("E2 Log",_("E2 Loggen for Errors"),_("E2 Loggen for Errors")))
+		self.sublist.append(QuickSubMenuEntryComponent("LogManager",_("Log-Viewer"),_("Show your Logfiles")))
 		self["sublist"].l.setList(self.sublist)
 ######## Tar.gz Menu ##############################
 	def Qtar(self):
@@ -713,6 +714,9 @@ class QuickMenu(Screen):
 ######## Select E2-Log Menu ############################################
 		elif item[0] == _("E2 Log"):
 			self.session.open(E2log)
+		elif item[0] == _("LogManager"): 
+			self.session.open(LogManager) 
+			
 ######## Select tar Menu ############################################
 		elif item[0] == _("PackageManager"):
 			self.session.open(InfopanelManagerScreen)			
