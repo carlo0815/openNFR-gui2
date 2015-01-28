@@ -35,7 +35,7 @@ from time import localtime as time_localtime
 import os
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 
-
+config.NFRTelnet.command = ConfigText(visible_width = 200, fixed_size=False)
 	
 class TelnetCommand(Screen, ConfigListScreen):
 	skin = """
