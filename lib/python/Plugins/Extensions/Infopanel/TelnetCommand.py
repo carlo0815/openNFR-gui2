@@ -35,9 +35,6 @@ from time import localtime as time_localtime
 import os
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 
-config.NFRTelnet.command = ConfigText(visible_width = 200, fixed_size=False)
-config.NFRTelnet.execute = ConfigYesNo(default = False)
-	
 class TelnetCommand(Screen, ConfigListScreen):
 	skin = """
 <screen name="TelnetCommand" position="center,center" size="820,180" title="TelnetCommand">
@@ -56,7 +53,11 @@ class TelnetCommand(Screen, ConfigListScreen):
 		self["key_red"] = Label(_("Exit"))
 		self["key_green"] = Label(_("Send Command"))
 		self["key_blue"] = Label(_("Use VirtualKeyboard"))
-		self.VirtualKeyBoard = VirtualKeyBoard 		
+		self.VirtualKeyBoard = VirtualKeyBoard 	
+		global NFRTelnet_command
+                global NFRTelnet_execute
+                NFRTelnet_command = ConfigText(visible_width = 200, fixed_size=False)
+                NFRTelnet_execute = ConfigYesNo(default = False) 
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=session)
 		self.createsetup()
@@ -72,28 +73,27 @@ class TelnetCommand(Screen, ConfigListScreen):
 	def createsetup(self):
 		self.list = []
 		self.list.append(getConfigListEntry(_("Telnet Command: "),
-			config.NFRTelnet.command))
+			NFRTelnet_command))
 		self.list.append(getConfigListEntry(_("Execute Command: "),
-			config.NFRTelnet.execute))			
+			NFRTelnet_execute))			
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 		self.config = config
 
 	def ok(self):
-		if config.NFRTelnet.execute.value == True:
-			config.NFRTelnet.command.value
-			config.NFRTelnet.save()
-			target = config.NFRTelnet.command.value
+		if NFRTelnet_execute.value == True:
+			NFRTelnet_command.value
+			target = NFRTelnet_command.value
                 	self.session.open(Console, title=_("Telnet Command."), cmdlist = [target], closeOnSuccess = False)
                 else:
-                        self.session.open(MessageBox, _('Your Choice is no Command execute!'), type=MessageBox.TYPE_INFO, timeout=10)                
+                        self.session.open(MessageBox, _('Your Choice is no Command execute!'), type=MessageBox.TYPE_INFO, timeout=10)
 
 	def cancel(self):
 	        self.close()
 	        
 
 	def blue(self):
-		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Insert your Command!'), text=self.config.NFRTelnet.command.value)
+		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Insert your Command!'), text=NFRTelnet.command.value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
