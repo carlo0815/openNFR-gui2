@@ -1,7 +1,7 @@
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.InfoBar import InfoBar
-from Screens.Console import Console
+from Plugins.Extensions.Infopanel.Console import Console
 from Components.ConfigList import ConfigListScreen
 from Components.Sources.List import List
 from Screens.ChoiceBox import ChoiceBox
@@ -93,7 +93,7 @@ class TelnetCommand(Screen, ConfigListScreen):
 	        
 
 	def blue(self):
-		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Insert your Command!'), text=NFRTelnet.command.value)
+		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Insert your Command!'), text=NFRTelnet_command.value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
