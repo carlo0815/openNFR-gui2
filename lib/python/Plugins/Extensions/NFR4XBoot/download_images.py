@@ -194,7 +194,7 @@ class DownloadOnLineImage(Screen):
         box = getBoxType()
         urlbox = getBoxType()
         if self.distro == 'openatv':
-            if box in ('blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se'):
+            if box in ('blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
                     box = 'ventonhdx'
                     stb = '1'
@@ -339,6 +339,14 @@ class DownloadOnLineImage(Screen):
                     box = 'xp1000'
                     urlbox = 'maxdigital/xp1000/' 
                     stb = '1'
+               elif box in ('formuler1'):
+                    box = 'formuler1'
+                    urlbox = 'formuler/formuler1/' 
+                    stb = '1'
+               elif box in ('formuler3'):
+                    box = 'formuler3'
+                    urlbox = 'formuler/formuler3/' 
+                    stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side'
         elif self.distro == 'atemio4you':
@@ -348,7 +356,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'                                    
         elif self.distro == 'openhdf':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk'):
+            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk', 'formuler1', 'formuler3'):
                 box = getBoxType()
                 stb = '1'
             elif box in ('xpeedlx1', 'xpeedlx2'):
