@@ -298,9 +298,9 @@ def NFR4XBootExtract(source, target):
                 os.chdir('seplus')                
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/ueplus'):
                 os.chdir('ueplus')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/formuler1'):
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
                 os.chdir('formuler1')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/formuler3'):
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
                 os.chdir('formuler3')     
                 
                                 
