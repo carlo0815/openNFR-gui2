@@ -219,9 +219,9 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('en2')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue'):
         shutil.rmtree('gigablue')
-     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
         shutil.rmtree('formuler1')
-     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
         shutil.rmtree('formuler3')     
 
 
