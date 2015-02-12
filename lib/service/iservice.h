@@ -919,6 +919,7 @@ public:
 		evVideoProgressiveChanged,
 
 		evBuffering,
+		evGstreamerPlayStarted,
 
 		evStopped,
 

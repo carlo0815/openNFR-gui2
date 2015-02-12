@@ -39,6 +39,10 @@ def getImageUrlString():
 	      
 def getEnigmaVersionString():
 	return getImageVersion()
+
+def getGStreamerVersionString():
+	import enigma
+	return enigma.getGStreamerVersionString()
 	
 def getKernelVersionString():
 	try:

@@ -43,7 +43,8 @@ class About(Screen):
 		AboutText += _("Build:\t%s") % getImageBuild() + "\n"		
 		AboutText += _("Kernel: \t%s") % about.getKernelVersionString() + "\n"
 		AboutText += _("Oe-Core:\t%s") % about.getEnigmaVersionString() + "\n"
-		
+		AboutText += _("GStreamer:\t%s") % about.getGStreamerVersionString() + "\n"	
+	
 		fp_version = getFPVersion()
 		if fp_version is None:
 			fp_version = ""

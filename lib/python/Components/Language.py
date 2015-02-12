@@ -102,6 +102,7 @@ class Language:
 		# HACK: sometimes python 2.7 reverts to the LC_TIME environment value, so make sure it has the correct value
 		os.environ["LC_TIME"] = self.getLanguage() + '.UTF-8'
 		os.environ["LANGUAGE"] = self.getLanguage() + '.UTF-8'
+		os.environ["GST_SUBTITLE_ENCODING"] = self.getGStreamerSubtitleEncoding()
 
 	def activateLanguageIndex(self, index):
 		if index < len(self.langlist):
@@ -131,6 +132,13 @@ class Language:
 			return str(self.lang[self.activeLanguage][1]) + "_" + str(self.lang[self.activeLanguage][2])
 		except:
 			return ''
+
+ 	def getGStreamerSubtitleEncoding(self):
+		try:
+			return str(self.lang[self.activeLanguage][3])
+		except:
+			return 'ISO-8859-15'
+
 
 	def addCallback(self, callback):
 		self.callbacks.append(callback)
