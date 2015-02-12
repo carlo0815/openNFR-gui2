@@ -337,6 +337,7 @@ class ImageBackup(Screen):
 		elif self.MODEL == "ini-8000am" or self.MODEL == "atemionemesis":
 			self.TYPE = "ATEMIO"
 			self.MODEL = "atemionemesis"
+			self.MODEL1 = "8x00"
 			self.MKUBIFS_ARGS = "-m 4096 -e 1040384 -c 1984"
 			self.UBINIZE_ARGS = "-m 4096 -p 1024KiB"
 			self.SHOWNAME = "Atemio Nemesis"
@@ -346,6 +347,47 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		## TESTING Atemio 6x00 Model
+		elif self.MODEL == "atemio6000":
+			self.TYPE = "ATEMIO"
+			self.MODEL = "atemio6000"
+			self.MODEL1 = "6000"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Atemio 6000"
+			self.MTDKERNEL = "mtd2"
+			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/atemio/6000" % self.DIRECTORY
+			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "atemio6100":
+			self.TYPE = "ATEMIO"
+			self.MODEL = "atemio6100"
+			self.MODEL1 = "6100"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Atemio 6100"
+			self.MTDKERNEL = "mtd2"
+			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/atemio/6100" % self.DIRECTORY
+			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "atemio6200":
+			self.TYPE = "ATEMIO"
+			self.MODEL = "atemio6200"
+			self.MODEL1 = "6200"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Atemio 6200"
+			self.MTDKERNEL = "mtd2"
+			self.MAINDESTOLD = "%s/Atemio/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/atemio/6200" % self.DIRECTORY
+			self.MAINDEST1 = "%s/atemio" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		## TESTING MUTANT Model
 		elif self.MODEL == "mutant2400":
 			self.TYPE = "MUT@NT"
 			self.MODEL = "mutant2400"
@@ -777,7 +819,7 @@ class ImageBackup(Screen):
 				cmdlist.append('echo " "')
 
 				if self.TYPE == 'ATEMIO':
-					cmdlist.append('mkdir -p %s/atemio/8x00' % self.TARGET)
+					cmdlist.append('mkdir -p %s/atemio/%s' % (self.TARGET, self.MODEL1))
 					cmdlist.append('cp -r %s %s/atemio/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'VU':
 					cmdlist.append('mkdir -p %s/vuplus_back/%s' % (self.TARGET, self.MODEL[2:]))

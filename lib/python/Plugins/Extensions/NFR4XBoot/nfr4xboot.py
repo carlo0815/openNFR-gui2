@@ -260,6 +260,10 @@ def NFR4XBootExtract(source, target):
                 os.chdir('5x00')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6x00'):
                 os.chdir('6x00')
+	    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6200'):
+                os.chdir('6200')
+	    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6000'):
+                os.chdir('6000')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/8x00'):
                 os.chdir('8x00')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx'):
