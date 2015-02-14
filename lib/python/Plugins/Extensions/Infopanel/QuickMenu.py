@@ -9,7 +9,7 @@ from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixm
 from Components.Network import iNetwork
 from Components.NimManager import nimmanager
 from Components.SystemInfo import SystemInfo
-
+from enigma import getDesktop
 from Screens.Screen import Screen
 from Screens.NetworkSetup import *
 from Screens.About import About
@@ -807,39 +807,67 @@ class QuickMenu(Screen):
 def QuickMenuEntryComponent(name, description, long_description = None, width=540):
 	pngname = name.replace(" ","_") 
 	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/" + pngname + ".png")
-	if png is None:
-		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
-
-	return [
-		_(name),
-		MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text = _(name)),
-		MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text = _(description)),
-		MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png = png),
-		_(long_description),
-	]
-
+        if png is None:
+	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
+	if getDesktop(0).size().width() == 1920:
+	    return [
+     	            _(name),
+                    MultiContentEntryText(pos=(120, 5), size=(width-160, 30), font=0, text = _(name)),
+	            MultiContentEntryText(pos=(120, 33), size=(width-160, 24), font=1, text = _(description)),
+	            MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png = png),
+	            _(long_description),
+	          ]
+	else:
+	    return [
+     	            _(name),
+     	            MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text = _(name)),
+     	            MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text = _(description)),
+     	            MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png = png),
+     	            _(long_description),
+	          ]
+				
 def QuickSubMenuEntryComponent(name, description, long_description = None, width=540):
-	return [
-		_(name),
-		MultiContentEntryText(pos=(50, 5), size=(width-10, 25), font=0, text = _(name)),
-		MultiContentEntryText(pos=(50, 26), size=(width-10, 17), font=1, text = _(description)),
-		_(long_description),
-	]
-
+		if getDesktop(0).size().width() == 1920:
+			return [
+				_(name),
+				MultiContentEntryText(pos=(50, 5), size=(width-10, 30), font=0, text = _(name)),
+				MultiContentEntryText(pos=(50, 33), size=(width-10, 24), font=1, text = _(description)),
+				_(long_description),
+			]
+		else:
+			return [
+				_(name),
+				MultiContentEntryText(pos=(50, 5), size=(width-10, 25), font=0, text = _(name)),
+				MultiContentEntryText(pos=(50, 26), size=(width-10, 17), font=1, text = _(description)),
+				_(long_description),
+			]		
+		
 class QuickMenuList(MenuList):
 	def __init__(self, list, enableWrapAround=True):
-		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 14))
-		self.l.setItemHeight(50)
-
+		if getDesktop(0).size().width() == 1920:	
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", 28))
+			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setItemHeight(60)
+		else:
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", 20))
+			self.l.setFont(1, gFont("Regular", 14))
+			self.l.setItemHeight(50)
+			
 class QuickMenuSubList(MenuList):
 	def __init__(self, sublist, enableWrapAround=True):
-		MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.l.setFont(1, gFont("Regular", 14))
-		self.l.setItemHeight(50)
-
+		if getDesktop(0).size().width() == 1920:	
+			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", 28))
+			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setItemHeight(60)
+		else:
+			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", 20))
+			self.l.setFont(1, gFont("Regular", 14))
+			self.l.setItemHeight(50)
+			
 class QuickMenuDevices(Screen):
 	skin = """
 		<screen name="QuickMenuDevices" position="center,center" size="840,525" title="Devices" flags="wfBorder">
