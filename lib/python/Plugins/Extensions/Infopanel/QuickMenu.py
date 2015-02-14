@@ -808,7 +808,7 @@ def QuickMenuEntryComponent(name, description, long_description = None, width=54
 	pngname = name.replace(" ","_") 
 	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/" + pngname + ".png")
         if png is None:
-	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
+	        png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
 	if getDesktop(0).size().width() == 1920:
 	    return [
      	            _(name),
