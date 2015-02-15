@@ -12,21 +12,36 @@ def PluginEntryComponent(plugin, width=440):
 		png = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/plugin.png"))
 	else:
 		png = plugin.icon
-
-	return [
+	if getDesktop(0).size().width() == 1920:
+	    return [
 		plugin,
 		MultiContentEntryText(pos=(120, 5), size=(width-120, 30), font=0, text=plugin.name),
 		MultiContentEntryText(pos=(120, 33), size=(width-120, 24), font=1, text=plugin.description),
-		MultiContentEntryPixmapAlphaTest(pos=(10, 5), size=(100, 40), png = png)
+		MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(100, 40), png = png)
+	]
+
+	if getDesktop(0).size().width() == 1280:
+	    return [
+		plugin,
+		MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text=plugin.name),
+		MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text=plugin.description),
+		MultiContentEntryPixmapAlphaTest(pos=(10, 5), size=(100, 40), png = png)		
 	]
 
 def PluginCategoryComponent(name, png, width=440):
-	return [
+	if getDesktop(0).size().width() == 1920:
+	    return [
 		name,
-		MultiContentEntryText(pos=(80, 5), size=(width-80, 30), font=0, text=name),
+		MultiContentEntryText(pos=(80, 10), size=(width-80, 30), font=0, text=name),
+		MultiContentEntryPixmapAlphaTest(pos=(10, 5), size=(60, 50), png = png)
+	]
+        else:
+	   return [
+		name,
+		MultiContentEntryText(pos=(80, 5), size=(width-80, 25), font=0, text=name),
 		MultiContentEntryPixmapAlphaTest(pos=(10, 0), size=(60, 50), png = png)
 	]
-
+        
 def PluginDownloadComponent(plugin, name, version=None, width=440):
 	if plugin.icon is None:
 		png = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/plugin.png"))
@@ -39,13 +54,22 @@ def PluginDownloadComponent(plugin, name, version=None, width=440):
 		elif version.startswith('experimental-'):
 			version = version[13:]
 		name += "  (" + version + ")"
-	return [
+	if getDesktop(0).size().width() == 1920:		
+	   return [
 		plugin,
 		MultiContentEntryText(pos=(80, 5), size=(width-80, 28), font=0, text=name),
 		MultiContentEntryText(pos=(80, 33), size=(width-80, 22), font=1, text=plugin.description),
 		MultiContentEntryPixmapAlphaTest(pos=(10, 0), size=(60, 50), png = png)
 	]
+	else:
+	   return [
+		plugin,
+		MultiContentEntryText(pos=(80, 5), size=(width-80, 25), font=0, text=name),
+		MultiContentEntryText(pos=(80, 26), size=(width-80, 17), font=1, text=plugin.description),
+		MultiContentEntryPixmapAlphaTest(pos=(10, 0), size=(60, 50), png = png)
+	]
 
+       
 
 class PluginList(MenuList):
 	def __init__(self, list, enableWrapAround=True):

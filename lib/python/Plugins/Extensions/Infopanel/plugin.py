@@ -31,6 +31,8 @@ from Screens.Hotkey import HotkeySetup
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
 from __init__ import _
+from enigma import getDesktop
+
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
 	DFLASH = True
@@ -244,7 +246,7 @@ INFO_SKIN2 =  """<screen name="PANEL-Info2"  position="center,center" size="530,
 ###################  Max Test ###################
 class PanelList(MenuList):
         if (getDesktop(0).size().width() == 1920):
-	        def __init__(self, list, font0 = 36, font1 = 28, itemHeight = 50, enableWrapAround = True):
+	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 50, enableWrapAround = True):
 		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		        self.l.setFont(0, gFont("Regular", font0))
 		        self.l.setFont(1, gFont("Regular", font1))
@@ -257,10 +259,17 @@ class PanelList(MenuList):
 		        self.l.setItemHeight(itemHeight)
 		        
 def MenuEntryItem(entry):
-	res = [entry]
-	res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-	res.append(MultiContentEntryText(pos=(110, 5), size=(440, 40), font=0, text=entry[1]))  # menupunkt
-	return res
+        if (getDesktop(0).size().width() == 1920):
+	   res = [entry]
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
+	   res.append(MultiContentEntryText(pos=(110, 5), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+	   return res
+	else:
+	   res = [entry]
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
+       	   res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+	   return res
+           
 ###################  Max Test ###################
 
 #g
