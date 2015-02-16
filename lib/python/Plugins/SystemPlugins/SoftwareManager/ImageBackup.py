@@ -424,6 +424,19 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		## TESTING Formuler F1
+		elif self.MODEL == "formuler1":
+			self.TYPE = "FORMULER"
+			self.MODEL = "formuler1"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 8192"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Formuler F1"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tmtwin":
 			self.TYPE = "TECHNO"
@@ -729,7 +742,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX":
+		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -851,6 +864,9 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'E3HD':
 					#cmdlist.append('mkdir -p %s/' % (self.TARGET))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
+				elif self.TYPE == 'FORMULER':
+					cmdlist.append('mkdir -p %s/formuler/%s' % (self.TARGET, self.MODEL))
+					cmdlist.append('cp -r %s %s/formuler/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'MAXDIGITAL' or self.TYPE == 'OCTAGON' or self.TYPE == 'MK':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
