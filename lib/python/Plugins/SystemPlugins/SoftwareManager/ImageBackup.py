@@ -424,19 +424,6 @@ class ImageBackup(Screen):
 			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
-		## TESTING Formuler F1
-		elif self.MODEL == "formuler1" and self.MACHINENAME.lower() == "formuler1":
-			self.TYPE = "formuler1"
-			self.MODEL = "formuler1"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "Formuler F1"
-			self.MTDKERNEL = "mtd2"
-			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
-			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING Technomate Model
 		elif self.MODEL == "tmtwin":
 			self.TYPE = "TECHNO"
