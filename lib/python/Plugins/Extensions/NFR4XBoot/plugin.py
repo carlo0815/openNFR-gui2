@@ -484,7 +484,7 @@ class NFR4XBootImageChoose(Screen):
             if os.path.isdir(dirfile):
                 count = count + 1
 
-        if count > 9:
+        if count > 12:
             myerror = _('Sorry you can install a max of 10 images.')
             self.session.open(MessageBox, myerror, MessageBox.TYPE_INFO)
         else:
@@ -566,6 +566,7 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
         self.source = ConfigSelection(choices=sourcelist)
         self.target = ConfigText(fixed_size=False)
         self.sett = ConfigYesNo(default=False)
+        self.zipdelete = ConfigYesNo(default=False)
         self.target.value = ''
         self.curselimage = ''
         try:
@@ -596,6 +597,7 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
         self.list.append(getConfigListEntry(_('Source Image file'), self.source))
         self.list.append(getConfigListEntry(_('Image Name'), self.target))
         self.list.append(getConfigListEntry(_('Copy Settings to the new Image'), self.sett))
+        self.list.append(getConfigListEntry(_('Delete Download Imagezip after Install?'), self.zipdelete))
 
     def typeChange(self, value):
         self.createSetup()
@@ -654,10 +656,11 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
                     cmd1 = 'python ' + pluginpath + '/ex_init.py'
                 else:
                     cmd1 = 'python ' + pluginpath + '/ex_init.pyo'
-                cmd = '%s %s %s %s' % (cmd1,
+                cmd = '%s %s %s %s %s' % (cmd1,
                  source,
                  target.replace(' ', '.'),
-                 str(self.sett.value))
+                 str(self.sett.value),
+                 str(self.zipdelete.value))
                 print '[NFR4X-BOOT]: ', cmd
                 self.session.open(Console, _('NFR4XBoot: Install new image'), [message, cmd])
 
