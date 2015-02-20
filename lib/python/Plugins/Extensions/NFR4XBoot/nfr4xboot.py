@@ -232,12 +232,12 @@ def NFR4XBootExtract(source, target, zipdelete):
     sourcefile = '/media/nfr4xboot/NFR4XBootUpload/%s.zip' % source
     if os.path.exists(sourcefile) is True:
         os.chdir('/media/nfr4xboot/NFR4XBootUpload')
-        print '[NFR4XBoot] Extracknig ZIP image file'
+        os.system('echo "[NFR4XBoot] Extracking ZIP image file"')
         rc = os.system('unzip ' + sourcefile)
         if zipdelete == "True":
                 rc = os.system('rm -rf ' + sourcefile)
         else:
-                print '[NFR4XBoot] keep  %s for next time' % sourcefile
+                os.system('echo "[NFR4XBoot] keep  %s for next time"'% sourcefile) 
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
             os.chdir('update')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox'):
