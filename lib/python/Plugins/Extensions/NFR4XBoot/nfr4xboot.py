@@ -3,7 +3,7 @@ import os
 import struct
 import shutil
 
-def NFR4XBootMainEx(source, target, installsettings):
+def NFR4XBootMainEx(source, target, installsettings, zipdelete):
     nfr4xhome = '/media/nfr4xboot'
     nfr4xroot = 'media/nfr4xboot'
     to = '/media/nfr4xboot/NFR4XBootI/' + target
@@ -15,7 +15,7 @@ def NFR4XBootMainEx(source, target, installsettings):
     to = '/media/nfr4xboot/NFR4XBootI/' + target
     cmd = 'chmod -R 0777 %s' % to
     rc = os.system(cmd)
-    rc = NFR4XBootExtract(source, target)
+    rc = NFR4XBootExtract(source, target, zipdelete)
     cmd = 'mkdir -p %s/NFR4XBootI/%s/media > /dev/null 2>&1' % (nfr4xhome, target)
     rc = os.system(cmd)
     cmd = 'rm %s/NFR4XBootI/%s/%s > /dev/null 2>&1' % (nfr4xhome, target, nfr4xroot)
@@ -184,7 +184,7 @@ def NFR4XBootMainEx(source, target, installsettings):
     out.close()
     os.system('touch /tmp/.opennfrreboot')
     rc = os.system('sync')
-    os.system('reboot -p')
+    #os.system('reboot -p')
 
 
 def NFR4XBootRemoveUnpackDirs():
@@ -225,7 +225,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')     
 
 
-def NFR4XBootExtract(source, target):
+def NFR4XBootExtract(source, target, zipdelete):
+    NFR4XBootRemoveUnpackDirs()
     if os.path.exists('/media/nfr4xboot/ubi') is False:
         rc = os.system('mkdir /media/nfr4xboot/ubi')
     sourcefile = '/media/nfr4xboot/NFR4XBootUpload/%s.zip' % source
@@ -233,7 +234,10 @@ def NFR4XBootExtract(source, target):
         os.chdir('/media/nfr4xboot/NFR4XBootUpload')
         print '[NFR4XBoot] Extracknig ZIP image file'
         rc = os.system('unzip ' + sourcefile)
-        rc = os.system('rm -rf ' + sourcefile)
+        if zipdelete == "True":
+                rc = os.system('rm -rf ' + sourcefile)
+        else:
+                print '[NFR4XBoot] keep  %s for next time' % sourcefile)
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
             os.chdir('update')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox'):
