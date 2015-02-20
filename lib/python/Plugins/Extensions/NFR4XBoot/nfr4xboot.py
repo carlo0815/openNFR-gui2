@@ -184,7 +184,7 @@ def NFR4XBootMainEx(source, target, installsettings, zipdelete):
     out.close()
     os.system('touch /tmp/.opennfrreboot')
     rc = os.system('sync')
-    #os.system('reboot -p')
+    os.system('reboot -p')
 
 
 def NFR4XBootRemoveUnpackDirs():
