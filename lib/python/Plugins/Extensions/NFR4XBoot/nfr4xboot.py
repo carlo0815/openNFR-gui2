@@ -237,7 +237,7 @@ def NFR4XBootExtract(source, target, zipdelete):
         if zipdelete == "True":
                 rc = os.system('rm -rf ' + sourcefile)
         else:
-                print '[NFR4XBoot] keep  %s for next time' % sourcefile)
+                print '[NFR4XBoot] keep  %s for next time' % sourcefile
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
             os.chdir('update')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox'):
