@@ -37,8 +37,16 @@ def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 			b = "%d.%d%s" % (b // 10, b % 10, direction)
 		else:
 			b = str(b)
+	if getDesktop(0).size().width() == 1920:
+	    return [
+		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, ""),
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, a),
+		(eListboxPythonMultiContent.TYPE_TEXT, 260, 0, 490, 40, 0, RT_HALIGN_LEFT, b)
+	]
 
-	return [
+	if getDesktop(0).size().width() == 1280:
+	    return [
 		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
 		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 30, 0, RT_HALIGN_LEFT, ""),
 		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 25, 0, RT_HALIGN_LEFT, a),
@@ -47,13 +55,21 @@ def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 
 class ServiceInfoList(HTMLComponent, GUIComponent):
 	def __init__(self, source):
+	    if getDesktop(0).size().width() == 1920:
+		GUIComponent.__init__(self)
+		self.l = eListboxPythonMultiContent()
+		self.list = source
+		self.l.setList(self.list)
+		self.l.setFont(0, gFont("Regular", 32))
+		self.l.setItemHeight(36)
+	    else:
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.list = source
 		self.l.setList(self.list)
 		self.l.setFont(0, gFont("Regular", 23))
 		self.l.setItemHeight(25)
-
+	
 	GUI_WIDGET = eListbox
 
 	def postWidgetCreate(self, instance):
