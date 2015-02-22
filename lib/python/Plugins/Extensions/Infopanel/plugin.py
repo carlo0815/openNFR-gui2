@@ -262,7 +262,7 @@ def MenuEntryItem(entry):
         if (getDesktop(0).size().width() == 1920):
 	   res = [entry]
 	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-	   res.append(MultiContentEntryText(pos=(110, 5), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 40), font=0, text=entry[1]))  # menupunkt
 	   return res
 	else:
 	   res = [entry]
