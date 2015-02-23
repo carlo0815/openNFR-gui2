@@ -76,6 +76,7 @@ def InitUsageConfig():
 	config.usage.show_infobar_on_event_change = ConfigYesNo(default = False)
 	config.usage.show_infobar_channel_number = ConfigYesNo(default = False)	
 	config.usage.show_second_infobar = ConfigYesNo(default = True)
+	config.usage.infobar_frontend_source = ConfigSelection(default = "tuner", choices = [("settings", _("Settings")), ("tuner", _("Tuner"))])
 	
 	def showsecondinfobarChanged(configElement):
 		if config.usage.show_second_infobar.getValue() != "INFOBAREPG":
