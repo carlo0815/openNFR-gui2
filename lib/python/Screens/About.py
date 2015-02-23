@@ -49,7 +49,7 @@ class About(Screen):
 		if fp_version is None:
 			fp_version = ""
 		else:
-			fp_version = _("Front Panel:\t%d") % fp_version
+			fp_version = _("Frontprocessor version: %s") % fp_version
 			AboutText += fp_version + "\n\n"
 			
 		AboutText += _("Last Upgrade:\t%s") % about.getLastUpdateString() + "\n\n" 
