@@ -11911,3 +11911,21 @@ msgstr "Download fehlgeschlagen !!"
 
 msgid "Welcome..."
 msgstr "Willkommen..."
+
+msgid "MountManager"
+msgstr "Mount Verwaltung"
+
+msgid "Select a script to run:"
+msgstr "Wähle ein Skript um es auszuführen:"
+
+msgid "Run"
+msgstr "Starten"
+
+msgid "SwapManager"
+msgstr "Swap Verwaltung"
+
+msgid "SWAP Manager"
+msgstr "Swap Verwaltung"
+
+msgid "PicturePlayer"
+msgstr "Bildbetrachter"
