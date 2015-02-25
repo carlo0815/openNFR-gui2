@@ -7,6 +7,7 @@ from ServiceReference import ServiceReference
 from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, eServiceCenter
 from Tools.Transponder import ConvertToHumanReadable
 from Components.Converter.ChannelNumbers import channelnumbers
+from enigma import getDesktop
 
 RT_HALIGN_LEFT = 0
 
