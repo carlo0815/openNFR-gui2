@@ -27,7 +27,7 @@ from twisted.internet import reactor
 from twisted.web.client import HTTPClientFactory
 from urlparse import urlparse, urlunparse
 from enigma import getDesktop
-
+from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename
 
 
 class EGCCcamEditAddLine(ConfigListScreen,Screen):
@@ -497,13 +497,13 @@ def CCcamListEntry(name, idx):
 	elif idx == 15:
 		idx = "info"
 	if getDesktop(0).size().width() == 1920:		
-	    png = "/usr/share/enigma2/SkalliHD-NFR-FullHD/buttons/key_%s.png" % str(idx)
+	    png = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_%s.png" % str(idx))
 	    if fileExists(png):
 		    res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 2), size=(35, 35), png=loadPNG(png)))
 	    res.append(MultiContentEntryText(pos=(60, 1), size=(500, 30), font=0, text=name))
 	    return res
 	else:
-	    png = "/usr/share/enigma2/skin_default/buttons/key_%s.png" % str(idx)
+	    png = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_%s.png" % str(idx))
 	    if fileExists(png):
 		    res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 0), size=(35, 35), png=loadPNG(png)))
 	    res.append(MultiContentEntryText(pos=(40, 3), size=(500, 25), font=0, text=name))
@@ -511,7 +511,7 @@ def CCcamListEntry(name, idx):
 		
 def CCcamServerListEntry(name, color):
 	res = [name]
-	png = "/usr/share/enigma2/skin_default/buttons/key_%s.png" % color
+	png = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_%s.png" % color)
 	if fileExists(png):
 		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 0), size=(35, 25), png=loadPNG(png)))
 	res.append(MultiContentEntryText(pos=(40, 3), size=(500, 25), font=0, text=name))
@@ -1956,4 +1956,3 @@ class CCcamInfoMenuConfig(Screen):
 		if callback:
 			config.cccaminfo.blacklist.value = ("%s/CCcamInfo.blacklisted"%callback).replace("//", "/")
 			config.cccaminfo.blacklist.save()
-
