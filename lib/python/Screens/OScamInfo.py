@@ -570,7 +570,7 @@ class oscInfo(Screen, OscamInfo):
 			self.skin += """<ePixmap name="%s" position="%d,%d" size="35,25" pixmap="/usr/share/enigma2/skin_default/buttons/key_%s.png" zPosition="1" transparent="1" alphatest="on" />""" % (v, xpos, ypos, v)
 			self.skin += """<widget source="key_%s" render="Label" position="%d,%d" size="%d,%d" font="Regular;16" zPosition="1" valign="center" transparent="1" />""" % (v, xpos + 40, ypos, button_width, 20)
 		self.skin +="""<ePixmap name="divh" position="0,37" size="%d,2" pixmap="/usr/share/enigma2/skin_default/div-h.png" transparent="1" alphatest="on" />""" % sizeH
-		self.skin +="""<widget name="output" position="10,45" size="%d,%d" zPosition="1" scrollbarMode="showOnDemand" />""" % ( self.sizeLH, ysize)
+		self.skin +="""<widget name="output" position="10,45" size="%d,%d" zPosition="1" />""" % ( self.sizeLH, ysize)
 		self.skin += """</screen>"""
 		Screen.__init__(self, session)
 		self.mlist = oscMenuList([])
@@ -682,10 +682,9 @@ class oscInfo(Screen, OscamInfo):
 			if i.strip() != "" or i is not None:
 				if getDesktop(0).size().width() == 1920:			
 					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,34, 2, RT_HALIGN_LEFT, i) )
-				else:
+		        	else:
 					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,14, 2, RT_HALIGN_LEFT, i) )			
-		return res
-				
+				return res
 	def calcSizes(self, entries):
 		self.fs2 = {}
 		colSize = [ 100, 200, 150, 200, 150, 100 ]
@@ -787,10 +786,13 @@ class oscInfo(Screen, OscamInfo):
 				self.setTitle("Server Info( Oscam-Version: %s )" % self.getVersion())
 
 			elif self.what == "l":
-				self.changeScreensize( 500 )
+				if getDesktop(0).size().width() == 1920:
+					self.changeScreensize( 980 )
+				else:
+					self.changeScreensize( 500 )                             
 				self.setTitle("Oscam Log ( Oscam-Version: %s )" % self.getVersion())
 			self["output"].l.setList(out)
-			self["output"].selectionEnabled(False)                
+			self["output"].selectionEnabled(False)     
 		else:
 			self.errmsg = (data,)
 			if config.oscaminfo.autoupdate.getValue():
