@@ -682,10 +682,10 @@ class oscInfo(Screen, OscamInfo):
 			if i.strip() != "" or i is not None:
 				if getDesktop(0).size().width() == 1920:			
 					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,34, 2, RT_HALIGN_LEFT, i) )
-				return res
-			else:
+				else:
 					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,14, 2, RT_HALIGN_LEFT, i) )			
-
+		return res
+				
 	def calcSizes(self, entries):
 		self.fs2 = {}
 		colSize = [ 100, 200, 150, 200, 150, 100 ]
