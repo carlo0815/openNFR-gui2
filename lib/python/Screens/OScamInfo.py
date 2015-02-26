@@ -326,14 +326,23 @@ class OscamInfo:
 
 class oscMenuList(MenuList):
 	def __init__(self, list, itemH = 25):
-		MenuList.__init__(self, list, False, eListboxPythonMultiContent)
-		self.l.setItemHeight(itemH)
-		self.l.setFont(0, gFont("Regular", 18))
-		self.l.setFont(1, gFont("Regular", 16))
-		self.clientFont = gFont("Regular", 14)
-		self.l.setFont(2, self.clientFont)
-		self.l.setFont(3, gFont("Regular", 12))
-
+	    if getDesktop(0).size().width() == 1920:	
+	        MenuList.__init__(self, list, False, eListboxPythonMultiContent)
+	        self.l.setItemHeight(itemH)
+	        self.l.setFont(0, gFont("Regular", 28))
+	        self.l.setFont(1, gFont("Regular", 24))
+	        self.clientFont = gFont("Regular", 22)
+	        self.l.setFont(2, self.clientFont)
+	        self.l.setFont(3, gFont("Regular", 22))
+	    else:
+	        MenuList.__init__(self, list, False, eListboxPythonMultiContent)
+	        self.l.setItemHeight(itemH)
+	        self.l.setFont(0, gFont("Regular", 20))
+	        self.l.setFont(1, gFont("Regular", 16))
+	        self.clientFont = gFont("Regular", 14)
+	        self.l.setFont(2, self.clientFont)
+	        self.l.setFont(3, gFont("Regular", 12))
+			
 class OscamInfoMenu(Screen):
 	def __init__(self, session):
 		self.session = session
@@ -482,10 +491,17 @@ class OscamInfoMenu(Screen):
 					if png2 is not None:
 						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 3, 35, 25, png2))
 			else:
-				res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 00, 800, 25, 0, RT_HALIGN_LEFT, x))
-				png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")
-				if png2 is not None:
-					res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 0, 35, 25, png2))
+			      	if getDesktop(0).size().width() == 1920:
+				    res.append((eListboxPythonMultiContent.TYPE_TEXT, 60, 00, 800, 35, 0, RT_HALIGN_LEFT, x))
+				    png2 = LoadPixmap("/usr/share/enigma2/SkalliHD-NFR-FullHD/buttons/key_" + keys[y] + ".png")
+				    if png2 is not None:
+					    res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 35, png2))				    
+				else:
+				    res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 5, 800, 25, 0, RT_HALIGN_LEFT, x))
+				    png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")                                    
+				    if png2 is not None:
+					    res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 30, png2))
+				                                       
 			menuentries.append(res)
 			if y < len(keys) - 1:
 				y += 1
@@ -520,8 +536,8 @@ class oscECMInfo(Screen, OscamInfo):
 	def buildListEntry(self, listentry):
 		return [
 			None,
-			(eListboxPythonMultiContent.TYPE_TEXT, 10, 10, 300, 30, 0, RT_HALIGN_LEFT, listentry[0]),
-			(eListboxPythonMultiContent.TYPE_TEXT, 300, 10, 300, 30, 0, RT_HALIGN_LEFT, listentry[1])
+			(eListboxPythonMultiContent.TYPE_TEXT, 10, 00, 300, 30, 0, RT_HALIGN_LEFT, listentry[0]),
+			(eListboxPythonMultiContent.TYPE_TEXT, 300, 00, 300, 30, 0, RT_HALIGN_LEFT, listentry[1])
 			]
 
 	def showData(self):
@@ -629,8 +645,8 @@ class oscInfo(Screen, OscamInfo):
 			self.startPos = [ 10, 110, 240, 340, 490, 570 ]
 			useFont = 3
 		else:
-			self.fieldsize = [ 150, 200, 130, 200, 100, 150 ]
-			self.startPos = [ 50, 200, 400, 530, 730, 830 ]
+			self.fieldsize = [ 150, 250, 130, 200, 100, 180 ]
+			self.startPos = [ 50, 400, 900, 1030, 1330, 1600 ]
 
 			useFont = 1
 		if isinstance(self.errmsg, tuple):
@@ -649,8 +665,12 @@ class oscInfo(Screen, OscamInfo):
 		for i in listentry[:-1]:
 			xsize = self.fieldsize[x]
 			xpos = self.startPos[x]
-			res.append( (eListboxPythonMultiContent.TYPE_TEXT, xpos, 0, xsize, 20, useFont, RT_HALIGN_LEFT, i, int(colour, 16)) )
-			x += 1
+			if getDesktop(0).size().width() == 1920:
+				res.append( (eListboxPythonMultiContent.TYPE_TEXT, xpos, 0, xsize, 40, useFont, RT_HALIGN_LEFT, i, int(colour, 16)) )
+				x += 1
+			else:
+				res.append( (eListboxPythonMultiContent.TYPE_TEXT, xpos, 0, xsize, 20, useFont, RT_HALIGN_LEFT, i, int(colour, 16)) )
+				x += 1			
 		if heading:
 			pos = 19
 			res.append( (eListboxPythonMultiContent.TYPE_PIXMAP, 0, pos, self.sizeLH, useFont, LoadPixmap("/usr/share/enigma2/skin_default/div-h.png")))
@@ -660,8 +680,11 @@ class oscInfo(Screen, OscamInfo):
 		res = [ None ]
 		for i in listentry:
 			if i.strip() != "" or i is not None:
-				res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,14, 2, RT_HALIGN_LEFT, i) )
-		return res
+				if getDesktop(0).size().width() == 1920:			
+					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,34, 2, RT_HALIGN_LEFT, i) )
+				return res
+			else:
+					res.append( (eListboxPythonMultiContent.TYPE_TEXT, 5, 0, self.sizeLH,14, 2, RT_HALIGN_LEFT, i) )			
 
 	def calcSizes(self, entries):
 		self.fs2 = {}
@@ -688,26 +711,47 @@ class oscInfo(Screen, OscamInfo):
 		self.instance.move(ePoint(x, new_posY))
 		self["output"].resize(eSize(self.sizeLH, new_height - 20))
 		self["key_red"].setText(_("Close"))
-		if self.what == "c":
-			self["key_green"].setText("")
-			self["key_yellow"].setText("Servers")
-			self["key_blue"].setText("Log")
-			self["output"].l.setItemHeight(20)
-		elif self.what == "s":
-			self["key_green"].setText("Clients")
-			self["key_yellow"].setText("")
-			self["key_blue"].setText("Log")
-			self["output"].l.setItemHeight(20)
-		elif self.what == "l":
-			self["key_green"].setText("Clients")
-			self["key_yellow"].setText("Servers")
-			self["key_blue"].setText("")
-			self["output"].l.setItemHeight(14)
-		else:
-			self["key_green"].setText("Clients")
-			self["key_yellow"].setText("Servers")
-			self["key_blue"].setText("Log")
-
+		if getDesktop(0).size().width() == 1920:		
+			if self.what == "c":
+				self["key_green"].setText("")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("Log")
+				self["output"].l.setItemHeight(40)
+			elif self.what == "s":
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("")
+				self["key_blue"].setText("Log")
+				self["output"].l.setItemHeight(40)
+			elif self.what == "l":
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("")
+				self["output"].l.setItemHeight(20)
+			else:
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("Log")
+		if getDesktop(0).size().width() == 720:		
+			if self.what == "c":
+				self["key_green"].setText("")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("Log")
+				self["output"].l.setItemHeight(20)
+			elif self.what == "s":
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("")
+				self["key_blue"].setText("Log")
+				self["output"].l.setItemHeight(20)
+			elif self.what == "l":
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("")
+				self["output"].l.setItemHeight(14)
+			else:
+				self["key_green"].setText("Clients")
+				self["key_yellow"].setText("Servers")
+				self["key_blue"].setText("Log")
+				
 	def showData(self):
 		if self.firstrun:
 			data = self.webif_data
@@ -731,7 +775,10 @@ class oscInfo(Screen, OscamInfo):
 					if i != "":
 						out.append( self.buildLogListEntry( (i,) ))
 				#out.reverse()
-			ysize = (len(out) + 4 ) * 25
+		        if getDesktop(0).size().width() == 1920:				
+			     ysize = (len(out) + 4 ) * 80
+		        else:
+			     ysize = (len(out) + 4 ) * 25		
 			if self.what == "c":
 				self.changeScreensize( ysize )
 				self.setTitle("Client Info ( Oscam-Version: %s )" % self.getVersion())
@@ -743,7 +790,7 @@ class oscInfo(Screen, OscamInfo):
 				self.changeScreensize( 500 )
 				self.setTitle("Oscam Log ( Oscam-Version: %s )" % self.getVersion())
 			self["output"].l.setList(out)
-			self["output"].selectionEnabled(False)
+			self["output"].selectionEnabled(False)                
 		else:
 			self.errmsg = (data,)
 			if config.oscaminfo.autoupdate.getValue():
@@ -752,11 +799,14 @@ class oscInfo(Screen, OscamInfo):
 			self.fieldsize = self.calcSizes( [(data,)] )
 			for i in self.errmsg:
 				out.append( self.buildListEntry( (i,) ))
-			ysize = (len(out) + 4 ) * 25
-			self.changeScreensize( ysize )
-			self.setTitle(_("Error") + data)
-			self["output"].l.setList(out)
-			self["output"].selectionEnabled(False)
+		        if getDesktop(0).size().width() == 1920:				
+			    ysize = (len(out) + 4 ) * 60
+			else:
+			    ysize = (len(out) + 4 ) * 25                            
+			    self.changeScreensize( ysize )
+			    self.setTitle(_("Error") + data)
+		       	    self["output"].l.setList(out)
+			    self["output"].selectionEnabled(False)
 
 
 
