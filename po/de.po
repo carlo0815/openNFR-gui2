@@ -11929,3 +11929,54 @@ msgstr "Swap Verwaltung"
 
 msgid "PicturePlayer"
 msgstr "Bildbetrachter"
+
+msgid "Webinterface"
+msgstr "OpenNFR Webinterface-Mod"
+
+msgid "Configuration for the Webinterface"
+msgstr "OpenNFR Webif-Mod - Konfiguration"
+
+msgid "Start Webinterface"
+msgstr "Webinterface einschalten"
+
+msgid "Show Setup in Extensions menu"
+msgstr "Setup im Erweiterungen-Menü anzeigen"
+
+msgid "Enable /media"
+msgstr "Aktiviere /media"
+
+msgid "Allow zapping via Webinterface"
+msgstr "Umschalten per Webinterface erlauben"
+
+msgid "Autowrite timer"
+msgstr "Timer automatisch schreiben"
+
+msgid "Load movie-length"
+msgstr "Filmlänge laden"
+
+msgid "Enable HTTP Access"
+msgstr "HTTP-Zugriff aktivieren"
+
+msgid "HTTP Port"
+msgstr "Port für HTTP"
+
+msgid "Enable HTTP Authentication"
+msgstr "Authentifizierung für HTTP aktivieren"
+
+msgid "Enable HTTPS Access"
+msgstr "HTTPS-Zugriff aktivieren"
+
+msgid "HTTPS Port"
+msgstr "Port für HTTPS"
+
+msgid "Enable HTTPS Authentication"
+msgstr "Authentifizierung für HTTPS aktivieren"
+
+msgid "Enable Streaming Authentication"
+msgstr "Authentifizierung für Streaming aktivieren"
+
+msgid "Simple Anti-Hijack Measures (may break clients)"
+msgstr "Einfache Anti-Hijack-Maßnahmen (unterbricht mglw. Clients)"
+
+msgid "Token-based security (may break clients)"
+msgstr "Token-basierte Sicherheit (unterbricht möglicherweise Clients)"
