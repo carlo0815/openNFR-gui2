@@ -4,7 +4,7 @@ from MenuList import MenuList
 from Components.Harddisk import harddiskmanager
 from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename, fileExists, pathExists
 from enigma import RT_HALIGN_LEFT, eListboxPythonMultiContent, \
-	eServiceReference, eServiceCenter, gFont
+	eServiceReference, eServiceCenter, gFont, getDesktop
 from Tools.LoadPixmap import LoadPixmap
 
 EXTENSIONS = {
@@ -36,6 +36,23 @@ EXTENSIONS = {
 	}
 
 def FileEntryComponent(name, absolute = None, isDir = False):
+    if getDesktop(0).size().width() == 1920:
+	res = [(absolute, isDir), (eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 40, 0, RT_HALIGN_LEFT, name)]
+	if isDir:
+		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "extensions/directory.png"))
+	else:
+		extension = name.split('.')
+		extension = extension[-1].lower()
+		if EXTENSIONS.has_key(extension):
+			png = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "extensions/" + EXTENSIONS[extension] + ".png"))
+		else:
+			png = None
+	if png is not None:
+		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 7, 20, 20, png))
+
+	return res
+
+    if getDesktop(0).size().width() == 1280:
 	res = [(absolute, isDir), (eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 20, 0, RT_HALIGN_LEFT, name)]
 	if isDir:
 		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "extensions/directory.png"))
@@ -50,7 +67,7 @@ def FileEntryComponent(name, absolute = None, isDir = False):
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 2, 20, 20, png))
 
 	return res
-
+	
 class FileList(MenuList):
 	def __init__(self, directory, showDirectories = True, showFiles = True, showMountpoints = True, matchingPattern = None, useServiceRef = False, inhibitDirs = False, inhibitMounts = False, isTop = False, enableWrapAround = False, additionalExtensions = None):
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
@@ -73,9 +90,14 @@ class FileList(MenuList):
 
 		self.refreshMountpoints()
 		self.changeDir(directory)
-		self.l.setFont(0, gFont("Regular", 18))
-		self.l.setItemHeight(23)
+		if getDesktop(0).size().width() == 1920:
+		    self.l.setFont(0, gFont("Regular", 26))
+		    self.l.setItemHeight(40)
+                else:
+		    self.l.setFont(0, gFont("Regular", 18))
+		    self.l.setItemHeight(23)                
 		self.serviceHandler = eServiceCenter.getInstance()
+
 
 	def refreshMountpoints(self):
 		self.mountpoints = [os.path.join(p.mountpoint, "") for p in harddiskmanager.getMountedPartitions()]
@@ -266,7 +288,10 @@ class FileList(MenuList):
 
 
 def MultiFileSelectEntryComponent(name, absolute = None, isDir = False, selected = False):
-	res = [(absolute, isDir, selected, name), (eListboxPythonMultiContent.TYPE_TEXT, 55, 1, 470, 20, 0, RT_HALIGN_LEFT, name)]
+        if getDesktop(0).size().width() == 1920:
+	    res = [(absolute, isDir, selected, name), (eListboxPythonMultiContent.TYPE_TEXT, 55, 1, 470, 40, 0, RT_HALIGN_LEFT, name)]
+        else:
+	    res = [(absolute, isDir, selected, name), (eListboxPythonMultiContent.TYPE_TEXT, 55, 1, 470, 20, 0, RT_HALIGN_LEFT, name)]
 	if isDir:
 		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "extensions/directory.png"))
 	else:
@@ -279,12 +304,15 @@ def MultiFileSelectEntryComponent(name, absolute = None, isDir = False, selected
 	if png is not None:
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 30, 2, 20, 20, png))
 	if not name.startswith('<'):
-		if selected:
+		if selected:  
 			icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_on.png"))
 		else:
 			icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_off.png"))
-		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 2, 0, 25, 25, icon))
-	return res
+                if getDesktop(0).size().width() == 1920:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 2, 5, 25, 25, icon))
+	        else:
+			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 2, 0, 25, 25, icon))
+	        return res
 
 
 class MultiFileSelectList(FileList):
@@ -292,12 +320,20 @@ class MultiFileSelectList(FileList):
 		if preselectedFiles is None:
 			self.selectedFiles = []
 		else:
-			self.selectedFiles = preselectedFiles
-		FileList.__init__(self, directory, showMountpoints = showMountpoints, matchingPattern = matchingPattern, showDirectories = showDirectories, showFiles = showFiles,  useServiceRef = useServiceRef, inhibitDirs = inhibitDirs, inhibitMounts = inhibitMounts, isTop = isTop, enableWrapAround = enableWrapAround, additionalExtensions = additionalExtensions)
-		self.changeDir(directory)
-		self.l.setItemHeight(25)
-		self.l.setFont(0, gFont("Regular", 20))
-		self.onSelectionChanged = [ ]
+		     if getDesktop(0).size().width() == 1920:		
+			    self.selectedFiles = preselectedFiles
+		            FileList.__init__(self, directory, showMountpoints = showMountpoints, matchingPattern = matchingPattern, showDirectories = showDirectories, showFiles = showFiles,  useServiceRef = useServiceRef, inhibitDirs = inhibitDirs, inhibitMounts = inhibitMounts, isTop = isTop, enableWrapAround = enableWrapAround, additionalExtensions = additionalExtensions)
+		            self.changeDir(directory)
+		            self.l.setItemHeight(40)
+		            self.l.setFont(0, gFont("Regular", 26))
+		            self.onSelectionChanged = [ ]
+		     else:
+			    self.selectedFiles = preselectedFiles
+		            FileList.__init__(self, directory, showMountpoints = showMountpoints, matchingPattern = matchingPattern, showDirectories = showDirectories, showFiles = showFiles,  useServiceRef = useServiceRef, inhibitDirs = inhibitDirs, inhibitMounts = inhibitMounts, isTop = isTop, enableWrapAround = enableWrapAround, additionalExtensions = additionalExtensions)			 
+		            self.changeDir(directory)
+		            self.l.setItemHeight(25)
+		            self.l.setFont(0, gFont("Regular", 20))
+		            self.onSelectionChanged = [ ]
 
 	def selectionChanged(self):
 		for f in self.onSelectionChanged:
@@ -434,4 +470,3 @@ class MultiFileSelectList(FileList):
 				if p == select:
 					self.moveToIndex(i)
 				i += 1
-
