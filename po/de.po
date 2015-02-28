@@ -11980,3 +11980,60 @@ msgstr "Einfache Anti-Hijack-Maßnahmen (unterbricht mglw. Clients)"
 
 msgid "Token-based security (may break clients)"
 msgstr "Token-basierte Sicherheit (unterbricht möglicherweise Clients)"
+
+msgid "Network Wizard"
+msgstr "Netzwerk Assistent"
+
+msgid "Network Adapter Selection"
+msgstr "Netzwerk Adapter Auswahl"
+
+msgid "Select Network Adapter"
+msgstr "Netzwerkadapter wählen"
+
+msgid "Network Restart"
+msgstr "Netzwerkneustart"
+
+msgid "iperf Net_test"
+msgstr "Netzwerk Geschwindigkeitstest"
+
+msgid "Iperf-Net_test"
+msgstr "Eingabe der Netzwerkadresse"
+
+msgid "NewLine"
+msgstr "Neue Zeile"
+
+msgid "DeleteLine"
+msgstr "Zeile löschen"
+
+msgid "New line is inserted!"
+msgstr "Neue Zeile wurde eingefügt!"
+
+msgid "Select Line is deleted!"
+msgstr "Gewählte Zeile wurde gelöscht!"
+
+msgid "This line is not editable!"
+msgstr "Diese Zeile kann nicht bearbeitet werden!"
+
+msgid "JobManager"
+msgstr "Job-Manager"
+
+msgid "Edit remote buttons"
+msgstr "Bearbeiten der Fernbedienungstasten"
+
+msgid "Keymap-Selection"
+msgstr "Keymap Auswahl"
+
+msgid "Keymap Selection"
+msgstr "Keymap-Auswahl"
+
+msgid "Use Keymap"
+msgstr "Verwende Keymap"
+
+msgid "Default  (keymap.xml)"
+msgstr "Standard  (keymap.xml)"
+
+msgid "User  (keymap.usr)"
+msgstr "Benutzer  (keymap.usr)"
+
+msgid "Neut  (keymap.ntr)"
+msgstr "Neutrino  (keymap.ntr)"
