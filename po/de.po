@@ -12037,3 +12037,27 @@ msgstr "Benutzer  (keymap.usr)"
 
 msgid "Neut  (keymap.ntr)"
 msgstr "Neutrino  (keymap.ntr)"
+
+msgid "Telnet Command"
+msgstr "Telnet Konsole"
+
+msgid "Telnet in Screen"
+msgstr "Telnet Befehle ausführen"
+
+msgid "TelnetCommand"
+msgstr "Telnet Befehlseingabe"
+
+msgid "Telnet Command: "
+msgstr "Telnet Befehl:"
+
+msgid "Execute Command: "
+msgstr "Befehl ausführen:"
+
+msgid "Send Command"
+msgstr "Befehl senden"
+
+msgid "Use VirtualKeyboard"
+msgstr "Virtuelle Tastatur"
+
+msgid "Your Choice is no Command execute!"
+msgstr "Du hast kein Befehl ausführen ausgewählt!"
