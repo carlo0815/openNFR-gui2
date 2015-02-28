@@ -635,7 +635,7 @@ msgid "ACQUIRING TSID/ONID"
 msgstr "Sammeln von TSID/ONID"
 
 msgid "AFP Setup"
-msgstr "AFP Einstellungen"
+msgstr "AFP-Einstellungen"
 
 msgid "AFP setup"
 msgstr "AFP Einstellungen"
@@ -3160,7 +3160,7 @@ msgid "FLASH"
 msgstr "FLASH"
 
 msgid "FTP Setup"
-msgstr "FTP Einstellungen"
+msgstr "FTP-Einstellungen"
 
 msgid "FTP setup"
 msgstr "FTP Einstellungen"
@@ -3730,7 +3730,7 @@ msgid "Inadyn Log"
 msgstr "Inadyn Log"
 
 msgid "Inadyn Setup"
-msgstr "Inadyn Einstellungen"
+msgstr "Inadyn-Einstellungen"
 
 msgid "Inadyn setup"
 msgstr "Inadyn Einstellungen"
@@ -4324,7 +4324,7 @@ msgid "MiniDLNA Log"
 msgstr "MiniDLNA Log"
 
 msgid "MiniDLNA Setup"
-msgstr "MiniDLNA Einstellungen"
+msgstr "MiniDLNA-Einstellungen"
 
 msgid "MiniDLNA setup"
 msgstr "MiniDLNA Einstellungen"
@@ -4385,7 +4385,7 @@ msgid "Mount"
 msgstr "Einhängen"
 
 msgid "Mounts Setup"
-msgstr "Mounts Einstellungen"
+msgstr "Mounts-Einstellungen"
 
 msgid "Mounts setup"
 msgstr "Mounts Einstellungen"
@@ -4498,7 +4498,7 @@ msgstr ""
 "Drücke Gelb um neu zu starten!"
 
 msgid "NFS Setup"
-msgstr "NFS Einstellungen"
+msgstr "NFS-Einstellungen"
 
 msgid "NFS setup"
 msgstr "NFS Einstellungen"
@@ -6032,7 +6032,7 @@ msgid "S-Video"
 msgstr "S-Video"
 
 msgid "SABnzbd Setup"
-msgstr "SABnzbd Einstellungen"
+msgstr "SABnzbd-Einstellungen"
 
 msgid "SABnzbd setup"
 msgstr "SABnzbd Einstellungen"
@@ -6053,7 +6053,7 @@ msgid "Samba Log"
 msgstr "Samba/CIFS Log"
 
 msgid "Samba Setup"
-msgstr "Samba Einstellungen"
+msgstr "Samba-Einstellungen"
 
 msgid "Samba setup"
 msgstr "Samba/CIFS Einstellungen"
@@ -7470,7 +7470,7 @@ msgid "Telnet Port"
 msgstr "Telnet Port"
 
 msgid "Telnet Setup"
-msgstr "Telnet Einstellungen"
+msgstr "Telnet-Einstellungen"
 
 msgid "Telnet setup"
 msgstr "Telnet Einstellungen"
@@ -10741,7 +10741,7 @@ msgid "uShare Port"
 msgstr "uShare Port"
 
 msgid "uShare Setup"
-msgstr "uShare Einstellungen"
+msgstr "uShare-Einstellungen"
 
 msgid "uShare setup"
 msgstr "uShare Einstellungen"
@@ -10870,10 +10870,10 @@ msgid "zapped"
 msgstr "umgeschaltet"
 
 msgid "Device Setup"
-msgstr "Adapter Einstellungen"
+msgstr "Adapter-Einstellungen"
 
 msgid "OpenVPN Setup"
-msgstr "OpenVPN Einstellungen"
+msgstr "OpenVPN-Einstellungen"
 
 #, python-format
 msgid ""
