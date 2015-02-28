@@ -12061,3 +12061,27 @@ msgstr "Virtuelle Tastatur"
 
 msgid "Your Choice is no Command execute!"
 msgstr "Du hast kein Befehl ausführen ausgewählt!"
+
+msgid "Feels like %s"
+msgstr "gefühlte Temperatur %s"
+
+msgid "Humidity: %s %%"
+msgstr "Luftfeuchtigkeit: %s %%"
+
+msgid "Observation time: %s"
+msgstr "gemessen um: %s"
+
+msgid "Observation point: %s"
+msgstr "Standort: %s"
+
+msgid "My Music"
+msgstr "Meine Musik"
+
+msgid "My Videos"
+msgstr "Meine Videos"
+
+msgid "My Pictures"
+msgstr "Meine Bilder"
+
+msgid "Weather Info"
+msgstr "Wetterinformationen"
