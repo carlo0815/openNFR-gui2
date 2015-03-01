@@ -12060,7 +12060,7 @@ msgid "Use VirtualKeyboard"
 msgstr "Virtuelle Tastatur"
 
 msgid "Your Choice is no Command execute!"
-msgstr "Du hast kein Befehl ausführen ausgewählt!"
+msgstr "Nicht möglich! Befehl ausführen muß aktiviert sein."
 
 msgid "Feels like %s"
 msgstr "gefühlte Temperatur %s"
