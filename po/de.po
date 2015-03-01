@@ -2182,10 +2182,10 @@ msgid ""
 msgstr "Wie sollen abgeschlossene Timer in der Liste angezeigt werden."
 
 msgid "Convert ext3 filesystem to ext4"
-msgstr "Dateisystem ext3 in ext4 umwandeln"
+msgstr "Konvertiere ext3 zu ext4"
 
 msgid "Convert ext3 to ext4"
-msgstr "Dateisystem ext3 in ext4 umwandeln"
+msgstr "Konvertierung ext3 nach ext4"
 
 msgid "Convert filesystem ext3 to ext4"
 msgstr "Dateisystem ext3 in ext4 umwandeln"
@@ -3465,7 +3465,7 @@ msgid "Handle wakeup from TV"
 msgstr "Fernseher aufwecken"
 
 msgid "Hard disk setup"
-msgstr "Festplatten Einstellungen"
+msgstr "Festplatten-Standby"
 
 msgid "Hard disk standby after"
 msgstr "Festplatte Ruhezustand nach"
@@ -6327,7 +6327,7 @@ msgstr ""
 "(Multi-)QuickButton benutzen möchtest):"
 
 msgid "Select input device"
-msgstr "Wähle Eingabegerät"
+msgstr "Eingabegerät auswählen"
 
 msgid "Select input device."
 msgstr "Wähle Eingabegerät."
@@ -12085,3 +12085,15 @@ msgstr "Meine Bilder"
 
 msgid "Weather Info"
 msgstr "Wetterinformationen"
+
+msgid "Harddisk"
+msgstr "Festplatte"
+
+msgid "Select HDD"
+msgstr "Festplatte auswählen"
+
+msgid "NetworkMountsMenu"
+msgstr "Netzwerk-Mounts-Menü"
+
+msgid "Network Configuration..."
+msgstr "Netzwerkeinstellungen"
