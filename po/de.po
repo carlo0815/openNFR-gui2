@@ -3889,7 +3889,7 @@ msgid "Internal hdd only"
 msgstr "Nur interne Festplatte"
 
 msgid "Interval between keys when repeating:"
-msgstr "Zeit zwischen Tastendrücken wenn Wiederholung aktiv:"
+msgstr ""Intervall bei Tastenwiederholung:"
 
 #, python-format
 msgid "Invalid directory selected: %s"
