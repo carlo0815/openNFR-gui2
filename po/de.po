@@ -12097,3 +12097,6 @@ msgstr "Netzwerk-Mounts-Menü"
 
 msgid "Network Configuration..."
 msgstr "Netzwerkeinstellungen"
+
+msgid "Delete Download Imagezip after Install?"
+msgstr "Imagezip nach der Installation löschen?"
