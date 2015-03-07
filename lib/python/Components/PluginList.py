@@ -15,8 +15,8 @@ def PluginEntryComponent(plugin, width=440):
 	if getDesktop(0).size().width() == 1920:
 	    return [
 		plugin,
-		MultiContentEntryText(pos=(120, 5), size=(width-120, 30), font=0, text=plugin.name),
-		MultiContentEntryText(pos=(120, 33), size=(width-120, 24), font=1, text=plugin.description),
+		MultiContentEntryText(pos=(120, 1), size=(width-120, 31), font=0, text=plugin.name),
+		MultiContentEntryText(pos=(120, 32), size=(width-120, 26), font=1, text=plugin.description),
 		MultiContentEntryPixmapAlphaTest(pos=(10, 10), size=(100, 40), png = png)
 	]
 
