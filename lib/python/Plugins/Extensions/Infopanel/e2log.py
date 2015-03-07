@@ -66,5 +66,5 @@ class E2log(ConfigListScreen, Screen):
 		self.close(False)
 		
     def red(self):
-		target = "init 4; init 3" 
+		target = "init 6" 
 		self.session.open(Console, title=_("E2_Log..."), cmdlist = [target], closeOnSuccess = False)
