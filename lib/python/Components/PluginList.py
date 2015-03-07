@@ -57,8 +57,8 @@ def PluginDownloadComponent(plugin, name, version=None, width=440):
 	if getDesktop(0).size().width() == 1920:		
 	   return [
 		plugin,
-		MultiContentEntryText(pos=(80, 5), size=(width-80, 28), font=0, text=name),
-		MultiContentEntryText(pos=(80, 33), size=(width-80, 22), font=1, text=plugin.description),
+		MultiContentEntryText(pos=(80, 0), size=(width-80, 32), font=0, text=name),
+		MultiContentEntryText(pos=(80, 32), size=(width-80, 26), font=1, text=plugin.description),
 		MultiContentEntryPixmapAlphaTest(pos=(10, 0), size=(60, 50), png = png)
 	]
 	else:
