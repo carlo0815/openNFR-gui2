@@ -304,16 +304,15 @@ def MultiFileSelectEntryComponent(name, absolute = None, isDir = False, selected
 	if png is not None:
 		res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 30, 2, 20, 20, png))
 	if not name.startswith('<'):
-		if selected:  
+		if selected:
 			icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_on.png"))
 		else:
 			icon = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_off.png"))
-                if getDesktop(0).size().width() == 1920:
+		if getDesktop(0).size().width() == 1920:
 			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 2, 5, 25, 25, icon))
-	        else:
+		else:
 			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 2, 0, 25, 25, icon))
-	        return res
-
+	return res
 
 class MultiFileSelectList(FileList):
 	def __init__(self, preselectedFiles, directory, showMountpoints = False, matchingPattern = None, showDirectories = True, showFiles = True,  useServiceRef = False, inhibitDirs = False, inhibitMounts = False, isTop = False, enableWrapAround = False, additionalExtensions = None):
