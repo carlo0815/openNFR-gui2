@@ -1,4 +1,4 @@
-from enigma import eRect, eServiceReference, iServiceInformation, iPlayableService
+from enigma import eRect, eServiceReference, iServiceInformation, iPlayableService, getDesktop
 from Screens.Screen import Screen
 from Screens.ServiceInfo import ServiceInfoList, ServiceInfoListEntry
 from Components.ActionMap import ActionMap, NumberActionMap
@@ -18,10 +18,17 @@ import os, re
 from os import path as os_path
 #------------------------------------------------------------------------------------------
 class MC_VideoInfoView(Screen):
-	skin = """
-		<screen position="80,130" size="560,320" title="View Video Info" >
+	if getDesktop(0).size().width() == 1920:
+		skin = """
+			<screen position="absolute;" size="1920,1080" title="View Video Info" >
+			<widget name="infolist" position="absolute;" size="1920,1080" selectionDisabled="1" />
+			</screen>"""
+	else:
+		skin = """
+			<screen position="80,130" size="560,320" title="View Video Info" >
 			<widget name="infolist" position="5,5" size="550,310" selectionDisabled="1" />
-		</screen>"""
+			</screen>"""
+
 	def __init__(self, session, fullname, name, ref):
 		self.skin = MC_VideoInfoView.skin
 		Screen.__init__(self, session)

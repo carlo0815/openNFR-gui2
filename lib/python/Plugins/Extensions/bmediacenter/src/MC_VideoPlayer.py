@@ -14,6 +14,7 @@ from MC_Filelist import FileList
 from GlobalFunctions import shortname, MC_VideoInfoView, Showiframe
 from glob import glob
 from Screens.MessageBox import MessageBox
+from enigma import getDesktop
 import re
 import os
 config.plugins.mc_vp = ConfigSubsection()
@@ -204,10 +205,17 @@ class MC_VideoPlayer(Screen, HelpableScreen):
 		self.showiframe.finishStillPicture()
 		self.close()
 class VideoPlayerSettings(Screen, ConfigListScreen):
-	skin = """
-		<screen position="160,220" size="400,120" title="Media Center - VideoPlayer Settings" >
-			<widget name="config" position="10,10" size="380,100" />
-		</screen>"""
+	if getDesktop(0).size().width() == 1920:
+		skin = """
+			<screen position="160,220" size="800,240" title="Media Center - VideoPlayer Settings" >
+				<widget name="config" position="10,10" size="7600,200" />
+			</screen>"""
+	else:
+		skin = """
+			<screen position="160,220" size="400,120" title="Media Center - VideoPlayer Settings" >
+				<widget name="config" position="10,10" size="380,100" />
+			</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self["actions"] = NumberActionMap(["SetupActions","OkCancelActions"],

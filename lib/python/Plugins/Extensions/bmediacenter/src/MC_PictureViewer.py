@@ -165,7 +165,7 @@ class MC_PicThumbViewer(Screen, HelpableScreen):
 		self["key_blue"] = Button(_("Settings"))
 		self.textcolor = config.plugins.mc_pp.textcolor.value
 		self.color = config.plugins.mc_pp.bgcolor.value
-		textsize = 20
+		textsize = 28
 		self.spaceX = 20
 		self.spaceY = 28
 		self.picX = config.plugins.mc_pp.ThumbWidth.value
@@ -370,6 +370,7 @@ class MC_PicView(Screen, InfoBarBase, InfoBarSeek, InfoBarNotifications, Helpabl
 			<widget name=\"play_icon\" position=\""+ str(space+25) + "," + str(space+2) + "\" size=\"20,20\" zPosition=\"2\" pixmap=\"skin_default/icons/ico_mp_play.png\"  alphatest=\"on\" /> \
 			<widget name=\"file\" position=\""+ str(space+45) + "," + str(space) + "\" size=\""+ str(size_w-(space*2)-50) + ",25\" font=\"Regular;20\" halign=\"left\" foregroundColor=\"" + self.textcolor + "\" zPosition=\"2\" noWrap=\"1\" transparent=\"1\" /></screen>"
 
+			
 		Screen.__init__(self, session)
 		InfoBarBase.__init__(self)
 		InfoBarSeek.__init__(self, actionmap = "MediaPlayerSeekActions")
@@ -534,7 +535,7 @@ class Pic_Exif(Screen):
 		self.skin = """<screen position="80,120" size="560,360" title="Info" >
 				<widget source="menu" render="Listbox" position="0,0" size="560,360" scrollbarMode="showOnDemand" selectionDisabled="1" >
 				<convert type="TemplatedMultiContent">
-					{"template": [  MultiContentEntryText(pos = (5, 5), size = (250, 30), flags = RT_HALIGN_LEFT, text = 0), MultiContentEntryText(pos = (260, 5), size = (290, 30), flags = RT_HALIGN_LEFT, text = 1)], "fonts": [gFont("Regular", 20)], "itemHeight": 30 }
+					{"template": [  MultiContentEntryText(pos = (5, 5), size = (250, 30), flags = RT_HALIGN_LEFT, text = 0), MultiContentEntryText(pos = (260, 5), size = (290, 30), flags = RT_HALIGN_LEFT, text = 1)], "fonts": [gFont("Regular", 40)], "itemHeight": 30 }
 				</convert>
 				</widget>
 			</screen>"""

@@ -7,6 +7,7 @@ from Tools.Directories import SCOPE_CURRENT_SKIN, resolveFilename, pathExists, f
 from enigma import RT_HALIGN_LEFT, RT_VALIGN_CENTER, eListboxPythonMultiContent, \
 	eServiceReference, eServiceCenter, gFont
 from Tools.LoadPixmap import LoadPixmap
+from enigma import getDesktop
 EXTENSIONS = {
 		"m4a": "music",
 		"mp2": "music",
@@ -44,10 +45,17 @@ EXTENSIONS = {
 	}
 def FileEntryComponent(name, absolute = None, isDir = False, directory = "/", size = 0, timestamp = 0):
 	res = [ (absolute, isDir, name) ]
-	if name == "..":
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 20, 0, RT_HALIGN_LEFT, name))
+	# breite des Balken
+	if getDesktop(0).size().width() == 1920:
+		if name == "..":
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 30, 0, RT_HALIGN_LEFT, name))
+		else:
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 30, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, name))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 20, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, name))
+		if name == "..":
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 20, 0, RT_HALIGN_LEFT, name))
+		else:
+			res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 1000, 20, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, name))
 	#res.append((eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 20, 0, RT_HALIGN_LEFT, name))
 	if isDir:
 		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "extensions/directory.png"))
@@ -80,8 +88,12 @@ class FileList(MenuList):
 		self.inhibitMounts = inhibitMounts or []
 		self.refreshMountpoints()
 		self.changeDir(directory, sort = sort)
-		self.l.setFont(0, gFont("Regular", 18))
-		self.l.setItemHeight(21)
+		if getDesktop(0).size().width() == 1920:
+			self.l.setFont(0, gFont("Regular", 26))
+			self.l.setItemHeight(36)
+		else:
+			self.l.setFont(0, gFont("Regular", 18))
+			self.l.setItemHeight(21)
 		self.serviceHandler = eServiceCenter.getInstance()
 	def refreshMountpoints(self):
 		self.mountpoints = [os_path.join(p.mountpoint, "") for p in harddiskmanager.getMountedPartitions()]
@@ -331,7 +343,7 @@ class FileList(MenuList):
 			self.refresh()
 def MultiFileSelectEntryComponent(name, absolute = None, isDir = False, selected = False):
 	res = [ (absolute, isDir, selected, name) ]
-	res.append((eListboxPythonMultiContent.TYPE_TEXT, 55, 1, 470, 20, 0, RT_HALIGN_LEFT, name))
+	res.append((eListboxPythonMultiContent.TYPE_TEXT, 55, 1, 470, 30, 0, RT_HALIGN_LEFT, name))
 	if isDir:
 		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "extensions/directory.png"))
 	else:
@@ -358,8 +370,12 @@ class MultiFileSelectList(FileList):
 			self.selectedFiles = []
 		FileList.__init__(self, directory, showMountpoints = showMountpoints, matchingPattern = matchingPattern, showDirectories = showDirectories, showFiles = showFiles,  useServiceRef = useServiceRef, inhibitDirs = inhibitDirs, inhibitMounts = inhibitMounts, isTop = isTop, enableWrapAround = enableWrapAround, additionalExtensions = additionalExtensions)
 		self.changeDir(directory)			
-		self.l.setItemHeight(25)
-		self.l.setFont(0, gFont("Regular", 20))
+		if getDesktop(0).size().width() == 1920:
+			self.l.setItemHeight(35)
+			self.l.setFont(0, gFont("Regular", 40))
+		else:
+			self.l.setItemHeight(25)
+			self.l.setFont(0, gFont("Regular", 20))
 		self.onSelectionChanged = [ ]
 	def selectionChanged(self):
 		for f in self.onSelectionChanged:

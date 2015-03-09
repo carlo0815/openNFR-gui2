@@ -1,4 +1,4 @@
-from enigma import eTimer, eWidget, eRect, eServiceReference, iServiceInformation, iPlayableService, eServiceCenter
+from enigma import eTimer, eWidget, eRect, eServiceReference, iServiceInformation, iPlayableService, eServiceCenter, getDesktop
 from Screens.Screen import Screen
 from Screens.ServiceInfo import ServiceInfoList, ServiceInfoListEntry
 from Components.ActionMap import ActionMap, NumberActionMap
@@ -594,10 +594,16 @@ class MC_VLCFavoriteFolders(Screen):
 		self.close()
 #------------------------------------------------------------------------------------------
 class FavoriteFolderAdd(Screen, ConfigListScreen):
-	skin = """
-		<screen position="160,220" size="400,120" title="Media Center - Add VLC Favorite" >
-			<widget name="config" position="10,10" size="380,100" />
-		</screen>"""
+	if getDesktop(0).size().width() == 1920:
+		skin = """
+			<screen position="160,220" size="800,240" title="Media Center - Add VLC Favorite" >
+				<widget name="config" position="10,10" size="760,200" />
+			</screen>"""
+	else:
+		skin = """
+			<screen position="160,220" size="400,120" title="Media Center - Add VLC Favorite" >
+				<widget name="config" position="10,10" size="380,100" />
+			</screen>"""
 
 	def __init__(self, session, directory = "/", name = ""):
 		Screen.__init__(self, session)
@@ -637,10 +643,16 @@ class FavoriteFolderAdd(Screen, ConfigListScreen):
 		self.close(0)
 #------------------------------------------------------------------------------------------
 class FavoriteFolderEdit(Screen, ConfigListScreen):
-	skin = """
-		<screen position="160,220" size="400,120" title="Media Center - Edit VLC Favorite" >
-			<widget name="config" position="10,10" size="380,100" />
-		</screen>"""
+	if getDesktop(0).size().width() == 1920:
+		skin = """
+			<screen position="160,220" size="800,240" title="Media Center - Edit VLC Favorite" >
+				<widget name="config" position="10,10" size="760,200" />
+			</screen>"""
+	else:
+		skin = """
+			<screen position="160,220" size="400,120" title="Media Center - Edit VLC Favorite" >
+				<widget name="config" position="10,10" size="380,100" />
+			</screen>"""
 
 	def __init__(self, session, foldernum):
 		Screen.__init__(self, session)
@@ -665,13 +677,22 @@ class FavoriteFolderEdit(Screen, ConfigListScreen):
 		self.close(self.fn)
 #------------------------------------------------------------------------------------------
 class FolderOptions(Screen):
-	skin = """
-		<screen position="160,200" size="400,200" title="Media Center - VLC Folder Options" >
-			<widget source="pathlabel" transparent="1" render="Label" zPosition="2" position="0,180" size="380,20" font="Regular;16" />
-			<widget source="menu" render="Listbox" zPosition="5" transparent="1" position="10,10" size="380,160" scrollbarMode="showOnDemand" >
-				<convert type="StringList" />
-			</widget>
-		</screen>"""
+	if getDesktop(0).size().width() == 1920:
+		skin = """
+			<screen position="160,200" size="800,400" title="Media Center - VLC Folder Options" >
+				<widget source="pathlabel" transparent="1" render="Label" zPosition="2" position="0,180" size="7600,40" font="Regular;16" />
+				<widget source="menu" render="Listbox" zPosition="5" transparent="1" position="10,10" size="760,320" scrollbarMode="showOnDemand" >
+					<convert type="StringList" />
+				</widget>
+			</screen>"""
+	else:
+		skin = """
+			<screen position="160,200" size="400,200" title="Media Center - VLC Folder Options" >
+				<widget source="pathlabel" transparent="1" render="Label" zPosition="2" position="0,180" size="380,20" font="Regular;16" />
+				<widget source="menu" render="Listbox" zPosition="5" transparent="1" position="10,10" size="380,160" scrollbarMode="showOnDemand" >
+					<convert type="StringList" />
+				</widget>
+			</screen>"""
 
 	def __init__(self, session, directory, name):
 		self.skin = FolderOptions.skin
