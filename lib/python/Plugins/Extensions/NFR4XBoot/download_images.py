@@ -16,7 +16,7 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType, getMachineBuild
+from boxbranding import getBoxType, getMachineBuild, getImageVersion
 
 class NFR4XChooseOnLineImage(Screen):
     skin = '<screen name="NFR4XChooseOnLineImage" position="center,center" size="880,620" title="NFR4XBoot - Download OnLine Images" >\n\t\t\t  <widget source="list" render="Listbox" position="10,0" size="870,610" scrollbarMode="showOnDemand" transparent="1">\n\t\t\t\t  <convert type="TemplatedMultiContent">\n\t\t\t\t  {"template": [\n\t\t\t\t  MultiContentEntryText(pos = (0, 10), size = (830, 30), font=0, flags = RT_HALIGN_RIGHT, text = 0),\n\t\t\t\t  MultiContentEntryPixmapAlphaBlend(pos = (10, 0), size = (480, 60), png = 1),\n\t\t\t\t  MultiContentEntryText(pos = (0, 40), size = (830, 30), font=1, flags = RT_VALIGN_TOP | RT_HALIGN_RIGHT, text = 3),\n\t\t\t\t  ],\n\t\t\t\t  "fonts": [gFont("Regular", 28),gFont("Regular", 20)],\n\t\t\t\t  "itemHeight": 65\n\t\t\t\t  }\n\t\t\t\t  </convert>\n\t\t\t  </widget>\n\t\t  </screen>'
@@ -142,6 +142,7 @@ class DownloadOnLineImage(Screen):
     def __init__(self, session, distro):
         Screen.__init__(self, session)
         self.session = session
+        ImageVersion = getImageVersion()
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
         self['key_red'] = Button(_('Exit'))
@@ -155,7 +156,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://image.egami-image.com'
         elif self.distro == 'opennfr':
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/4.3/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
         elif self.distro == 'openatv':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
