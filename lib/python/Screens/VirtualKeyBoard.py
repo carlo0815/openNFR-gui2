@@ -27,6 +27,7 @@ class VirtualKeyBoard(Screen):
 		Screen.__init__(self, session)
 		self.setTitle(_(title))
 		self.keys_list = []
+		self.text = ""
 		self.shiftkeys_list = []
 		self.lang = language.getLanguage()
 		self.nextLang = None
