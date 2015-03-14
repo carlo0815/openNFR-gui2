@@ -1,6 +1,6 @@
 from boxbranding import getMachineBrand, getMachineName
 
-from twisted.web import client
+from Plugins.Extensions.NFR4XBoot import client
 from twisted.internet import reactor, defer, ssl
 
 
