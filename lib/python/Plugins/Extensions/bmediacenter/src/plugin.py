@@ -25,18 +25,18 @@ if getDesktop(0).size().width() == 1920:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skinHD.xml")
 else:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skin.xml")
-#try:
-#	from enigma import evfd
-#	config.plugins.mc_global.vfd.value = 'on'
-#	config.plugins.mc_global.save()
-#except Exception as e:
-#	print 'Media Center: Import evfd failed'
+try:
+	from enigma import evfd
+	config.plugins.mc_global.vfd.value = 'on'
+	config.plugins.mc_global.save()
+except Exception as e:
+	print 'Media Center: Import evfd failed'
 try:
 	from Plugins.Extensions.DVDPlayer.plugin import *
 	dvdplayer = True
 except:
 	print "Media Center: Import DVDPlayer failed"
-	dvdplayer = False
+        dvdplayer = False
 
 mcpath = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/'
 class DMC_MainMenu(Screen):
@@ -66,10 +66,10 @@ class DMC_MainMenu(Screen):
 		list.append((_("Web Radio"), "MC_WebRadio", "menu_radio", "50"))
 		list.append((_("VLC Player"), "MC_VLCPlayer", "menu_vlc", "50"))
 		list.append((_("Weather Info"), "MC_WeatherInfo", "menu_weather", "50"))
-#		list.append((_("WebMedia"), "WebMedia", "menu_webmedia", "50"))
-#		list.append((_("TuneIn"), "Webbrowser", "menu_webbrowser", "50"))
+		list.append((_("MUZU.TV"), "MUZU.TV", "menu_webmedia", "50"))
+		list.append((_("Opera"), "Webbrowser", "menu_webbrowser", "50"))
 		list.append((_("SHOUTcast"), "SHOUTcast", "menu_shoutcast", "50"))
-#		list.append((_("Weblinks"), "Weblinks", "menu_weblinks", "50"))
+		list.append((_("TSMedia"), "TSMedia", "menu_weblinks", "50"))
 		list.append((_("Settings"), "MC_Settings", "menu_settings", "50"))
 		list.append(("Exit", "Exit", "menu_exit", "50"))
 		self["menu"] = List(list)
@@ -86,8 +86,8 @@ class DMC_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-#		if config.plugins.mc_global.vfd.value == "on":
-#			evfd.getInstance().vfd_write_string(_("My Music"))
+		if config.plugins.mc_global.vfd.value == "on":
+			evfd.getInstance().vfd_write_string(_("My Music"))
 		if config.plugins.mc_globalsettings.upnp_enable.getValue():
 			if fileExists("/media/upnp") is False:
 				os.mkdir("/media/upnp")
@@ -103,7 +103,7 @@ class DMC_MainMenu(Screen):
 			self.CheckConsole = Console()
 			self.CheckConsole.ePopen(cmd1, self.checkNetworkStateFinished)
 		else:
-			self.updateService()
+			self.session.open(MessageBox,"Error: No Updateservice Avaible in Moment",  MessageBox.TYPE_INFO)
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
 		if 'bad address' in result:
@@ -128,6 +128,10 @@ class DMC_MainMenu(Screen):
 	def installComplete(self,result = None, retval = None, extra_args = None):
 		self.session.open(TryQuitMainloop, 3)
 
+	def InstallCheckDVD(self):
+	        self.service_name = 'enigma2-plugin-extensions-dvdplayer'
+		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
+
 	def InstallCheckVLC(self):
 	        self.service_name = 'enigma2-plugin-extensions-vlcplayer'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
@@ -136,17 +140,29 @@ class DMC_MainMenu(Screen):
 	        self.service_name = 'enigma2-plugin-extensions-shoutcast'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
+	def InstallCheckTSMedia(self):
+	        self.service_name = 'enigma2-plugin-extensions-tsmedia-oe2.0'
+		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
+
+	def InstallCheckMUZU(self):
+	        self.service_name = 'enigma2-plugin-extensions-muzutv'
+		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
+                
+	def InstallCheckWebbrowser(self):
+	        self.service_name = 'enigma2-plugin-extensions-hbbtv-opennfr-fullhd'
+		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
+
 	def next(self):
 		self["menu"].selectNext()
-		if self["menu"].getIndex() == 1:
-			self["menu"].setIndex(2)
-		if self["menu"].getIndex() == 10:
+		if self["menu"].getIndex() == 13:
 			self["menu"].setIndex(1)
+		#if self["menu"].getIndex() == 14:
+		#	self["menu"].setIndex(1)
 		self.update()
 	def prev(self):
 		self["menu"].selectPrevious()
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(9)
+			self["menu"].setIndex(12)
 		self.update()
 	def update(self):
 		if self["menu"].getIndex() == 1:
@@ -176,33 +192,30 @@ class DMC_MainMenu(Screen):
 		elif self["menu"].getIndex() == 7:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconVLCsw.png")
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWeather.png")
-			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconWebmediasw.png")
 		elif self["menu"].getIndex() == 8:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWeathersw.png")
-			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcast.png")
-			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconSettingssw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWebmedia.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconWebbrowsersw.png")
 		elif self["menu"].getIndex() == 9:
+			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWebmediasw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWebbrowser.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")	
+		elif self["menu"].getIndex() == 10:
+			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWebbrowsersw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcast.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinkssw.png")			
+		elif self["menu"].getIndex() == 11:
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
+			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinks.png")
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconSettingssw.png")			
+		elif self["menu"].getIndex() == 12:
+			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinkssw.png")
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconSettings.png")
-			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")	
+			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")				
 			
-#		elif self["menu"].getIndex() == 10:
-#			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWebbrowsersw.png")
-#			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcast.png")
-#			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinkssw.png")			
-			
-#		elif self["menu"].getIndex() == 11:
-#			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconShoutcastsw.png")
-#			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinks.png")
-#			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconSettingssw.png")			
-			
-#		elif self["menu"].getIndex() == 12:
-#			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinkssw.png")
-#			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconSettings.png")
-#			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")				
-			
-#		if config.plugins.mc_global.vfd.value == "on":
-#			evfd.getInstance().vfd_write_string(self["menu"].getCurrent()[0])
+		if config.plugins.mc_global.vfd.value == "on":
+			evfd.getInstance().vfd_write_string(self["menu"].getCurrent()[0])
 		self["text"].setText(self["menu"].getCurrent()[0])
 	def okbuttonClick(self):
 		from Screens.MessageBox import MessageBox
@@ -215,7 +228,8 @@ class DMC_MainMenu(Screen):
 				if dvdplayer:
 					self.session.open(DVDPlayer)
 				else:
-					self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO)
+					self.InstallCheckDVD()
+                                        self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO)
 			elif selection[1] == "MC_PictureViewer":
 				from MC_PictureViewer import MC_PictureViewer
 				self.session.open(MC_PictureViewer)
@@ -231,19 +245,20 @@ class DMC_MainMenu(Screen):
 					self.session.open(MC_VLCServerlist)
 				else:
 					self.session.open(MessageBox,"Error: VLC-Player Plugin not installed ...",  MessageBox.TYPE_INFO)
-			        self.InstallCheckVLC()
+			        	self.InstallCheckVLC()
 
 			elif selection[1] == "Webbrowser":
                                 if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/") == True:
                                        from Plugins.Extensions.HbbTV.plugin import OperaBrowser
 		                       global didOpen
 		                       didOpen = True
-			               url = 'http://ce.radiotime.com'
+			               url = 'http://www.nachtfalke.biz'
                                        self.session.open(OperaBrowser, url)
                                        global browserinstance
 		                else:
 #                                       self.session.openWithCallback(self.browserCallback, BrowserRemoteControl, url)
 			                self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO)
+					self.InstallCheckWebbrowser()
                         elif selection[1] == "SHOUTcast":
 			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
                                         from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
@@ -257,13 +272,27 @@ class DMC_MainMenu(Screen):
 			elif selection[1] == "MC_Settings":
 				from MC_Settings import MC_Settings
 				self.session.open(MC_Settings)
+			elif selection[1] == "MUZU.TV":
+			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MUZUtv/") == True:
+                                        from Plugins.Extensions.MUZUtv.plugin import muzuMain
+                                        self.session.open(muzuMain)
+                                else:
+					self.session.open(MessageBox,"Error: MUZUtv Plugin not installed ...",  MessageBox.TYPE_INFO)                                  			
+					self.InstallCheckMUZU()
+			elif selection[1] == "TSMedia":
+			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/") == True:
+                                        from Plugins.Extensions.TSmedia.plugin import TSmediabootlogo
+                                        self.session.open(TSmediabootlogo)
+                                else:
+					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO)                                  			
+					self.InstallCheckTSMedia()				
 			else:
 				self.session.open(MessageBox,("Error: Could not find plugin %s\ncoming soon ... :)") % (selection[1]),  MessageBox.TYPE_INFO)
 	def error(self, error):
 		from Screens.MessageBox import MessageBox
 		self.session.open(MessageBox,("UNEXPECTED ERROR:\n%s") % (error),  MessageBox.TYPE_INFO)
 	def Exit(self):
-#		self.session.nav.stopService()
+		self.session.nav.stopService()
 		# Restore OSD Transparency Settings
 		open("/proc/sys/vm/drop_caches", "w").write(str("3"))
 		if self.can_osd_alpha:
@@ -275,8 +304,8 @@ class DMC_MainMenu(Screen):
 				open("/proc/stb/video/alpha", "w").write(str(trans))
 			except:
 				print "Set OSD Transparacy failed"
-#		if config.plugins.mc_global.vfd.value == "on":
-#			evfd.getInstance().vfd_write_string(_("Media Center"))
+		if config.plugins.mc_global.vfd.value == "on":
+			evfd.getInstance().vfd_write_string(_("Media Center"))
 		os.system('umount /media/upnp')
 		self.session.nav.playService(self.oldbmcService)
 		self.close()
