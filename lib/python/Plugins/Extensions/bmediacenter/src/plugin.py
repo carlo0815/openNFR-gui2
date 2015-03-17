@@ -112,7 +112,8 @@ class DMC_MainMenu(Screen):
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		else:
 			self.session.openWithCallback(self.InstallPackage, MessageBox, _('Ready to install %s ?') % self.service_name, MessageBox.TYPE_YESNO)
-
+			self.Exit()
+			
 	def InstallPackage(self, val):
 		if val:
 			self.doInstall(self.installComplete, self.service_name)
