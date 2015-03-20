@@ -314,6 +314,7 @@ class ChannelContextMenu(Screen):
 			if self.session.pipshown:
 				del self.session.pip
 			self.session.pip = self.session.instantiateDialog(PictureInPicture)
+			self.session.pip.setAnimationMode(0)
 			self.session.pip.show()
 			newservice = self.csel.servicelist.getCurrent()
 			if self.session.pip.playService(newservice):
@@ -2142,6 +2143,7 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		self.onLayoutFinish.append(self.onCreate)
 
 		self.info = session.instantiateDialog(RadioInfoBar) # our simple infobar
+		self.info.setAnimationMode(0)
 
 		self["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"],
 			{
