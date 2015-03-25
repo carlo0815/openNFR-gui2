@@ -615,6 +615,9 @@
 		<key id="KEY_EPG" mapto="epg" flags="b"/>
 		<key id="KEY_TV" mapto="tv" flags="b"/>
 		<key id="KEY_TV" mapto="tvlong" flags="l"/>
+		<key id="KEY_BLUE" mapto="blue" flags="m"/>
+		<key id="KEY_YELLOW" mapto="yellow" flags="m"/>
+		<key id="KEY_RED" mapto="red" flags="m"/>
 	</map>
 
 	<map context="EventViewActions">
