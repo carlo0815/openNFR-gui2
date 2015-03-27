@@ -108,12 +108,16 @@ class DMC_MainMenu(Screen):
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
-		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
+ 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		else:
 			self.session.openWithCallback(self.InstallPackage, MessageBox, _('Ready to install %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 			self.Exit()
-			
+
+	def InstallPackageFailed(self, val):
+			self.feedscheck.close()
+			self.close()			
+			self.Exit()
 	def InstallPackage(self, val):
 		if val:
 			self.doInstall(self.installComplete, self.service_name)
@@ -230,7 +234,7 @@ class DMC_MainMenu(Screen):
 					self.session.open(DVDPlayer)
 				else:
 					self.InstallCheckDVD()
-                                        self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO)
+                                        self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 			elif selection[1] == "MC_PictureViewer":
 				from MC_PictureViewer import MC_PictureViewer
 				self.session.open(MC_PictureViewer)
@@ -245,7 +249,7 @@ class DMC_MainMenu(Screen):
 					from MC_VLCPlayer import MC_VLCServerlist
 					self.session.open(MC_VLCServerlist)
 				else:
-					self.session.open(MessageBox,"Error: VLC-Player Plugin not installed ...",  MessageBox.TYPE_INFO)
+					self.session.open(MessageBox,"Error: VLC-Player Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 			        	self.InstallCheckVLC()
 
 			elif selection[1] == "Webbrowser":
@@ -258,14 +262,14 @@ class DMC_MainMenu(Screen):
                                        global browserinstance
 		                else:
 #                                       self.session.openWithCallback(self.browserCallback, BrowserRemoteControl, url)
-			                self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO)
+			                self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckWebbrowser()
                         elif selection[1] == "SHOUTcast":
 			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
                                         from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
                                         self.session.open(SHOUTcastWidget)
                                 else:
-					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO)                                  			
+					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckSHOUT()
  			elif selection[1] == "MC_WeatherInfo":
 				from MC_WeatherInfo import MC_WeatherInfo
@@ -278,14 +282,14 @@ class DMC_MainMenu(Screen):
                                         from Plugins.Extensions.MUZUtv.plugin import muzuMain
                                         self.session.open(muzuMain)
                                 else:
-					self.session.open(MessageBox,"Error: MUZUtv Plugin not installed ...",  MessageBox.TYPE_INFO)                                  			
+					self.session.open(MessageBox,"Error: MUZUtv Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckMUZU()
 			elif selection[1] == "TSMedia":
 			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/") == True:
                                         from Plugins.Extensions.TSmedia.plugin import TSmediabootlogo
                                         self.session.open(TSmediabootlogo)
                                 else:
-					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO)                                  			
+					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckTSMedia()				
 			else:
 				self.session.open(MessageBox,("Error: Could not find plugin %s\ncoming soon ... :)") % (selection[1]),  MessageBox.TYPE_INFO)
