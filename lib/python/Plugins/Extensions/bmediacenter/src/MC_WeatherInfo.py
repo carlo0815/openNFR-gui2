@@ -388,7 +388,7 @@ class WeatherPluginEntryList(MenuList):
 						(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, 400, 40, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.city.value)),
 						(eListboxPythonMultiContent.TYPE_TEXT, 550, 0, 80, 40, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.degreetype .value)),
 				]
-			list.append(res)
+				list.append(res)
 		else:
 			for c in config.plugins.mc_wi.Entry:
 				res = [
@@ -396,7 +396,7 @@ class WeatherPluginEntryList(MenuList):
 						(eListboxPythonMultiContent.TYPE_TEXT, 5, 0, 400, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.city.value)),
 						(eListboxPythonMultiContent.TYPE_TEXT, 410, 0, 80, 20, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, str(c.degreetype .value)),
 				]
-			list.append(res)
+				list.append(res)
 		self.list = list
 		self.l.setList(list)
 		self.moveToIndex(0)
