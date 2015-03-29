@@ -332,7 +332,7 @@ class WeatherSetup(Screen):
 	def keyClose(self):
 		self.close(-1, None)
 	def keyGreen(self):
-		self.session.openWithCallback(self.updateList,MSNWeatherPluginEntryConfigScreen,None)
+		self.session.openWithCallback(self.updateList,WeatherPluginEntryConfigScreen,None)
 	def keyOK(self):
 		try:sel = self["entrylist"].l.getCurrentSelection()[0]
 		except: sel = None
@@ -342,7 +342,7 @@ class WeatherSetup(Screen):
 		except: sel = None
 		if sel is None:
 			return
-		self.session.openWithCallback(self.updateList,MSNWeatherPluginEntryConfigScreen,sel)
+		self.session.openWithCallback(self.updateList,WeatherPluginEntryConfigScreen,sel)
 	def keyDelete(self):
 		try:sel = self["entrylist"].l.getCurrentSelection()[0]
 		except: sel = None
@@ -400,10 +400,10 @@ class WeatherPluginEntryList(MenuList):
 		self.list = list
 		self.l.setList(list)
 		self.moveToIndex(0)
-class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
+class WeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 	if getDesktop(0).size().width() == 1920:
 		skin = """
-			<screen name="MSNWeatherPluginEntryConfigScreen" position="center,center" size="1100,800">
+			<screen name="WeatherPluginEntryConfigScreen" position="center,center" size="1100,800">
 				<widget name="config" position="20,60" size="1040,600" scrollbarMode="showOnDemand" />
 				<ePixmap position="0,10" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="140,10" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
@@ -416,7 +416,7 @@ class MSNWeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 			</screen>"""
 	else:
 		skin = """
-			<screen name="MSNWeatherPluginEntryConfigScreen" position="center,center" size="550,400">
+			<screen name="WeatherPluginEntryConfigScreen" position="center,center" size="550,400">
 				<widget name="config" position="20,60" size="520,300" scrollbarMode="showOnDemand" />
 				<ePixmap position="0,10" zPosition="4" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
 				<ePixmap position="140,10" zPosition="4" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />
