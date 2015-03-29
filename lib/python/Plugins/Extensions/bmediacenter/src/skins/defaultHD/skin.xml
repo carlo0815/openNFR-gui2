@@ -480,7 +480,7 @@
     <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
     <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
   </screen>
-  <screen name="MSNWeatherPluginEntryConfigScreen" position="center,center" size="1280,720" flags="wfNoBorder">
+  <screen name="WeatherPluginEntryConfigScreen" position="center,center" size="1280,720" flags="wfNoBorder">
     <widget name="config" position="329,228" size="624,300" scrollbarMode="showOnDemand" zPosition="6" transparent="1" />
     <ePixmap position="329,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/red.png" transparent="1" alphatest="on" />
     <ePixmap position="487,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/green.png" transparent="1" alphatest="on" />
