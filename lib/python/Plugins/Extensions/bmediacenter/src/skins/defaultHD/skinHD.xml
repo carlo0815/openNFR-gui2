@@ -467,7 +467,7 @@
 <ePixmap name="new ePixmap" position="713,50" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend"/>
 </screen>
 <!-- DMC MSN Weather Setup -->
-<screen name="MSNWeatherPluginEntryConfigScreen" position="center,center" size="1920,1080" flags="wfNoBorder">
+<screen name="WeatherPluginEntryConfigScreen" position="center,center" size="1920,1080" flags="wfNoBorder">
 <widget name="config" position="center,228" size="624,300" scrollbarMode="showOnDemand" zPosition="6" transparent="1" font="Regular; 26"/>
 <ePixmap position="627,186" zPosition="4" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/red.png" transparent="1" alphatest="on"/>
 <ePixmap position="806,186" zPosition="4" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/green.png" transparent="1" alphatest="on"/>
