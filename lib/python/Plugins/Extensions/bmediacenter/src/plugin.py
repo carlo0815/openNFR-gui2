@@ -16,6 +16,8 @@ from __init__ import _
 import os
 import commands
 from enigma import getDesktop
+from boxbranding import getMachineName, getMachineBrand
+
 
 config.plugins.mc_global = ConfigSubsection()
 config.plugins.mc_global.vfd = ConfigSelection(default='off', choices=[('off', 'off'), ('on', 'on')])
