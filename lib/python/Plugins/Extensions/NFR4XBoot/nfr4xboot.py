@@ -227,6 +227,7 @@ def NFR4XBootRemoveUnpackDirs():
 
 def NFR4XBootExtract(source, target, zipdelete):
     NFR4XBootRemoveUnpackDirs()
+    os.system('rm -rf /media/nfr4xboot/ubi')
     if os.path.exists('/media/nfr4xboot/ubi') is False:
         rc = os.system('mkdir /media/nfr4xboot/ubi')
     sourcefile = '/media/nfr4xboot/NFR4XBootUpload/%s.zip' % source
