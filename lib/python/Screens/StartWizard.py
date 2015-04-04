@@ -12,6 +12,7 @@ from Components.config import config, ConfigBoolean, configfile
 
 from LanguageSelection import LanguageWizard
 from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
+from Screens.OpenNFR_wizard import WebIfConfigScreen
 
 config.misc.firstrun = ConfigBoolean(default = True)
 config.misc.languageselected = ConfigBoolean(default = True)
@@ -42,3 +43,4 @@ wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.getVal
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.getValue(), priority = 20)
 wizardManager.registerWizard(UserInterfacePositionerWizard, config.misc.firstrun.getValue(), priority = 30)
 wizardManager.registerWizard(OpenWebifConfig, config.misc.firstrun.getValue(), priority = 40)
+wizardManager.registerWizard(WebIfConfigScreen, config.misc.firstrun.getValue(), priority = 50)
