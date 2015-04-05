@@ -1,0 +1,9 @@
+<screen name="YahooWeatherList" position="center,center" size="1280,720" title="Yahoo Weather list" flags="wfNoBorder" backgroundColor="#ffffffff">
+	<widget name="titleheader" position="333,33" size="550,30" zPosition="1" font="Regular;24" foregroundColor="#ffffff" backgroundColor="#000000" halign="center" valign="top" transparent="1" />
+        <ePixmap position="50,32" size="40,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/yh.png" alphatest="blend" transparent="1" />
+        <ePixmap position="0,0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/searchmenu.png" alphatest="blend" transparent="1" zPosition="-1" />
+        <ePixmap position="50,659" size="1200,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/2colors.png" zPosition="2" alphatest="blend" />
+	<widget position="100,666" size="210,21" name="Key_Red" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
+	<widget position="335,666" size="210,21" name="Key_Green" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
+	<widget name="myMenu" position="63,90" size="1147,502" scrollbarMode="showOnDemand" itemHeight="30" transparent="1" />
+</screen>

@@ -1,0 +1,206 @@
+<html><head><meta name=keywords content="emailMyName, emailMyName.us, mySite.com, Web mail, email, personal email, no spam, Yahoo!, Hotmail, Google, Gmail, POP, POP3, email forwarding, email storage, Outlook Express, email filtering, inbox"><meta name=description content="emailMyName personal email from mySite.com. Half the standard price of Yahoo! and Hotmail. With emailyMyName you get your name as your personal email address. emailMyName includes virtually unlimited storage - 1GB of storage (1024 MB email storage) - for email, photos, and file attachments. Includes Spam Protection, No Advertising, POP access, mail forwarding, and more features."><link rel='Shortcut Icon' type=image/ico href=/common/img/icon/webicon_w.ico><script language="JavaScript">
+	var errImg = (Image ? new Image(1, 1) : undefined);
+	function myErrorHandler(errorMessage,url,line) {
+	 	var url = '/s/javascript?r=javascript-error&message=' + escape('inline at  ' + line + ' ' + errorMessage + ' ' + url);
+	 	if (errImg) errImg.src = url;
+	 	return true;
+	}
+	
+    window.onerror = myErrorHandler;
+	
+</script><script>
+swapText = function(obj,text,newText){
+		for(var el=obj.firstChild; el!=null; el=el.nextSibling){
+		if(el.nodeType==1){
+			if(!el.tagName.match(/^(script)$/))	swapText(el,text,newText);
+		}
+		else if(el.nodeType==3) el.data=el.data.replace(text,newText);
+	}
+}
+
+function handleJN(){ /* RT 216698 */
+	var cb='WS'.toLowerCase();
+	if(cb=='jn') swapText(document.body,/Turbo/g,'Speedband');
+}
+if(window.addEventListener){ window.addEventListener('load',handleJN,false); }
+else if(window.attachEvent){ window.attachEvent('onload',handleJN); }
+</script><link rel=stylesheet type=text/css href=/common/css/global-w.css?v=1 /><script language=javascript type=text/javascript src=/common/js/global.js?version=1.15></script><script language=javascript src=/common/js/cookiejar.js?v=2></script><title>emailMyName- Low-cost email address - 1GB email storage - Block spam - Web & POP3 email access - Get your name as your email address</title><link rel=stylesheet type=text/css href=/common/css/www-w.css /><meta http-equiv=Content-Type content="text/html; charset=ISO-8859-1" /><script>
+function detailsPop() {popup ('http://www.emailmyname.com/legal/details-limitations.html','details','toolbar=no,location=no,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,scrollbars=yes,left=10,top=100,width=500,height=500');}
+</script></head><body><div id=top><div id=topNavWrap><div id=navLogo><img src=/img/logo/emn_logo.gif title="Welcome to emailMyName.com" alt="emailMyName.com Logo" /></div><ul><li class=on><a href="http://www.emailmyname.com/" title="Click to return to the home page">Home</a></li><li><a href="http://mail.emailmyname.com/" title="Click to check your email">My Email</a></li><li><a href="http://account.emailmyname.com/s/account" title="Click to review your emailMyName Account">My Account</a></li><li><a href="http://www.emailmyname.com/support/" title="Click for emailMyName Support">Help</a></li><li><a href="http://www.emailmyname.com/faqs.html" title="Click for the emailMyName FAQs">FAQs</a></li></ul><br /><div id=tagLine><img src=/img/www/hometagline_w_emn.gif title="More Features.  Easier to Use.  Great Value." alt="emailMyName tagline graphic" /><br /></div></div></div><div id=pageContainer><div id=pageContents><div class=home><div id=signup><a href="http://account.emailmyname.com/s/signup?refcd=default"><img src=/img/www/emailmyname2_w.gif alt="emailMyName email address promotional graphic" title="Click here to get your personalized .US email address" border=0 /></a><br /><a href="http://account.emailmyname.com/s/signup?refcd=default"><img src=/img/www/getyourname2_w.gif alt="personalized email address graphic" title="Get your name as your email address today - click here!" border=0 /></a><br /><a href="http://account.emailmyname.com/s/signup?refcd=default"><img src=/img/www/signupnow_w.gif alt="email sign up button" title="Get low cost personalized email with great features - click to sign up now!" border=0 /></a><br /><a href="http://www.emailmyname.com/compare/compare-price.html"><img src=/img/www/compare_w.gif alt="compare our email to other email services graphic<sup>&#42;</sup>" title="Click here to compare our email to other email services" border=0 /></a></div><img src=/img/www/signup_btm_w.gif alt="" border=0 /></div><div class=home><img src=/img/www/sign_in_w.gif alt="" /><br /><script>
+
+function logonValidation(form) {
+var memberIdText = 'Email Address';
+var alpha = 'abcdefghijklmnopqrstuvwxyz';
+var alphanum = alpha + '0123456789';
+var uc="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var alphanum_pass = alpha + uc + '0123456789';
+
+
+var memberid= form.emailAddress.value.toLowerCase();var alphanumspecial = alphanum + '-.@';
+
+form.MemberID.value=memberid;
+if(!areCookiesEnabled()) {return false;}
+if(memberid.length == 0) {form.emailAddress.focus();alert('Please enter your '+ memberIdText+ '.');return false;}if(memberid.length < 8) {form.emailAddress.focus();alert(memberIdText+' must be at least 8 characters in length.');return false;}
+
+for (var i = 0; i < memberid.length; i++) {var ch = memberid.substring(i, i+1);if (alphanumspecial.indexOf(ch)==-1) {
+form.emailAddress.focus();	
+	alert("The "+memberIdText+" you have entered is incorrect.  '" +ch+"' not allowed in "+memberIdText+".");return false;}	
+}
+
+
+
+
+if(memberid.indexOf('@')!=-1 && memberid.indexOf('.')!=-1) {var after_at  = memberid.substring(memberid.indexOf('@'), memberid.length);
+     
+if(memberid.indexOf("@")!= memberid.lastIndexOf("@"))
+{
+  form.emailAddress.focus();alert('Please enter a valid email address');return false;
+}
+
+set = '-.@';
+for (var i = 0; i < memberid.length; i++) 
+  {   
+    var ch = memberid.substring(i, i+1); 
+    var ch2 = memberid.substring(i+1, i+2); 
+    if (set.indexOf(ch)!=-1 && set.indexOf(ch2)!=-1) 
+     { form.emailAddress.focus();alert('Please enter a valid email address.');return false;}
+}
+
+if(memberid.indexOf('@netzero.net') != -1 || memberid.indexOf('@netzero.com') != -1)
+{
+	alert('Please re-enter your email address and password. If you would like to sign in to your NetZero account, please visit http://mail.emailmyname.com/ .');
+	return false;	
+}
+
+else if(memberid.indexOf('@juno.com') != -1)
+{
+	alert('Please re-enter your email address and password. If you would like to sign in to your Juno account, please visit http://mail.emailmyname.com/ .');
+	return false;	
+}
+
+     before = memberid.substring(0,memberid.indexOf('@')); 
+     if(before.length < 1 || before.length > 30) {form.emailAddress.focus();alert('Please enter a valid email address');return false;} 
+
+if (alpha.indexOf(before.substring(0, 1)) == -1) {
+	form.emailAddress.focus();
+	alert('Please enter a valid email address.');
+	return false;
+}
+if (alphanum.indexOf(before.substring(before.length-1, before.length)) == -1) {
+	form.emailAddress.focus();
+	alert('Please enter a valid email address.');
+	return false;
+}
+     if(after_at.length < 7 || after_at.length > 24) {form.emailAddress.focus();alert('Please enter a valid email address');return false;} 
+    
+     }else {form.emailAddress.focus();alert('Please enter a valid email address');return false;} 
+	
+
+
+if(form.Password.value.length == 0) {form.Password.focus();alert("Please enter your Password.");return false;}
+
+pswd=form.Password.value;
+if(pswd.length < 3) 
+{
+form.Password.focus();
+alert('Your password must be between 3 and 12 lowercase characters. Please enter another password.');
+return false;
+}
+
+for (var i = 0; i < pswd.length; i++) 
+{
+var ch = pswd.substring(i, i+1);
+if (alphanum_pass.indexOf(ch)==-1) 
+{
+form.Password.focus();
+alert("The Password you have entered is incorrect.  '" +ch+"' not allowed in Password.");
+return false;
+}	
+}
+
+
+form.MemberID.value = memberid.substring(0,memberid.indexOf('@'));form.MemberDomain.value=memberid.substring(memberid.indexOf('@')+1,memberid.length);
+return true;
+}
+
+function clearForm() {
+ var form = document.LogonForm;
+ form.MemberID.value = '';
+ form.Password.value = '';
+ form.emailAddress.value = '';
+}
+function popitup(url)
+{
+newwindow=window.open(url,'name');
+if (window.focus) {newwindow.focus()}
+return false;
+}
+
+function popup3(){
+window.open("http://www.emailmyname.com/support/webmail/help-frame.html?index=1","welcome","width=600,height=540,resizable=no,status=no,menubar=no,directories=no,toolbar=no,location=no,scrollbars=yes");
+}
+
+	helpwin=null;
+faqwin=null;
+function gotoHelp(fileNum) {
+                var location ="http://www.emailmyname.com/support/webmail/help-frame.html?index=";
+                location += fileNum;
+                if (helpwin != null) {
+                        if(!helpwin.closed) {
+                                helpwin.close();
+                        }
+                }
+
+                helpwin = window.open(location,"Help","width=610,height=540,resizable=no,status=no,menubar=no,directories=no,toolbar=no,location=no,scrollbar=no");
+                helpwin.focus();
+}
+
+function gotoFAQ() {
+         var location = "http://www.emailmyname.com/support/webmail/help-frame.html?index=2";
+         if (faqwin != null) {
+                if(!faqwin.closed) {
+                    faqwin.close();
+                }
+         }
+         faqwin = window.open(location,"FAQ","width=610,height=540,resizable=no,status=no,menubar=no,directories=no,toolbar=no,location=no,scrollbars=yes");
+	faqwin.focus();
+}
+
+function detailsPop() {
+popup ('http://www.emailmyname.com/legal/details-limitations.html','details','toolbar=no,location=no,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,scrollbars=yes,left=10,top=100,width=500,height=500');
+}
+</script><script>
+function onloadProcessing() {
+
+ var form = document.LogonForm;
+ var memberid = form.MemberID.value; 
+var emailaddress = form.emailAddress.value;
+if(emailaddress.length == 0) {form.emailAddress.focus();}
+  
+ else {
+	form.Password.focus();
+ }
+}
+</script><form method=post action="http://account.emailmyname.com/s/logon" name=LogonForm onSubmit="return logonValidation(this)"><input type=hidden name=GOTO_URL value="http://mail.emailmyname.com" /><div id=signin><div class=loginField><img src=/img/www/sign_in_address2_w.gif alt="" /><br /><input id=loginName type=text name=emailAddress value="" maxlength=54/><input type=hidden name=MemberID value="" /><input type=hidden name=MemberDomain value="" /></div><div class=loginField><img src=/img/www/sign_in_password_w.gif alt="" /><br /><input id=loginPswrd type=password name=Password maxlength=12 /></div><input id=signinBtn type=image src=/img/btn/signin_w.gif width=80 height=22 /><div style=clear:both;></div></div></form><div id=flash><object id=emn classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000 codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" width=329 height=198><param name=movie value=/img/flash/mysite_home2.swf /><param name=quality value=high /><param name=bgcolor value=#FFFFFF /><embed name=emn src=/img/flash/mysite_home2.swf quality=high bgcolor=#FFFFFF width=329 height=198 type=application/x-shockwave-flash pluginspace=http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash></embed></object></div><div id=learnMore><a href="http://www.emailmyname.com/compare/compare-price.html">Compare</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.emailmyname.com/compare/features.html">Features</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.emailmyname.com/faqs.html">FAQs</a><br /></div></div><br clear=left /><div id=includes><div id=includesHdr><img src=/img/www/includes_w.gif alt="" /></div><table cellspacing=8><tr><td rowspan=2 width=30>&nbsp;</td><td width=340><img src=/img/icon/home_storage_w.gif align=absmiddle alt="" />&nbsp;&nbsp;1 GB (1024 megabytes) of storage</td><td width=215><img src=/img/icon/home_privacy_w.gif align=absmiddle  alt="" />&nbsp;&nbsp;Sort & Delete Settings</td><td><img src=/img/icon/home_noads_w.gif align=absmiddle  alt="" />&nbsp;&nbsp;NO advertising<sup>&#0134;</sup></td></tr><tr><td><img src=/img/icon/home_checkother_w.gif align=absmiddle  alt="" />&nbsp;&nbsp;Web and POP access to your email</td><td><img src=/img/icon/home_spam_w.gif align=absmiddle  alt="" />&nbsp;&nbsp;Spam protection</td><td><img src=/img/icon/home_forwarding_w.gif align=absmiddle  alt="" />&nbsp;&nbsp;Mail forwarding</td></tr></table></div><div id=btm><img src=/img/www/btm_corner_w.gif alt="" /></div></div></div><div id=footer><div id=footerNav><a href="http://www.emailmyname.com/" title="Click to return to the emailMyName home page">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mail.emailmyname.com" title="Click to check your email">My Email</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://account.emailmyname.com/s/account" title="Click to review your emailMyName Account">My Account</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.emailmyname.com/support" title="Click for emailMyName Support">Help</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.emailmyname.com/faqs.html" title="Click for the emailMyName FAQs">FAQs</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.emailmyname.com/legal/terms.html" title="Click for the emailMyName Terms of Service">Terms of Service</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.emailmyname.com/legal/privacy.html" title="Click for the emailMyName Privacy Policy">Privacy Policy</a></div><div id=footerDisclaimers><p>&copy; 2011 United Online Web Services, Inc., MySite.com and emailMyName are trademarks of United Online, Inc.</p><a name=#disclaimers></a><font class=m6>&#42; Comparison based on standard pricing as of 7/1/2004 for Yahoo! Mail Plus service with personal address feature and Hotmail Plus service with personal address feature.<br><br>&#0134; mySite.com services are billed annually in advance at 12 times the quoted monthly price and payments are non-refundable.  The emailMyName service interface is free of third-party banner ads and pop-ups. For more details and limitations, <a href=javascript:detailsPop();>click here</a>.<br><br></font></div></div>     <script type="text/javascript">
+function getPageInfo(){
+	/* CRM requested better visibility into +2 level pages in the pats
+		to get this, when the url is a pats url, we'll amalgamate the query params into the page var
+		note: need ssi page var in order to differentiate logon from other pages
+	*/
+	var str = '';
+	if(location.href.match(/\/pat\?/)){
+		var tmp = location.search.match(/\??(.+)$/)[1].replace(/[\/\&\=]/g,'_');
+		str += '_'+tmp;
+	}
+	return str;
+}
+</script><script type="text/javascript">
+function logPageView(application, page, session, server, comefrom) {
+ if(typeof server == "undefined") server = 'http://track.untd.com';
+ if(typeof session == "undefined") session = 'default';
+ if(typeof comefrom == "undefined") comefrom = ''; 
+ var img = '<img src='+server+'/s/pv?s=999999&a='+application+'&p='+page+'&d=unknown&i='+session+'&cf='+comefrom+'&srt=0&crt=0& width=1 height=1 border=0>';
+ document.write(img);
+}
+</script><script language="JavaScript">
+logPageView('www','/index','DB582A1105100A19A49A0966598883AA.VGS-MM01-0','http://track.emailmyname.com','');</script>      <div style='display:none;'>NGCV</div> </body></html>

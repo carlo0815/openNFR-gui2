@@ -1,0 +1,2 @@
+SUBDIRS = de it tr
+

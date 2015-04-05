@@ -10,6 +10,8 @@ from Screens.Screen import Screen
 from Components.Pixmap import Pixmap
 from Plugins.Plugin import PluginDescriptor
 from Tools.Directories import pathExists, fileExists
+from Weather import *
+from Search_Id import *
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
 from __init__ import _
@@ -274,8 +276,7 @@ class DMC_MainMenu(Screen):
 					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckSHOUT()
  			elif selection[1] == "MC_WeatherInfo":
-				from MC_WeatherInfo import MC_WeatherInfo
-				self.session.open(MC_WeatherInfo)
+				self.session.open(MeteoMain)
 			elif selection[1] == "MC_Settings":
 				from MC_Settings import MC_Settings
 				self.session.open(MC_Settings)
