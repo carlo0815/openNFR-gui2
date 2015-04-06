@@ -426,13 +426,6 @@ lib/python/Plugins/Extensions/bmediacenter/src/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/converter/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Config/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Skin/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/de/LC_MESSAGES/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/de/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/it/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/it/LC_MESSAGES/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/tr/Makefile
-lib/python/Plugins/Extensions/bmediacenter/src/locale/tr/LC_MESSAGES/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Font/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Icon/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/icons/Makefile
