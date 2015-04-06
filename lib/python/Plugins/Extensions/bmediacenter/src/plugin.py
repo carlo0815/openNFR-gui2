@@ -276,6 +276,7 @@ class DMC_MainMenu(Screen):
 					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckSHOUT()
  			elif selection[1] == "MC_WeatherInfo":
+ 				self.session.nav.playService(self.oldbmcService)
 				self.session.open(MeteoMain)
 			elif selection[1] == "MC_Settings":
 				from MC_Settings import MC_Settings
