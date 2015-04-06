@@ -12218,9 +12218,6 @@ msgstr "neblig"
 msgid "Mostly Clear"
 msgstr "meist klar"
 
-msgid "Clear"
-msgstr "klar"
-
 msgid "Haze"
 msgstr "Dunst"
 
@@ -12251,32 +12248,17 @@ msgstr "Lä-Grad   :"
 msgid "Country   :"
 msgstr "Land        :"
 
-msgid "North"
-msgstr "Norden"
-
 msgid "NEast"
 msgstr "Nordost"
 
-msgid "East"
-msgstr "Osten"
-
 msgid "SEast"
 msgstr "Südosten"
-
-msgid "South"
-msgstr "Süden"
-
-msgid "West"
-msgstr "Westen"
 
 msgid "SWest"
 msgstr "Südwest"
 
 msgid "NWest"
 msgstr "Nordwest"
-
-msgid "Unknown"
-msgstr "unbekannt"
 
 msgid "Light Drizzle"
 msgstr "leichter Nieselregen"
@@ -12352,9 +12334,3 @@ msgstr "morgens leichter Regen"
 
 msgid "Heavy Snow"
 msgstr "starker Schneefall"
-
-msgid "Exit"
-msgstr "beenden"
-
-msgid "Save"
-msgstr "Speichern"
