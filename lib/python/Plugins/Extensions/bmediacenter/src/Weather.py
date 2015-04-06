@@ -147,7 +147,6 @@ class MeteoMain(Screen):
         self.onShow.append(self.startShow)
         self.onClose.append(self.delTimer)
         self.bhv = 2
-        
     def exit(self):
         self.session.nav.stopService()
         self.close()        
@@ -252,9 +251,14 @@ class MeteoMain(Screen):
                 self['lab16'].setText(txt)
                 txt = str(weather_data['forecasts'][0]['date'])
                 self['daydate0'].setText(txt)
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][0]['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 81, 59, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['forecasts'][0]['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
+		else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][0]['code'])
+                    myicon = self.checkIcon(icon)		
+ 	            png = loadPic(myicon, 81, 59, 0, 0, 0, 0)				
                 self['lab17'].instance.setPixmap(png)
                 txt = self.extend_day(str(weather_data['forecasts'][1]['day']))
                 self['lab18'].setText(txt)
@@ -268,9 +272,14 @@ class MeteoMain(Screen):
                 self['lab21'].setText(txt)
                 txt = str(weather_data['forecasts'][1]['date'])
                 self['daydate1'].setText(txt)
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][1]['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 81, 59, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['forecasts'][1]['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
+		else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][1]['code'])
+                    myicon = self.checkIcon(icon)		
+ 	            png = loadPic(myicon, 81, 59, 0, 0, 0, 0)					
                 self['lab22'].instance.setPixmap(png)
                 txt = self.extend_day(str(weather_data['forecasts'][2]['day']))
                 self['3lab18'].setText(txt)
@@ -284,9 +293,14 @@ class MeteoMain(Screen):
                 self['3lab21'].setText(txt)
                 txt = str(weather_data['forecasts'][2]['date'])
                 self['daydate2'].setText(txt)
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][2]['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 81, 59, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['forecasts'][2]['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
+		else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][2]['code'])
+                    myicon = self.checkIcon(icon)		
+ 	            png = loadPic(myicon, 81, 59, 0, 0, 0, 0)	
                 self['3lab22'].instance.setPixmap(png)
                 txt = self.extend_day(str(weather_data['forecasts'][3]['day']))
                 self['4lab18'].setText(txt)
@@ -300,9 +314,14 @@ class MeteoMain(Screen):
                 self['4lab21'].setText(txt)
                 txt = str(weather_data['forecasts'][3]['date'])
                 self['daydate3'].setText(txt)
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][3]['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 81, 59, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['forecasts'][3]['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
+		else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][3]['code'])
+                    myicon = self.checkIcon(icon)		
+ 	            png = loadPic(myicon, 81, 59, 0, 0, 0, 0)	
                 self['4lab22'].instance.setPixmap(png)
                 txt = self.extend_day(str(weather_data['forecasts'][4]['day']))
                 self['5lab18'].setText(txt)
@@ -316,9 +335,14 @@ class MeteoMain(Screen):
                 self['5lab21'].setText(txt)
                 txt = str(weather_data['forecasts'][4]['date'])
                 self['daydate4'].setText(txt)
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][4]['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 81, 59, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['forecasts'][4]['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
+		else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][4]['code'])
+                    myicon = self.checkIcon(icon)		
+ 	            png = loadPic(myicon, 81, 59, 0, 0, 0, 0)	
                 self['5lab22'].instance.setPixmap(png)
                 self['lab23'].setText(city)
                 self['lab24'].setText(_('Latitude :'))
