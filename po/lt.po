@@ -12686,3 +12686,180 @@ msgstr "įjungta"
 
 #~ msgid "currently installed image: %s"
 #~ msgstr "šiuo metu įdiegtas atvaizdas: %s"
+
+msgid "5 Day Weather Forecast"
+msgstr "5 Giorni di previsioni meteo"
+
+msgid "AM Clouds/PM Sun"
+msgstr "AM Nuvole/PM Sole"
+
+msgid "AM Light Snow"
+msgstr "AM Deboli nevicate"
+
+msgid "AM Rain"
+msgstr "AM Pioggia"
+
+msgid "AM Showers"
+msgstr "AM Acquazzoni"
+
+msgid "AM Showers/Wind"
+msgstr "AM Acquazzoni/Vento"
+
+msgid "AM Snow"
+msgstr "AM Neve"
+
+msgid "AM Snow Showers"
+msgstr "AM Nevicate"
+
+msgid "AM Thunderstorms"
+msgstr "AM Temporali"
+
+msgid "Change city"
+msgstr "Cambia cittÃ "
+
+msgid "Clear"
+msgstr "Sereno "
+
+msgid "Cloudy"
+msgstr "Nuvoloso"
+
+msgid "Cloudy/Wind"
+msgstr "Nuvoloso/Vento"
+
+msgid "Country   :"
+msgstr "Nazione   :"
+
+msgid "East"
+msgstr "Est"
+
+msgid "Fair"
+msgstr "Bel tempo"
+
+msgid "Fog"
+msgstr "Nebbia"
+
+msgid "From"
+msgstr "da"
+
+msgid "Haze"
+msgstr "Foschia"
+
+msgid "Humidity   :"
+msgstr "UmiditÃ     :"
+
+msgid "Last Updated:"
+msgstr "Aggiornato il  :"
+
+msgid "Latitude :"
+msgstr "Latitudine  :"
+
+msgid "Light Rain"
+msgstr "Deboli pioggie"
+
+msgid "Light Rain/Wind"
+msgstr "Deboli pioggie/Vento"
+
+msgid "Light Snow"
+msgstr "Deboli nevicate"
+
+msgid "Longitude :"
+msgstr "longitudine   :"
+
+msgid "Mostly Clear"
+msgstr "Prvalentemente sereno"
+
+msgid "Mostly Cloudy"
+msgstr "Prevalentemente nuvoloso"
+
+msgid "Mostly Sunny"
+msgstr "Prevalentemente soleggiato"
+
+msgid "NEast"
+msgstr "Nord/Est"
+
+msgid "NWest"
+msgstr "Nord/Ovest"
+
+msgid "North"
+msgstr "Nord"
+
+msgid "PM Light Snow"
+msgstr "PM Deboli nevicate"
+
+msgid "PM Showers"
+msgstr "PM Rovesci"
+
+msgid "PM Snow Showers"
+msgstr "PM Nevicate"
+
+msgid "PM Thunderstorms"
+msgstr "PM Temporali"
+
+msgid "Partly Cloudy"
+msgstr "Parzialmente nuvoloso"
+
+msgid "Pressure   :"
+msgstr "Pressione  :"
+
+msgid "Rain"
+msgstr "Pioggia"
+
+msgid "Rain/Snow"
+msgstr "Pioggia/Neve"
+
+msgid "Region   :"
+msgstr "Regione   :"
+
+msgid "SEast"
+msgstr "Sud/Est"
+
+msgid "SWest"
+msgstr "Sud/Ovest"
+
+msgid "Scattered Thunderstorms"
+msgstr "Temporali sparsi"
+
+msgid "Showers"
+msgstr "Aquazzoni"
+
+msgid "Showers Early"
+msgstr "Possibili acquazzoni"
+
+msgid "Showers/Wind"
+msgstr "Acquazzoni/Vento"
+
+msgid "Snow"
+msgstr "Neve"
+
+msgid "Snow Showers"
+msgstr "Nevicate"
+
+msgid "South"
+msgstr "Sud"
+
+msgid "Sunny"
+msgstr "Soleggiato"
+
+msgid "Sunrise    :"
+msgstr "Alba         :"
+
+msgid "Sunset     :"
+msgstr "Tramonto  :"
+
+msgid "Thunderstorms"
+msgstr "Temporali"
+
+msgid "Visibility :"
+msgstr "VisibilitÃ    :"
+
+msgid "Wind"
+msgstr "Vento"
+
+msgid "West"
+msgstr "Ovest"
+
+msgid "Yahoo Weather"
+msgstr "Yahoo Meteo"
+
+msgid "Yahoo Weather City"
+msgstr "Yahoo Meteo CittÃ "
