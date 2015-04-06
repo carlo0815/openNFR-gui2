@@ -140,13 +140,17 @@ class MeteoMain(Screen):
         self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'red': self.key_red,
          'menu': self.key_red,
          'green': self.key_green,
-         'back': self.close,
-         'ok': self.close})
+         'back': self.exit,
+         'ok': self.exit})
         self.activityTimer = eTimer()
         self.activityTimer.timeout.get().append(self.startConnection)
         self.onShow.append(self.startShow)
         self.onClose.append(self.delTimer)
         self.bhv = 2
+        
+    def exit(self):
+        self.session.nav.stopService()
+        self.close()        
 
     def startShow(self):
         self.activityTimer.start(0, False)
