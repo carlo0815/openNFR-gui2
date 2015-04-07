@@ -214,9 +214,14 @@ class MeteoMain(Screen):
                 txt = str(weather_data['condition']['temp'])
                 self['lab4'].setText(txt)
                 self['lab4b'].setText('\xc2\xb0C')
-                icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['condition']['code'])
-                myicon = self.checkIcon(icon)
-                png = loadPic(myicon, 219, 160, 0, 0, 0, 0)
+                if getDesktop(0).size().width() == 1920:                  
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/WeatherIcons/%s.png' % str(weather_data['condition']['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 219, 160, 0, 0, 0, 0)
+                else:
+                    icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['condition']['code'])
+                    myicon = self.checkIcon(icon)
+                    png = loadPic(myicon, 219, 160, 0, 0, 0, 0)    
                 self['lab5'].instance.setPixmap(png)
                 txt = self.extend_name(str(weather_data['condition']['text']))
                 self['lab6'].setText(txt)
