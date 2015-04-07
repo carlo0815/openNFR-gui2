@@ -9,7 +9,7 @@ from Tools.Directories import fileExists
 from urllib import quote
 from urllib2 import Request, urlopen, URLError, HTTPError
 from xml.dom import minidom, Node
-from enigma import loadPic, eTimer, gFont
+from enigma import loadPic, eTimer, gFont, getDesktop
 from Components.config import config, ConfigSubsection, ConfigYesNo
 config.plugins.YahooWeather = ConfigSubsection()
 config.plugins.YahooWeather.compactskin = ConfigYesNo(default=True)
