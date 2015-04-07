@@ -428,6 +428,7 @@ lib/python/Plugins/Extensions/bmediacenter/src/Config/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Skin/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Font/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/Icon/Makefile
+lib/python/Plugins/Extensions/bmediacenter/src/Icon/Makefile/WeatherIcons
 lib/python/Plugins/Extensions/bmediacenter/src/icons/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/icons/70x70/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/radio/Makefile
