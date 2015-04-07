@@ -583,10 +583,13 @@ class MeteoMain(Screen):
         self.session.open(WeatherSearch)
 
     def key_green(self):
-        if config.plugins.YahooWeather.compactskin.value == True:
-            config.plugins.YahooWeather.compactskin.setValue(False)
-            self.session.open(MessageBox, _('Yahoo Weather') + _('\nSkin Compact: off'), MessageBox.TYPE_INFO, timeout=5)
-        elif config.plugins.YahooWeather.compactskin.value == False:
-            config.plugins.YahooWeather.compactskin.setValue(True)
-            self.session.open(MessageBox, _('Yahoo Weather') + _('\nSkin Compact: on'), MessageBox.TYPE_INFO, timeout=5)
-        config.plugins.YahooWeather.compactskin.save()
+        if getDesktop(0).size().width() == 1920:
+            self.session.open(MessageBox, _('Yahoo Weather') + _('\nFullHD Skin no Skinchange!'), MessageBox.TYPE_INFO, timeout=5)
+        else:    
+            if config.plugins.YahooWeather.compactskin.value == True:
+                config.plugins.YahooWeather.compactskin.setValue(False)
+                self.session.open(MessageBox, _('Yahoo Weather') + _('\nSkin Compact: off'), MessageBox.TYPE_INFO, timeout=5)
+            elif config.plugins.YahooWeather.compactskin.value == False:
+                config.plugins.YahooWeather.compactskin.setValue(True)
+                self.session.open(MessageBox, _('Yahoo Weather') + _('\nSkin Compact: on'), MessageBox.TYPE_INFO, timeout=5)
+            config.plugins.YahooWeather.compactskin.save()
