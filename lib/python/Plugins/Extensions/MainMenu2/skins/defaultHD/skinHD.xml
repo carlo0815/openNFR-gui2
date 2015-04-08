@@ -1,0 +1,360 @@
+<skin>
+<!-- DMC Main Menu -->
+<screen name="MM_MainMenu" position="0,0" size="1920,1080" title="Home" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconSetupsw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconInfopanel.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconPluginssw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="1036,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="Infopanel_MainMenu" position="0,0" size="1920,1080" title="Infopanel" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconRemotemanagersw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconImagemanager.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconRemotemanagersw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="ImageManager_MainMenu" position="0,0" size="1920,1080" title="Imagemanager" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconFlashlocalsw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconBackup.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconFlashlocalsw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="RemoteManager_MainMenu" position="0,0" size="1920,1080" title="RemoteManager" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconBluepanelsw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconRedpanel.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconKeymappanalsw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="Setup_MainMenu" position="0,0" size="1920,1080" title="Setup" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconSystemsw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconChannelsearch.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconSystemsw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="ChannelSearch_MainMenu" position="0,0" size="1920,1080" title="ChannelSearch" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconManuelsw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconAutomatic.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconManuelsw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="System_MainMenu" position="0,0" size="1920,1080" title="System" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconGuisw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconAV.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconGuisw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="User_MainMenu" position="0,0" size="1920,1080" title="Gui" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="mb_bg" position="0,0" zPosition="-5" size="1920,1080" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/backHD.png" />
+  <widget font="Regular; 42" position="59,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="center,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="center,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="555,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1365,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+   <!-- /*Buttons-->
+  <ePixmap alphatest="blend" pixmap="SkalliHD-NFR-FullHD/buttons/key_blue.png" position="1386,1008" size="35,35" />
+  <widget backgroundColor="background" font="Regular; 30" halign="left" render="Label" source="key_blue" position="1443,1008" size="240,35" transparent="1" zPosition="1" valign="top" />
+  <!--Buttons */--> 
+  <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+    <convert type="StringList" />
+  </widget>
+  <widget name="left" position="258,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconUserMenusw.png" transparent="1" alphatest="blend" />
+  <widget name="middle" position="center,650" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconUserMenu.png" transparent="1" alphatest="blend" />
+  <widget name="right" position="1458,550" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/MenuIconUserMenusw.png" transparent="1" alphatest="blend" />
+  <ePixmap name="mb_select" position="center,1000" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
+  <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,1000" size="400,45" foregroundColor="foreground" font="Regular;40" />
+</screen>
+<screen name="UserMainMenuSetup" position="0,0" size="1920,1080" title="Setup" flags="wfNoBorder" backgroundColor="black">
+  <eLabel backgroundColor="black" foregroundColor="Text1" name="" position="0,0" size="1920,1080" zPosition="-10" />
+  <ePixmap name="new ePixmap" pixmap="SkalliHD-NFR-FullHD/extensions/back.png" position="0,0" size="1920,1080" transparent="0" zPosition="-5" />
+  <widget font="Regular; 42" position="60,25" render="Label" size="850,50" source="Title" transparent="1" valign="top" zPosition="1" halign="left" backgroundColor="background" foregroundColor="TextInfo" />
+  <widget enableWrapAround="1" position="25,125" name="configlist" itemHeight="35" font="Regular;28" scrollbarMode="showOnDemand" size="800,800" selectionPixmap="SkalliHD-NFR-FullHD/selpic/1240x40.png" transparent="1" />
+  <!-- /*Uhr-->
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1739,18" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%H</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 36" halign="center" position="1788,18" size="15,40" text=":" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 36" halign="center" position="1793,19" render="Label" size="55,40" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%M</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 25" halign="center" position="1848,20" size="10,25" text=":" transparent="1" valign="center" zPosition="1" foregroundColor="Text1" />
+  <widget backgroundColor="background" font="Regular; 24" halign="center" position="1855,20" render="Label" size="40,30" source="global.CurrentTime" transparent="1" valign="bottom" zPosition="1" foregroundColor="Text1">
+    <convert type="ClockToText">Format:%S</convert>
+  </widget>
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" position="1545,25" render="Label" size="220,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%d. %B</convert>
+  </widget>
+  <eLabel backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="left" noWrap="1" position="1536,25" size="10,40" text=", " transparent="1" valign="top" zPosition="5" />
+  <widget backgroundColor="background" font="Regular; 32" foregroundColor="Text1" halign="right" position="1330,25" render="Label" size="200,40" source="global.CurrentTime" transparent="1">
+    <convert type="ClockToText">Format:%A</convert>
+  </widget>
+  <!--Uhr */-->
+  <!--TV-Bild mit Rahmen groß */-->
+  <widget source="session.VideoPicture" render="Pig" position="1040,180" zPosition="3" size="800,450" backgroundColor="picture" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="1040,175" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line3.png" position="1040,633" size="800, 2" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1035,180" size="2, 450" />
+  <ePixmap name="line" pixmap="SkalliHD-NFR-FullHD/icons/line4.png" position="1842,180" size="2, 450" />
+  <!-- /*TV-Bild mit Rahmen groß-->
+</screen>
+</skin>

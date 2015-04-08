@@ -451,6 +451,11 @@ lib/python/Plugins/Extensions/Infopanel/images/Makefile
 lib/python/Plugins/Extensions/Infopanel/pics/Makefile
 lib/python/Plugins/Extensions/Infopanel/locale/Makefile
 lib/python/Plugins/Extensions/Infopanel/Extra/Makefile
+lib/python/Plugins/Extensions/MainMenu2/Makefile
+lib/python/Plugins/Extensions/MainMenu2/skin/Makefile
+lib/python/Plugins/Extensions/MainMenu2/skin/defaultHD/Makefile
+lib/python/Plugins/Extensions/MainMenu2/skin/defaultHD/images/Makefile
+lib/python/Plugins/Extensions/MainMenu2/skin/defaultHD/images/default/Makefile
 lib/python/Plugins/Extensions/MenuSort/Makefile
 lib/python/Plugins/Extensions/CustomSubservices/Makefile
 lib/python/Plugins/Extensions/MediaScanner/Makefile

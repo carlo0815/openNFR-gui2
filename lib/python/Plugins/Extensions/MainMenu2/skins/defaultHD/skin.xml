@@ -1,0 +1,178 @@
+<skin>
+  <screen name="MM_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="MM_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconSetupsw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconInfopanel.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconUserMenusw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" font="Regular; 30" backgroundColor="backtop" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="Infopanel_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="Infopanel_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconRemotemanagersw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconImagemanager.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconRemotemanagersw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="ImageManager_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="Imagemanager_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconFlashlocalsw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconBackup.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconFlashlocalsw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="RemoteManager_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="RemoteManager_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconBluepanelsw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconRedpanel.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconKeymappanalsw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="Setup_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="Setup_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconSystemsw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconChannelsearch.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconSystemsw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="ChannelSearch_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="ChannelSearch_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconManuelsw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/default/images/MenuIconAutomatic.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconManuelsw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="System_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="System_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconGuisw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconAV.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconGuisw.png" transparent="1" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="User_MainMenu" position="0,0" size="1280,720" title="Home" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="menu" render="Listbox" zPosition="0" transparent="1" position="0,0" size="0,0">
+      <convert type="StringList" />
+    </widget>
+  <widget source="key_blue" render="Label" position="1000,674" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+  <ePixmap pixmap="skin_default/buttons/blue.png" position="960,672" size="30,30" alphatest="blend" />
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="User_MainMenu" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="left" position="159,380" zPosition="1" size="150,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconUserMenusw.png" transparent="1" alphatest="blend" />
+    <widget name="middle" position="center,430" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconUserMenu.png" transparent="1" alphatest="blend" />
+    <widget name="right" position="982,380" zPosition="1" size="150,150" transparent="1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/MenuIconUserMenusw.png" alphatest="blend" />
+    <widget name="text" zPosition="2" transparent="1" halign="center" valign="center" position="center,660" size="400,45" foregroundColor="foreground" font="Regular; 30" backgroundColor="transparent" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+  <screen name="UserMainMenuSetup" position="0,0" size="1280,720" title="Settings" flags="wfNoBorder">
+    <ePixmap position="center,center" size="1280,720" zPosition="-10" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/back_ohneTV.png" />
+    <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular;26" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Default</convert>
+    </widget>
+    <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="backtop" transparent="1" foregroundColor="cyan1">
+      <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+    </widget>
+    <widget source="session.VideoPicture" render="Pig" position="center,95" size="375,214" zPosition="-8" />
+    <eLabel position="center,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+    <eLabel text="UserMainMenu-Setup" position="55,17" size="720,43" font="Regular; 35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+    <widget name="configlist" position="center,359" zPosition="3" size="718,273" scrollbarMode="showOnDemand" transparent="1" />
+    <ePixmap name="new ePixmap" position="center,81" size="407,244" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/tv.png" />
+  </screen>
+</skin>

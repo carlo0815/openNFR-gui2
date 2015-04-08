@@ -191,7 +191,8 @@
 	</map>
 
 	<map context="InfobarMenuActions">
-		<key id="KEY_MENU" mapto="mainMenu" flags="mr" />
+		<key id="KEY_MENU" mapto="mainMenu" flags="b" />
+		<key id="KEY_MENU" mapto="mainMenu2" flags="l" />	
 		<key id="KEY_SPACE" mapto="mainMenu" flags="mr" />
 		<key id="KEY_PC" mapto="showNetworkSetup" flags="mr" />
 		<key id="KEY_ANGLE" mapto="showRFmod" flags="l" /> 

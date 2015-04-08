@@ -864,12 +864,17 @@ class InfoBarMenu:
 		self["MenuActions"] = HelpableActionMap(self, "InfobarMenuActions",
 			{
 				"mainMenu": (self.mainMenu, _("Enter main menu...")),
+				"mainMenu2": (self.mainMenu2, _("Enter Easy menu...")),
 				"showNetworkSetup": (self.showNetworkMounts, _("Show network mounts ...")),
 				"showSystemSetup": (self.showSystemMenu, _("Show network mounts ...")),
 				"showRFmod": (self.showRFSetup, _("Show RFmod setup...")),
 				"toggleAspectRatio": (self.toggleAspectRatio, _("Toggle aspect ratio...")),
 			})
 		self.session.infobar = None
+
+        def mainMenu2(self):
+                from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
+                self.session.open(MM_MainMenu)
 
 	def mainMenu(self):
 		# print "loading mainmenu XML..."
