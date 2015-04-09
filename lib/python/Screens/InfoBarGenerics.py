@@ -873,8 +873,12 @@ class InfoBarMenu:
 		self.session.infobar = None
 
         def mainMenu2(self):
-                from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
-                self.session.open(MM_MainMenu)
+                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
+                        from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
+                        self.session.open(MM_MainMenu)
+                else:
+                        self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+
 
 	def mainMenu(self):
 		# print "loading mainmenu XML..."
