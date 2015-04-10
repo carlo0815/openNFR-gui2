@@ -42,7 +42,8 @@ wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.getValu
 wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.getValue(), priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.getValue(), priority = 20)
 wizardManager.registerWizard(UserInterfacePositionerWizard, config.misc.firstrun.getValue(), priority = 30)
-wizardManager.registerWizard(OpenNFRWizardSetup, config.misc.firstrun.getValue(), priority = 40)
-wizardManager.registerWizard(OpenWebifConfig, config.misc.firstrun.getValue(), priority = 50)
+wizardManager.registerWizard(OpenWebifConfig, config.misc.firstrun.getValue(), priority = 40)
+wizardManager.registerWizard(OpenNFRWizardSetup, config.misc.firstrun.getValue(), priority = 50)
+
 
 
