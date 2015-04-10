@@ -736,8 +736,11 @@ class InfoBarChannelSelection:
                 self.session.open(FindService)
 
         def showMediaCenter(self):
-                from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
-                self.session.open(DMC_MainMenu)
+                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+                        from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
+                        self.session.open(DMC_MainMenu)
+                else:
+                        self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 	def ChannelPlusPressed(self):
 		if config.usage.channelbutton_mode.getValue() == "0":
