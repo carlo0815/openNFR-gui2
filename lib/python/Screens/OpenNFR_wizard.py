@@ -81,9 +81,9 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
 		cmd += "opkg remove --force-depends enigma2-plugin-extensions-mainmenu2;"	
 	
 	if config.opennfrwizard.enablehbbtv.value is True:
-		cmd += "opkg install --force-overwrite tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-inihbbtv;"
+		cmd += "opkg install --force-overwrite tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd;"
 	else:
-		cmd += "opkg remove --force-depends tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-inihbbtv;"
+		cmd += "opkg remove --force-depends tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd;"
 
         for x in self['config'].list:
             x[1].save()
