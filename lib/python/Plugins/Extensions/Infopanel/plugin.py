@@ -32,6 +32,7 @@ from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixm
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
 from __init__ import _
 from enigma import getDesktop
+from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
@@ -525,7 +526,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "PluginInstallwizard":
 			self.session.open(PluginInstall)
 		elif menu == "PluginDeinstallwizard":
-			self.session.open(PluginDeinstall)			
+			self.session.open(PluginDeinstall)
+		elif menu == "OpenNFRWizard":
+			self.session.open(OpenNFRWizardSetup)				
 		else:
 			pass
 
@@ -636,6 +639,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.oldmlist = self.Mlist
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginInstallwizard'), _("PluginInstallwizard"), 'PluginInstallwizard')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginDeinstallwizard'), _("PluginDeinstallwizard"), 'PluginDeinstallwizard')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('OpenNFRWizard'), _("OpenNFRWizard"), 'OpenNFRWizard')))
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
