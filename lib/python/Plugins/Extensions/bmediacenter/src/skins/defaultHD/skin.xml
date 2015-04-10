@@ -20,7 +20,7 @@
     <widget name="middle" position="495,180" zPosition="1" size="290,290" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/MenuIconMusic.png" transparent="1" alphatest="blend" />
     <widget name="right" position="980,300" zPosition="1" size="200,200" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/MenuIconVideosw.png" transparent="1" alphatest="blend" />
     <ePixmap name="mb_select" position="center,502" zPosition="2" size="605,43" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/selected.png" transparent="1" alphatest="blend" />
-    <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,502" size="250,40" foregroundColor="foreground" font="Regular;32" />
+    <widget name="text" zPosition="1" transparent="1" halign="center" valign="center" position="center,502" size="605,40" foregroundColor="foreground" font="Regular;32" />
     <widget source="menu" render="Pixmap" transparent="1" zPosition="2" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock_ap.png" position="center,645" size="38,46" alphatest="on">
       <convert type="MenuEntryCompare">menu_music</convert>
       <convert type="ConditionalShowHide" />
@@ -385,121 +385,5 @@
     <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
     <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
     <ePixmap position="center,175" zPosition="2" size="802,383" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fsm.png" transparent="1" alphatest="blend" />
-  </screen>
-  <!--DMC Weather Info-->
-  <screen name="MC_WeatherInfo" position="center,center" size="1280,720" title="Weather Info" flags="wfNoBorder" backgroundColor="black">
-    <ePixmap name="mb_bg" position="center,2" zPosition="0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fs8.png" />
-    <ePixmap name="mb_bgdock" position="center,630" zPosition="1" size="76,74" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock.png" alphatest="blend" />
-    <ePixmap name="mb_bgdockweather" position="center,646" zPosition="2" size="55,42" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock_weather.png" alphatest="blend" />
-    <ePixmap name="mb_bgweathertop" position="342,135" zPosition="2" size="587,231" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/weathertop.png" alphatest="blend" />
-    <ePixmap name="mb_bgweatherbottom" position="160,377" zPosition="2" size="961,247" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/weatherbot.png" alphatest="blend" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/icons/settingsblue.png" position="970,650" zPosition="2" size="40,40" transparent="1" alphatest="blend" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MediaCenter/skins/defaultHD/images/pfleft.png" position="51,330" zPosition="2" size="49,52" transparent="1" alphatest="on" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/MediaCenter/skins/defaultHD/images/pfright.png" position="1181,330" zPosition="2" size="49,52" transparent="1" alphatest="on" />
-    <widget render="Label" backgroundColor="black" source="CurrentCity" zPosition="5" transparent="1" halign="center" position="center,358" size="720,30" font="Regular; 26" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="observationtime" position="369,318" zPosition="3" size="532,20" font="Regular;14" transparent="1" halign="left" />
-    <widget render="Label" backgroundColor="black" source="observationpoint" position="369,290" zPosition="3" size="533,22" font="Regular;14" transparent="1" halign="left" />
-    <widget name="currenticon" transparent="1" position="513,167" zPosition="5" size="120,120" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="currentTemp" zPosition="5" transparent="1" halign="right" position="369,165" size="140,33" font="Regular; 30" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="feelsliketemp" position="369,201" zPosition="5" halign="right" size="140,20" font="Regular;16" transparent="1" />
-    <widget render="Label" backgroundColor="black" source="condition" zPosition="5" transparent="1" halign="right" position="640,209" size="260,35" font="Regular;28" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="wind_condition" position="369,225" halign="right" zPosition="5" size="140,20" font="Regular;18" transparent="1" />
-    <widget render="Label" backgroundColor="black" source="humidity" zPosition="5" transparent="1" halign="right" position="369,256" size="140,30" font="Regular;26" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday1" position="0,0" zPosition="-1" size="0,0" halign="center" valign="center" font="Regular;18" transparent="1" />
-    <widget name="weekday1_icon" position="300,447" zPosition="-1" size="0,0" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="weekday1_temp" position="0,0" zPosition="-1" size="0,0" halign="center" valign="bottom" font="Regular;16" transparent="1" />
-    <widget render="Label" backgroundColor="black" source="weekday1_tempname" zPosition="-1" transparent="1" halign="center" position="0,0" size="0,0" font="Regular;23" />
-    <widget render="Label" backgroundColor="black" source="weekday2" zPosition="5" transparent="1" halign="center" position="188,400" size="200,30" font="Regular;25" foregroundColor="grey" />
-    <widget name="weekday2_icon" transparent="1" position="300,447" zPosition="6" size="75,75" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="weekday2_temp" zPosition="5" transparent="1" halign="center" position="180,465" size="110,57" font="Regular;20" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday2_tempname" zPosition="5" transparent="1" halign="center" position="190,527" size="200,53" font="Regular;23" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday3" zPosition="5" transparent="1" halign="center" position="420,400" size="200,30" font="Regular;25" foregroundColor="grey" />
-    <widget name="weekday3_icon" transparent="1" position="535,447" zPosition="7" size="75,75" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="weekday3_temp" zPosition="5" transparent="1" halign="center" position="415,465" size="110,57" font="Regular;20" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday3_tempname" zPosition="5" transparent="1" halign="center" position="423,527" size="200,65" font="Regular;23" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday4" zPosition="5" transparent="1" halign="center" position="655,400" size="200,30" font="Regular;25" foregroundColor="grey" />
-    <widget name="weekday4_icon" transparent="1" position="767,447" zPosition="7" size="75,75" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="weekday4_temp" zPosition="5" transparent="1" halign="center" position="648,465" size="110,57" font="Regular;20" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday4_tempname" zPosition="5" transparent="1" halign="center" position="656,526" size="200,68" font="Regular;23" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday5" zPosition="5" transparent="1" halign="center" position="890,400" size="200,30" font="Regular;25" foregroundColor="grey" />
-    <widget name="weekday5_icon" transparent="1" position="1000,447" zPosition="7" size="75,75" alphatest="blend" />
-    <widget render="Label" backgroundColor="black" source="weekday5_temp" zPosition="5" transparent="1" halign="center" position="880,465" size="110,57" font="Regular;20" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="weekday5_tempname" zPosition="5" transparent="1" halign="center" position="889,526" size="200,53" font="Regular;23" foregroundColor="grey" />
-    <widget render="Label" backgroundColor="black" source="statustext" zPosition="5" transparent="1" halign="center" position="center,358" size="720,30" font="Regular; 26" foregroundColor="grey" />
-    <widget source="global.CurrentTime" render="Label" position="66,77" zPosition="1" size="305,30" font="Regular;23" transparent="1" halign="left" valign="center" foregroundColor="grey">
-      <convert type="ClockToText">Date</convert>
-    </widget>
-    <widget source="global.CurrentTime" render="Label" position="1035,77" size="150,30" font="Regular; 23" halign="right" shadowColor="greyfont" shadowOffset="-1,-1" transparent="1" zPosition="2" backgroundColor="background" foregroundColor="grey" valign="bottom">
-      <convert type="ClockToText">WithSeconds</convert>
-    </widget>
-    <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
-    <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
-  </screen>
-  <!--<screen name="WeatherSetup" position="0,0" size="1280,720" title="Edit Weather Info Settings" flags="wfNoBorder" backgroundColor="#000">
-		<ePixmap name="mb_bg" position="0,0" zPosition="0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/background.png"/>
-		<ePixmap name="mb_bgdock" position="center,630" zPosition="1" size="76,74" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock.png" alphatest="blend"/>
-		<ePixmap name="mb_bgdockweathersettings" position="613,648" zPosition="2" size="55,39" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock_weathersettings.png" transparent="1" alphatest="on"/>
-		<ePixmap name="mb_bgweather" position="center,120" zPosition="2" size="684,500" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/bglyric.png" transparent="1" alphatest="on"/>
-		<widget source="global.CurrentTime" render="Label" position="615,17" zPosition="1" size="120,43" font="Regular;40" transparent="1" halign="right" valign="center" foregroundColor="#CDCDCD">
-			<convert type="ClockToText">Format:%H:%M</convert>
-		</widget>
-		<widget source="global.CurrentTime" render="Label" position="495,75" zPosition="1" size="290,30" font="Regular;23" transparent="1" halign="center" valign="center" foregroundColor="#8C8C8C">
-			<convert type="ClockToText">Date</convert>
-		</widget>
-		<widget source="global.CurrentTime" render="LizWatches" position="573,26" size="32,32" zPosition="4" foregroundColor="white" alphatest="blend">
-			<convert type="LizExtraNumText">minHand</convert>
-		</widget>
-		<widget source="global.CurrentTime" render="LizWatches" position="577,30" size="24,24" zPosition="3" foregroundColor="white" alphatest="blend">
-			<convert type="LizExtraNumText">hourHand</convert>
-		</widget>
-		<ePixmap name="mb_clock" position="564,16" zPosition="2" size="51,51" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/clock.png" transparent="1" alphatest="blend"/>		
-		<widget name="config" position="center,center" zPosition="5" size="540,300" scrollbarMode="showOnDemand" transparent="1"/>
-	</screen>-->
-  <screen name="WeatherSetup" position="center,center" size="1280,720" flags="wfNoBorder">
-    <ePixmap name="mb_bg" position="0,0" zPosition="0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fs8.png" />
-    <ePixmap name="mb_bgdock" position="center,630" zPosition="1" size="76,74" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock.png" alphatest="blend" />
-    <ePixmap name="mb_bgdockweathersettings" position="613,648" zPosition="2" size="55,39" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock_weathersettings.png" transparent="1" alphatest="on" />
-    <ePixmap name="mb_bgweather" position="center,180" zPosition="2" size="644,357" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/back.png" transparent="1" alphatest="blend" />
-    <widget render="Label" zPosition="5" source="city" position="329,228" size="400,50" font="Regular;20" halign="left" transparent="1" />
-    <widget render="Label" zPosition="5" source="degreetype" position="731,228" size="130,50" font="Regular;20" halign="left" transparent="1" />
-    <widget name="entrylist" zPosition="5" position="329,281" size="622,250" scrollbarMode="showOnDemand" transparent="1" />
-    <widget render="Label" source="key_red" position="329,186" size="140,20" zPosition="5" valign="center" halign="center" backgroundColor="red" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget render="Label" source="key_green" position="487,186" size="140,20" zPosition="5" valign="center" halign="center" backgroundColor="green" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget render="Label" source="key_yellow" position="647,186" size="140,20" zPosition="5" valign="center" halign="center" backgroundColor="yellow" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget render="Label" source="key_blue" position="808,186" zPosition="5" size="140,20" valign="center" halign="center" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <ePixmap position="329,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/red.png" transparent="1" alphatest="on" />
-    <ePixmap position="487,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/green.png" transparent="1" alphatest="on" />
-    <ePixmap position="647,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/yellow.png" transparent="1" alphatest="on" />
-    <ePixmap position="808,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/blue.png" transparent="1" alphatest="on" />
-    <widget source="global.CurrentTime" render="Label" position="66,77" zPosition="1" size="305,30" font="Regular;23" transparent="1" halign="left" valign="center" foregroundColor="grey">
-      <convert type="ClockToText">Date</convert>
-    </widget>
-    <widget source="global.CurrentTime" render="Label" position="1035,77" size="150,30" font="Regular; 23" halign="right" shadowColor="greyfont" shadowOffset="-1,-1" transparent="1" zPosition="2" backgroundColor="background" foregroundColor="grey" valign="bottom">
-      <convert type="ClockToText">WithSeconds</convert>
-    </widget>
-    <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
-    <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
-  </screen>
-  <screen name="WeatherPluginEntryConfigScreen" position="center,center" size="1280,720" flags="wfNoBorder">
-    <widget name="config" position="329,228" size="624,300" scrollbarMode="showOnDemand" zPosition="6" transparent="1" />
-    <ePixmap position="329,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/red.png" transparent="1" alphatest="on" />
-    <ePixmap position="487,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/green.png" transparent="1" alphatest="on" />
-    <ePixmap position="647,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/yellow.png" transparent="1" alphatest="on" />
-    <ePixmap position="808,186" zPosition="4" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/blue.png" transparent="1" alphatest="on" />
-    <widget source="key_red" render="Label" position="329,186" zPosition="5" size="140,20" valign="center" halign="center" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget source="key_green" render="Label" position="487,186" zPosition="5" size="140,20" valign="center" halign="center" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget render="Label" source="key_yellow" position="647,186" size="140,20" zPosition="5" valign="center" halign="center" backgroundColor="yellow" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget source="key_blue" render="Label" position="808,186" zPosition="5" size="140,20" valign="center" halign="center" font="Regular; 16" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
-    <widget source="global.CurrentTime" render="Label" position="66,77" zPosition="1" size="305,30" font="Regular;23" transparent="1" halign="left" valign="center" foregroundColor="grey">
-      <convert type="ClockToText">Date</convert>
-    </widget>
-    <widget source="global.CurrentTime" render="Label" position="1035,77" size="150,30" font="Regular; 23" halign="right" shadowColor="greyfont" shadowOffset="-1,-1" transparent="1" zPosition="2" backgroundColor="background" foregroundColor="grey" valign="bottom">
-      <convert type="ClockToText">WithSeconds</convert>
-    </widget>
-    <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
-    <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
-    <ePixmap name="mb_bg" position="0,0" zPosition="0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fs8.png" />
-    <ePixmap position="center,180" zPosition="2" size="644,357" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/back.png" transparent="1" alphatest="blend" />
-    <ePixmap position="647,186" zPosition="5" size="140,20" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/yellow.png" transparent="1" alphatest="blend" />
   </screen>
 </skin>
