@@ -1,4 +1,4 @@
-﻿from enigma import eListboxPythonMultiContent, gFont, eEnv
+from enigma import eListboxPythonMultiContent, gFont, eEnv
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM
 from Components.Console import Console
 from Components.ActionMap import ActionMap
@@ -34,7 +34,6 @@ from Plugins.Extensions.Infopanel.RestartNetwork import RestartNetwork
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
-from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Plugins.Extensions.Infopanel.Manager import *
 from Plugins.Extensions.Infopanel.outofflash import MovePlugins_int, MovePlugins
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
@@ -259,7 +258,6 @@ class QuickMenu(Screen):
 #### Network Services Menu ##############################
 	def Qnetworkservices(self):
 		self.sublist = []
-		self.sublist.append(QuickSubMenuEntryComponent("Network Configs",_("Setup Network configs"),_("enable/disable HBBTV; 3g-4g Modem; Firmwareupdate; Wifi Driver")))
 		self.sublist.append(QuickSubMenuEntryComponent("Samba",_("Setup Samba"),_("Setup Samba")))
 		self.sublist.append(QuickSubMenuEntryComponent("NFS",_("Setup NFS"),_("Setup NFS")))
 		self.sublist.append(QuickSubMenuEntryComponent("FTP",_("Setup FTP"),_("Setup FTP")))
@@ -537,8 +535,6 @@ class QuickMenu(Screen):
 			self.session.open(NetworkuShare)
 		elif item[0] == _("Telnet"):
 			self.session.open(NetworkTelnet)
-		elif item[0] == _("Network Configs"):
-			self.session.open(OpenNFRWizardSetup)			
 ######## Select System Setup Menu ##############################
 		elif item[0] == _("Customise"):
 			self.openSetup("usage")
@@ -812,8 +808,8 @@ def QuickMenuEntryComponent(name, description, long_description = None, width=54
 	if getDesktop(0).size().width() == 1920:
 	    return [
      	            _(name),
-                    MultiContentEntryText(pos=(120, 3), size=(width-160, 32), font=0, text = _(name)),
-	            MultiContentEntryText(pos=(120, 35), size=(width-160, 25), font=1, text = _(description)),
+                    MultiContentEntryText(pos=(120, 5), size=(width-160, 30), font=0, text = _(name)),
+	            MultiContentEntryText(pos=(120, 33), size=(width-160, 24), font=1, text = _(description)),
 	            MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 40), png = png),
 	            _(long_description),
 	          ]
@@ -830,8 +826,8 @@ def QuickSubMenuEntryComponent(name, description, long_description = None, width
 		if getDesktop(0).size().width() == 1920:
 			return [
 				_(name),
-				MultiContentEntryText(pos=(10, 3), size=(width-10, 32), font=0, text = _(name)),
-				MultiContentEntryText(pos=(10, 35), size=(width-10, 25), font=1, text = _(description)),
+				MultiContentEntryText(pos=(10, 5), size=(width-10, 30), font=0, text = _(name)),
+				MultiContentEntryText(pos=(10, 33), size=(width-10, 24), font=1, text = _(description)),
 				_(long_description),
 			]
 		else:
@@ -847,7 +843,7 @@ class QuickMenuList(MenuList):
 		if getDesktop(0).size().width() == 1920:	
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
-			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setFont(1, gFont("Regular", 20))
 			self.l.setItemHeight(60)
 		else:
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
@@ -860,7 +856,7 @@ class QuickMenuSubList(MenuList):
 		if getDesktop(0).size().width() == 1920:	
 			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
-			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setFont(1, gFont("Regular", 21))
 			self.l.setItemHeight(60)
 		else:
 			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
