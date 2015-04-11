@@ -87,32 +87,32 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
     def run(self):
 	cmd = ""
 	webinstall = "0"
-	if config.opennfrwizard.enablewebinterface.value is True:
-	        webinstall = "1"
-                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-webinterface-nfrmod;"
-	else:
-		cmd += "opkg remove --force-depends enigma2-plugin-extensions-webinterface-nfrmod;"
 
 	if config.opennfrwizard.enablemediacenter.value is True:
-		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;"
+		os.system("opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;")
 	else:
-		cmd += "opkg remove --force-depends enigma2-plugin-extensions-bmediacenter;"
+		os.system("opkg remove --force-depends enigma2-plugin-extensions-bmediacenter;")
 
 	if config.opennfrwizard.enableskalliskin.value is True:
-		cmd += "opkg install --force-overwrite enigma2-plugin-skins-skallihd-fullhd;"
+		os.system("opkg install --force-overwrite enigma2-plugin-skins-skallihd-fullhd;")
 	else:
-		cmd += "opkg remove --force-depends enigma2-plugin-skins-skallihd-fullhd;"
+		os.system("opkg remove --force-depends enigma2-plugin-skins-skallihd-fullhd;")
 
-	if config.opennfrwizard.enablemainmenu2 is True:
-		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mainmenu2;"
+	if config.opennfrwizard.enablemainmenu2.value is True:
+		os.system("opkg install --force-overwrite enigma2-plugin-extensions-mainmenu2;")
 	else:
-		cmd += "opkg remove --force-depends enigma2-plugin-extensions-mainmenu2;"	
+		os.system("opkg remove --force-depends enigma2-plugin-extensions-mainmenu2;")	
 
 	if config.opennfrwizard.enablehbbtv.value is True:
-		cmd += "opkg install --force-overwrite tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;"
+		os.system("opkg install --force-overwrite tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;")
 	else:
-		cmd += "opkg remove --force-depends tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;"
+		os.system("opkg remove --force-depends tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;")
 
+	if config.opennfrwizard.enablewebinterface.value is True:
+		webinstall = "1"
+		os.system("opkg install --force-overwrite enigma2-plugin-extensions-webinterface-nfrmod;")
+	else:
+		os.system("opkg remove --force-depends enigma2-plugin-extensions-webinterface-nfrmod;")
 
         for x in self['config'].list:
             x[1].save()
@@ -120,7 +120,7 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
 	config.opennfrwizard.save()
         from time import sleep
         sleep(10)	
-	self.session.open(Console, title = _("Please wait configuring OpenNFR Image"), cmdlist = [cmd], finishedCallback = None, closeOnSuccess = True)
+	
 	plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 
 	if webinstall == "1":
