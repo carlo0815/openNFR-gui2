@@ -43,13 +43,13 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
         list = []
 	list.append(getConfigListEntry(_('Enable OpenNfr Webinterface ?'), config.opennfrwizard.enablewebinterface))
 	list.append(getConfigListEntry(_('Enable OpenNfr MediaCenter ?'), config.opennfrwizard.enablemediacenter))
-	list.append(getConfigListEntry(_('Enable OpenNfr Skalli Skin mod bei Blasser ?'), config.opennfrwizard.enableskalliskin))
+	list.append(getConfigListEntry(_('Enable OpenNfr Skalli Skin mod by Blasser ?'), config.opennfrwizard.enableskalliskin))
 	list.append(getConfigListEntry(_('Enable OpenNfr MainMenu2 ?'), config.opennfrwizard.enablemainmenu2))		
 	list.append(getConfigListEntry(_('Enable HBBTV ?'), config.opennfrwizard.enablehbbtv))
 
         self["key_red"] = Label(_("Exit"))
         self["key_green"] = Label(_("Save"))
-        self['label1'] = Label(_('Bei Install dieser Plugins kann es bei zu wenig Flashspeicher zu Problemen kommen \n\nDas Image koennte platzen!'))
+        self['label1'] = Label(_('IF you install this Plugin with not enough Flashmemory it comes to trouble\n\nThe image could be destroyed!'))
 		 
         ConfigListScreen.__init__(self, list) 
         self['actions'] = ActionMap(['OkCancelActions',
