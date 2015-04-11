@@ -49,7 +49,7 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
 
         self["key_red"] = Label(_("Exit"))
         self["key_green"] = Label(_("Save"))
-        self['label1'] = Label(_('Bei Install dieser Plugins kann es bei zu wenig Flashspeicher zu Problemen kommen \n\nDas Image kÃ¶nnte platzen!'))
+        self['label1'] = Label(_('Bei Install dieser Plugins kann es bei zu wenig Flashspeicher zu Problemen kommen \n\nDas Image koennte platzen!'))
 		 
         ConfigListScreen.__init__(self, list) 
         self['actions'] = ActionMap(['OkCancelActions',
