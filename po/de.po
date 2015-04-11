@@ -12334,3 +12334,10 @@ msgstr "morgens leichter Regen"
 
 msgid "Heavy Snow"
 msgstr "starker Schneefall"
+
+msgid "" 
+"IF you install this Plugins with not enough Flashmemory it comes to trouble\n\n"
+"The image could be destroyed!"
+msgstr ""
+"Wenn du installierst und nicht genug Flashspeicher frei ist kann es zu Problemen kommen\n\n"
+"Das Image kann platzen"
