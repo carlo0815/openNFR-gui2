@@ -28,8 +28,8 @@ from Screens.VideoMode import VideoSetup
 from Screens.SkinSelector import SkinSelector
 from Screens.Setup import Setup
 
-from Plugins.Extensions.BMediaCenter.Weather import *
-from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu    
+
+
 from Plugins.Extensions.Infopanel.TelnetCommand import TelnetCommand
 from Plugins.Extensions.Infopanel.SoftwarePanel import SoftwarePanel
 from Plugins.SystemPlugins.SoftwareManager.plugin import SoftwareManagerSetup
@@ -72,8 +72,17 @@ class UserMainMenuSetup(Screen):
 	def keyNumber(self, number):
 		self["configlist"].handleKey(KEY_0 + number)
 	def keyOK(self):
-		config.plugins.um_globalsettings.save()
-		self.close()
+	        if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+			config.plugins.um_globalsettings.save()
+			self.close()	
+	        else:
+	        	config.plugins.um_globalsettings.Mediacenter.value = False
+	        	config.plugins.um_globalsettings.Weather.value = False
+			config.plugins.um_globalsettings.save()
+	        	self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+			self.close()
+	
+
 
 
 
@@ -119,17 +128,21 @@ class User_MainMenu(Screen):
 		                list.append((_("skin selektor"), "SkinSelector", "MenuIconSkin.png", "MenuIconSkinsw.png"))
                                 testl = "1"                                
 		if config.plugins.um_globalsettings.Mediacenter.value == True:
-		        list.append((_("Media Center"), "DMC_MainMenu", "MenuIconMC.png", "MenuIconMCsw.png"))
-		        if testl == "0":
-		                self["text"] = Label(_("Media Center"))
+		        if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+		                from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu    
 		                list.append((_("Media Center"), "DMC_MainMenu", "MenuIconMC.png", "MenuIconMCsw.png"))
-                                testl = "1" 
+		                if testl == "0":
+		                        self["text"] = Label(_("Media Center"))
+		                        list.append((_("Media Center"), "DMC_MainMenu", "MenuIconMC.png", "MenuIconMCsw.png"))
+                                        testl = "1" 
 		if config.plugins.um_globalsettings.Weather.value == True:
-		        list.append((_("Weather"), "MeteoMain", "MenuIconWeather.png", "MenuIconWeathersw.png"))
-		        if testl == "0":
-		                self["text"] = Label(_("Yahoo Weather"))
+		        if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+		                from Plugins.Extensions.BMediaCenter.Weather import *
 		                list.append((_("Weather"), "MeteoMain", "MenuIconWeather.png", "MenuIconWeathersw.png"))
-                                testl = "1"                                 
+		                if testl == "0":
+		                        self["text"] = Label(_("Yahoo Weather"))
+		                        list.append((_("Weather"), "MeteoMain", "MenuIconWeather.png", "MenuIconWeathersw.png"))
+                                        testl = "1"     
                 if testl == "0":
                         self["text"] = Label(_("No UserMainMenuSetup"))                                                        		        
 		        list.append((_("Exit"), "Exit", "MenuIconUserMenu.png", "MenuIconUserMenusw.png"))
@@ -194,9 +207,18 @@ class User_MainMenu(Screen):
 		if selection is not None:
 			if "Exit" in selection:
 		        	self.Exit()
+                        elif "Weather" in selection or "Media Center" in selection:
+                                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+                                	xopen = eval(self["menu"].getCurrent()[1])
+					self.session.openWithCallback(self.update, xopen)
+				else:	
+				        self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
                         else:
                                 xopen = eval(self["menu"].getCurrent()[1])
 				self.session.openWithCallback(self.update, xopen)
+				
+ 
+		                				
 
 	def error(self, error):
 		from Screens.MessageBox import MessageBox
