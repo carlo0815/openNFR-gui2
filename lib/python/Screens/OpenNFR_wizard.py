@@ -49,7 +49,7 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
         list = []
 	list.append(getConfigListEntry(_('Enable OpenNfr Webinterface ?'), config.opennfrwizard.enablewebinterface))
 	list.append(getConfigListEntry(_('Enable OpenNfr MediaCenter ?'), config.opennfrwizard.enablemediacenter))
-	list.append(getConfigListEntry(_('Enable OpenNfr Skalli Skin mod by Blasser ?'), config.opennfrwizard.enableskalliskin))
+	list.append(getConfigListEntry(_('Enable OpenNfr Skalli-FullHD-Mod  Skin mod by Blasser ?'), config.opennfrwizard.enableskalliskin))
 	list.append(getConfigListEntry(_('Enable OpenNfr MainMenu2 ?'), config.opennfrwizard.enablemainmenu2))		
 	list.append(getConfigListEntry(_('Enable HBBTV ?'), config.opennfrwizard.enablehbbtv))
 	
