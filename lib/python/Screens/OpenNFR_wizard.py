@@ -56,7 +56,8 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
         self["key_red"] = Label(_("Exit"))
         self["key_green"] = Label(_("Save"))
         self['label1'] = Label(_('IF you install this Plugins with not enough Flashmemory it comes to trouble\n\nThe image could be destroyed!'))
-		 
+        self['label2'] = Label(_('% Flash Used....'))
+        
         ConfigListScreen.__init__(self, list) 
         self['actions'] = ActionMap(['OkCancelActions',
          'ColorActions'], {'red': self.dontSaveAndExit, 'green' : self.run,
