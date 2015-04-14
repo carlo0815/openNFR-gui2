@@ -37,7 +37,7 @@ EXTENSIONS = {
 
 def FileEntryComponent(name, absolute = None, isDir = False):
     if getDesktop(0).size().width() == 1920:
-	res = [(absolute, isDir), (eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 470, 40, 0, RT_HALIGN_LEFT, name)]
+	res = [(absolute, isDir), (eListboxPythonMultiContent.TYPE_TEXT, 35, 1, 900, 40, 0, RT_HALIGN_LEFT, name)]
 	if isDir:
 		png = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "extensions/directory.png"))
 	else:
