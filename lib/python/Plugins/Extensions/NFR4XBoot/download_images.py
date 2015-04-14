@@ -90,6 +90,16 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
+        mypixmap = mypath + 'openatv.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenATV-5.0')
+        desc = _('Download latest OpenATV Image')
+        idx = 'openatv-5.0'
+        res = (name,
+         png,
+         idx,
+         desc) 
+        self.list.append(res)
         mypixmap = mypath + 'openpli.png'
         png = LoadPixmap(mypixmap)
         name = _('OpenPLi')
@@ -160,6 +170,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openatv':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+        elif self.distro == 'openatv-5.0':
+            self.feed = 'openatv'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.0'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk'
@@ -206,7 +219,20 @@ class DownloadOnLineImage(Screen):
                     box = getBoxType()
                     stb = '1'
             else:   
-                stb = 'no Image for this Box on this Side'                      
+                stb = 'no Image for this Box on this Side'
+        if self.distro == 'openatv-5.0':
+            if box in ('blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
+                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
+                    box = 'ventonhdx'
+                    stb = '1'
+                elif box in ('xpeedlx1', 'xpeedlx2'):
+                    box = 'xpeedlx'
+                    stb = '1'
+                else:
+                    box = getBoxType()
+                    stb = '1'
+            else:   
+                stb = 'no Image for this Box on this Side'        
         elif self.distro == 'opennfr':
             if box in ('blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'atemio6200', 'atemio6000', 'atemio6100', 'formuler1', 'formuler3'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
@@ -460,7 +486,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips'):
+        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.0'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
   	elif self.distro == 'atemio4you':
 	    url = '%s/%s/' % (self.feedurl, box)             
