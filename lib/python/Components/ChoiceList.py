@@ -11,9 +11,9 @@ def ChoiceEntryComponent(key="", text=None):
 	if not text: text = ["--"]
 	res = [ text ]
 	if text[0] == "--":
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 00, 800, 25, 0, RT_HALIGN_LEFT, "-"*200))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 00, 1000, 25, 0, RT_HALIGN_LEFT, "-"*200))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 65, 2, 800, 40, 0, RT_HALIGN_LEFT, text[0]))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, 65, 2, 1000, 40, 0, RT_HALIGN_LEFT, text[0]))
 		pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + key + ".png")
 		if fileExists(pngfile):
 			png = LoadPixmap(pngfile)
