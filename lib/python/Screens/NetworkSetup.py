@@ -2432,15 +2432,12 @@ class NetworkSamba(Screen):
 		self.updateService()
 
 	def activateSamba(self):
-		if access('/etc/network/if-up.d/01samba-start', X_OK):
-			chmod('/etc/network/if-up.d/01samba-start', 0644)
-		elif not access('/etc/network/if-up.d/01samba-start', X_OK):
-			chmod('/etc/network/if-up.d/01samba-start', 0755)
-
 		if fileExists('/etc/rc2.d/S20samba'):
 			self.Console.ePopen('update-rc.d -f samba remove', self.StartStopCallback)
 		else:
 			self.Console.ePopen('update-rc.d -f samba defaults', self.StartStopCallback)
+		time.sleep(3)
+		self.updateService()
 
 	def updateService(self):
 		import process
@@ -2452,11 +2449,6 @@ class NetworkSamba(Screen):
 		self.my_Samba_active = False
 		self.my_Samba_run = False
 		if fileExists('/etc/rc2.d/S20samba'):
-			self['labactive'].setText(_("Enabled"))
-			self['labactive'].show()
-			self.my_Samba_active = True
-
-		if access('/etc/network/if-up.d/01samba-start', X_OK):
 			self['labactive'].setText(_("Enabled"))
 			self['labactive'].show()
 			self.my_Samba_active = True
@@ -2484,8 +2476,8 @@ class NetworkSamba(Screen):
 class NetworkSambaLog(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("Samba Log"))
-		self.skinName = "NetworkInadynLog"
+		Screen.setTitle(self, _("NetworkSambaLog"))
+		self.skinName = "NetworkSambaLog"
 		self['infotext'] = ScrollLabel('')
 		self.Console = Console()
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'up': self['infotext'].pageUp, 'down': self['infotext'].pageDown})
@@ -2917,7 +2909,7 @@ config.networkushare.mediafolders = NoSave(ConfigLocations(default=""))
 class NetworkuShare(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("uShare Setup"))
+		Screen.setTitle(self, _("NetworkuShare"))
 		self.onChangedEntry = [ ]
 		self['autostart'] = Label(_("Autostart:"))
 		self['labactive'] = Label(_(_("Active")))
@@ -3142,11 +3134,11 @@ class NetworkuShare(Screen):
 class NetworkuShareSetup(Screen, ConfigListScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("uShare Setup"))
+		Screen.setTitle(self, _("NetworkuShareSetup"))
 		self.onChangedEntry = [ ]
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.selectionChanged)
-		Screen.setTitle(self, _("uShare Setup"))
+		Screen.setTitle(self, _("NetworkuShareSetup"))
 		self['key_red'] = Label(_("Save"))
 		self['key_green'] = Label(_("Shares"))
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'VirtualKeyboardActions'], {'red': self.saveuShare, 'green': self.selectfolders, 'back': self.close, 'showVirtualKeyboard': self.KeyText})
@@ -3387,8 +3379,8 @@ class uShareSelection(Screen):
 class NetworkuShareLog(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skinName = "NetworkInadynLog"
-		Screen.setTitle(self, _("uShare Log"))
+		self.skinName = "NetworkuShareLog"
+		Screen.setTitle(self, _("NetworkuShareLog"))
 		self['infotext'] = ScrollLabel('')
 		self.Console = Console()
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'up': self['infotext'].pageUp, 'down': self['infotext'].pageDown})
@@ -3618,12 +3610,12 @@ class NetworkMiniDLNA(Screen):
 class NetworkMiniDLNASetup(Screen, ConfigListScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("MiniDLNA Setup"))
+		Screen.setTitle(self, _("NetworkMiniDLNASetup"))
 		self.onChangedEntry = [ ]
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.selectionChanged)
-		Screen.setTitle(self, _("MiniDLNA Setup"))
-		self.skinName = "NetworkuShareSetup"
+		Screen.setTitle(self, _("NetworkMiniDLNASetup"))
+		self.skinName = "NetworkMiniDLNASetup"
 		self['key_red'] = Label(_("Save"))
 		self['key_green'] = Label(_("Shares"))
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'VirtualKeyboardActions'], {'red': self.saveMinidlna, 'green': self.selectfolders, 'back': self.close, 'showVirtualKeyboard': self.KeyText})
@@ -3775,7 +3767,7 @@ class MiniDLNASelection(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Select folders"))
-		self.skinName = "uShareSelection"
+		self.skinName = "MiniDLNASelection"
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
 		self["key_yellow"] = StaticText()
@@ -3851,8 +3843,8 @@ class MiniDLNASelection(Screen):
 class NetworkMiniDLNALog(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.skinName = "NetworkInadynLog"
-		Screen.setTitle(self, _("MiniDLNA Log"))
+		self.skinName = "NetworkMiniDLNALog"
+		Screen.setTitle(self, _("NetworkMiniDLNALog"))
 		self['infotext'] = ScrollLabel('')
 		self.Console = Console()
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'up': self['infotext'].pageUp, 'down': self['infotext'].pageDown})
