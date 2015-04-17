@@ -2436,8 +2436,6 @@ class NetworkSamba(Screen):
 			self.Console.ePopen('update-rc.d -f samba remove', self.StartStopCallback)
 		else:
 			self.Console.ePopen('update-rc.d -f samba defaults', self.StartStopCallback)
-		time.sleep(3)
-		self.updateService()
 
 	def updateService(self):
 		import process
