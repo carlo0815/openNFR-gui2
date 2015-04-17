@@ -2321,13 +2321,11 @@ class NetworkSamba(Screen):
 		self['labrun'] = Label(_("Running"))
 		self['key_green'] = Label(_("Start"))
 		self['key_red'] = Label(_("Remove Service"))
-		self['key_yellow'] = Label(_("Autostart"))
 		self['key_blue'] = Label(_("Show Log"))
 		self['key_menu'] = Label(_("Samba Config Edit"))
 		self.Console = Console()
-		self.my_Samba_active = False
 		self.my_Samba_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'yellow': self.activateSamba, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
 		self.service_name = basegroup + '-smbfs'
 		self.onLayoutFinish.append(self.InstallCheck)
 
@@ -2431,12 +2429,6 @@ class NetworkSamba(Screen):
 		time.sleep(3)
 		self.updateService()
 
-	def activateSamba(self):
-		if fileExists('/etc/rc2.d/S20samba'):
-			self.Console.ePopen('update-rc.d -f samba remove', self.StartStopCallback)
-		else:
-			self.Console.ePopen('update-rc.d -f samba defaults', self.StartStopCallback)
-
 	def updateService(self):
 		import process
 		p = process.ProcessList()
@@ -2444,19 +2436,17 @@ class NetworkSamba(Screen):
 		self['labrun'].hide()
 		self['labstop'].hide()
 		self['labactive'].setText(_("Disabled"))
-		self.my_Samba_active = False
 		self.my_Samba_run = False
-		if fileExists('/etc/rc2.d/S20samba'):
-			self['labactive'].setText(_("Enabled"))
-			self['labactive'].show()
-			self.my_Samba_active = True
 
 		if samba_process:
 			self.my_Samba_run = True
+
 		if self.my_Samba_run:
 			self['labstop'].hide()
 			self['labactive'].show()
 			self['labrun'].show()
+			self['labactive'].setText(_("Enabled"))
+			self['labactive'].show()			
 			self['key_green'].setText(_("Stop"))
 			status_summary = self['lab2'].text + ' ' + self['labrun'].text
 		else:
@@ -2464,6 +2454,7 @@ class NetworkSamba(Screen):
 			self['labstop'].show()
 			self['labactive'].show()
 			self['key_green'].setText(_("Start"))
+			
 			status_summary = self['lab2'].text + ' ' + self['labstop'].text
 		title = _("Samba Setup")
 		autostartstatus_summary = self['lab1'].text + ' ' + self['labactive'].text
