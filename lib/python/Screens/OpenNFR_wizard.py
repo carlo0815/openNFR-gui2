@@ -94,7 +94,7 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
 		 percFree))
 		self['spaceused'].setValue(percUsed)
 
-    def run(self, session):
+    def run(self):
 	cmd = ""
 	if config.opennfrwizard.enablemediacenter.value is True:
 		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;"	
