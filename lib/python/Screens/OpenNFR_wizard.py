@@ -12,7 +12,7 @@ from Components.Ipkg import IpkgComponent
 from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 from Screens.Console import Console
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
+from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 from enigma import eListboxPythonMultiContent, gFont
 from Screens.MessageBox import MessageBox
@@ -21,13 +21,22 @@ from Components.MenuList import MenuList
 from Components.MultiContent import MultiContentEntryText
 from Components.ProgressBar import ProgressBar
 from Components.ScrollLabel import ScrollLabel
+import shutil
+from Components.ConfigList import ConfigListScreen
+from traceback import print_exc
+from Tools.Import import my_import
 
 config.opennfrwizard = ConfigSubsection()
 config.opennfrwizard.enablewebinterface = ConfigYesNo(default=False)
 config.opennfrwizard.enablemediacenter = ConfigYesNo(default=False)
 config.opennfrwizard.enableskalliskin = ConfigYesNo(default=False)
 config.opennfrwizard.enablemainmenu2 = ConfigYesNo(default=False)
-config.opennfrwizard.enablehbbtv = ConfigYesNo(default=False)
+
+config.opennfrwizard = ConfigSubsection()
+config.opennfrwizard.enablewebinterface = ConfigYesNo(default=False)
+config.opennfrwizard.enablemediacenter = ConfigYesNo(default=False)
+config.opennfrwizard.enableskalliskin = ConfigYesNo(default=False)
+config.opennfrwizard.enablemainmenu2 = ConfigYesNo(default=False)
 
 def getVarSpaceKb():
     try:
@@ -36,7 +45,7 @@ def getVarSpaceKb():
         return (0, 0)
 
     return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
-    
+
 class OpenNFRWizardSetup(ConfigListScreen, Screen):
     __module__ = __name__
     def __init__(self, session, args = 0):
@@ -47,16 +56,16 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
         self.onShown.append(self.setWindowTitle)
         			
         list = []
-	list.append(getConfigListEntry(_('Enable OpenNfr Webinterface ?'), config.opennfrwizard.enablewebinterface))
 	list.append(getConfigListEntry(_('Enable OpenNfr MediaCenter ?'), config.opennfrwizard.enablemediacenter))
 	list.append(getConfigListEntry(_('Enable OpenNfr Skalli-FullHD-Mod  Skin mod by Blasser ?'), config.opennfrwizard.enableskalliskin))
 	list.append(getConfigListEntry(_('Enable OpenNfr MainMenu2 ?'), config.opennfrwizard.enablemainmenu2))		
-	list.append(getConfigListEntry(_('Enable HBBTV ?'), config.opennfrwizard.enablehbbtv))
+	list.append(getConfigListEntry(_('Enable OpenNfr Webinterface ?'), config.opennfrwizard.enablewebinterface)) 
 	
         self["key_red"] = Label(_("Exit"))
         self["key_green"] = Label(_("Save"))
-        self['label1'] = Label(_('IF you install this Plugins with not enough Flashmemory it comes to trouble\n\nThe image could be destroyed!'))
+        self['label1'] = Label(_('IF you install this Plugins with not enough Flashmemory it comes to trouble\nThe image could be destroyed!\n\nWebInterface 3.6MB\nBMediacenter 6.4MB\nSkalli 4.5MB\nMainmenu2 3.6MB'))
         self['label2'] = Label(_('% Flash Used....'))
+        self['label3'] = Label(_('Warning!!!  If you select No, Existing Installations will be deleted!!'))
         
         ConfigListScreen.__init__(self, list) 
         self['actions'] = ActionMap(['OkCancelActions',
@@ -85,57 +94,48 @@ class OpenNFRWizardSetup(ConfigListScreen, Screen):
 		 percFree))
 		self['spaceused'].setValue(percUsed)
 
-    def run(self):
+    def run(self, session):
 	cmd = ""
-	webinstall = "0"
-
 	if config.opennfrwizard.enablemediacenter.value is True:
-		os.system("opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;")
-	else:
-		os.system("opkg remove --force-depends enigma2-plugin-extensions-bmediacenter;")
-
+		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;"	
+	else:	
+		cmd += "opkg remove --force-depends enigma2-plugin-extensions-bmediacenter;"		
+                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):		
+                    shutil.rmtree("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter")
+             
 	if config.opennfrwizard.enableskalliskin.value is True:
-		os.system("opkg install --force-overwrite enigma2-plugin-skins-skallihd-fullhd;")
+		cmd += "opkg install --force-overwrite enigma2-plugin-skins-skallihd-fullhd;"		
 	else:
-		os.system("opkg remove --force-depends enigma2-plugin-skins-skallihd-fullhd;")
-
-	if config.opennfrwizard.enablemainmenu2.value is True:
-		os.system("opkg install --force-overwrite enigma2-plugin-extensions-mainmenu2;")
+		cmd += "opkg remove --force-depends enigma2-plugin-skins-skallihd-fullhd;"		
+                if  os.path.exists("/usr/share/enigma2/SkalliHD-NFR-FullHD"):		
+                    shutil.rmtree("/usr/share/enigma2/SkalliHD-NFR-FullHD")	
+               	 
+	if config.opennfrwizard.enablemainmenu2.value is True:	
+		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mainmenu2;"	
 	else:
-		os.system("opkg remove --force-depends enigma2-plugin-extensions-mainmenu2;")	
-
-	if config.opennfrwizard.enablehbbtv.value is True:
-		os.system("opkg install --force-overwrite tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;")
-	else:
-		os.system("opkg remove --force-depends tslib-conf libts-1.0-0 libsysfs2 libgmp10 libmpfr4 vuplus-opera-browser-util enigma2-plugin-extensions-hbbtv-opennfr-fullhd_1.8_all.ipk;")
-
+		cmd += "opkg remove --force-depends enigma2-plugin-extensions-mainmenu2;"		
+                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):	
+                    shutil.rmtree("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2")
 	if config.opennfrwizard.enablewebinterface.value is True:
-		webinstall = "1"
-		os.system("opkg install --force-overwrite enigma2-plugin-extensions-webinterface-nfrmod;")
-	else:
-		os.system("opkg remove --force-depends enigma2-plugin-extensions-webinterface-nfrmod;")
-
-        for x in self['config'].list:
-            x[1].save()
-
+		cmd += "opkg install --force-overwrite enigma2-plugin-extensions-webinterface-nfrmod;"	
+	else:	
+		cmd += "opkg remove --force-depends enigma2-plugin-extensions-webinterface-nfrmod;"		
+                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface"):		
+                    shutil.rmtree("/usr/lib/enigma2/python/Plugins/Extensions/WebInterface")	
 	config.opennfrwizard.save()
-        from time import sleep
-        sleep(10)	
-	
-	plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
+	self.session.open(Console, title = _("Please wait configuring OpenNFR Image"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)              
 
-	if webinstall == "1":
-		quitMainloop(3)
-	else:
-		self.close()
-
+               
+    def reloadPlugin(self):
+        plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
+        self.close()
+              
     def dontSaveAndExit(self):
         for x in self['config'].list:
             x[1].cancel()
 
         self.close()
         
-
 class InstallWizardIpkgUpdater(Screen):
 	def __init__(self, session, info, cmd, pkg = None):
 		Screen.__init__(self, session)
@@ -153,4 +153,4 @@ class InstallWizardIpkgUpdater(Screen):
 	def ipkgCallback(self, event, param):
 		if event == IpkgComponent.EVENT_DONE:
 			plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
-			self.close()
+                        self.close()
