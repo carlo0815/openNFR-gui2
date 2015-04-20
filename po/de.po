@@ -12341,3 +12341,6 @@ msgid ""
 msgstr ""
 "Wenn du installierst und nicht genug Flashspeicher frei ist kann es zu Problemen kommen\n"
 "Das Image kann platzen"
+
+msgid "Warning!!!  If you select No, Existing Installations will be deleted!!"
+msgstr "Achtung!!! Wenn du Nein wählst werden bereits installierte Plugins gelöscht!!"
