@@ -404,4 +404,3 @@
     <ePixmap position="center,center" zPosition="2" size="1260,600" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fsmb.png" transparent="1" alphatest="blend" />
   </screen>
 </skin>
-

@@ -13,25 +13,6 @@ from enigma import loadPic, eTimer, gFont, getDesktop
 from Components.config import config, ConfigSubsection, ConfigYesNo
 config.plugins.YahooWeather = ConfigSubsection()
 config.plugins.YahooWeather.compactskin = ConfigYesNo(default=True)
-from Components.Language import language
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
-import os, gettext
-PluginLanguageDomain = 'YahooWeather'
-PluginLanguagePath = 'Extensions/BMediaCenter/locale'
-
-def localeInit():
-    gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
-
-
-def _(txt):
-    if gettext.dgettext(PluginLanguageDomain, txt):
-        return gettext.dgettext(PluginLanguageDomain, txt)
-    else:
-        print '[' + PluginLanguageDomain + '] fallback to default translation for ' + txt
-        return gettext.gettext(txt)
-
-
-language.addCallback(localeInit())
 try:
     from Search_Id import *
 except:

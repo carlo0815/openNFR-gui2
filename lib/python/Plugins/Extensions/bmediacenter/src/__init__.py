@@ -4,8 +4,8 @@ from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_LANGUAGE, SCOPE_PLUGINS
 import os, gettext
 
-currentmcversion = "099"
-currentmcplatform = "sh4"
+currentmcversion = "1"
+currentmcplatform = "mips32el sh4"
 
 config.plugins.mc_favorites = ConfigSubsection()
 config.plugins.mc_favorites.foldercount = ConfigInteger(0)
@@ -20,11 +20,11 @@ config.plugins.mc_globalsettings.currentplatform = ConfigText(default = currentm
 config.plugins.mc_globalsettings.currentversion.value = currentmcversion
 config.plugins.mc_globalsettings.currentplatform.value = currentmcplatform
 
-PluginLanguageDomain = "OPenNFR-MediaCenter"
+PluginLanguageDomain = "YahooWeather"
 PluginLanguagePath = "Extensions/BMediaCenter/locale"
 # Load Language
 def localeInit():
-	lang = language.getLanguage()[:2] 
+	lang = language.getLanguage()
 	os.environ["LANGUAGE"] = lang
 	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
 def _(txt):

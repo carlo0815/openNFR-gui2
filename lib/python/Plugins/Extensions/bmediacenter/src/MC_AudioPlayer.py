@@ -13,7 +13,7 @@ from Components.Sources.List import List
 from Screens.MessageBox import MessageBox
 from Screens.HelpMenu import HelpableScreen
 from twisted.internet import reactor, defer
-from Plugins.Extensions.NFR4XBoot import client
+from twisted.web import client
 from twisted.web.client import HTTPClientFactory, downloadPage
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.Playlist import PlaylistIOInternal, PlaylistIOM3U, PlaylistIOPLS

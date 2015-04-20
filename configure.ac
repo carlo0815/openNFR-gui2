@@ -437,6 +437,9 @@ lib/python/Plugins/Extensions/bmediacenter/src/saver/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/skins/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/skins/defaultHD/Makefile
 lib/python/Plugins/Extensions/bmediacenter/src/skins/defaultHD/images/Makefile
+lib/python/Plugins/Extensions/bmediacenter/src/locale/Makefile
+lib/python/Plugins/Extensions/bmediacenter/src/locale/de/LC_MESSAGES/Makefile
+lib/python/Plugins/Extensions/bmediacenter/src/locale/de/Makefile
 lib/python/Plugins/Extensions/CutListEditor/Makefile
 lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
 lib/python/Plugins/Extensions/DVDBurn/Makefile

@@ -1,9 +1,17 @@
-<screen name="YahooWeatherList" position="center,center" size="1280,720" title="Yahoo Weather list" flags="wfNoBorder" backgroundColor="#ffffffff">
-	<widget name="titleheader" position="333,33" size="550,30" zPosition="1" font="Regular;24" foregroundColor="#ffffff" backgroundColor="#000000" halign="center" valign="top" transparent="1" />
-        <ePixmap position="50,32" size="40,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/yh.png" alphatest="blend" transparent="1" />
-        <ePixmap position="0,0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/searchmenu.png" alphatest="blend" transparent="1" zPosition="-1" />
-        <ePixmap position="50,659" size="1200,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/2colors.png" zPosition="2" alphatest="blend" />
-	<widget position="100,666" size="210,21" name="Key_Red" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
-	<widget position="335,666" size="210,21" name="Key_Green" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
-	<widget name="myMenu" position="63,90" size="1147,502" scrollbarMode="showOnDemand" itemHeight="30" transparent="1" />
-</screen>
+<screen name="YahooWeatherList" position="center,center" size="1280,720" title="Yahoo Weather list" flags="wfNoBorder" backgroundColor="transparent">
+ <widget source="global.CurrentTime" render="Label" position="66,77" zPosition="1" size="305,30" font="Regular;23" transparent="1" halign="left" valign="center" foregroundColor="grey">
+ <convert type="ClockToText">Date</convert>
+ </widget>
+ <widget source="global.CurrentTime" render="Label" position="1035,77" size="150,30" font="Regular; 23" halign="right" shadowColor="greyfont" shadowOffset="-1,-1" transparent="1" zPosition="2" backgroundColor="background" foregroundColor="grey" valign="bottom">
+ <convert type="ClockToText">WithSeconds</convert>
+ </widget>
+ <ePixmap position="420,62" size="459,60" alphatest="blend" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr.png" zPosition="2" />
+ <ePixmap name="new ePixmap" position="center,60" size="474,70" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/nfr1.png" zPosition="1" alphatest="blend" />
+ <ePixmap name="mb_bg" position="center,center" zPosition="-10" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fs8.png" />
+ <widget name="titleheader" position="center,159" size="550,30" zPosition="1" font="Regular;24" foregroundColor="cyan" backgroundColor="cyan" halign="center" valign="top" transparent="1" />
+ <ePixmap position="50,32" size="40,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/yh.png" alphatest="blend" transparent="1" />
+ <ePixmap position="50,659" size="1200,50" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Skin/2colors.png" zPosition="2" alphatest="blend" />
+ <widget position="100,666" size="210,21" name="Key_Red" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
+ <widget position="335,666" size="210,21" name="Key_Green" font="Regular;20" halign="left" backgroundColor="black" zPosition="1" transparent="1" />
+ <widget name="myMenu" position="63,217" size="1147,354" scrollbarMode="showOnDemand" itemHeight="30" transparent="1" />
+ </screen>
