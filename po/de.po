@@ -12335,12 +12335,85 @@ msgstr "morgens leichter Regen"
 msgid "Heavy Snow"
 msgstr "starker Schneefall"
 
-msgid "" 
+msgid ""
 "IF you install this Plugins with not enough Flashmemory it comes to trouble\n"
-"The image could be destroyed!"
+"The image could be destroyed!\n"
+"\n"
+"WebInterface 3.6MB\n"
+"BMediacenter 6.4MB\n"
+"Skalli 4.5MB\n"
+"Mainmenu2 3.6MB"
 msgstr ""
-"Wenn du installierst und nicht genug Flashspeicher frei ist kann es zu Problemen kommen\n"
-"Das Image kann platzen"
+"Bei der Installation mit nicht genügend Flashspeicher kommt es zu Problemen\n"
+"Das Image kann platzen und ist dann nicht mehr lauffähig!\n"
+"\n"
+"OpenNfr WebInterface 3.6MB\n"
+"OpenNfr Mediacenter 6.4MB\n"
+"OpenNfr Skalli-FullHD-Mod by Blasser 4.5MB\n"
+"OpenNfr Hauptmenü 2 3.6MB"
 
 msgid "Warning!!!  If you select No, Existing Installations will be deleted!!"
 msgstr "Achtung!!! Wenn du Nein wählst werden bereits installierte Plugins gelöscht!!"
+
+msgid "OpenNFRWizard"
+msgstr "OpenNFR Assistent"
+
+msgid "Enable OpenNfr Webinterface ?"
+msgstr "Aktiviere OpenNfr Webinterface ?"
+
+msgid "Enable OpenNfr MediaCenter ?"
+msgstr "Aktiviere OpenNfr MediaCenter ?"
+
+msgid "Enable OpenNfr Skalli-FullHD-Mod  Skin mod by Blasser ?"
+msgstr "Aktiviere OpenNfr Skalli-FullHD-Mod  Skin mod by Blasser ?"
+
+msgid "Enable OpenNfr MainMenu2 ?"
+msgstr "Aktiviere OpenNfr Hauptmenü 2 ?"
+
+msgid "PANEL-Info"
+msgstr "Info Panel"
+
+msgid "Restore Settings"
+msgstr "Einstellungen wiederherstellen"
+
+msgid "Select Backup files"
+msgstr "Dateien zum sichern auswählen"
+
+msgid "Select files/folders to backup..."
+msgstr "Dateien und Ordner auswählen..."
+
+msgid "Remove Plugins"
+msgstr "Plugins entfernen"
+
+msgid "Move Plugins"
+msgstr "Plugins verschieben/auslagern"
+
+msgid "Download Plugins"
+msgstr "Plugins herunterladen"
+
+msgid "IpkgInstaller"
+msgstr "Ipk Installieren"
+
+msgid "Install Image"
+msgstr "Image installieren"
+
+msgid "Remove Image "
+msgstr "Image löschen"
+
+msgid "Reload Services"
+msgstr "Kanallisten neu laden/einlesen"
+
+msgid "The servicelist is reloaded."
+msgstr "Die Kanallisten wurden neu geladen/eingelesen."
+
+msgid "Channel Selection"
+msgstr "Kanalliste"
+
+msgid "Channellist menu"
+msgstr "Menü Kanalliste"
+
+msgid "Sort main menu"
+msgstr "Sortieren der Optionen im Hauptmenü je nach Wunsch"
+
+msgid "Sortable Menu"
+msgstr "Menü sortieren/anpassen"
