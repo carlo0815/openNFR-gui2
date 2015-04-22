@@ -24,7 +24,7 @@ def get_weather_from_yahoo(location):
         return text
 
     Citta = Nazione = Regione = Provincia = Codice = '**'
-    url = 'http://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=sd1&lc=it-IT&command=%s' % location.replace(' ', '%20')
+    url = 'http://sugg.us.search.yahoo.net/gossip-gl-location/?appid=weather&output=sd1&lc=de-DE&command=%s' % location.replace(' ', '%20')
     handler = urllib2.urlopen(url)
     dom = handler.read()
     handler.close()
