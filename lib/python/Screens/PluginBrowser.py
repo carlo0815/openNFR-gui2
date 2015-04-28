@@ -1,10 +1,11 @@
+from Screens.ParentalControlSetup import ProtectedScreen
 from boxbranding import getImageVersion
 from urllib import urlopen
 import socket
 import os
 
 from enigma import eConsoleAppContainer, eDVBDB
-
+from Screens.InputBox import PinInput
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.PluginComponent import plugins
@@ -26,7 +27,7 @@ from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 from Components.ProgressBar import ProgressBar
-
+from Tools.BoundFunction import boundFunction
 language.addCallback(plugins.reloadPlugins)
 
 config.misc.pluginbrowser = ConfigSubsection()
@@ -65,7 +66,6 @@ class PluginBrowser(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Plugin Browser"))
-
 		self.firsttime = True
 
 		self["key_red"] = Button(_("Remove plugins"))
@@ -102,7 +102,21 @@ class PluginBrowser(Screen):
 		self.onChangedEntry = []
 		self["list"].onSelectionChanged.append(self.selectionChanged)
 		self.onLayoutFinish.append(self.saveListsize)
+		if self.isProtected() and config.ParentalControl.servicepin[0].value:
+			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and (not config.ParentalControl.config_sections.main_menu.value or hasattr(self.session, 'infobar') and self.session.infobar is None) and config.ParentalControl.config_sections.timer_menu.value
+
+	def pinEntered(self, result):
+		if result is None:
+			self.closeProtectedScreen()
+		elif not result:
+			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
+
+	def closeProtectedScreen(self, result=None):
+		self.close(None)
+		
 	def openSetup(self):
 		from Screens.Setup import Setup
 		self.session.open(Setup, "pluginbrowsersetup")
