@@ -2,9 +2,9 @@ from boxbranding import getImageVersion, getImageBuild, getMachineBrand, getMach
 from os import rename, path, remove
 from gettext import dgettext
 import urllib
-
+from Tools.BoundFunction import boundFunction
 from enigma import eTimer, eDVBDB
-
+from Screens.InputBox import PinInput
 import Components.Task
 from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
@@ -59,7 +59,21 @@ class UpdatePlugin(Screen):
 		self.processed_packages = []
 		self.total_packages = None
 		self.checkNetworkState()
+		if self.isProtected() and config.ParentalControl.servicepin[0].value:
+			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and (not config.ParentalControl.config_sections.main_menu.value or hasattr(self.session, 'infobar') and self.session.infobar is None) and config.ParentalControl.config_sections.timer_menu.value
+
+	def pinEntered(self, result):
+		if result is None:
+			self.closeProtectedScreen()
+		elif not result:
+			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
+
+	def closeProtectedScreen(self, result=None):
+		self.close(None)
+		
 	def checkNetworkState(self):
 		cmd1 = "opkg update"
 		self.CheckConsole = Console()
