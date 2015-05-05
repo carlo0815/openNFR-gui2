@@ -70,6 +70,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 from Screens.CronTimer import *
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
+from Plugins.Extensions.Infopanel.diskspeed import Disk_Speed
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
@@ -488,6 +489,8 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(Info, "Partitions")
 		elif menu == "Swap":
 			self.session.open(Info, "Swap")
+		elif menu == "DiskSpeed":
+			self.session.open(Disk_Speed)				
 		elif menu == "System_Info":
 			self.System()
 		elif menu == "JobManager":
@@ -566,6 +569,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('JobManager'), _("JobManager"), 'JobManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('SwapManager'), _("SwapManager"), 'SwapManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('DiskSpeed'), _("Disk-Speed"), 'DiskSpeed')))
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
