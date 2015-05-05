@@ -20,7 +20,7 @@ from Components.Sources.StaticText import StaticText
 from Components.Slider import Slider
 import time
 import os
-
+from Screens.ParentalControlSetup import ProtectedScreen
 
 class UpdatePlugin(Screen):
 	skin = """
@@ -58,20 +58,21 @@ class UpdatePlugin(Screen):
 		self.error = 0
 		self.processed_packages = []
 		self.total_packages = None
-		self.checkNetworkState()
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
 	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and (not config.ParentalControl.config_sections.main_menu.value or hasattr(self.session, 'infobar') and self.session.infobar is None) and config.ParentalControl.config_sections.timer_menu.value
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.software_update.value
 
-	def pinEntered(self, result):
-		if result is None:
+	def pinEntered(self, result4):
+		if result4 is None:
 			self.closeProtectedScreen()
-		elif not result:
+		elif not result4:
 			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
-
-	def closeProtectedScreen(self, result=None):
+                else:
+                        self.checkNetworkState()
+                        
+	def closeProtectedScreen(self, result2=None):
 		self.close(None)
 		
 	def checkNetworkState(self):

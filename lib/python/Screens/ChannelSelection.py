@@ -20,7 +20,7 @@ from Screens.TimerEdit import TimerSanityConflict
 profile("ChannelSelection.py 1")
 from EpgSelection import EPGSelection
 from enigma import eServiceReference, eEPGCache, eServiceCenter, eRCInput, eTimer, ePoint, eDVBDB, iPlayableService, iServiceInformation, getPrevAsciiCode, eEnv, loadPNG
-from Components.config import config, configfile, ConfigSubsection, ConfigText
+from Components.config import config, configfile, ConfigSubsection, ConfigText, ConfigYesNo
 from Tools.NumericalTextInput import NumericalTextInput
 profile("ChannelSelection.py 2")
 from Components.NimManager import nimmanager
@@ -35,6 +35,7 @@ profile("ChannelSelection.py 3")
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
 from RecordTimer import RecordTimerEntry, AFTEREVENT
 from TimerEntry import TimerEntry, InstantRecordTimerEntry
+
 from Screens.InputBox import InputBox, PinInput
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Screens.ChoiceBox import ChoiceBox
@@ -403,19 +404,19 @@ class ChannelContextMenu(Screen):
 		self.session.openWithCallback(self.setStartupServiceCallback, MessageBox, _("Set startup service"), list = [(_("Only on startup"), "startup"), (_("Also on standby"), "standby")])
 
 	def setStartupServiceCallback(self, answer):
-		if answer:
+		if answer:	
 			config.servicelist.startupservice.value = self.csel.getCurrentSelection().toString()
 			path = ';'.join([i.toString() for i in self.csel.servicePath])
 			config.servicelist.startuproot.value = path
 			config.servicelist.startupmode.value = config.servicelist.lastmode.value
-			config.servicelist.startupservice_onstandby.value = answer == "standby"
+			config.servicelist.startupservice_onstandby.value = answer == "standby"			
 			config.servicelist.save()
 			configfile.save()
 			self.close()
 
 	def unsetStartupService(self):
 		config.servicelist.startupservice.value = ''
-		config.servicelist.startupservice_onstandby.value = False
+		config.servicelist.startupservice_onstandby.value = False		
 		config.servicelist.save()
 		configfile.save()
 		self.close()
@@ -1092,6 +1093,9 @@ class ChannelSelectionEdit:
 				remove(filename)
 		except OSError:
 			print "error during remove of", filename
+
+
+
 
 
 #  multiple marked entry stuff ( edit mode, later multiepg selection )
@@ -1783,10 +1787,11 @@ config.radio = ConfigSubsection()
 config.radio.lastservice = ConfigText()
 config.radio.lastroot = ConfigText()
 config.servicelist = ConfigSubsection()
-config.servicelist.lastmode = ConfigText(default='tv')
+config.servicelist.lastmode = ConfigText(default = "tv")
 config.servicelist.startupservice = ConfigText()
+config.servicelist.startupservice_onstandby = ConfigYesNo(default = False)
 config.servicelist.startuproot = ConfigText()
-config.servicelist.startupmode = ConfigText(default='tv')
+config.servicelist.startupmode = ConfigText(default = "tv")
 
 class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelectionEPG, SelectionEventInfo):
 	instance = None
