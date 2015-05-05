@@ -222,7 +222,9 @@ def NFR4XBootRemoveUnpackDirs():
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
         shutil.rmtree('formuler1')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
-        shutil.rmtree('formuler3')     
+        shutil.rmtree('formuler3')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
+        shutil.rmtree('bre2ze')    
 
 
 def NFR4XBootExtract(source, target, zipdelete):
@@ -310,7 +312,9 @@ def NFR4XBootExtract(source, target, zipdelete):
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
                 os.chdir('formuler1')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
-                os.chdir('formuler3')     
+                os.chdir('formuler3')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
+                os.chdir('bre2ze')        
                 
                                 
 				
