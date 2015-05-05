@@ -79,6 +79,10 @@ class BootvideoSetupScreen(Screen):
                 for xvideo in uvideo:
                        	if xvideo.endswith(".mp4"):
                        	       	bootvideo.append(xvideo)
+                       	elif xvideo.endswith(".mkv"):
+                       	       	bootvideo.append(xvideo)
+                       	elif xvideo.endswith(".mpeg"):
+                       	       	bootvideo.append(xvideo)  
 		self.list = []
 		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
 			{
