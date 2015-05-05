@@ -1,4 +1,4 @@
-from enigma import eListboxPythonMultiContent, gFont, eEnv
+﻿from enigma import eListboxPythonMultiContent, gFont, eEnv
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM
 from Components.Console import Console
 from Components.ActionMap import ActionMap
@@ -47,8 +47,8 @@ from Plugins.Extensions.Infopanel.Satloader import Satloader
 from Plugins.Extensions.Infopanel.InstallTarGZ import InfopanelManagerScreen
 from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 from Plugins.Extensions.Infopanel.TelnetCommand import TelnetCommand
-
-
+from Screens.InputBox import PinInput
+from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_SKIN
 from Tools.LoadPixmap import LoadPixmap
 
@@ -163,7 +163,21 @@ class QuickMenu(Screen):
 		self.selectedList = self["list"]
 		self.selectionChanged()
 		self.onLayoutFinish.append(self.layoutFinished)
+		if self.isProtected() and config.ParentalControl.servicepin[0].value:
+			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.quickmenu.value
+		
+	def pinEntered(self, result):
+		if result is None:
+			self.closeProtectedScreen()
+		elif not result:
+			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
+
+	def closeProtectedScreen(self, result=None):
+		self.close()			
+			
 	def layoutFinished(self):
 		self["sublist"].selectionEnabled(0)
 
@@ -808,8 +822,8 @@ def QuickMenuEntryComponent(name, description, long_description = None, width=54
 	if getDesktop(0).size().width() == 1920:
 	    return [
      	            _(name),
-                    MultiContentEntryText(pos=(120, 3), size=(width-160, 32), font=0, text = _(name)),
-	            MultiContentEntryText(pos=(120, 35), size=(width-160, 25), font=1, text = _(description)),
+                    MultiContentEntryText(pos=(120, 5), size=(width-160, 30), font=0, text = _(name)),
+	            MultiContentEntryText(pos=(120, 33), size=(width-160, 24), font=1, text = _(description)),
 	            MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 40), png = png),
 	            _(long_description),
 	          ]
@@ -826,8 +840,8 @@ def QuickSubMenuEntryComponent(name, description, long_description = None, width
 		if getDesktop(0).size().width() == 1920:
 			return [
 				_(name),
-				MultiContentEntryText(pos=(10, 3), size=(width-10, 32), font=0, text = _(name)),
-				MultiContentEntryText(pos=(10, 35), size=(width-10, 25), font=1, text = _(description)),
+				MultiContentEntryText(pos=(10, 5), size=(width-10, 30), font=0, text = _(name)),
+				MultiContentEntryText(pos=(10, 33), size=(width-10, 24), font=1, text = _(description)),
 				_(long_description),
 			]
 		else:
@@ -843,7 +857,7 @@ class QuickMenuList(MenuList):
 		if getDesktop(0).size().width() == 1920:	
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
-			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setFont(1, gFont("Regular", 20))
 			self.l.setItemHeight(60)
 		else:
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
@@ -856,7 +870,7 @@ class QuickMenuSubList(MenuList):
 		if getDesktop(0).size().width() == 1920:	
 			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
-			self.l.setFont(1, gFont("Regular", 22))
+			self.l.setFont(1, gFont("Regular", 21))
 			self.l.setItemHeight(60)
 		else:
 			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)

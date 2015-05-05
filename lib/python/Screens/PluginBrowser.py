@@ -62,10 +62,11 @@ class PluginBrowserSummary(Screen):
 		self["desc"].text = desc
 
 
-class PluginBrowser(Screen):
+class PluginBrowser(Screen, ProtectedScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Plugin Browser"))
+		ProtectedScreen.__init__(self)		
 		self.firsttime = True
 
 		self["key_red"] = Button(_("Remove plugins"))
@@ -106,7 +107,7 @@ class PluginBrowser(Screen):
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
 	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and (not config.ParentalControl.config_sections.main_menu.value or hasattr(self.session, 'infobar') and self.session.infobar is None) and config.ParentalControl.config_sections.timer_menu.value
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.plugin_browser.value
 
 	def pinEntered(self, result):
 		if result is None:

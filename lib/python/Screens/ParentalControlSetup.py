@@ -87,6 +87,9 @@ class ParentalControlSetup(Screen, ConfigListScreen, ProtectedScreen):
 				self.list.append(getConfigListEntry(_("Protect manufacturer reset screen"), config.ParentalControl.config_sections.manufacturer_reset))
 				self.list.append(getConfigListEntry(_("Protect movie list"), config.ParentalControl.config_sections.movie_list))
 				self.list.append(getConfigListEntry(_("Protect context menus"), config.ParentalControl.config_sections.context_menus))
+				self.list.append(getConfigListEntry(_("Protect Quickmenu"), config.ParentalControl.config_sections.quickmenu))				
+				self.list.append(getConfigListEntry(_("Protect Infopanel"), config.ParentalControl.config_sections.infopanel))				
+				self.list.append(getConfigListEntry(_("Protect Mediacenter"), config.ParentalControl.config_sections.bmediacenter))		
 		else:
 			self.changePin = getConfigListEntry(_("Enable parental protection"), NoSave(ConfigNothing()))
 			self.list.append(self.changePin)

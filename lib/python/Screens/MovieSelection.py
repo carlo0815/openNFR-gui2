@@ -35,7 +35,7 @@ import Tools.CopyFiles
 import Tools.Trashcan
 import NavigationInstance
 import RecordTimer
-
+from Screens.InputBox import PinInput
 
 config.movielist = ConfigSubsection()
 config.movielist.curentlyplayingservice = ConfigText()

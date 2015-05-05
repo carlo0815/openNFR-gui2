@@ -19,7 +19,8 @@ import os
 import commands
 from enigma import getDesktop
 from boxbranding import getMachineName, getMachineBrand
-
+from Screens.InputBox import PinInput
+from Tools.BoundFunction import boundFunction
 
 config.plugins.mc_global = ConfigSubsection()
 config.plugins.mc_global.vfd = ConfigSelection(default='off', choices=[('off', 'off'), ('on', 'on')])
@@ -96,7 +97,21 @@ class DMC_MainMenu(Screen):
 			if fileExists("/media/upnp") is False:
 				os.mkdir("/media/upnp")
 			os.system('djmount /media/upnp &')
-	
+		if self.isProtected() and config.ParentalControl.servicepin[0].value:
+			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
+
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.bmediacenter.value
+
+	def pinEntered(self, result):
+		if result is None:
+			self.closeProtectedScreen()
+		elif not result:
+			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
+
+	def closeProtectedScreen(self, result=None):
+		self.close(None)
+		
 	def checkNetworkState(self, str, retval, extra_args):
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)

@@ -33,6 +33,7 @@ from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM
 from __init__ import _
 from enigma import getDesktop
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
+from Screens.InputBox import PinInput
 
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
@@ -69,7 +70,6 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 from Screens.CronTimer import *
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
-from Plugins.Extensions.Infopanel.diskspeed import Disk_Speed
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
@@ -344,7 +344,21 @@ class Infopanel(Screen, InfoBarPiP):
 		self["Mlist"].l.setList(self.Mlist)
 		menu = 0
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
+		if self.isProtected() and config.ParentalControl.servicepin[0].value:
+			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.infopanel.value
+
+	def pinEntered(self, result):
+		if result is None:
+			self.closeProtectedScreen()
+		elif not result:
+			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
+
+	def closeProtectedScreen(self, result=None):
+		self.close(None)
+		
 	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
@@ -474,8 +488,6 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(Info, "Partitions")
 		elif menu == "Swap":
 			self.session.open(Info, "Swap")
-		elif menu == "DiskSpeed":
-			self.session.open(Disk_Speed)	
 		elif menu == "System_Info":
 			self.System()
 		elif menu == "JobManager":
@@ -534,7 +546,11 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "PluginDeinstallwizard":
 			self.session.open(PluginDeinstall)
 		elif menu == "OpenNFRWizard":
-			self.session.open(OpenNFRWizardSetup)				
+			self.session.open(OpenNFRWizardSetup)	
+		elif menu == "PluginReLoad":
+                        if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):    
+                            from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
+                            self.session.open(PluginReLoadConfig)      				
 		else:
 			pass
 
@@ -550,7 +566,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('JobManager'), _("JobManager"), 'JobManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('SwapManager'), _("SwapManager"), 'SwapManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent('DiskSpeed'), _("Disk-Speed"), 'DiskSpeed')))
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
@@ -618,7 +633,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
                 self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager")))) 
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
@@ -648,6 +663,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginInstallwizard'), _("PluginInstallwizard"), 'PluginInstallwizard')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginDeinstallwizard'), _("PluginDeinstallwizard"), 'PluginDeinstallwizard')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('OpenNFRWizard'), _("OpenNFRWizard"), 'OpenNFRWizard')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginReLoad'), _("PluginReLoad"), 'PluginReLoad')))		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
@@ -1207,4 +1223,3 @@ class Info(Screen):
 		except:
 			o = ''
 			return o
-
