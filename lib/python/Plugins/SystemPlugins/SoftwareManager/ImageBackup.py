@@ -1,8 +1,8 @@
 #################################################################################
-# FULL BACKUP UYILITY FOR ENIGMA2, SUPPORTS THE MODELS ET-XX00 & VU+			#
-#							& Gigablue & Venton HD Models						#
-#					MAKES A FULLBACK-UP READY FOR FLASHING.						#
-#																				#
+# FULL BACKUP UYILITY FOR ENIGMA2 @openNFR					#
+#										#
+# MAKES A FULLBACK-UP READY FOR FLASHING.					#
+#										#
 #################################################################################
 from enigma import getEnigmaVersionString
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
@@ -658,6 +658,19 @@ class ImageBackup(Screen):
 				self.MTDROOT = 0
 				self.MTDBOOT = 2
 				self.JFFS2OPTIONS = "--eraseblock=0x20000 -n -l"
+		## TESTING THE WWIO BRE2ZE
+		elif self.MODEL == "bre2ze":
+			self.TYPE = "WWIO"
+			self.MODEL = "bre2ze"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "WWIO Bre2ze"
+			self.MTDKERNEL = "mtd2"
+			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		else:
 			print "No supported receiver found!"
 			return
@@ -754,7 +767,7 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
+		if self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -897,6 +910,9 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'EDISION':
 					cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/update/%s/cfe' % (self.MAINDEST, self.TARGET, self.MODEL))
+				elif self.TYPE == 'WWIO':
+					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
+					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				else:
 					cmdlist.append('echo " "')
 
