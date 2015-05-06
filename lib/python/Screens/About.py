@@ -48,8 +48,11 @@ class About(Screen):
 		fp_version = getFPVersion()
 		if fp_version is None:
 			fp_version = ""
+		elif fp_version != 0:
+			fp_version = _("Front Panel:\t%s") % fp_version 
+			AboutText += fp_version + "\n\n"
 		else:
-			fp_version = _("Front Panel:\t%s") % fp_version
+			fp_version = _("Front Panel:\tVersion unknown")
 			AboutText += fp_version + "\n\n"
 			
 		AboutText += _("Last Upgrade:\t%s") % about.getLastUpdateString() + "\n\n" 
