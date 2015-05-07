@@ -5263,7 +5263,7 @@ msgid "Please enter new name:"
 msgstr "Bitte neuen Dateinamen eingeben:"
 
 msgid "Please enter the correct pin code"
-msgstr "Bitte den korrekten PIN Code eingeben"
+msgstr "Bitte den korrekten PIN-Code eingeben"
 
 msgid "Please enter the old PIN code"
 msgstr "Bitte den alten PIN Code eingeben"
@@ -7632,7 +7632,7 @@ msgid "The path %s already exists."
 msgstr "Der Pfad %s existiert bereits."
 
 msgid "The pin code you entered is wrong."
-msgstr "Der eingegebene PIN Code ist falsch"
+msgstr "Der eingegebene PIN-Code ist falsch"
 
 #, python-format
 msgid "The results have been written to %s."
@@ -12417,3 +12417,66 @@ msgstr "Sortieren der Optionen im Hauptmenü je nach Wunsch"
 
 msgid "Sortable Menu"
 msgstr "Menü sortieren/anpassen"
+
+msgid "Enable parental protection"
+msgstr "Jugendschutz aktivieren"
+
+msgid "Press OK to change your PINCODE"
+msgstr "OK drücken um den PIN-Code ändern"
+
+msgid "Please enter the new PIN code"
+msgstr "Bitte den neuen PIN-Code eingeben"
+
+msgid "Please re-enter the new PIN code"
+msgstr "Bitte den neuen PIN-Code erneut eingeben"
+
+msgid "Change PIN"
+msgstr "PIN-Code ändern"
+
+msgid "Protect on epg age"
+msgstr "Schutz nach EPG-Altersbeschränkung"
+
+msgid "No age block"
+msgstr "Keine Altersbeschränkung"
+
+msgid "Reload blacklists"
+msgstr "Blacklist neu einlesen"
+
+msgid "Protect Screens"
+msgstr "Zugriffschutz für Menüs/Funktionen aktivieren"
+
+msgid "Protect main menu"
+msgstr "Hauptmenü schützen"
+
+msgid "Protect timer menu"
+msgstr "Timermenü schützen"
+
+msgid "Protect plugin browser"
+msgstr "Erweiterungsmenü schützen"
+
+msgid "Protect configuration"
+msgstr "Konfiguration schützen"
+
+msgid "Protect standby menu"
+msgstr "Ausschaltmenü schützen"
+
+msgid "Protect software update screen"
+msgstr "Software-Update schützen"
+
+msgid "Protect manufacturer reset screen"
+msgstr "Werkseinstellungen/Reset schützen"
+
+msgid "Protect movie list"
+msgstr "Filmliste schützen"
+
+msgid "Protect context menus"
+msgstr "Kontextmenüs schützen"
+
+msgid "Protect Quickmenu"
+msgstr "QuickMenü schützen"
+
+msgid "Protect Infopanel"
+msgstr "InfoPanel schützen"
+
+msgid "Protect Mediacenter"
+msgstr "Mediacenter schützen"
