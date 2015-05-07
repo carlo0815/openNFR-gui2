@@ -68,6 +68,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 
 from Screens.CronTimer import *
 from Plugins.Extensions.Infopanel.ScriptRunner import *
+from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
@@ -501,6 +502,8 @@ class Infopanel(Screen, InfoBarPiP):
 				self.session.openWithCallback(self.startRestore, MessageBox, _("Are you sure you want to restore your STB backup?\nSTB will restart after the restore"))
 			else:
 				self.session.open(MessageBox, _("Sorry no backups found!"), MessageBox.TYPE_INFO, timeout = 10)
+		elif menu == "bootvideomanager":
+			self.session.open(BootvideoSetupScreen)
 		elif menu == "backup-files":
 			self.session.openWithCallback(self.backupfiles_choosen,BackupSelection)
 		elif menu == "flash-local":
@@ -611,6 +614,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
                 self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager"))))
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 

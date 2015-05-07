@@ -66,6 +66,9 @@ class PluginDescriptor:
 
 	WHERE_VIXMENU = 17
 
+	# start as channellist context menu plugin. session, serviceref (currently selected)
+	WHERE_CHANNEL_CONTEXT_MENU = 18
+
 	def __init__(self, name="Plugin", where=None, description="", icon=None, fnc=None, wakeupfnc=None, needsRestart=None, internal=False, weight=0):
 		if not where: where = []
 		self.name = name
