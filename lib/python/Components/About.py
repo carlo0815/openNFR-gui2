@@ -123,10 +123,11 @@ def getModelString():
 
 def getChipSetString():
 	try:
+		system="unknown"
 		f = open('/proc/stb/info/chipset', 'r')
 		chipset = f.read()
 		f.close()
-		return str(chipset.lower().replace('\n','').replace('bcm',''))
+		return str(chipset.lower().replace('\n','').replace('bcm','').replace('brcm','').replace('sti',''))
 	except IOError:
 		return "unavailable"
 

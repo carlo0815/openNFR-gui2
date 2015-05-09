@@ -17,7 +17,6 @@ from Tools.BoundFunction import boundFunction
 from Tools.FuzzyDate import FuzzyTime
 from time import time
 from timer import TimerEntry as RealTimerEntry
-from Screens.InputBox import PinInput
 
 class TimerEditList(Screen):
 	EMPTY = 0
@@ -62,21 +61,7 @@ class TimerEditList(Screen):
 		self.setTitle(_("Timer overview"))
 		self.session.nav.RecordTimer.on_state_change.append(self.onStateChange)
 		self.onShown.append(self.updateState)
-		if self.isProtected() and config.ParentalControl.servicepin[0].value:
-			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
-	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.timer_menu.value
-
-	def pinEntered(self, result):
-		if result is None:
-			self.closeProtectedScreen()
-		elif not result:
-			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
-
-	def closeProtectedScreen(self, result=None):
-		self.close(None)
-		
 	def createSummary(self):
 		return TimerEditListSummary
 

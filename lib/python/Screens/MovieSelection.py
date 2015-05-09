@@ -35,7 +35,7 @@ import Tools.CopyFiles
 import Tools.Trashcan
 import NavigationInstance
 import RecordTimer
-from Screens.InputBox import PinInput
+
 
 config.movielist = ConfigSubsection()
 config.movielist.curentlyplayingservice = ConfigText()
@@ -294,14 +294,11 @@ class MovieContextMenuSummary(Screen):
 		item = self.parent["config"].getCurrent()
 		self["selected"].text = item[0]
 
-from Screens.ParentalControlSetup import ProtectedScreen
 
-class MovieContextMenu(Screen, ProtectedScreen):
+class MovieContextMenu(Screen):
 	# Contract: On OK returns a callable object (e.g. delete)
 	def __init__(self, session, csel, service):
 		Screen.__init__(self, session)
-		self.csel = csel	
-		ProtectedScreen.__init__(self)
 		self.skinName = "Setup"
 		self.setup_title = _("Movie List Setup")
 		Screen.setTitle(self, _(self.setup_title))
@@ -342,21 +339,8 @@ class MovieContextMenu(Screen, ProtectedScreen):
 				menu.append((_("Start offline decode"), csel.do_decode))
 				# Plugins expect a valid selection, so only include them if we selected a non-dir
 				menu.extend([(p.description, boundFunction(p, session, service)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
-				
-		if config.ParentalControl.hideBlacklist.value and config.ParentalControl.storeservicepin.value != "never":
-		    from Components.ParentalControl import parentalControl
-		    if not parentalControl.sessionPinCached:
-		        append_to_menu(menu, (_("Unhide parental control services"), csel.unhideParentalServices))
-		        
+
 		self["config"] = MenuList(menu)
-
-	def isProtected(self):
-		return self.csel.protectContextMenu and config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.context_menus.value
-
-	def pinEntered(self, answer):
-		if answer:
-			self.csel.protectContextMenu = False
-		ProtectedScreen.pinEntered(self, answer)
 
 	def createSummary(self):
 		return MovieContextMenuSummary
@@ -420,7 +404,7 @@ class MovieSelectionSummary(Screen):
 		else:
 			self["name"].text = ""
 
-class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, ProtectedScreen):
+class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase):
 	# SUSPEND_PAUSES actually means "please call my pauseService()"
 	ALLOW_SUSPEND = Screen.SUSPEND_PAUSES
 
@@ -433,9 +417,6 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		HelpableScreen.__init__(self)
 		if not timeshiftEnabled:
 			InfoBarBase.__init__(self) # For ServiceEventTracker
-		ProtectedScreen.__init__(self)
-		self.protectContextMenu = True
-
 		self.initUserDefinedActions()
 		self.tags = {}
 		if selectedmovie:
@@ -592,24 +573,6 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 			self.onExecBegin.append(self.asciiOff)
 		else:
 			self.onExecBegin.append(self.asciiOn)
-
-	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.movie_list.value
-
-	def unhideParentalServices(self):
-		if self.protectContextMenu:
-			self.session.openWithCallback(self.unhideParentalServicesCallback, PinInput, pinList=[config.ParentalControl.servicepin[0].value], triesEntry=config.ParentalControl.retries.servicepin, title=_("Enter the service pin"), windowTitle=_("Enter pin code"))
-		else:
-			self.unhideParentalServicesCallback(True)
-
-	def unhideParentalServicesCallback(self, answer):
-		if answer:
-			from Components.ParentalControl import parentalControl
-			parentalControl.setSessionPinCached()
-			parentalControl.hideBlacklist()
-			self.reloadList()
-		elif answer is not None:
-			self.session.openWithCallback(self.close, MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR)	
 
 	def asciiOn(self):
 		rcinput = eRCInput.getInstance()

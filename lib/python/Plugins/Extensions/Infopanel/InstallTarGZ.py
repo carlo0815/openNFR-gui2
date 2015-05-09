@@ -13,6 +13,7 @@ from Screens.Standby import TryQuitMainloop
 #from Plugins.Extensions.PersianPalace import *
 from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LANGUAGE
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
 from os import environ
 import os
 import gettext
@@ -352,7 +353,10 @@ class InstallZip(Screen):
         try:
             item = self['menu'].getCurrent()
             name = item[0]
-            pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unzip -o -d / /%s/%s' % (fileplace3, name)
+            if getBrandOEM() == "fulan":
+                pecommand1 = '/usr/bin/unzip -o -d / /%s/%s' % (fileplace3, name)
+            else:
+                pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unzip -o -d / /%s/%s' % (fileplace3, name)
 
             self.session.open(Console, title = _('Install zip'), cmdlist = [
                 pecommand1])

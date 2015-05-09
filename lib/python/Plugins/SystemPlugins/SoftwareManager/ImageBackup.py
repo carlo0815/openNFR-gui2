@@ -1,11 +1,11 @@
 #################################################################################
-# FULL BACKUP UYILITY FOR ENIGMA2 @openNFR					#
-#										#
-# MAKES A FULLBACK-UP READY FOR FLASHING.					#
-#										#
+# FULL BACKUP UYILITY FOR ENIGMA2, SUPPORTS THE MODELS OE-A 2.0  MOD by NFR		#
+#																				#
+#					MAKES A FULLBACK-UP READY FOR FLASHING.						#
+#																				#
 #################################################################################
 from enigma import getEnigmaVersionString
-from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
+from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM, getMachineBuild, getImageFolder, getImageVersion, getImageBuild, getDriverDate, getMachineProcModel, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
 from Screens.Screen import Screen
 from Components.Button import Button
 from Components.Label import Label
@@ -19,6 +19,13 @@ import os
 import commands
 import datetime
 import zipfile
+import os
+from boxbranding import getBoxType, getMachineBrand, getMachineName, getDriverDate, getImageVersion, getImageBuild, getBrandOEM, getMachineBuild, getImageFolder, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
+
+ 
+HaveGZkernel = True
+if getBrandOEM() in ("fulan"):
+	HaveGZkernel = False
 
 VERSION = "Version 2.0 "
 
@@ -47,21 +54,28 @@ class ImageBackup(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.MODEL = getBoxType()
+		self.OEM = getBrandOEM()
+		self.MACHINEBUILD = getMachineBuild()
 		self.MODEL1 = getMachineProcModel()
 		self.MACHINENAME = getMachineName()
 		self.MACHINEBRAND = getMachineBrand()
+		self.IMAGEFOLDER = getImageFolder()
 		self.UBINIZE_ARGS = getMachineUBINIZE()
 		self.MKUBIFS_ARGS = getMachineMKUBIFS()
 		self.MTDKERNEL = getMachineMtdKernel()
 		self.ROOTFSBIN = getMachineRootFile()
 		self.KERNELBIN = getMachineKernelFile()
+		self.ROOTFSTYPE = getImageFileSystem()
+		print "[FULL BACKUP] BOX MACHINEBUILD = >%s<" %self.MACHINEBUILD
 		print "[FULL BACKUP] BOX MACHINENAME = >%s<" %self.MACHINENAME
 		print "[FULL BACKUP] BOX MACHINEBRAND = >%s<" %self.MACHINEBRAND
 		print "[FULL BACKUP] BOX MODEL = >%s<" %self.MODEL
+		print "[FULL BACKUP] OEM MODEL = >%s<" %self.OEM
+		print "[FULL BACKUP] IMAGEFOLDER = >%s<" %self.IMAGEFOLDER
 		print "[FULL BACKUP] UBINIZE = >%s<" %self.UBINIZE_ARGS
 		print "[FULL BACKUP] MKUBIFS = >%s<" %self.MKUBIFS_ARGS
 		print "[FULL BACKUP] MTDKERNEL = >%s<" %self.MTDKERNEL
-		#print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
+		print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
 		
 		self["key_green"] = Button("USB")
 		self["key_red"] = Button("HDD")
@@ -142,8 +156,11 @@ class ImageBackup(Screen):
 		self.START = time()
 		self.DATE = strftime("%Y%m%d_%H%M", localtime(self.START))
 		self.IMAGEVERSION = self.imageInfo() #strftime("%Y%m%d", localtime(self.START))
-		self.ROOTFSTYPE = self.testUBIFS()
-		self.MKFS = "/usr/sbin/mkfs.%s" %self.ROOTFSTYPE
+		if self.ROOTFSTYPE == "ubi":
+			self.ROOTFSTYPE = self.testUBIFS()
+			self.MKFS = "/usr/sbin/mkfs.%s" %self.ROOTFSTYPE
+		else:
+			self.MKFS = "/usr/sbin/mkfs.jffs2"
 		self.UBINIZE = "/usr/sbin/ubinize"
 		self.NANDDUMP = "/usr/sbin/nanddump"
 		self.WORKDIR= "%s/bi" %self.DIRECTORY
@@ -165,7 +182,20 @@ class ImageBackup(Screen):
 		## TESTING WHICH KIND OF SATELLITE RECEIVER IS USED
 
 		## TESTING THE Odin M9 Model
-		if self.MODEL == "odinm9":
+		if getBrandOEM() == "fulan":
+			self.SHOWNAME = "%s %s" %(self.MACHINEBRAND, self.MODEL)
+			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/%s" %(self.DIRECTORY,self.IMAGEFOLDER)
+			if getBrandOEM() in ('vuplus', 'gigablue'):
+					self.MAINDEST1 = "%s/%s" %(self.DIRECTORY,self.OEM)
+			elif self.MACHINEBRAND in ('Atemio'):
+				self.MAINDEST1 = "%s/atemio" %(self.DIRECTORY)
+			elif self.MACHINEBRAND in ('UNiBOX'):
+				self.MAINDEST1 = "%s/unibox" %(self.DIRECTORY)
+			else:
+					self.MAINDEST1 = "%s/%s" %(self.DIRECTORY,self.IMAGEFOLDER)
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "odinm9":
 			self.TYPE = "ODINM9"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
@@ -658,19 +688,6 @@ class ImageBackup(Screen):
 				self.MTDROOT = 0
 				self.MTDBOOT = 2
 				self.JFFS2OPTIONS = "--eraseblock=0x20000 -n -l"
-		## TESTING THE WWIO BRE2ZE
-		elif self.MODEL == "bre2ze":
-			self.TYPE = "WWIO"
-			self.MODEL = "bre2ze"
-			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
-			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
-			self.SHOWNAME = "WWIO Bre2ze"
-			self.MTDKERNEL = "mtd2"
-			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
-			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
-			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		else:
 			print "No supported receiver found!"
 			return
@@ -706,7 +723,8 @@ class ImageBackup(Screen):
 		system("mount --bind / /tmp/bi/root")
 
 		if self.ROOTFSTYPE == "jffs2":
-			cmd1 = "%s --root=/tmp/bi/root --faketime --output=%s/root.jffs2 %s" % (self.MKFS, self.WORKDIR, self.JFFS2OPTIONS)
+			cmd1 = "%s --root=/tmp/bi/root --faketime --output=%s/root.jffs2 %s" % (self.MKFS, self.WORKDIR, self.MKUBIFS_ARGS)
+			cmd2 = None
 		else:
 			f = open("%s/ubinize.cfg" %self.WORKDIR, "w")
 			f.write("[ubifs]\n")
@@ -721,6 +739,9 @@ class ImageBackup(Screen):
 			ff.close()
 			cmd1 = "%s -r /tmp/bi/root -o %s/root.ubi %s" % (self.MKFS, self.WORKDIR, self.MKUBIFS_ARGS)
 			cmd2 = "%s -o %s/root.ubifs %s %s/ubinize.cfg" % (self.UBINIZE, self.WORKDIR, self.UBINIZE_ARGS, self.WORKDIR)
+			if getBrandOEM() == "fulan":
+				cmd3 = "mv %s/root.ubifs %s/root.%s" %(self.WORKDIR, self.WORKDIR, self.ROOTFSTYPE)
+			
 
 
 		cmdlist = []
@@ -729,6 +750,8 @@ class ImageBackup(Screen):
 		cmdlist.append(cmd1)
 		if cmd2:
 			cmdlist.append(cmd2)
+			if getBrandOEM() == "fulan":
+				cmdlist.append(cmd3)
 		cmdlist.append("chmod 644 %s/root.%s" %(self.WORKDIR, self.ROOTFSTYPE))
 		cmdlist.append('echo " "')
 		cmdlist.append('echo "Create: kerneldump"')
@@ -767,7 +790,12 @@ class ImageBackup(Screen):
 		f.write(self.IMAGEVERSION)
 		f.close()
 
-		if self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
+		if getBrandOEM() == "fulan":
+			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
+			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
+			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
+			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
+		elif self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -855,8 +883,11 @@ class ImageBackup(Screen):
 				cmdlist.append('echo "flash drive. "')
 				cmdlist.append('echo "This only takes about 1 or 2 minutes"')
 				cmdlist.append('echo " "')
-
-				if self.TYPE == 'ATEMIO':
+				
+				if getBrandOEM() == "fulan":
+					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.IMAGEFOLDER))
+					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
+				elif self.TYPE == 'ATEMIO':
 					cmdlist.append('mkdir -p %s/atemio/%s' % (self.TARGET, self.MODEL1))
 					cmdlist.append('cp -r %s %s/atemio/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'VU':
@@ -910,9 +941,6 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'EDISION':
 					cmdlist.append('mkdir -p %s/update/%s/cfe' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/update/%s/cfe' % (self.MAINDEST, self.TARGET, self.MODEL))
-				elif self.TYPE == 'WWIO':
-					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
-					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				else:
 					cmdlist.append('echo " "')
 
@@ -940,7 +968,10 @@ class ImageBackup(Screen):
 
 
 	def make_zipfile(self, output_filename, source_dir):
-		output_zip = self.EXTRA1 + "/" + output_filename
+		if getBrandOEM() == "fulan":
+			output_zip = self.EXTRA + "/" + output_filename
+		else:
+			output_zip = self.EXTRA1 + "/" + output_filename
 		relroot = os.path.abspath(os.path.join(source_dir, os.pardir))
 		with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zip:
 			for root, dirs, files in os.walk(source_dir):
@@ -962,7 +993,10 @@ class ImageBackup(Screen):
 		AboutText += _("Backup Date: %s\n") % strftime("%Y-%m-%d", localtime(self.START))
 
 		if path.exists('/proc/stb/info/chipset'):
-			AboutText += _("Chipset: BCM%s") % about.getChipSetString().lower().replace('\n','').replace('bcm','') + "\n"
+			if getBrandOEM() == "fulan":
+				AboutText += _("Chipset: %s") % about.getChipSetString().lower().replace('\n','').replace('bcm','') + "\n"
+			else:
+				AboutText += _("Chipset: BCM%s") % about.getChipSetString().lower().replace('\n','').replace('bcm','') + "\n"
 
 		AboutText += _("CPU: %s") % about.getCPUString() + "\n"
 		AboutText += _("Cores: %s") % about.getCpuCoresString() + "\n"

@@ -544,6 +544,7 @@ def runScreenTest():
 
 	def runNextScreen(session, screensToRun, *result):
 		if result:
+			print "[mytest.py] quitMainloop #3"
 			enigma.quitMainloop(*result)
 			return
 
@@ -580,6 +581,8 @@ def runScreenTest():
 
 	profile("RunReactor")
 	profile_final()
+	# kill showiframe if it is running (sh4 hack...)
+	os.system("killall -9 showiframe")	
 	runReactor()
 
 	config.misc.startCounter.save()

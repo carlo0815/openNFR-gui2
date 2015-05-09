@@ -45,7 +45,7 @@ def profile(id):
 			else:
 				perc = PERCENTAGE_START
 			try:
-				if boxtype in ("classm", "atemio6100", "atemio6000", "atemio6200", "axodin", "axodinc", "starsatlx", "evo", "genius", "galaxym6", "formuler1" ):
+				if boxtype in ("classm", "atemio6100", "atemio6000", "atemio6200", "axodin", "axodinc", "starsatlx", "evo", "genius", "galaxym6", "formuler1", "sparktriplex", "sparkone" ):
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d" % perc)
 				elif boxtype == "xpeedlx1":
@@ -69,6 +69,9 @@ def profile(id):
 				elif boxtype in ("xpeedlx3", "atemionemesis"):
 					f = open("/proc/vfd", "w")
 					f.write("Loading %d %%" % perc)
+				elif getBoxType() in ('amikomini', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120'):
+-					f = open("/proc/vfd", "w")
+-					f.write("%d \n" % perc)
 				else:
 					f = open("/proc/progress", "w")
 					f.write("%d \n" % perc)

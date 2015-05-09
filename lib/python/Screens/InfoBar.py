@@ -1,6 +1,5 @@
 from Tools.Profile import profile
-from Tools.BoundFunction import boundFunction
-from enigma import eServiceReference
+
 # workaround for required config entry dependencies.
 import Screens.MovieSelection
 
@@ -123,12 +122,6 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 	def __onClose(self):
 		InfoBar.instance = None
 
-	def standbyCountChanged(self, value):
-		if config.ParentalControl.servicepinactive.value:
-			from Components.ParentalControl import parentalControl
-			if parentalControl.isProtected(self.cur_service):
-				self.close()
-
 	def __eventInfoChanged(self):
 		if self.execing:
 			service = self.session.nav.getCurrentService()
@@ -214,12 +207,7 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			if ref and not self.session.nav.getCurrentlyPlayingServiceOrGroup():
 				self.session.nav.playService(ref)
 		else:
-			from Components.ParentalControl import parentalControl
-			if parentalControl.isServicePlayable(service, self.openMoviePlayer):
-				self.openMoviePlayer(service)
-
-	def openMoviePlayer(self, ref):
-		self.session.open(MoviePlayer, ref, slist=self.servicelist, lastservice=self.session.nav.getCurrentlyPlayingServiceOrGroup())
+			self.session.open(MoviePlayer, service, slist = self.servicelist, lastservice = ref)
 
 	def openTimerList(self):
 		from Screens.TimerEdit import TimerEditList
@@ -339,12 +327,6 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		del playlist[:]
 		self.session.nav.playService(self.lastservice)
 
-	def standbyCountChanged(self, value):
-		if config.ParentalControl.servicepinactive.value:
-			from Components.ParentalControl import parentalControl
-			if parentalControl.isProtected(self.cur_service):
-				self.close()		
-		
 	def handleLeave(self, how):
 		self.is_closing = True
 		if how == "ask":

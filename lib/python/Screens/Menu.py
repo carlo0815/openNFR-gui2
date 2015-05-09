@@ -6,7 +6,7 @@ from Components.config import configfile
 from Components.PluginComponent import plugins
 from Components.config import config
 from Components.SystemInfo import SystemInfo
-from Screens.ParentalControlSetup import ProtectedScreen
+
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_SKIN
 
@@ -14,10 +14,13 @@ import xml.etree.cElementTree
 
 from Screens.Setup import Setup, getSetupTitle
 
-
+mainmenu = _("Main menu")
 
 # read the menu
-mdom = xml.etree.cElementTree.parse(resolveFilename(SCOPE_SKIN, 'menu.xml'))
+file = open(resolveFilename(SCOPE_SKIN, 'menu.xml'), 'r')
+mdom = xml.etree.cElementTree.parse(file)
+file.close()
+
 class MenuUpdater:
 	def __init__(self):
 		self.updatedMenuItems = {}
@@ -41,7 +44,7 @@ menuupdater = MenuUpdater()
 class MenuSummary(Screen):
 	pass
 
-class Menu(Screen, ProtectedScreen):
+class Menu(Screen):
 	ALLOW_SUSPEND = True
 
 	def okbuttonClick(self):
@@ -230,8 +233,6 @@ class Menu(Screen, ProtectedScreen):
 		if menuID is not None:
 			self.skinName.append("menu_" + menuID)
 		self.skinName.append("Menu")
-		self.menuID = menuID
-		ProtectedScreen.__init__(self)
 
 		# Sort by Weight
 		if config.usage.sort_menus.getValue():
@@ -282,15 +283,6 @@ class Menu(Screen, ProtectedScreen):
 
 	def createSummary(self):
 		return MenuSummary
-
-	def isProtected(self):
-		if config.ParentalControl.setuppinactive.value:
-			if config.ParentalControl.config_sections.main_menu.value and not(hasattr(self.session, 'infobar') and self.session.infobar is None):
-				return self.menuID == "mainmenu"
-			elif config.ParentalControl.config_sections.configuration.value and self.menuID == "setup":
-				return True
-			elif config.ParentalControl.config_sections.standby_menu.value and self.menuID == "shutdown":
-				return True
 
 class MainMenu(Menu):
 	#add file load functions for the xml-file
