@@ -410,6 +410,22 @@ CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
 CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
 CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
 
+if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
+mv lib/python/Plugins/Extensions/Infopanel/data_sh4 lib/python/Plugins/Extensions/Infopanel/data
+rm -r lib/python/Plugins/Extensions/Infopanel/data_mips
+mv lib/python/Plugins/Extensions/NFR4XBoot_sh4 lib/python/Plugins/Extensions/NFR4XBoot
+rm -r lib/python/Plugins/Extensions/NFR4XBoot_mips
+mv lib/python/Components/Converter/bitratecalc.so_sh4 lib/python/Components/Converter/bitratecalc.so
+rm -r lib/python/Components/Converter/bitratecalc.so_mips
+else
+mv lib/python/Plugins/Extensions/Infopanel/data_mips lib/python/Plugins/Extensions/Infopanel/data
+rm -r lib/python/Plugins/Extensions/Infopanel/data_sh4
+mv lib/python/Plugins/Extensions/NFR4XBoot_mips lib/python/Plugins/Extensions/NFR4XBoot
+rm -r lib/python/Plugins/Extensions/NFR4XBoot_sh4
+mv lib/python/Components/Converter/bitratecalc.so_mips lib/python/Components/Converter/bitratecalc.so
+rm -r lib/python/Components/Converter/bitratecalc.so_sh4
+fi
+
 AC_CONFIG_FILES([
 Makefile
 data/Makefile
