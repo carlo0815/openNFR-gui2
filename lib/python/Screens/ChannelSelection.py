@@ -124,6 +124,12 @@ EDIT_ALTERNATIVES = 2
 def append_when_current_valid(current, menu, args, level = 0, key = ""):
 	if current and current.valid() and level <= config.usage.setup_level.index:
 		menu.append(ChoiceEntryComponent(key, args))
+		
+def removed_userbouquets_available():
+	for file in os.listdir("/etc/enigma2/"):
+		if file.startswith("userbouquet") and file.endswith(".del"):
+			return True
+	return False
 
 class ChannelContextMenu(Screen):
 	def __init__(self, session, csel):
