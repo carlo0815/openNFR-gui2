@@ -411,7 +411,7 @@ CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
 CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
 CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
 
-if [ $BOXTYPE1 == "spark" ]; then
+if test `echo "$BOXTYPE" | cut -b 1-5` == "spark"; then
 	AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
@@ -545,7 +545,8 @@ if [ $BOXTYPE1 == "spark" ]; then
 	enigma2.pc
 	])
 	AC_OUTPUT
-else
+fi
+if test `echo "$BOXTYPE" | cut -b 1-5` != "spark"; then
 	AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
