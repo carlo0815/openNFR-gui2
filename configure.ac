@@ -350,7 +350,7 @@ if test "$BOXTYPE" == "tmtwin" -o "$BOXTYPE" == "tm2t" -o "$BOXTYPE" == "tmsingl
 fi
 
 if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
-	BOXTYPE1 = "spark"
+	BOXTYPE1="spark"
 	AC_DEFINE(FORCE_ADVANCED_REMOTE, 1,[define to fixup the input device identification when the remote control is actually an 'advanced' remote (with play/forward/rewind keys)])
 fi
 if test "$BOXTYPE" == "hd2400" ; then
@@ -411,7 +411,7 @@ CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
 CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
 CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
 
-if $BOXTYPE1 == "spark"; then
+if [ $BOXTYPE1 == "spark" ]; then
 	AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
