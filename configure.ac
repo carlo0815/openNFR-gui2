@@ -350,7 +350,68 @@ if test "$BOXTYPE" == "tmtwin" -o "$BOXTYPE" == "tm2t" -o "$BOXTYPE" == "tmsingl
 fi
 
 if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
+	BOXTYPE1 = "spark"
 	AC_DEFINE(FORCE_ADVANCED_REMOTE, 1,[define to fixup the input device identification when the remote control is actually an 'advanced' remote (with play/forward/rewind keys)])
+fi
+if test "$BOXTYPE" == "hd2400" ; then
+	AC_DEFINE(KEY_PLAY_ACTUALLY_IS_KEY_PLAYPAUSE, 1,[define when rc sends a KEY_PLAY event for its KEY_PLAYPAUSE key])
+	AC_DEFINE(KEY_F3_TO_KEY_LIST, 1,[define when rc sends a KEY_F3 event for its KEY_LIST key])
+fi
+
+AC_ARG_WITH(libsdl,
+	AS_HELP_STRING([--with-libsdl],[use libsdl, yes or no]),
+	[with_libsdl=$withval],[with_libsdl=no])
+if test "$with_libsdl" = "yes"; then
+	PKG_CHECK_MODULES(LIBSDL, sdl)
+fi
+AM_CONDITIONAL(HAVE_LIBSDL, test "$with_libsdl" = "yes")
+
+AC_ARG_WITH(libxine,
+	AS_HELP_STRING([--with-libxine],[use libxine, yes or no]),
+	[with_libxine=$withval],[with_libxine=no])
+if test "$with_libxine" = "yes"; then
+	PKG_CHECK_MODULES(LIBXINE, libxine)
+	AC_DEFINE([WITH_XINE],[1],[Define to 1 if you have libxine])
+fi
+AM_CONDITIONAL(HAVE_LIBXINE, test "$with_libxine" = "yes")
+
+AC_ARG_WITH(debug,
+	AS_HELP_STRING([--without-debug],[disable debugging code]),
+	[with_debug="$withval"],[with_debug="yes"])
+if test "$with_debug" = "yes"; then
+	DEBUG_CFLAGS="-ggdb3"
+	AC_DEFINE([DEBUG],[1],[Define to 1 to enable debugging code])
+fi
+
+AC_ARG_WITH(memcheck,
+	AS_HELP_STRING([--with-memcheck],[enable memory leak checks]),
+	[with_memcheck="$withval"],[with_memcheck="no"])
+if test "$with_memcheck" = "yes"; then
+	AC_DEFINE([MEMLEAK_CHECK],[1],[Define to 1 to enable memory leak checks])
+fi
+
+AC_ARG_WITH(po,
+	AS_HELP_STRING([--with-po],[enable updating of po files]),
+	[with_po="$withval"],[with_po="no"])
+if test "$with_po" = "yes"; then
+	AC_PATH_PROG(MSGINIT, msginit)
+	AC_PATH_PROG(MSGMERGE, msgmerge)
+	AC_PATH_PROG(MSGUNIQ, msguniq)
+	AC_PATH_PROG(XGETTEXT, xgettext)
+	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT"; then
+		AC_MSG_ERROR([Could not find required gettext tools])
+	fi
+fi
+AM_CONDITIONAL(UPDATE_PO, test "$with_po" = "no")
+
+ENIGMA2_CFLAGS="-fno-rtti -fno-exceptions"
+AC_SUBST(ENIGMA2_CFLAGS)
+
+CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
+CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
+CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
+
+if $BOXTYPE1 == "spark"; then
 	AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
@@ -484,66 +545,7 @@ if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
 	enigma2.pc
 	])
 	AC_OUTPUT
-fi
-if test "$BOXTYPE" == "hd2400" ; then
-	AC_DEFINE(KEY_PLAY_ACTUALLY_IS_KEY_PLAYPAUSE, 1,[define when rc sends a KEY_PLAY event for its KEY_PLAYPAUSE key])
-	AC_DEFINE(KEY_F3_TO_KEY_LIST, 1,[define when rc sends a KEY_F3 event for its KEY_LIST key])
-fi
-
-AC_ARG_WITH(libsdl,
-	AS_HELP_STRING([--with-libsdl],[use libsdl, yes or no]),
-	[with_libsdl=$withval],[with_libsdl=no])
-if test "$with_libsdl" = "yes"; then
-	PKG_CHECK_MODULES(LIBSDL, sdl)
-fi
-AM_CONDITIONAL(HAVE_LIBSDL, test "$with_libsdl" = "yes")
-
-AC_ARG_WITH(libxine,
-	AS_HELP_STRING([--with-libxine],[use libxine, yes or no]),
-	[with_libxine=$withval],[with_libxine=no])
-if test "$with_libxine" = "yes"; then
-	PKG_CHECK_MODULES(LIBXINE, libxine)
-	AC_DEFINE([WITH_XINE],[1],[Define to 1 if you have libxine])
-fi
-AM_CONDITIONAL(HAVE_LIBXINE, test "$with_libxine" = "yes")
-
-AC_ARG_WITH(debug,
-	AS_HELP_STRING([--without-debug],[disable debugging code]),
-	[with_debug="$withval"],[with_debug="yes"])
-if test "$with_debug" = "yes"; then
-	DEBUG_CFLAGS="-ggdb3"
-	AC_DEFINE([DEBUG],[1],[Define to 1 to enable debugging code])
-fi
-
-AC_ARG_WITH(memcheck,
-	AS_HELP_STRING([--with-memcheck],[enable memory leak checks]),
-	[with_memcheck="$withval"],[with_memcheck="no"])
-if test "$with_memcheck" = "yes"; then
-	AC_DEFINE([MEMLEAK_CHECK],[1],[Define to 1 to enable memory leak checks])
-fi
-
-AC_ARG_WITH(po,
-	AS_HELP_STRING([--with-po],[enable updating of po files]),
-	[with_po="$withval"],[with_po="no"])
-if test "$with_po" = "yes"; then
-	AC_PATH_PROG(MSGINIT, msginit)
-	AC_PATH_PROG(MSGMERGE, msgmerge)
-	AC_PATH_PROG(MSGUNIQ, msguniq)
-	AC_PATH_PROG(XGETTEXT, xgettext)
-	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT"; then
-		AC_MSG_ERROR([Could not find required gettext tools])
-	fi
-fi
-AM_CONDITIONAL(UPDATE_PO, test "$with_po" = "no")
-
-ENIGMA2_CFLAGS="-fno-rtti -fno-exceptions"
-AC_SUBST(ENIGMA2_CFLAGS)
-
-CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
-CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
-CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
-
-if test "$BOXTYPE" != "spark" -a "$BOXTYPE" != "spark7162"; then
+else
 	AC_CONFIG_FILES([
 	Makefile
 	data/Makefile
