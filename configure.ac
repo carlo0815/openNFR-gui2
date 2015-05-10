@@ -410,22 +410,6 @@ CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
 CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
 CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
 
-if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
-mv lib/python/Plugins/Extensions/Infopanel/data_sh4 lib/python/Plugins/Extensions/Infopanel/data
-rm -r lib/python/Plugins/Extensions/Infopanel/data_mips
-mv lib/python/Plugins/Extensions/NFR4XBoot_sh4 lib/python/Plugins/Extensions/NFR4XBoot
-rm -r lib/python/Plugins/Extensions/NFR4XBoot_mips
-mv lib/python/Components/Converter/bitratecalc.so_sh4 lib/python/Components/Converter/bitratecalc.so
-rm -r lib/python/Components/Converter/bitratecalc.so_mips
-else
-mv lib/python/Plugins/Extensions/Infopanel/data_mips lib/python/Plugins/Extensions/Infopanel/data
-rm -r lib/python/Plugins/Extensions/Infopanel/data_sh4
-mv lib/python/Plugins/Extensions/NFR4XBoot_mips lib/python/Plugins/Extensions/NFR4XBoot
-rm -r lib/python/Plugins/Extensions/NFR4XBoot_sh4
-mv lib/python/Components/Converter/bitratecalc.so_mips lib/python/Components/Converter/bitratecalc.so
-rm -r lib/python/Components/Converter/bitratecalc.so_sh4
-fi
-
 AC_CONFIG_FILES([
 Makefile
 data/Makefile
@@ -480,7 +464,11 @@ lib/python/Plugins/Extensions/DVDPlayer/Makefile
 lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
 lib/python/Plugins/Extensions/Infopanel/Makefile
 lib/python/Plugins/Extensions/Infopanel/meta/Makefile
-lib/python/Plugins/Extensions/Infopanel/data/Makefile
+if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
+lib/python/Plugins/Extensions/Infopanel/data_sh4/Makefile
+else
+lib/python/Plugins/Extensions/Infopanel/data_mips/Makefile
+fi
 lib/python/Plugins/Extensions/Infopanel/icons/Makefile
 lib/python/Plugins/Extensions/Infopanel/images/Makefile
 lib/python/Plugins/Extensions/Infopanel/pics/Makefile
@@ -498,20 +486,27 @@ lib/python/Plugins/Extensions/MediaScanner/meta/Makefile
 lib/python/Plugins/Extensions/MediaPlayer/Makefile
 lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile 
 lib/python/Plugins/Extensions/Modem/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/bin/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/images/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi/volume/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi/headers/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi/block/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubifs/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubifs/nodes/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi_io/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ui/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/NFR4XBoot_client/Makefile
-lib/python/Plugins/Extensions/NFR4XBoot/NFR4XBoot_client/images/Makefile
+if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
+lib/python/Plugins/Extensions/NFR4XBoot_sh4/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_sh4/bin/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_sh4/images/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_sh4/NFR4XBoot_client/Makefile
+else
+lib/python/Plugins/Extensions/NFR4XBoot_mips/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/bin/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/images/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/volume/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/headers/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/block/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/nodes/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi_io/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ui/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/Makefile
+lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/images/Makefile
+fi
 lib/python/Plugins/Extensions/PicturePlayer/Makefile
 lib/python/Plugins/Extensions/PicturePlayer/meta/Makefile
 lib/python/Plugins/Extensions/PicturePlayer/data/Makefile
