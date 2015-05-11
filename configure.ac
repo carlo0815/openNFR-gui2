@@ -544,7 +544,6 @@ if test `echo "$BOXTYPE" | cut -b 1-5` == "spark"; then
 	tools/enigma2.sh
 	enigma2.pc
 	])
-	AC_OUTPUT
 elif "!$BOXTYPE" == "spark" -o "!$BOXTYPE" == "spark7162"
 	AC_CONFIG_FILES([
 	Makefile
@@ -688,6 +687,6 @@ elif "!$BOXTYPE" == "spark" -o "!$BOXTYPE" == "spark7162"
 	tools/enigma2.sh
 	enigma2.pc
 	])
-	AC_OUTPUT
 fi
+AC_OUTPUT
 
