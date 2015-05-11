@@ -150,7 +150,11 @@ class Net_test(Screen):
 	def info(self):
 		self.selLine = self["filedata"].getSelectionIndex()
 		self.oldLine = self.list[self.selLine]
-		target = "/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/iperf -c %s" % self.oldLine
+		if getBrandOEM() == "fulan":
+			target = "echo 'no iperf works in sh4" 
+		else:
+			target = "/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/iperf -c %s" % self.oldLine	
+		
 		self.session.open(Console, title=_("iperf Net_test..."), cmdlist = [target], closeOnSuccess = False)
                 
         
