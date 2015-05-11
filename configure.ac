@@ -484,7 +484,7 @@ CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CF
 	lib/python/Plugins/Extensions/MediaPlayer/Makefile
 	lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile 
 	lib/python/Plugins/Extensions/Modem/Makefile
-if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
+if test "$BOXTYPE1" == "spark"; then
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/bin/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/images/Makefile
