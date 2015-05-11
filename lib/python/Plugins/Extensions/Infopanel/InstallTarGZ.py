@@ -516,7 +516,11 @@ class InstallRar(Screen):
         try:
             item = self['menu'].getCurrent()
             name = item[0]
-            pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unrar-free x -u /%s/%s' % (fileplace5, name)
+            if getBrandOEM() == "fulan":
+            	pecommand1 = 'echo "unrar no working in sh4"'
+            else:
+            	pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unrar-free x -u /%s/%s' % (fileplace5, name)            
+            
             self.session.open(Console, title = _('Install rar'), cmdlist = [
                 pecommand1])
         except:
