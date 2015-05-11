@@ -350,70 +350,7 @@ if test "$BOXTYPE" == "tmtwin" -o "$BOXTYPE" == "tm2t" -o "$BOXTYPE" == "tmsingl
 fi
 
 if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
-	BOXTYPE1="spark"
-	AC_DEFINE(FORCE_ADVANCED_REMOTE, 1,[define to fixup the input device identification when the remote control is actually an 'advanced' remote (with play/forward/rewind keys)])
-fi
-if test "$BOXTYPE" == "hd2400" ; then
-	AC_DEFINE(KEY_PLAY_ACTUALLY_IS_KEY_PLAYPAUSE, 1,[define when rc sends a KEY_PLAY event for its KEY_PLAYPAUSE key])
-	AC_DEFINE(KEY_F3_TO_KEY_LIST, 1,[define when rc sends a KEY_F3 event for its KEY_LIST key])
-fi
-
-AC_ARG_WITH(libsdl,
-	AS_HELP_STRING([--with-libsdl],[use libsdl, yes or no]),
-	[with_libsdl=$withval],[with_libsdl=no])
-if test "$with_libsdl" = "yes"; then
-	PKG_CHECK_MODULES(LIBSDL, sdl)
-fi
-AM_CONDITIONAL(HAVE_LIBSDL, test "$with_libsdl" = "yes")
-
-AC_ARG_WITH(libxine,
-	AS_HELP_STRING([--with-libxine],[use libxine, yes or no]),
-	[with_libxine=$withval],[with_libxine=no])
-if test "$with_libxine" = "yes"; then
-	PKG_CHECK_MODULES(LIBXINE, libxine)
-	AC_DEFINE([WITH_XINE],[1],[Define to 1 if you have libxine])
-fi
-AM_CONDITIONAL(HAVE_LIBXINE, test "$with_libxine" = "yes")
-
-AC_ARG_WITH(debug,
-	AS_HELP_STRING([--without-debug],[disable debugging code]),
-	[with_debug="$withval"],[with_debug="yes"])
-if test "$with_debug" = "yes"; then
-	DEBUG_CFLAGS="-ggdb3"
-	AC_DEFINE([DEBUG],[1],[Define to 1 to enable debugging code])
-fi
-
-AC_ARG_WITH(memcheck,
-	AS_HELP_STRING([--with-memcheck],[enable memory leak checks]),
-	[with_memcheck="$withval"],[with_memcheck="no"])
-if test "$with_memcheck" = "yes"; then
-	AC_DEFINE([MEMLEAK_CHECK],[1],[Define to 1 to enable memory leak checks])
-fi
-
-AC_ARG_WITH(po,
-	AS_HELP_STRING([--with-po],[enable updating of po files]),
-	[with_po="$withval"],[with_po="no"])
-if test "$with_po" = "yes"; then
-	AC_PATH_PROG(MSGINIT, msginit)
-	AC_PATH_PROG(MSGMERGE, msgmerge)
-	AC_PATH_PROG(MSGUNIQ, msguniq)
-	AC_PATH_PROG(XGETTEXT, xgettext)
-	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT"; then
-		AC_MSG_ERROR([Could not find required gettext tools])
-	fi
-fi
-AM_CONDITIONAL(UPDATE_PO, test "$with_po" = "no")
-
-ENIGMA2_CFLAGS="-fno-rtti -fno-exceptions"
-AC_SUBST(ENIGMA2_CFLAGS)
-
-CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
-CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
-CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
-
-#if test `echo "$BOXTYPE" | cut -b 1-5` == "spark"; then
-	AC_CONFIG_FILES([
-	Makefile
+	BOXTYPE1=[Makefile
 	data/Makefile
 	data/fonts/Makefile
 	data/extensions/Makefile
@@ -484,27 +421,10 @@ CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CF
 	lib/python/Plugins/Extensions/MediaPlayer/Makefile
 	lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile 
 	lib/python/Plugins/Extensions/Modem/Makefile
-if test "$BOXTYPE1" == "spark"; then
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/bin/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/images/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/NFR4XBoot_client/Makefile
-else
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/bin/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/images/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/volume/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/headers/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/block/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/nodes/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi_io/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ui/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/Makefile
-	lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/images/Makefile
-fi
 	lib/python/Plugins/Extensions/PicturePlayer/Makefile
 	lib/python/Plugins/Extensions/PicturePlayer/meta/Makefile
 	lib/python/Plugins/Extensions/PicturePlayer/data/Makefile
@@ -559,8 +479,210 @@ fi
 	main/Makefile
 	tools/Makefile
 	tools/enigma2.sh
-	enigma2.pc
-	])
+	enigma2.pc]
+	AC_DEFINE(FORCE_ADVANCED_REMOTE, 1,[define to fixup the input device identification when the remote control is actually an 'advanced' remote (with play/forward/rewind keys)])
+else: 
+BOXTYPE1=[	Makefile
+	data/Makefile
+	data/fonts/Makefile
+	data/extensions/Makefile
+	data/keymaps/Makefile
+	data/displaytext/Makefile
+	data/display96/Makefile
+	data/display128/Makefile
+	data/display220/Makefile
+	data/display400/Makefile
+	data/spinner/Makefile
+	data/vfd128/Makefile
+	data/vfd140/Makefile
+	data/vfd255/Makefile
+	include/Makefile
+	lib/Makefile
+	lib/base/eenv.cpp
+	lib/python/Makefile
+	lib/python/Components/Makefile
+	lib/python/Components/Converter/Makefile
+	lib/python/Components/Renderer/Makefile
+	lib/python/Components/Sources/Makefile
+	lib/python/Screens/Makefile
+	lib/python/Plugins/Makefile
+	lib/python/Plugins/Extensions/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/meta/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/converter/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Config/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Skin/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Font/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Icon/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/Icon/WeatherIcons/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/icons/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/icons/70x70/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/radio/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/renderer/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/saver/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/skins/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/skins/defaultHD/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/skins/defaultHD/images/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/locale/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/locale/de/LC_MESSAGES/Makefile
+	lib/python/Plugins/Extensions/bmediacenter/src/locale/de/Makefile
+	lib/python/Plugins/Extensions/CutListEditor/Makefile
+	lib/python/Plugins/Extensions/CutListEditor/meta/Makefile
+	lib/python/Plugins/Extensions/DVDBurn/Makefile
+	lib/python/Plugins/Extensions/DVDBurn/meta/Makefile
+	lib/python/Plugins/Extensions/DVDPlayer/Makefile
+	lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
+	lib/python/Plugins/Extensions/Infopanel/Makefile
+	lib/python/Plugins/Extensions/Infopanel/meta/Makefile
+	lib/python/Plugins/Extensions/Infopanel/data_mips/Makefile
+	lib/python/Plugins/Extensions/Infopanel/icons/Makefile
+	lib/python/Plugins/Extensions/Infopanel/images/Makefile
+	lib/python/Plugins/Extensions/Infopanel/pics/Makefile
+	lib/python/Plugins/Extensions/Infopanel/locale/Makefile
+	lib/python/Plugins/Extensions/Infopanel/Extra/Makefile
+	lib/python/Plugins/Extensions/MainMenu2/Makefile
+	lib/python/Plugins/Extensions/MainMenu2/skins/Makefile
+	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/Makefile
+	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/Makefile
+	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/Makefile
+	lib/python/Plugins/Extensions/MenuSort/Makefile
+	lib/python/Plugins/Extensions/CustomSubservices/Makefile
+	lib/python/Plugins/Extensions/MediaScanner/Makefile
+	lib/python/Plugins/Extensions/MediaScanner/meta/Makefile
+	lib/python/Plugins/Extensions/MediaPlayer/Makefile
+	lib/python/Plugins/Extensions/MediaPlayer/meta/Makefile 
+	lib/python/Plugins/Extensions/Modem/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/bin/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/images/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/volume/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/headers/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi/block/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubifs/nodes/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ubi_io/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/ubi_reader/ui/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_mips/NFR4XBoot_client/images/Makefile
+	lib/python/Plugins/Extensions/PicturePlayer/Makefile
+	lib/python/Plugins/Extensions/PicturePlayer/meta/Makefile
+	lib/python/Plugins/Extensions/PicturePlayer/data/Makefile
+	lib/python/Plugins/Extensions/SocketMMI/Makefile
+	lib/python/Plugins/Extensions/SocketMMI/meta/Makefile
+	lib/python/Plugins/Extensions/SocketMMI/src/Makefile
+	lib/python/Plugins/Extensions/TuxboxPlugins/Makefile
+	lib/python/Plugins/Extensions/TuxboxPlugins/meta/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/acuwheathericons/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/image/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/locale/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/locale/es/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/locale/es/LC_MESSAGES/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/wheathericons/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/Makefile
+	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/small/Makefile
+	lib/python/Plugins/SystemPlugins/Makefile
+	lib/python/Plugins/SystemPlugins/CableScan/Makefile
+	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
+	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/meta/Makefile
+	lib/python/Plugins/SystemPlugins/DiseqcTester/Makefile
+	lib/python/Plugins/SystemPlugins/DiseqcTester/meta/Makefile
+	lib/python/Plugins/SystemPlugins/FastScan/Makefile
+	lib/python/Plugins/SystemPlugins/FastScan/xml/Makefile
+	lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
+	lib/python/Plugins/SystemPlugins/Hotplug/Makefile
+	lib/python/Plugins/SystemPlugins/Hotplug/meta/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkWizard/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkWizard/meta/Makefile
+	lib/python/Plugins/SystemPlugins/PositionerSetup/Makefile
+	lib/python/Plugins/SystemPlugins/PositionerSetup/meta/Makefile
+	lib/python/Plugins/SystemPlugins/SABnzbdSetup/Makefile
+	lib/python/Plugins/SystemPlugins/SatelliteEquipmentControl/Makefile
+	lib/python/Plugins/SystemPlugins/SatelliteEquipmentControl/meta/Makefile
+	lib/python/Plugins/SystemPlugins/Satfinder/Makefile
+	lib/python/Plugins/SystemPlugins/Satfinder/meta/Makefile
+	lib/python/Plugins/SystemPlugins/SoftwareManager/Makefile
+	lib/python/Plugins/SystemPlugins/SoftwareManager/meta/Makefile
+	lib/python/Plugins/SystemPlugins/VideoClippingSetup/Makefile
+	lib/python/Plugins/SystemPlugins/VideoEnhancement/Makefile
+	lib/python/Plugins/SystemPlugins/VideoEnhancement/meta/Makefile
+	lib/python/Plugins/SystemPlugins/VideoTune/Makefile
+	lib/python/Plugins/SystemPlugins/VideoTune/meta/Makefile
+	lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
+	lib/python/Plugins/SystemPlugins/WirelessLan/meta/Makefile
+	lib/python/Plugins/SystemPlugins/LCNScanner/Makefile
+	lib/python/Plugins/SystemPlugins/NFRLedControl/Makefile
+	lib/python/Plugins/SystemPlugins/AnimationSetup/Makefile
+	lib/python/Tools/Makefile
+	po/Makefile
+	main/Makefile
+	tools/Makefile
+	tools/enigma2.sh
+	enigma2.pc]
+fi
+if test "$BOXTYPE" == "hd2400" ; then
+	AC_DEFINE(KEY_PLAY_ACTUALLY_IS_KEY_PLAYPAUSE, 1,[define when rc sends a KEY_PLAY event for its KEY_PLAYPAUSE key])
+	AC_DEFINE(KEY_F3_TO_KEY_LIST, 1,[define when rc sends a KEY_F3 event for its KEY_LIST key])
+fi
 
+AC_ARG_WITH(libsdl,
+	AS_HELP_STRING([--with-libsdl],[use libsdl, yes or no]),
+	[with_libsdl=$withval],[with_libsdl=no])
+if test "$with_libsdl" = "yes"; then
+	PKG_CHECK_MODULES(LIBSDL, sdl)
+fi
+AM_CONDITIONAL(HAVE_LIBSDL, test "$with_libsdl" = "yes")
+
+AC_ARG_WITH(libxine,
+	AS_HELP_STRING([--with-libxine],[use libxine, yes or no]),
+	[with_libxine=$withval],[with_libxine=no])
+if test "$with_libxine" = "yes"; then
+	PKG_CHECK_MODULES(LIBXINE, libxine)
+	AC_DEFINE([WITH_XINE],[1],[Define to 1 if you have libxine])
+fi
+AM_CONDITIONAL(HAVE_LIBXINE, test "$with_libxine" = "yes")
+
+AC_ARG_WITH(debug,
+	AS_HELP_STRING([--without-debug],[disable debugging code]),
+	[with_debug="$withval"],[with_debug="yes"])
+if test "$with_debug" = "yes"; then
+	DEBUG_CFLAGS="-ggdb3"
+	AC_DEFINE([DEBUG],[1],[Define to 1 to enable debugging code])
+fi
+
+AC_ARG_WITH(memcheck,
+	AS_HELP_STRING([--with-memcheck],[enable memory leak checks]),
+	[with_memcheck="$withval"],[with_memcheck="no"])
+if test "$with_memcheck" = "yes"; then
+	AC_DEFINE([MEMLEAK_CHECK],[1],[Define to 1 to enable memory leak checks])
+fi
+
+AC_ARG_WITH(po,
+	AS_HELP_STRING([--with-po],[enable updating of po files]),
+	[with_po="$withval"],[with_po="no"])
+if test "$with_po" = "yes"; then
+	AC_PATH_PROG(MSGINIT, msginit)
+	AC_PATH_PROG(MSGMERGE, msgmerge)
+	AC_PATH_PROG(MSGUNIQ, msguniq)
+	AC_PATH_PROG(XGETTEXT, xgettext)
+	if test -z "$MSGINIT" -o -z "$MSGMERGE" -o -z "$MSGUNIQ" -o -z "$XGETTEXT"; then
+		AC_MSG_ERROR([Could not find required gettext tools])
+	fi
+fi
+AM_CONDITIONAL(UPDATE_PO, test "$with_po" = "no")
+
+ENIGMA2_CFLAGS="-fno-rtti -fno-exceptions"
+AC_SUBST(ENIGMA2_CFLAGS)
+
+CPPFLAGS="$CPPFLAGS $PYTHON_CPPFLAGS"
+CFLAGS="$CFLAGS $DEBUG_CFLAGS -Wall"
+CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CFLAGS $GLES_CFLAGS"
+
+AC_CONFIG_FILES([$BOXTYPE1])
 AC_OUTPUT
+
+
 
