@@ -1,11 +1,16 @@
 installdir = $(pkglibdir)/python/Components/Converter
 
-if SPARK
-mv $(installdir)/bitratecalc.so_sh4 $(installdir)/bitratecalc.so
-rm -r $(installdir)/bitratecalc.so_mips
+ifeq ($BOXTYPE, "spark")
+  mv $(installdir)/bitratecalc.so_sh4 $(installdir)/bitratecalc.so
+  rm -r $(installdir)/bitratecalc.so_mips
 else
-mv $(installdir)/bitratecalc.so_mips $(installdir)/bitratecalc.so
-rm -r $(installdir)/bitratecalc.so_sh4
+  ifeq ($BOXTYPE, "spark7162")
+    mv $(installdir)/bitratecalc.so_sh4 $(installdir)/bitratecalc.so
+    rm -r $(installdir)/bitratecalc.so_mips
+  else  
+    mv $(installdir)/bitratecalc.so_mips $(installdir)/bitratecalc.so
+    rm -r $(installdir)/bitratecalc.so_sh4
+  endif  
 endif
 
 dist_install_DATA = *.so
