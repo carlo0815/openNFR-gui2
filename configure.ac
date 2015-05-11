@@ -350,7 +350,7 @@ if test "$BOXTYPE" == "tmtwin" -o "$BOXTYPE" == "tm2t" -o "$BOXTYPE" == "tmsingl
 fi
 
 if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
-	BOXTYPE1=[Makefile
+	BOXTYPE1="Makefile
 	data/Makefile
 	data/fonts/Makefile
 	data/extensions/Makefile
@@ -479,10 +479,10 @@ if test "$BOXTYPE" == "spark" -o "$BOXTYPE" == "spark7162"; then
 	main/Makefile
 	tools/Makefile
 	tools/enigma2.sh
-	enigma2.pc]
+	enigma2.pc"
 	AC_DEFINE(FORCE_ADVANCED_REMOTE, 1,[define to fixup the input device identification when the remote control is actually an 'advanced' remote (with play/forward/rewind keys)])
 else: 
-BOXTYPE1=[	Makefile
+BOXTYPE1="Makefile
 	data/Makefile
 	data/fonts/Makefile
 	data/extensions/Makefile
@@ -621,7 +621,7 @@ BOXTYPE1=[	Makefile
 	main/Makefile
 	tools/Makefile
 	tools/enigma2.sh
-	enigma2.pc]
+	enigma2.pc"
 fi
 if test "$BOXTYPE" == "hd2400" ; then
 	AC_DEFINE(KEY_PLAY_ACTUALLY_IS_KEY_PLAYPAUSE, 1,[define when rc sends a KEY_PLAY event for its KEY_PLAYPAUSE key])
