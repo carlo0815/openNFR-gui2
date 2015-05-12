@@ -313,7 +313,7 @@ def InitLcd():
 
 		config.usage.lcd_standbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_standbypowerled.addNotifier(setPowerLEDstandbystate)
--
+
  		standby_default = 0
 
 		standby_default = 0
