@@ -412,6 +412,7 @@ CXXFLAGS="$CXXFLAGS $DEBUG_CFLAGS -Wall $BASE_CFLAGS $ENIGMA2_CFLAGS $PTHREAD_CF
 
 AC_CONFIG_FILES([Makefile
 	data/Makefile
+	data/bootvideos/Makefile
 	data/fonts/Makefile
 	data/extensions/Makefile
 	data/keymaps/Makefile
