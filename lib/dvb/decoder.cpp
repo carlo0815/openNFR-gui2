@@ -77,7 +77,6 @@ int eDVBAudio::startPid(int pid, int type)
 #else
 	 	pes.flags    = 0;
 #endif
-		pes.flags    = 0;
 		eDebugNoNewLine("DMX_SET_PES_FILTER(0x%02x) - audio - ", pid);
 		if (::ioctl(m_fd_demux, DMX_SET_PES_FILTER, &pes) < 0)
 		{
@@ -751,7 +750,6 @@ int eDVBTText::startPid(int pid)
 #else
  	pes.flags    = 0;
 #endif
-	pes.flags    = 0;
 
 	eDebugNoNewLine("DMX_SET_PES_FILTER(0x%02x) - ttx - ", pid);
 	if (::ioctl(m_fd_demux, DMX_SET_PES_FILTER, &pes) < 0)
