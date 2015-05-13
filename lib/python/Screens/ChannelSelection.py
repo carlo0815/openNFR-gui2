@@ -51,6 +51,7 @@ from time import localtime, time
 from os import remove
 from Components.PluginComponent import plugins
 from Plugins.Plugin import PluginDescriptor
+import os
 
 profile("ChannelSelection.py after imports")
 
