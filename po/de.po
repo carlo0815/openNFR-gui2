@@ -2316,7 +2316,7 @@ msgid "Custom skip time for '7'/'9' buttons"
 msgstr "Gewünschte Sprungzeit für '7'/'9'-Tasten"
 
 msgid "Customize"
-msgstr "Anpassen"
+msgstr "Extra-Anpassungen"
 
 msgid "Cut"
 msgstr "Schneiden"
@@ -10714,7 +10714,7 @@ msgid "this recording"
 msgstr "Diese Aufnahme"
 
 msgid "this service is protected by a parental control pin"
-msgstr "Dieser Sender ist durch einen Jugendschutz-PIN Code geschützt."
+msgstr "Sender ist durch den Jugendschutz-PIN geschützt"
 
 msgid "toggle time, chapter, audio, subtitle info"
 msgstr "Schalte zwischen Zeit-, Kapitel-, Audio- und Untertitel-Info um"
@@ -11336,7 +11336,7 @@ msgid "VideoEnhancement Setup"
 msgstr "VideoEnhancement Einstellungen"
 
 msgid "Setup Enigma2"
-msgstr "System Einstellungen"
+msgstr "Enigma2 anpassen"
 
 msgid "Button Setup"
 msgstr "Tasten Einstellungen"
@@ -12480,3 +12480,85 @@ msgstr "InfoPanel schützen"
 
 msgid "Protect Mediacenter"
 msgstr "Mediacenter schützen"
+
+msgid "Lists reloaded!"
+msgstr "Liste wurde neu eingelesen!"
+
+msgid "Configuration..."
+msgstr "OSD Einstellungen"
+
+msgid "find currently played service"
+msgstr "Springe zum aktuell laufenden Sender"
+
+msgid "Customise"
+msgstr "Extra Anpassungen"
+
+msgid "Disk-Speed"
+msgstr "Laufwerks-Geschwindigkeitstest"
+
+msgid "Disk Speed Test"
+msgstr "Laufwerks Geschwindigkeitstest"
+
+msgid "Welcome to Device Speed Test."
+msgstr "Willkommen beim Geschwindigkeitstest deiner Laufwerke."
+
+msgid ""
+"Here is the list of mounted devices in Your STB\n"
+"\n"
+"Please choose a device where You would like to test the Speed:"
+msgstr ""
+"Hier ist die Liste der gemounteten Laufwerke in deiner STB\n"
+"\n"
+"Bitte wähle ein Laufwerk bei dem du die Geschwindigkeit testen möchtest:"
+
+msgid "Devices Panel"
+msgstr "Geräte-Panel"
+
+msgid ""
+"Sorry, there is not any connected devices in your STB.\n"
+"Please connect HDD or USB to test the Speed!"
+msgstr ""
+"Leider ist keine Medium in deiner STB gemountet.\n"
+"Bitte schliesse eine HDD oder einen USB-Stick an um die "
+"Geschwindigkeit zu testen!"
+
+msgid "Do You really want to test speed from:\n "
+msgstr "Jetzt die Geschwindigkeit testen von:\n "
+
+msgid "Start Confirmation!"
+msgstr "Bestätigige den Start!"
+
+#, python-format
+msgid "'Your Disk-Speed is:%s"
+msgstr "Deine Laufwerksgeschwindigkeit ist: %s"
+
+msgid "With this Speed you can Record 1 SD Channel!\n"
+msgstr "Mit dieser Geschwindigkeit kann man 1 SD-Sender aufnehmen!\n"
+
+msgid "With this Speed you can Record 1 HD Channel!\n"
+msgstr "Mit dieser Geschwindigkeit kann man 1 HD-Sender aufnehmen!\n"
+
+msgid "With this Speed you can Record 2 HD Channel!\n"
+msgstr "Mit dieser Geschwindigkeit kann man 2 HD-Sender aufnehmen!\n"
+
+msgid "With this Speed you can Record more then 2 HD Channel!\n"
+msgstr "Mit dieser Geschwindigkeit kann man mehr als 2 HD-Sender aufnehmen!\n"
+
+msgid "Speedtest aborted !"
+msgstr "Geschwindigkeitstest abgebrochen!"
+
+msgid "BootvideoManager"
+msgstr "OpenNFR BootVideo Manager"
+
+msgid "Bootvideo Setup"
+msgstr "OpenNFR Bootvideo Einstellungen"
+
+msgid "no Bootvideo"
+msgstr "kein Bootvideo"
+
+#, python-format
+msgid "now Using Bootvideo: %s"
+msgstr "gewähltes Bootvideo: %s"
+
+msgid "PluginReLoad"
+msgstr "Erweiterungen neu laden"
