@@ -667,7 +667,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginInstallwizard'), _("PluginInstallwizard"), 'PluginInstallwizard')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginDeinstallwizard'), _("PluginDeinstallwizard"), 'PluginDeinstallwizard')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('OpenNFRWizard'), _("OpenNFRWizard"), 'OpenNFRWizard')))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent('PluginReLoad'), _("PluginReLoad"), 'PluginReLoad')))		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
