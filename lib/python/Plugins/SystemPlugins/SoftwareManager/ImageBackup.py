@@ -1,5 +1,4 @@
 #################################################################################
-<<<<<<< HEAD
 # FULL BACKUP UYILITY FOR ENIGMA2, SUPPORTS THE MODELS OE-A 2.0  MOD by NFR		#
 #																				#
 #					MAKES A FULLBACK-UP READY FOR FLASHING.						#
