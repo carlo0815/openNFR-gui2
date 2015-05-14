@@ -76,6 +76,8 @@ class ImageBackup(Screen):
 		print "[FULL BACKUP] MKUBIFS = >%s<" %self.MKUBIFS_ARGS
 		print "[FULL BACKUP] MTDKERNEL = >%s<" %self.MTDKERNEL
 		print "[FULL BACKUP] ROOTFSTYPE = >%s<" %self.ROOTFSTYPE
+		print "[FULL BACKUP] KERNELBIN = >%s<" %self.KERNELBIN
+		print "[FULL BACKUP] ROOTFSBIN = >%s<" %self.ROOTFSBIN		
 		
 		self["key_green"] = Button("USB")
 		self["key_red"] = Button("HDD")
@@ -165,9 +167,13 @@ class ImageBackup(Screen):
 		self.NANDDUMP = "/usr/sbin/nanddump"
 		self.WORKDIR= "%s/bi" %self.DIRECTORY
 		self.TARGET="XX"
-		#self.MTDKERNEL="mtd1"
-		self.ROOTFSBIN="rootfs.bin"
-		self.KERNELBIN="kernel.bin"
+		if getBrandOEM() in ("fulan"):
+			self.ROOTFSBIN="e2jffs2.img"
+			self.KERNELBIN="uImage"		
+		else:
+			self.MTDKERNEL="mtd1"
+			self.ROOTFSBIN="rootfs.bin"
+			self.KERNELBIN="kernel.bin"
 
 		## TESTING IF ALL THE TOOLS FOR THE BUILDING PROCESS ARE PRESENT
 		if not path.exists(self.MKFS):
@@ -182,7 +188,7 @@ class ImageBackup(Screen):
 		## TESTING WHICH KIND OF SATELLITE RECEIVER IS USED
 
 		## TESTING THE Odin M9 Model
-		if getBrandOEM() == "fulan":
+		if getBrandOEM() in ("fulan"):
 			self.SHOWNAME = "%s %s" %(self.MACHINEBRAND, self.MODEL)
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/%s" %(self.DIRECTORY,self.IMAGEFOLDER)
@@ -763,7 +769,7 @@ class ImageBackup(Screen):
 		cmdlist.append(cmd1)
 		if cmd2:
 			cmdlist.append(cmd2)
-			if getBrandOEM() == "fulan":
+			if getBrandOEM() in ("fulan"):
 				cmdlist.append(cmd3)
 		cmdlist.append("chmod 644 %s/root.%s" %(self.WORKDIR, self.ROOTFSTYPE))
 		cmdlist.append('echo " "')
@@ -805,7 +811,7 @@ class ImageBackup(Screen):
 		f = open("%s/imageversion" %self.MAINDEST, "w")
 		f.write(self.IMAGEVERSION)
 		f.close()
-		if getBrandOEM() == "fulan":
+		if getBrandOEM() in ("fulan"):
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -899,7 +905,7 @@ class ImageBackup(Screen):
 				cmdlist.append('echo "This only takes about 1 or 2 minutes"')
 				cmdlist.append('echo " "')
 				
-				if getBrandOEM() == "fulan":
+				if getBrandOEM() in ("fulan"):
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.IMAGEFOLDER))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
 				elif self.TYPE == 'ATEMIO':
@@ -986,7 +992,7 @@ class ImageBackup(Screen):
 
 
 	def make_zipfile(self, output_filename, source_dir):
-		if getBrandOEM() == "fulan":
+		if getBrandOEM() in ("fulan"):
 			output_zip = self.EXTRA + "/" + output_filename
 		else:
 			output_zip = self.EXTRA1 + "/" + output_filename
@@ -1011,7 +1017,7 @@ class ImageBackup(Screen):
 		AboutText += _("Backup Date: %s\n") % strftime("%Y-%m-%d", localtime(self.START))
 
 		if path.exists('/proc/stb/info/chipset'):
-			if getBrandOEM() == "fulan":
+			if getBrandOEM() in ("fulan"):
 				AboutText += _("Chipset: %s") % about.getChipSetString().lower().replace('\n','').replace('bcm','') + "\n"
 			else:
 				AboutText += _("Chipset: BCM%s") % about.getChipSetString().lower().replace('\n','').replace('bcm','') + "\n"
