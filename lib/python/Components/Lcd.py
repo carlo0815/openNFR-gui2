@@ -316,8 +316,6 @@ def InitLcd():
 
  		standby_default = 0
 
-		standby_default = 0
-
 		ilcd = LCD()
 
 		if not ilcd.isOled():
