@@ -893,6 +893,8 @@ class ChannelSelectionEdit:
 		self.saved_title = None
 		self.saved_root = None
 		self.current_ref = None
+		self.editMode = False
+		self.confirmRemove = True
 
 		class ChannelSelectionEditActionMap(ActionMap):
 			def __init__(self, csel, contexts=None, actions=None, prio=0):
