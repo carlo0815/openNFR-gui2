@@ -12562,3 +12562,6 @@ msgstr "gewähltes Bootvideo: %s"
 
 msgid "PluginReLoad"
 msgstr "Erweiterungen neu laden"
+
+msgid "and never ask again this session again"
+msgstr "und nicht erneut nachfragen"
