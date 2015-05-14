@@ -165,7 +165,7 @@ class ImageBackup(Screen):
 		self.NANDDUMP = "/usr/sbin/nanddump"
 		self.WORKDIR= "%s/bi" %self.DIRECTORY
 		self.TARGET="XX"
-		self.MTDKERNEL="mtd1"
+		#self.MTDKERNEL="mtd1"
 		self.ROOTFSBIN="rootfs.bin"
 		self.KERNELBIN="kernel.bin"
 
