@@ -126,7 +126,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/%s/images' %ImageVersion
         elif self.distro == 'diverse':
             self.feed = 'diverse'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/4.3/images/fremdimages'
         elif self.distro == 'openar':
             self.feed = 'openar'
             self.feedurl = 'http://taapat.ho.ua/Download'            
