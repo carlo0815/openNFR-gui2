@@ -16,7 +16,7 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType, getMachineBuild, getImageVersion
+from boxbranding import getBoxType, getMachineBuild, getImageVersion, getBrandOEM
 
 class NFR4XChooseOnLineImage(Screen):
     skin = '<screen name="NFR4XChooseOnLineImage" position="center,center" size="880,620" title="NFR4XBoot - Download OnLine Images" >\n\t\t\t  <widget source="list" render="Listbox" position="10,0" size="870,610" scrollbarMode="showOnDemand" transparent="1">\n\t\t\t\t  <convert type="TemplatedMultiContent">\n\t\t\t\t  {"template": [\n\t\t\t\t  MultiContentEntryText(pos = (0, 10), size = (830, 30), font=0, flags = RT_HALIGN_RIGHT, text = 0),\n\t\t\t\t  MultiContentEntryPixmapAlphaBlend(pos = (10, 0), size = (480, 60), png = 1),\n\t\t\t\t  MultiContentEntryText(pos = (0, 40), size = (830, 30), font=1, flags = RT_VALIGN_TOP | RT_HALIGN_RIGHT, text = 3),\n\t\t\t\t  ],\n\t\t\t\t  "fonts": [gFont("Regular", 28),gFont("Regular", 20)],\n\t\t\t\t  "itemHeight": 65\n\t\t\t\t  }\n\t\t\t\t  </convert>\n\t\t\t  </widget>\n\t\t  </screen>'
@@ -334,35 +334,51 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side' 
         elif self.distro == 'opendroid':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'sf8'):
-                box = getBoxType()
+            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se'):
+                box = 'GigaBlue'
                 urlbox = getBoxType()               
                 stb = '1'
             elif box in ('xpeedlx1', 'xpeedlx2'):
-                box = 'xpeedlx'
+                box = 'GoldenInterstar'
                 urlbox = 'xpeedlx'                
                 stb = '1'
+            elif box in ('xpeedlx3'):
+                box = 'GoldenInterstar'
+                urlbox = 'xpeedlx3'                
+                stb = '1'                
             elif box in ('vusolo', 'vusolo2', 'vuduo'):
-                box = 'vu%2B'
-                urlbox = 'vu%2B'
+                box = getBrandOEM()
+                urlbox = getBoxType()
                 stb = '1'
 	    elif box in ('atemionemesis'):
-                box = 'atemio'
+                box = 'Atemio'
                 urlbox = 'atemionemesis'                
                 stb = '1'
 	    elif box in ('atemio6200'):
-                box = 'atemio'
+                box = 'Atemio'
                 urlbox = 'atemio6200'                
                 stb = '1'    
 	    elif box in ('atemio6000'):
-                box = 'atemio'
+                box = 'Atemio'
                 urlbox = 'atemio6000'                
                 stb = '1'
             elif box in ('atemio6100'):
-                box = 'atemio'
+                box = 'Atemio'
                 urlbox = 'atemio6100'                
+                stb = '1'
+            elif box in ('formuler3'):
+                box = 'Formuler'
+                urlbox = 'formuler3'                
                 stb = '1'    
-
+            elif box in ('formuler1'):
+                box = 'Formuler'
+                urlbox = 'formuler1'                
+                stb = '1'                                        
+            elif box in ('iniboxhde'):
+                box = 'Venton-Unibox'
+                urlbox = 'iniboxhde'                
+                stb = '1'  
+                
             else:   
                 stb = 'no Image for this Box on this Side'                                      
         elif self.distro == 'openpli':
@@ -454,7 +470,7 @@ class DownloadOnLineImage(Screen):
             elif self.distro == 'openhdf':
                 url = 'http://v4.hdfreaks.cc/' + box[0] + '/' + sel
             elif self.distro == 'opendroid':
-                url = self.feedurl + '/' + box[1] + '/' + sel                
+                url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel                
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -514,7 +530,7 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openvix':
             url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)
         elif self.distro == 'opendroid':
-            url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)        
+            url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)        
         elif self.distro == 'openpli':
             url = '%s/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opennfr':
@@ -554,6 +570,11 @@ class DownloadOnLineImage(Screen):
                     elif self.feed == 'openmips':
                         line = line[t + tt + 10:t + tt + tt + 40]
                         self.imagelist.append(line) 
+                elif line.find("<a href='%s/" % urlbox) > -1:
+                    ttt = len(urlbox)
+                    t = line.find("<a href='%s/" % urlbox) 
+                    t5 = line.find(".zip'")
+                    self.imagelist.append(line[t + ttt + 10 :t5 + 4])                        
                 elif line.find('href="atemio4you-') > -1:
                     t4 = line.find('atemio4you-')
                     t5 = line.find('.zip"')
@@ -579,14 +600,10 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('openpli-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])    
-                elif line.find('file=opendroid') > -1:
-                    t4 = line.find('opendroid-')
-                    t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                        
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                       
+                    self.imagelist.append(line[t4 :t5+4]) 
         else:
             self.imagelist.append(stb)
         self['imageList'].l.setList(self.imagelist)
