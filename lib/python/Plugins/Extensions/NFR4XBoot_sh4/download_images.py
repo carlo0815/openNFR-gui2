@@ -16,7 +16,7 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType, getMachineBuild, getImageVersion
+from boxbranding import getBoxType, getMachineBuild, getImageVersion, getBrandOEM
 
 class NFR4XChooseOnLineImage(Screen):
     skin = '<screen name="NFR4XChooseOnLineImage" position="center,center" size="880,620" title="NFR4XBoot - Download OnLine Images" >\n\t\t\t  <widget source="list" render="Listbox" position="10,0" size="870,610" scrollbarMode="showOnDemand" transparent="1">\n\t\t\t\t  <convert type="TemplatedMultiContent">\n\t\t\t\t  {"template": [\n\t\t\t\t  MultiContentEntryText(pos = (0, 10), size = (830, 30), font=0, flags = RT_HALIGN_RIGHT, text = 0),\n\t\t\t\t  MultiContentEntryPixmapAlphaBlend(pos = (10, 0), size = (480, 60), png = 1),\n\t\t\t\t  MultiContentEntryText(pos = (0, 40), size = (830, 30), font=1, flags = RT_VALIGN_TOP | RT_HALIGN_RIGHT, text = 3),\n\t\t\t\t  ],\n\t\t\t\t  "fonts": [gFont("Regular", 28),gFont("Regular", 20)],\n\t\t\t\t  "itemHeight": 65\n\t\t\t\t  }\n\t\t\t\t  </convert>\n\t\t\t  </widget>\n\t\t  </screen>'
@@ -174,11 +174,15 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'   
         elif self.distro == 'opendroid':
-            box = 'sparkreloaded'
-            if box in ('sparklx', 'arguspingulux', 'sparkreloaded'):
-                box = getBoxType()
-                urlbox = getBoxType()               
-                stb = '1'
+            if box in ('sparklx', 'arguspingulux', 'sparkreloaded', 'sparkone', 'sparktriplex'):
+                if box in ('sparklx', 'sparkreloaded', 'sparkone', 'sparktriplex'):
+                    box = 'GoldenMedia'
+                    urlbox = getBoxType()              
+                    stb = '1'
+                elif box in ('arguspingulux'):
+                    box = 'Edision'
+                    urlbox = getBoxType()              
+                    stb = '1'                
             else:   
                 stb = 'no Image for this Box on this Side'                              
         elif self.distro == 'diverse':
@@ -214,7 +218,10 @@ class DownloadOnLineImage(Screen):
             self.sel = sel
             box = self.box()
             self.hide()
-            url = self.feedurl + '/' + box[0] + '/' + sel
+            if self.distro == 'opendroid':
+                url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel                
+            else:
+                url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
             try:
                 u = urllib2.urlopen(url)
@@ -272,7 +279,7 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openar':
             url = '%s' % (self.feedurl)  
         elif self.distro == 'opendroid':
-            url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)             
+            url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)             
         elif self.distro == 'diverse':
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'vixe2sh4':
@@ -322,10 +329,11 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('TaapatOpenAR-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4]) 
-                elif line.find('file=opendroid') > -1:
-                    t4 = line.find('opendroid-')
-                    t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                                       
+                elif line.find("<a href='%s/" % urlbox) > -1:
+                    ttt = len(urlbox)
+                    t = line.find("<a href='%s/" % urlbox) 
+                    t5 = line.find(".zip'")
+                    self.imagelist.append(line[t + ttt + 10 :t5 + 4])                                        
                 elif line.find('file=ViX4E2PROJECT-') > -1:
                     t4 = line.find('ViX4E2PROJECT-')
                     t5 = line.find('.zip"')
@@ -398,3 +406,4 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
+
