@@ -12529,7 +12529,7 @@ msgid "Start Confirmation!"
 msgstr "Bestätigige den Start!"
 
 #, python-format
-msgid "'Your Disk-Speed is:%s"
+msgid "Your Disk-Speed is:%s"
 msgstr "Deine Laufwerksgeschwindigkeit ist: %s"
 
 msgid "With this Speed you can Record 1 SD Channel!\n"
@@ -12548,10 +12548,10 @@ msgid "Speedtest aborted !"
 msgstr "Geschwindigkeitstest abgebrochen!"
 
 msgid "BootvideoManager"
-msgstr "OpenNFR BootVideo Manager"
+msgstr "OpenNFR Bootvideo Manager"
 
 msgid "Bootvideo Setup"
-msgstr "OpenNFR Bootvideo Einstellungen"
+msgstr "OpenNFR Bootvideo Auswahl"
 
 msgid "no Bootvideo"
 msgstr "kein Bootvideo"
@@ -12565,3 +12565,43 @@ msgstr "Erweiterungen neu laden"
 
 msgid "and never ask again this session again"
 msgstr "und nicht erneut nachfragen"
+
+msgid "The swap file has been created"
+msgstr "Die Swapdatei wurde erstellt"
+
+msgid "The swap file has been deleted"
+msgstr "Die Swapdatei wurde gelöscht"
+
+msgid "The swap has been activated"
+msgstr "Swap wurde aktiviert"
+
+msgid "The swap has been deactivated"
+msgstr "Swap wurde deaktiviert"
+
+msgid "Swap is activated"
+msgstr "Swap ist aktiviert"
+
+msgid "Swap is not activated"
+msgstr "Swap ist nicht aktiviert"
+
+msgid "Activate swap"
+msgstr "Swap aktivieren"
+
+msgid "Deactivate swap"
+msgstr "Swap deaktivieren"
+
+msgid "Delete swap file"
+msgstr "Swapdatei löschen"
+
+msgid "BootlogoManager"
+msgstr "OpenNFR Bootlogo Manager"
+
+msgid "Bootlogo Setup"
+msgstr "OpenNFR Bootlogo Auswahl"
+
+#, python-format
+msgid "now Using Bootlogo: %s"
+msgstr "gewähltes Bootvideo: %s"
+
+msgid "Default Bootlogo"
+msgstr "Standard Bootlogo"
