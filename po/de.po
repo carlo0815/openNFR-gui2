@@ -683,6 +683,9 @@ msgstr "HDMI-IN als Bild in Bild wiedergeben"
 msgid "Turn off HDMI-IN Full screen mode"
 msgstr "HDMI-IN Vollbildmodus ausschalten"
 
+msgid "Turn off HDMI-IN PiP mode"
+msgstr "HDMI-IN Bild in Bild ausschalten"
+
 msgid "Picture in Picture Setup"
 msgstr "Bild in Bild Einstellungen"
 
@@ -12605,3 +12608,6 @@ msgstr "gewähltes Bootvideo: %s"
 
 msgid "Default Bootlogo"
 msgstr "Standard Bootlogo"
+
+msgid "Last Upgrade:\t%s" 
+msgstr "Letztes Update:\t%s"
