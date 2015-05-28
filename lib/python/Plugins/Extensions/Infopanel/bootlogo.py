@@ -1,5 +1,6 @@
 from boxbranding import getMachineBrand, getMachineName
 from os import path
+from Screens.MessageBox import MessageBox
 from Components.Console import Console
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
@@ -13,6 +14,7 @@ from Tools.LoadPixmap import LoadPixmap
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from glob import glob
 import os
+import time
 
 config.bootlogo = ConfigSubsection()
 config.bootlogo.booting = ConfigText(default = "NFRbootlogo.mvi")
@@ -21,13 +23,13 @@ config.radiologo.booting = ConfigText(default = "NFRradiologo.mvi")
 
 class PanelList(MenuList):
         if (getDesktop(0).size().width() == 1920):
-	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 50, enableWrapAround = True):
+	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 92, enableWrapAround = True):
 		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		        self.l.setFont(0, gFont("Regular", font0))
 		        self.l.setFont(1, gFont("Regular", font1))
 		        self.l.setItemHeight(itemHeight)
 	else:
-                def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 50, enableWrapAround = True):	        
+                def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 92, enableWrapAround = True):	        
 		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
                         self.l.setFont(0, gFont("Regular", font0))
 		        self.l.setFont(1, gFont("Regular", font1))
@@ -36,20 +38,20 @@ class PanelList(MenuList):
 def MenuEntryItem(entry):
         if (getDesktop(0).size().width() == 1920):
 	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 40), font=0, text=entry[1]))  # menupunkt
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
+	   res.append(MultiContentEntryText(pos=(210, 30), size=(690, 80), font=0, text=entry[1]))  # menupunkt
 	   return res
 	else:
 	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-       	   res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
+       	   res.append(MultiContentEntryText(pos=(210, 30), size=(440, 80), font=0, text=entry[1]))  # menupunkt
 	   return res
 	   
 
 def InfoEntryComponent(file):
-	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/" + file + ".png")
+	png = LoadPixmap("/usr/share/enigma2/bootlogos/" + file + ".png")
 	if png == None:
-		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default.png")
+		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default_logo.png")
 
 	res = (png)
 	return res
@@ -73,10 +75,7 @@ class BootlogoSetupScreen(Screen):
 		Screen.setTitle(self, _("BootlogoSetupScreen"))
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
-		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
-		self.session.nav.stopService()
 		aktbootlogo = config.bootlogo.booting.value
-		os.system("/usr/bin/showiframe /usr/share/enigma2/bootlogos/NFRbootlogo.mvi")
 		self["label1"] = Label("now Using Bootlogo: %s" % aktbootlogo)
 	        vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
@@ -97,16 +96,17 @@ class BootlogoSetupScreen(Screen):
 			}, 1)
 			
                 self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Default Bootlogo'), _("Default Bootlogo"), 'defaultbootlogo')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('NFRbootlogo'), _("NFRbootlogo"), 'defaultbootlogo')))
                 for logo in bootlogo:
+                        xname = logo.strip(".mvi")
                         if logo == "NFRbootlogo.mvi":
                                	print "deaultbootlogo found"
-                        else:       	
-			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % logo), _('%s' % logo), '%s' % logo)))
+                        else:   
+			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % xname), _('%s' % xname), '%s' % logo)))
 
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1920):
-			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
+			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
 		else:
 		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
@@ -118,41 +118,30 @@ class BootlogoSetupScreen(Screen):
 		
 	
 	def getCurrentEntry(self):
-	        os.system("sleep 0.2")
 		if self['Mlist'].l.getCurrentSelection():
 		        menuv = self['Mlist'].getCurrent()[2]
 		        menuv1 = list(menuv)[7]
-		        if menuv1 == "Default Bootlogo":
-			        menuv1 = "NFRbootlogo.mvi"
-		        os.system("killall -9 showiframe")
-		        os.system("/usr/bin/showiframe /usr/share/enigma2/bootlogos/%s" %menuv1)
 			selection = self['Mlist'].l.getCurrentSelection()[0]
 			if (selection[0] is not None):
 				return selection[0]
 
 	def selectionChanged(self):
-	
 		item = self.getCurrentEntry()
 
+		
 	def Exit(self):
-	        os.system("killall -9 showiframe")
-	        self.session.nav.stopService()
-	        self.session.nav.playService(self.oldService)
 		self.close()
-
+ 
 
 	def ok(self):
-		menu = self['Mlist'].getCurrent()[2]
+        	menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
-		print "menu1:", menu1
-		if menu1 == "Default Bootlogo":
-			menu1 = "NFRbootlogo.mvi"
 		os.system("rm /usr/share/bootlogo.mvi")
-		os.system("cp /usr/share/enigma2/bootlogos/%s /usr/share/bootlogo.mvi" %menu1)
+		os.system("cp /usr/share/enigma2/bootlogos/%s.mvi /usr/share/bootlogo.mvi" %menu1)
 		config.bootlogo.booting.value = menu1
 		config.bootlogo.booting.save()	
 		configfile.save()
-		self.Exit()
+		self.close()
 		
 class RadiologoSetupScreen(Screen):
 	skin = """<screen name="RadiologoSetupScreen" position="center,center" size="950,470" title="RadiologoSetupScreen">
@@ -172,10 +161,7 @@ class RadiologoSetupScreen(Screen):
 		Screen.setTitle(self, _("RadiologoSetupScreen"))
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
-		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
-		self.session.nav.stopService()
 		aktradiologo = config.radiologo.booting.value
-		os.system("/usr/bin/showiframe /usr/share/enigma2/radiologos/NFRradiologo.mvi")
 		self["label1"] = Label("now Using Radiologo: %s" % aktradiologo)
 	        vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
@@ -196,16 +182,17 @@ class RadiologoSetupScreen(Screen):
 			}, 1)
 			
                 self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Default Radiologo'), _("Default Radiologo"), 'defaultradiologo')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
                 for logo in radiologo:
+                        yname = logo.strip(".mvi")
                         if logo == "NFRradiologo.mvi":
                                	print "deaultradiologo found"
                         else:       	
-			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % logo), _('%s' % logo), '%s' % logo)))
+			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % yname), _('%s' % yname), '%s' % logo)))
 
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1920):
-			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
+			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
 		else:
 		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
@@ -217,38 +204,30 @@ class RadiologoSetupScreen(Screen):
 		
 	
 	def getCurrentEntry(self):
-	        os.system("sleep 0.2")
 		if self['Mlist'].l.getCurrentSelection():
 		        menuv = self['Mlist'].getCurrent()[2]
 		        menuv1 = list(menuv)[7]
 		        if menuv1 == "Default Radiologo":
 			        menuv1 = "NFRradiologo.mvi"
-		        os.system("killall -9 showiframe")
-		        os.system("/usr/bin/showiframe /usr/share/enigma2/radiologos/%s" %menuv1)
 			selection = self['Mlist'].l.getCurrentSelection()[0]
 			if (selection[0] is not None):
 				return selection[0]
 
 	def selectionChanged(self):
-	
 		item = self.getCurrentEntry()
 
+	
 	def Exit(self):
-	        os.system("killall -9 showiframe")
-	        self.session.nav.stopService()
-	        self.session.nav.playService(self.oldService)
 		self.close()
-
 
 	def ok(self):
 		menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
-		print "menu1:", menu1
 		if menu1 == "Default Radiologo":
-			menu1 = "NFRradiologo.mvi"
+			menu1 = "NFRradiologo.mvi"        	
 		os.system("rm /usr/share/enigma2/radio.mvi")
-		os.system("cp /usr/share/enigma2/radiologos/%s /usr/share/enigma2/radio.mvi" %menu1)
-		config.radiologo.booting.value = menu1
+		os.system("cp /usr/share/enigma2/radiologos/%s.mvi /usr/share/enigma2/radio.mvi" %menu1)
+                config.radiologo.booting.value = menu1
 		config.radiologo.booting.save()	
 		configfile.save()
-		self.Exit()	
+		self.close()
