@@ -12611,3 +12611,16 @@ msgstr "Standard Bootlogo"
 
 msgid "Last Upgrade:\t%s" 
 msgstr "Letztes Update:\t%s"
+
+msgid "RadiologoManager"
+msgstr "OpenNFR Radiologo Manager"
+
+msgid "Radiologo Setup"
+msgstr "OpenNFR Radiologo Auswahl"
+
+msgid "Default Radiologo"
+msgstr "Standard Radiologo"
+
+#, python-format
+msgid "now Using Radiologo: %s"
+msgstr "gewähltes Radiologo: %s"
