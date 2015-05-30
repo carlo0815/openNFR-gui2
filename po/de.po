@@ -12624,3 +12624,12 @@ msgstr "Standard Radiologo"
 #, python-format
 msgid "now Using Radiologo: %s"
 msgstr "gewähltes Radiologo: %s"
+
+msgid "Choose your Skin"
+msgstr "Wähle einen Skin"
+
+msgid "UserInterfacePositioner"
+msgstr "Position der Benutzeroberfläche anpassen"
+
+msgid "HDMI CEC setup"
+msgstr "HDMI CEC Einstellungen"
