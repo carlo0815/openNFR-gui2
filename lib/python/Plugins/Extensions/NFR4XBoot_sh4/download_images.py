@@ -123,7 +123,7 @@ class DownloadOnLineImage(Screen):
         self.distro = distro
         if self.distro == 'opennfr':
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/%s/images' %ImageVersion
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
         elif self.distro == 'diverse':
             self.feed = 'diverse'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/4.3/images/fremdimages'
