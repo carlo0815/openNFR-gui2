@@ -259,7 +259,7 @@ msgstr "Daten-DVD im %s %s Format (HDTV-kompatibel)"
 
 #, python-format
 msgid "%s %s front panel"
-msgstr "%s %s Frontpaneel"
+msgstr "%s %s Frontpanel"
 
 #, python-format
 msgid "%s %s ir keyboard"
