@@ -27,7 +27,7 @@ image = 0 # 0=openNFR
 if distro.lower() == "opennfr":
 	image = 0
 if getBrandOEM() == "fulan":
-	feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/%s/images' %ImageVersion
+	feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
 else:
 	feedurl_nfr = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
 	
