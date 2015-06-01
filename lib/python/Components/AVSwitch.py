@@ -244,12 +244,15 @@ class AVSwitch:
 		eAVSwitch.getInstance().setInput(INPUT[input])
 
 	def setColorFormat(self, value):
-		if not self.current_port:
-			self.current_port = config.av.videoport.value
-		if self.current_port in ("YPbPr", "Scart-YPbPr"):
-			eAVSwitch.getInstance().setColorFormat(3)
-		else:
+		if getBrandOEM() == "fulan":
 			eAVSwitch.getInstance().setColorFormat(value)
+		else:
+			if not self.current_port:
+				self.current_port = config.av.videoport.value
+			if self.current_port in ("YPbPr", "Scart-YPbPr"):
+				eAVSwitch.getInstance().setColorFormat(3)
+			else:
+				eAVSwitch.getInstance().setColorFormat(value)
 
 	def setConfiguredMode(self):
 		port = config.av.videoport.value
@@ -376,7 +379,10 @@ def InitAVSwitch():
 	config.av.autores_1080p25 = ConfigSelection(choices={"1080p25": _("1080p 25Hz"), "1080p50": _("1080p 50Hz"), "1080i50": _("1080i 50Hz")}, default="1080p25")
 	config.av.autores_1080p30 = ConfigSelection(choices={"1080p30": _("1080p 30Hz"), "1080p60": _("1080p 60Hz"), "1080i": _("1080i 60Hz")}, default="1080p30")
 	config.av.smart1080p = ConfigSelection(choices={"false": _("off"), "true": _("1080p50: 24/50/60Hz"), "1080i50": _("1080i50: 24/50/60Hz"), "720p50": _("720p50: 24/50/60Hz")}, default="false")
-	config.av.colorformat = ConfigSelection(choices=colorformat_choices, default="yuv")
+	if getBrandOEM() == "fulan":
+		config.av.colorformat = ConfigSelection(choices=colorformat_choices, default="rgb")
+	else:
+		config.av.colorformat = ConfigSelection(choices=colorformat_choices, default="yuv")
 	config.av.aspectratio = ConfigSelection(choices={
 			"4_3_letterbox": _("4:3 Letterbox"),
 			"4_3_panscan": _("4:3 PanScan"),
@@ -480,10 +486,16 @@ def InitAVSwitch():
 				f.close()
 			except:
 				pass
-		config.av.bypass_edid_checking = ConfigSelection(choices={
-				"00000000": _("off"),
-				"00000001": _("on")},
-				default = "00000000")
+		if getBrandOEM() == "fulan":		
+			config.av.bypass_edid_checking = ConfigSelection(choices={
+					"00000000": _("off"),
+					"00000001": _("on")},
+					default = "00000001")
+		else:
+			config.av.bypass_edid_checking = ConfigSelection(choices={
+					"00000000": _("off"),
+					"00000001": _("on")},
+					default = "00000000")
 		config.av.bypass_edid_checking.addNotifier(setEDIDBypass)
 	else:
 		config.av.bypass_edid_checking = ConfigNothing()
