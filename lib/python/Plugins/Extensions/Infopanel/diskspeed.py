@@ -120,7 +120,7 @@ class Disk_Speed(Screen):
                     model = line.split(' ')[6]
 		    speed = re.findall("[-+]?\d+[\.]?\d*", model)
         f.close()
-        label1 = Label(_('Your Disk-Speed is:%s' %model))
+        label1 = Label(_('Your Disk-Speed is:%s') %model)
         percUsed = int(float(speed[0]) / 1.6) 
         if float(speed[0]) <= 1.5:
             label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
