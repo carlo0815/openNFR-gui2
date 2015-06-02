@@ -12604,7 +12604,7 @@ msgstr "OpenNFR Bootlogo Auswahl"
 
 #, python-format
 msgid "now Using Bootlogo: %s"
-msgstr "gewähltes Bootvideo: %s"
+msgstr "gewähltes Bootlogo: %s"
 
 msgid "Default Bootlogo"
 msgstr "Standard Bootlogo"
