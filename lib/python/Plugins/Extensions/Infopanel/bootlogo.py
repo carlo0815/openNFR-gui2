@@ -76,7 +76,7 @@ class BootlogoSetupScreen(Screen):
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktbootlogo = config.bootlogo.booting.value
-		self["label1"] = Label("now Using Bootlogo: %s" % aktbootlogo)
+		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
 	        vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
 		ulogo = os.listdir(vpath)
