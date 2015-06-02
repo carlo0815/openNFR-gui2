@@ -71,7 +71,7 @@ class BootvideoSetupScreen(Screen):
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktbootvideo = config.bootvideo.booting.value
-		self["label1"] = Label("now Using Bootvideo: %s" % aktbootvideo)
+		self["label1"] = Label(_("now Using Bootvideo: %s") % aktbootvideo)
 	        vpath = "/usr/share/enigma2/bootvideos/"	
 		uvideo=[]
 		uvideo = os.listdir(vpath)
