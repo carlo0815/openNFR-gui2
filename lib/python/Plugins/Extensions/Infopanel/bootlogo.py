@@ -162,7 +162,7 @@ class RadiologoSetupScreen(Screen):
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktradiologo = config.radiologo.booting.value
-		self["label1"] = Label("now Using Radiologo: %s" % aktradiologo)
+		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
 	        vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
