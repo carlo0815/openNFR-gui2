@@ -1,4 +1,5 @@
 installdir = $(pkgdatadir)/radiologos
 
 dist_install_DATA = \
-	*.mvi 
+	*.mvi \
+	*.png
