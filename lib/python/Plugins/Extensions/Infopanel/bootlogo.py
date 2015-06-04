@@ -83,7 +83,7 @@ class BootlogoSetupScreen(Screen):
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktbootlogo = config.bootlogo.booting.value
-		self["label1"] = Label("now Using Bootlogo: %s" % aktbootlogo)
+		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
 	        vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
 		ulogo = os.listdir(vpath)
@@ -151,7 +151,6 @@ class BootlogoSetupScreen(Screen):
 		self.close()
 
 class RadiologoSetupScreen(Screen):
-
 	skin = """<screen name="RadiologoSetupScreen" position="center,center" size="950,470" title="RadiologoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
@@ -170,7 +169,7 @@ class RadiologoSetupScreen(Screen):
                 self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktradiologo = config.radiologo.booting.value
-		self["label1"] = Label("now Using Radiologo: %s" % aktradiologo)
+		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
 	        vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
