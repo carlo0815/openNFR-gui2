@@ -5,7 +5,7 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	CommonInterfaceAssignment \
 	HdmiCEC VideoClippingSetup \
 	VideoEnhancement WirelessLan NetworkWizard \
-	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester LCNScanner NFRLedControl
+	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester LCNScanner
 
 if HAVE_LIBVUGLES2
 SUBDIRS += AnimationSetup
