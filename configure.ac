@@ -553,7 +553,6 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/SystemPlugins/WirelessLan/Makefile
 	lib/python/Plugins/SystemPlugins/WirelessLan/meta/Makefile
 	lib/python/Plugins/SystemPlugins/LCNScanner/Makefile
-	lib/python/Plugins/SystemPlugins/NFRLedControl/Makefile
 	lib/python/Plugins/SystemPlugins/AnimationSetup/Makefile
 	lib/python/Tools/Makefile
 	po/Makefile
