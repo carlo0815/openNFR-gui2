@@ -84,6 +84,7 @@ from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, Re
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
+from Plugins.Extensions.Infopanel.SpinnerSelector import SpinnerSelector
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 from Components.ProgressBar import ProgressBar
 
@@ -526,7 +527,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "bootlogomanager":
 			self.session.open(BootlogoSetupScreen)	
 		elif menu == "radiologomanager":
-			self.session.open(RadiologoSetupScreen)                        
+			self.session.open(RadiologoSetupScreen) 
+		elif menu == "spinnermanager":
+			SpinnerSelector(self.session) 			
 		elif menu == "backup-files":
 			self.session.openWithCallback(self.backupfiles_choosen,BackupSelection)
 		elif menu == "flash-local":
@@ -640,12 +643,13 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
-                self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager"))))
-                self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootlogoManager" ), _("BootlogoManager"), ("bootlogomanager")))) 
-                self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 	
-        	self["Mlist"].moveToIndex(0)
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootlogoManager" ), _("BootlogoManager"), ("bootlogomanager")))) 
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SpinnerManager" ), _("SpinnerManager"), ("spinnermanager"))))		
+		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
 	def Remote_Manager(self):
