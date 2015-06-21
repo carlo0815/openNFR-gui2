@@ -428,6 +428,9 @@ AC_CONFIG_FILES([Makefile
 	data/display220/Makefile
 	data/display400/Makefile
 	data/spinner/Makefile
+	data/Spinner/Makefile
+	data/Spinner/default/Makefile
+	data/Spinner/Kreis/Makefile
 	data/vfd128/Makefile
 	data/vfd140/Makefile
 	data/vfd255/Makefile
