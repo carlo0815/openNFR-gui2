@@ -8,48 +8,25 @@ from Plugins.Extensions.Infopanel.Spinner import Spinner
 import os
 
 class SpinnerSelectionBox(Screen):
-	skin = """
-	<screen name="SpinnerSelectionBox" position="150,100" size="550,400" title="Input" backgroundColor="transparent">
-		<widget name="text" position="10,160" size="550,25" font="Regular;20" backgroundColor="transparent" />
-		<widget name="list" position="0,30" size="550,335" scrollbarMode="showOnDemand" />
-		<widget name="bild" position="200,10" zPosition="1" size="300,200" transparent="1" />
-		<applet type="onLayoutFinish">
-# this should be factored out into some helper code, but currently demonstrates applets.
-from enigma import eSize, ePoint
-
-orgwidth = self.instance.size().width()
-orgpos = self.instance.position()
-textsize = self[&quot;text&quot;].getSize()
-
-# y size still must be fixed in font stuff...
-textsize = (textsize[0] + 50, textsize[1] + 200)
-count = len(self.list)
-if count &gt; 8:
-	count = 8
-offset = 25 * count
-wsizex = textsize[0] + 60
-wsizey = textsize[1] + offset
-
-if (520 &gt; wsizex):
-	wsizex = 520
-wsize = (wsizex, wsizey)
-
-# resize
-self.instance.resize(eSize(*wsize))
-
-# resize label
-self[&quot;text&quot;].instance.resize(eSize(*textsize))
-
-# move list
-listsize = (wsizex, 25 * count)
-self[&quot;list&quot;].instance.move(ePoint(0, textsize[1]))
-self[&quot;list&quot;].instance.resize(eSize(*listsize))
-
-# center window
-newwidth = wsize[0]
-self.instance.move(ePoint((720-wsizex)/2, (576-wsizey)/(count &gt; 7 and 2 or 3)))
-		</applet>
-	</screen>"""
+	skin = """ <screen name="SpinnerSelectionBox" position="center,center" size="1280,720" title="SpinnerSelection" flags="wfNoBorder">
+		<widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+		<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+		<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+		</widget>
+		<ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
+		<ePixmap pixmap="skin_default/menu/db.png" position="848,596" size="350,44" alphatest="blend" zPosition="1" />
+		<ePixmap pixmap="skin_default/menu/nfr.png" position="950,430" size="150,150" alphatest="on" zPosition="1" />
+		<ePixmap pixmap="skin_default/menu/opennfr_info.png" position="837,95" size="379,216" alphatest="on" zPosition="1" />
+		<eLabel backgroundColor="grey" position="66,602" size="715,1" zPosition="0" />
+		<widget name="bild" position="65,96" zPosition="1" size="715,200" alphatest="blend" />
+		<widget name="list" position="65,298" size="715,300" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
+		<widget name="text" position="64,608" size="715,25" font="Regular;20" transparent="1" foregroundColor="cyan1" halign="left" backgroundColor="backtop" />
+		<widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
+		<eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+		<widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
+		</screen>"""
 	def __init__(self, session, title = "", list = []):
 		Screen.__init__(self, session)
 
