@@ -9,7 +9,7 @@
 eWindow::eWindow(eWidgetDesktop *desktop, int z): eWidget(0)
 {
 	m_flags = 0;
-	m_animation_mode = 0x11;
+	m_isSub = false;
 	m_desktop = desktop;
 		/* ask style manager for current style */
 	ePtr<eWindowStyleManager> mgr;
@@ -120,21 +120,13 @@ void eWindow::show()
 		m_desktop->sendShow(position(), size());
 	eWidget::show();
 }
-
 void eWindow::hide()
 {
 	if (m_animation_mode & 0x10)
 		m_desktop->sendHide(position(), size());
 	eWidget::hide();
 }
-
-void eWindow::setAnimationMode(int mode)
+void eWindow::setToSub()
 {
- /*
-	* 0x00 = animation off
-	* 0x01 = show on
-	* 0x10 = hide on
-	* 0x11 = animation on
-	*/
- 	m_animation_mode = mode;
+	m_isSub = true;
 }
