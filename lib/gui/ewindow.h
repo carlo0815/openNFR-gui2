@@ -26,7 +26,7 @@ public:
 	
 	void setFlag(int flags);
 	void clearFlag(int flags);
-	void setAnimationMode(int mode);
+	void setToSub();
 protected:
 	enum eWindowEvents
 	{
@@ -38,7 +38,7 @@ private:
 	eWidget *m_child;
 	int m_flags;
 	eWidgetDesktop *m_desktop;
-	int m_animation_mode;
+	bool m_isSub;
 };
 
 #endif
