@@ -7,10 +7,6 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	VideoEnhancement WirelessLan NetworkWizard \
 	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester LCNScanner
 
-if HAVE_LIBVUGLES2
-SUBDIRS += AnimationSetup
-endif
-
 if VUSOLO2
 SUBDIRS += CableScan
 endif
