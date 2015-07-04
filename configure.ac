@@ -519,6 +519,7 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/Makefile
 	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/small/Makefile
 	lib/python/Plugins/SystemPlugins/Makefile
+	lib/python/Plugins/SystemPlugins/AnimationSetup/Makefile
 	lib/python/Plugins/SystemPlugins/CableScan/Makefile
 	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
 	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/meta/Makefile
