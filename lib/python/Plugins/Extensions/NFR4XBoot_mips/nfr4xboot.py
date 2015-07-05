@@ -225,8 +225,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
         shutil.rmtree('bre2ze')    
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
-        shutil.rmtree('twinboxlcd')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
+        shutil.rmtree('redeagle')
 
 def NFR4XBootExtract(source, target, zipdelete):
     NFR4XBootRemoveUnpackDirs()
