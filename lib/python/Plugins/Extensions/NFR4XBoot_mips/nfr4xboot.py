@@ -317,7 +317,7 @@ def NFR4XBootExtract(source, target, zipdelete):
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
                 os.chdir('bre2ze')        
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
-	        os.chdir('twinboxlcd')        
+		os.chdir('twinboxlcd')        
                                 
 				
         print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
