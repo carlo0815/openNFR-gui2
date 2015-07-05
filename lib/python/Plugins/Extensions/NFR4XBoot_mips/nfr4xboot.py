@@ -225,7 +225,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
         shutil.rmtree('bre2ze')    
-
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/twinboxlcd'):
+        shutil.rmtree('twinboxlcd')
 
 def NFR4XBootExtract(source, target, zipdelete):
     NFR4XBootRemoveUnpackDirs()
@@ -297,6 +298,9 @@ def NFR4XBootExtract(source, target, zipdelete):
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/duo2'):
                 os.chdir('duo2')
                 os.system('mv -f root_cfe_auto.bin rootfs.bin')
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solose'):
+                os.chdir('solose')
+                os.system('mv -f root_cfe_auto.bin rootfs.bin')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue'):
             os.chdir('gigablue')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/quad'):
@@ -315,7 +319,8 @@ def NFR4XBootExtract(source, target, zipdelete):
                 os.chdir('formuler3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
                 os.chdir('bre2ze')        
-                
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/twinboxlcd'):
+	        os.chdir('twinboxlcd')        
                                 
 				
         print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
@@ -337,3 +342,4 @@ def NFR4XBootExtract(source, target, zipdelete):
         cmd = 'rm -rf /media/nfr4xboot/ubi'
         rc = os.system(cmd)
     return 1
+
