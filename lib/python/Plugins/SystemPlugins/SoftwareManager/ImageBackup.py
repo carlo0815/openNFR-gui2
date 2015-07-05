@@ -602,12 +602,12 @@ class ImageBackup(Screen):
 			self.EXTRA = "%s/fullbackup_EDISION/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
 			self.EXTRA1 = "%s/fullbackup_EDISION/%s" % (self.DIRECTORY, self.DATE)
 		## TESTING Edison Model
-		elif self.MODEL == "optimussos3":
+		elif self.MODEL == "optimussos3plus":
 			self.TYPE = "EDISION"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096 -F"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "%s" %self.MODEL
-			self.MTDKERNEL = "mtd6"
+			self.MTDKERNEL = "mtd2"
 			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/update/%s/cfe" % (self.DIRECTORY, self.MODEL)
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
