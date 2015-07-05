@@ -315,8 +315,10 @@ def NFR4XBootExtract(source, target, zipdelete):
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
                 os.chdir('formuler3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
-                os.chdir('bre2ze')        
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
+                os.chdir('bre2ze')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
+            os.chdir('redeagle')        
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
 		os.chdir('twinboxlcd')        
                                 
 				
