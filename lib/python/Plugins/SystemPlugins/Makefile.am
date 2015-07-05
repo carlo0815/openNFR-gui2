@@ -7,6 +7,10 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	VideoEnhancement WirelessLan NetworkWizard \
 	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester LCNScanner
 	
+if VUSOLOSE
+SUBDIRS += AnimationSetup
+endif
+	
 if VUSOLO2
 SUBDIRS += CableScan
 endif
