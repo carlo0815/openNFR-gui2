@@ -736,7 +736,7 @@ class ImageBackup(Screen):
 			print "No supported receiver found!"
 			return
 		
-		if self.MODEL == "gbquad" or self.MODEL == "gbquadplus" or self.MODEL == "gb800ue" or self.MODEL == "gb800ueplus":
+		if self.MODEL == "gbquad" or self.MODEL == "gbquadplus" or self.MODEL == "gb800ue" or self.MODEL == "gb800ueplus" or self.MODEL == "twinboxlcd":
 			lcdwaitkey = '/usr/share/lcdwaitkey.bin'
 			lcdwarning = '/usr/share/lcdwarning.bin'
 			if path.exists(lcdwaitkey):
