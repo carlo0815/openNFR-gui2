@@ -346,15 +346,7 @@ void eDBoxLCD::update()
 			}
 			else
 			{
-				FILE *file;
-				FILE *boxtype_file;
-				char boxtype_name[20];
-				if((boxtype_file = fopen("/proc/stb/info/boxtype", "r")) != NULL)
-				{
-					fgets(boxtype_name, sizeof(boxtype_name), boxtype_file);
-					fclose(boxtype_file);
-				}
-				if (((file = fopen("/proc/stb/info/gbmodel", "r")) != NULL ) || (strcmp(boxtype_name, "7100S\n") == 0))
+				if (FILE * file = fopen("/proc/stb/info/gbmodel", "r"))
 				{
 					unsigned char gb_buffer[_stride * res.height()];
 					for (int offset = 0; offset < _stride * res.height(); offset += 2)
@@ -363,9 +355,7 @@ void eDBoxLCD::update()
 						gb_buffer[offset + 1] = ((_buffer[offset + 1] >> 5) & 0x03) | ((_buffer[offset] >> 3) & 0x1C) | ((_buffer[offset + 1] << 5) & 0x60);
 					}
 					write(lcdfd, gb_buffer, _stride * res.height());
-					if (file != NULL)
-					{
-						fclose(file);
+					fclose(file);
 				}
 				else
 				{
@@ -405,5 +395,4 @@ void eDBoxLCD::update()
 	}
 #endif
 }
-
 
