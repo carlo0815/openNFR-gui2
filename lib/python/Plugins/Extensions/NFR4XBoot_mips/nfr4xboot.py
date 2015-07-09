@@ -225,8 +225,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
         shutil.rmtree('bre2ze')    
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/twinboxlcd'):
-        shutil.rmtree('twinboxlcd')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
+        shutil.rmtree('redeagle')
 
 def NFR4XBootExtract(source, target, zipdelete):
     NFR4XBootRemoveUnpackDirs()
@@ -286,6 +286,9 @@ def NFR4XBootExtract(source, target, zipdelete):
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solo'):
                 os.chdir('solo')
                 os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solose'):
+                os.chdir('solose')
+                os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/ultimo'):
                 os.chdir('ultimo')
                 os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
@@ -297,9 +300,6 @@ def NFR4XBootExtract(source, target, zipdelete):
                 os.system('mv -f root_cfe_auto.bin rootfs.bin')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/duo2'):
                 os.chdir('duo2')
-                os.system('mv -f root_cfe_auto.bin rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solose'):
-                os.chdir('solose')
                 os.system('mv -f root_cfe_auto.bin rootfs.bin')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue'):
             os.chdir('gigablue')
@@ -318,9 +318,11 @@ def NFR4XBootExtract(source, target, zipdelete):
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
                 os.chdir('formuler3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
-                os.chdir('bre2ze')        
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/twinboxlcd'):
-	        os.chdir('twinboxlcd')        
+                os.chdir('bre2ze')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
+            os.chdir('redeagle')        
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
+		os.chdir('twinboxlcd')        
                                 
 				
         print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
