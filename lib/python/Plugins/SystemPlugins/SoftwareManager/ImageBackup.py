@@ -436,6 +436,19 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/hd2400" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		## TESTING Red Eagle Model
+		elif self.MODEL == "twinboxlcd":
+			self.TYPE = "REDEAGLE"
+			self.MODEL = "twinboxlcd"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Red Eagel"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/Red Eagel/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/redeagle/twinboxlcd" % self.DIRECTORY
+			self.MAINDEST1 = "%s/redeagle" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		elif self.MODEL == "quadbox2400":
 			self.TYPE = "AX"
 			self.MODEL = "quadbox2400"
@@ -588,7 +601,7 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/update" %self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_EDISION/%s/update/%s" % (self.DIRECTORY, self.DATE, self.MODEL)
 			self.EXTRA1 = "%s/fullbackup_EDISION/%s" % (self.DIRECTORY, self.DATE)
-		## TESTING Edison Model OS3+
+		## TESTING Edison Model
 		elif self.MODEL == "optimussos3plus":
 			self.TYPE = "EDISION"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096 -F"
@@ -690,7 +703,7 @@ class ImageBackup(Screen):
 			self.EXTRA = "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
 			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE VU+ MODELS
-		elif self.MODEL == "vusolo" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
+		elif self.MODEL == "vusolo" or self.MODEL == "vusolose" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 			self.TYPE = "VU"
 			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 				self.MTDKERNEL = "mtd2"
@@ -723,7 +736,7 @@ class ImageBackup(Screen):
 			print "No supported receiver found!"
 			return
 		
-		if self.MODEL == "gbquad" or self.MODEL == "gbquadplus" or self.MODEL == "gb800ue" or self.MODEL == "gb800ueplus":
+		if self.MODEL == "gbquad" or self.MODEL == "gbquadplus" or self.MODEL == "gb800ue" or self.MODEL == "gb800ueplus" or self.MODEL == "twinboxlcd":
 			lcdwaitkey = '/usr/share/lcdwaitkey.bin'
 			lcdwarning = '/usr/share/lcdwarning.bin'
 			if path.exists(lcdwaitkey):
@@ -828,7 +841,7 @@ class ImageBackup(Screen):
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
 			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
-		elif self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
+		elif self.TYPE == "REDEAGLE" or self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -977,6 +990,9 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'WWIO':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
+				elif self.TYPE == 'REDEAGLE':
+					cmdlist.append('mkdir -p %s/redeagle/%s' % (self.TARGET, self.MODEL1))
+					cmdlist.append('cp -r %s %s/redeagle/' % (self.MAINDEST, self.TARGET))
 				else:
 					cmdlist.append('echo " "')
 
@@ -1090,3 +1106,4 @@ class ImageBackup(Screen):
 		AboutText += commands.getoutput("opkg list_installed | grep enigma2-plugin-")
 
 		return AboutText
+
