@@ -703,7 +703,7 @@ class ImageBackup(Screen):
 			self.EXTRA = "%s/fullbackup_%s/%s/gigablue" % (self.DIRECTORY, self.TYPE, self.DATE)
 			self.EXTRA1 =  "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.TYPE, self.DATE)
 		## TESTING THE VU+ MODELS
-		elif self.MODEL == "vusolo" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
+		elif self.MODEL == "vusolo" or self.MODEL == "vusolose" or self.MODEL =="vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 			self.TYPE = "VU"
 			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 				self.MTDKERNEL = "mtd2"
