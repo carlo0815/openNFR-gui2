@@ -286,6 +286,9 @@ def NFR4XBootExtract(source, target, zipdelete):
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solo'):
                 os.chdir('solo')
                 os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solose'):
+                os.chdir('solose')
+                os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/ultimo'):
                 os.chdir('ultimo')
                 os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
