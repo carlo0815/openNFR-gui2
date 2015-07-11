@@ -114,18 +114,21 @@ int eWindow::event(int event, void *data, void *data2)
 	}
 	return eWidget::event(event, data, data2);
 }
+
 void eWindow::show()
 {
 	if (m_animation_mode & 0x01)
 		m_desktop->sendShow(position(), size());
 	eWidget::show();
 }
+
 void eWindow::hide()
 {
 	if (m_animation_mode & 0x10)
 		m_desktop->sendHide(position(), size());
 	eWidget::hide();
 }
+
 void eWindow::setAnimationMode(int mode)
 {
 	/*
