@@ -847,7 +847,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
 			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
 		elif self.TYPE == "VU":
-			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
+			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2" or self.MODEL == "vusolose":
 				self.ROOTFSBIN = "root_cfe_auto.bin"
 			else:
 				self.ROOTFSBIN = "root_cfe_auto.jffs2"
