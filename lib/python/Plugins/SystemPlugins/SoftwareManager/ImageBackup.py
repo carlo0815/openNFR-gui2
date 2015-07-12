@@ -705,7 +705,7 @@ class ImageBackup(Screen):
 		## TESTING THE VU+ MODELS
 		elif self.MODEL == "vusolo" or self.MODEL == "vusolose" or self.MODEL == "vuduo" or self.MODEL == "vuuno" or self.MODEL == "vuultimo" or self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
 			self.TYPE = "VU"
-			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2":
+			if self.MODEL == "vusolo2" or self.MODEL == "vuduo2" or self.MODEL == "vusolose":
 				self.MTDKERNEL = "mtd2"
 			self.SHOWNAME = "VU+ %s" %self.MODEL[2:]
 			self.MAINDEST = "%s/vuplus/%s" %(self.DIRECTORY, self.MODEL[2:])
