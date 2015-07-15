@@ -438,7 +438,7 @@ class ImageBackup(Screen):
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING Red Eagle Model
 		elif self.MODEL == "twinboxlcd":
-			self.TYPE = "REDEAGLE"
+			self.TYPE = "RED EAGLE"
 			self.MODEL = "twinboxlcd"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
@@ -447,6 +447,19 @@ class ImageBackup(Screen):
 			self.MAINDESTOLD = "%s/Red Eagel/%s" %(self.DIRECTORY, self.MODEL)
 			self.MAINDEST = "%s/redeagle/twinboxlcd" % self.DIRECTORY
 			self.MAINDEST1 = "%s/redeagle" % self.DIRECTORY
+			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		## TESTING Odin Twin Model
+		elif self.MODEL == "odin2hybrid":
+			self.TYPE = "OPTICUM"
+			self.MODEL = "odin2hybrid"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "Opticum"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/Opticum/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/odin2/hybrid" % self.DIRECTORY
+			self.MAINDEST1 = "%s/odin2" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		elif self.MODEL == "quadbox2400":
@@ -841,7 +854,7 @@ class ImageBackup(Screen):
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
 			cmdlist.append('cp -r %s %s' % (self.MAINDEST, self.EXTRA))
-		elif self.TYPE == "REDEAGLE" or self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
+		elif self.TYPE == "OPTICUM" or self.TYPE == "RED EAGLE" or self.TYPE == "WWIO" or self.TYPE == "ATEMIO" or self.TYPE == "VENTON" or self.TYPE == "VENTONECO" or self.TYPE == "SEZAM" or self.TYPE == "MICRACLE" or self.TYPE == "GI" or self.TYPE == "ODINM9"  or self.TYPE == "ODINM7" or self.TYPE == "E3HD" or self.TYPE == "MAXDIGITAL" or self.TYPE == "OCTAGON" or self.TYPE == "MK" or self.TYPE == "MUT@NT" or self.TYPE == "AX" or self.TYPE == "FORMULER":
 			system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 			system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
@@ -990,9 +1003,12 @@ class ImageBackup(Screen):
 				elif self.TYPE == 'WWIO':
 					cmdlist.append('mkdir -p %s/%s' % (self.TARGET, self.MODEL))
 					cmdlist.append('cp -r %s %s/' % (self.MAINDEST, self.TARGET))
-				elif self.TYPE == 'REDEAGLE':
+				elif self.TYPE == 'RED EAGLE':
 					cmdlist.append('mkdir -p %s/redeagle/%s' % (self.TARGET, self.MODEL1))
 					cmdlist.append('cp -r %s %s/redeagle/' % (self.MAINDEST, self.TARGET))
+				elif self.TYPE == 'OPTICUM':
+					cmdlist.append('mkdir -p %s/odin2/%s' % (self.TARGET, self.MODEL1))
+					cmdlist.append('cp -r %s %s/odin2/' % (self.MAINDEST, self.TARGET))
 				else:
 					cmdlist.append('echo " "')
 
