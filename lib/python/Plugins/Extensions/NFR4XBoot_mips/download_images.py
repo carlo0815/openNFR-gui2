@@ -221,7 +221,7 @@ class DownloadOnLineImage(Screen):
         box = getBoxType()
         urlbox = getBoxType()
         if self.distro == 'openatv':
-            if box in ('bre2ze', 'twinboxlcd', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
+            if box in ('bre2ze', 'twinboxlcd', 'odin2hybrid', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
                     box = 'ventonhdx'
                     stb = '1'
@@ -234,7 +234,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'
         if self.distro == 'openatv-5.0':
-            if box in ('bre2ze', 'twinboxlcd', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
+            if box in ('bre2ze', 'twinboxlcd', 'odin2hybrid', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
                     box = 'ventonhdx'
                     stb = '1'
@@ -247,7 +247,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'        
         elif self.distro == 'opennfr':
-            if box in ('bre2ze', 'twinboxlcd', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'atemio6200', 'atemio6000', 'atemio6100', 'formuler1', 'formuler3'):
+            if box in ('bre2ze', 'twinboxlcd', 'odin2hybrid', 'blackbox7405', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'atemio6200', 'atemio6000', 'atemio6100', 'formuler1', 'formuler3'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
                     box = 'ventonhdx'
                     stb = '1'
