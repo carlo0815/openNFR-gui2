@@ -225,6 +225,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
         shutil.rmtree('bre2ze')    
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2'):
+        shutil.rmtree('odin2')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
         shutil.rmtree('redeagle')
 
@@ -319,6 +321,10 @@ def NFR4XBootExtract(source, target, zipdelete):
                 os.chdir('formuler3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
                 os.chdir('bre2ze')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2'):
+            os.chdir('odin2')        
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2/hybrid'):
+		os.chdir('hybrid')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
             os.chdir('redeagle')        
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
