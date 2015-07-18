@@ -1,4 +1,4 @@
-from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName 
+from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName, getMachineBrand 
 from Screens.Screen import Screen
 from Screens.Console import Console
 from Screens.MessageBox import MessageBox
@@ -155,11 +155,18 @@ class NFR4XBootInstallation(Screen):
                 
     def install2(self, yesno):
         if yesno:
-            message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
-            ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
-            ybox.setTitle(_('Install Confirmation'))
+			if getMachineBrand() == "Vu+":
+				message = _('VU+ Models start without Startmanager, Image can be select in Plugin.')
+				ybox = self.session.openWithCallback(self.install4, MessageBox, message, MessageBox.TYPE_ERROR)
+				ybox.setTitle(_('Install Confirmation'))			
+			else:
+				message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
+				ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
+				ybox.setTitle(_('Install Confirmation'))
         else:
-            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
+            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)     
+
+  			
 
     def install3(self, yesno):
         if yesno:
@@ -233,6 +240,40 @@ class NFR4XBootInstallation(Screen):
                     f.close()
             self.myclose2(_('NFR4XBoot has been installed succesfully, and Box rebooting now!'))
 
+    def install4(self, yesno):
+        cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
+        os.system(cmd2)
+        if fileExists('/proc/mounts'):
+            fileExists('/proc/mounts')
+            f = open('/proc/mounts', 'r')
+            for line in f.readlines():
+                if line.find(self.mysel):
+		    mntdev = line.split(' ')[0]
+            f.close()
+            mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+        cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
+        os.system(cmd)
+        os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
+        os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
+        os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
+        out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+        out2.write('Flash')
+        out2.close()
+        out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
+        out.write(self.mysel)
+        out.close()
+        os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
+        image = getImageDistro()
+        if fileExists('/etc/image-version'):
+            if 'build' not in image:
+                f = open('/etc/image-version', 'r')
+                for line in f.readlines():
+                    if 'build=' in line:
+                        image = image + ' build ' + line[6:-1]
+                        open('/media/nfr4xboot/NFR4XBootI/.Flash', 'w').write(image)
+                        break
+                f.close()
+        self.myclose2(_('NFR4XBoot has been installed succesfully, and Box rebooting now!'))
 
 class NFR4XBootImageChoose(Screen):
 
@@ -677,7 +718,7 @@ def checkkernel():
     mycheck = 0
     if not fileExists('/media/usb'):
         os.system('mkdir /media/usb')
-    if getBoxType() in ('bre2ze', 'twinboxlcd', 'axodin', 'sf8', 'odinm7', 'odinm6', 'evoe3hd', 'xp1000', 'xp1000mk', 'uniboxhd1','uniboxhd2', 'uniboxhd3', 'uniboxhde', 'ini-1000de', 'xpeedlx2', 'xpeedlx1', 'atemio5x00', 'ini-9000de', 'xpeedlx3', 'ini-8000am', 'atemionemesis', 'vusolo', 'vusolose', 'vuduo', 'vuuno', 'vuultimo', 'vusolo2', 'vuduo2', 'mutant2400', 'quadbox2400', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000'):
+    if getBoxType() in ('bre2ze', 'twinboxlcd', 'odin2hybrid', 'axodin', 'sf8', 'odinm7', 'odinm6', 'evoe3hd', 'xp1000', 'xp1000mk', 'uniboxhd1','uniboxhd2', 'uniboxhd3', 'uniboxhde', 'ini-1000de', 'xpeedlx2', 'xpeedlx1', 'atemio5x00', 'ini-9000de', 'xpeedlx3', 'ini-8000am', 'atemionemesis', 'vusolo', 'vusolose', 'vuduo', 'vuuno', 'vuultimo', 'vusolo2', 'vuduo2', 'mutant2400', 'quadbox2400', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000'):
        mycheck = 1
     elif getBoxType() in ('gb800se', 'gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus'): 
        mycheck = 1
