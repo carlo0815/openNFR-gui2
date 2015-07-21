@@ -20,7 +20,8 @@ class eNavigation: public iObject, public Object
 
 	std::map<ePtr<iRecordableService>, ePtr<eConnection>, std::less<iRecordableService*> > m_recordings;
 	std::set<ePtr<iRecordableService>, std::less<iRecordableService*> > m_simulate_recordings;
-
+    	void navEvent(int event);
+    	
 	Signal2<void,ePtr<iRecordableService>,int> m_record_event;
 	void recordEvent(iRecordableService* service, int event);
 public:
