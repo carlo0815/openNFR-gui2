@@ -12645,3 +12645,7 @@ msgstr "Spinner wechseln"
 
 msgid "select a other spinner"
 msgstr "Einen anderen Spinner auswählen"
+
+msgid "are you sure to cancel all changes"
+msgstr "Jetzt beenden ohne die Änderungen zu speichern?"
+
