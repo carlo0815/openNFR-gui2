@@ -258,32 +258,47 @@ class InputDeviceSetup(Screen, ConfigListScreen):
 
 
 class RemoteControlType(Screen, ConfigListScreen):
-	odinRemote = "OdinM9"
-	if boxtype == "maram9":
-		odinRemote = "MaraM9"
 	
 	rcList = [
 			("0", _("Default")),
-			("3", _(odinRemote)),
+			("3", _("MaraM9")),
 			("4", _("DMM normal")),
+			("5", _("et9000/et9100")),
 			("6", _("DMM advanced")),
 			("7", _("et5000/6000")),
 			("8", _("VU+")),
-			("11", _("et9x00/6500")),
+			("9", _("et8000/et10000")),
+			("11", _("et9200/9500/6500")),
 			("13", _("et4000")),
 			("14", _("XP1000")),
-		]
+			("16", _("HD1100/HD1200/HD500C/et7x00/et8500")),
+			("17", _("XP3000")),
+			("18", _("F1/F3")),
+			("19", _("HD2400"))
+			]
 
 	defaultRcList = [
 			("et4000", 13),
 			("et5000", 7),
 			("et6000", 7),
 			("et6500", 11),
-			("et9000", 11),
+			("et7x00",16),
+			("et8000", 9),
+			("et8500",16),
+			("et9000", 5),
+			("et9100", 5),
 			("et9200", 11),
 			("et9500", 11),
+			("et10000", 9),
+			("hd1100",16),
+			("hd1200",16),
+			("hd500c",16),
+			("hd2400",19),
+			("formuler1",18),
+			("formuler3",18),
 			("xp1000", 14),
-		]
+			("xp3000", 17)
+			]
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
