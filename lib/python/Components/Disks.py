@@ -190,7 +190,7 @@ class Disks():
 			psize = (size / (1024*1024)) / 4
 			flow = "0,%d,%s\n+,%d,%s\n+,%d,%s\n+,+,%s\ny\n" % (psize, ptype, psize, ptype, psize, ptype, ptype)
 		
-		cmd = "%s -f -uM /dev/%s" % ("/usr/sbin/sfdisk", device)
+		cmd = "%s -f -uM /dev/%s" % ("/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/sfdisk", device)
 		sfdisk = os.popen(cmd, "w")
 		sfdisk.write(flow)
 		if sfdisk.close():
