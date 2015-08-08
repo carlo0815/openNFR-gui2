@@ -5,4 +5,4 @@ install-data-hook:  \
       @chmod +x $(DESTDIR)$(installdir)/nfr4xbm  \
       @chmod +x $(DESTDIR)$(installdir)/nfr4xinitboot  \
       @chmod +x $(DESTDIR)$(installdir)/nfr4xinitnoboot  \
-      @chmod +x $(DESTDIR)$(installdir)/sfdisk  \
+      @chmod +x $(DESTDIR)$(installdir)/sfdisk 
