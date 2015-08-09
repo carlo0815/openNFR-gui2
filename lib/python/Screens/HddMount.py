@@ -119,6 +119,16 @@ class HddMount(Screen):
 		
 	def setMountPoint(self, path):
 		self.cpath = path
+		mountp = ""
+	        f = open('/proc/mounts', 'r')
+		for line in f.readlines():
+			if path in line:
+				partsp = line.strip().split()
+				mountp = str(partsp[1])
+				break
+		
+		f.close()
+	        if path == mountp:		
 		if self.mountpoints.exist(path):
 			self.session.openWithCallback(self.setMountPointCb, ExtraMessageBox, "Selected mount point is already used by another drive.", "Mount point exist!",
 																[ [ "Change old drive with this new drive", "ok.png" ],
