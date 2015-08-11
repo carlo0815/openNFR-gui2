@@ -129,12 +129,11 @@ class HddMount(Screen):
 		
 		f.close()
 	        if path == mountp:		
-		    if self.mountpoints.exist(path):
 			self.session.openWithCallback(self.setMountPointCb, ExtraMessageBox, "Selected mount point is already used by another drive.", "Mount point exist!",
 																[ [ "Change old drive with this new drive", "ok.png" ],
 																[ "Mantain old drive", "cancel.png" ],
 																])
-		    else:
+		else:
 			self.setMountPointCb(0)
 			
 	def setMountPointCb(self, result):
