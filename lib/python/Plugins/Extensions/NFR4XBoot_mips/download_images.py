@@ -92,13 +92,23 @@ class NFR4XChooseOnLineImage(Screen):
         self.list.append(res)
         mypixmap = mypath + 'openatv.png'
         png = LoadPixmap(mypixmap)
+        name = _('OpenATV-5.0')
+        desc = _('Download latest OpenATV Image')
+        idx = 'openatv-5.0'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
+        mypixmap = mypath + 'openatv.png'
+        png = LoadPixmap(mypixmap)
         name = _('OpenATV-5.1')
         desc = _('Download latest OpenATV Image')
         idx = 'openatv-5.1'
         res = (name,
          png,
          idx,
-         desc)
+         desc) 
         self.list.append(res)
         mypixmap = mypath + 'openpli.png'
         png = LoadPixmap(mypixmap)
