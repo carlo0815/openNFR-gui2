@@ -132,7 +132,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://taapat.ho.ua/Download'            
         elif self.distro == 'openatv':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
             self.feedurl = 'http://droidsat.org/image/'            
@@ -141,7 +141,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://www.vix4.com/downloads/'           
         else:
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/sh4/4.3/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.1/images'
         self['imageList'] = MenuList(self.imagelist)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'green': self.green,
          'red': self.quit,
