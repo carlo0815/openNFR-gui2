@@ -60,6 +60,16 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
+        mypixmap = mypath + 'openatv.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenATV-5.1')
+        desc = _('Download latest OpenATV Image')
+        idx = 'openatv-5.1'
+        res = (name,
+         png,
+         idx,
+         desc) 
+        self.list.append(res)
         mypixmap = mypath + 'diverse.png'
         png = LoadPixmap(mypixmap)
         name = _('Diverse')
@@ -132,7 +142,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://taapat.ho.ua/Download'            
         elif self.distro == 'openatv':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+        elif self.distro == 'openatv-5.1':
+            self.feed = 'openatv'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
             self.feedurl = 'http://droidsat.org/image/'            
@@ -160,7 +173,13 @@ class DownloadOnLineImage(Screen):
                 box = getBoxType()
                 stb = '1'
             else:   
-                stb = 'no Image for this Box on this Side'                      
+                stb = 'no Image for this Box on this Side'
+        if self.distro == 'openatv-5.1':
+            if box in ('sparklx', 'sparkone', 'sparktriplex', 'arguspingulux', 'sparkreloaded'):
+                box = getBoxType()
+                stb = '1'
+            else:   
+                stb = 'no Image for this Box on this Side'        
         elif self.distro == 'opennfr':
             if box in ('sparklx', 'sparkone', 'sparktriplex', 'arguspingulux', 'sparkreloaded'):
                 box = getBoxType()
