@@ -180,9 +180,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openatv':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
-        elif self.distro == 'openatv-5.0':
+        elif self.distro == 'openatv-5.1':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.0'    
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk'
@@ -206,7 +206,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://feed.yt/bre2ze/image/'    
         else:
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.0/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.1/images'
         self['imageList'] = MenuList(self.imagelist)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'green': self.green,
          'red': self.quit,
