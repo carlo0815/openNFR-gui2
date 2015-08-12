@@ -92,13 +92,13 @@ class NFR4XChooseOnLineImage(Screen):
         self.list.append(res)
         mypixmap = mypath + 'openatv.png'
         png = LoadPixmap(mypixmap)
-        name = _('OpenATV-5.0')
+        name = _('OpenATV-5.1')
         desc = _('Download latest OpenATV Image')
-        idx = 'openatv-5.0'
+        idx = 'openatv-5.1'
         res = (name,
          png,
          idx,
-         desc) 
+         desc)
         self.list.append(res)
         mypixmap = mypath + 'openpli.png'
         png = LoadPixmap(mypixmap)
@@ -180,6 +180,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openatv':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+        elif self.distro == 'openatv-5.0':
+            self.feed = 'openatv'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.0'
         elif self.distro == 'openatv-5.1':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
