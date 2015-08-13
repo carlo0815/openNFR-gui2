@@ -201,7 +201,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://www.openvix.co.uk'
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
-            self.feedurl = 'http://droidsat.org/image/'
+            self.feedurl = 'http://images.opendroid.org/5.0/'
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
@@ -557,7 +557,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.0'):
+        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.0', 'openatv-5.1'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
   	elif self.distro == 'atemio4you':
 	    url = '%s/%s/' % (self.feedurl, box)             
