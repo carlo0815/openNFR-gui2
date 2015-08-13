@@ -291,6 +291,8 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
+        elif self.distro in ('openatv-5.1'):
+            url = '%s/index.php?open=%s' % (self.feedurl, box)	            
         elif self.distro in ('openatv'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'opennfr':
