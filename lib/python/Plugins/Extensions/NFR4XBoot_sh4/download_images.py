@@ -80,16 +80,6 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        mypixmap = mypath + 'opendroid.png'
-        png = LoadPixmap(mypixmap)
-        name = _('OpenDroid')
-        desc = _('Download latest OpenDroid Image')
-        idx = 'opendroid'
-        res = (name,
-         png,
-         idx,
-         desc)         
-        self.list.append(res)
         mypixmap = mypath + 'openar-p.png'
         png = LoadPixmap(mypixmap)
         name = _('OPENAR')
@@ -146,9 +136,6 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openatv-5.1':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
-        elif self.distro == 'opendroid':
-            self.feed = 'opendroid'
-            self.feedurl = 'http://droidsat.org/image/'            
         elif self.distro == 'vixe2sh4':
             self.feed = 'vixe2sh4'
             self.feedurl = 'http://www.vix4.com/downloads/'           
@@ -192,18 +179,6 @@ class DownloadOnLineImage(Screen):
                 stb = '1'  
             else:   
                 stb = 'no Image for this Box on this Side'   
-        elif self.distro == 'opendroid':
-            if box in ('sparklx', 'arguspingulux', 'sparkreloaded', 'sparkone', 'sparktriplex'):
-                if box in ('sparklx', 'sparkreloaded', 'sparkone', 'sparktriplex'):
-                    box = 'GoldenMedia'
-                    urlbox = getBoxType()              
-                    stb = '1'
-                elif box in ('arguspingulux'):
-                    box = 'Edision'
-                    urlbox = getBoxType()              
-                    stb = '1'                
-            else:   
-                stb = 'no Image for this Box on this Side'                              
         elif self.distro == 'diverse':
             if box in ('sparklx', 'sparkone', 'sparktriplex', 'arguspingulux', 'sparkreloaded'):
                 if box in ('sparklx', 'arguspingulux', 'sparkreloaded'):
@@ -237,10 +212,7 @@ class DownloadOnLineImage(Screen):
             self.sel = sel
             box = self.box()
             self.hide()
-            if self.distro == 'opendroid':
-                url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel                
-            else:
-                url = self.feedurl + '/' + box[0] + '/' + sel
+            url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
             try:
                 u = urllib2.urlopen(url)
@@ -299,8 +271,6 @@ class DownloadOnLineImage(Screen):
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openar':
             url = '%s' % (self.feedurl)  
-        elif self.distro == 'opendroid':
-            url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)             
         elif self.distro == 'diverse':
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'vixe2sh4':
