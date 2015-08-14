@@ -1,8 +1,12 @@
 #ifndef __lib_nav_pcore_h
 #define __lib_nav_pcore_h
 
+#include <lib/base/object.h>
 #include <lib/nav/core.h>
+#include <lib/service/iservice.h>
 #include <lib/python/connections.h>
+#include <map>
+#include <set>
 
 /* a subset of eNavigation */
 
