@@ -23,6 +23,11 @@ public:
 	SWIG_VOID(RESULT) recordService(const eServiceReference &ref, ePtr<iRecordableService> &SWIG_OUTPUT, bool simulate);
 	RESULT stopRecordService(ePtr<iRecordableService> &service);
 	void getRecordings(std::vector<ePtr<iRecordableService> > &recordings, bool simulate=false);
+	
+	RESULT pause(int p);
+	eNavigation(iServiceHandler *serviceHandler, int decoder = 0);
+	static eNavigation *getInstance() { return instance; }
+	virtual ~eNavigation();
 
 private:
 	ePtr<eNavigation> m_core;
