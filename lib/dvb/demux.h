@@ -16,11 +16,11 @@ public:
 	};
 	eDVBDemux(int adapter, int demux);
 	virtual ~eDVBDemux();
-	
+
 	RESULT setSourceFrontend(int fenum);
 	int getSource() { return source; }
 	RESULT setSourcePVR(int pvrnum);
-	
+
 	RESULT createSectionReader(eMainloop *context, ePtr<iDVBSectionReader> &reader);
 	RESULT createPESReader(eMainloop *context, ePtr<iDVBPESReader> &reader);
 	RESULT createTSRecorder(ePtr<iDVBTSRecorder> &recorder, int packetsize = 188, bool streaming=false);
@@ -35,7 +35,7 @@ public:
 	int getRefCount() { return ref; }
 private:
 	int adapter, demux, source;
-	
+
 	int m_dvr_busy;
 	friend class eDVBSectionReader;
 	friend class eDVBPESReader;
@@ -47,7 +47,7 @@ private:
 	friend class eDVBCAService;
 	friend class eTSMPEGDecoder;
 	Signal1<void, int> m_event;
-	
+
 	int openDemux(void);
 };
 
@@ -55,7 +55,7 @@ class eDVBSectionReader: public iDVBSectionReader, public Object
 {
 	DECLARE_REF(eDVBSectionReader);
 	int fd;
-	Signal1<void, const __u8*> read;
+	Signal1<void, const uint8_t*> read;
 	ePtr<eDVBDemux> demux;
 	int active;
 	int checkcrc;
@@ -67,14 +67,14 @@ public:
 	RESULT setBufferSize(int size);
 	RESULT start(const eDVBSectionFilterMask &mask);
 	RESULT stop();
-	RESULT connectRead(const Slot1<void,const __u8*> &read, ePtr<eConnection> &conn);
+	RESULT connectRead(const Slot1<void,const uint8_t*> &read, ePtr<eConnection> &conn);
 };
 
 class eDVBPESReader: public iDVBPESReader, public Object
 {
 	DECLARE_REF(eDVBPESReader);
 	int m_fd;
-	Signal2<void, const __u8*, int> m_read;
+	Signal2<void, const uint8_t*, int> m_read;
 	ePtr<eDVBDemux> m_demux;
 	int m_active;
 	void data(int);
@@ -85,7 +85,7 @@ public:
 	RESULT setBufferSize(int size);
 	RESULT start(int pid);
 	RESULT stop();
-	RESULT connectRead(const Slot2<void,const __u8*, int> &read, ePtr<eConnection> &conn);
+	RESULT connectRead(const Slot2<void,const uint8_t*, int> &read, ePtr<eConnection> &conn);
 };
 
 class eDVBRecordFileThread: public eFilePushThreadRecorder
@@ -152,14 +152,14 @@ public:
 	RESULT start();
 	RESULT addPID(int pid);
 	RESULT removePID(int pid);
-	
+
 	RESULT setTimingPID(int pid, timing_pid_type pidtype, int streamtype);
-	
+
 	RESULT setTargetFD(int fd);
 	RESULT setTargetFilename(const std::string& filename);
 	RESULT setBoundary(off_t max);
 	RESULT enableAccessPoints(bool enable);
-	
+
 	RESULT stop();
 
 	RESULT getCurrentPCR(pts_t &pcr);
@@ -169,14 +169,14 @@ public:
 private:
 	RESULT startPID(int pid);
 	void stopPID(int pid);
-	
+
 	void filepushEvent(int event);
-	
+
 	std::map<int,int> m_pids;
 	Signal1<void,int> m_event;
-	
+
 	ePtr<eDVBDemux> m_demux;
-	
+
 	int m_running;
 	int m_target_fd;
 	int m_source_fd;

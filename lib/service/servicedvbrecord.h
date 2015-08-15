@@ -11,7 +11,7 @@
 #include <lib/service/servicedvb.h>
 
 class eDVBServiceRecord: public eDVBServiceBase,
-	public iRecordableService, 
+	public iRecordableService,
 	public iStreamableService,
 	public iSubserviceList,
 	public Object
@@ -27,6 +27,7 @@ public:
 	RESULT getError(int &error) { error = m_error; return 0; }
 	RESULT frontendInfo(ePtr<iFrontendInformation> &ptr);
 	RESULT subServices(ePtr<iSubserviceList> &ptr);
+	RESULT getFilenameExtension(std::string &ext) { ext = ".ts"; return 0; };
 
 		// iStreamableService
 	ePtr<iStreamData> getStreamingData();
@@ -43,14 +44,14 @@ private:
 	bool m_is_stream_client;
 	friend class eServiceFactoryDVB;
 	eDVBServiceRecord(const eServiceReferenceDVB &ref, bool isstreamclient = false);
-	
+
 	eDVBServiceEITHandler m_event_handler;
-	
+
 	eServiceReferenceDVB m_ref;
-	
+
 	ePtr<iDVBTSRecorder> m_record;
 	ePtr<eConnection> m_con_record_event;
-	
+
 	int m_recording, m_tuned, m_error;
 	std::set<int> m_pids_active;
 	std::string m_filename;
@@ -59,14 +60,14 @@ private:
 	int m_target_fd;
 	int m_streaming;
 	int m_last_event_id;
-	
+
 	int doPrepare();
 	int doRecord();
 
 			/* events */
 	void serviceEvent(int event);
 	Signal2<void,iRecordableService*,int> m_event;
-	
+
 			/* recorder events */
 	void recordEvent(int event);
 

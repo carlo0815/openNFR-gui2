@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+
 #if defined(__sh__) // this allows filesystem tasks to be prioritised
 #include <sys/vfs.h>
 #define USBDEVICE_SUPER_MAGIC 0x9fa2
@@ -12,14 +13,13 @@
 #define NFS_SUPER_MAGIC       0x6969
 #define MSDOS_SUPER_MAGIC     0x4d44 /* MD */
 #endif
-
 //#define SHOW_WRITE_TIME
 
 eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int blocksize, size_t buffersize)
 	:prio_class(io_prio_class),
 	 prio(io_prio_level),
 	 m_sg(NULL),
-	 m_stop(0),
+	 m_stop(1),
 	 m_send_pvr_commit(0),
 	 m_stream_mode(0),
 	 m_blocksize(blocksize),
@@ -35,6 +35,7 @@ eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int block
 
 eFilePushThread::~eFilePushThread()
 {
+	stop(); /* eThread is borked, always call stop() from d'tor */
 	free(m_buffer);
 }
 
@@ -95,9 +96,9 @@ void eFilePushThread::thread()
 			m_current_position = current_span_offset;
 			bytes_read = 0;
 		}
-		
+
 		size_t maxread = m_buffersize;
-		
+
 			/* if we have a source span, don't read past the end */
 		if (m_sg && maxread > current_span_remaining)
 			maxread = current_span_remaining;
@@ -184,9 +185,9 @@ void eFilePushThread::thread()
 			if (m_stop)
 				break;
 
-				/* in stream_mode, we are sending EOF events 
+				/* in stream_mode, we are sending EOF events
 				   over and over until somebody responds.
-				   
+
 				   in stream_mode, think of evtEOF as "buffer underrun occurred". */
 			sendEvent(evtEOF);
 
@@ -222,7 +223,12 @@ void eFilePushThread::thread()
 						break;
 					}
 					if (w < 0 && (errno == EINTR || errno == EAGAIN || errno == EBUSY))
+					{
+#if HAVE_CPULOADFIX
+						sleep(2);
+#endif
 						continue;
+					}
 					eDebug("eFilePushThread WRITE ERROR");
 					sendEvent(evtWriteError);
 					break;
@@ -256,7 +262,7 @@ void eFilePushThread::thread()
 		if (m_stop == 0)
 			m_run_state = 1;
 	}
-	
+
 	} while (m_stop == 0);
 	eDebug("FILEPUSH THREAD STOP");
 }
@@ -273,19 +279,19 @@ void eFilePushThread::start(ePtr<iTsSource> &source, int fd_dest)
 
 void eFilePushThread::stop()
 {
-		/* if we aren't running, don't bother stopping. */
-	if (!sync())
+	/* if we aren't running, don't bother stopping. */
+	if (m_stop == 1)
 		return;
 	m_stop = 1;
 	eDebug("eFilePushThread stopping thread");
 	m_run_cond.signal(); /* Break out of pause if needed */
 	sendSignal(SIGUSR1);
-	kill(0); /* Kill means join actually */
+	kill(); /* Kill means join actually */
 }
 
 void eFilePushThread::pause()
 {
-	if (!sync())
+	if (m_stop == 1)
 	{
 		eWarning("eFilePushThread::pause called while not running");
 		return;
@@ -304,9 +310,9 @@ void eFilePushThread::pause()
 
 void eFilePushThread::resume()
 {
-	if (!sync())
+	if (m_stop != 2)
 	{
-		eWarning("eFilePushThread::resume called while not running");
+		eWarning("eFilePushThread::resume called while not paused");
 		return;
 	}
 	/* Resume the paused thread by resetting the flag and
@@ -353,7 +359,7 @@ eFilePushThreadRecorder::eFilePushThreadRecorder(unsigned char* buffer, size_t b
 	m_buffersize(buffersize),
 	m_buffer(buffer),
 	m_overflow_count(0),
-	m_stop(0),
+	m_stop(1),
 	m_messagepump(eApp, 0)
 {
 	CONNECT(m_messagepump.recv_msg, eFilePushThreadRecorder::recvEvent);
@@ -426,12 +432,12 @@ void eFilePushThreadRecorder::start(int fd)
 void eFilePushThreadRecorder::stop()
 {
 	/* if we aren't running, don't bother stopping. */
-	if (!sync())
+	if (m_stop == 1)
 		return;
 	m_stop = 1;
 	eDebug("[eFilePushThreadRecorder] stopping thread."); /* just do it ONCE. it won't help to do this more than once. */
 	sendSignal(SIGUSR1);
-	kill(0);
+	kill();
 }
 
 void eFilePushThreadRecorder::sendEvent(int evt)

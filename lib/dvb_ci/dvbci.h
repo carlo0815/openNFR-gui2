@@ -22,10 +22,10 @@ class eDVBCIInterfaces;
 
 struct queueData
 {
-	__u8 prio;
+	uint8_t prio;
 	unsigned char *data;
 	unsigned int len;
-	queueData( unsigned char *data, unsigned int len, __u8 prio = 0 )
+	queueData( unsigned char *data, unsigned int len, uint8_t prio = 0 )
 		:prio(prio), data(data), len(len)
 	{
 
@@ -116,7 +116,7 @@ public:
 	enum {stateRemoved, stateInserted, stateInvalid, stateResetted};
 	eDVBCISlot(eMainloop *context, int nr);
 	~eDVBCISlot();
-	
+
 	int send(const unsigned char *data, size_t len);
 
 	void setAppManager( eDVBCIApplicationManagerSession *session );
@@ -180,7 +180,7 @@ class eDVBCIInterfaces
 	static eDVBCIInterfaces *instance;
 	eSmartPtrList<eDVBCISlot> m_slots;
 	eDVBCISlot *getSlot(int slotid);
-	PMTHandlerList m_pmt_handlers; 
+	PMTHandlerList m_pmt_handlers;
 #ifndef SWIG
 public:
 #endif

@@ -4,6 +4,7 @@
 #include <lib/dvb/metaparser.h>
 #include <lib/base/httpstream.h>
 #include <fcntl.h>
+#include <lib/base/nconfig.h>
 
 	/* for cutlist */
 #include <byteswap.h>
@@ -90,6 +91,8 @@ void eDVBServiceRecord::serviceEvent(int event)
 	}
 }
 
+#define HILO(x) (x##_hi << 8 | x##_lo)
+
 RESULT eDVBServiceRecord::prepare(const char *filename, time_t begTime, time_t endTime, int eit_event_id, const char *name, const char *descr, const char *tags, bool descramble, bool recordecm)
 {
 	m_filename = filename;
@@ -146,43 +149,10 @@ RESULT eDVBServiceRecord::prepare(const char *filename, time_t begTime, time_t e
 			ret = meta.updateMeta(filename) ? -255 : 0;
 			if (!ret)
 			{
-				const eit_event_struct *event = 0;
-				eEPGCache::getInstance()->Lock();
-				if ( eit_event_id != -1 )
-				{
-					eDebug("query epg event id %d", eit_event_id);
-					eEPGCache::getInstance()->lookupEventId(ref, eit_event_id, event);
-				}
-				if ( !event && (begTime != -1 && endTime != -1) )
-				{
-					time_t queryTime = begTime + ((endTime-begTime)/2);
-					tm beg, end, query;
-					localtime_r(&begTime, &beg);
-					localtime_r(&endTime, &end);
-					localtime_r(&queryTime, &query);
-					eDebug("query stime %d:%d:%d, etime %d:%d:%d, qtime %d:%d:%d",
-						beg.tm_hour, beg.tm_min, beg.tm_sec,
-						end.tm_hour, end.tm_min, end.tm_sec,
-						query.tm_hour, query.tm_min, query.tm_sec);
-					eEPGCache::getInstance()->lookupEventTime(ref, queryTime, event);
-				}
-				if ( event )
-				{
-					eDebug("found event.. store to disc");
-					std::string fname = filename;
-					fname.erase(fname.length()-2, 2);
-					fname+="eit";
-					int fd = open(fname.c_str(), O_CREAT|O_WRONLY, 0666);
-					if (fd>-1)
-					{
-						int evLen=HILO(event->descriptors_loop_length)+12/*EIT_LOOP_SIZE*/;
-						int wr = ::write( fd, (unsigned char*)event, evLen );
-						if ( wr != evLen )
-							eDebug("eit write error (%m)");
-						::close(fd);
-					}
-				}
-				eEPGCache::getInstance()->Unlock();
+				std::string fname = filename;
+				fname.erase(fname.length()-2, 2);
+				fname += "eit";
+				eEPGCache::getInstance()->saveEventToFile(fname.c_str(), ref, eit_event_id, begTime, endTime);
 			}
 		}
 		return ret;
@@ -223,9 +193,9 @@ RESULT eDVBServiceRecord::stop()
 			::close(m_target_fd);
 			m_target_fd = -1;
 		}
-		
+
 		saveCutlist();
-		
+
 		m_state = statePrepared;
 	} else if (!m_simulate)
 		eDebug("(was not recording)");
@@ -263,7 +233,7 @@ int eDVBServiceRecord::doPrepare()
 		{
 			if (m_is_stream_client)
 			{
-				/* 
+				/*
 				* streams are considered to be descrambled by default;
 				* user can indicate a stream is scrambled, by using servicetype id + 0x100
 				*/
@@ -297,15 +267,15 @@ int eDVBServiceRecord::doRecord()
 		m_event((iRecordableService*)this, evRecordFailed);
 		return err;
 	}
-	
+
 	if (!m_tuned)
 		return 0; /* try it again when we are tuned in */
-	
+
 	if (!m_record && m_tuned && !m_streaming && !m_simulate)
 	{
 		eDebug("Recording to %s...", m_filename.c_str());
 		::remove(m_filename.c_str());
-		int fd = ::open(m_filename.c_str(), O_WRONLY|O_CREAT|O_LARGEFILE, 0666);
+		int fd = ::open(m_filename.c_str(), O_WRONLY | O_CREAT | O_LARGEFILE | O_CLOEXEC, 0666);
 		if (fd == -1)
 		{
 			eDebug("eDVBServiceRecord - can't open recording file!");
@@ -336,7 +306,7 @@ int eDVBServiceRecord::doRecord()
 
 		m_target_fd = fd;
 	}
-	
+
 	if (m_streaming)
 	{
 		m_state = stateRecording;
@@ -365,18 +335,18 @@ int eDVBServiceRecord::doRecord()
 			{
 				eDebugNoNewLine(" (");
 				for (std::vector<eDVBServicePMTHandler::videoStream>::const_iterator
-					i(program.videoStreams.begin()); 
+					i(program.videoStreams.begin());
 					i != program.videoStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-					
+
 					if (timing_pid == -1)
 					{
 						timing_pid = i->pid;
 						timing_stream_type = i->type;
 						timing_pid_type = iDVBTSRecorder::video_pid;
 					}
-					
+
 					if (i != program.videoStreams.begin())
 							eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -388,18 +358,18 @@ int eDVBServiceRecord::doRecord()
 			{
 				eDebugNoNewLine(" (");
 				for (std::vector<eDVBServicePMTHandler::audioStream>::const_iterator
-					i(program.audioStreams.begin()); 
+					i(program.audioStreams.begin());
 					i != program.audioStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-	
+
 					if (timing_pid == -1)
 					{
 						timing_pid = i->pid;
 						timing_stream_type = i->type;
 						timing_pid_type = iDVBTSRecorder::audio_pid;
 					}
-				
+
 					if (i != program.audioStreams.begin())
 						eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -414,7 +384,7 @@ int eDVBServiceRecord::doRecord()
 					i != program.subtitleStreams.end(); ++i)
 				{
 					pids_to_record.insert(i->pid);
-	
+
 					if (i != program.subtitleStreams.begin())
 						eDebugNoNewLine(", ");
 					eDebugNoNewLine("%04x", i->pid);
@@ -430,26 +400,33 @@ int eDVBServiceRecord::doRecord()
 
 			if (m_record_ecm)
 			{
-				for (std::list<eDVBServicePMTHandler::program::capid_pair>::const_iterator i(program.caids.begin()); 
+				for (std::list<eDVBServicePMTHandler::program::capid_pair>::const_iterator i(program.caids.begin());
 							i != program.caids.end(); ++i)
 				{
 					if (i->capid >= 0) pids_to_record.insert(i->capid);
 				}
 			}
 
-				/* find out which pids are NEW and which pids are obsolete.. */
+			bool include_ait = eConfigManager::getConfigBoolValue("config.recording.include_ait");
+			if (include_ait)
+			{
+				/* add AIT pid (if any) */
+				if (program.aitPid >= 0) pids_to_record.insert(program.aitPid);
+			}
+
+			/* find out which pids are NEW and which pids are obsolete.. */
 			std::set<int> new_pids, obsolete_pids;
 
-			std::set_difference(pids_to_record.begin(), pids_to_record.end(), 
+			std::set_difference(pids_to_record.begin(), pids_to_record.end(),
 					m_pids_active.begin(), m_pids_active.end(),
 					std::inserter(new_pids, new_pids.begin()));
 
 			std::set_difference(
 					m_pids_active.begin(), m_pids_active.end(),
-					pids_to_record.begin(), pids_to_record.end(), 
+					pids_to_record.begin(), pids_to_record.end(),
 					std::inserter(obsolete_pids, obsolete_pids.begin())
 					);
-			
+
 			for (std::set<int>::iterator i(new_pids.begin()); i != new_pids.end(); ++i)
 			{
 				eDebug("ADD PID: %04x", *i);
@@ -534,7 +511,7 @@ void eDVBServiceRecord::gotNewEvent(int /*error*/)
 	int event_id = event_now->getEventId();
 
 	pts_t p;
-	
+
 	if (m_record)
 	{
 		if (m_record->getCurrentPCR(p))
@@ -548,7 +525,7 @@ void eDVBServiceRecord::gotNewEvent(int /*error*/)
 
 	if (event_id != m_last_event_id)
 		eDebug("[eDVBServiceRecord] now running: %s (%d seconds)", event_now->getEventName().c_str(), event_now->getDuration());
-	
+
 	m_last_event_id = event_id;
 
 	m_event((iRecordableService*)this, evNewEventInfo);
@@ -560,7 +537,7 @@ void eDVBServiceRecord::saveCutlist()
 	std::string filename = m_filename + ".cuts";
 
 	eDVBTSTools tstools;
-	
+
 	if (tstools.openFile(m_filename.c_str()))
 	{
 		eDebug("[eDVBServiceRecord] saving cutlist failed because tstools failed");
@@ -591,7 +568,7 @@ void eDVBServiceRecord::saveCutlist()
 		}
 		fclose(f);
 	}
-	
+
 }
 
 RESULT eDVBServiceRecord::subServices(ePtr<iSubserviceList> &ptr)

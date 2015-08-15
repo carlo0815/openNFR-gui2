@@ -2,6 +2,7 @@
 #include <lib/gdi/grc.h>
 #include <lib/base/estring.h>
 #include <lib/base/nconfig.h>
+#include <lib/gui/ewidgetdesktop.h>
 
 std::map<eSubtitleWidget::subfont_t, eSubtitleWidget::eSubtitleStyle> eSubtitleWidget::subtitleStyles;
 
@@ -154,29 +155,58 @@ void eSubtitleWidget::setPage(const ePangoSubtitlePage &p)
 {
 	int elements, element, startY, width, height, size_per_element;
 	int lowerborder;
-	bool rewrap;
+	bool rewrap_enabled;
+	bool colourise_dialogs_enabled;
 
 	m_pango_page = p;
 	m_pango_page_ok = 1;
 	invalidate(m_visible_region); // invalidate old visible regions
 	m_visible_region.rects.clear();
 
-	rewrap = eConfigManager::getConfigBoolValue("config.subtitles.subtitle_rewrap");
+	rewrap_enabled = eConfigManager::getConfigBoolValue("config.subtitles.subtitle_rewrap");
+	colourise_dialogs_enabled = eConfigManager::getConfigBoolValue("config.subtitles.colourise_dialogs");
 	lowerborder = eConfigManager::getConfigIntValue("config.subtitles.subtitle_position", 50);
 
 	elements = m_pango_page.m_elements.size();
 
-	if(rewrap)
+	if(rewrap_enabled | colourise_dialogs_enabled)
 	{
-		std::string::iterator it;
+		size_t ix, colourise_dialogs_current = 0;
+		std::vector<std::string> colourise_dialogs_colours;
+		std::string replacement;
+		bool alignment_center = eConfigManager::getConfigValue("config.subtitles.subtitle_alignment") == "center";
+
+		if(colourise_dialogs_enabled)
+		{
+			colourise_dialogs_colours.push_back((std::string)gRGB(0xff, 0xff, 0x00));	// yellow
+			colourise_dialogs_colours.push_back((std::string)gRGB(0x00, 0xff, 0xff));	// cyan
+			colourise_dialogs_colours.push_back((std::string)gRGB(0xff, 0x00, 0xff));	// magenta
+			colourise_dialogs_colours.push_back((std::string)gRGB(0x00, 0xff, 0x00));	// green
+			colourise_dialogs_colours.push_back((std::string)gRGB(0xff, 0xaa, 0xaa));	// light red
+			colourise_dialogs_colours.push_back((std::string)gRGB(0xaa, 0xaa, 0xff));	// light blue
+		}
 
 		for (element = 0; element < elements; element++)
 		{
 			std::string& line = m_pango_page.m_elements[element].m_pango_line;
 
-			for (it = line.begin(); it != line.end(); it++)
-				if((*it) == '\n')
-					*it = ' ';
+			for (ix = 0; ix < line.length(); ix++)
+			{
+				if(rewrap_enabled && !line.compare(ix, 1, "\n"))
+					line.replace(ix, 1, " ");
+
+				if(colourise_dialogs_enabled && !line.compare(ix, 2, "- "))
+				{
+					/* workaround for rendering fault when colouring is enabled, rewrap is off and alignment is center */
+					replacement = std::string((!rewrap_enabled && alignment_center) ? "  " : "") + colourise_dialogs_colours.at(colourise_dialogs_current);
+
+					line.replace(ix, 2, replacement);
+					colourise_dialogs_current++;
+
+					if(colourise_dialogs_current >= colourise_dialogs_colours.size())
+						colourise_dialogs_current = 0;
+				}
+			}
 		}
 	}
 
@@ -209,7 +239,6 @@ void eSubtitleWidget::setPage(const ePangoSubtitlePage &p)
 
 void eSubtitleWidget::clearPage()
 {
-	// eDebug("subtitle timeout... hide");
 	m_page_ok = 0;
 	m_dvb_page_ok = 0;
 	m_pango_page_ok = 0;
@@ -221,14 +250,14 @@ void eSubtitleWidget::setPixmap(ePtr<gPixmap> &pixmap, gRegion changed, eRect pi
 {
 	m_pixmap = pixmap;
 	m_pixmap_dest = pixmap_dest; /* this is in a virtual 720x576 cage */
-	
+
 		/* incoming "changed" regions are relative to the physical pixmap area, so they have to be scaled to the virtual pixmap area, then to the screen */
 	changed.scale(m_pixmap_dest.width(), 720, m_pixmap_dest.height(), 576);
 	changed.moveBy(ePoint(m_pixmap_dest.x(), m_pixmap_dest.y()));
 
 	if (pixmap->size().width() && pixmap->size().height())
 		changed.scale(size().width(), pixmap->size().width(), size().height(), pixmap->size().height());
-	
+
 	invalidate(changed);
 }
 
@@ -255,8 +284,8 @@ int eSubtitleWidget::event(int event, void *data, void *data2)
 		else
 			rt_halignment_flag = gPainter::RT_HALIGN_CENTER;
 
-		int borderwidth = eConfigManager::getConfigIntValue("config.subtitles.subtitle_borderwidth", 2);
-		int fontsize = eConfigManager::getConfigIntValue("config.subtitles.subtitle_fontsize", 34);
+		int borderwidth = eConfigManager::getConfigIntValue("config.subtitles.subtitle_borderwidth", 2) * getDesktop(0)->size().width()/1280;
+		int fontsize = eConfigManager::getConfigIntValue("config.subtitles.subtitle_fontsize", 34) * getDesktop(0)->size().width()/1280;
 
 		if (m_pixmap)
 		{
@@ -295,35 +324,47 @@ int eSubtitleWidget::event(int event, void *data, void *data2)
 				face = Subtitle_Regular;
 				ePangoSubtitlePageElement &element = m_pango_page.m_elements[i];
 				std::string text = element.m_pango_line;
+
+				if (eConfigManager::getConfigBoolValue("config.subtitles.pango_subtitle_removehi", false))
+					removeHearingImpaired(text);
+
 				text = replace_all(text, "&apos;", "'");
 				text = replace_all(text, "&quot;", "\"");
 				text = replace_all(text, "&amp;", "&");
 				text = replace_all(text, "&lt", "<");
 				text = replace_all(text, "&gt", ">");
 
-				switch (eConfigManager::getConfigIntValue("config.subtitles.pango_subtitle_colors", 1))
+				if (eConfigManager::getConfigBoolValue("config.subtitles.pango_subtitle_fontswitch"))
 				{
-					default:
-					case 0: /* use yellow for italic, cyan for bold and green for underscore */
-						text = replace_all(text, "<i>", (std::string) gRGB(255,255,0));
-						text = replace_all(text, "<b>", (std::string) gRGB(0,255,255));
+					if (text.find("<i>") != std::string::npos || text.find("</i>") != std::string::npos)
+						if (text.find("<b>") != std::string::npos || text.find("</b>") != std::string::npos)
+							face = Subtitle_MAX;
+						else
+							face = Subtitle_Italic;
+					else if (text.find("<b>") != std::string::npos || text.find("</b>") != std::string::npos)
+						face = Subtitle_Bold;
+				}
+				int subtitleColors = eConfigManager::getConfigIntValue("config.subtitles.pango_subtitle_colors", 1);
+				if (!subtitleColors)
+					{
+						text = replace_all(text, "<i>", gRGB(255,255,0));
+						text = replace_all(text, "<b>", gRGB(0,255,255));
 						text = replace_all(text, "<u>", (std::string) gRGB(0,255,0));
 						text = replace_all(text, "</i>", (std::string) gRGB(255,255,255));
 						text = replace_all(text, "</b>", (std::string) gRGB(255,255,255));
 						text = replace_all(text, "</u>", (std::string) gRGB(255,255,255));
-						break;
-					case 2: /* yellow */
+					}
+				else
+				{
+					if (subtitleColors == 2)
 						text = (std::string) gRGB(255, 255, 0) + text;
-					case 1: /* remove italic, bold, underscore */
-						text = replace_all(text, "<i>", "");
-						text = replace_all(text, "<b>", "");
-						text = replace_all(text, "<u>", "");
-						text = replace_all(text, "</i>", "");
-						text = replace_all(text, "</b>", "");
-						text = replace_all(text, "</u>", "");
-						break;
+					text = replace_all(text, "</u>", "");
+					text = replace_all(text, "</i>", "");
+					text = replace_all(text, "</b>", "");
+					text = replace_all(text, "<u>", "");
+					text = replace_all(text, "<i>", "");
+					text = replace_all(text, "<b>", "");
 				}
-
 				subtitleStyles[face].font->pointSize=fontsize;
 				painter.setFont(subtitleStyles[face].font);
 
@@ -359,3 +400,58 @@ void eSubtitleWidget::setFontStyle(subfont_t face, gFont *font, int haveColor, c
 	subtitleStyles[face].border_color = borderCol;
 	subtitleStyles[face].border_width = borderWidth;
 }
+
+void eSubtitleWidget::removeHearingImpaired(std::string& str)
+{
+	// remove texts in round brackets
+	while (true)
+	{
+		std::string::size_type loc = str.find('(');
+		if (loc == std::string::npos)
+			break;
+		std::string::size_type enp = str.find(')');
+		if (enp == std::string::npos)
+			break;
+		str.erase(loc, enp - loc + 1);
+	}
+
+	// remove texts in square brackets
+	while (true)
+	{
+		std::string::size_type loc = str.find('[');
+		if (loc == std::string::npos)
+			break;
+		std::string::size_type enp = str.find(']');
+		if (enp == std::string::npos)
+			break;
+		str.erase(loc, enp - loc + 1);
+	}
+
+	// cleanup: remove empty lines (consisting of spaces and hyphens only)
+	std::string::size_type line_start = 0;
+	bool empty_line = true;
+	for (std::string::size_type p = 0; p < str.length(); p++)
+	{
+		unsigned char ch = str[p];
+
+		if (ch != ' ' && ch != '-' && ch != '\n')
+			empty_line = false;
+
+		if (ch == '\n' || p == str.length() - 1)
+		{
+			if (empty_line)
+			{
+				// remove line
+				str.erase(line_start, p - line_start + 1);
+				p = line_start - 1;
+			}
+			line_start = p + 1;
+			empty_line = true;
+		}
+	}
+
+	// cleanup: remove trailing line breaks
+	while (str[str.length() - 1] == '\n')
+		str.erase(str.length() - 1, 1);
+}
+

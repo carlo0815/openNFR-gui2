@@ -20,7 +20,7 @@ gAccel *gAccel::instance;
 #else
 #define STMFB_ACCEL
 #endif
- 
+
 #ifdef STMFB_ACCEL
 extern int stmfb_accel_init(void);
 extern void stmfb_accel_close(void);
@@ -34,7 +34,6 @@ extern void stmfb_accel_fill(
 		int x, int y, int width, int height,
 		unsigned long color);
 #endif
-
 #ifdef ATI_ACCEL
 extern int ati_accel_init(void);
 extern void ati_accel_close(void);
@@ -74,10 +73,10 @@ gAccel::gAccel():
 #ifdef STMFB_ACCEL
 	stmfb_accel_init();
 #endif
-#ifdef ATI_ACCEL	
+#ifdef ATI_ACCEL
 	ati_accel_init();
 #endif
-#ifdef BCM_ACCEL	
+#ifdef BCM_ACCEL
 	m_bcm_accel_state = bcm_accel_init();
 #endif
 }
@@ -236,7 +235,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 #ifdef ATI_ACCEL
 	ati_accel_blit(
 		src->data_phys, src->x, src->y, src->stride,
-		dst->data_phys, dst->x, dst->y, dst->stride, 
+		dst->data_phys, dst->x, dst->y, dst->stride,
 		area.left(), area.top(), area.width(), area.height(),
 		p.x(), p.y());
 	return 0;
@@ -271,7 +270,7 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 
 		bcm_accel_blit(
 			src->data_phys, src->x, src->y, src->stride, src_format,
-			dst->data_phys, dst->x, dst->y, dst->stride, 
+			dst->data_phys, dst->x, dst->y, dst->stride,
 			area.left(), area.top(), area.width(), area.height(),
 			p.x(), p.y(), p.width(), p.height(),
 			pal_addr, flags);
@@ -288,7 +287,7 @@ int gAccel::fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col)
 #endif
 #ifdef ATI_ACCEL
 	ati_accel_fill(
-		dst->data_phys, dst->x, dst->y, dst->stride, 
+		dst->data_phys, dst->x, dst->y, dst->stride,
 		area.left(), area.top(), area.width(), area.height(),
 		col);
 	return 0;
@@ -371,7 +370,7 @@ void gAccel::accelFree(gUnmanagedSurface* surface)
 		 * might alter data_phys is the global release, and that will
 		 * be called in a safe context. So don't obtain the lock. */
 		eSingleLocker lock(m_allocation_lock);
-		
+
 		phys_addr -= m_accel_phys_addr;
 		phys_addr >>= ACCEL_ALIGNMENT_SHIFT;
 

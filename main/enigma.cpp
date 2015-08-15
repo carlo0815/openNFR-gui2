@@ -1,9 +1,12 @@
 #include <unistd.h>
+#include <iostream>
+#include <fstream>
 #include <fcntl.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <libsig_comp.h>
+#include <linux/dvb/version.h>
 
 #include <lib/actions/action.h>
 #include <lib/driver/rc.h>
@@ -61,6 +64,7 @@ void keyEvent(const eRCKey &key)
 
 	ePtr<eActionMap> ptr;
 	eActionMap::getInstance(ptr);
+	/*eDebug("key.code : %02x \n", key.code);*/
 
 	if ((key.code == last.code) && (key.producer == last.producer) && key.flags & eRCKey::flagRepeat)
 		num_repeat++;
@@ -123,11 +127,94 @@ public:
 	}
 };
 
+bool replace(std::string& str, const std::string& from, const std::string& to) 
+{
+	size_t start_pos = str.find(from);
+	if(start_pos == std::string::npos)
+		return false;
+	str.replace(start_pos, from.length(), to);
+	return true;
+}
+
+static const std::string getConfigCurrentSpinner(const std::string &key)
+{
+	std::string value = "spinner";
+	std::ifstream in(eEnv::resolve("${sysconfdir}/enigma2/settings").c_str());
+	
+	if (in.good()) {
+		do {
+			std::string line;
+			std::getline(in, line);
+			size_t size = key.size();
+			if (line.compare(0, size, key)== 0) {
+				value = line.substr(size + 1);
+				replace(value, "skin.xml", "spinner");
+				break;
+			}
+		} while (in.good());
+		in.close();
+	}
+	// if value is empty, means no config.skin.primary_skin exist in settings file, so return just default spinner ( /usr/share/enigma2/spinner )
+	if (value.empty()) 
+		return value;
+	
+	 //  if value is NOT empty, means config.skin.primary_skin exist in settings file, so return SCOPE_CURRENT_SKIN + "/spinner" ( /usr/share/enigma2/MYSKIN/spinner ) BUT check if /usr/share/enigma2/MYSKIN/spinner/wait1.png exist
+	std::string png_location = "/usr/share/enigma2/" + value + "/wait1.png";
+	std::ifstream png(png_location.c_str());
+	if (png.good()) {
+		png.close();
+		return value; // if value is NOT empty, means config.skin.primary_skin exist in settings file, so return SCOPE_CURRENT_SKIN + "/spinner" ( /usr/share/enigma2/MYSKIN/spinner/wait1.png exist )
+	}
+	else
+		return "spinner";  // if value is NOT empty, means config.skin.primary_skin exist in settings file, so return "spinner" ( /usr/share/enigma2/MYSKIN/spinner/wait1.png DOES NOT exist )
+} 
+
 int exit_code;
+
+void quitMainloop(int exitCode)
+{
+	FILE *f = fopen("/proc/stb/fp/was_timer_wakeup", "w");
+	if (f)
+	{
+		fprintf(f, "%d", 0);
+		fclose(f);
+	}
+	else
+	{
+		int fd = open("/dev/dbox/fp0", O_WRONLY);
+		if (fd >= 0)
+		{
+			if (ioctl(fd, 10 /*FP_CLEAR_WAKEUP_TIMER*/) < 0)
+				eDebug("FP_CLEAR_WAKEUP_TIMER failed (%m)");
+			close(fd);
+		}
+		else
+			eDebug("open /dev/dbox/fp0 for wakeup timer clear failed!(%m)");
+	}
+	exit_code = exitCode;
+	eApp->quit(0);
+}
+
+static void sigterm_handler(int num)
+{
+	quitMainloop(128 + num);
+}
+
+void catchTermSignal()
+{
+	struct sigaction act;
+
+	act.sa_handler = sigterm_handler;
+	act.sa_flags = SA_RESTART;
+
+	if (sigemptyset(&act.sa_mask) == -1)
+		perror("sigemptyset");
+	if (sigaction(SIGTERM, &act, 0) == -1)
+		perror("SIGTERM");
+}
 
 int main(int argc, char **argv)
 {
-
 #ifdef MEMLEAK_CHECK
 	atexit(DumpUnfreed);
 #endif
@@ -141,6 +228,7 @@ int main(int argc, char **argv)
 	// set pythonpath if unset
 	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
 	printf("PYTHONPATH: %s\n", getenv("PYTHONPATH"));
+	printf("DVB_API_VERSION %d DVB_API_VERSION_MINOR %d\n", DVB_API_VERSION, DVB_API_VERSION_MINOR);
 
 	bsodLogInit();
 
@@ -190,6 +278,7 @@ int main(int argc, char **argv)
 	dsk.setRedrawTask(main);
 	dsk_lcd.setRedrawTask(main);
 
+	std::string active_skin = getConfigCurrentSpinner("config.skin.primary_skin");
 
 	eDebug("Loading spinners...");
 
@@ -201,7 +290,7 @@ int main(int argc, char **argv)
 		{
 			char filename[64];
 			std::string rfilename;
-			snprintf(filename, sizeof(filename), "${datadir}/enigma2/spinner/wait%d.png", i + 1);
+			snprintf(filename, sizeof(filename), "${datadir}/enigma2/%s/wait%d.png", active_skin.c_str(), i + 1);
 			rfilename = eEnv::resolve(filename);
 			loadPNG(wait[i], rfilename.c_str());
 
@@ -214,14 +303,10 @@ int main(int argc, char **argv)
 				break;
 			}
 		}
-		/*if (i)
-			my_dc->setSpinner(eRect(ePoint(608, 328), wait[0]->size()), wait, i);
-		else
-			my_dc->setSpinner(eRect(608, 328, 0, 0), wait, 1);*/
 		if (i)
-			my_dc->setSpinner(eRect(ePoint(25, 25), wait[0]->size()), wait, i);
+			my_dc->setSpinner(eRect(ePoint(100, 100), wait[0]->size()), wait, i);
 		else
-			my_dc->setSpinner(eRect(25, 25, 0, 0), wait, 1);
+			my_dc->setSpinner(eRect(100, 100, 0, 0), wait, 1);
 	}
 
 	gRC::getInstance()->setSpinnerDC(my_dc);
@@ -231,13 +316,14 @@ int main(int argc, char **argv)
 	printf("executing main\n");
 
 	bsodCatchSignals();
+	catchTermSignal();
 
 	setIoPrio(IOPRIO_CLASS_BE, 3);
 
 	/* start at full size */
 	eVideoWidget::setFullsize(true);
 
-	// python.execute("mytest", "__main__");
+	//	python.execute("mytest", "__main__");
 	python.execFile(eEnv::resolve("${libdir}/enigma2/python/mytest.py").c_str());
 
 	/* restore both decoders to full size */
@@ -272,47 +358,9 @@ eApplication *getApplication()
 	return eApp;
 }
 
-void quitMainloop(int exitCode)
-{
-	FILE *f = fopen("/proc/stb/fp/was_timer_wakeup", "w");
-	if (f)
-	{
-		fprintf(f, "%d", 0);
-		fclose(f);
-	}
-	else
-	{
-		int fd = open("/dev/dbox/fp0", O_WRONLY);
-		if (fd >= 0)
-		{
-			if (ioctl(fd, 10 /*FP_CLEAR_WAKEUP_TIMER*/) < 0)
-				eDebug("FP_CLEAR_WAKEUP_TIMER failed (%m)");
-			close(fd);
-		}
-		else
-			eDebug("open /dev/dbox/fp0 for wakeup timer clear failed!(%m)");
-	}
-	exit_code = exitCode;
-	eApp->quit(0);
-}
-
-static void sigterm_handler(int num)
-{
-	quitMainloop(128 + num);
-}
-
 void runMainloop()
 {
-	struct sigaction act;
-
-	act.sa_handler = sigterm_handler;
-	act.sa_flags = SA_RESTART;
-
-	if (sigemptyset(&act.sa_mask) == -1)
-		perror("sigemptyset");
-	if (sigaction(SIGTERM, &act, 0) == -1)
-		perror("SIGTERM");
-
+	catchTermSignal();
 	eApp->runLoop();
 }
 
@@ -350,4 +398,3 @@ void setAnimation_speed(int speed)
 void setAnimation_current(int a) {}
 void setAnimation_speed(int speed) {}
 #endif
-

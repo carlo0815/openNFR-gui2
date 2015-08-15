@@ -52,7 +52,7 @@ int eDVBMetaParser::parseFile(const std::string &basename)
 		/* first, try parsing the .meta file */
 	if (!parseMeta(basename))
 		return 0;
-	
+
 		/* otherwise, use recordings.epl */
 	if (!parseRecordings(basename))
 		return 0;
@@ -113,7 +113,7 @@ int eDVBMetaParser::parseMeta(const std::string &tsname)
 			m_tags = line;
 			break;
 		case 5:
-			m_length = atoi(line);  //movielength in pts
+			m_length = atoll(line);  //movielength in pts
 			break;
 		case 6:
 			m_filesize = atoll(line);
@@ -146,27 +146,27 @@ int eDVBMetaParser::parseRecordings(const std::string &filename)
 	std::string::size_type slash = filename.rfind('/');
 	if (slash == std::string::npos)
 		return -1;
-	
+
 	std::string recordings = filename.substr(0, slash) + "/recordings.epl";
-	
+
 	CFile f(recordings.c_str(), "r");
 	if (!f)
 	{
 //		eDebug("no recordings.epl found: %s: %m", recordings.c_str());
 		return -1;
 	}
-	
+
 	std::string description;
 	eServiceReferenceDVB ref;
-	
+
 //	eDebug("parsing recordings.epl..");
-	
+
 	while (1)
 	{
 		char line[1024];
 		if (!fgets(line, 1024, f))
 			break;
-		
+
 		size_t len = strlen(line);
 		if (len < 2)
 			// Lines with less than one char aren't meaningful
@@ -176,7 +176,7 @@ int eDVBMetaParser::parseRecordings(const std::string &filename)
 		line[len] = 0;
 		if (line[len-1] == '\r')
 			line[len-1] = 0;
-		
+
 		if (strncmp(line, "#SERVICE: ", 10) == 0)
 			ref = eServiceReferenceDVB(line + 10);
 		else if (strncmp(line, "#DESCRIPTION: ", 14) == 0)
@@ -211,6 +211,6 @@ int eDVBMetaParser::updateMeta(const std::string &tsname)
 	CFile f(filename.c_str(), "w");
 	if (!f)
 		return -ENOENT;
-	fprintf(f, "%s\n%s\n%s\n%d\n%s\n%d\n%lld\n%s\n%d\n%d\n", ref.toString().c_str(), m_name.c_str(), m_description.c_str(), m_time_create, m_tags.c_str(), m_length, m_filesize, m_service_data.c_str(), m_packet_size, m_scrambled);
+	fprintf(f, "%s\n%s\n%s\n%d\n%s\n%lld\n%lld\n%s\n%d\n%d\n", ref.toString().c_str(), m_name.c_str(), m_description.c_str(), m_time_create, m_tags.c_str(), m_length, m_filesize, m_service_data.c_str(), m_packet_size, m_scrambled);
 	return 0;
 }

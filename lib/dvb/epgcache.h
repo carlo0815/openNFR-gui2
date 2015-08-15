@@ -5,24 +5,17 @@
 #define ENABLE_MHW_EPG 1
 #define ENABLE_FREESAT 1
 #define ENABLE_NETMED 1
+#define ENABLE_VIRGIN 1
 
 #ifndef SWIG
 
 #include <vector>
 #include <list>
-// unordered_map unordered_set aren't there yet?
-#if 0
-#include <unordered_map>
-#include <unordered_set>
-#else
-#include <ext/hash_map>
-#include <ext/hash_set>
-#endif
+#include <tr1/unordered_map>
 
 #include <errno.h>
 
 #include <lib/dvb/eit.h>
-#include <lib/dvb/lowlevel/eit.h>
 #ifdef ENABLE_MHW_EPG
 #include <lib/dvb/lowlevel/mhw.h>
 #endif
@@ -34,12 +27,6 @@
 #include <lib/base/message.h>
 #include <lib/service/event.h>
 #include <lib/python/python.h>
-
-#define CLEAN_INTERVAL 60000    //  1 min
-#define UPDATE_INTERVAL 3600000  // 60 min
-#define ZAP_DELAY 2000          // 2 sek
-
-#define HILO(x) (x##_hi << 8 | x##_lo)
 
 class eventData;
 class eServiceReferenceDVB;
@@ -75,8 +62,8 @@ struct uniqueEPGKey
 		return (tsid < a.tsid);
 	}
 	operator bool() const
-	{ 
-		return !(sid == -1 && onid == -1 && tsid == -1); 
+	{
+		return !(sid == -1 && onid == -1 && tsid == -1);
 	}
 	bool operator==(const uniqueEPGKey &a) const
 	{
@@ -92,12 +79,11 @@ struct uniqueEPGKey
 };
 
 //eventMap is sorted by event_id
-#define eventMap std::map<__u16, eventData*>
+typedef std::map<uint16_t, eventData*> eventMap;
 //timeMap is sorted by beginTime
-#define timeMap std::map<time_t, eventData*>
+typedef std::map<time_t, eventData*> timeMap;
 
-#define channelMapIterator std::map<iDVBChannel*, channel_data*>::iterator
-#define updateMap std::map<eDVBChannelID, time_t>
+typedef std::map<eDVBChannelID, time_t> updateMap;
 
 struct hash_uniqueEPGKey
 {
@@ -107,61 +93,20 @@ struct hash_uniqueEPGKey
 	}
 };
 
-#define tidMap std::set<__u32>
-#if 0 
-	typedef std::unordered_map<uniqueEPGKey, std::pair<eventMap, timeMap>, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
-	#ifdef ENABLE_PRIVATE_EPG
-		typedef std::unordered_map<time_t, std::pair<time_t, __u16> > contentTimeMap;
-		typedef std::unordered_map<int, contentTimeMap > contentMap;
-		typedef std::unordered_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
-	#endif
-#else
-	typedef __gnu_cxx::hash_map<uniqueEPGKey, std::pair<eventMap, timeMap>, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
-	#ifdef ENABLE_PRIVATE_EPG
-		typedef __gnu_cxx::hash_map<time_t, std::pair<time_t, __u16> > contentTimeMap;
-		typedef __gnu_cxx::hash_map<int, contentTimeMap > contentMap;
-		typedef __gnu_cxx::hash_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
-	#endif
+struct EventCacheItem {
+	eventMap byEvent;
+	timeMap byTime;
+};
+
+typedef std::set<uint32_t> tidMap;
+
+typedef std::tr1::unordered_map<uniqueEPGKey, EventCacheItem, hash_uniqueEPGKey, uniqueEPGKey::equal> eventCache;
+#ifdef ENABLE_PRIVATE_EPG
+	typedef std::tr1::unordered_map<time_t, std::pair<time_t, uint16_t> > contentTimeMap;
+	typedef std::tr1::unordered_map<int, contentTimeMap > contentMap;
+	typedef std::tr1::unordered_map<uniqueEPGKey, contentMap, hash_uniqueEPGKey, uniqueEPGKey::equal > contentMaps;
 #endif
 
-#define descriptorPair std::pair<int,__u8*>
-#define descriptorMap std::map<__u32, descriptorPair >
-
-class eventData
-{
-	friend class eEPGCache;
-private:
-	__u8* EITdata;
-	__u8 ByteSize;
-	__u8 type;
-	static descriptorMap descriptors;
-	static __u8 data[];
-	static int CacheSize;
-	static bool isCacheCorrupt;
-	static void load(FILE *);
-	static void save(FILE *);
-	static void cacheCorrupt(const char* context);
-	const eit_event_struct* get() const;
-	operator const eit_event_struct*() const
-	{
-		return get();
-	}
-public:
-	eventData(const eit_event_struct* e = NULL, int size = 0, int type = 0, int tsidonid = 0);
-	~eventData();
-	int getEventID()
-	{
-		return (EITdata[0] << 8) | EITdata[1];
-	}
-	time_t getStartTime()
-	{
-		return parseDVBtime(EITdata[2], EITdata[3], EITdata[4], EITdata[5], EITdata[6]);
-	}
-	int getDuration()
-	{
-		return fromBCD(EITdata[7])*3600+fromBCD(EITdata[8])*60+fromBCD(EITdata[9]);
-	}
-};
 #endif
 
 #ifdef ENABLE_FREESAT
@@ -170,15 +115,15 @@ class freesatEITSubtableStatus
 {
 private:
 	u_char version;
-	__u16 sectionMap[32];
-	void initMap(__u8 maxSection);
+	uint16_t sectionMap[32];
+	void initMap(uint8_t maxSection);
 
 public:
-	freesatEITSubtableStatus(u_char version, __u8 maxSection);
-	bool isSectionPresent(__u8 sectionNo);
-	void seen(__u8 sectionNo, __u8 maxSegmentSection);
+	freesatEITSubtableStatus(u_char version, uint8_t maxSection);
+	bool isSectionPresent(uint8_t sectionNo);
+	void seen(uint8_t sectionNo, uint8_t maxSegmentSection);
 	bool isVersionChanged(u_char testVersion);
-	void updateVersion(u_char newVersion, __u8 maxSection);
+	void updateVersion(u_char newVersion, uint8_t maxSection);
 	bool isCompleted();
 };
 #endif
@@ -200,6 +145,10 @@ class eEPGCache: public eMainloop, private eThread, public Object
 		ePtr<eConnection> m_stateChangedConn, m_NowNextConn, m_ScheduleConn, m_ScheduleOtherConn, m_ViasatConn;
 		ePtr<iDVBSectionReader> m_NowNextReader, m_ScheduleReader, m_ScheduleOtherReader, m_ViasatReader;
 		tidMap seenSections[4], calcedSections[4];
+#ifdef ENABLE_VIRGIN
+		ePtr<eConnection> m_VirginNowNextConn, m_VirginScheduleConn;
+		ePtr<iDVBSectionReader> m_VirginNowNextReader, m_VirginScheduleReader;
+#endif
 #ifdef ENABLE_NETMED
 		ePtr<eConnection> m_NetmedScheduleConn, m_NetmedScheduleOtherConn;
 		ePtr<iDVBSectionReader> m_NetmedScheduleReader, m_NetmedScheduleOtherReader;
@@ -207,9 +156,9 @@ class eEPGCache: public eMainloop, private eThread, public Object
 #ifdef ENABLE_FREESAT
 		ePtr<eConnection> m_FreeSatScheduleOtherConn, m_FreeSatScheduleOtherConn2;
 		ePtr<iDVBSectionReader> m_FreeSatScheduleOtherReader, m_FreeSatScheduleOtherReader2;
-		std::map<__u32, freesatEITSubtableStatus> m_FreeSatSubTableStatus;
-		__u32 m_FreesatTablesToComplete;
-		void readFreeSatScheduleOtherData(const __u8 *data);
+		std::map<uint32_t, freesatEITSubtableStatus> m_FreeSatSubTableStatus;
+		uint32_t m_FreesatTablesToComplete;
+		void readFreeSatScheduleOtherData(const uint8_t *data);
 		void cleanupFreeSat();
 #endif
 #ifdef ENABLE_PRIVATE_EPG
@@ -219,43 +168,43 @@ class eEPGCache: public eMainloop, private eThread, public Object
 		uniqueEPGKey m_PrivateService;
 		ePtr<eConnection> m_PrivateConn;
 		ePtr<iDVBSectionReader> m_PrivateReader;
-		std::set<__u8> seenPrivateSections;
-		void readPrivateData(const __u8 *data);
+		std::set<uint8_t> seenPrivateSections;
+		void readPrivateData(const uint8_t *data);
 		void startPrivateReader();
 #endif
 #ifdef ENABLE_MHW_EPG
 		std::vector<mhw_channel_name_t> m_channels;
-		std::map<__u8, mhw_theme_name_t> m_themes;
-		std::map<__u32, mhw_title_t> m_titles;
-		std::multimap<__u32, __u32> m_program_ids;
+		std::map<uint8_t, mhw_theme_name_t> m_themes;
+		std::map<uint32_t, mhw_title_t> m_titles;
+		std::multimap<uint32_t, uint32_t> m_program_ids;
 		ePtr<eConnection> m_MHWConn, m_MHWConn2;
 		ePtr<iDVBSectionReader> m_MHWReader, m_MHWReader2;
 		eDVBSectionFilterMask m_MHWFilterMask, m_MHWFilterMask2;
 		ePtr<eTimer> m_MHWTimeoutTimer;
-		__u16 m_mhw2_channel_pid, m_mhw2_title_pid, m_mhw2_summary_pid;
+		uint16_t m_mhw2_channel_pid, m_mhw2_title_pid, m_mhw2_summary_pid;
 		bool m_MHWTimeoutet;
 		void MHWTimeout() { m_MHWTimeoutet=true; }
-		void readMHWData(const __u8 *data);
-		void readMHWData2(const __u8 *data);
-		void startMHWReader(__u16 pid, __u8 tid);
-		void startMHWReader2(__u16 pid, __u8 tid, int ext=-1);
+		void readMHWData(const uint8_t *data);
+		void readMHWData2(const uint8_t *data);
+		void startMHWReader(uint16_t pid, uint8_t tid);
+		void startMHWReader2(uint16_t pid, uint8_t tid, int ext=-1);
 		void startMHWTimeout(int msek);
 		bool checkMHWTimeout() { return m_MHWTimeoutet; }
 		void cleanupMHW();
-		__u8 *delimitName( __u8 *in, __u8 *out, int len_in );
+		uint8_t *delimitName( uint8_t *in, uint8_t *out, int len_in );
 		void timeMHW2DVB( u_char hours, u_char minutes, u_char *return_time);
 		void timeMHW2DVB( int minutes, u_char *return_time);
 		void timeMHW2DVB( u_char day, u_char hours, u_char minutes, u_char *return_time);
-		void storeMHWTitle(std::map<__u32, mhw_title_t>::iterator itTitle, std::string sumText, const __u8 *data);
+		void storeMHWTitle(std::map<uint32_t, mhw_title_t>::iterator itTitle, std::string sumText, const uint8_t *data);
 #endif
-		void readData(const __u8 *data, int source);
+		void readData(const uint8_t *data, int source);
 		void startChannel();
 		void startEPG();
-		bool finishEPG();
+		void finishEPG();
 		void abortEPG();
 		void abortNonAvail();
 	};
-	bool FixOverlapping(std::pair<eventMap,timeMap> &servicemap, time_t TM, int duration, const timeMap::iterator &tm_it, const uniqueEPGKey &service);
+	bool FixOverlapping(EventCacheItem &servicemap, time_t TM, int duration, const timeMap::iterator &tm_it, const uniqueEPGKey &service);
 public:
 	struct Message
 	{
@@ -299,8 +248,10 @@ private:
 	friend class eventData;
 	static eEPGCache *instance;
 
+	typedef std::map<iDVBChannel*, channel_data*> ChannelMap;
+
 	ePtr<eTimer> cleanTimer;
-	std::map<iDVBChannel*, channel_data*> m_knownChannels;
+	ChannelMap m_knownChannels;
 	ePtr<eConnection> m_chanAddedConn;
 
 	unsigned int enabledSources;
@@ -309,7 +260,6 @@ private:
 	std::vector<int> onid_blacklist;
 	eventCache eventDB;
 	updateMap channelLastUpdated;
-	static pthread_mutex_t cache_lock, channel_map_lock;
 	std::string m_filename;
 	bool m_running;
 
@@ -320,11 +270,10 @@ private:
 	void thread();  // thread function
 
 #ifdef ENABLE_PRIVATE_EPG
-	void privateSectionRead(const uniqueEPGKey &, const __u8 *);
+	void privateSectionRead(const uniqueEPGKey &, const uint8_t *);
 #endif
-	void sectionRead(const __u8 *data, int source, channel_data *channel);
+	void sectionRead(const uint8_t *data, int source, channel_data *channel);
 	void gotMessage(const Message &message);
-	void flushEPG(const uniqueEPGKey & s=uniqueEPGKey());
 	void cleanLoop();
 
 // called from main thread
@@ -344,7 +293,8 @@ public:
 	void crossepgImportEPGv21(std::string dbroot);
 	void save();
 	void load();
-	void timeUpdated();	
+	void timeUpdated();
+	void flushEPG(const uniqueEPGKey & s=uniqueEPGKey());
 #ifndef SWIG
 	eEPGCache();
 	~eEPGCache();
@@ -359,30 +309,21 @@ public:
 	// must be called once!
 	void setCacheFile(const char *filename);
 
-	// called from main thread
-	inline void Lock();
-	inline void Unlock();
-
 	// at moment just for one service..
 	RESULT startTimeQuery(const eServiceReference &service, time_t begin=-1, int minutes=-1);
 
 #ifndef SWIG
 private:
-	// For internal use only. Acquire the cache lock before calling. 
+	// For internal use only. Acquire the cache lock before calling.
 	RESULT lookupEventId(const eServiceReference &service, int event_id, const eventData *&);
 	RESULT lookupEventTime(const eServiceReference &service, time_t, const eventData *&, int direction=0);
-	RESULT getNextTimeEntry(const eventData *&);
 
 public:
-	// eit_event_struct's are plain dvb eit_events .. it's not safe to use them after cache unlock
-	// its not allowed to delete this pointers via delete or free..
-	RESULT lookupEventId(const eServiceReference &service, int event_id, const eit_event_struct *&);
-	RESULT lookupEventTime(const eServiceReference &service, time_t , const eit_event_struct *&, int direction=0);
-	RESULT getNextTimeEntry(const eit_event_struct *&);
+	/* Only used by servicedvbrecord.cpp to write the EIT file */
+	RESULT saveEventToFile(const char* filename, const eServiceReference &service, int eit_event_id, time_t begTime, time_t endTime);
 
-public:
-	// Event's are parsed epg events.. it's safe to use them after cache unlock
-	// after use this Events must be deleted (memleaks)
+	// Events are parsed epg events.. it's safe to use them after cache unlock
+	// after use the Event pointer must be released using "delete".
 	RESULT lookupEventId(const eServiceReference &service, int event_id, Event* &);
 	RESULT lookupEventTime(const eServiceReference &service, time_t, Event* &, int direction=0);
 	RESULT getNextTimeEntry(Event *&);
@@ -420,6 +361,10 @@ public:
 	,NETMED_SCHEDULE=512
 	,NETMED_SCHEDULE_OTHER=1024
 #endif
+#ifdef ENABLE_VIRGIN
+	,VIRGIN_NOWNEXT=2048
+	,VIRGIN_SCHEDULE=4096
+#endif
 	,EPG_IMPORT=0x80000000
 	};
 	void setEpgHistorySeconds(time_t seconds);
@@ -431,17 +376,5 @@ public:
 	void importEvents(SWIG_PYOBJECT(ePyObject) serviceReferences, SWIG_PYOBJECT(ePyObject) list);
 	void importEvent(SWIG_PYOBJECT(ePyObject) serviceReference, SWIG_PYOBJECT(ePyObject) list);
 };
-
-#ifndef SWIG
-inline void eEPGCache::Lock()
-{
-	pthread_mutex_lock(&cache_lock);
-}
-
-inline void eEPGCache::Unlock()
-{
-	pthread_mutex_unlock(&cache_lock);
-}
-#endif
 
 #endif

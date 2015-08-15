@@ -32,7 +32,7 @@ int eRawFile::open(const char *filename)
 	scan();
 	m_current_offset = 0;
 	m_last_offset = 0;
-	m_fd = ::open(filename, O_RDONLY | O_LARGEFILE);
+	m_fd = ::open(filename, O_RDONLY | O_LARGEFILE | O_CLOEXEC);
 	posix_fadvise(m_fd, 0, 0, POSIX_FADV_SEQUENTIAL);
 	return m_fd;
 }
@@ -81,9 +81,9 @@ ssize_t eRawFile::read(off_t offset, void *buf, size_t count)
 		if (count < 0)
 			return 0;
 	}
-	
+
 	int ret;
-	
+
 	ret = ::read(m_fd, buf, count);
 
 	if (ret > 0)
@@ -124,7 +124,7 @@ int eRawFile::switchOffset(off_t off)
 		if (filenr >= m_nrfiles)
 			filenr = m_nrfiles - 1;
 		if (filenr != m_current_file)
-		{	
+		{
 //			eDebug("-> %d", filenr);
 			close();
 			m_fd = openFileUncached(filenr);
@@ -133,7 +133,7 @@ int eRawFile::switchOffset(off_t off)
 		}
 	} else
 		m_base_offset = 0;
-	
+
 	if (off != m_last_offset)
 	{
 		m_last_offset = ::lseek(m_fd, off - m_base_offset, SEEK_SET) + m_base_offset;
@@ -153,7 +153,7 @@ int eRawFile::openFileUncached(int nr)
 		snprintf(suffix, 5, ".%03d", nr);
 		filename += suffix;
 	}
-	return ::open(filename.c_str(), O_RDONLY | O_LARGEFILE);
+	return ::open(filename.c_str(), O_RDONLY | O_LARGEFILE | O_CLOEXEC);
 }
 
 off_t eRawFile::length()

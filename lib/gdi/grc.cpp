@@ -3,7 +3,6 @@
 #include <lib/gdi/font.h>
 #include <lib/base/init.h>
 #include <lib/base/init_num.h>
-
 #ifdef USE_LIBVUGLES2
 #include <vuplus_gles.h>
 #endif
@@ -105,10 +104,10 @@ void *gRC::thread()
 {
 	int need_notify = 0;
 #ifdef USE_LIBVUGLES2
- 	if (gles_open()) {
- 		gles_state_open();
- 			gles_viewport(720, 576, 720 * 4);
- }
+	if (gles_open()) {
+		gles_state_open();
+		gles_viewport(720, 576, 720 * 4);
+	}
 #endif
 #ifndef SYNC_PAINT
 	while (1)
@@ -156,7 +155,7 @@ void *gRC::thread()
 #ifndef SYNC_PAINT
 			while(rp == wp)
 			{
-			
+
 					/* when the main thread is non-idle for a too long time without any display output,
 					   we want to display a spinner. */
 				struct timespec timeout;
@@ -201,12 +200,11 @@ void *gRC::thread()
 #endif
 		}
 	}
-
-#ifndef SYNC_PAINT
 #ifdef USE_LIBVUGLES2
- 	gles_state_close();
- 	gles_close();
+	gles_state_close();
+	gles_close();
 #endif
+#ifndef SYNC_PAINT
 	pthread_exit(0);
 #endif
 	return 0;
@@ -253,7 +251,7 @@ void gRC::disableSpinner()
 	}
 
 	m_spinner_enabled = 0;
-	
+
 	gOpcode o;
 	o.opcode = gOpcode::disableSpinner;
 	m_spinner_dc->exec(&o);
@@ -661,7 +659,6 @@ void gPainter::setView(eSize size)
 }
 #endif
 
-
 gDC::gDC()
 {
 	m_spinner_pic = 0;
@@ -727,9 +724,9 @@ void gDC::exec(const gOpcode *o)
 			para->realign(eTextPara::dirBlock);
 		else
 			para->realign(eTextPara::dirBidi);
-		
+
 		ePoint offset = m_current_offset;
-		
+
 		if (o->parm.renderText->flags & gPainter::RT_VALIGN_CENTER)
 		{
 			eRect bbox = para->getBoundBox();
@@ -800,16 +797,16 @@ void gDC::exec(const gOpcode *o)
 	{
 		gRegion clip;
 				// this code should be checked again but i'm too tired now
-		
+
 		o->parm.blit->position.moveBy(m_current_offset);
-		
+
 		if (o->parm.blit->clip.valid())
 		{
 			o->parm.blit->clip.moveBy(m_current_offset);
 			clip.intersect(gRegion(o->parm.blit->clip), m_current_clip);
 		} else
 			clip = m_current_clip;
-		
+
 		m_pixmap->blit(*o->parm.blit->pixmap, o->parm.blit->position, clip, o->parm.blit->flags);
 		o->parm.blit->pixmap->Release();
 		delete o->parm.blit;
@@ -822,7 +819,7 @@ void gDC::exec(const gOpcode *o)
 			o->parm.setPalette->palette->colors = m_pixmap->surface->clut.colors-o->parm.setPalette->palette->start;
 		if (o->parm.setPalette->palette->colors)
 			memcpy(m_pixmap->surface->clut.data+o->parm.setPalette->palette->start, o->parm.setPalette->palette->data, o->parm.setPalette->palette->colors*sizeof(gRGB));
-		
+
 		delete[] o->parm.setPalette->palette->data;
 		delete o->parm.setPalette->palette;
 		delete o->parm.setPalette;
@@ -831,7 +828,7 @@ void gDC::exec(const gOpcode *o)
 		m_pixmap->mergePalette(*o->parm.mergePalette->target);
 		o->parm.mergePalette->target->Release();
 		delete o->parm.mergePalette;
-		break; 
+		break;
 	case gOpcode::line:
 	{
 		ePoint start = o->parm.line->start + m_current_offset, end = o->parm.line->end + m_current_offset;
@@ -873,13 +870,13 @@ void gDC::exec(const gOpcode *o)
 		break;
 	case gOpcode::flush:
 		break;
- 	case gOpcode::sendShow:
- 		break;
- 	case gOpcode::sendHide:
- 		break;
+	case gOpcode::sendShow:
+		break;
+	case gOpcode::sendHide:
+		break;
 #ifdef USE_LIBVUGLES2
-	 case gOpcode::setView:
-		 break;
+	case gOpcode::setView:
+		break;
 #endif
 	case gOpcode::enableSpinner:
 		enableSpinner();
@@ -910,10 +907,10 @@ gRGB gDC::getRGB(gColor col)
 void gDC::enableSpinner()
 {
 	ASSERT(m_spinner_saved);
-	
+
 		/* save the background to restore it later. We need to negative position because we want to blit from the middle of the screen. */
 	m_spinner_saved->blit(*m_pixmap, eRect(-m_spinner_pos.topLeft(), eSize()), gRegion(eRect(ePoint(0, 0), m_spinner_saved->size())), 0);
-	
+
 	incrementSpinner();
 }
 
@@ -928,18 +925,18 @@ void gDC::disableSpinner()
 void gDC::incrementSpinner()
 {
 	ASSERT(m_spinner_saved);
-	
+
 	static int blub;
 	blub++;
 
 #if 0
 	int i;
-	
+
 	for (i = 0; i < 5; ++i)
 	{
 		int x = i * 20 + m_spinner_pos.left();
 		int y = m_spinner_pos.top();
-		
+
 		int col = ((blub - i) * 30) % 256;
 
 		m_pixmap->fill(eRect(x, y, 10, 10), gRGB(col, col, col));
@@ -963,16 +960,16 @@ void gDC::setSpinner(eRect pos, ePtr<gPixmap> *pic, int len)
 	m_spinner_saved = new gPixmap(pos.size(), m_pixmap->surface->bpp);
 	m_spinner_temp = new gPixmap(pos.size(), m_pixmap->surface->bpp);
 	m_spinner_pos = pos;
-	
+
 	m_spinner_i = 0;
 	m_spinner_num = len;
-	
+
 	int i;
 	if (m_spinner_pic)
 		delete[] m_spinner_pic;
-	
+
 	m_spinner_pic = new ePtr<gPixmap>[len];
-	
+
 	for (i = 0; i < len; ++i)
 		m_spinner_pic[i] = pic[i];
 }

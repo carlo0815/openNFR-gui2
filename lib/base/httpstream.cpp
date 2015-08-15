@@ -20,8 +20,9 @@ eHttpStream::eHttpStream()
 
 eHttpStream::~eHttpStream()
 {
+	abort_badly();
+	kill();
 	free(tmpBuf);
-	kill(true);
 	close();
 }
 
@@ -43,12 +44,12 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 	close();
 
 	int pathindex = uri.find("/", 7);
-	if (pathindex > 0) 
+	if (pathindex > 0)
 	{
 		hostname = uri.substr(7, pathindex - 7);
 		uri = uri.substr(pathindex, uri.length() - pathindex);
-	} 
-	else 
+	}
+	else
 	{
 		hostname = uri.substr(7, uri.length() - 7);
 		uri = "/";
@@ -76,12 +77,12 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		BIO_free_all(bio);
 	}
 	int customportindex = hostname.find(":");
-	if (customportindex > 0) 
+	if (customportindex > 0)
 	{
 		port = atoi(hostname.substr(customportindex + 1, hostname.length() - customportindex - 1).c_str());
 		hostname = hostname.substr(0, customportindex);
-	} 
-	else if (customportindex == 0) 
+	}
+	else if (customportindex == 0)
 	{
 		port = atoi(hostname.substr(1, hostname.length() - 1).c_str());
 		hostname = "localhost";
@@ -126,7 +127,7 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 		result = readLine(streamSocket, &linebuf, &buflen);
 		if (!contenttypeparsed)
 		{
-			char contenttype[32];
+			char contenttype[33];
 			if (sscanf(linebuf, "Content-Type: %32s", contenttype) == 1)
 			{
 				contenttypeparsed = true;
@@ -147,14 +148,15 @@ int eHttpStream::openUrl(const std::string &url, std::string &newurl)
 			eDebug("%s: playlist entry: %s", __FUNCTION__, newurl.c_str());
 			break;
 		}
-		if (statuscode == 302 && strncasecmp(linebuf, "location: ", 10) == 0)
+		if (((statuscode == 301) || (statuscode == 302) || (statuscode == 303) || (statuscode == 307) || (statuscode == 308)) &&
+				strncasecmp(linebuf, "location: ", 10) == 0)
 		{
 			newurl = &linebuf[10];
 			eDebug("%s: redirecting to: %s", __FUNCTION__, newurl.c_str());
 			break;
 		}
 
-		if (statuscode == 206 && strncasecmp(linebuf, "transfer-encoding: chunked", strlen("transfer-encoding: chunked")))
+		if (((statuscode == 200) || (statuscode == 206)) && !strncasecmp(linebuf, "transfer-encoding: chunked", strlen("transfer-encoding: chunked")))
 		{
 			isChunked = true;
 		}
@@ -258,7 +260,7 @@ ssize_t eHttpStream::syncNextRead(void *buf, ssize_t length)
 		{
 			memcpy(partialPkt, e, partialPktSz);
 		}
-	} 
+	}
 	return (length - partialPktSz);
 }
 
@@ -289,7 +291,7 @@ ssize_t eHttpStream::httpChunkedRead(void *buf, size_t count)
 		{
 			if (0 == currentChunkSize)
 			{
-				do 
+				do
 				{
 					ret = readLine(streamSocket, &tmpBuf, &tmpBufSize);
 					if (ret < 0) return -1;

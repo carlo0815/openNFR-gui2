@@ -10,7 +10,8 @@
 
 DEFINE_REF(eSocketNotifier);
 
-eSocketNotifier::eSocketNotifier(eMainloop *context, int fd, int requested, bool startnow): context(*context), fd(fd), state(0), requested(requested)
+eSocketNotifier::eSocketNotifier(eMainloop *context, int fd, int requested, bool startnow):
+	context(*context), fd(fd), state(0), requested(requested)
 {
 	if (startnow)
 		start();
@@ -187,7 +188,7 @@ int eMainloop::processOneEvent(unsigned int twisted_timeout, PyObject **res, ePy
 		if (it != m_timer_list.end())
 		{
 			eTimer *tmr = *it;
-			timespec now; 
+			timespec now;
 			clock_gettime(CLOCK_MONOTONIC, &now);
 			/* process all timers which are ready. first remove them out of the list. */
 			while (tmr->needsActivation(now))

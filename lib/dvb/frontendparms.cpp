@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
+#include <ansidebug.h>
 
 
 DEFINE_REF(eDVBFrontendStatus);
@@ -193,10 +194,15 @@ int eDVBTransponderData::getHierarchyInformation() const
 	return -1;
 }
 
+int eDVBTransponderData::getPlpId() const
+{
+	return -1;
+}
+
 DEFINE_REF(eDVBSatelliteTransponderData);
 
-eDVBSatelliteTransponderData::eDVBSatelliteTransponderData(struct dtv_property *dtvproperties, unsigned int propertycount, eDVBFrontendParametersSatellite &transponderparms, int frequencyoffset, bool original)
-: eDVBTransponderData(dtvproperties, propertycount, original), transponderParameters(transponderparms), frequencyOffset(frequencyoffset)
+eDVBSatelliteTransponderData::eDVBSatelliteTransponderData(struct dtv_property *dtvproperties, unsigned int propertycount, eDVBFrontendParametersSatellite &transponderparms, int frequencyoffset, long spectinvcnt, bool original)
+: eDVBTransponderData(dtvproperties, propertycount, original), transponderParameters(transponderparms), frequencyOffset(frequencyoffset), spectinvCnt(spectinvcnt)
 {
 }
 
@@ -218,11 +224,12 @@ int eDVBSatelliteTransponderData::getInversion() const
 	}
 }
 
+
 unsigned int eDVBSatelliteTransponderData::getFrequency() const
 {
 	if (originalValues) return transponderParameters.frequency;
 
-	return getProperty(DTV_FREQUENCY) + frequencyOffset;
+	return roundMulti((spectinvCnt&1) ? frequencyOffset - getProperty(DTV_FREQUENCY) : frequencyOffset + getProperty(DTV_FREQUENCY), 1000);
 }
 
 unsigned int eDVBSatelliteTransponderData::getSymbolRate() const
@@ -365,9 +372,11 @@ int eDVBCableTransponderData::getFecInner() const
 	case FEC_2_3: return eDVBFrontendParametersCable::FEC_2_3;
 	case FEC_3_4: return eDVBFrontendParametersCable::FEC_3_4;
 	case FEC_5_6: return eDVBFrontendParametersCable::FEC_5_6;
-	case FEC_6_7: return eDVBFrontendParametersCable::FEC_6_7;
 	case FEC_7_8: return eDVBFrontendParametersCable::FEC_7_8;
-	case FEC_8_9: return eDVBFrontendParametersCable::FEC_7_8;
+	case FEC_8_9: return eDVBFrontendParametersCable::FEC_8_9;
+	case FEC_3_5: return eDVBFrontendParametersCable::FEC_3_5;
+	case FEC_4_5: return eDVBFrontendParametersCable::FEC_4_5;
+	case FEC_9_10: return eDVBFrontendParametersCable::FEC_9_10;
 	default:
 	case FEC_AUTO: return eDVBFrontendParametersCable::FEC_Auto;
 	}
@@ -542,6 +551,19 @@ int eDVBTerrestrialTransponderData::getHierarchyInformation() const
 	default:
 	case HIERARCHY_AUTO: return eDVBFrontendParametersTerrestrial::Hierarchy_Auto;
 	}
+}
+
+int eDVBTerrestrialTransponderData::getPlpId() const
+{
+	if (originalValues) return transponderParameters.plpid;
+
+#if defined DTV_STREAM_ID
+	return getProperty(DTV_STREAM_ID);
+#elif defined DTV_DVBT2_PLP_ID
+	return getProperty(DTV_DVBT2_PLP_ID);
+#else
+	return -1;
+#endif
 }
 
 int eDVBTerrestrialTransponderData::getSystem() const

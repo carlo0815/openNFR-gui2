@@ -69,6 +69,11 @@ public:
 		CUR_VOLTAGE,          // current voltage
 		CUR_TONE,             // current continuous tone
 		SATCR,                // current SatCR
+		DICTION,              // current diction
+		PIN,                  // pin
+		DISEQC_WDG,           // Watchdog for buggy DiSEqC-implementation (VuZero)
+		SPECTINV_CNT,         // spectral inversation counter (need for offset calculation)
+		LFSR,                 // PRNG collision handling
 		NUM_DATA_ENTRIES
 	};
 	Signal1<void,iDVBFrontend*> m_stateChanged;
@@ -80,6 +85,8 @@ private:
 	int m_dvbid;
 	int m_slotid;
 	int m_fd;
+#define DVB_VERSION(major, minor) ((major << 8) | minor)
+	int m_dvbversion;
 	bool m_rotor_mode;
 	bool m_need_rotor_workaround;
 	std::map<fe_delivery_system_t, bool> m_delsys, m_delsys_whitelist;

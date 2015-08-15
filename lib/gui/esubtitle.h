@@ -44,7 +44,7 @@ class eSubtitleWidget: public eWidget, public iSubtitleUser, public Object
 {
 public:
 	eSubtitleWidget(eWidget *parent);
-	
+
 	void setPage(const eDVBTeletextSubtitlePage &p);
 	void setPage(const eDVBSubtitlePage &p);
 	void setPage(const ePangoSubtitlePage &p);
@@ -66,6 +66,7 @@ public:
 
 protected:
 	int event(int event, void *data=0, void *data2=0);
+	void removeHearingImpaired(std::string& str);
 private:
 	int m_page_ok;
 	eDVBTeletextSubtitlePage m_page;

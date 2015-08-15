@@ -1,4 +1,4 @@
-/* 
+/*
 FreeSat Huffman decoder for VDR
 Copyright (C) 2008  DOM http://www.rst38.org.uk/vdr/
 Port to C++ / Enigma 2
@@ -38,9 +38,10 @@ GNU General Public License for more details.
 static void loadFile(huffTableEntry **table, const char *filename);
 
 
-struct huffTableEntry {
-	__u32 value;
-	__u16 bits;
+struct huffTableEntry
+{
+	uint32_t value;
+	uint16_t bits;
 	char next;
 	huffTableEntry * nextEntry;
 
@@ -60,8 +61,8 @@ freesatHuffmanDecoder::~freesatHuffmanDecoder()
 	int	i, j;
 	huffTableEntry *currentEntry, *nextEntry;
 	for ( j = 0 ; j < 2; j++ )
-	{ 
-		for ( i = 0 ; i < 256; i++ ) 
+	{
+		for ( i = 0 ; i < 256; i++ )
 		{
 			currentEntry = m_tables[j][i];
 			while ( currentEntry != NULL )
@@ -84,32 +85,27 @@ freesatHuffmanDecoder::~freesatHuffmanDecoder()
 */
 static unsigned char resolveChar(const char *str)
 {
-	if (str[1] == 0)
-		return str[0];
-
-	switch(str[0])
-	{
-		case '0':
+	const char *p = str;
+	unsigned c0 = *p++, c1 = *p++;
+	if (c1)
+		switch(c0|c1<<8)
 		{
-			int val;
-			if ( sscanf(str,"0x%02x", &val) == 1 )
-			{
-				return val;
-			}
+			case '0'|'x'<<8:
+				if ( sscanf(p,"%02x", &c1) == 1 )
+					c0 = c1;
+				break;
+			case 'E'|'S'<<8:
+				if ( !strcmp(p,"CAPE") )
+					c0 = ESCAPE;
+				break;
+			case 'S'|'T'<<8:
+				if ( !strcmp(p,"OP") )
+					c0 = STOP;
+				else if ( !strcmp(p,"ART") )
+					c0 = START;
+				break;
 		}
-		break;
-		case 'E':
-			if ( strcmp(str,"ESCAPE") == 0 )
-				return ESCAPE;
-			break;
-		case 'S':
-			if ( strcmp(str,"STOP") == 0 )
-				return STOP;
-			if ( strcmp(str,"START") == 0 )
-				return START;
-			break;
-	}
-	return str[0];
+	return c0;
 }
 
 
@@ -203,7 +199,7 @@ std::string freesatHuffmanDecoder::decode(const unsigned char *src, size_t size)
 
 	if (src[0] != 0x1f)
 		return uncompressed;
-	
+
 	const unsigned int table_index = src[1] - 1;
 
 	if (table_index <= 1)

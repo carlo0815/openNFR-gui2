@@ -270,6 +270,7 @@ public:
 	virtual ePtr<iServiceInfoContainer> getInfoObject(int w);
 	virtual ePtr<iDVBTransponderData> getTransponderData(const eServiceReference &ref);
 	virtual long long getFileSize(const eServiceReference &ref);
+	virtual bool isCrypted();
 
 	virtual int setInfo(const eServiceReference &ref, int w, int v);
 	virtual int setInfoString(const eServiceReference &ref, int w, const char *v);
@@ -386,6 +387,7 @@ public:
 
 		sHBBTVUrl,
 		sLiveStreamDemuxId,
+		sBuffer,
 
 		sUser = 0x100
 	};
@@ -725,7 +727,7 @@ public:
 		/* adds a service to a list */
 	virtual RESULT addService(eServiceReference &ref, eServiceReference before=eServiceReference())=0;
 		/* removes a service from a list */
-	virtual RESULT removeService(eServiceReference &ref)=0;
+	virtual RESULT removeService(eServiceReference &ref, bool renameBouquet=true)=0;
 		/* moves a service in a list, only if list suppports a specific sort method. */
 		/* pos is the new, absolute position from 0..size-1 */
 	virtual RESULT moveService(eServiceReference &ref, int pos)=0;
@@ -982,6 +984,7 @@ public:
 		evRecordWriteError,
 		evNewEventInfo,
 		evRecordAborted,
+		evGstRecordEnded,
 	};
 	enum {
 		NoError=0,
@@ -1014,6 +1017,7 @@ public:
 	virtual SWIG_VOID(RESULT) frontendInfo(ePtr<iFrontendInformation> &SWIG_OUTPUT)=0;
 	virtual SWIG_VOID(RESULT) stream(ePtr<iStreamableService> &SWIG_OUTPUT)=0;
 	virtual SWIG_VOID(RESULT) subServices(ePtr<iSubserviceList> &SWIG_OUTPUT)=0;
+	virtual SWIG_VOID(RESULT) getFilenameExtension(std::string &SWIG_OUTPUT)=0;
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<iRecordableService>, iRecordableServicePtr);
 

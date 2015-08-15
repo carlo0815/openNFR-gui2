@@ -123,9 +123,8 @@ void eTuxtxtApp::setEnableTtCachingOnOff( int onoff )
 		pid = savePid;
 	}
 }
+
 void eTuxtxtApp::handleKey( int key )
 {
 	tuxtxt_handlePressedKey(key);
-
 }
-

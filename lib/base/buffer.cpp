@@ -17,7 +17,7 @@ void eIOBuffer::removeblock()
 eIOBuffer::eIOBufferData &eIOBuffer::addblock()
 {
 	eIOBufferData s;
-	s.data=new __u8[allocationsize];
+	s.data=new uint8_t[allocationsize];
 	s.len=0;
 	buffer.push_back(s);
 	return buffer.back();
@@ -50,25 +50,25 @@ int eIOBuffer::empty() const
 
 int eIOBuffer::peek(void *dest, int len) const
 {
-	__u8 *dst=(__u8*)dest;
+	uint8_t *dst=(uint8_t*)dest;
 	std::list<eIOBufferData>::const_iterator i(buffer.begin());
 	int p=ptr;
 	int written=0;
 	while (len)
-	{	
+	{
 		if (i == buffer.end())
 			break;
 		int tc=i->len-p;
 		if (tc > len)
 			tc = len;
-	
+
 		memcpy(dst, i->data+p, tc);
 		dst+=tc;
 		written+=tc;
-	
+
 		++i;
 		p=0;
-			
+
 		len-=tc;
 	}
 	return written;
@@ -92,7 +92,7 @@ void eIOBuffer::skip(int len)
 
 int eIOBuffer::read(void *dest, int len)
 {
-	__u8 *dst=(__u8*)dest;
+	uint8_t *dst=(uint8_t*)dest;
 	len=peek(dst, len);
 	skip(len);
 	return len;
@@ -100,7 +100,7 @@ int eIOBuffer::read(void *dest, int len)
 
 void eIOBuffer::write(const void *source, int len)
 {
-	const __u8 *src=(const __u8*)source;
+	const uint8_t *src=(const uint8_t*)source;
 	while (len)
 	{
 		int tc=len;
@@ -147,16 +147,15 @@ int eIOBuffer::fromfile(int fd, int len)
 int eIOBuffer::tofile(int fd, int len)
 {
 	int written=0;
-	int w;
 	while (len && !buffer.empty())
-	{	
+	{
 		if (buffer.begin() == buffer.end())
 			break;
 		int tc=buffer.front().len-ptr;
 		if (tc > len)
 			tc = len;
-	
-		w=::write(fd, buffer.front().data+ptr, tc);
+
+		int w=::write(fd, buffer.front().data+ptr, tc);
 		if (w < 0)
 		{
 			if (errno != EWOULDBLOCK && errno != EBUSY && errno != EINTR)
@@ -166,7 +165,7 @@ int eIOBuffer::tofile(int fd, int len)
 		ptr+=w;
 		if (ptr == buffer.front().len)
 			removeblock();
-		written+=w;	
+		written+=w;
 
 		len-=w;
 		if (tc != w)
@@ -181,7 +180,7 @@ int eIOBuffer::searchchr(char ch) const
 	int p=ptr;
 	int c=0;
 	while (1)
-	{	
+	{
 		if (i == buffer.end())
 			break;
 		while (p < i->len)

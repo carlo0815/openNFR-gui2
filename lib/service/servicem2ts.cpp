@@ -70,9 +70,9 @@ RESULT eStaticServiceM2TSInformation::getName(const eServiceReference &ref, std:
 int eStaticServiceM2TSInformation::getLength(const eServiceReference &ref)
 {
 	ASSERT(ref == m_ref);
-	
+
 	eDVBTSTools tstools;
-	
+
 	struct stat s;
 	stat(ref.path.c_str(), &s);
 
@@ -165,7 +165,7 @@ DEFINE_REF(eM2TSFile);
 eM2TSFile::eM2TSFile(const char *filename):
 	m_lock(),
 	m_sync_offset(0),
-	m_fd(::open(filename, O_RDONLY | O_LARGEFILE)),
+	m_fd(::open(filename, O_RDONLY | O_LARGEFILE | O_CLOEXEC)),
 	m_current_offset(0),
 	m_length(0)
 {
@@ -285,7 +285,7 @@ eServiceFactoryM2TS::eServiceFactoryM2TS()
 eServiceFactoryM2TS::~eServiceFactoryM2TS()
 {
 	ePtr<eServiceCenter> sc;
-	
+
 	eServiceCenter::getPrivInstance(sc);
 	if (sc)
 		sc->removeServiceFactory(eServiceFactoryM2TS::id);

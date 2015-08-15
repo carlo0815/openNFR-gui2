@@ -91,7 +91,7 @@ int eSocket::setSocket(int s, int iss, eMainloop *ml)
 	last_break = -1;
 
 	rsn = 0;
-	rsn=eSocketNotifier::create(ml, getDescriptor(), 
+	rsn=eSocketNotifier::create(ml, getDescriptor(),
 		eSocketNotifier::Read|eSocketNotifier::Hungup);
 	CONNECT(rsn->activated, eSocket::notifier);
 	return 0;
@@ -115,7 +115,7 @@ void eSocket::notifier(int what)
 					close();
 					return;
 				}
-			} 
+			}
 			else		// when operating on terminals, check for break
 			{
 				serial_icounter_struct icount;
@@ -169,7 +169,7 @@ void eSocket::notifier(int what)
 		{
 			mystate=Connection;
 			rsn->setRequested(rsn->getRequested()&~eSocketNotifier::Write);
-			
+
 			int res;
 			socklen_t size=sizeof(res);
 			::getsockopt(getDescriptor(), SOL_SOCKET, SO_ERROR, &res, &size);
@@ -229,23 +229,23 @@ int eSocket::getDescriptor()
 
 int eSocket::connectToHost(std::string hostname, int port)
 {
-	sockaddr_in  serv_addr;
+	sockaddr_in6  serv_addr;
 	struct hostent *server;
 	int res;
 
 	if (mystate == Invalid)
 	{
 		/* the socket has been closed, create a new socket descriptor */
-		int s=socket(AF_INET, SOCK_STREAM, 0);
+		int s=socket(AF_INET6, SOCK_STREAM, 0);
 		mystate=Idle;
 		setSocket(s, 1, mainloop);
 	}
-	
+
 	if(socketdesc < 0){
 		error_(errno);
 		return(-1);
 	}
-	server=gethostbyname(hostname.c_str());
+	server=gethostbyname2(hostname.c_str(), AF_INET6);
 	if(server==NULL)
 	{
 		eDebug("can't resolve %s", hostname.c_str());
@@ -253,9 +253,9 @@ int eSocket::connectToHost(std::string hostname, int port)
 		return(-2);
 	}
 	bzero(&serv_addr, sizeof(serv_addr));
-	serv_addr.sin_family=AF_INET;
-	bcopy(server->h_addr, &serv_addr.sin_addr.s_addr, server->h_length);
-	serv_addr.sin_port=htons(port);
+	serv_addr.sin6_family=AF_INET6;
+	bcopy(server->h_addr, &serv_addr.sin6_addr, server->h_length);
+	serv_addr.sin6_port=htons(port);
 	res=::connect(socketdesc, (const sockaddr*)&serv_addr, sizeof(serv_addr));
 	if ((res < 0) && (errno != EINPROGRESS) && (errno != EINTR))
 	{
@@ -324,7 +324,7 @@ int eUnixDomainSocket::connectToPath(std::string path)
 		mystate=Idle;
 		setSocket(s, 1, mainloop);
 	}
-	
+
 	if(socketdesc < 0){
 		error_(errno);
 		return(-1);

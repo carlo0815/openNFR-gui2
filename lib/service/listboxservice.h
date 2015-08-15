@@ -6,6 +6,7 @@
 #include <lib/service/iservice.h>
 #include <lib/python/python.h>
 #include <set>
+#include <lib/nav/core.h>
 
 class eListboxServiceContent: public virtual iListboxContent
 {
@@ -21,11 +22,11 @@ public:
 	void setIgnoreService( const eServiceReference &service );
 	void setRoot(const eServiceReference &ref, bool justSet=false);
 	void getCurrent(eServiceReference &ref);
-	
+
 	int getNextBeginningWithChar(char c);
 	int getPrevMarkerPos();
 	int getNextMarkerPos();
-	
+
 		/* support for marked services */
 	void initMarked();
 	void addMarked(const eServiceReference &ref);
@@ -43,9 +44,9 @@ public:
 		visModeSimple,
 		visModeComplex
 	};
-	
+
 	void setVisualMode(int mode);
-	
+
 		/* only in complex mode: */
 	enum {
 		celServiceNumber,
@@ -67,20 +68,31 @@ public:
 		picFolder,
 		picMarker,
 		picServiceEventProgressbar,
+		picCrypto,
+		picRecord,
 		picElements
 	};
 
 	void setElementPosition(int element, eRect where);
 	void setElementFont(int element, gFont *font);
 	void setPixmap(int type, ePtr<gPixmap> &pic);
-	
+
 	void sort();
 
 	int setCurrentMarked(bool);
 
 	int getItemHeight() { return m_itemheight; }
 	void setItemHeight(int height);
-	void setServiceTypeIconMode(int mode);
+	void setHideNumberMarker(bool doHide) { m_hide_number_marker = doHide; }
+	void setServiceTypeIconMode(int mode) { m_servicetype_icon_mode = mode; }
+	void setCryptoIconMode(int mode) { m_crypto_icon_mode = mode; }
+	void setRecordIndicatorMode(int mode) { m_record_indicator_mode = mode; }
+	void setColumnWidth(int value) { m_column_width = value; }
+	void setProgressbarHeight(int value) {	m_progressbar_height = value; }
+	void setProgressbarBorderWidth(int value) { m_progressbar_border_width = value; }
+	void setNonplayableMargins(int value) { m_nonplayable_margins = value; }
+	void setItemsDistances(int value) { m_items_distances = value; }
+
 	static void setGetPiconNameFunc(SWIG_PYOBJECT(ePyObject) func);
 
 	enum {
@@ -93,34 +105,42 @@ public:
 		eventForegroundSelected,
 		eventborderForeground,
 		eventborderForegroundSelected,
+		eventForegroundFallback,
+		eventForegroundSelectedFallback,
+		serviceItemFallback,
+		serviceSelectedFallback,
 		serviceEventProgressbarColor,
 		serviceEventProgressbarColorSelected,
 		serviceEventProgressbarBorderColor,
 		serviceEventProgressbarBorderColorSelected,
+		serviceRecorded,
+		servicePseudoRecorded,
+		serviceStreamed,
 		colorElements
 	};
-	
+
 	void setColor(int color, gRGB &col);
+	bool checkServiceIsRecorded(eServiceReference ref,pNavigation::RecordType type=pNavigation::isAnyRecording);
 protected:
 	void cursorHome();
 	void cursorEnd();
 	int cursorMove(int count=1);
 	int cursorValid();
 	int cursorSet(int n);
-	int cursorResolve(int cursor_position);
+	int cursorResolve(int);
 	int cursorGet();
 	int currentCursorSelectable();
 
 	void cursorSave();
 	void cursorRestore();
 	int size();
-	
+
 	// void setOutputDevice ? (for allocating colors, ...) .. requires some work, though
 	void setSize(const eSize &size);
-	
+
 		/* the following functions always refer to the selected item */
 	void paint(gPainter &painter, eWindowStyle &style, const ePoint &offset, int selected);
-	
+
 	int m_visual_mode;
 		/* for complex mode */
 	eRect m_element_position[celElements];
@@ -130,17 +150,17 @@ protected:
 	bool m_color_set[colorElements];
 private:
 	typedef std::list<eServiceReference> list;
-	
+
 	list m_list;
 	list::iterator m_cursor, m_saved_cursor;
-	
+
 	int m_cursor_number, m_saved_cursor_number;
 	int m_size;
-	
+
 	eSize m_itemsize;
 	ePtr<iServiceHandler> m_service_center;
 	ePtr<iListableService> m_lst;
-	
+
 	eServiceReference m_root;
 
 		/* support for marked services */
@@ -154,7 +174,15 @@ private:
 	eServiceReference m_is_playable_ignore;
 
 	int m_itemheight;
+	bool m_hide_number_marker;
 	int m_servicetype_icon_mode;
+	int m_crypto_icon_mode;
+	int m_record_indicator_mode;
+	int m_column_width;
+	int m_progressbar_height;
+	int m_progressbar_border_width;
+	int m_nonplayable_margins;
+	int m_items_distances;
 };
 
 #endif

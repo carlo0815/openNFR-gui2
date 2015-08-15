@@ -234,12 +234,12 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
 		gAccel::getInstance()->releaseAccelMemorySpace();
 
 	fb->SetMode(xres, yres, bpp);
+
 #if defined(__sh__)
 	for (int y = 0; y<yres; y++) { // make whole screen transparent
 		memset(fb->lfb+y*fb->Stride(), 0x00, fb->Stride());
 	}
 #endif
-
 	surface.x = xres;
 	surface.y = yres;
 	surface.bpp = bpp;

@@ -12,6 +12,9 @@
 
 #include <linux/dvb/frontend.h>
 
+extern int roundMulti(int value, int m);//round value to multiple of m
+
+
 struct eDVBFrontendParametersSatellite
 {
 #ifndef SWIG
@@ -62,12 +65,12 @@ struct eDVBFrontendParametersCable
 		Inversion_Off, Inversion_On, Inversion_Unknown
 	};
 
-	/* 
+	/*
 	 * WARNING: do not change the order of these values, they are used to parse lamedb and cables.xml FEC fields.
 	 * The values are the same as those in eDVBFrontendParametersSatellite.
 	 */
 	enum {
-		FEC_Auto=0, FEC_1_2=1, FEC_2_3=2, FEC_3_4=3, FEC_5_6=4, FEC_7_8=5, FEC_8_9=6, FEC_6_7=10, FEC_None=15
+		FEC_Auto=0, FEC_1_2=1, FEC_2_3=2, FEC_3_4=3, FEC_5_6=4, FEC_7_8=5, FEC_8_9=6, FEC_3_5=7, FEC_4_5=8, FEC_9_10=9, FEC_6_7=10, FEC_None=15
 	};
 
 	enum {
@@ -92,7 +95,7 @@ struct eDVBFrontendParametersTerrestrial
 		Bandwidth_8MHz, Bandwidth_7MHz, Bandwidth_6MHz, Bandwidth_Auto, Bandwidth_5MHz, Bandwidth_1_712MHz, Bandwidth_10MHz
 	};
 
-	/* 
+	/*
 	 * WARNING: do not change the order of these values, they are used to parse lamedb and terrestrial.xml FEC fields.
 	 * The values are NOT the same as those in eDVBFrontendParametersSatellite/eDVBFrontendParametersCable
 	 * (and it's too late to fix this now, we would break backward compatibility)
@@ -102,7 +105,7 @@ struct eDVBFrontendParametersTerrestrial
 	};
 
 	enum {
-		System_DVB_T, System_DVB_T2
+		System_DVB_T_T2 = -1, System_DVB_T, System_DVB_T2
 	};
 
 	enum {
@@ -207,6 +210,7 @@ public:
 	int getTransmissionMode() const;
 	int getGuardInterval() const;
 	int getHierarchyInformation() const;
+	int getPlpId() const;
 };
 
 class eDVBSatelliteTransponderData : public eDVBTransponderData
@@ -215,9 +219,10 @@ class eDVBSatelliteTransponderData : public eDVBTransponderData
 
 	eDVBFrontendParametersSatellite transponderParameters;
 	int frequencyOffset;
+	long spectinvCnt;
 
 public:
-	eDVBSatelliteTransponderData(struct dtv_property *dtvproperties, unsigned int propertycount, eDVBFrontendParametersSatellite &transponderparms, int frequencyoffset, bool original);
+	eDVBSatelliteTransponderData(struct dtv_property *dtvproperties, unsigned int propertycount, eDVBFrontendParametersSatellite &transponderparms, int frequencyoffset, long spectinvcnt, bool original);
 
 	std::string getTunerType() const;
 	int getInversion() const;
@@ -269,6 +274,7 @@ public:
 	int getTransmissionMode() const;
 	int getGuardInterval() const;
 	int getHierarchyInformation() const;
+	int getPlpId() const;
 	int getSystem() const;
 };
 

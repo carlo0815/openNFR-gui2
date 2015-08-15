@@ -77,7 +77,7 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/gui/elistboxcontent.h>
 #include <lib/gui/esubtitle.h>
 #include <lib/service/listboxservice.h>
-#include <lib/nav/pcore.h>
+#include <lib/nav/core.h>
 #include <lib/actions/action.h>
 #include <lib/gdi/gfont.h>
 #include <lib/gdi/epng.h>
@@ -94,6 +94,7 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/dvb/cahandler.h>
 #include <lib/dvb/fastscan.h>
 #include <lib/dvb/cablescan.h>
+#include <lib/dvb/encoder.h>
 #include <lib/components/scan.h>
 #include <lib/components/file_eraser.h>
 #include <lib/components/tuxtxtapp.h>
@@ -102,7 +103,6 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/driver/rfmod.h>
 #include <lib/driver/misc_options.h>
 #include <lib/driver/etimezone.h>
-#include <lib/driver/vfd.h>
 #include <lib/gdi/lcd.h>
 #include <lib/mmi/mmi_ui.h>
 #include <lib/dvb_ci/dvbci.h>
@@ -221,7 +221,7 @@ typedef long time_t;
 %include <lib/gui/evideo.h>
 %include <lib/gui/esubtitle.h>
 %include <lib/service/listboxservice.h>
-%include <lib/nav/pcore.h>
+%include <lib/nav/core.h>
 %include <lib/actions/action.h>
 %include <lib/gdi/gfont.h>
 %include <lib/gdi/epng.h>
@@ -245,7 +245,6 @@ typedef long time_t;
 %include <lib/driver/rfmod.h>
 %include <lib/driver/misc_options.h>
 %include <lib/driver/etimezone.h>
-%include <lib/driver/vfd.h>
 %include <lib/gdi/lcd.h>
 %include <lib/mmi/mmi_ui.h>
 %include <lib/dvb_ci/dvbci.h>
@@ -399,6 +398,16 @@ void setEnableTtCachingOnOff(int onoff)
 }
 %}
 
+int getUsedEncoderCount();
+%{
+int getUsedEncoderCount()
+{
+	eEncoder *encoders = eEncoder::getInstance();
+	if (encoders) return encoders->getUsedEncoderCount();
+	return 0;
+}
+%}
+
 /************** temp *****************/
 
 	/* need a better place for this, i agree. */
@@ -425,5 +434,6 @@ extern const char *getGStreamerVersionString();
 extern void dump_malloc_stats(void);
 extern void setAnimation_current(int a);
 extern void setAnimation_speed(int speed);
+
 %include <lib/python/python_console.i>
 %include <lib/python/python_base.i>
