@@ -822,8 +822,8 @@ def QuickMenuEntryComponent(name, description, long_description = None, width=54
 	if getDesktop(0).size().width() == 1920:
 	    return [
      	            _(name),
-                    MultiContentEntryText(pos=(120, 5), size=(width-160, 30), font=0, text = _(name)),
-	            MultiContentEntryText(pos=(120, 33), size=(width-160, 24), font=1, text = _(description)),
+                    MultiContentEntryText(pos=(120, 5), size=(width-160, 33), font=0, text = _(name)),
+	            MultiContentEntryText(pos=(120, 38), size=(width-160, 27), font=1, text = _(description)),
 	            MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 40), png = png),
 	            _(long_description),
 	          ]
@@ -840,8 +840,8 @@ def QuickSubMenuEntryComponent(name, description, long_description = None, width
 		if getDesktop(0).size().width() == 1920:
 			return [
 				_(name),
-				MultiContentEntryText(pos=(10, 5), size=(width-10, 30), font=0, text = _(name)),
-				MultiContentEntryText(pos=(10, 33), size=(width-10, 24), font=1, text = _(description)),
+				MultiContentEntryText(pos=(10, 5), size=(width-10, 33), font=0, text = _(name)),
+				MultiContentEntryText(pos=(10, 38), size=(width-10, 27), font=1, text = _(description)),
 				_(long_description),
 			]
 		else:
