@@ -51,6 +51,13 @@ def InitUsageConfig():
 	config.usage.servicetype_icon_mode.addNotifier(refreshServiceList)
 	config.usage.panicbutton = ConfigYesNo(default = False)
 
+	# just merge note, config.usage.servicelist_column was allready there
+	choicelist = [("-1", _("Disable")), ("0", _("Eventname only"))]
+	for i in range(100,1300,100):
+		choicelist.append(("%d" % i, ngettext("%d pixel wide", "%d pixels wide", i) % i))
+	config.usage.servicelist_column = ConfigSelection(default="-1", choices=choicelist)
+	config.usage.servicelist_column.addNotifier(refreshServiceList)
+
 	config.usage.service_icon_enable = ConfigYesNo(default = False)
 	config.usage.service_icon_enable.addNotifier(refreshServiceList)
 	config.usage.servicelist_cursor_behavior = ConfigSelection(default = "keep", choices = [
