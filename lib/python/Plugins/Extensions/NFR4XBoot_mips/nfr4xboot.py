@@ -195,6 +195,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('atemio')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx'):
         shutil.rmtree('xpeedlx')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedc'):
+        shutil.rmtree('xpeedc')        
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx3'):
         shutil.rmtree('xpeedlx3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus'):
@@ -278,6 +280,8 @@ def NFR4XBootExtract(source, target, zipdelete):
                 os.chdir('8x00')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx'):
             os.chdir('xpeedlx')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedc'):
+            os.chdir('xpeedc')            
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx3'):
             os.chdir('xpeedlx3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus'):
