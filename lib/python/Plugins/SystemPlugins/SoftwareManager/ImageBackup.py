@@ -346,6 +346,18 @@ class ImageBackup(Screen):
 			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
 			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+		elif self.MODEL == "xpeedlxcs2" or self.MODEL == "xpeedlxcc":
+			self.TYPE = "GI"
+			self.MODEL = "xpeedc"
+			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
+			self.SHOWNAME = "GI XpeedLXC"
+			self.MTDKERNEL = "mtd1"
+			self.MAINDESTOLD = "%s/%s" %(self.DIRECTORY, self.MODEL)
+			self.MAINDEST = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.MODEL)
+			self.EXTRA = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
+			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		elif self.MODEL == "atemio5x00":
 			self.TYPE = "ATEMIO"
 			self.MODEL = "5x00"
