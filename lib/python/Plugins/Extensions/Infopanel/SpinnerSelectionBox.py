@@ -44,7 +44,8 @@ class SpinnerSelectionBox(Screen):
 		self["list"].onSelectionChanged.append(self.Changed)
 		self["summary_list"] = StaticText()
 		self.updateSummary()
-				
+		self["key_blue"] = StaticText(_("MoveSpinners_int"))
+                self["key_yellow"] = StaticText(_("MoveSpinners_ext"))					
 		self["actions"] = NumberActionMap(["WizardActions","DirectionActions"], 
 		{
 			"ok": self.go,
