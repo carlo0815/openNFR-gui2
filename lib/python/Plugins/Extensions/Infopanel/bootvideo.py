@@ -7,6 +7,7 @@ from Components.Label import Label
 from Components.ConfigList import ConfigListScreen, ConfigList
 from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, getConfigListEntry, KEY_LEFT, KEY_RIGHT, configfile
 from Components.Sources.StaticText import StaticText
+from Plugins.Extensions.Infopanel.outofflash1 import MoveVideos_int, MoveVideos
 from Components.MenuList import MenuList
 from enigma import *
 from Tools.LoadPixmap import LoadPixmap
@@ -72,6 +73,11 @@ class BootvideoSetupScreen(Screen):
 		self.onShown.append(self.setWindowTitle)
 		aktbootvideo = config.bootvideo.booting.value
 		self["label1"] = Label(_("now Using Bootvideo: %s") % aktbootvideo)
+		self["key_red"] = StaticText(_("Exit"))
+                self["key_green"] = StaticText(_("Save"))
+		self["key_blue"] = StaticText(_("MoveVideos_int"))
+                self["key_yellow"] = StaticText(_("MoveVideos_ext"))
+
 	        vpath = "/usr/share/enigma2/bootvideos/"	
 		uvideo=[]
 		uvideo = os.listdir(vpath)
@@ -84,13 +90,16 @@ class BootvideoSetupScreen(Screen):
                        	elif xvideo.endswith(".mpeg"):
                        	       	bootvideo.append(xvideo)  
 		self.list = []
-		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"],
 			{
 				"cancel": self.Exit,
 				"exit": self.Exit,
 				"red": self.Exit,                                				
 				"ok": self.ok,
-				"green": self.ok,				
+				"green": self.ok,
+				"blue": self.KeyBlue,
+				"yellow": self.KeyYellow,
+                                				
 			}, 1)
 			
                 self.Mlist = []
@@ -106,6 +115,12 @@ class BootvideoSetupScreen(Screen):
 		self["Mlist"].l.setList(self.Mlist)
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 		
 
+
+	def KeyYellow(self):
+		self.session.open(MoveVideos)
+		
+	def KeyBlue(self):
+		self.session.open(MoveVideos_int)		
 
 	def setWindowTitle(self):
 		self.setTitle('%s' % (_('Bootvideo Setup')))
@@ -131,5 +146,3 @@ class BootvideoSetupScreen(Screen):
 		config.bootvideo.booting.save()	
 		configfile.save()
 		self.close()
-		
-	
