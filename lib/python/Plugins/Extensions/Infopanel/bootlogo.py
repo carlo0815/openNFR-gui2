@@ -84,6 +84,10 @@ class BootlogoSetupScreen(Screen):
 		self.onShown.append(self.setWindowTitle)
 		aktbootlogo = config.bootlogo.booting.value
 		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
+		self["key_red"] = StaticText(_("Exit"))
+                self["key_green"] = StaticText(_("Save"))
+		self["key_blue"] = StaticText(_("MoveBootLogos_int"))
+                self["key_yellow"] = StaticText(_("MoveBootLogos_ext"))			
 	        vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
 		ulogo = os.listdir(vpath)
@@ -170,6 +174,10 @@ class RadiologoSetupScreen(Screen):
 		self.onShown.append(self.setWindowTitle)
 		aktradiologo = config.radiologo.booting.value
 		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
+		self["key_red"] = StaticText(_("Exit"))
+                self["key_green"] = StaticText(_("Save"))
+		self["key_blue"] = StaticText(_("MoveBootLogos_int"))
+                self["key_yellow"] = StaticText(_("MoveBootLogos_ext"))			
 	        vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
