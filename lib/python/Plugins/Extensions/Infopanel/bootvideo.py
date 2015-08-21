@@ -56,7 +56,7 @@ def InfoEntryComponent(file):
 class BootvideoSetupScreen(Screen):
 	skin = """<screen name="BootvideoSetupScreen" position="center,center" size="950,520" title="BootvideoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
+                                <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
 				<widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="white" halign="right" transparent="1" zPosition="5">
 				<convert type="ClockToText">&gt;Format%H:%M:%S</convert>
@@ -74,6 +74,7 @@ class BootvideoSetupScreen(Screen):
 				<widget source="key_yellow" render="Label" position="405,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_blue" render="Label" position="590,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_info" render="Label" position="775,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
                 </screen>"""	
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -86,8 +87,8 @@ class BootvideoSetupScreen(Screen):
 		self["label1"] = Label(_("now Using Bootvideo: %s") % aktbootvideo)
 		self["key_red"] = StaticText(_("Exit"))
                 self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("MoveVideos_int"))
-                self["key_yellow"] = StaticText(_("MoveVideos_ext"))
+		self["key_blue"] = StaticText(_("MoveToExt."))
+                self["key_yellow"] = StaticText(_("MoveBack"))
                 self["key_info"] = StaticText(_("preview"))
 
 	        vpath = "/usr/share/enigma2/bootvideos/"	
