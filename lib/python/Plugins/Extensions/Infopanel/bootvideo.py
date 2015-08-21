@@ -92,16 +92,19 @@ class BootvideoSetupScreen(Screen):
                 self["key_info"] = StaticText(_("preview"))
 
 	        vpath = "/usr/share/enigma2/bootvideos/"	
-		uvideo=[]
-		uvideo = os.listdir(vpath)
-		bootvideo = []
-                for xvideo in uvideo:
-                       	if xvideo.endswith(".mp4"):
-                       	       	bootvideo.append(xvideo)
-                       	elif xvideo.endswith(".mkv"):
-                       	       	bootvideo.append(xvideo)
-                       	elif xvideo.endswith(".mpeg"):
-                       	       	bootvideo.append(xvideo)  
+                if not os.path.exists(vpath):
+                       	bootvideo = []
+                else:
+		       	uvideo=[]
+		       	uvideo = os.listdir(vpath)
+		       	bootvideo = []
+                       	for xvideo in uvideo:
+                       	       	if xvideo.endswith(".mp4"):
+                       	       	       	bootvideo.append(xvideo)
+                       	       	elif xvideo.endswith(".mkv"):
+                       	       	       	bootvideo.append(xvideo)
+                       	       	elif xvideo.endswith(".mpeg"):
+                       	       	       	bootvideo.append(xvideo)   
 		self.list = []
 		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions"],
 			{
