@@ -9,6 +9,7 @@ from Components.ConfigList import ConfigListScreen, ConfigList
 from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, getConfigListEntry, KEY_LEFT, KEY_RIGHT, configfile
 from Components.Sources.StaticText import StaticText
 from Components.MenuList import MenuList
+from Plugins.Extensions.Infopanel.outofflash import MoveBootlogos_int, MoveBootlogos, MoveRadiologos_int, MoveRadiologos
 from enigma import *
 from Tools.LoadPixmap import LoadPixmap
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
@@ -65,7 +66,7 @@ def InfoEntryComponent1(file):
 	return res
         		           
 class BootlogoSetupScreen(Screen):
-	skin = """<screen name="BootlogoSetupScreen" position="center,center" size="950,470" title="BootlogoSetupScreen">
+	skin = """<screen name="BootlogoSetupScreen" position="center,center" size="950,520" title="BootlogoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
@@ -75,7 +76,16 @@ class BootlogoSetupScreen(Screen):
 				<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
 				<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
 				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
-                </screen>"""	
+ 				<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/yellow.png" position="370,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/blue.png" position="550,480" size="30,30" alphatest="blend" />
+				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_yellow" render="Label" position="405,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_blue" render="Label" position="590,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
+               </screen>"""	
 	def __init__(self, session):
 		Screen.__init__(self, session)
                 self.session = session
@@ -85,10 +95,10 @@ class BootlogoSetupScreen(Screen):
 		aktbootlogo = config.bootlogo.booting.value
 		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
 		self["key_red"] = StaticText(_("Exit"))
-                self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("MoveBootLogos_int"))
-                self["key_yellow"] = StaticText(_("MoveBootLogos_ext"))			
-	        vpath = "/usr/share/enigma2/bootlogos/"	
+		self["key_green"] = StaticText(_("Save"))
+		self["key_blue"] = StaticText(_("Back2Flash"))
+		self["key_yellow"] = StaticText(_("Outsourcing"))			
+		vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
 		ulogo = os.listdir(vpath)
 		bootlogo = []
@@ -103,7 +113,9 @@ class BootlogoSetupScreen(Screen):
 				"exit": self.Exit,
 				"red": self.Exit,                                				
 				"ok": self.ok,
-				"green": self.ok,				
+				"green": self.ok,
+				"blue": self.KeyBlue,
+				"yellow": self.KeyYellow,				
 			}, 1)
 			
                 self.Mlist = []
@@ -121,7 +133,13 @@ class BootlogoSetupScreen(Screen):
 		else:
 		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
-		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 		
+		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 	
+
+	def KeyYellow(self):
+		self.session.open(MoveBootlogos)
+		
+	def KeyBlue(self):
+		self.session.open(MoveBootlogos_int)			
 
 
 	def setWindowTitle(self):
@@ -155,7 +173,7 @@ class BootlogoSetupScreen(Screen):
 		self.close()
 
 class RadiologoSetupScreen(Screen):
-	skin = """<screen name="RadiologoSetupScreen" position="center,center" size="950,470" title="RadiologoSetupScreen">
+	skin = """<screen name="RadiologoSetupScreen" position="center,center" size="950,520" title="RadiologoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
@@ -165,20 +183,29 @@ class RadiologoSetupScreen(Screen):
 				<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
 				<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
 				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
+ 				<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/yellow.png" position="370,480" size="30,30" alphatest="blend" />
+				<ePixmap pixmap="skin_default/buttons/blue.png" position="550,480" size="30,30" alphatest="blend" />
+				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_yellow" render="Label" position="405,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="key_blue" render="Label" position="590,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
                 </screen>"""	
 	def __init__(self, session):
 		Screen.__init__(self, session)
-                self.session = session
+		self.session = session
 		Screen.setTitle(self, _("RadiologoSetupScreen"))
-                self.Console = Console()
+		self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktradiologo = config.radiologo.booting.value
 		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
 		self["key_red"] = StaticText(_("Exit"))
-                self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("MoveBootLogos_int"))
-                self["key_yellow"] = StaticText(_("MoveBootLogos_ext"))			
-	        vpath = "/usr/share/enigma2/radiologos/"	
+		self["key_green"] = StaticText(_("Save"))
+		self["key_blue"] = StaticText(_("Back2Flash"))
+		self["key_yellow"] = StaticText(_("outsourcing"))			
+		vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
 		radiologo = []
@@ -193,7 +220,9 @@ class RadiologoSetupScreen(Screen):
 				"exit": self.Exit,
 				"red": self.Exit,                                				
 				"ok": self.ok,
-				"green": self.ok,				
+				"green": self.ok,
+				"blue": self.KeyBlue,
+				"yellow": self.KeyYellow,					
 			}, 1)
 			
                 self.Mlist = []
@@ -213,6 +242,11 @@ class RadiologoSetupScreen(Screen):
 		self["Mlist"].l.setList(self.Mlist)
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 		
 
+	def KeyYellow(self):
+		self.session.open(MoveRadiologos)
+		
+	def KeyBlue(self):
+		self.session.open(MoveRadiologos_int)		
 
 	def setWindowTitle(self):
 		self.setTitle('%s' % (_('Radiologo Setup')))
@@ -245,4 +279,4 @@ class RadiologoSetupScreen(Screen):
                 config.radiologo.booting.value = menu1
 		config.radiologo.booting.save()	
 		configfile.save()
-		self.close()
+		self.close() 
