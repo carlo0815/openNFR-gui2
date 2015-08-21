@@ -87,8 +87,8 @@ class BootvideoSetupScreen(Screen):
 		self["label1"] = Label(_("now Using Bootvideo: %s") % aktbootvideo)
 		self["key_red"] = StaticText(_("Exit"))
                 self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("MoveToExt."))
-                self["key_yellow"] = StaticText(_("MoveBack"))
+		self["key_blue"] = StaticText(_("MoveBack"))
+                self["key_yellow"] = StaticText(_("MoveToExt."))
                 self["key_info"] = StaticText(_("preview"))
 
 	        vpath = "/usr/share/enigma2/bootvideos/"	
