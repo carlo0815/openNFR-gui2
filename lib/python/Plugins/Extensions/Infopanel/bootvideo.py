@@ -90,7 +90,7 @@ class BootvideoSetupScreen(Screen):
                        	elif xvideo.endswith(".mpeg"):
                        	       	bootvideo.append(xvideo)  
 		self.list = []
-		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions"],
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions"],
 			{
 				"cancel": self.Exit,
 				"exit": self.Exit,
@@ -99,6 +99,7 @@ class BootvideoSetupScreen(Screen):
 				"green": self.ok,
 				"blue": self.KeyBlue,
 				"yellow": self.KeyYellow,
+				"info": self.KeyInfo,
                                 				
 			}, 1)
 			
@@ -113,8 +114,14 @@ class BootvideoSetupScreen(Screen):
 		else:
 		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
-		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 		
-
+		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 	
+		
+	def KeyInfo(self):
+	        self.session.nav.stopService()
+	        menu = self['Mlist'].getCurrent()[2]
+		menu1 = list(menu)[7]
+		os.system('gst-launch-1.0 playbin uri=file:///usr/share/enigma2/bootvideos/%s' % menu1)
+                self.session.nav.playService(self.oldbmcService)
 
 	def KeyYellow(self):
 		self.session.open(MoveVideos)
