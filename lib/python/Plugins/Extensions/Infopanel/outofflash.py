@@ -545,9 +545,9 @@ class MoveVideos_int(Screen):
 		self['spaceused'].setValue(percUsed)			
 
 		
-class MoveBootlogo_ext(Screen):
+class MoveBootlogos_ext(Screen):
 	skin = """
-		<screen name="MoveBootlogo_ext" position="0,0" size="800,600" title="Move Bootlogos to HDD/USB">
+		<screen name="MoveBootlogos_ext" position="0,0" size="800,600" title="Move Bootlogos to HDD/USB">
 				<eLabel text="Move Bootlogos to HDD/USB" position="66,98" size="720,28" font="Regular;26" backgroundColor="backtop" transparent="1" />
 				<widget source="Title" render="Label" position="65,17" size="721,43" font="Regular; 28" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
 				<eLabel position="65,130" size="710,2" backgroundColor="grey" />
@@ -564,7 +564,7 @@ class MoveBootlogo_ext(Screen):
   
 	def __init__(self, session, hdd, text, question):
 		from Components.Sources.StaticText import StaticText
-		self.skin = MoveBootlogo_ext.skin	
+		self.skin = MoveBootlogos_ext.skin	
 		Screen.__init__(self, session)
 		global bootlogopoint
 		bootlogopoint = hdd.findMount()
@@ -802,9 +802,9 @@ class MoveBootlogos_int(Screen):
 		 percFree))
 		self['spaceused'].setValue(percUsed)
 
-class MoveRadiologo_ext(Screen):
+class MoveRadiologos_ext(Screen):
 	skin = """
-		<screen name="MoveRadiologo_ext" position="0,0" size="800,600" title="Move Radiologos to HDD/USB">
+		<screen name="MoveRadiologos_ext" position="0,0" size="800,600" title="Move Radiologos to HDD/USB">
 				<eLabel text="Move Radiologos to HDD/USB" position="66,98" size="720,28" font="Regular;26" backgroundColor="backtop" transparent="1" />
 				<widget source="Title" render="Label" position="65,17" size="721,43" font="Regular; 28" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
 				<eLabel position="65,130" size="710,2" backgroundColor="grey" />
@@ -821,7 +821,7 @@ class MoveRadiologo_ext(Screen):
   
 	def __init__(self, session, hdd, text, question):
 		from Components.Sources.StaticText import StaticText
-		self.skin = MoveRadiologo_ext.skin	
+		self.skin = MoveRadiologos_ext.skin	
 		Screen.__init__(self, session)
 		global radiologopoint
 		radiologopoint = hdd.findMount()
