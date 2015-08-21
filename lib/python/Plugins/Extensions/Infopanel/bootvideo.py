@@ -54,7 +54,7 @@ def InfoEntryComponent(file):
                         	   
            
 class BootvideoSetupScreen(Screen):
-	skin = """<screen name="BootvideoSetupScreen" position="center,center" size="950,470" title="BootvideoSetupScreen">
+	skin = """<screen name="BootvideoSetupScreen" position="center,center" size="950,520" title="BootvideoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
