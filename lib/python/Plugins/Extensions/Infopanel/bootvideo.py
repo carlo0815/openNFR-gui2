@@ -7,7 +7,7 @@ from Components.Label import Label
 from Components.ConfigList import ConfigListScreen, ConfigList
 from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, getConfigListEntry, KEY_LEFT, KEY_RIGHT, configfile
 from Components.Sources.StaticText import StaticText
-from Plugins.Extensions.Infopanel.outofflash1 import MoveVideos_int, MoveVideos
+from Plugins.Extensions.Infopanel.outofflash import MoveVideos_int, MoveVideos
 from Components.MenuList import MenuList
 from enigma import *
 from Tools.LoadPixmap import LoadPixmap
