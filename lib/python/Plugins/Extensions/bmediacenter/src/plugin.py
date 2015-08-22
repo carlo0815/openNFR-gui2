@@ -30,12 +30,12 @@ if getDesktop(0).size().width() == 1920:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skinHD.xml")
 else:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skin.xml")
-try:
-	from enigma import evfd
-	config.plugins.mc_global.vfd.value = 'on'
-	config.plugins.mc_global.save()
-except Exception as e:
-	print 'Media Center: Import evfd failed'
+#try:
+#	from enigma import evfd
+#	config.plugins.mc_global.vfd.value = 'on'
+#	config.plugins.mc_global.save()
+#except Exception as e:
+#	print 'Media Center: Import evfd failed'
 try:
 	from Plugins.Extensions.DVDPlayer.plugin import *
 	dvdplayer = True
@@ -91,8 +91,8 @@ class DMC_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-		if config.plugins.mc_global.vfd.value == "on":
-			evfd.getInstance().vfd_write_string(_("My Music"))
+		#if config.plugins.mc_global.vfd.value == "on":
+		#	evfd.getInstance().vfd_write_string(_("My Music"))
 		if config.plugins.mc_globalsettings.upnp_enable.getValue():
 			if fileExists("/media/upnp") is False:
 				os.mkdir("/media/upnp")
@@ -238,8 +238,8 @@ class DMC_MainMenu(Screen):
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconSettings.png")
 			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")				
 			
-		if config.plugins.mc_global.vfd.value == "on":
-			evfd.getInstance().vfd_write_string(self["menu"].getCurrent()[0])
+		#if config.plugins.mc_global.vfd.value == "on":
+		#	evfd.getInstance().vfd_write_string(self["menu"].getCurrent()[0])
 		self["text"].setText(self["menu"].getCurrent()[0])
 	def okbuttonClick(self):
 		from Screens.MessageBox import MessageBox
@@ -328,8 +328,8 @@ class DMC_MainMenu(Screen):
 				open("/proc/stb/video/alpha", "w").write(str(trans))
 			except:
 				print "Set OSD Transparacy failed"
-		if config.plugins.mc_global.vfd.value == "on":
-			evfd.getInstance().vfd_write_string(_("Media Center"))
+		#if config.plugins.mc_global.vfd.value == "on":
+		#	evfd.getInstance().vfd_write_string(_("Media Center"))
 		os.system('umount /media/upnp')
 		self.session.nav.playService(self.oldbmcService)
 		self.close()
