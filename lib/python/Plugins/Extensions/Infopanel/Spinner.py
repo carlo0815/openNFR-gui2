@@ -7,7 +7,12 @@ class Spinner(GUIComponent):
 	def __init__(self,Bilder):
 		GUIComponent.__init__(self)
 		self.len = 0
-		self.SetBilder(Bilder)
+		if not Bilder:
+		        Bilder = []
+			for i in range(64):
+				if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
+					Bilder.append("/usr/share/enigma2/spinner/wait%d.png"%(i+1))
+                self.SetBilder(Bilder)
 		self.timer = eTimer()
 		self.timer.callback.append(self.Invalidate)
 		self.timer.start(100)
@@ -26,4 +31,4 @@ class Spinner(GUIComponent):
 			if self.len >= len(self.Bilder):
 				self.len = 0
 			self.instance.setPixmapFromFile(self.Bilder[self.len])
-			self.len += 1
+			self.len += 1 
