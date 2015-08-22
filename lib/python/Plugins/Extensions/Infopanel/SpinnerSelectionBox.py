@@ -3,8 +3,10 @@ from Components.ActionMap import NumberActionMap
 from Components.Label import Label
 #from Components.ChoiceList import ChoiceEntryComponent, ChoiceList
 from Components.MenuList import MenuList
+from Screens.MessageBox import MessageBox
 from Components.Sources.StaticText import StaticText
 from Plugins.Extensions.Infopanel.Spinner import Spinner
+from Plugins.Extensions.Infopanel.outofflash import MoveSpinner_int, MoveSpinner
 import os
 
 class SpinnerSelectionBox(Screen):
@@ -26,14 +28,18 @@ class SpinnerSelectionBox(Screen):
 		<widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
 		<eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
 		<widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
+		<ePixmap pixmap="skin_default/buttons/yellow.png" position="650,670" size="30,30" alphatest="blend" />
+		<ePixmap pixmap="skin_default/buttons/blue.png" position="940,670" size="30,30" alphatest="blend" />
+		<widget source="key_yellow" render="Label" position="685,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+		<widget source="key_blue" render="Label" position="975,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" /> 
 		</screen>"""
 	def __init__(self, session, title = "", list = []):
 		Screen.__init__(self, session)
 
 		self["text"] = Label(title)
 		self.list = list #[]
-		self.summarylist = []
-		cursel = self.list[0]
+		self.summarylist = [] 
+               	cursel = self.list[0]
 		self.Bilder = []
 		if cursel:
 			for i in range(64):
@@ -46,13 +52,25 @@ class SpinnerSelectionBox(Screen):
 		self.updateSummary()
 		self["key_blue"] = StaticText(_("Back2Flash"))
                 self["key_yellow"] = StaticText(_("Outsourcing"))					
-		self["actions"] = NumberActionMap(["WizardActions","DirectionActions"], 
+		self["actions"] = NumberActionMap(["WizardActions", "DirectionActions", "ColorActions"], 
 		{
 			"ok": self.go,
 			"back": self.cancel,
 			"up": self.up,
-			"down": self.down
+			"down": self.down,
+			"red": self.cancel,                                				
+			"green": self.go,
+			"blue": self.KeyBlue,
+			"yellow": self.KeyYellow,				
 		}, -1)
+		
+
+	def KeyYellow(self):
+		self.session.open(MoveSpinner)
+		
+	def KeyBlue(self):
+		self.session.open(MoveSpinner_int)			
+
 
 	def Changed(self):
 		cursel = self["list"].l.getCurrentSelection()
@@ -117,4 +135,4 @@ class SpinnerSelectionBox(Screen):
 		self["summary_list"].setText(summarytext)
 
 	def cancel(self):
-		self.close(None)
+		self.close(None) 
