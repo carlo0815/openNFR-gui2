@@ -119,10 +119,10 @@ void bsodFatal(const char *component)
 	bsodhandled = true;
 
 	std::string lines = getLogBuffer();
-	
+
 		/* find python-tracebacks, and extract "  File "-strings */
 	size_t start = 0;
-	
+
 	std::string crash_emailaddr = CRASH_EMAILADDR;
 	std::string crash_component = "enigma2";
 
@@ -157,6 +157,7 @@ void bsodFatal(const char *component)
 	FILE *f;
 	const char* crashlog_name;
 	std::ostringstream os;
+	std::ostringstream os_text;
 	os << getConfigString("config.crash.debug_path", "/home/root/logs/");
 	os << "enigma2_crash_";
 	os << time(0);
@@ -187,8 +188,6 @@ void bsodFatal(const char *component)
 		time_t t = time(0);
 		struct tm tm;
 		char tm_str[32];
-
-		bool detailedCrash = getConfigBool("config.crash.details", true);
 
 		localtime_r(&t, &tm);
 		strftime(tm_str, sizeof(tm_str), "%a %b %_d %T %Y", &tm);
@@ -224,48 +223,6 @@ void bsodFatal(const char *component)
 		xml.cDataFromFile("imageversion", "/etc/image-version");
 		xml.cDataFromFile("imageissue", "/etc/issue.net");
 		xml.close();
-
-		if (detailedCrash)
-		{
-			xml.open("software");
-			xml.cDataFromCmd("enigma2software", "opkg list-installed 'enigma2*'");
-			if(access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("xtrendsoftware", "opkg list-installed 'et*'");
-			}
-			else if (access("/proc/stb/info/vumodel", F_OK) != -1) {
-				xml.cDataFromCmd("vuplussoftware", "opkg list-installed 'vuplus*'");
-			}
-			else if (access("/proc/stb/info/model", F_OK) != -1) {
-				xml.cDataFromCmd("dreamboxsoftware", "opkg list-installed 'dream*'");
-			}
-			else if (access("/proc/stb/info/azmodel", F_OK) != -1) {
-				xml.cDataFromCmd("azboxboxsoftware", "opkg list-installed 'az*'");
-			}
-			else if (access("/proc/stb/info/gbmodel", F_OK) != -1) {
-				xml.cDataFromCmd("gigabluesoftware", "opkg list-installed 'gb*'");
-			}
-			else if (access("/proc/stb/info/hwmodel", F_OK) != -1) {
-				xml.cDataFromCmd("technomatesoftware", "opkg list-installed 'tm*'");
-			}
-			else if (access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("inisoftware", "opkg list-installed 'ini*'");
-			}
-			else if (access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("maxdigitalsoftware", "opkg list-installed 'xp*'");
-			}			
-			else if (access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("odinsoftware", "opkg list-installed 'odin*'");
-			}		
-			else if (access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("eboxsoftware", "opkg list-installed 'ebox*'");
-			}	
-			else if (access("/proc/stb/info/boxtype", F_OK) != -1) {
-				xml.cDataFromCmd("medialinksoftware", "opkg list-installed 'ixuss*'");
-			}				
-			xml.cDataFromCmd("gstreamersoftware", "opkg list-installed 'gst*'");
-			xml.close();
-		}
-
 		xml.open("crashlogs");
 		xml.cDataFromString("enigma2crashlog", getLogBuffer());
 		xml.close();
@@ -277,30 +234,35 @@ void bsodFatal(const char *component)
 
 	ePtr<gMainDC> my_dc;
 	gMainDC::getInstance(my_dc);
-	
+
 	gPainter p(my_dc);
 	p.resetOffset();
 	p.resetClip(eRect(ePoint(0, 0), my_dc->size()));
 	p.setBackgroundColor(gRGB(0x010000));
 	p.setForegroundColor(gRGB(0xFFFFFF));
 
-	ePtr<gFont> font = new gFont("Regular", 20);
+	int hd =  my_dc->size().width() == 1920;
+	ePtr<gFont> font = new gFont("Regular", hd ? 30 : 20);
 	p.setFont(font);
 	p.clear();
 
-	eRect usable_area = eRect(100, 70, my_dc->size().width() - 150, 100);
-	
+	eRect usable_area = eRect(hd ? 30 : 100, hd ? 30 : 70, my_dc->size().width() - (hd ? 60 : 150), hd ? 150 : 100);
+
 	os.str("");
 	os.clear();
-	os << "We are really sorry. Your receiver encountered "
+	os_text.clear();
+
+	os_text << "We are really sorry. Your receiver encountered "
 		"a software problem, and needs to be restarted.\n"
 		"Please send the logfile " << crashlog_name << " to " << crash_emailaddr << ".\n"
 		"Your receiver restarts in 10 seconds!\n"
 		"Component: " << crash_component;
+	
+	os << getConfigString("config.crash.debug_text", os_text.str());
 
 	p.renderText(usable_area, os.str().c_str(), gPainter::RT_WRAP|gPainter::RT_HALIGN_LEFT);
 
-	usable_area = eRect(100, 170, my_dc->size().width() - 180, my_dc->size().height() - 20);
+	usable_area = eRect(hd ? 30 : 100, hd ? 180 : 170, my_dc->size().width() - (hd ? 60 : 180), my_dc->size().height() - (hd ? 30 : 20));
 
 	int i;
 
@@ -315,10 +277,10 @@ void bsodFatal(const char *component)
 		}
 	}
 
-	font = new gFont("Regular", 14);
+	font = new gFont("Regular", hd ? 21 : 14);
 	p.setFont(font);
 
-	p.renderText(usable_area, 
+	p.renderText(usable_area,
 		lines.substr(start), gPainter::RT_HALIGN_LEFT);
 	sleep(10);
 
@@ -381,7 +343,7 @@ void handleFatalSignal(int signum, siginfo_t *si, void *ctx)
 	oops(uc->uc_mcontext);
 #endif
 	print_backtrace();
-	eDebug("-------");
+	eDebug("-------FATAL SIGNAL");
 	bsodFatal("enigma2, signal");
 }
 
@@ -392,7 +354,7 @@ void bsodCatchSignals()
 	act.sa_flags = SA_RESTART | SA_SIGINFO;
 	if (sigemptyset(&act.sa_mask) == -1)
 		perror("sigemptyset");
-	
+
 		/* start handling segfaults etc. */
 	sigaction(SIGSEGV, &act, 0);
 	sigaction(SIGILL, &act, 0);
