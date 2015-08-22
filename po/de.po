@@ -12649,3 +12649,5 @@ msgstr "Einen anderen Spinner auswählen"
 msgid "are you sure to cancel all changes"
 msgstr "Jetzt beenden ohne die Änderungen zu speichern?"
 
+msgid "Please wait while your network is restarting..."
+msgstr "Bitte warten, das Netzwerk wird neu gestartet..."
