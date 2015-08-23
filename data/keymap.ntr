@@ -479,8 +479,8 @@
 	</map>
 
 	<map context="InfobarTimeshiftActions">
-		<key id="KEY_YELLOW" mapto="timeshiftStartY" flags="b" />
-
+		<!--key id="KEY_YELLOW" mapto="timeshiftStartY" flags="b" /-->
+		<key id="KEY_TV" mapto="timeshiftStop" flags="m" />
 		<device name="dreambox ir keyboard">
 			<key id="KEY_YELLOW" mapto="timeshiftStartY" flags="m" />
 			<key id="KEY_TV" mapto="timeshiftStop" flags="m" />
