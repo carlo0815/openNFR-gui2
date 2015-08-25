@@ -166,7 +166,7 @@ class BackupSelection(Screen):
 
 		self.selectedFiles = config.plugins.configurationbackup.backupdirs.value
 		defaultDir = '/'
-		inhibitDirs = ["/bin", "/boot", "/dev", "/autofs", "/lib", "/proc", "/sbin", "/sys", "/hdd", "/tmp", "/mnt", "/media"]
+		inhibitDirs = ["/bin", "/boot", "/etc/enigma2", "/dev", "/autofs", "/lib", "/proc", "/sbin", "/sys", "/hdd", "/tmp", "/mnt", "/media"]
 		self.filelist = MultiFileSelectList(self.selectedFiles, defaultDir, inhibitDirs = inhibitDirs )
 		self["checkList"] = self.filelist
 
@@ -323,7 +323,7 @@ class RestoreMenu(Screen):
 	def startRestore(self, ret = False):
 		if ret == True:
 			self.exe = True
-			self.session.open(Console, title = _("Restoring..."), cmdlist = ["tar -xzvf " + self.path + "/" + self.sel + " -C /", "killall -9 enigma2"])
+			self.session.open(Console, title = _("Restoring..."), cmdlist = ["rm -R /etc/enigma2", "tar -xzvf " + self.path + "/" + self.sel + " -C /", "killall -9 enigma2"])
 
 	def deleteFile(self):
 		if (self.exe == False) and (self.entry == True):
