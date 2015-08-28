@@ -332,9 +332,8 @@ def NFR4XBootExtract(source, target, zipdelete):
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2/hybrid'):
 		os.chdir('hybrid')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/optimussos3plus'):
-            os.chdir('update')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/optimussos3plus/cfe'):
-                os.chdir('optimussos3plus/cfe')
+            os.chdir('update/optimussos3plus/cfe')
+            os.system('mv -f oe_rootfs.bin rootfs.bin')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
             os.chdir('redeagle')        
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
