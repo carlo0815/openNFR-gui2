@@ -210,7 +210,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://nightly.atemio4you.com/2.3/image'        
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
-            self.feedurl = 'http://v4.hdfreaks.cc'
+            self.feedurl = 'http://images.hdfreaks.cc'
         elif self.distro == 'openmips':
             self.feed = 'openmips'
             self.feedurl = 'http://image.openmips.com/4.2'
@@ -404,6 +404,10 @@ class DownloadOnLineImage(Screen):
                 box = 'Formuler'
                 urlbox = 'formuler1'                
                 stb = '1'                                        
+            elif box in ('optimussos3plus'):
+                box = 'Edision'
+                urlbox = 'optimussos3plus'                
+                stb = '1'
             elif box in ('iniboxhde'):
                 box = 'Venton-Unibox'
                 urlbox = 'iniboxhde'                
@@ -462,7 +466,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'                                    
         elif self.distro == 'openhdf':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolose', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
+            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'optimussos3plus', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolose', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
                 box = getBoxType()
                 stb = '1'
             elif box in ('xpeedlx1', 'xpeedlx2'):
@@ -502,7 +506,7 @@ class DownloadOnLineImage(Screen):
             elif self.distro == 'custom':
                 url = self.feedurl + sel
             elif self.distro == 'openhdf':
-                url = 'http://v4.hdfreaks.cc/' + box[0] + '/' + sel
+                url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
             elif self.distro == 'opendroid':
                 url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel                
             else:
