@@ -558,7 +558,7 @@ class FindMovieList(Screen):
 	def showCover(self, poster_path):
 		self.picload = ePicLoad()
 		if not fileExists(poster_path):
-			poster_path = "/usr/share/enigma2/skin_default/extensions/no_cover.png"
+			poster_path = "/usr/share/enigma2/skin_default/extensions/no_coverbg.png"
 		if fileExists(poster_path):
 			self["cover"].instance.setPixmap(gPixmapPtr())
 			scale = AVSwitch().getFramebufferScale()
