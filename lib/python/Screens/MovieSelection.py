@@ -214,6 +214,7 @@ class MovieBrowserConfiguration(ConfigListScreen,Screen):
 		configList.append(getConfigListEntry(_("Root directory"), config.movielist.root, _("Sets the root folder of movie list, to remove the '..' from benign shown in that folder.")))
 		configList.append(getConfigListEntry(_("Hide known extensions"), config.movielist.hide_extensions, _("Allows you to hide the extensions of known file types.")))
 		configList.append(getConfigListEntry(_("Show live tv when movie stopped"), config.movielist.show_live_tv_in_movielist, _("When set the PIG will return to live after a movie has stopped playing.")))
+		configList.append(getConfigListEntry(_("Show Covers in Movielist"), config.usage.movielist_show_cover, _("Shows the Covers in Movielist and Moviebar")))		
 		for btn in ('red', 'green', 'yellow', 'blue', 'TV', 'Radio', 'Text'):
 			configList.append(getConfigListEntry(_("Button") + " " + _(btn), userDefinedButtons[btn], _("Allows you to setup the button to do what you choose.")))
 		ConfigListScreen.__init__(self, configList, session = self.session, on_change = self.changedEntry)
@@ -340,6 +341,7 @@ class MovieContextMenu(Screen, ProtectedScreen):
 				menu.append((_("Reset playback position"), csel.do_reset))
 				menu.append((_("Rename"), csel.do_rename))
 				menu.append((_("Start offline decode"), csel.do_decode))
+				menu.append((_("Search for Covers"), csel.do_covers))				
 				# Plugins expect a valid selection, so only include them if we selected a non-dir
 				menu.extend([(p.description, boundFunction(p, session, service)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
 				
@@ -373,6 +375,7 @@ class SelectionEventInfo:
 		self.list.connectSelChanged(self.__selectionChanged)
 		self.timer = eTimer()
 		self.timer.callback.append(self.updateEventInfo)
+		self["Cover"] = Pixmap()
 		self.onShown.append(self.__selectionChanged)
 
 	def __selectionChanged(self):
@@ -1470,6 +1473,22 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		self.session.openWithCallback(self.createDirCallback, VirtualKeyBoard,
 			title = _("Please enter name of the new directory"),
 			text = "")
+			
+	def do_covers(self):
+	        #**kwargs = 0
+        	item = self.getCurrentSelection()
+        	current = item[0]
+        	info = item[1]
+        	if info is None:
+        		# Special case
+        		return
+                else:
+                	service = info and info.getName(current)
+                        print "service:", service	
+			from Components.SearchCovers import *
+			self.session.openWithCallback(self.reloadList, FindMovieList, service)
+
+		
 	def createDirCallback(self, name):
 		if not name:
 			return
