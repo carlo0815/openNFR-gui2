@@ -233,6 +233,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('update')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
         shutil.rmtree('redeagle')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
+        shutil.rmtree('osmini')    
 
 def NFR4XBootExtract(source, target, zipdelete):
     NFR4XBootRemoveUnpackDirs()
@@ -345,7 +347,8 @@ def NFR4XBootExtract(source, target, zipdelete):
             os.chdir('redeagle')        
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
 		os.chdir('twinboxlcd')        
-                                
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
+                os.chdir('osmini')
 				
         print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
         if os.path.exists('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi_extract_files.pyo'):
