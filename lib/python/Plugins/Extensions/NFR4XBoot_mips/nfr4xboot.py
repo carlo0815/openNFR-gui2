@@ -227,8 +227,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('formuler3')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
         shutil.rmtree('bre2ze')    
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2'):
-        shutil.rmtree('odin2')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum'):
+        shutil.rmtree('opticum')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
         shutil.rmtree('update')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
@@ -327,10 +327,10 @@ def NFR4XBootExtract(source, target, zipdelete):
                 os.chdir('formuler3')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
                 os.chdir('bre2ze')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2'):
-            os.chdir('odin2')        
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odin2/hybrid'):
-		os.chdir('hybrid')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum'):
+            os.chdir('opticum')        
+            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum/tt'):
+		os.chdir('tt')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
             os.chdir('update')
             if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update/optimussos2plus'):
