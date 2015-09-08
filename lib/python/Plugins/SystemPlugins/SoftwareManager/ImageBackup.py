@@ -462,16 +462,16 @@ class ImageBackup(Screen):
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		## TESTING Odin Twin Model
-		elif self.MODEL == "odin2hybrid":
+		elif self.MODEL == "opticumtt":
 			self.TYPE = "OPTICUM"
-			self.MODEL = "odin2hybrid"
+			self.MODEL = "opticumtt"
 			self.MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
 			self.UBINIZE_ARGS = "-m 2048 -p 128KiB"
 			self.SHOWNAME = "Opticum"
-			self.MTDKERNEL = "mtd1"
+			self.MTDKERNEL = "mtd2"
 			self.MAINDESTOLD = "%s/Opticum/%s" %(self.DIRECTORY, self.MODEL)
-			self.MAINDEST = "%s/odin2/hybrid" % self.DIRECTORY
-			self.MAINDEST1 = "%s/odin2" % self.DIRECTORY
+			self.MAINDEST = "%s/opticum/tt" % self.DIRECTORY
+			self.MAINDEST1 = "%s/opticum" % self.DIRECTORY
 			self.EXTRA = "%s/fullbackup_%s/%s/" % (self.DIRECTORY, self.MODEL, self.DATE)
 			self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)	
 		elif self.MODEL == "quadbox2400":
