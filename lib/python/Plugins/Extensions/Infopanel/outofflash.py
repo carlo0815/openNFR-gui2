@@ -88,12 +88,15 @@ class MovePlugins_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+	        try:
+		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			        message += '\n' + _("Do you want to continue?")
+			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		        else:
+			        self.hddConfirmed(True)
+		except:
+                	        self.hddConfirmed(True) 
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -348,12 +351,15 @@ class MoveVideos_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+	        try:
+		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			        message += '\n' + _("Do you want to continue?")
+			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		        else:
+			        self.hddConfirmed(True)
+		except:
+                	        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -610,12 +616,15 @@ class MoveBootlogos_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+	        try:
+		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			        message += '\n' + _("Do you want to continue?")
+			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		        else:
+			        self.hddConfirmed(True)
+		except:
+                	        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -867,12 +876,15 @@ class MoveRadiologos_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+	        try:
+		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			        message += '\n' + _("Do you want to continue?")
+			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		        else:
+			        self.hddConfirmed(True)
+		except:
+                	        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -1124,12 +1136,15 @@ class MoveSpinner_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+	        try:
+		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			        message += '\n' + _("Do you want to continue?")
+			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		        else:
+			        self.hddConfirmed(True)
+		except:
+                	        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
