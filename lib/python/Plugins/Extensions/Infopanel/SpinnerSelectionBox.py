@@ -66,10 +66,13 @@ class SpinnerSelectionBox(Screen):
 		
 
 	def KeyYellow(self):
-		self.session.open(MoveSpinner)
+		self.session.openWithCallback(self.Key_ex, MoveSpinner)
 		
 	def KeyBlue(self):
-		self.session.open(MoveSpinner_int)			
+		self.session.openWithCallback(self.Key_ex, MoveSpinner_int)
+		
+	def Key_ex(self, arg):
+                self.cancel()			
 
 
 	def Changed(self):
