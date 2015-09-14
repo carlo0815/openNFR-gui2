@@ -27,12 +27,4 @@ if VUULTIMO
 SUBDIRS += CableScan
 endif
 
-if QUADBOX2400
-SUBDIRS += AnimationSetup
-endif
-
-if MUTANT2400
-SUBDIRS += AnimationSetup
-endif
-
 install_PYTHON = __init__.py
