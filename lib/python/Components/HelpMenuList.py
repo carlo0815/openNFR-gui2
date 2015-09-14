@@ -50,7 +50,10 @@ class HelpMenuList(GUIComponent):
 				else:
 					entry.append( (eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 500, 28, 0, 0, help) )
 
-				l.append(entry)
+                                if "HotkeyActions" in entry[0]: 
+                                	print "no helpentry"
+                                else:
+                                	l.append(entry)
 
 		self.l.setList(l)
 		if self.extendedHelp is True:
