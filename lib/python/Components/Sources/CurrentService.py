@@ -33,6 +33,13 @@ class CurrentService(PerServiceBase, Source):
 		return self.navcore.getCurrentlyPlayingServiceReference()
 
 	service = property(getCurrentService)
+	
+	def getCurrentServiceRef(self):
+		if NavigationInstance.instance is not None:
+			return NavigationInstance.instance.getCurrentlyPlayingServiceOrGroup()
+		return None
+
+	serviceref = property(getCurrentServiceRef)
 
 	def destroy(self):
 		PerServiceBase.destroy(self)
