@@ -19,7 +19,7 @@ class InstallWizard(Screen, ConfigListScreen):
 	
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
-
+                print "installwizard starts"
 		self.index = args
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
@@ -108,13 +108,8 @@ class InstallWizard(Screen, ConfigListScreen):
 	def run(self):
 		if self.index == self.STATE_UPDATE:
 			if config.misc.installwizard.hasnetwork.value:
-			        self.run1()
 				self.session.open(InstallWizardIpkgUpdater, self.index, _('Please wait (updating packages)'), IpkgComponent.CMD_UPDATE)
 						
- 
-	def run1(self):
-		self.session.open(PluginInstall)
-		return		
 
 
 class InstallWizardIpkgUpdater(Screen):
