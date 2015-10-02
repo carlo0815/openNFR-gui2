@@ -1,43 +1,6 @@
 <!--suppress XmlUnboundNsPrefix -->
 <wizard>
-		<step id="start" >
-			<text value="Please connect your %s %s to the internet" />
-			<displaytext value="Please connect your %s %s to the internet" />
-			<list>
-				<listentry caption="Check the internet connection" step="update" />
-				<listentry caption="Skip internet connection check (disables automatic package installation)" step="nima" />
-			</list>
-			<code>
-self.clearSelectedKeys()
-self.selectKey("UP")
-self.selectKey("DOWN")
-			</code>
-		</step>
-		<step id="update">
-			<text value="Checking the internet connection" />
-			<config screen="InstallWizard" module="InstallWizard" args="0" type="ConfigList" />
-			<code>
-self.clearSelectedKeys()
-self.selectKey("OK")
-			</code>
-		</step>
-		<step id="networkfailed" >
-			<condition>
-self.condition = not config.misc.installwizard.ipkgloaded.value
-			</condition>
-			<text value="Your %s %s does not have an internet connection" />
-			<displaytext value="Your %s %s is not connected to the internet" />
-			<list>
-				<listentry caption="Check the internet connection again" step="update" />
-				<listentry caption="Skip internet connection check (disables automatic package installation)" step="nima" />
-			</list>
-			<code>
-self.clearSelectedKeys()
-self.selectKey("UP")
-self.selectKey("DOWN")
-			</code>
-		</step>
-		<step id="nima">
+		<step id="start">
 			<condition>
 from Components.NimManager import nimmanager
 self.condition = len(nimmanager.nim_slots) > 0 and not nimmanager.nim_slots[0].empty
@@ -96,12 +59,12 @@ from Components.NimManager import nimmanager
 self.condition = nimmanager.somethingConnected()
 			</condition>
 			<list>
-				<listentry caption="No" step="end" />
+				<listentry caption="No" step="expert" />
 				<listentry caption="Yes, do an automatic scan now" step="scan" />
 				<listentry caption="Yes, do a manual scan now" step="manualscan" />
 			</list>
 		</step>
-		<step id="scan" nextstep="end">
+		<step id="scan" nextstep="expert">
 			<condition>
 from Components.NimManager import nimmanager
 self.condition = nimmanager.somethingConnected()
@@ -124,25 +87,16 @@ self.condition = nimmanager.somethingConnected()
 			</condition>
 			<text value="Do you want to do another manual service scan?" />
 			<list>
-				<listentry caption="No" step="end" />
+				<listentry caption="No" step="expert" />
 				<listentry caption="Yes, do another manual scan now" step="manualscan" />
 			</list>
 		</step>
-
 		<step id="expert">
+			<condition>
+self.condition = self.isLastWizard
+			</condition>		
 			<text value="Your %s %s offers three levels of configuration options:\n\nSimple - We suggest this level if this is your first contact with a %s %s.\nIntermediate - This level enables you to change some more options, mainly the graphical user interface and the behaviour of your %s %s.\nExpert - This gives you full control over all available settings of your %s %s.\n\nWarning: Higher levels may lead to increased usage complexity." />
 			<displaytext value="Your %s %s offers three levels of configuration options:\n\nSimple - We suggest this level if this is your first contact with a %s %s.\nIntermediate - This level enables you to change some more options, mainly the graphical user interface and the behaviour of your %s %s.\nExpert - This gives you full control over all available settings of your %s %s.\n\nWarning: Higher levels may lead to increased usage complexity." />
 			<list type="config" configelement="config.usage.setup_level" />
-		</step>
-		<step id="end" laststep="true">
-			<condition>
-self.condition = self.isLastWizard
-			</condition>
-			<text value="Thank you for using the wizard. Your %s %s is now ready to use.\nPlease press OK to start using your %s %s." />
-			<displaytext value="Thank you for using the wizard. Your %s %s is now ready to use.\nPlease press OK to start using your %s %s." />
-			<code>
-self.clearSelectedKeys()
-self.selectKey("OK")
-			</code>
 		</step>
 </wizard>
