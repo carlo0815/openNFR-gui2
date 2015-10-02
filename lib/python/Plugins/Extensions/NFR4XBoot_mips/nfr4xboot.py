@@ -235,6 +235,8 @@ def NFR4XBootRemoveUnpackDirs():
         shutil.rmtree('redeagle')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
         shutil.rmtree('osmini')
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/spycat'):
+        shutil.rmtree('spycat')
     if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/triplex'):
         shutil.rmtree('triplex')    
 
@@ -351,6 +353,8 @@ def NFR4XBootExtract(source, target, zipdelete):
 		os.chdir('twinboxlcd')        
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
                 os.chdir('osmini')
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/spycat'):
+                os.chdir('spycat')
         if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/triplex'):
                 os.chdir('triplex')        
 				
