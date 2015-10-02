@@ -8,11 +8,10 @@ from Screens.Screen import Screen
 from boxbranding import getBoxType
 
 from Components.Pixmap import Pixmap
-from Components.config import config, ConfigBoolean, configfile
+from Components.config import *
 
 from LanguageSelection import LanguageWizard
-from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
-from Screens.OpenNFR_wizard import OpenNFRWizardSetup
+from Screens.Nfrstartwizard import NfrWizardSetupScreen
 from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
 
 config.misc.firstrun = ConfigBoolean(default = True)
@@ -32,22 +31,15 @@ class StartWizard(WizardLanguage, Rc):
 		if getBoxType() == 'dm8000':
 			config.misc.rcused.setValue(0)
 		else:
-			config.misc.rcused.setValue(1)
+                        config.misc.rcused.setValue(1)
 		config.misc.rcused.save()
-
+		
 		config.misc.firstrun.setValue(0)
 		config.misc.firstrun.save()
 		configfile.save()
-
-wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.getValue(), priority = 0)
-wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.getValue(), priority = 1)
+	
+wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.getValue(), priority = 0)
+wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.getValue(), priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.getValue(), priority = 20)
-if getBrandOEM() == "fulan":
-	print "no UserInterfacePositionerWizard"
-else:
-	wizardManager.registerWizard(UserInterfacePositionerWizard, config.misc.firstrun.getValue(), priority = 30)
-wizardManager.registerWizard(OpenWebifConfig, config.misc.firstrun.getValue(), priority = 40)
-wizardManager.registerWizard(OpenNFRWizardSetup, config.misc.firstrun.getValue(), priority = 50)
-
-
+wizardManager.registerWizard(NfrWizardSetupScreen, config.misc.firstrun.getValue(), priority = 30)
 
