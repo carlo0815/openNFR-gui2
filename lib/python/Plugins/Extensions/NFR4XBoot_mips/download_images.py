@@ -210,7 +210,8 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://nightly.atemio4you.com/2.3/image'        
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
-            self.feedurl = 'http://images.hdfreaks.cc'
+            self.feedurl1 = 'http://images.hdfreaks.cc'
+            self.feedurl = 'http://images.hdfreaks.cc/menu.html'
         elif self.distro == 'openmips':
             self.feed = 'openmips'
             self.feedurl = 'http://image.openmips.com/4.2'
@@ -233,72 +234,22 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv':
-            if box in ('bre2ze', 'twinboxlcd', 'triplex', 'osmini', 'spycat', 'optimussos3plus', 'optimussos2plus', 'opticumtt', 'blackbox7405', 'xpeedlxcc', 'xpeedlxcs2', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
-                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-                    box = 'ventonhdx'
-                    stb = '1'
-                elif box in ('xpeedlx1', 'xpeedlx2'):
+        if self.distro == 'openatv' or self.distro == 'openatv-5.0' or self.distro == 'openatv-5.1' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'atemio4you' or self.distro == 'openmips' or self.distro == 'openhdf':
+            if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
-                    stb = '1'
-                else:
-                    box = getBoxType()
-                    stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'
-        if self.distro == 'openatv-5.0':
-            if box in ('bre2ze', 'twinboxlcd', 'triplex', 'osmini', 'spycat', 'optimussos3plus', 'optimussos2plus', 'opticumtt', 'blackbox7405', 'xpeedlxcc', 'xpeedlxcs2', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
-                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-                    box = 'ventonhdx'
-                    stb = '1'
-                elif box in ('xpeedlx1', 'xpeedlx2'):
-                    box = 'xpeedlx'
-                    stb = '1'
-                else:
-                    box = getBoxType()
-                    stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'
-        if self.distro == 'openatv-5.1':
-            if box in ('bre2ze', 'twinboxlcd', 'triplex', 'osmini', 'spycat', 'optimussos3plus', 'optimussos2plus', 'opticumtt', 'blackbox7405', 'xpeedlxcc', 'xpeedlxcs2', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
-                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-                    box = 'ventonhdx'
-                    stb = '1'
-                elif box in ('xpeedlx1', 'xpeedlx2'):
-                    box = 'xpeedlx'
-                    stb = '1'
-                else:
-                    box = getBoxType()
-                    stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'        
-        elif self.distro == 'opennfr':
-            if box in ('bre2ze', 'twinboxlcd', 'triplex', 'osmini', 'spycat', 'optimussos3plus', 'optimussos2plus', 'opticumtt', 'blackbox7405', 'xpeedlxcc', 'xpeedlxcs2', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'mutant2400', 'quadbox2400', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'starsatlx', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'uniboxhde', 'axodin', 'classm', 'evoe3hd', 'sf8', 'xp1000mk', 'iqonios300hd', 'odinm7', 'gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gb800se', 'atemio6200', 'atemio6000', 'atemio6100', 'formuler1', 'formuler3'):
-                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-                    box = 'ventonhdx'
-                    stb = '1'
-                elif box in ('xpeedlx1', 'xpeedlx2'):
-                    box = 'xpeedlx'
-                    stb = '1'  
-                elif box in ('starsatlx'):
-                    box = 'odinm7'
-                    stb = '1'  
-                else:
-                    box = getBoxType()
-                    stb = '1'  
-            else:   
-                stb = 'no Image for this Box on this Side'                                                
-        elif self.distro == 'egami':   
-            if box in ('xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'atemio6000', 'atemio6100', 'atemio6200'):
-                if box in ('xpeedlx1', 'xpeedlx2'):
-                    box = 'xpeedlx12'
-                    stb = '1'
-                else:
-                    box = getBoxType()
-                    stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side' 
-        elif self.distro == 'openvix':
+            req = urllib2.Request(self.feedurl)
+            stb = 'no Image for this Box on this Side'
+            try:
+                    response = urllib2.urlopen(req)
+                    tmp = response.readlines()
+                    for line in tmp:
+                        if '<a href="' in line:
+                            if box in line:
+                                stb = '1'
+                                break
+            except:
+                    stb = 'no Image for this Box on this Side'
+        if self.distro == 'openvix':
             if box in ('xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'sf8', 'mutant2400', 'gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se'):
                 if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
                     box = 'ventonhdx'
@@ -463,27 +414,6 @@ class DownloadOnLineImage(Screen):
                     stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side'
-        elif self.distro == 'atemio4you':
-            if box in ('atemio5x00', 'atemionemesis', 'atemio6200', 'atemio6000', 'atemio6100'):
-                box = getBoxType()
-                stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'                                    
-        elif self.distro == 'openhdf':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se', 'optimussos3plus', 'optimussos2plus', 'xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'atemio5x00', 'atemionemesis', 'starsatlx', 'vusolo', 'vusolose', 'vusolo2', 'vuduo', 'axodin', 'classm', 'sf8', 'xp1000mk', 'formuler1', 'formuler3', 'atemio6200', 'atemio6000', 'atemio6100'):
-                box = getBoxType()
-                stb = '1'
-            elif box in ('xpeedlx1', 'xpeedlx2'):
-                box = 'xpeedlx'
-                stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'  
-        elif self.distro == 'openmips':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se'):
-                box = getBoxType()
-                stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'
         elif self.distro == 'custom':
             if box in ('bre2ze'):
                 box = getBoxType()
@@ -578,7 +508,7 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'opennfr':
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
-            url = '%s/%s' % (self.feedurl, box)
+            url = '%s/%s' % (self.feedurl1, box)
         elif self.distro == 'custom':
             url = self.feedurl
 	else:
@@ -674,7 +604,6 @@ class ImageDownloadTask(Task):
         self.postconditions.append(DownloaderPostcondition())
         self.job = job
         self.url = url
-        print url
         self.path = path
         self.error_message = ''
         self.last_recvbytes = 0
