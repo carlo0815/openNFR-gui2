@@ -3,7 +3,7 @@ import os
 import struct
 import shutil
 
-def NFR4XBootMainEx(source, target, installsettings, zipdelete):
+def NFR4XBootMainEx(source, target, installsettings, zipdelete, getimagefolder, getMachineRootFile):
     nfr4xhome = '/media/nfr4xboot'
     nfr4xroot = 'media/nfr4xboot'
     to = '/media/nfr4xboot/NFR4XBootI/' + target
@@ -15,7 +15,7 @@ def NFR4XBootMainEx(source, target, installsettings, zipdelete):
     to = '/media/nfr4xboot/NFR4XBootI/' + target
     cmd = 'chmod -R 0777 %s' % to
     rc = os.system(cmd)
-    rc = NFR4XBootExtract(source, target, zipdelete)
+    rc = NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFile)
     cmd = 'mkdir -p %s/NFR4XBootI/%s/media > /dev/null 2>&1' % (nfr4xhome, target)
     rc = os.system(cmd)
     cmd = 'rm %s/NFR4XBootI/%s/%s > /dev/null 2>&1' % (nfr4xhome, target, nfr4xroot)
@@ -177,7 +177,7 @@ def NFR4XBootMainEx(source, target, installsettings, zipdelete):
             cmd = 'chmod -R 0755 %s' % filename
             rc = os.system(cmd)
 
-    rc = NFR4XBootRemoveUnpackDirs()
+    rc = NFR4XBootRemoveUnpackDirs(getimagefolder)
     filename = nfr4xhome + '/NFR4XBootI/.nfr4xboot'
     out = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
     out.write(target)
@@ -187,61 +187,14 @@ def NFR4XBootMainEx(source, target, installsettings, zipdelete):
     os.system('reboot -p')
 
 
-def NFR4XBootRemoveUnpackDirs():
+def NFR4XBootRemoveUnpackDirs(getimagefolder):
     os.chdir('/media/nfr4xboot/NFR4XBootUpload')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/venton-hdx'):
-        shutil.rmtree('venton-hdx')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio'):
-        shutil.rmtree('atemio')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx'):
-        shutil.rmtree('xpeedlx')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedc'):
-        shutil.rmtree('xpeedc')        
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx3'):
-        shutil.rmtree('xpeedlx3')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus'):
-        shutil.rmtree('vuplus')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
-        shutil.rmtree('update')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox'):
-        shutil.rmtree('unibox')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xp1000'):
-        shutil.rmtree('xp1000')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/e3hd'):
-        shutil.rmtree('e3hd')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odinm9'):
-        shutil.rmtree('odinm9')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odinm7'):
-        shutil.rmtree('odinm7')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odinm6'):
-        shutil.rmtree('odinm6')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/hd2400'):
-    	shutil.rmtree('hd2400')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/en2'):
-        shutil.rmtree('en2')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue'):
-        shutil.rmtree('gigablue')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
-        shutil.rmtree('formuler1')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
-        shutil.rmtree('formuler3')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
-        shutil.rmtree('bre2ze')    
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum'):
-        shutil.rmtree('opticum')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
-        shutil.rmtree('update')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
-        shutil.rmtree('redeagle')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
-        shutil.rmtree('osmini')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/spycat'):
-        shutil.rmtree('spycat')
-    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/triplex'):
-        shutil.rmtree('triplex')    
+    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/%s'% getimagefolder):
+        shutil.rmtree('%s'% getimagefolder)
+ 
 
-def NFR4XBootExtract(source, target, zipdelete):
-    NFR4XBootRemoveUnpackDirs()
+def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFile):
+    NFR4XBootRemoveUnpackDirs(getimagefolder)
     os.system('rm -rf /media/nfr4xboot/ubi')
     if os.path.exists('/media/nfr4xboot/ubi') is False:
         rc = os.system('mkdir /media/nfr4xboot/ubi')
@@ -254,109 +207,10 @@ def NFR4XBootExtract(source, target, zipdelete):
                 rc = os.system('rm -rf ' + sourcefile)
         else:
                 os.system('echo "[NFR4XBoot] keep  %s for next time"'% sourcefile) 
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox'):
-            os.chdir('unibox')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/unibox/hde'):
-                os.chdir('hde')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xp1000'):
-            os.chdir('xp1000')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/e3hd'):
-            os.chdir('e3hd')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odinm9'):
-            os.chdir('odinm9')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/hd2400'):
-            os.chdir('hd2400')	
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/en2'):
-            os.chdir('en2')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/odinm6'):
-            os.chdir('odinm6')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/venton-hdx'):
-            os.chdir('venton-hdx')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio'):
-            os.chdir('atemio')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/5x00'):
-                os.chdir('5x00')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6x00'):
-                os.chdir('6x00')
-	    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6200'):
-                os.chdir('6200')
-	    if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/6000'):
-                os.chdir('6000')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/atemio/8x00'):
-                os.chdir('8x00')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx'):
-            os.chdir('xpeedlx')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedc'):
-            os.chdir('xpeedc')            
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/xpeedlx3'):
-            os.chdir('xpeedlx3')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus'):
-            os.chdir('vuplus')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/duo'):
-                os.chdir('duo')
-                os.system('mv root_cfe_auto.jffs2 rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solo'):
-                os.chdir('solo')
-                os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solose'):
-                os.chdir('solose')
-                os.system('mv -f root_cfe_auto.bin rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/ultimo'):
-                os.chdir('ultimo')
-                os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/uno'):
-                os.chdir('uno')
-                os.system('mv -f root_cfe_auto.jffs2 rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/solo2'):
-                os.chdir('solo2')
-                os.system('mv -f root_cfe_auto.bin rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/vuplus/duo2'):
-                os.chdir('duo2')
-                os.system('mv -f root_cfe_auto.bin rootfs.bin')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue'):
-            os.chdir('gigablue')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/quad'):
-                os.chdir('quad')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/quadplus'):
-                os.chdir('quadplus')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/se'):
-                os.chdir('se')                
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/seplus'):
-                os.chdir('seplus')                
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/gigablue/ueplus'):
-                os.chdir('ueplus')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler1'):
-                os.chdir('formuler1')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/formuler3'):
-                os.chdir('formuler3')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/bre2ze'):
-                os.chdir('bre2ze')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum'):
-            os.chdir('opticum')        
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/opticum/tt'):
-		os.chdir('tt')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update'):
-            os.chdir('update')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update/optimussos2plus'):
-		os.chdir('optimussos2plus')
-		if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update/optimussos2plus/cfe'):
-			os.chdir('cfe')
-			os.system('mv -f oe_rootfs.bin rootfs.bin')
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update/optimussos3plus'):
-		os.chdir('optimussos3plus')
-		if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/update/optimussos3plus/cfe'):
-			os.chdir('cfe')
-			os.system('mv -f oe_rootfs.bin rootfs.bin')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle'):
-            os.chdir('redeagle')        
-            if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/redeagle/twinboxlcd'):
-		os.chdir('twinboxlcd')        
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/osmini'):
-                os.chdir('osmini')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/spycat'):
-                os.chdir('spycat')
-        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/triplex'):
-                os.chdir('triplex')        
+        if os.path.exists('/media/nfr4xboot/NFR4XBootUpload/%s'% getimagefolder):
+            os.chdir('%s'% getimagefolder)
+            os.system('mv %s rootfs.bin'% getMachineRootFile)
+      
 				
         print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
         if os.path.exists('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi_extract_files.pyo'):
