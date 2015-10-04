@@ -5462,7 +5462,7 @@ msgid "Position of finished Timers in the Timer list"
 msgstr "Position beendeter Timer in der Timerliste"
 
 msgid "Position setup"
-msgstr "Position Einstellungen"
+msgstr "OSD-Position Einstellungen"
 
 msgid "Position stored at index"
 msgstr "Position bei Index gespeichert"
@@ -12649,3 +12649,59 @@ msgstr "Einen anderen Spinner auswählen"
 msgid "are you sure to cancel all changes"
 msgstr "Jetzt beenden ohne die Änderungen zu speichern?"
 
+msgid "set as startup service from standby"
+msgstr "Kanal als Startkanal nach Standby auswählen"
+
+msgid "LanguageWizard"
+msgstr "Sprachauswahl"
+
+msgid "VideoWizard"
+msgstr "Bildschirm Auflösung"
+
+msgid "NetworkWizard"
+msgstr "Netzwerkassistent"
+
+msgid "ImageWizard"
+msgstr "Einstellungen Wiederherstellen"
+
+msgid "StartWizard"
+msgstr "Grundkonfiguration"
+
+msgid "SpinnerManager"
+msgstr "OpenNFR Spinner Manager"
+
+msgid "SpinnerSelection"
+msgstr "OpenNFR Spinner Auswahl"
+
+msgid "Chose Spinner"
+msgstr "Wähle einen Spinner"
+
+msgid "Outsourcing"
+msgstr "Auslagern"
+
+msgid "openNFR Wizard setup"
+msgstr "OpenNFR Einrichtungs-Assistent"
+
+msgid "PLugin-Install-Wizard"
+msgstr "Plugin-Installations-Assistent"
+
+msgid "OpenWebif Setup"
+msgstr "OpenWebif Einrichten"
+
+msgid "OpenNFR-Addons Setup"
+msgstr "OpenNFR-Addons Einrichten"
+
+msgid "Plugins Move out of Flash"
+msgstr "Plugins aus dem Flash verschieben"
+
+msgid "Spinner Move out of Flash"
+msgstr "Spinner aus dem Flash verschieben"
+
+msgid "Bootlogo Move out of Flash"
+msgstr "Bootlogo aus dem Flash verschieben"
+
+msgid "Bootvideo Move out of Flash"
+msgstr "Bootvideo aus dem Flash verschieben"
+
+msgid "no Device found for moveout"
+msgstr "Kein Gerät zum auslagern gefunden"
