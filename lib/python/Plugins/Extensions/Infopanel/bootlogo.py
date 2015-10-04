@@ -204,7 +204,7 @@ class RadiologoSetupScreen(Screen):
 		self["key_red"] = StaticText(_("Exit"))
 		self["key_green"] = StaticText(_("Save"))
 		self["key_blue"] = StaticText(_("Back2Flash"))
-		self["key_yellow"] = StaticText(_("outsourcing"))			
+		self["key_yellow"] = StaticText(_("Outsourcing"))			
 		vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
