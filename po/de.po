@@ -12634,9 +12634,6 @@ msgstr "Position der Benutzeroberfläche anpassen"
 msgid "HDMI CEC setup"
 msgstr "HDMI CEC Einstellungen"
 
-msgid "Chose Spinner"
-msgstr "Spinner auswählen"
-
 msgid "GUI needs a restart to apply a new spinner.\nDo you want to restart the GUI now ?"
 msgstr "Das System muß neu gestartet werden,\num den neuen Spinner übernehmen zu können.\nWollen sie jetzt neustarten ?"
 
