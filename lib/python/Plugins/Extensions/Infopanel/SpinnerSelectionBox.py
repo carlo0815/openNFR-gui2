@@ -28,9 +28,13 @@ class SpinnerSelectionBox(Screen):
 		<widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
 		<eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
 		<widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
-		<ePixmap pixmap="skin_default/buttons/yellow.png" position="650,670" size="30,30" alphatest="blend" />
+ 		<ePixmap pixmap="skin_default/buttons/red.png" position="70,670" size="30,30" alphatest="blend" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
+                <ePixmap pixmap="skin_default/buttons/yellow.png" position="650,670" size="30,30" alphatest="blend" />
 		<ePixmap pixmap="skin_default/buttons/blue.png" position="940,670" size="30,30" alphatest="blend" />
-		<widget source="key_yellow" render="Label" position="685,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+		<widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+		<widget source="key_green" render="Label" position="395,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+                <widget source="key_yellow" render="Label" position="685,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 		<widget source="key_blue" render="Label" position="975,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" /> 
 		</screen>"""
 	def __init__(self, session, title = "", list = []):
@@ -50,8 +54,10 @@ class SpinnerSelectionBox(Screen):
 		self["list"].onSelectionChanged.append(self.Changed)
 		self["summary_list"] = StaticText()
 		self.updateSummary()
+		self["key_red"] = StaticText(_("Exit"))
+		self["key_green"] = StaticText(_("Save"))		
 		self["key_blue"] = StaticText(_("Back2Flash"))
-                self["key_yellow"] = StaticText(_("Outsourcing"))					
+                self["key_yellow"] = StaticText(_("Outsourcing"))			
 		self["actions"] = NumberActionMap(["WizardActions", "DirectionActions", "ColorActions"], 
 		{
 			"ok": self.go,
