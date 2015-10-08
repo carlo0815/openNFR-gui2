@@ -425,7 +425,7 @@ class NFR4XBootImageChoose(Screen):
             f.close()
             try:
                 if mypath == self.mysel:
-                    self.session.open(MessageBox, _('Sorry you cannot delete the image currently booted from.'), MessageBox.TYPE_INFO, 4)
+                    self.session.open(MessageBox, _('Sorry you cannot delete the image, is currently booted from or select for next booting.'), MessageBox.TYPE_INFO, 4)
                 if self.mysel.startswith('Flash'):
                     self.session.open(MessageBox, _('Sorry you cannot delete Flash image'), MessageBox.TYPE_INFO, 4)
                 else:
