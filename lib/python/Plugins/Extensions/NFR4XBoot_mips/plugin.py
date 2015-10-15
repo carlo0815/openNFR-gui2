@@ -425,7 +425,7 @@ class NFR4XBootImageChoose(Screen):
             f.close()
             try:
                 if mypath == self.mysel:
-                    self.session.open(MessageBox, _('Sorry you cannot delete the image, is currently booted from or select for next booting.'), MessageBox.TYPE_INFO, 4)
+                    self.session.open(MessageBox, _('Sorry you cannot delete the image currently booted from.'), MessageBox.TYPE_INFO, 4)
                 if self.mysel.startswith('Flash'):
                     self.session.open(MessageBox, _('Sorry you cannot delete Flash image'), MessageBox.TYPE_INFO, 4)
                 else:
@@ -569,6 +569,7 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
         self.target = ConfigText(fixed_size=False)
         self.sett = ConfigYesNo(default=False)
         self.zipdelete = ConfigYesNo(default=False)
+        self.bootquest = ConfigYesNo(default=True)
         self.target.value = ''
         self.curselimage = ''
         try:
@@ -599,6 +600,7 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
         self.list.append(getConfigListEntry(_('Source Image file'), self.source))
         self.list.append(getConfigListEntry(_('Image Name'), self.target))
         self.list.append(getConfigListEntry(_('Copy Settings to the new Image'), self.sett))
+        self.list.append(getConfigListEntry(_('Boot new Image directly?'), self.bootquest))
         self.list.append(getConfigListEntry(_('Delete Download Imagezip after Install?'), self.zipdelete))
 
     def typeChange(self, value):
@@ -658,10 +660,11 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
                     cmd1 = 'python ' + pluginpath + '/ex_init.py'
                 else:
                     cmd1 = 'python ' + pluginpath + '/ex_init.pyo'
-                cmd = '%s %s %s %s %s %s %s' % (cmd1,
+                cmd = '%s %s %s %s %s %s %s %s' % (cmd1,
                  source,
                  target.replace(' ', '.'),
                  str(self.sett.value),
+                 str(self.bootquest.value),
                  str(self.zipdelete.value),
                  getImageFolder(),
                  getMachineRootFile())
@@ -747,4 +750,4 @@ def menu(menuid, **kwargs):
 from Plugins.Plugin import PluginDescriptor
 
 def Plugins(**kwargs):
-    return [PluginDescriptor(name='NFR4XBoot', description='NFR4X MultiBoot', where=PluginDescriptor.WHERE_MENU, fnc=menu), PluginDescriptor(name='NFR4XBoot', description=_('E2 Light Multiboot'), icon='plugin_icon.png', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)]
+    return [PluginDescriptor(name='NFR4XBoot', description='NFR4X MultiBoot', where=PluginDescriptor.WHERE_MENU, fnc=menu), PluginDescriptor(name='NFR4XBoot', description=_('E2 Light Multiboot'), icon='plugin_icon.png', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)] 
