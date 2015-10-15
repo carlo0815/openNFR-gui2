@@ -12702,3 +12702,15 @@ msgstr "Bootvideo aus dem Flash verschieben"
 
 msgid "no Device found for moveout"
 msgstr "Kein Gerät zum auslagern gefunden"
+
+msgid "Installing Software..."
+msgstr "Installiere Software..."
+
+msgid "Install Confirmation"
+msgstr "Installationsbestätigung"
+
+msgid "NFR4XBoot has been installed succesfully!"
+msgstr "NFR4XBoot wurde erfolgreich installiert!"
+
+msgid "Boot new Image directly?"
+msgstr "Direkt nach der Installation neu booten?"
