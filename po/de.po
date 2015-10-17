@@ -11119,7 +11119,7 @@ msgid "Setup your System"
 msgstr "Systemeinstellungen"
 
 msgid "Customise enigma2 personal settings"
-msgstr "persönlichen Einstellungen für ihr Enigma2"
+msgstr "persönliche Einstellungen für ihr Enigma2"
 
 msgid "Setup your OSD"
 msgstr "Einstellungen der Benutzeroberfläche"
@@ -11192,7 +11192,7 @@ msgid ""
 "to activated the new settings"
 msgstr ""
 "Stellen Sie Ihre Einstellungen aus einer Sicherung wieder her. Nach der "
-"Wiederherstellung wir die Box neu gestartet um die neuen Einstellungen zu "
+"Wiederherstellung wird die Box neu gestartet um die neuen Einstellungen zu "
 "übernehmen"
 
 msgid ""
@@ -12714,3 +12714,9 @@ msgstr "NFR4XBoot wurde erfolgreich installiert!"
 
 msgid "Boot new Image directly?"
 msgstr "Direkt nach der Installation neu booten?"
+
+msgid "Show your Logfiles"
+msgstr "Log-Dateien anzeigen"
+
+msgid "Try Telnet Commands in Gui"
+msgstr "Eingabeversuch von Telnetbefehlen in der Benutzeroberfläche"
