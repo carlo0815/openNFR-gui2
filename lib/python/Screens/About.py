@@ -43,8 +43,11 @@ class About(Screen):
 		AboutText += _("Build:\t%s") % getImageBuild() + "\n"		
 		AboutText += _("Kernel: \t%s") % about.getKernelVersionString() + "\n"
 		AboutText += _("Oe-Core:\t%s") % about.getEnigmaVersionString() + "\n"
+		AboutText += _("Enigma (re)starts: %d\n") % config.misc.startCounter.value		
 		AboutText += _("GStreamer:\t%s") % about.getGStreamerVersionString() + "\n"	
-	
+		AboutText += _("Python:\t%s") % about.getPythonVersionString() + "\n"
+		AboutText += _("Installed:\t%s") % about.getFlashDateString() + "\n"	
+
 		fp_version = getFPVersion()
 		if fp_version is None:
 			fp_version = ""

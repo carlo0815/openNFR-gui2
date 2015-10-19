@@ -1,5 +1,5 @@
 from Tools.Directories import resolveFilename, SCOPE_SYSETC
-from Tools.HardwareInfo import HardwareInfo
+#from Tools.HardwareInfo import HardwareInfo
 from os import path
 import sys
 import os
@@ -10,6 +10,12 @@ import socket, fcntl, struct
 
 def getVersionString():
 	return getImageVersion()
+
+def getFlashDateString():
+	try:
+		return time.strftime(_("%Y-%m-%d"), time.localtime(os.stat("/boot").st_ctime))
+	except:
+		return _("unknown")
 
 def getImageVersionString():
 	try:
@@ -166,6 +172,14 @@ def getCpuCoresString():
 		return cores
 	except IOError:
 		return "unavailable"
+
+def getPythonVersionString():
+	try:
+		import commands
+		status, output = commands.getstatusoutput("python -V")
+		return output.split(' ')[1]
+	except:
+		return _("unknown")
 
 # For modules that do "from About import about"
 about = sys.modules[__name__]
