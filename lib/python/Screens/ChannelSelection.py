@@ -692,6 +692,10 @@ class SelectionEventInfo:
 
 	def updateEventInfo(self):
 		cur = self.getCurrentSelection()
+		print "zap_setup:", config.servicelist.zap_preview.value
+		#val_zap = config.servicelist.zap_preview.value
+		if config.servicelist.zap_preview.getValue():
+                	self.session.nav.playService(cur)
 		service = self["Service"]
 		service.newService(cur)
 		self["Event"].newEvent(service.event)
@@ -1979,6 +1983,7 @@ config.servicelist.lastmode = ConfigText(default = "tv")
 config.servicelist.startupservice = ConfigText()
 config.servicelist.startupservice_standby = ConfigText()
 config.servicelist.startupservice_onstandby = ConfigYesNo(default = False)
+config.servicelist.zap_preview = ConfigYesNo(default = False)
 config.servicelist.startuproot = ConfigText()
 config.servicelist.startupmode = ConfigText(default = "tv")
 
@@ -1994,6 +1999,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			self.skinName = ["SlimChannelSelection","SimpleChannelSelection","ChannelSelection"]
 		else:
 			self.skinName = "ChannelSelection"
+			
 
 		self["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"],
 			{
@@ -2448,6 +2454,8 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				if lastservice.valid() and self.getCurrentSelection() != lastservice:
 					self.setCurrentSelection(lastservice)
 		self.asciiOff()
+		if config.servicelist.zap_preview.getValue():
+                	config.usage.servicelistpreview_mode.setValue(False)		
 		if config.usage.servicelistpreview_mode.getValue():
 			self.zapBack()
 		self.correctChannelNumber()
