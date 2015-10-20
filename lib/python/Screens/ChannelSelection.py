@@ -692,8 +692,6 @@ class SelectionEventInfo:
 
 	def updateEventInfo(self):
 		cur = self.getCurrentSelection()
-		print "zap_setup:", config.servicelist.zap_preview.value
-		#val_zap = config.servicelist.zap_preview.value
 		if config.servicelist.zap_preview.getValue():
                 	self.session.nav.playService(cur)
 		service = self["Service"]
