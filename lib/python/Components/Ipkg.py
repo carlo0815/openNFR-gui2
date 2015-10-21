@@ -104,7 +104,7 @@ class IpkgComponent:
 		elif cmd == self.CMD_INSTALL:
 			self.runCmd("--force-overwrite install " + args['package'])
 		elif cmd == self.CMD_REMOVE:
-			self.runCmd("remove " + args['package'])
+			self.runCmd("remove --autoremove --force-depends " + args['package'])
 		elif cmd == self.CMD_UPGRADE_LIST:
 			self.fetchedList = []
 			self.excludeList = []
