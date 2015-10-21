@@ -12720,3 +12720,31 @@ msgstr "Log-Dateien anzeigen"
 
 msgid "Try Telnet Commands in Gui"
 msgstr "Eingabeversuch von Telnetbefehlen in der Benutzeroberfläche"
+
+msgid "Channel list preview-zap"
+msgstr "Direkte Vorschau der Programme beim Zappen in der Senderliste"
+
+msgid ""
+"If set to 'yes' you can preview channels in the channel list directly. "
+"Press 'OK' to exit and zap to that channel, pressing 'EXIT' to return to " 
+"the channel you started at. Menu is little bit slower."
+msgstr ""
+"Wenn 'Ja' eingestellt ist wird eine direkte Vorschau der Programme in der "
+"Senderliste angezeigt. Drücke 'OK' zum beenden und auf das Programm zu " 
+"wechseln, 'EXIT' beendet die Vorschau und du kommst zurück zum Programm "
+"das du zuvor geschaut hast. Das Menü ist dadurch ein wenig langsamer."
+
+msgid "Enable infobar fade-out"
+msgstr "Infobar langsam ausblenden"
+
+msgid "Infobar fade-out speed"
+msgstr "Infobar Ausblendgeschwindigkeit"
+
+msgid "Select a movie"
+msgstr "Filmauswahl"
+
+msgid "Search for Covers"
+msgstr "Suche nach Cover"
+
+msgid "Show columns"
+msgstr "Spalten einblenden"
