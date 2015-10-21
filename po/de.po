@@ -12748,3 +12748,6 @@ msgstr "Suche nach Cover"
 
 msgid "Show columns"
 msgstr "Spalten einblenden"
+
+msgid "Detected HDD:"
+msgstr "Erkannte Speichermedien:"
