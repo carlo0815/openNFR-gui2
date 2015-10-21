@@ -236,7 +236,7 @@ class Devices(Screen):
 		
 		self.AboutText += self.list + "\n"
 		self.AboutText += "\n" + _("Network Servers:") + "\n"
-		self.mountinfo = "none"
+		self.mountinfo = _("none")
 		self.Console.ePopen("df -mh | grep -v '^Filesystem'", self.Stage1Complete)
 		self.AboutText +=self.mountinfo
 		self["AboutScrollLabel"].setText(self.AboutText)
