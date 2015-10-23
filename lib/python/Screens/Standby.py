@@ -33,7 +33,7 @@ class Standby2(Screen):
 		self.leaveMute()
 		# set LCDminiTV 
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
-			setLCDModeMinitTV(config.lcd.modeminitv.getValue())
+			setLCDModeMinitTV(config.lcd.modeminitv.value)
 		#kill me
 		self.close(True)
 
@@ -251,7 +251,7 @@ class TryQuitMainloop(MessageBox):
 		self.close(True)
 
 	def getRecordEvent(self, recservice, event):
-		if event == iRecordableService.evEnd and config.timeshift.isRecording.getValue():
+		if event == iRecordableService.evEnd and config.timeshift.isRecording.value:
 			return
 		else:
 			if event == iRecordableService.evEnd:

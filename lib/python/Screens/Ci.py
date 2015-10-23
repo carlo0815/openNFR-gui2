@@ -23,7 +23,7 @@ from enigma import eTimer, eDVBCI_UI, eDVBCIInterfaces
 MAX_NUM_CI = 4
 
 def setCIBitrate(configElement):
-	if configElement.getValue() == "no":
+	if configElement.value == "no":
 		eDVBCI_UI.getInstance().setClockRate(configElement.slotid, eDVBCI_UI.rateNormal)
 	else:
 		eDVBCI_UI.getInstance().setClockRate(configElement.slotid, eDVBCI_UI.rateHigh)

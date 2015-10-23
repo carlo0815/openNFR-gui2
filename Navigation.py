@@ -87,7 +87,7 @@ class Navigation:
 			print "ignore request to play already running service(1)"
 			return 0
 		print "playing", ref and ref.toString()
-		if path.exists("/proc/stb/lcd/symbol_signal") and config.lcd.mode.getValue() == '1':
+		if path.exists("/proc/stb/lcd/symbol_signal") and config.lcd.mode.value == '1':
 			try:
 				if '0:0:0:0:0:0:0:0:0' not in ref.toString():
 					signal = 1
@@ -100,13 +100,13 @@ class Navigation:
 				f = open("/proc/stb/lcd/symbol_signal", "w")
 				f.write("0")
 				f.close()
-		elif path.exists("/proc/stb/lcd/symbol_signal") and config.lcd.mode.getValue() == '0':
+		elif path.exists("/proc/stb/lcd/symbol_signal") and config.lcd.mode.value == '0':
 			f = open("/proc/stb/lcd/symbol_signal", "w")
 			f.write("0")
 			f.close()
 
 		# Venton series
-		if path.exists("/proc/stb/lcd/symbol_scrambled") and config.lcd.mode.getValue() == '1':
+		if path.exists("/proc/stb/lcd/symbol_scrambled") and config.lcd.mode.value == '1':
 			try:
 				if ref.toString().find('0:0:0:0:0:0:0:0:0') == -1:
 					signal = 1
@@ -119,13 +119,13 @@ class Navigation:
 				f = open("/proc/stb/lcd/symbol_scrambled", "w")
 				f.write("0")
 				f.close()
-		elif path.exists("/proc/stb/lcd/symbol_scrambled") and config.lcd.mode.getValue() == '0':
+		elif path.exists("/proc/stb/lcd/symbol_scrambled") and config.lcd.mode.value == '0':
 			f = open("/proc/stb/lcd/symbol_scrambled", "w")
 			f.write("0")
 			f.close()
 
 		# Venton series
-		if path.exists("/proc/stb/lcd/symbol_mp3") and config.lcd.mode.getValue() == '1':
+		if path.exists("/proc/stb/lcd/symbol_mp3") and config.lcd.mode.value == '1':
 			try:
 				if ref.toString().endswith('.mp3'):
 					mp3 = 1
@@ -138,7 +138,7 @@ class Navigation:
 				f = open("/proc/stb/lcd/symbol_mp3", "w")
 				f.write("0")
 				f.close()
-		elif path.exists("/proc/stb/lcd/symbol_mp3") and config.lcd.mode.getValue() == '0':
+		elif path.exists("/proc/stb/lcd/symbol_mp3") and config.lcd.mode.value == '0':
 			f = open("/proc/stb/lcd/symbol_mp3", "w")
 			f.write("0")
 			f.close()

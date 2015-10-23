@@ -234,7 +234,7 @@ class Menu(Screen, ProtectedScreen):
 		ProtectedScreen.__init__(self)
 
 		# Sort by Weight
-		if config.usage.sort_menus.getValue():
+		if config.usage.sort_menus.value:
 			list.sort()
 		else:
 			list.sort(key=lambda x: int(x[3]))

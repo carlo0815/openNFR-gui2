@@ -67,7 +67,7 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 	def createSetup(self):
 		self.list = []
 		self.list.append(getConfigListEntry(_("PLugin-Install-Wizard"), config.wizardsetup.pluginwizard))
-		if config.wizardsetup.pluginwizard.getValue():
+		if config.wizardsetup.pluginwizard.value:
 			self.list.append(getConfigListEntry(_("Spinner Setup"), config.wizardsetup.spinnerselect))
 			self.list.append(getConfigListEntry(_("Spinner Move out of Flash"), config.wizardsetup.spinnermoveout))			
 			self.list.append(getConfigListEntry(_("Bootlogo Setup"), config.wizardsetup.bootlogo))

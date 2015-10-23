@@ -38,8 +38,8 @@ class StartWizard(WizardLanguage, Rc):
 		config.misc.firstrun.save()
 		configfile.save()
 	
-wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.getValue(), priority = 0)
-wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.getValue(), priority = 1)
-wizardManager.registerWizard(StartWizard, config.misc.firstrun.getValue(), priority = 20)
-wizardManager.registerWizard(NfrWizardSetupScreen, config.misc.firstrun.getValue(), priority = 30)
+wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 0)
+wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
+wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
+wizardManager.registerWizard(NfrWizardSetupScreen, config.misc.firstrun.value, priority = 30)
 

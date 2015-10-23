@@ -42,8 +42,8 @@ def parseEvent(ev, description = True):
 	begin = ev.getBeginTime()
 	end = begin + ev.getDuration()
 	eit = ev.getEventId()
-	begin -= config.recording.margin_before.getValue() * 60
-	end += config.recording.margin_after.getValue() * 60
+	begin -= config.recording.margin_before.value * 60
+	end += config.recording.margin_after.value * 60
 	return begin, end, name, description, eit
 
 class AFTEREVENT:
@@ -119,13 +119,13 @@ class RecordTimerEntry(timer.TimerEntry, object):
 		self.tags = tags or []
 
 		if descramble == 'notset' and record_ecm == 'notset':
-			if config.recording.ecm_data.getValue() == 'descrambled+ecm':
+			if config.recording.ecm_data.value == 'descrambled+ecm':
 				self.descramble = True
 				self.record_ecm = True
-			elif config.recording.ecm_data.getValue() == 'scrambled+ecm':
+			elif config.recording.ecm_data.value == 'scrambled+ecm':
 				self.descramble = False
 				self.record_ecm = True
-			elif config.recording.ecm_data.getValue() == 'normal':
+			elif config.recording.ecm_data.value == 'normal':
 				self.descramble = True
 				self.record_ecm = False
 		else:
@@ -185,14 +185,14 @@ class RecordTimerEntry(timer.TimerEntry, object):
 #
 		filename = begin_date + " - " + service_name
 		if self.name:
-			if config.recording.filename_composition.getValue() == "short":
+			if config.recording.filename_composition.value == "short":
 				filename = strftime("%Y%m%d", localtime(self.begin)) + " - " + self.name
-			elif config.recording.filename_composition.getValue() == "long":
+			elif config.recording.filename_composition.value == "long":
 				filename += " - " + self.name + " - " + self.description
 			else:
 				filename += " - " + self.name # standard
 
-		if config.recording.ascii_filenames.getValue():
+		if config.recording.ascii_filenames.value:
 			filename = ASCIItranslit.legacyEncode(filename)
 
 		self.Filename = Directories.getRecordingFilename(filename, self.MountPath)
@@ -316,7 +316,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				self.first_try_prepare = False
 				cur_ref = NavigationInstance.instance.getCurrentlyPlayingServiceReference()
 				if cur_ref and not cur_ref.getPath():
-					if not config.recording.asktozap.getValue():
+					if not config.recording.asktozap.value:
 						self.log(8, "asking user to zap away")
 						Notifications.AddNotificationWithCallback(self.failureCB, MessageBox, _("A timer failed to record!\nDisable TV and try again?\n"), timeout=20)
 					else: # zap without asking
@@ -361,7 +361,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					ChannelSelectionInstance = ChannelSelection.instance
 					self.service_types = service_types_tv
 					if ChannelSelectionInstance:
-						if config.usage.multibouquet.getValue():
+						if config.usage.multibouquet.value:
 							bqrootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
 						else:
 							bqrootstr = '%s FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'% self.service_types
@@ -491,7 +491,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			ChannelSelectionInstance = ChannelSelection.instance
 			self.service_types = service_types_tv
 			if ChannelSelectionInstance:
-				if config.usage.multibouquet.getValue():
+				if config.usage.multibouquet.value:
 					bqrootstr = '1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "bouquets.tv" ORDER BY bouquet'
 				else:
 					bqrootstr = '%s FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'% self.service_types
@@ -665,7 +665,7 @@ class RecordTimer(timer.Timer):
 				# check for disabled timers, if time as passed set to completed.
 				self.cleanupDisabled()
 				# Remove old timers as set in config
-				self.cleanupDaily(config.recording.keep_timers.getValue())
+				self.cleanupDaily(config.recording.keep_timers.value)
 				insort(self.processed_timers, w)
 		self.stateChanged(w)
 
@@ -802,7 +802,7 @@ class RecordTimer(timer.Timer):
 		nextrectime = self.getNextRecordingTimeOld()
 		faketime = time()+300
 
-		if config.timeshift.isRecording.getValue():
+		if config.timeshift.isRecording.value:
 			if 0 < nextrectime < faketime:
 				return nextrectime
 			else:
@@ -844,7 +844,7 @@ class RecordTimer(timer.Timer):
 
 		isAutoTimer = False
 		bt = None
-		check_offset_time = not config.recording.margin_before.getValue() and not config.recording.margin_after.getValue()
+		check_offset_time = not config.recording.margin_before.value and not config.recording.margin_after.value
 		end = begin + duration
 		refstr = ':'.join(service.split(':')[:11])
 		for x in self.timer_list:

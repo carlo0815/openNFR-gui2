@@ -96,10 +96,10 @@ class LogManagerPoller:
 
 	def JobTrim(self):
 		filename = ""
-		for filename in glob(config.crash.debug_path.getValue() + '*.log'):
-			if path.getsize(filename) > (config.crash.debugloglimit.getValue() * 1024 * 1024):
+		for filename in glob(config.crash.debug_path.value + '*.log'):
+			if path.getsize(filename) > (config.crash.debugloglimit.value * 1024 * 1024):
 				fh = open(filename, 'rb+')
-				fh.seek(-(config.crash.debugloglimit.getValue() * 1024 * 1024), 2)
+				fh.seek(-(config.crash.debugloglimit.value * 1024 * 1024), 2)
 				data = fh.read()
 				fh.seek(0) # rewind
 				fh.write(data)
@@ -108,8 +108,8 @@ class LogManagerPoller:
 		self.TrimTimer.startLongTimer(3600) #once an hour
 
 	def JobTrash(self):
-		ctimeLimit = time() - (config.crash.daysloglimit.getValue() * 3600 * 24)
-		allowedBytes = 1024*1024 * int(config.crash.sizeloglimit.getValue())
+		ctimeLimit = time() - (config.crash.daysloglimit.value * 3600 * 24)
+		allowedBytes = 1024*1024 * int(config.crash.sizeloglimit.value)
 
 		mounts = []
 		matches = []
@@ -209,13 +209,13 @@ class LogManager(Screen):
 
 		self.onChangedEntry = [ ]
 		self.sentsingle = ""
-		self.selectedFiles = config.logmanager.sentfiles.getValue()
-		self.previouslySent = config.logmanager.sentfiles.getValue()
-		self.defaultDir = config.crash.debug_path.getValue()
+		self.selectedFiles = config.logmanager.sentfiles.value
+		self.previouslySent = config.logmanager.sentfiles.value
+		self.defaultDir = config.crash.debug_path.value
 		self.matchingPattern = 'enigma2_crash_'
 		self.filelist = MultiFileSelectList(self.selectedFiles, self.defaultDir, showDirectories = False, matchingPattern = self.matchingPattern )
 		self["list"] = self.filelist
-		self["LogsSize"] = self.logsinfo = LogInfo(config.crash.debug_path.getValue(), LogInfo.USED, update=False)
+		self["LogsSize"] = self.logsinfo = LogInfo(config.crash.debug_path.value, LogInfo.USED, update=False)
 		self.onLayoutFinish.append(self.layoutFinished)
 		if not self.selectionChanged in self["list"].onSelectionChanged:
 			self["list"].onSelectionChanged.append(self.selectionChanged)
@@ -235,7 +235,7 @@ class LogManager(Screen):
 			cb(name, desc)
 
 	def layoutFinished(self):
-		self["LogsSize"].update(config.crash.debug_path.getValue())
+		self["LogsSize"].update(config.crash.debug_path.value)
 		idx = 0
 		self["list"].moveToIndex(idx)
 		self.setWindowTitle()
@@ -278,7 +278,7 @@ class LogManager(Screen):
 			self.selectedFiles = self["list"].getSelectedList()
 
 	def changelogtype(self):
-		self["LogsSize"].update(config.crash.debug_path.getValue())
+		self["LogsSize"].update(config.crash.debug_path.value)
 		import re
 		if self.logtype == 'crashlogs':
 			self["key_red"].setText(_("Crash Logs"))
@@ -347,7 +347,7 @@ class LogManager(Screen):
 			if path.exists(self.defaultDir + self.sel[0]):
 				remove(self.defaultDir + self.sel[0])
 			self["list"].changeDir(self.defaultDir)
-			self["LogsSize"].update(config.crash.debug_path.getValue())
+			self["LogsSize"].update(config.crash.debug_path.value)
 
 	def sendlog(self, addtionalinfo = None):
 		try:
@@ -418,8 +418,8 @@ class LogManager(Screen):
 		ref = str(time())
 		# Create the container (outer) email message.
 		msg = MIMEMultipart()
-		if config.logmanager.user.getValue() != '' and config.logmanager.useremail.getValue() != '':
-			fromlogman = config.logmanager.user.getValue() + '  <' + config.logmanager.useremail.getValue() + '>'
+		if config.logmanager.user.value != '' and config.logmanager.useremail.value != '':
+			fromlogman = config.logmanager.user.value + '  <' + config.logmanager.useremail.value + '>'
 			tonfrlogs = 'nfr_e2@nachtfalke.biz'
 			msg['From'] = fromlogman
 			msg['To'] = tonfrlogs
@@ -429,7 +429,7 @@ class LogManager(Screen):
 			if additonalinfo != "":
 				msg.attach(MIMEText(additonalinfo, 'plain'))
 			else:
-				msg.attach(MIMEText(config.logmanager.additionalinfo.getValue(), 'plain'))
+				msg.attach(MIMEText(config.logmanager.additionalinfo.value, 'plain'))
 			if self.sendallfiles:
 				self.selectedFiles = self["list"].getSelectedList()
 				for send in self.previouslySent:
@@ -466,7 +466,7 @@ class LogManager(Screen):
 				#socket.setdefaulttimeout(30)
 				s = smtplib.SMTP("mail.oe-alliance.com", 26)
 				s.login(wos_user, wos_pwd)
-				if config.logmanager.usersendcopy.getValue():
+				if config.logmanager.usersendcopy.value:
 					s.sendmail(fromlogman, [tonfrlogs, fromlogman], msg.as_string())
 					s.quit()
 					self.session.open(MessageBox, sentfiles + ' ' + _('has been sent to the nfr beta team.\nplease quote') + ' ' + str(ref) + ' ' + _('when asking question about this log\n\nA copy has been sent to yourself.'), MessageBox.TYPE_INFO)
@@ -493,8 +493,8 @@ class LogManagerViewLog(Screen):
 		self.session = session
 		Screen.__init__(self, session)
 		self.setTitle(selected)
-		if path.exists(config.crash.debug_path.getValue() + selected):
-			log = file(config.crash.debug_path.getValue() + selected).read()
+		if path.exists(config.crash.debug_path.value + selected):
+			log = file(config.crash.debug_path.value + selected).read()
 		else:
 			log = ""
 		self["list"] = ScrollLabel(str(log))
@@ -558,7 +558,7 @@ class LogManagerMenu(ConfigListScreen, Screen):
 		if self['config'].getCurrent():
 			if self['config'].getCurrent()[0] == _("User Name") or self['config'].getCurrent()[0] == _("e-Mail address"):
 				from Screens.VirtualKeyBoard import VirtualKeyBoard
-				self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].getValue())
+				self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
@@ -603,8 +603,8 @@ class LogManagerFb(Screen):
 
 	def __init__(self, session, logpath=None):
 		if logpath is None:
-			if path.isdir(config.logmanager.path.getValue()):
-				logpath = config.logmanager.path.getValue()
+			if path.isdir(config.logmanager.path.value):
+				logpath = config.logmanager.path.value
 			else:
 				logpath = "/"
 
@@ -681,7 +681,7 @@ class LogInfo(VariableText, GUIComponent):
 		GUIComponent.__init__(self)
 		VariableText.__init__(self)
 		self.type = type
-# 		self.path = config.crash.debug_path.getValue()
+# 		self.path = config.crash.debug_path.value
 		if update:
 			self.update(path)
 
