@@ -57,7 +57,7 @@ class MC_Settings(Screen):
 		config.plugins.mc_globalsettings.save()
 #		if config.plugins.mc_global.vfd.value == "on":
 #			evfd.getInstance().vfd_write_string(_("Settings"))
-		if config.plugins.mc_globalsettings.upnp_enable.getValue():
+		if config.plugins.mc_globalsettings.upnp_enable.value:
 			if fileExists("/media/upnp") is False:
 				mkdir("/media/upnp")
 			self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)

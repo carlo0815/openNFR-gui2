@@ -89,17 +89,17 @@ from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, pa
 from Components.ProgressBar import ProgressBar
 
 # Hide Softcam-Panel Setup when no softcams installed
-if (config.plugins.showinfopanelextensions.getValue()):
+if (config.plugins.showinfopanelextensions.value):
 	config.plugins.showinfopanelextensions.setValue(False)
 	config.plugins.showinfopanelextensions.save()
 
 # Hide Keymap selection when no other keymaps installed.
-if config.usage.keymap.getValue() != eEnv.resolve("${datadir}/enigma2/keymap.xml"):
-	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.usr")) and config.usage.keymap.getValue() == eEnv.resolve("${datadir}/enigma2/keymap.usr"):
+if config.usage.keymap.value != eEnv.resolve("${datadir}/enigma2/keymap.xml"):
+	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.usr")) and config.usage.keymap.value == eEnv.resolve("${datadir}/enigma2/keymap.usr"):
 		setDefaultKeymap()
-	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.ntr")) and config.usage.keymap.getValue() == eEnv.resolve("${datadir}/enigma2/keymap.ntr"):
+	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.ntr")) and config.usage.keymap.value == eEnv.resolve("${datadir}/enigma2/keymap.ntr"):
 		setDefaultKeymap()
-	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.u80")) and config.usage.keymap.getValue() == eEnv.resolve("${datadir}/enigma2/keymap.u80"):
+	if not os.path.isfile(eEnv.resolve("${datadir}/enigma2/keymap.u80")) and config.usage.keymap.value == eEnv.resolve("${datadir}/enigma2/keymap.u80"):
 		setDefaultKeymap()
 
 def getVarSpaceKb():
@@ -143,7 +143,7 @@ panel = open("/tmp/infopanel.ver", "w")
 panel.write(INFO_Panel_Version + '\n')
 panel.write("Boxversion: %s " % (boxversion)+ '\n')
 try:
-	panel.write("Keymap: %s " % (config.usage.keymap.getValue())+ '\n')
+	panel.write("Keymap: %s " % (config.usage.keymap.value)+ '\n')
 except:
 	panel.write("Keymap: keymap file not found !!" + '\n')
 panel.close()
@@ -716,7 +716,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		ntrkey = eEnv.resolve("${datadir}/enigma2/keymap.ntr")
 		u80key = eEnv.resolve("${datadir}/enigma2/keymap.u80")
 		
-		self.actkeymap = self.getKeymap(config.usage.keymap.getValue())
+		self.actkeymap = self.getKeymap(config.usage.keymap.value)
 		keySel = [ ('keymap.xml',_("Default  (keymap.xml)"))]
 		if os.path.isfile(usrkey):
 			keySel.append(('keymap.usr',_("User  (keymap.usr)")))
@@ -760,7 +760,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		
 		self["config"].list = self.list
 		self["config"].setList(self.list)
-		if config.usage.sort_settings.getValue():
+		if config.usage.sort_settings.value:
 			self["config"].list.sort()
 
 	def selectionChanged(self):
@@ -785,10 +785,10 @@ class KeymapSel(ConfigListScreen, Screen):
 		return SetupSummary
 
 	def saveAll(self):
-		config.usage.keymap.setValue(eEnv.resolve("${datadir}/enigma2/" + self.keyshow.getValue()))
+		config.usage.keymap.setValue(eEnv.resolve("${datadir}/enigma2/" + self.keyshow.value))
 		config.usage.keymap.save()
 		configfile.save()
-		if self.actkeymap != self.keyshow.getValue():
+		if self.actkeymap != self.keyshow.value:
 			self.changedFinished()
 
 	def keySave(self):
@@ -862,7 +862,7 @@ class RedPanel(ConfigListScreen, Screen):
 		
 		self["config"].list = self.list
 		self["config"].setList(self.list)
-		if config.usage.sort_settings.getValue():
+		if config.usage.sort_settings.value:
 			self["config"].list.sort()
 
 	def selectionChanged(self):
@@ -949,7 +949,7 @@ class BluePanel(ConfigListScreen, Screen):
 		
 		self["config"].list = self.list
 		self["config"].setList(self.list)
-		if config.usage.sort_settings.getValue():
+		if config.usage.sort_settings.value:
 			self["config"].list.sort()
 
 	def selectionChanged(self):

@@ -93,7 +93,7 @@ class DMC_MainMenu(Screen):
 		}, -1)
 		#if config.plugins.mc_global.vfd.value == "on":
 		#	evfd.getInstance().vfd_write_string(_("My Music"))
-		if config.plugins.mc_globalsettings.upnp_enable.getValue():
+		if config.plugins.mc_globalsettings.upnp_enable.value:
 			if fileExists("/media/upnp") is False:
 				os.mkdir("/media/upnp")
 			os.system('djmount /media/upnp &')

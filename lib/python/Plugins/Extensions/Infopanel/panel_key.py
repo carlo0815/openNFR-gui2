@@ -30,11 +30,11 @@ class OpenNFRBluePanel:
 			})
 
 	def showOpenNFRBluePanel(self):
-		if config.plugins.infopanel_bluekey.list.getValue() == '0':
+		if config.plugins.infopanel_bluekey.list.value == '0':
 			from Plugins.Extensions.Infopanel.Manager import *
 			from Plugins.Extensions.Infopanel.Softcam import *
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
-		elif config.plugins.infopanel_bluekey.list.getValue() == '1':
+		elif config.plugins.infopanel_bluekey.list.value == '1':
                         from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
@@ -54,11 +54,11 @@ class OpenNFRREDPanel:
 			})
 
 	def showOpenNFRRedPanel(self):
-		if config.plugins.infopanel_redkey.list.getValue() == '0':
+		if config.plugins.infopanel_redkey.list.value == '0':
 			from Plugins.Extensions.Infopanel.Manager import *
 			from Plugins.Extensions.Infopanel.Softcam import *
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
-		elif config.plugins.infopanel_redkey.list.getValue() == '1':
+		elif config.plugins.infopanel_redkey.list.value == '1':
                         from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
