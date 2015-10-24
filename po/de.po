@@ -12751,3 +12751,123 @@ msgstr "Spalten einblenden"
 
 msgid "Detected HDD:"
 msgstr "Erkannte Speichermedien:"
+
+msgid "Red Panel"
+msgstr "Rote Taste"
+
+msgid "Red Key Action"
+msgstr "Funktion der roten Taste"
+
+msgid "Default (Softcam Panel)"
+msgstr "Standard (Softcam Panel)"
+
+msgid "Quickmenu"
+msgstr "Quickmenü"
+
+msgid "Blue Panel"
+msgstr "Blaue Taste"
+
+msgid "Blue Key Action"
+msgstr "Funktion der blauen Taste"
+
+msgid "Default (Quickmenu)"
+msgstr "Standard (Quickmenü)"
+
+msgid "Multi-Key-Panel"
+msgstr "Tastenbelegung-Einstellungen"
+
+msgid "Red long"
+msgstr "Rot lang"
+
+msgid "Yellow"
+msgstr "Gelb"
+
+msgid "Yellow long"
+msgstr "Gelb lang"
+
+msgid "Info (EPG)"
+msgstr "Info/EPG"
+
+msgid "Info (EPG) Long"
+msgstr "Info/EPG lang"
+
+msgid "Epg/Guide long"
+msgstr "EPG/Info lang"
+
+msgid "Up"
+msgstr "Hoch"
+
+msgid "Down"
+msgstr "Runter"
+
+msgid "Channel up"
+msgstr "Nächster Sender"
+
+msgid "Channel down"
+msgstr "Sender zurück"
+
+msgid "Rec"
+msgstr "Aufnahme"
+
+msgid "Teletext"
+msgstr "Videotext"
+
+msgid "Help"
+msgstr "Hilfe"
+
+msgid "Subtitle"
+msgstr "Untertitel"
+
+msgid "End"
+msgstr "Ende"
+
+msgid "Next"
+msgstr "Nächstes"
+
+msgid "Previous"
+msgstr "Vorheriges"
+
+msgid "Rewind"
+msgstr "Rücklauf"
+
+msgid "Fastforward"
+msgstr "Vorlauf"
+
+msgid "Skip back"
+msgstr "Rückwärts spulen"
+
+msgid "Skip forward"
+msgstr "Vorwärts spulen"
+
+msgid "activatePiP"
+msgstr "Aktiviere PiP"
+
+msgid "Timer"
+msgstr "Timer"
+
+msgid "Playlist"
+msgstr "Playliste"
+
+msgid "Search/WEB"
+msgstr "Suche/Web"
+
+msgid "Sleep"
+msgstr "Ausschalt-Timer"
+
+msgid "Power"
+msgstr "Aus-Taste"
+
+msgid "Power long"
+msgstr "Aus-Taste lang"
+
+msgid "F1/LAN long"
+msgstr "F1/LAN lang"
+
+msgid "F2 long"
+msgstr "F2 lang"
+
+msgid "F3 long"
+msgstr "F3 lang"
+
+msgid "LED Display Setup"
+msgstr "LED Boxdisplay Einstellungen"
