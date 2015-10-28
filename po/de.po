@@ -12752,9 +12752,6 @@ msgstr "Spalten einblenden"
 msgid "Detected HDD:"
 msgstr "Erkannte Speichermedien:"
 
-msgid "Red Panel"
-msgstr "Rote Taste"
-
 msgid "Red Key Action"
 msgstr "Funktion der roten Taste"
 
@@ -12764,9 +12761,6 @@ msgstr "Standard (Softcam Panel)"
 msgid "Quickmenu"
 msgstr "Quickmenü"
 
-msgid "Blue Panel"
-msgstr "Blaue Taste"
-
 msgid "Blue Key Action"
 msgstr "Funktion der blauen Taste"
 
@@ -12774,7 +12768,7 @@ msgid "Default (Quickmenu)"
 msgstr "Standard (Quickmenü)"
 
 msgid "Multi-Key-Panel"
-msgstr "Tastenbelegung-Einstellungen"
+msgstr "Tastenbelegungs-Einstellungen"
 
 msgid "Red long"
 msgstr "Rot lang"
