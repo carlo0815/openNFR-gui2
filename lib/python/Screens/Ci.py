@@ -94,7 +94,7 @@ class MMIDialog(Screen):
 			pinlength = entry[1]
 			pin = config.plugins.autopin.pin.value
 			if len(str(config.plugins.autopin.pin.value)) == 3:
-				pin = "0" + str(cconfig.plugins.autopin.pin.value)
+				pin = "0" + str(config.plugins.autopin.pin.value)
 				pinlength = 4
 			if entry[3] == 1:
 				# masked pins:
