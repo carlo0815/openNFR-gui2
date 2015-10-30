@@ -34,6 +34,8 @@ from __init__ import _
 from enigma import getDesktop
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.InputBox import PinInput
+import string
+from random import Random
 
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
@@ -54,7 +56,7 @@ config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
 config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
 config.NFRSoftcam.waittime = ConfigSelection([('0',_("dont wait")),('1',_("1 second")), ('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='15')
 config.plugins.infopanel_redkey = ConfigSubsection()
-config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Default (Softcam Panel)")),('1',_("Quickmenu")),('2',_("Infopanel"))])
+config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Default (Softcam Panel")),('1',_("Quickmenu)")),('2',_("Infopanel"))])
 config.plugins.infopanel_bluekey = ConfigSubsection()
 config.plugins.infopanel_bluekey.list = ConfigSelection([('1',_("Default (Quickmenu)")),('0',_("Softcam Panel")),('2',_("Infopanel"))])
 config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
@@ -68,6 +70,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 		pass
 
 from Screens.CronTimer import *
+from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
@@ -333,7 +336,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamManager'), _("Softcam-Manager"), 'SoftcamManager')))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("ImageManager" ), _("Image-Manager"), ("image-manager"))))
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("RemoteManager" ), _("Remote-Manager"), ("remote-manager"))))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("RemoteManager" ), _("Image/Remote-Setup"), ("remote-manager"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("PluginManager" ), _("Plugin-Manager"), ("plugin-manager"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("QuickMenu" ), _("Quick-Menu"), ("QuickMenu"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Extras'), _("Extras"), 'Extras')))
@@ -492,7 +495,12 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "Swap":
 			self.session.open(Info, "Swap")
 		elif menu == "DiskSpeed":
-			self.session.open(Disk_Speed)				
+			self.session.open(Disk_Speed)
+		elif menu == "PasswordChange":
+			self.session.open(NFRPasswdScreen)
+		elif menu == "UserMainMenu":
+		        plugin_path = None
+			self.session.open(UserMainMenuConfig, plugin_path)                                                				
 		elif menu == "System_Info":
 			self.System()
 		elif menu == "JobManager":
@@ -645,10 +653,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager"))))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootlogoManager" ), _("BootlogoManager"), ("bootlogomanager")))) 
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SpinnerManager" ), _("SpinnerManager"), ("spinnermanager"))))		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
@@ -656,7 +660,7 @@ class Infopanel(Screen, InfoBarPiP):
 		#// Create Keymap Menu
 		global menu
 		menu = 1
-		self["label1"].setText(_("Remote Manager"))
+		self["label1"].setText(_("Image/Remote Setup"))
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
@@ -664,6 +668,12 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Multi-Key-Action'), _("Edit remote buttons"), 'Multi-Key-Action')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('KeymapSel'), _("Keymap-Selection"), 'KeymapSel')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootvideoManager" ), _("BootvideoManager"), ("bootvideomanager"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BootlogoManager" ), _("BootlogoManager"), ("bootlogomanager")))) 
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SpinnerManager" ), _("SpinnerManager"), ("spinnermanager"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('PasswordChange'), _("PasswordChange"), 'PasswordChange')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('UserMainMenu'), _("UserMainMenu"), 'UserMainMenu')))                		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
@@ -1237,3 +1247,87 @@ class Info(Screen):
 		except:
 			o = ''
 			return o
+class NFRPasswdScreen(Screen):
+
+    def __init__(self, session, args = 0):
+        Screen.__init__(self, session)
+        self.title = _('Change Root Password')
+        try:
+            self['title'] = StaticText(self.title)
+        except:
+            print 'self["title"] was not found in skin'
+
+        self.user = 'root'
+        self.output_line = ''
+        self.list = []
+        self['passwd'] = ConfigList(self.list)
+        self['key_red'] = StaticText(_('Close'))
+        self['key_green'] = StaticText(_('Set Password'))
+        self['key_yellow'] = StaticText(_('new Random'))
+        self['key_blue'] = StaticText(_('virt. Keyboard'))
+        self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'red': self.close,
+         'green': self.SetPasswd,
+         'yellow': self.newRandom,
+         'blue': self.bluePressed,
+         'cancel': self.close}, -1)
+        self.buildList(self.GeneratePassword())
+        self.onShown.append(self.setWindowTitle)
+
+    def newRandom(self):
+        self.buildList(self.GeneratePassword())
+
+    def buildList(self, password):
+        self.password = password
+        self.list = []
+        self.list.append(getConfigListEntry(_('Enter new Password'), ConfigText(default=self.password, fixed_size=False)))
+        self['passwd'].setList(self.list)
+
+    def GeneratePassword(self):
+        passwdChars = string.letters + string.digits
+        passwdLength = 8
+        return ''.join(Random().sample(passwdChars, passwdLength))
+
+    def SetPasswd(self):
+        self.container = eConsoleAppContainer()
+        self.container.appClosed.append(self.runFinished)
+        self.container.dataAvail.append(self.dataAvail)
+        retval = self.container.execute('passwd %s' % self.user)
+        if retval == 0:
+            self.session.open(MessageBox, _('Sucessfully changed password for root user to:\n%s ' % self.password), MessageBox.TYPE_INFO)
+        else:
+            self.session.open(MessageBox, _('Unable to change/reset password for root user'), MessageBox.TYPE_ERROR)
+
+    def dataAvail(self, data):
+        self.output_line += data
+        if self.output_line.find('password changed.') == -1:
+            if self.output_line.endswith('new UNIX password: '):
+                print '1password:%s\n' % self.password
+                self.processOutputLine(self.output_line[:1])
+
+    def processOutputLine(self, line):
+        if line.find('new UNIX password: '):
+            print '2password:%s\n' % self.password
+            self.container.write('%s\n' % self.password)
+            self.output_line = ''
+
+    def runFinished(self, retval):
+        del self.container.dataAvail[:]
+        del self.container.appClosed[:]
+        del self.container
+        self.close()
+
+    def bluePressed(self):
+        self.session.openWithCallback(self.VirtualKeyBoardTextEntry, VirtualKeyBoard, title=_('Enter your password here:'), text=self.password)
+
+    def VirtualKeyBoardTextEntry(self, callback = None):
+        if callback is not None:
+            self.buildList(callback)
+        return
+
+    def setWindowTitle(self, title = None):
+        if not title:
+            title = self.title
+        try:
+            self['title'] = StaticText(title)
+        except:
+            pass

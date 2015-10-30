@@ -9,6 +9,8 @@ from Components.SystemInfo import SystemInfo
 from Screens.ParentalControlSetup import ProtectedScreen
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_SKIN
+from Plugins.Plugin import PluginDescriptor
+from Components.Label import Label
 
 import xml.etree.cElementTree
 
@@ -232,6 +234,22 @@ class Menu(Screen, ProtectedScreen):
 		self.skinName.append("Menu")
 		self.menuID = menuID
 		ProtectedScreen.__init__(self)
+
+		if config.plugins.infopanel_usermenus is not None and menuID == "mainmenu":
+			plugin_list = []
+			id_list = []
+			for l in plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU ,PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_EVENTINFO]):
+				l.id = (l.name.lower()).replace(' ','_')
+				if l.id not in id_list:
+					id_list.append(l.id)
+					plugin_list.append((l.name, boundFunction(l.__call__, session), l.id, 200))
+			addlist = config.plugins.infopanel_usermenus.value
+			addlist = addlist.split(',')
+			for entry in plugin_list:
+				if entry[2] in addlist:
+					list.append(entry)
+
+		self.list = list
 
 		# Sort by Weight
 		if config.usage.sort_menus.value:
