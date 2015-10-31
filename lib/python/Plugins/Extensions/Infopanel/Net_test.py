@@ -17,6 +17,7 @@ from Tools.Directories import fileExists, pathExists
 from Tools.HardwareInfo import HardwareInfo
 from ServiceReference import ServiceReference
 from Screens.InputBox import InputBox
+from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM 
 from enigma import eConsoleAppContainer, eServiceReference, ePicLoad, getDesktop, eServiceCenter
 from os import system as os_system
 from os import stat as os_stat
