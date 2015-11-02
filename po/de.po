@@ -12865,3 +12865,24 @@ msgstr "F3 lang"
 
 msgid "LED Display Setup"
 msgstr "LED Boxdisplay Einstellungen"
+
+msgid "PasswordChange"
+msgstr "Root Passwort ändern"
+
+msgid "Change Root Password"
+msgstr "Root-Passwort ändern"
+
+msgid "Enter new Password"
+msgstr "Neues Passwort eingeben"
+
+msgid "Set Password"
+msgstr "Passwort speichern"
+
+msgid "new Random"
+msgstr "Passwort generieren"
+
+msgid "UserMainMenu"
+msgstr "Hauptmenü anpassen"
+
+msgid "openNFR user main menu"
+msgstr "Plugins im Hauptmenü ein/ausblenden"
