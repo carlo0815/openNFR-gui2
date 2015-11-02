@@ -505,8 +505,8 @@ def CCcamListEntry(name, idx):
 	else:
 	    png = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_%s.png" % str(idx))
 	    if fileExists(png):
-		    res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 0), size=(35, 35), png=loadPNG(png)))
-	    res.append(MultiContentEntryText(pos=(40, 3), size=(500, 25), font=0, text=name))
+		    res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 0), size=(49, 35), png=loadPNG(png)))
+	    res.append(MultiContentEntryText(pos=(60, 3), size=(500, 25), font=0, text=name))
 	    return res
 		
 def CCcamServerListEntry(name, color):
