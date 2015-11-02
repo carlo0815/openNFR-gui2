@@ -10,6 +10,7 @@ from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.MenuList import MenuList
 
 from Tools.LoadPixmap import LoadPixmap
+from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename, fileExists
 
 from enigma import eTimer, RT_HALIGN_LEFT, eListboxPythonMultiContent, gFont, getDesktop, eSize, ePoint
 from xml.etree import ElementTree
@@ -483,24 +484,41 @@ class OscamInfoMenu(Screen):
 		for x in mlist:
 			res = [ x ]
 			if x.startswith("--"):
-				png = LoadPixmap("/usr/share/enigma2/skin_default/div-h.png")
+			        png = resolveFilename(SCOPE_ACTIVE_SKIN, "div-h.png")
+			        if fileExists(png):
+					png = LoadPixmap(png)
+				else:	
+					png = LoadPixmap("/usr/share/enigma2/skin_default/div-h.png")
 				if png is not None:
 					res.append((eListboxPythonMultiContent.TYPE_PIXMAP, 10,0,360, 2, png))
 					res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 3, 800, 25, 0, RT_HALIGN_LEFT, x[2:]))
-					png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")
+					png2 = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + keys[y] + ".png")
+					if fileExists(png2):
+						png2 = LoadPixmap(png2)
+					else:	
+						png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")
 					if png2 is not None:
 						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 3, 35, 25, png2))
 			else:
 			      	if getDesktop(0).size().width() == 1920:
-				    res.append((eListboxPythonMultiContent.TYPE_TEXT, 60, 00, 800, 35, 0, RT_HALIGN_LEFT, x))
-				    png2 = LoadPixmap("/usr/share/enigma2/SkalliHD-NFR-FullHD/buttons/key_" + keys[y] + ".png")
-				    if png2 is not None:
-					    res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 35, png2))				    
+					res.append((eListboxPythonMultiContent.TYPE_TEXT, 60, 00, 800, 35, 0, RT_HALIGN_LEFT, x))
+					png2 = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + keys[y] + ".png")
+					if fileExists(png2):
+						png2 = LoadPixmap(png2)
+					else:	
+						png2 = LoadPixmap("/usr/share/enigma2/SkalliHD-NFR-FullHD/buttons/key_" + keys[y] + ".png")				    
+				   
+					if png2 is not None:
+					    	res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 35, png2))				    
 				else:
-				    res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 5, 800, 25, 0, RT_HALIGN_LEFT, x))
-				    png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")                                    
-				    if png2 is not None:
-					    res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 30, png2))
+					res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 5, 800, 25, 0, RT_HALIGN_LEFT, x))
+					png2 = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + keys[y] + ".png")
+					if fileExists(png2):
+					    	png2 = LoadPixmap(png2)
+					else:	
+						png2 = LoadPixmap("/usr/share/enigma2/skin_default/buttons/key_" + keys[y] + ".png")                                 
+					if png2 is not None:
+						res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 2, 35, 30, png2))
 				                                       
 			menuentries.append(res)
 			if y < len(keys) - 1:
@@ -673,7 +691,11 @@ class oscInfo(Screen, OscamInfo):
 				x += 1			
 		if heading:
 			pos = 19
-			res.append( (eListboxPythonMultiContent.TYPE_PIXMAP, 0, pos, self.sizeLH, useFont, LoadPixmap("/usr/share/enigma2/skin_default/div-h.png")))
+		        png = resolveFilename(SCOPE_ACTIVE_SKIN, "div-h.png")
+		        if fileExists(png):
+				res.append( (eListboxPythonMultiContent.TYPE_PIXMAP, 0, pos, self.sizeLH, useFont, LoadPixmap(png)))
+			else:	
+				res.append( (eListboxPythonMultiContent.TYPE_PIXMAP, 0, pos, self.sizeLH, useFont, LoadPixmap("/usr/share/enigma2/skin_default/div-h.png")))                       
 		return res
 
 	def buildLogListEntry(self, listentry):
