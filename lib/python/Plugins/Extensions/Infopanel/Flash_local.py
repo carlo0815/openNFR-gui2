@@ -232,6 +232,8 @@ class doFlashImage(Screen):
 			box = box[0:3] + 'x00'
 		elif box == 'odinm9' and self.feed == "nfr":
 			box = 'maram9'
+		elif box == 'bre2ze':
+			box = 'ew7362'	
 		return box
 
 	def green(self, ret = None):
