@@ -108,8 +108,14 @@ void eDebug(const char* fmt, ...)
 	va_end(ap);
 	singleLock s(DebugLock);
 	logOutput(lvlDebug, std::string(buf) + "\n");
-	if (logOutputConsole)
-		fprintf(stderr, "%s\n", buf);
+	if (logOutputConsole) {
+        	struct tm ltime;
+        	struct timeval tv;
+        	gettimeofday(&tv, NULL);
+        	localtime_r(&tv.tv_sec, &ltime);        
+        	fprintf(stderr, "%02d:%02d:%02d.%03ld %s\n",
+                	ltime.tm_hour, ltime.tm_min, ltime.tm_sec, tv.tv_usec / 1000L, buf);
+    }
 }
 
 void eDebugNoNewLine(const char* fmt, ...)
@@ -121,8 +127,14 @@ void eDebugNoNewLine(const char* fmt, ...)
 	va_end(ap);
 	singleLock s(DebugLock);
 	logOutput(lvlDebug, buf);
-	if (logOutputConsole)
-		fprintf(stderr, "%s", buf);
+	if (logOutputConsole) {
+        	struct tm ltime;
+        	struct timeval tv;
+        	gettimeofday(&tv, NULL);
+        	localtime_r(&tv.tv_sec, &ltime);        
+        	fprintf(stderr, "%02d:%02d:%02d.%03ld %s",
+                	ltime.tm_hour, ltime.tm_min, ltime.tm_sec, tv.tv_usec / 1000L, buf);
+    }
 }
 
 void eWarning(const char* fmt, ...)
