@@ -32,12 +32,6 @@ config.opennfrwizard.enablemediacenter = ConfigYesNo(default=False)
 config.opennfrwizard.enableskalliskin = ConfigYesNo(default=False)
 config.opennfrwizard.enablemainmenu2 = ConfigYesNo(default=False)
 
-config.opennfrwizard = ConfigSubsection()
-config.opennfrwizard.enablewebinterface = ConfigYesNo(default=False)
-config.opennfrwizard.enablemediacenter = ConfigYesNo(default=False)
-config.opennfrwizard.enableskalliskin = ConfigYesNo(default=False)
-config.opennfrwizard.enablemainmenu2 = ConfigYesNo(default=False)
-
 def getVarSpaceKb():
     try:
         s = statvfs('/')
