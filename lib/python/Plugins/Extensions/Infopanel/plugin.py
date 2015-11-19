@@ -2,6 +2,8 @@ from Plugins.Plugin import PluginDescriptor
 from Screens.PluginBrowser import *
 from Screens.Ipkg import Ipkg
 from Components.Console import Console
+from Components.About import about
+from Components.Sources.List import List
 from Components.SelectionList import SelectionList
 from Screens.NetworkSetup import *
 from enigma import *
@@ -32,7 +34,7 @@ from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixm
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
 from __init__ import _
 from enigma import getDesktop
-from Screens.OpenNFR_wizard import OpenNFRWizardSetup
+from Screens.OpenNFR_wizard import OpenNFRWizardSetup, OpenNFRWizardupdatecheck
 from Screens.InputBox import PinInput
 import string
 from random import Random
@@ -90,6 +92,8 @@ from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 from Plugins.Extensions.Infopanel.SpinnerSelector import SpinnerSelector
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 from Components.ProgressBar import ProgressBar
+from urllib import urlopen
+import socket
 
 # Hide Softcam-Panel Setup when no softcams installed
 if (config.plugins.showinfopanelextensions.value):
@@ -300,8 +304,10 @@ class Infopanel(Screen, InfoBarPiP):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skin = MENU_SKIN
-		self.onShown.append(self.setWindowTitle)
-		self.service = None
+		global check_update
+		check_update = 0
+		self.onShown.append(self.checkTraficLight)
+                self.service = None
 		self['spaceused'] = ProgressBar()			
 		global pluginlist
 		global videomode
@@ -353,6 +359,35 @@ class Infopanel(Screen, InfoBarPiP):
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
+	def checkTraficLight(self):
+                global check_update
+                if config.opennfrupdate.enablecheckupdate.value is True:
+                	if check_update == 0:
+                		check_update = 1
+				currentTimeoutDefault = socket.getdefaulttimeout()
+				socket.setdefaulttimeout(3)
+				try:
+					if os.path.isfile("/tmp/lastrelease.txt"):
+                                		os.system("rm -f /tmp/lastrelease.txt")
+					d = os.popen("wget -P /tmp http://dev.nachtfalke.biz/nfr/feeds/lastrelease.txt").read()
+					tmpOnlineStatus = open("/tmp/lastrelease.txt", "r").read()
+                                	tmpFlashStatus = open("/etc/version", "r").read()
+					if int(tmpOnlineStatus) > int(tmpFlashStatus):
+						message = _("new Release avaible")
+						self.session.openWithCallback(self.setWindowTitle(), MessageBox, _("New Releaseimage on Server, read more about it by http://www.nachtfalke.biz/f742-opennfr-images.html"), MessageBox.TYPE_INFO, timeout=5)
+                        		else:
+                        			print "no new Release avaible"                                                                	
+				except:
+					print "no internetconnection to check imageupdates"
+
+				socket.setdefaulttimeout(currentTimeoutDefault)
+                	else:
+                		pass        	
+
+                else:
+                	check_update = 1
+                        self.setWindowTitle()
+                	
 	def isProtected(self):
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.infopanel.value
 
@@ -385,7 +420,8 @@ class Infopanel(Screen, InfoBarPiP):
 		 _('Free'),
 		 self.ConvertSize(int(diskSpace[0])),
 		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		self['spaceused'].setValue(percUsed)
+
 		
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
@@ -565,7 +601,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "PluginDeinstallwizard":
 			self.session.open(PluginDeinstall)
 		elif menu == "OpenNFRWizard":
-			self.session.open(OpenNFRWizardSetup)	
+			self.session.open(OpenNFRWizardSetup)
+		elif menu == "ImageUpdateCheck":
+			self.session.open(OpenNFRWizardupdatecheck)                        	
 		elif menu == "PluginReLoad":
                         if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):    
                             from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
@@ -647,7 +685,8 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
-		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
+                self.tlist.append(MenuEntryItem((InfoEntryComponent('ImageUpdateCheck'), _("ImageUpdateCheck"), 'ImageUpdateCheck')))
+                self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
@@ -1330,4 +1369,4 @@ class NFRPasswdScreen(Screen):
         try:
             self['title'] = StaticText(title)
         except:
-            pass
+            pass 
