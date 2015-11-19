@@ -32,6 +32,9 @@ config.opennfrwizard.enablemediacenter = ConfigYesNo(default=False)
 config.opennfrwizard.enableskalliskin = ConfigYesNo(default=False)
 config.opennfrwizard.enablemainmenu2 = ConfigYesNo(default=False)
 
+config.opennfrupdate = ConfigSubsection()
+config.opennfrupdate.enablecheckupdate = ConfigYesNo(default=True)
+
 def getVarSpaceKb():
     try:
         s = statvfs('/')
@@ -148,3 +151,55 @@ class InstallWizardIpkgUpdater(Screen):
 		if event == IpkgComponent.EVENT_DONE:
 			plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
                         self.close()
+                        
+class OpenNFRWizardupdatecheck(ConfigListScreen, Screen):
+    __module__ = __name__
+    def __init__(self, session, args = 0):
+	Screen.__init__(self, session)
+	self.skinName = ["Setup"]
+	self['spaceused'] = ProgressBar()
+        self["status"] = ScrollLabel()
+        self.onShown.append(self.setWindowTitle)
+        			
+        list = []
+	list.append(getConfigListEntry(_('Enable OpenNfr Image-Update-Check?'), config.opennfrupdate.enablecheckupdate))
+	
+        self["key_red"] = Label(_("Exit"))
+        self["key_green"] = Label(_("Save"))
+        
+        ConfigListScreen.__init__(self, list) 
+        self['actions'] = ActionMap(['OkCancelActions',
+         'ColorActions'], {'red': self.dontSaveAndExit, 'green' : self.run,
+         'cancel': self.dontSaveAndExit}, -1)
+
+    def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
+
+    def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Setup'),
+		 _('Free'),
+		 self.ConvertSize(int(diskSpace[0])),
+		 percFree))
+		self['spaceused'].setValue(percUsed)
+
+    def run(self):
+	config.opennfrupdate.save()
+        self.close()
+              
+    def dontSaveAndExit(self):
+        for x in self['config'].list:
+            x[1].cancel()
+
+        self.close()                        
