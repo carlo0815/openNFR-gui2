@@ -72,6 +72,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 		pass
 
 from Screens.CronTimer import *
+from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config
 from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
@@ -602,7 +603,9 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(PluginDeinstall)
 		elif menu == "OpenNFRWizard":
 			self.session.open(OpenNFRWizardSetup)
-		elif menu == "ImageUpdateCheck":
+		elif menu == "SkinSetup":
+			self.session.open(NfrHD_Config)
+		elif menu == "ImageUpdateCheck": 
 			self.session.open(OpenNFRWizardupdatecheck)                        	
 		elif menu == "PluginReLoad":
                         if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):    
@@ -703,6 +706,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('SkinSetup'), _("SkinSetup"), 'SkinSetup')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Blue-Key-Action'), _("Blue Panel"), 'Blue-Key-Action')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Multi-Key-Action'), _("Edit remote buttons"), 'Multi-Key-Action')))
