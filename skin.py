@@ -2,6 +2,7 @@ from Tools.Profile import profile
 profile("LOAD:ElementTree")
 import xml.etree.cElementTree
 import os
+from os import path, remove, listdir
 
 profile("LOAD:enigma_skin")
 from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop
@@ -13,6 +14,7 @@ from Tools.LoadPixmap import LoadPixmap
 from Components.RcModel import rc_model
 
 colorNames = {}
+skinerrorfile = '/tmp/.skinerror'
 # Predefined fonts, typically used in built-in screens and for components like
 # the movie list and so.
 fonts = {
@@ -60,6 +62,24 @@ def skin_user_skinname():
 	if fileExists(filename):
 		return name
 	return None
+	
+def loadSkin(name, scope = SCOPE_SKIN):
+	# read the skin
+	filename = resolveFilename(scope, name)
+	mpath = path.dirname(filename) + "/"
+	dom_skins.append((mpath, xml.etree.cElementTree.parse(filename).getroot()))
+	
+def get_modular_files(name, scope = SCOPE_SKIN):
+	dirname = resolveFilename(scope, name + 'mySkin/')
+	file_list = []
+	if fileExists(dirname):
+		skin_files = (listdir(dirname))
+		if len(skin_files):
+			for f in skin_files:
+				if f.startswith('skin_') and f.endswith('.xml'):
+					file_list.append(("mySkin/" + f))
+	file_list = sorted(file_list, key=str.lower)
+	return file_list	
 
 # we do our best to always select the "right" value
 # skins are loaded in order of priority: skin with
@@ -84,6 +104,13 @@ config.skin.primary_skin = ConfigText(default=DEFAULT_SKIN)
 
 DEFAULT_DISPLAY_SKIN = "skin_display.xml"
 config.skin.display_skin = ConfigText(default=DEFAULT_DISPLAY_SKIN)
+def getSkinPath():
+	primary_skin_path = config.skin.primary_skin.value.replace('skin.xml', '')
+	if not primary_skin_path.endswith('/'):
+		primary_skin_path = primary_skin_path + '/'
+	return primary_skin_path
+	
+primary_skin_path = getSkinPath()
 
 profile("LoadSkin")
 try:
@@ -94,7 +121,47 @@ try:
 		addSkin('skin_user.xml', SCOPE_CONFIG)
 except (SkinError, IOError, AssertionError), err:
 	print "not loading user skin: ", err
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_colors.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined colors for skin", (primary_skin_path + 'skin_user_colors.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined colors for skin"
 
+try:
+	loadSkin(primary_skin_path + 'skin_user_header.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined header file for skin"	
+	
+	
+def load_modular_files():
+	modular_files = get_modular_files(primary_skin_path, SCOPE_SKIN)
+	if len(modular_files):
+		for f in modular_files:
+			try:
+				loadSkin(primary_skin_path + f, SCOPE_SKIN)
+				print "[openNFR] loading modular skin file : ", (primary_skin_path + f)
+			except (SkinError, IOError, AssertionError), err:
+				print "[openNFR] failed to load modular skin file : ", err
+load_modular_files()
+	
+try:
+	if fileExists(skinerrorfile):
+		remove(skinerrorfile)
+		if config.skin.primary_fallback_skin.value == True:
+			if config.skin.primary_skin.value == default_skin:
+				config.skin.primary_skin.value = 'skin.xml'
+			else:
+				config.skin.primary_skin.value = default_skin
+			config.skin.primary_skin.save()
+
+except (SkinError, IOError, AssertionError), err:
+	print "SKIN ERROR:", err
+	print "defaulting to standard skin..."
+	config.skin.primary_skin.value = 'skin.xml'
+	loadSkin('skin.xml')
+	
 # some boxes lie about their dimensions
 addSkin('skin_box.xml')
 # add optional discrete second infobar
@@ -1004,4 +1071,4 @@ def readSkin(screen, skin, names, desktop):
 	# solution is to avoid the nested scope above and use the context object to pass
 	# things around.
 	screen = None
-	visited_components = None
+	visited_components = None 
