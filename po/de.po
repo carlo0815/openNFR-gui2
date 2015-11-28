@@ -12886,3 +12886,63 @@ msgstr "Hauptmenü anpassen"
 
 msgid "openNFR user main menu"
 msgstr "Plugins im Hauptmenü ein/ausblenden"
+
+msgid "Save EPG data"
+msgstr "EPG Daten speichern"
+
+msgid "ImageUpdateCheck"
+msgstr "OpenNFR Image-Update-Check"
+
+msgid "Enable OpenNfr Image-Update-Check?"
+msgstr "Aktiviere OpenNFR Image-Update-Check?"
+
+msgid "new Release avaible"
+msgstr "Neues Release verfügbar"
+
+msgid "New Releaseimage on Server, read more about it by http://www.nachtfalke.biz/f742-opennfr-images.html"
+msgstr "Neues Releaseimage verfügbar, lese mehr dazu auf http://www.nachtfalke.biz/f742-opennfr-images.html"
+
+msgid "SkinSetup"
+msgstr "Skin-Einstellungen"
+
+msgid "%s - Setup"
+msgstr "%s - Einstellungen"
+
+msgid "Enable %s pro:"
+msgstr "Aktiviere %s Pro:"
+
+msgid "Style:"
+msgstr "Stil:"
+
+msgid "Font:"
+msgstr "Schriftart"
+
+msgid "Restart necessary, restart GUI now?"
+msgstr "Neustart erforderlich, GUI jetzt neu starten?"
+
+msgid "---Weather---"
+msgstr "---Wetter---"
+
+msgid "Refresh interval in minutes:"
+msgstr "Aktualisierungsintervall in Minuten:"
+
+msgid "Temperature unit:"
+msgstr "Temperatureinheit:"
+
+msgid "Search weather location ID"
+msgstr "Suche nach Ort Nr."
+
+msgid "Please enter search string for your location"
+msgstr "Bitte hier den Ortsnamen für die Suche eingeben"
+
+msgid "Location list"
+msgstr "Ortsliste"
+
+msgid "Location # (http://weather.yahoo.com/):"
+msgstr "Standort # (http://weather.yahoo.com/):"
+
+msgid "skin_default additional screens"
+msgstr "OpenNFR-Standard-Skin zusätzliche Screens"
+
+msgid "%s additional screens"
+msgstr "%s zusätzliche Screens"
