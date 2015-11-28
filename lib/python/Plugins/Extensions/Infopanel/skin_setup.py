@@ -202,9 +202,9 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		self["config"].l.setList(self.list)
 		if self.myNfrHD_active.value:
 		        if cur_skin == "skin_default":
-			        self["key_yellow"].setText("skin_default pro")
+			        self["key_yellow"].setText("skin_default Pro")
 			else:
-                                self["key_yellow"].setText("%s pro" % cur_skin)
+                                self["key_yellow"].setText("%s Pro" % cur_skin)
 		else:
 			self["key_yellow"].setText("")
 
@@ -216,9 +216,9 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		elif self["config"].getCurrent() == self.set_myatile:
 			if self.myNfrHD_active.value:
 		        	if cur_skin == "skin_default":
-			        	self["key_yellow"].setText("skin_default pro")
+			        	self["key_yellow"].setText("skin_default Pro")
 				else:
-                                	self["key_yellow"].setText("%s pro" % cur_skin)
+                                	self["key_yellow"].setText("%s Pro" % cur_skin)
 			else:
 				self["key_yellow"].setText("")
 
