@@ -335,7 +335,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		if sel is not None and sel == self.set_new_skin:
 			self.openSkinSelector()
 		elif sel is not None and sel == self.find_woeid:
-			self.session.openWithCallback(self.search_weather_id_callback, InputBox, title = _("Please enter search string for your location"), text = "")
+			self.session.openWithCallback(self.search_weather_id_callback, InputBox, title = _("Please enter search string for your location"),windowTitle = _("City-ID"), text = "")
 		else:
 			self.keyGreen()
 
