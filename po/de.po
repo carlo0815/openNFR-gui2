@@ -10954,9 +10954,9 @@ msgid "Sleeptimer"
 msgstr "Ausschalt-Timer"
 
 msgid "Shutdown when in Standby"
-msgstr "Ausschalten aus dem Standby"
+msgstr "Ausschalten wenn im Standby-Modus"
 
-msgid "after"
+msgid "after "
 msgstr "nach"
 
 msgid "SleepTimer Configuration"
