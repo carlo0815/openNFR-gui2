@@ -28,21 +28,21 @@
 	</screen>
 
 	<screen name="SummaryIconsPanel">
-		<widget source="global.OnlineStableUpdateState" render="Pixmap" pixmap="update_stable.png" position="0,0" size="30,30" >
+		<widget source="global.OnlineStableUpdateState" render="Pixmap" pixmap="update_stable.png" position="0,1" size="30,30" >
 			<convert type="ConditionalShowHide"/>
 		</widget>
-		<widget source="global.OnlineUnstableUpdateState" render="Pixmap" pixmap="update_unstable.png" position="0,0" size="30,30" >
+		<widget source="global.OnlineUnstableUpdateState" render="Pixmap" pixmap="update_unstable.png" position="0,1" size="30,30" >
 			<convert type="ConditionalShowHide"/>
 		</widget>
-		<widget source="session.RecordState" render="Pixmap" pixmap="rec.png" position="38,0"  size="55,30" >
+		<widget source="session.RecordState" render="Pixmap" pixmap="rec.png" position="38,1"  size="55,30" >
 			<convert type="ConditionalShowHide"/>
 		</widget>
-		<widget source="session.CurrentService" render="Pixmap" pixmap="hd.png" position="98,0" size="58,26">
+		<widget source="session.CurrentService" render="Pixmap" pixmap="hd.png" position="98,1" size="58,26">
 			<convert type="ServiceInfo">VideoWidth</convert>
 			<convert type="ValueRange">721,1980</convert>
 			<convert type="ConditionalShowHide" />
 		</widget>
-		<widget source="session.CurrentService" render="Pixmap" pixmap="dolby.png" position="163,0" size="43,26">
+		<widget source="session.CurrentService" render="Pixmap" pixmap="dolby.png" position="163,1" size="43,26">
 			<convert type="ServiceInfo">IsMultichannel</convert>
 			<convert type="ConditionalShowHide" />
 		</widget>
