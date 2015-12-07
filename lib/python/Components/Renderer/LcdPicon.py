@@ -21,7 +21,7 @@ def onMountpointAdded(mountpoint):
 	global searchPaths
 	try:
 		if getBoxType() in ('vuultimo', 'et10000', 'mutant2400', 'xpeedlx3', 'quadbox2400', 'sezammarvel', 'atemionemesis', 'mbultra', 'beyonwizt4', 'dm7080') and not SystemInfo["grautec"]:
-			path = os.path.join(mountpoint, 'usr/share/enigma2/piconlcd') + '/'
+			path = os.path.join(mountpoint, 'piconlcd') + '/'
 		else:
 			path = os.path.join(mountpoint, 'picon') + '/'
 		if os.path.isdir(path) and path not in searchPaths:
@@ -36,7 +36,7 @@ def onMountpointAdded(mountpoint):
 def onMountpointRemoved(mountpoint):
 	global searchPaths
 	if getBoxType() in ('vuultimo', 'et10000', 'mutant2400', 'xpeedlx3', 'quadbox2400', 'sezammarvel', 'atemionemesis', 'mbultra', 'beyonwizt4', 'dm7080') and not SystemInfo["grautec"]:
-		path = os.path.join(mountpoint, 'usr/share/enigma2/piconlcd') + '/'
+		path = os.path.join(mountpoint, 'piconlcd') + '/'
 	else:
 		path = os.path.join(mountpoint, 'picon') + '/'
 	try:
