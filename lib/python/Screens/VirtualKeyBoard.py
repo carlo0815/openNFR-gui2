@@ -453,10 +453,10 @@ class VirtualKeyBoard(Screen):
 			self.okClicked()
 
 	def keyGotAscii(self):
-		self.smsChar = None
-		if self.selectAsciiKey(str(unichr(getPrevAsciiCode()).encode('utf-8'))):
-			self.okClicked()
-
+		#self.smsChar = None
+		#if self.selectAsciiKey(str(unichr(getPrevAsciiCode()).encode('utf-8'))):
+			#self.okClicked()
+		pass
 	def selectAsciiKey(self, char):
 		if char == " ":
 			char = "SPACE"
