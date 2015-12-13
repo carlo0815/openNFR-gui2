@@ -18,6 +18,7 @@ from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
 from Plugins.Plugin import PluginDescriptor
 from Screens.SkinSelector import SkinSelector
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Screens.InputBox import InputBox
 from Screens.MessageBox import MessageBox
 from Screens.Screen import Screen
@@ -335,7 +336,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		if sel is not None and sel == self.set_new_skin:
 			self.openSkinSelector()
 		elif sel is not None and sel == self.find_woeid:
-			self.session.openWithCallback(self.search_weather_id_callback, InputBox, title = _("Please enter search string for your location"),windowTitle = _("City-ID"), text = "")
+			self.session.openWithCallback(self.search_weather_id_callback, VirtualKeyBoard, title = _('Please enter search string for your location'), text = "")
 		else:
 			self.keyGreen()
 
