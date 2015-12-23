@@ -11,6 +11,10 @@ if HAVE_LIBVUGLES2
 SUBDIRS += AnimationSetup
 endif
 
+if HAVE_OSDANIMATION
+SUBDIRS += AnimationSetup
+endif
+
 if VUSOLO2
 SUBDIRS += CableScan
 endif
