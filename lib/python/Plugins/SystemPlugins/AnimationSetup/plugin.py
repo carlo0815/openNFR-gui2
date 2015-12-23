@@ -6,6 +6,7 @@ from Components.MenuList import MenuList
 from Components.Sources.StaticText import StaticText
 from Components.config import config, ConfigNumber, ConfigSelectionNumber, getConfigListEntry
 from Plugins.Plugin import PluginDescriptor
+from boxbranding import getBrandOEM
 
 from enigma import setAnimation_current, setAnimation_speed
 
@@ -25,7 +26,7 @@ config.misc.window_animation_speed = ConfigSelectionNumber(15, g_max_speed, 1, d
 
 class AnimationSetupConfig(ConfigListScreen, Screen):
 	skin="""
-		<screen position="center,center" size="600,140" title="Animation Settings">
+		<screen position="center,center" size="600,140" title="Animation Setup">
 			<widget name="config" position="0,0" size="600,100" scrollbarMode="showOnDemand" />
 			<ePixmap pixmap="skin_default/buttons/red.png" position="0,100" size="140,40" alphatest="on" />
 			<ePixmap pixmap="skin_default/buttons/green.png" position="140,100" size="140,40" alphatest="on" />
@@ -98,7 +99,7 @@ class AnimationSetupScreen(Screen):
 			{"idx":3, "name":_("Grow drop")},
 			{"idx":4, "name":_("Grow from left")},
 			{"idx":5, "name":_("Extrude from left")},
-			{"idx":6, "name":_("Popup")},
+			#{"idx":6, "name":_("Popup")},
 			{"idx":7, "name":_("Slide drop")},
 			{"idx":8, "name":_("Slide from left")},
 			{"idx":9, "name":_("Slide left to right")},
@@ -231,7 +232,7 @@ def animationSetupMain(session, **kwargs):
 	session.open(AnimationSetupScreen)
 
 def startAnimationSetup(menuid):
-	if menuid != "ui_menu":
+	if menuid != "osd_menu":
 		return []
 
 	return [( _("Animations"), animationSetupMain, "animation_setup", 3)]
