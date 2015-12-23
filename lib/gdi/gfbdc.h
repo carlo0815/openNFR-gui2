@@ -5,6 +5,8 @@
 #include "gpixmap.h"
 #include "gmaindc.h"
 
+#ifndef SWIG
+
 class gFBDC: public gMainDC
 {
 	fbClass *fb;
@@ -34,5 +36,10 @@ public:
 	virtual ~gFBDC();
 	int islocked() const { return fb->islocked(); }
 };
+#endif
+#ifdef HAVE_OSDANIMATION
+void setAnimation_current(int a);
+void setAnimation_speed(int speed);
+#endif
 
 #endif
