@@ -36,18 +36,18 @@ class VirtualKeyBoard(Screen):
 		self.smsChar = None
 		self.sms = NumericalTextInput(self.smsOK)
 		
-		self.key_bg = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_bg.png"))
-		self.key_sel = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_sel.png"))
-		self.key_backspace = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_backspace.png"))
-		self.key_all = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_all.png"))
-		self.key_clr = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_clr.png"))
-		self.key_esc = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_esc.png"))
-		self.key_ok = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_ok.png"))
-		self.key_shift = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_shift.png"))
-		self.key_shift_sel = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_shift_sel.png"))
-		self.key_space = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_space.png"))
-		self.key_left = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_left.png"))
-		self.key_right = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/vkey_right.png"))
+		self.key_bg = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_bg.png"))
+		self.key_sel = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_sel.png"))
+		self.key_backspace = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_backspace.png"))
+		self.key_all = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_all.png"))
+		self.key_clr = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_clr.png"))
+		self.key_esc = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_esc.png"))
+		self.key_ok = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_ok.png"))
+		self.key_shift = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_shift.png"))
+		self.key_shift_sel = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_shift_sel.png"))
+		self.key_space = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_space.png"))
+		self.key_left = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_left.png"))
+		self.key_right = LoadPixmap(path=resolveFilename(SCOPE_ACTIVE_SKIN, "skin_default/vkey_right.png"))
 
 		self.keyImages =  {
 				"BACKSPACE": self.key_backspace,
