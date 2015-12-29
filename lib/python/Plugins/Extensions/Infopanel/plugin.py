@@ -340,6 +340,7 @@ class Infopanel(Screen, InfoBarPiP):
 			}, 1)
 		
 		self["label1"] = Label(INFO_Panel_Version)
+		self["summary_description"] = StaticText("")
 
 		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('SoftcamManager'), _("Softcam-Manager"), 'SoftcamManager')))
@@ -428,6 +429,7 @@ class Infopanel(Screen, InfoBarPiP):
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
 			selection = self['Mlist'].l.getCurrentSelection()[0]
+			self["summary_description"].text = selection[1]
 			if (selection[0] is not None):
 				return selection[0]
 
