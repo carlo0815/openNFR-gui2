@@ -78,6 +78,7 @@ from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
 from Plugins.Extensions.Infopanel.diskspeed import Disk_Speed
+from Plugins.Extensions.Infopanel.iptv_convert import IPTV
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
@@ -533,6 +534,8 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(Info, "Swap")
 		elif menu == "DiskSpeed":
 			self.session.open(Disk_Speed)
+		elif menu == "m3u-convert":
+			self.session.open(IPTV)			
 		elif menu == "PasswordChange":
 			self.session.open(NFRPasswdScreen)
 		elif menu == "UserMainMenu":
@@ -627,6 +630,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('SwapManager'), _("SwapManager"), 'SwapManager')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('DiskSpeed'), _("Disk-Speed"), 'DiskSpeed')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('m3u-convert'), _("m3u-convert"), 'm3u-convert')))
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
@@ -1373,4 +1377,4 @@ class NFRPasswdScreen(Screen):
         try:
             self['title'] = StaticText(title)
         except:
-            pass 
+            pass  
