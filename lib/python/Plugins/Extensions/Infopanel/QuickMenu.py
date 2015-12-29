@@ -1,4 +1,4 @@
-﻿from enigma import eListboxPythonMultiContent, gFont, eEnv
+from enigma import eListboxPythonMultiContent, gFont, eEnv
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM
 from Components.Console import Console
 from Components.ActionMap import ActionMap
@@ -9,6 +9,7 @@ from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixm
 from Components.Network import iNetwork
 from Components.NimManager import nimmanager
 from Components.SystemInfo import SystemInfo
+from Components.Sources.StaticText import StaticText
 from enigma import getDesktop
 from Screens.Screen import Screen
 from Screens.NetworkSetup import *
@@ -128,6 +129,7 @@ class QuickMenu(Screen):
 		self["key_yellow"] = Label(_("Devices"))
 		self["key_blue"] = Label()
 		self["description"] = Label()
+		self["summary_description"] = StaticText("")
 
 		self.menu = 0
 		self.list = []
@@ -186,6 +188,7 @@ class QuickMenu(Screen):
 			item = self["list"].getCurrent()
 			if item:
 				self["description"].setText(_(item[4]))
+				self["summary_description"].text = item[0]
 				self.okList()
 
 	def selectionSubChanged(self):
@@ -193,6 +196,7 @@ class QuickMenu(Screen):
 			item = self["sublist"].getCurrent()
 			if item:
 				self["description"].setText(_(item[3]))
+				self["summary_description"].text = item[0]
 
 	def goLeft(self):
 		if self.menu <> 0:
