@@ -7,6 +7,7 @@ from Components.ActionMap import NumberActionMap
 from Components.ConfigList import ConfigListScreen
 from Components.config import config, ConfigSubsection, getConfigListEntry, ConfigNothing, ConfigSelection, ConfigOnOff
 from Components.Label import Label
+from Components.Sources.StaticText import StaticText
 from Components.Sources.List import List
 from Components.Sources.Boolean import Boolean
 from Components.SystemInfo import SystemInfo
@@ -25,6 +26,7 @@ class AudioSelection(Screen, ConfigListScreen):
 		self["key_green"] = Boolean(False)
 		self["key_yellow"] = Boolean(True)
 		self["key_blue"] = Boolean(False)
+		self["summary_description"] = StaticText("")
 
 		ConfigListScreen.__init__(self, [])
 		self.infobar = infobar or self.session.infobar
