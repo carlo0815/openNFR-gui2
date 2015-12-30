@@ -1,4 +1,5 @@
 from Screens.Screen import Screen
+from Screens.MessageBox import MessageBox
 from Components.config import ConfigSelection, ConfigSubList, ConfigDateTime, ConfigClock, ConfigYesNo, ConfigInteger, getConfigListEntry
 from Components.ActionMap import NumberActionMap
 from Components.ConfigList import ConfigListScreen
@@ -6,6 +7,7 @@ from Components.MenuList import MenuList
 from Components.Button import Button
 from Components.Label import Label
 from Components.Pixmap import Pixmap
+from Components.Sources.StaticText import StaticText
 from Components.SystemInfo import SystemInfo
 from PowerTimer import AFTEREVENT, TIMERTYPE
 from time import localtime, mktime, time, strftime
@@ -327,6 +329,7 @@ class TimerLog(Screen):
 
 		self["loglist"] = MenuList(self.list)
 		self["logentry"] = Label()
+		self["summary_description"] = StaticText("")
 
 		self["key_red"] = Button(_("Delete entry"))
 		self["key_green"] = Button()
@@ -392,5 +395,6 @@ class TimerLog(Screen):
 	def updateText(self):
 		if self.list:
 			self["logentry"].setText(str(self["loglist"].getCurrent()[1][2]))
+			self["summary_description"].setText(str(self["loglist"].getCurrent()[1][2]))
 		else:
 			self["logentry"].setText("")
