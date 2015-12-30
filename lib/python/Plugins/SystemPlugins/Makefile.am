@@ -19,6 +19,10 @@ if VUSOLO2
 SUBDIRS += CableScan
 endif
 
+if VUSOLO4K
+SUBDIRS += FastZapSupport
+ endif
+
 if VUDUO2
 SUBDIRS += CableScan
 endif

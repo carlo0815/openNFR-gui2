@@ -570,6 +570,21 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 			else:
 				raise SkinError("need color and name, got %s %s" % (name, color))
 
+	for c in skin.findall("parameters"):
+		for parameter in c.findall("parameter"):
+			get = parameter.attrib.get
+			try:
+				name = get("name")
+				value = get("value")
+				if name.find('Font') != -1:
+					font = value.split(";")
+					if isinstance(font, list) and len(font) == 2:
+						parameters[name] = (str(font[0]), int(font[1]))
+				else:
+					parameters[name] = map(int, value.split(","))
+			except Exception, ex:
+			 	print "[SKIN] bad parameter", ex
+
 	for c in skin.findall("fonts"):
 		for font in c.findall("font"):
 			get_attr = font.attrib.get

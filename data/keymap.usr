@@ -137,7 +137,12 @@
 	</map>
 
 	<map context="InputAsciiActions">
-		<key id="KEY_ASCII" mapto="gotAsciiCode" flags="mr" />
+		<device name="Console">
+			<key id="KEY_ASCII" mapto="gotAsciiCode" flags="mr" />
+		</device>
+		<device name="SDL">
+			<key id="KEY_ASCII" mapto="gotAsciiCode" flags="mr" />
+		</device>
 	</map>
 
 	<map context="InputBoxActions">
@@ -150,6 +155,7 @@
 		<key id="KEY_MUTE" mapto="deleteForward" flags="mr" />
 		<key id="KEY_NEXT" mapto="deleteForward" flags="mr" />
 		<key id="KEY_PREVIOUS" mapto="deleteBackward" flags="mr" />
+		<key id="KEY_TEXT" mapto="showVirtualKeyboard" flags="m" />
 		<key id="KEY_1" mapto="1" flags="m" />
 		<key id="KEY_2" mapto="2" flags="m" />
 		<key id="KEY_3" mapto="3" flags="m" />

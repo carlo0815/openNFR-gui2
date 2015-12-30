@@ -196,7 +196,6 @@ typedef long time_t;
 %include <lib/gdi/fb.h>
 %include <lib/gdi/font.h>
 %include <lib/gdi/gpixmap.h>
-%include <lib/gdi/gfbdc.h>
 %include <lib/gdi/gmaindc.h>
 %include <lib/gdi/epoint.h>
 %include <lib/gdi/erect.h>
@@ -406,6 +405,16 @@ int getUsedEncoderCount()
 	eEncoder *encoders = eEncoder::getInstance();
 	if (encoders) return encoders->getUsedEncoderCount();
 	return 0;
+}
+%}
+
+int getLinkedSlotID(int);
+%{
+int getLinkedSlotID(int fe)
+{
+        eFBCTunerManager *mgr = eFBCTunerManager::getInstance();
+        if (mgr) return mgr->getLinkedSlotID(fe);
+        return -1;
 }
 %}
 

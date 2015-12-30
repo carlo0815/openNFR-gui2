@@ -66,6 +66,15 @@ class PluginDescriptor:
 
 	WHERE_VIXMENU = 17
 
+	WHERE_RECORDTIMER = 18
+
+	WHERE_SATCONFIGCHANGED = 19
+
+	WHERE_SERVICESCAN = 20
+
+	WHERE_EXTENSIONSINGLE = 21
+
+
 	# start as channellist context menu plugin. session, serviceref (currently selected)
 	WHERE_CHANNEL_CONTEXT_MENU = 18
 

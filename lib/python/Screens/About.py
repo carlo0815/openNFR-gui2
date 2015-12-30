@@ -31,6 +31,24 @@ class About(Screen):
 		if path.exists('/proc/stb/info/chipset'):
 			AboutText += _("Chipset:\t\t BCM%s") % about.getChipSetString() + "\n"
 
+		cpuMHz = ""
+		if getBoxType() in ('vusolo4k'):
+			cpuMHz = "   (1,5 GHz)"
+		else:
+			if path.exists('/proc/cpuinfo'):
+				f = open('/proc/cpuinfo', 'r')
+				temp = f.readlines()
+				f.close()
+				try:
+					for lines in temp:
+						lisp = lines.split(': ')
+						if lisp[0].startswith('cpu MHz'):
+							#cpuMHz = "   (" +  lisp[1].replace('\n', '') + " MHz)"
+							cpuMHz = "   (" +  str(int(float(lisp[1].replace('\n', '')))) + " MHz)"
+							break
+				except:
+					pass
+
 		AboutText += _("CPU:\t\t %s") % about.getCPUString() + "\n"
 		AboutText += _("Cores:\t\t %s") % about.getCpuCoresString() + "\n"
 		string = getDriverDate()
