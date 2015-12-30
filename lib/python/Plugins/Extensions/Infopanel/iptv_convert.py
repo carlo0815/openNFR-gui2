@@ -24,7 +24,27 @@ import socket
 from glob import glob
 
 class IPTV(Screen):
+    skin = """
+            <screen name="IPTV" position="center,center" size="820,450" title="M3U Converter" >
+	
+		<ePixmap position="0,0" zPosition="-1" size="820,450" backgroundColor="#ff000000" />
 
+		<widget name="text1" position="0,70" size="820,26" zPosition="2" foregroundColor="#FFE500" font="Regular;22" halign="center" transparent="1" />
+
+		<widget name="IPTVList" position="90,130" size="310,200" zPosition="2" backgroundColor="#000000" scrollbarMode="showOnDemand" enableWrapAround="1" transparent="1" />
+
+		<ePixmap name="red" pixmap="skin_default/buttons/red.png" position="10,400" zPosition="1" size="40,40" transparent="1" alphatest="on" />
+
+		<ePixmap name="green" pixmap="skin_default/buttons/buttons/green.png" position="160,400" zPosition="1" size="40,40" transparent="1" alphatest="on" />
+
+		<ePixmap name="yellow" pixmap="skin_default/buttons/buttons/yellow.png" position="320,400" zPosition="1" size="40,40" transparent="1" alphatest="on" />
+
+		<widget name="key_red" position="55,407" zPosition="2" size="100,25" valign="center" halign="left" font="Regular;21" transparent="1" shadowColor="#000000" shadowOffset="-1,-1" />
+
+		<widget name="key_green" position="205,407" zPosition="2" size="120,25" valign="center" halign="left" font="Regular;21" transparent="1" shadowColor="#000000" shadowOffset="-1,-1" />
+
+		<widget name="key_yellow" position="365,407" zPosition="2" size="180,25" valign="center" halign="left" font="Regular;21" transparent="1" shadowColor="#000000" shadowOffset="-1,-1" />
+	    </screen>
             
     iptvlist =[]
 
@@ -33,11 +53,6 @@ class IPTV(Screen):
         self.session = session
         self.Console = Console()
         self.Version = args
-        path = "/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/skins/converter.xml"
-        with open(path, "r") as f:
-            self.skin = f.read()
-            f.close()
-           
         Screen.__init__(self, session)
         self.m3uliststart()
         self.iptvlist = self.m3ulist
