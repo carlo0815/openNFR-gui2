@@ -154,52 +154,6 @@ class NFR4XBootInstallation(Screen):
                 
     def install2(self, yesno):
         if yesno:
-            self.MACHINEBRAND = getMachineBrand()
-            if  self.MACHINEBRAND == "Vu+":
-                os.system("opkg install packagegroup-base-nfs")	
-            message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
-            ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
-            ybox.setTitle(_('Install Confirmation'))
-        else:
-            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
-
-    def install3(self, yesno):
-        if yesno:
-            cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
-            os.system(cmd2)
-            if fileExists('/proc/mounts'):
-                fileExists('/proc/mounts')
-                f = open('/proc/mounts', 'r')
-                for line in f.readlines():
-                    if line.find(self.mysel):
-		        mntdev = line.split(' ')[0]
-                f.close()
-                mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-            cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
-            os.system(cmd)
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitboot /sbin/nfr4xinit')
-            os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
-            os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
-            out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
-            out2.write('Flash')
-            out2.close()
-            out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
-            out.write(self.mysel)
-            out.close()
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
-            image = getImageDistro()
-            if fileExists('/etc/image-version'):
-                if 'build' not in image:
-                    f = open('/etc/image-version', 'r')
-                    for line in f.readlines():
-                        if 'build=' in line:
-                            image = image + ' build ' + line[6:-1]
-                            open('/media/nfr4xboot/NFR4XBootI/.Flash', 'w').write(image)
-                            break
-
-                    f.close()
-            self.myclose2(_('NFR4XBoot has been installed succesfully!'))
-        else:
             cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
             os.system(cmd2)
             if fileExists('/proc/mounts'):
@@ -234,7 +188,8 @@ class NFR4XBootInstallation(Screen):
 
                     f.close()
             self.myclose2(_('NFR4XBoot has been installed succesfully, and Box rebooting now!'))
-
+        else:
+            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
 
 class NFR4XBootImageChoose(Screen):
 
@@ -273,7 +228,6 @@ class NFR4XBootImageChoose(Screen):
         
     def bootsetup(self):
         menulist = []
-        menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
         menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
         self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
 
@@ -282,10 +236,6 @@ class NFR4XBootImageChoose(Screen):
         if choice is None:
             return
         else:
-            if choice[1] == 'withnfr4xboot':
-                cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitboot /sbin/nfr4xinit'
-                cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
-                self.session.openWithCallback(self.close, Console, _('NFR4XBoot work with Bootmanager by Booting!'), [cmd0, cmd1])
             if choice[1] == 'withoutnfr4xboot':
                 cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
                 cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
