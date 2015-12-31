@@ -563,6 +563,20 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/bin/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/images/Makefile
 	lib/python/Plugins/Extensions/NFR4XBoot_sh4/NFR4XBoot_client/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/bin/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/images/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubi/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubi/volume/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubi/headers/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubi/block/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubifs/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubifs/nodes/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ubi_io/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/ubi_reader/ui/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/NFR4XBoot_client/Makefile
+	lib/python/Plugins/Extensions/NFR4XBoot_4k/NFR4XBoot_client/images/Makefile
 	lib/python/Plugins/Extensions/PicturePlayer/Makefile
 	lib/python/Plugins/Extensions/PicturePlayer/meta/Makefile
 	lib/python/Plugins/Extensions/PicturePlayer/data/Makefile

@@ -4,6 +4,8 @@ SUBDIRS = TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer Soc
 
 if SPARK
 SUBDIRS +=  NFR4XBoot_sh4
+else if VUSOLO4K
+SUBDIRS +=  NFR4XBoot_4k
 else
 SUBDIRS +=  NFR4XBoot_mips
 endif
