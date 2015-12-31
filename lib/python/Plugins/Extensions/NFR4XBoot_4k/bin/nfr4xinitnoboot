@@ -99,7 +99,7 @@ else
 		  break;
 	fi
 
-	/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/fbclear > /dev/null 2>&1
+	#/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/fbclear > /dev/null 2>&1
 
 	TARGET=Flash
 	if [ -f /media/nfr4xboot/NFR4XBootI/.nfr4xboot ]; then
