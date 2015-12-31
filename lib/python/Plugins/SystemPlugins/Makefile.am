@@ -21,7 +21,7 @@ endif
 
 if VUSOLO4K
 SUBDIRS += FastZapSupport
- endif
+endif
 
 if VUDUO2
 SUBDIRS += CableScan
