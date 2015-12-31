@@ -2,4 +2,3 @@ installdir = $(libdir)/enigma2/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ub
 SUBDIRS = nodes
 install_PYTHON = *.py \
                  *.pyo
-install_DATA = *.so
