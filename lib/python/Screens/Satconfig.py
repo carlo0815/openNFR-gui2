@@ -355,7 +355,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				if len(choices):
 					if isFBCLink(self.nim):
 						if self.nimConfig.advanced.unicableconnected.value != True:
-						
+							self.nimConfig.advanced.unicableconnected.value = True
 					self.advancedConnected = getConfigListEntry(_("connected"), self.nimConfig.advanced.unicableconnected)
 					self.list.append(self.advancedConnected)
 					if self.nimConfig.advanced.unicableconnected.value:
