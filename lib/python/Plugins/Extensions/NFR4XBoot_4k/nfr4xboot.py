@@ -134,6 +134,7 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
     if not os.path.exists(media_nf + '/ubi'):
        os.system('mkdir ' + media_nf + '/ubi')
     sourcefile = media_nf + '/NFR4XBootUpload/%s.zip' % source
+    #vusolo4k only tar.gz here change extract
     if os.path.exists(sourcefile):
         os.chdir(media_nf + '/NFR4XBootUpload')
         os.system('echo "[NFR4XBoot] Extracking ZIP image file"')
