@@ -55,7 +55,7 @@ class IPTV(Screen):
         self.iptvlist.sort()
         self["IPTVList"] = MenuList(self.iptvlist)
         self["country"] = Pixmap()
-        self["text1"] = Label(_("Select country from list to add into TV Bouquet or Radio Bouquet:"))
+        self["text1"] = Label(_("Select M3U File from /etc/enigma2 to add into TV Bouquet"))
         
         self["actions"] = ActionMap(["OkCancelActions", "WizardActions", "ColorActions", "SetupActions", "NumberActions", "EPGSelectActions"],
         {
