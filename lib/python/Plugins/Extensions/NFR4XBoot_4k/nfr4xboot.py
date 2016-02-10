@@ -130,9 +130,6 @@ def NFR4XBootRemoveUnpackDirs(getimagefolder):
 
 def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFile):
     NFR4XBootRemoveUnpackDirs(getimagefolder)
-    os.system('rm -rf ' + media_nf + '/ubi')
-    if not os.path.exists(media_nf + '/ubi'):
-       os.system('mkdir ' + media_nf + '/ubi')
     sourcefile = media_nf + '/NFR4XBootUpload/%s.zip' % source
     #vusolo4k only tar.gz here change extract
     if os.path.exists(sourcefile):
@@ -145,19 +142,11 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
            os.system('echo "[NFR4XBoot] keep  %s for next time"'% sourcefile) 
         if os.path.exists(media_nf + '/NFR4XBootUpload/%s'% getimagefolder):
            os.chdir('%s'% getimagefolder)
-           os.system('mv %s rootfs.bin'% getMachineRootFile)
-				
-        print '[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target'
-        if os.path.exists(extensions_path_extractpyo):
-            os.chmod(extensions_path_extractpyo, 0777)
-            cmd = 'python ' + extensions_path_extractpyo + ' rootfs.bin -o ' + media_nf + '/ubi'
-        else:
-            os.chmod(extensions_path_extractpy, 0777)
-            cmd = 'python ' + extensions_path_extractpy + ' rootfs.bin -o ' + media_nf + '/ubi'        
+			
+        print '[NFR4XBoot] Extracting tar.bz2 image and moving extracted image to our target'
+        if os.path.exists('/usr/bin/bzip2'):
+            sfolder = media_nf + '/NFR4XBootUpload/%s'% getimagefolder
+            cmd = 'tar -xvjf ' + sfolder + '/rootfs.tar.bz2 -C ' + media_nf + '/NFR4XBootI/' + target + ' > /dev/null 2>&1'
         print cmd
         os.system(cmd)
-        os.chdir('/home/root')
-        os.system('cp -r -p ' + media_nf + '/ubi/rootfs/* ' + media_nf + '/NFR4XBootI/' + target)
-        os.system('chmod -R +x ' + media_nf + '/NFR4XBootI/' + target)
-        os.system('rm -rf ' + media_nf + '/ubi')
     return 1 
