@@ -17,7 +17,7 @@ boxtype = getBoxType()
 
 has_rca = False
 has_dvi = False
-if boxtype in ('xpeedlxcs2', 'xpeedlxcc', 'odin2hybrid', 'twinboxlcd', 'bre2ze', 'vusolose', 'atemio6000', 'atemio6100', 'atemio6200', 'gbquad', 'gbquadplus', 'et5x00', 'et6000', 'classm', 'axodin', 'axodinc', 'genius', 'evo', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'starsatlx', 'mixosf7', 'mixoslumi', 'tmnano', 'azboxme', 'azboxminime', 'optimussos1', 'optimussos2', 'gb800seplus', 'gb800ueplus', 'sezam1000hd', 'ixussone', 'ixusszero', 'enfinity', 'force1', 'optimussos1plus', 'optimussos2plus'):	
+if boxtype in ('e4hd', 'xpeedlxcs2', 'xpeedlxcc', 'odin2hybrid', 'twinboxlcd', 'bre2ze', 'vusolose', 'atemio6000', 'atemio6100', 'atemio6200', 'gbquad', 'gbquadplus', 'et5x00', 'et6000', 'classm', 'axodin', 'axodinc', 'genius', 'evo', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'starsatlx', 'mixosf7', 'mixoslumi', 'tmnano', 'azboxme', 'azboxminime', 'optimussos1', 'optimussos2', 'gb800seplus', 'gb800ueplus', 'sezam1000hd', 'ixussone', 'ixusszero', 'enfinity', 'force1', 'optimussos1plus', 'optimussos2plus'):	
 	has_rca = True
 if boxtype == 'dm8000' or boxtype == 'dm800':
 	has_dvi = True
