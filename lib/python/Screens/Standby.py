@@ -4,7 +4,7 @@ from Components.config import config
 from Components.AVSwitch import AVSwitch
 from Components.SystemInfo import SystemInfo
 from GlobalActions import globalActionMap
-from enigma import eDVBVolumecontrol
+from enigma import eDVBVolumecontrol, eTimer, eDVBLocalTimeHandler, eServiceReference, pNavigation
 from boxbranding import getMachineBrand, getMachineName, getMachineProcModel, getBoxType, getBrandOEM
 from Tools import Notifications
 import Screens.InfoBar
@@ -31,6 +31,7 @@ class Standby2(Screen):
 		#restart last played service
 		#unmute adc
 		self.leaveMute()
+		self.session.nav.playService(self.oldService)
 		# set LCDminiTV 
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 			setLCDModeMinitTV(config.lcd.modeminitv.value)
@@ -55,6 +56,7 @@ class Standby2(Screen):
 		self.avswitch = AVSwitch()
 
 		print "enter standby"
+		
 		if getMachineProcModel() in ('ini-7012'):
 			if path.exists("/proc/stb/lcd/symbol_scrambled"):
 				open("/proc/stb/lcd/symbol_scrambled", "w").write("0")
@@ -93,7 +95,7 @@ class Standby2(Screen):
 
 		#mute adc
 		self.setMute()
-		
+		self.stopService()
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 			# set LCDminiTV off
 			setLCDModeMinitTV("0")
@@ -138,7 +140,14 @@ class Standby2(Screen):
 
 	def createSummary(self):
 		return StandbySummary
-
+		
+	def stopService(self):
+		if config.servicelist.startupservice_standby.value:
+			self.oldService = eServiceReference(config.servicelist.startupservice_standby.value)
+		else:
+			self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
+		self.session.nav.stopService()
+		
 class Standby(Standby2):
 	def __init__(self, session):
 		if Screens.InfoBar.InfoBar and Screens.InfoBar.InfoBar.instance and Screens.InfoBar.InfoBar.ptsGetTimeshiftStatus(Screens.InfoBar.InfoBar.instance):
