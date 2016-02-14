@@ -12954,3 +12954,9 @@ msgstr ""
 "Bist du sicher das die Einstellungen deines Receivers wiederhergestellt werden sollen?\n"
 "\n"
 "Der Receiver wird neu gestartet, nachdem die Einstellungen wiederhergestellt wurden!"
+
+msgid "Keymap changed, you need to restart the GUI"
+msgstr "Keymap geändert, die Benutzeroberfläche muss neu getartet werden"
+
+msgid "Do you want to restart now?"
+msgstr "Jetzt neu starten?"
