@@ -24,10 +24,11 @@ from Tools.Directories import *
 from os import system, popen, path, makedirs, listdir, access, stat, rename, remove, W_OK, R_OK
 from time import gmtime, strftime, localtime, sleep
 from datetime import date
-from boxbranding import getBoxType, getMachineBrand, getMachineName
+from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageDistro
 import shutil
 
 boxtype = getBoxType()
+distro = getImageDistro()
 START = time()
 dt1 = strftime("%Y%m%d_%H%M", localtime(START))
 config.plugins.configurationbackup = ConfigSubsection()
@@ -49,9 +50,9 @@ def getBackupFilenameChannel():
 def getBackupPath():
 	backuppath = config.plugins.configurationbackup.backuplocation.value
 	if backuppath.endswith('/'):
-		return backuppath + 'backup_' + boxtype
+		return backuppath + 'backup_' + distro + '_'+ boxtype
 	else:
-		return backuppath + '/backup_' + boxtype
+		return backuppath + '/backup_' + distro + '_'+ boxtype
 
 def getOldBackupPath():
 	backuppath = config.plugins.configurationbackup.backuplocation.value
