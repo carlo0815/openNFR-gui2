@@ -108,6 +108,16 @@ class NFR4XChooseOnLineImage(Screen):
         res = (name,
          png,
          idx,
+         desc)
+        self.list.append(res)
+        mypixmap = mypath + 'openatv.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenATV-5.2')
+        desc = _('Download latest OpenATV Image')
+        idx = 'openatv-5.2'
+        res = (name,
+         png,
+         idx,
          desc) 
         self.list.append(res)
         mypixmap = mypath + 'openpli.png'
@@ -195,7 +205,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://images.mynonpublic.com/openatv/5.0'
         elif self.distro == 'openatv-5.1':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'
+        elif self.distro == 'openatv-5.2':
+            self.feed = 'openatv'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk'
@@ -234,7 +247,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv' or self.distro == 'openatv-5.0' or self.distro == 'openatv-5.1' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'atemio4you' or self.distro == 'openmips' or self.distro == 'openhdf':
+        if self.distro == 'openatv' or self.distro == 'openatv-5.0' or self.distro == 'openatv-5.1' or self.distro == 'openatv-5.2' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'atemio4you' or self.distro == 'openmips' or self.distro == 'openhdf':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
             req = urllib2.Request(self.feedurl)
@@ -495,7 +508,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.0', 'openatv-5.1'):
+        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.0', 'openatv-5.1', 'openatv-5.2'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
   	elif self.distro == 'atemio4you':
 	    url = '%s/%s/' % (self.feedurl, box)             
