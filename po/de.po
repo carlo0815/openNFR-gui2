@@ -12960,3 +12960,9 @@ msgstr "Keymap geändert, die Benutzeroberfläche muss neu getartet werden"
 
 msgid "Do you want to restart now?"
 msgstr "Jetzt neu starten?"
+
+msgid "Sorry, there was a problem:"
+msgstr "Entschuldigung, es ist ein Fehler aufgetreten:"
+
+msgid "No matching place names found"
+msgstr "Es wurde kein entsprechender Ortsname gefunden"
