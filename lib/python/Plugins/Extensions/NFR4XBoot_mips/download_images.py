@@ -214,7 +214,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://www.openvix.co.uk'
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
-            self.feedurl = 'http://images.opendroid.org/5.0/'
+            self.feedurl = 'http://images.opendroid.org/5.3/'
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
@@ -376,9 +376,9 @@ class DownloadOnLineImage(Screen):
                 box = 'Edision'
                 urlbox = 'optimussos2plus'                
                 stb = '1'
-            elif box in ('iniboxhde'):
+            elif box in ('uniboxhde'):
                 box = 'Venton-Unibox'
-                urlbox = 'iniboxhde'                
+                urlbox = 'uniboxhde'                
                 stb = '1'  
                 
             else:   
