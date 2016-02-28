@@ -373,6 +373,7 @@ class SystemNetworkInfo(Screen):
 		self["IF"] = StaticText()
 		self["Statustext"] = StaticText()
 		self["statuspic"] = MultiPixmap()
+		self["statuspic"].setPixmapNum(1)
 		self["statuspic"].hide()
 
 		self.iface = None
