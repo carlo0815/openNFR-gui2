@@ -9754,7 +9754,7 @@ msgid "add marker"
 msgstr "Marker einfügen"
 
 msgid "add service to bouquet"
-msgstr "Zu Favoritenliste hinzufügen"
+msgstr "Kanal zu Favoritenliste hinzufügen"
 
 msgid "add service to favourites"
 msgstr "Sender zu Favoriten hinzufügen"
@@ -10537,7 +10537,7 @@ msgid "service PIN"
 msgstr "Service PIN"
 
 msgid "set as startup service"
-msgstr "Als Startsender benutzen"
+msgstr "Kanal als Startsender benutzen"
 
 msgid "setup PIN"
 msgstr "Einstellungen PIN"
@@ -10678,7 +10678,7 @@ msgid "stereo"
 msgstr "Stereo"
 
 msgid "stop using as startup service"
-msgstr "Nicht mehr als Startsender benutzen"
+msgstr "Kanal nicht mehr als Startsender benutzen"
 
 msgid "switch to bookmarks"
 msgstr "gehe zu Lesezeichen"
@@ -12966,3 +12966,73 @@ msgstr "Entschuldigung, es ist ein Fehler aufgetreten:"
 
 msgid "No matching place names found"
 msgstr "Es wurde kein entsprechender Ortsname gefunden"
+
+msgid "" 
+"Cannot mount new drive.\n" 
+"Please check filesystem or format it and try again" 
+msgstr "" 
+"Kann das neue Laufwerk nicht mounten.\n" 
+"Bitte das Dateisystem überprüfen oder formatieren und dann erneut versuchen"
+
+msgid ""
+"Cannot umount device.\n"
+"A record in progress, timeshit or some external tools (like samba and nfsd) may cause this problem.\n"
+"Please stop this actions/applications and try again"
+msgstr ""
+"Unmount nicht möglich.\n"
+"Eine Aufnahme, Timeshift oder externe Tools wie Samba oder NFS können dieses Problem verursachen.\n"
+"Bitte beende zuerst diese Aktionen / Anwendungen und versuche es dann erneut"
+
+msgid ""
+"Cannot umount current drive.\n"
+"A record in progress, timeshit or some external tools (like samba and nfsd) may cause this problem.\n"
+"Please stop this actions/applications and try again"
+msgstr ""
+"Unmount nicht möglich.\n"
+"Eine Aufnahme, Timeshift oder externe Tools wie Samba oder NFS können dieses Problem verursachen.\n"
+"Bitte beende zuerst diese Aktionen / Anwendungen und versuche es dann erneut"
+
+msgid "EPG Selection"
+msgstr "EPG Auswahl"
+
+msgid "Eventview"
+msgstr "Sendungsinformation"
+
+msgid "purge deleted userbouquets"
+msgstr "Gelöschte Favoritenlisten entfernen"
+
+msgid "restore deleted userbouquets"
+msgstr "Gelöschte Favoritenlisten wiederherstellen"
+
+msgid "Are you sure to purge all deleted userbouquets?"
+msgstr "Jetzt alle gelöschten Favoritenlisten entfernen?"
+
+msgid "Are you sure to remove all %d.%d%s%s services?"
+msgstr "Bist du sicher das %d.%d%s%s entfernt werden soll?"
+
+msgid "remove cable services"
+msgstr "Entferne Kabelsender"
+
+msgid "Are you sure to remove all cable services?"
+msgstr "Bist du sicher das alle Kabelsender entfernt werden sollen?"
+
+msgid "remove terrestrial services"
+msgstr "Entferne Terrestrische Sender"
+
+msgid "Are you sure to remove all terrestrial services?"
+msgstr "Bist du sicher das alle Terrestrischen Sender entfernt werden sollen?"
+
+msgid "stop using as startup service from standby"
+msgstr "Kanal als Startkanal nach Standby entfernen"
+
+msgid "Set startup service"
+msgstr "Startsender auswählen"
+
+msgid "Only on startup"
+msgstr "Nur beim Start"
+
+msgid "Also on standby"
+msgstr "Auch im Standby"
+
+msgid "m3u-convert"
+msgstr "M3U / TV Bouquet Converter"
