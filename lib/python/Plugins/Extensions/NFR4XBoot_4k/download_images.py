@@ -62,9 +62,9 @@ class NFR4XChooseOnLineImage(Screen):
         self.list.append(res)
         mypixmap = mypath + 'openatv.png'
         png = LoadPixmap(mypixmap)
-        name = _('OpenATV-5.1')
+        name = _('OpenATV-5.2')
         desc = _('Download latest OpenATV Image')
-        idx = 'openatv-5.1'
+        idx = 'openatv-5.2'
         res = (name,
          png,
          idx,
@@ -94,15 +94,15 @@ class DownloadOnLineImage(Screen):
         if self.distro == 'opennfr':
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
-        elif self.distro == 'openatv-5.1':
+        elif self.distro == 'openatv-5.2':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.1'    
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk/openvix-builds'
         else:
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.1/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.2/images'
         self['imageList'] = MenuList(self.imagelist)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'green': self.green,
          'red': self.quit,
@@ -116,7 +116,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-5.1' or self.distro == 'opennfr':
+        if self.distro == 'openatv-5.2' or self.distro == 'opennfr':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
             try:
@@ -203,7 +203,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv-5.1'):
+        elif self.distro in ('openatv-5.2'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/%s' % (self.feedurl, urlbox)
