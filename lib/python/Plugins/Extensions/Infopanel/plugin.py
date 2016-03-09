@@ -309,6 +309,7 @@ class Infopanel(Screen, InfoBarPiP):
 		global check_update
 		check_update = 0
 		self.onShown.append(self.checkTraficLight)
+		self.onShown.append(self.setWindowTitle)
                 self.service = None
 		self['spaceused'] = ProgressBar()			
 		global pluginlist
