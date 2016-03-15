@@ -4,6 +4,7 @@ from Tools.CList import CList
 from SystemInfo import SystemInfo
 from Components.Console import Console
 from boxbranding import getBoxType
+from Tools.HardwareInfo import HardwareInfo
 import Task
 
 def readFile(filename):
@@ -103,7 +104,10 @@ class Harddisk:
 
 	def partitionPath(self, n):
 		if self.type == DEVTYPE_UDEV:
-			return self.dev_path + n
+			if self.dev_path.startswith('/dev/mmcblk'):
+				return self.dev_path + "p" + n
+			else:
+				return self.dev_path + n
 		elif self.type == DEVTYPE_DEVFS:
 			return self.dev_path + '/part' + n
 
@@ -116,20 +120,26 @@ class Harddisk:
 			self.timer.callback.remove(self.runIdle)
 
 	def bus(self):
-		# CF (7025 specific)
+		ret = _("External")
+		# SD/MMC(F1 specific)
 		if self.type == DEVTYPE_UDEV:
-			ide_cf = False	# FIXME
+			card = "sdhci" in self.phys_path
+			type_name = " (SD/MMC)"
+		# CF(7025 specific)
 		elif self.type == DEVTYPE_DEVFS:
-			ide_cf = self.device[:2] == "hd" and "host0" not in self.dev_path
+			card = self.device[:2] == "hd" and "host0" not in self.dev_path
+			type_name = " (CF)"
 
-		internal = ("pci" or "ata" or "ahci") in self.phys_path
+		hw_type = HardwareInfo().get_device_name()
+		if hw_type == 'elite' or hw_type == 'premium' or hw_type == 'premium+' or hw_type == 'ultra' :
+			internal = "ide" in self.phys_path
+		else:
+			internal = ("pci" or "ahci") in self.phys_path
 
-		if ide_cf:
-			ret = _("External (CF)")
+		if card:
+			ret += type_name
 		elif internal:
 			ret = _("Internal")
-		else:
-			ret = _("External")
 		return ret
 
 	def diskSize(self):
@@ -163,8 +173,10 @@ class Harddisk:
 				vendor = readFile(self.phys_path + '/vendor')
 				model = readFile(self.phys_path + '/model')
 				return vendor + '(' + model + ')'
+			elif self.device.startswith('mmcblk'):
+				return readFile(self.sysfsPath('device/name'))
 			else:
-				raise Exception, "no hdX or sdX"
+				raise Exception, "no hdX or sdX or mmcX"
 		except Exception, e:
 			print "[Harddisk] Failed to get model:", e
 			return "-?-"
@@ -175,7 +187,7 @@ class Harddisk:
 			if not os.path.exists(dev):
 				os.mkdir(dev)
 			stat = os.statvfs(dev)
-			return int((stat.f_bfree/1000) * (stat.f_bsize/1000))
+			return int((stat.f_bfree/1000) * (stat.f_bsize/1024))
 		return -1
 
 	def numPartitions(self):
@@ -328,7 +340,11 @@ class Harddisk:
 			else:
 				# Prefer optimal alignment for performance
 				alignment = 'opt'
-			task.args += ['-a', alignment, '-s', self.disk_path, 'mklabel', 'gpt', 'mkpart', 'primary', '0%', '100%']
+			if size > 2097151:
+				parttype = 'gpt'
+			else:
+				parttype = 'msdos'
+			task.args += ['-a', alignment, '-s', self.disk_path, 'mklabel', parttype, 'mkpart', 'primary', '0%', '100%']
 		else:
 			task.setTool('sfdisk')
 			task.args.append('-f')
@@ -585,22 +601,93 @@ class Partition:
 DEVICEDB =  \
 	{"dm8000":
 		{
-			# dm8000:
-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1:1.0": "Front USB Slot",
-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.2/1-1.2:1.0": "Back, upper USB Slot",
-			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.3/1-1.3:1.0": "Back, lower USB Slot",
-			"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0/host1/target1:0:0/1:0:0:0": "DVD Drive",
+			"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("SATA"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1:1.0": _("Front USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.1/1-1.1.": _("Front USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.2/1-1.2:1.0": _("Back, upper USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.2/1-1.2.": _("Back, upper USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.3/1-1.3:1.0": _("Back, lower USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.3/1-1.3.": _("Back, lower USB"),
+			"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0/": _("Internal USB"),
+			"/devices/platform/brcm-ohci-1.1/usb4/4-1/4-1:1.0/": _("Internal USB"),
+			"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.4/1-1.4.": _("Internal USB"),
 		},
+	"dm7020hd":
+	{
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("SATA"),
+		"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("eSATA"),
+		"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1:1.0": _("Front USB"),
+		"/devices/platform/brcm-ehci-1.1/usb2/2-1/2-1.": _("Front USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": _("Back, upper USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2.": _("Back, upper USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": _("Back, lower USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1.": _("Back, lower USB"),
+	},
+	"dm7080":
+	{
+		"/devices/pci0000:00/0000:00:00.0/usb9/9-1/": _("Back USB 3.0"),
+		"/devices/pci0000:00/0000:00:00.0/usb9/9-2/": _("Front USB 3.0"),
+		"/devices/platform/ehci-brcm.0/": _("Back, lower USB"),
+		"/devices/platform/ehci-brcm.1/": _("Back, upper USB"),
+		"/devices/platform/ehci-brcm.2/": _("Internal USB"),
+		"/devices/platform/ehci-brcm.3/": _("Internal USB"),
+		"/devices/platform/ohci-brcm.0/": _("Back, lower USB"),
+		"/devices/platform/ohci-brcm.1/": _("Back, upper USB"),
+		"/devices/platform/ohci-brcm.2/": _("Internal USB"),
+		"/devices/platform/ohci-brcm.3/": _("Internal USB"),
+		"/devices/platform/sdhci-brcmstb.0/": _("eMMC"),
+		"/devices/platform/sdhci-brcmstb.1/": _("SD"),
+		"/devices/platform/strict-ahci.0/ata1/": _("SATA"),	# front
+		"/devices/platform/strict-ahci.0/ata2/": _("SATA"),	# back
+	},
 	"dm800":
 	{
-		# dm800:
-		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": "Upper USB Slot",
-		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": "Lower USB Slot",
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("SATA"),
+		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": _("Upper USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": _("Lower USB"),
+	},
+	"dm820":
+	{
+		"/devices/platform/ehci-brcm.0/": _("Back, lower USB"),
+		"/devices/platform/ehci-brcm.1/": _("Back, upper USB"),
+		"/devices/platform/ehci-brcm.2/": _("Internal USB"),
+		"/devices/platform/ehci-brcm.3/": _("Internal USB"),
+		"/devices/platform/ohci-brcm.0/": _("Back, lower USB"),
+		"/devices/platform/ohci-brcm.1/": _("Back, upper USB"),
+		"/devices/platform/ohci-brcm.2/": _("Internal USB"),
+		"/devices/platform/ohci-brcm.3/": _("Internal USB"),
+		"/devices/platform/sdhci-brcmstb.0/": _("eMMC"),
+		"/devices/platform/sdhci-brcmstb.1/": _("SD"),
+		"/devices/platform/strict-ahci.0/ata1/": _("SATA"),     # front
+		"/devices/platform/strict-ahci.0/ata2/": _("SATA"),     # back
+	},
+	"dm800se":
+	{
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("SATA"),
+		"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("eSATA"),
+		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": _("Upper USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": _("Lower USB"),
+	},
+	"dm500hd":
+	{
+		"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("eSATA"),
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("eSATA"),
+	},
+	"dm800sev2":
+	{
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("SATA"),
+		"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("eSATA"),
+		"/devices/platform/brcm-ehci.0/usb1/1-2/1-2:1.0": _("Upper USB"),
+		"/devices/platform/brcm-ehci.0/usb1/1-1/1-1:1.0": _("Lower USB"),
+	},
+	"dm500hdv2":
+	{
+		"/devices/pci0000:01/0000:01:00.0/host1/target1:0:0/1:0:0:0": _("eSATA"),
+		"/devices/pci0000:01/0000:01:00.0/host0/target0:0:0/0:0:0:0": _("eSATA"),
 	},
 	"dm7025":
 	{
-		# dm7025:
-		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "CF Card Slot", #hdc
+		"/devices/pci0000:00/0000:00:14.1/ide1/1.0": "Compact Flash", #hdc
 		"/devices/pci0000:00/0000:00:14.1/ide0/0.0": "Internal Harddisk"
 	}
 	}
@@ -625,8 +712,7 @@ class HarddiskManager:
 		# Find stuff not detected by the enumeration
 		self.enumerateNetworkMounts()
 		# Find stuff not detected by the enumeration
-		p = [("/", _("Internal Flash")),("/media/upnp", _("DLNA")),]
-
+		p = [("/", _("Internal flash"))]
 		self.partitions.extend([ Partition(mountpoint = x[0], description = x[1]) for x in p ])
 
 	def getBlockDevInfo(self, blockdev):
@@ -707,7 +793,10 @@ class HarddiskManager:
 			self.partitions.append(Partition(mountpoint = '/media/hdd/', description = '/media/hdd'))
 
 	def getAutofsMountpoint(self, device):
-		return "/autofs/%s" % device
+		r = self.getMountpoint(device)
+		if r is None:
+			return "/media/" + device
+		return r
 
 	def getMountpoint(self, device):
 		dev = "/dev/%s" % device
@@ -727,6 +816,9 @@ class HarddiskManager:
 				physdev = dev
 				print "couldn't determine blockdev physdev for device", device
 		error, blacklisted, removable, is_cdrom, partitions, medium_found = self.getBlockDevInfo(self.splitDeviceName(device)[0])
+		hw_type = HardwareInfo().get_device_name()
+		if hw_type == 'elite' or hw_type == 'premium' or hw_type == 'premium+' or hw_type == 'ultra' :
+			if device[0:3] == "hda": blacklisted = True
 		if not blacklisted and medium_found:
 			description = self.getUserfriendlyDeviceName(device, physdev)
 			p = Partition(mountpoint = self.getMountpoint(device), description = description, force_mounted = True, device = device)
@@ -735,7 +827,7 @@ class HarddiskManager:
 				self.on_partition_list_change("add", p)
 			# see if this is a harddrive
 			l = len(device)
-			if l and not device[l-1].isdigit():
+			if l and (not device[l-1].isdigit() or device.startswith('mmcblk')):
 				self.hdd.append(Harddisk(device, removable))
 				self.hdd.sort()
 				SystemInfo["Harddisk"] = True
@@ -798,7 +890,7 @@ class HarddiskManager:
 
 	def getUserfriendlyDeviceName(self, dev, phys):
 		dev, part = self.splitDeviceName(dev)
-		description = "External Storage %s" % dev
+		description = _("External Storage %s") % dev
 		try:
 			description = readFile("/sys" + phys + "/model")
 		except IOError, s:
@@ -809,7 +901,7 @@ class HarddiskManager:
 				description = pdescription
 		# not wholedisk and not partition 1
 		if part and part != 1:
-			description += " (Partition %d)" % part
+			description += _(" (Partition %d)") % part
 		return description
 
 	def addMountedPartition(self, device, desc):
@@ -925,4 +1017,4 @@ class MkfsTask(Task.LoggingTask):
 
 
 harddiskmanager = HarddiskManager()
-SystemInfo["ext4"] = isFileSystemSupported("ext4")
+SystemInfo["ext4"] = isFileSystemSupported("ext4") 
