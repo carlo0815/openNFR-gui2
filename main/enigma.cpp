@@ -37,9 +37,6 @@
 
 #include <gst/gst.h>
 
-#include <lib/base/eerroroutput.h>
-ePtr<eErrorOutput> m_erroroutput;
-
 #ifdef OBJECT_DEBUG
 int object_total_remaining;
 
@@ -228,17 +225,6 @@ int main(int argc, char **argv)
 
 	gst_init(&argc, &argv);
 
-	for (int i = 0; i < argc; i++)
-	{
-		if (!(strcmp(argv[i], "--debug-no-color")))
-		{
-			logOutputColors = 0;
-		}
-	}
-
-	m_erroroutput = new eErrorOutput();
-	m_erroroutput->run();
-
 	// set pythonpath if unset
 	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
 	printf("PYTHONPATH: %s\n", getenv("PYTHONPATH"));
@@ -358,7 +344,7 @@ int main(int argc, char **argv)
 		p.clear();
 		p.flush();
 	}
-	m_erroroutput = NULL;
+
 	return exit_code;
 }
 
