@@ -1,599 +1,402 @@
-#include <lib/base/cfile.h>
-#include <lib/base/eerror.h>
-#include <lib/base/eerroroutput.h>
-#include <lib/base/elock.h>
-#include <cstdarg>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <unistd.h>
-#include <time.h>
+#include <iostream>
+#include <fstream>
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#include <libsig_comp.h>
+#include <linux/dvb/version.h>
 
-#include <string>
-#include <ansidebug.h>
+#include <lib/actions/action.h>
+#include <lib/driver/rc.h>
+#include <lib/base/ioprio.h>
+#include <lib/base/ebase.h>
+#include <lib/base/eenv.h>
+#include <lib/base/eerror.h>
+#include <lib/base/init.h>
+#include <lib/base/init_num.h>
+#include <lib/gdi/gmaindc.h>
+#include <lib/gdi/glcddc.h>
+#include <lib/gdi/grc.h>
+#include <lib/gdi/epng.h>
+#include <lib/gdi/font.h>
+#include <lib/gui/ebutton.h>
+#include <lib/gui/elabel.h>
+#include <lib/gui/elistboxcontent.h>
+#include <lib/gui/ewidget.h>
+#include <lib/gui/ewidgetdesktop.h>
+#include <lib/gui/ewindow.h>
+#include <lib/gui/evideo.h>
+#include <lib/python/connections.h>
+#include <lib/python/python.h>
+#include <lib/python/pythonconfig.h>
 
-extern ePtr<eErrorOutput> m_erroroutput;
+#include "bsod.h"
+#include "version_info.h"
 
+#include <gst/gst.h>
+
+#ifdef OBJECT_DEBUG
+int object_total_remaining;
+
+void object_dump()
+{
+	printf("%d items left\n", object_total_remaining);
+}
+#endif
+
+static eWidgetDesktop *wdsk, *lcddsk;
+
+static int prev_ascii_code;
+
+int getPrevAsciiCode()
+{
+	int ret = prev_ascii_code;
+	prev_ascii_code = 0;
+	return ret;
+}
+
+void keyEvent(const eRCKey &key)
+{
+	static eRCKey last(0, 0, 0);
+	static int num_repeat;
+
+	ePtr<eActionMap> ptr;
+	eActionMap::getInstance(ptr);
+	/*eDebug("key.code : %02x \n", key.code);*/
+
+	if ((key.code == last.code) && (key.producer == last.producer) && key.flags & eRCKey::flagRepeat)
+		num_repeat++;
+	else
+	{
+		num_repeat = 0;
+		last = key;
+	}
+
+	if (num_repeat == 4)
+	{
+		ptr->keyPressed(key.producer->getIdentifier(), key.code, eRCKey::flagLong);
+		num_repeat++;
+	}
+
+	if (key.flags & eRCKey::flagAscii)
+	{
+		prev_ascii_code = key.code;
+		ptr->keyPressed(key.producer->getIdentifier(), 510 /* faked KEY_ASCII */, 0);
+	}
+	else
+		ptr->keyPressed(key.producer->getIdentifier(), key.code, key.flags);
+}
+
+/************************************************/
+#include <unistd.h>
+#include <lib/components/scan.h>
+#include <lib/dvb/idvb.h>
+#include <lib/dvb/dvb.h>
+#include <lib/dvb/db.h>
+#include <lib/dvb/dvbtime.h>
+#include <lib/dvb/epgcache.h>
+
+class eMain: public eApplication, public Object
+{
+	eInit init;
+	ePythonConfigQuery config;
+
+	ePtr<eDVBDB> m_dvbdb;
+	ePtr<eDVBResourceManager> m_mgr;
+	ePtr<eDVBLocalTimeHandler> m_locale_time_handler;
+	ePtr<eEPGCache> m_epgcache;
+
+public:
+	eMain()
+	{
+		init.setRunlevel(eAutoInitNumbers::main);
+		/* TODO: put into init */
+		m_dvbdb = new eDVBDB();
+		m_mgr = new eDVBResourceManager();
+		m_locale_time_handler = new eDVBLocalTimeHandler();
+		m_epgcache = new eEPGCache();
+		m_mgr->setChannelList(m_dvbdb);
+	}
+
+	~eMain()
+	{
+		m_dvbdb->saveServicelist();
+		m_mgr->releaseCachedChannel();
+	}
+};
+
+bool replace(std::string& str, const std::string& from, const std::string& to) 
+{
+	size_t start_pos = str.find(from);
+	if(start_pos == std::string::npos)
+		return false;
+	str.replace(start_pos, from.length(), to);
+	return true;
+}
+
+static const std::string getConfigCurrentSpinner(const std::string &key)
+{
+	std::string value = "spinner";
+	std::ifstream in(eEnv::resolve("${sysconfdir}/enigma2/settings").c_str());
+	
+	if (in.good()) {
+		do {
+			std::string line;
+			std::getline(in, line);
+			size_t size = key.size();
+			if (line.compare(0, size, key)== 0) {
+				value = line.substr(size + 1);
+				replace(value, "skin.xml", "spinner");
+				break;
+			}
+		} while (in.good());
+		in.close();
+	}
+	// if value is empty, means no config.skin.primary_skin exist in settings file, so return just default spinner ( /usr/share/enigma2/spinner )
+	if (value.empty()) 
+		return value;
+	
+	 //  if value is NOT empty, means config.skin.primary_skin exist in settings file, so return SCOPE_CURRENT_SKIN + "/spinner" ( /usr/share/enigma2/MYSKIN/spinner ) BUT check if /usr/share/enigma2/MYSKIN/spinner/wait1.png exist
+	std::string png_location = "/usr/share/enigma2/" + value + "/wait1.png";
+	std::ifstream png(png_location.c_str());
+	if (png.good()) {
+		png.close();
+		return value; // if value is NOT empty, means config.skin.primary_skin exist in settings file, so return SCOPE_CURRENT_SKIN + "/spinner" ( /usr/share/enigma2/MYSKIN/spinner/wait1.png exist )
+	}
+	else
+		return "spinner";  // if value is NOT empty, means config.skin.primary_skin exist in settings file, so return "spinner" ( /usr/share/enigma2/MYSKIN/spinner/wait1.png DOES NOT exist )
+} 
+
+int exit_code;
+
+void quitMainloop(int exitCode)
+{
+	FILE *f = fopen("/proc/stb/fp/was_timer_wakeup", "w");
+	if (f)
+	{
+		fprintf(f, "%d", 0);
+		fclose(f);
+	}
+	else
+	{
+		int fd = open("/dev/dbox/fp0", O_WRONLY);
+		if (fd >= 0)
+		{
+			if (ioctl(fd, 10 /*FP_CLEAR_WAKEUP_TIMER*/) < 0)
+				eDebug("FP_CLEAR_WAKEUP_TIMER failed (%m)");
+			close(fd);
+		}
+		else
+			eDebug("open /dev/dbox/fp0 for wakeup timer clear failed!(%m)");
+	}
+	exit_code = exitCode;
+	eApp->quit(0);
+}
+
+static void sigterm_handler(int num)
+{
+	quitMainloop(128 + num);
+}
+
+void catchTermSignal()
+{
+	struct sigaction act;
+
+	act.sa_handler = sigterm_handler;
+	act.sa_flags = SA_RESTART;
+
+	if (sigemptyset(&act.sa_mask) == -1)
+		perror("sigemptyset");
+	if (sigaction(SIGTERM, &act, 0) == -1)
+		perror("SIGTERM");
+}
+
+int main(int argc, char **argv)
+{
 #ifdef MEMLEAK_CHECK
-AllocList *allocList;
-pthread_mutex_t memLock =
-	PTHREAD_RECURSIVE_MUTEX_INITIALIZER_NP;
+	atexit(DumpUnfreed);
+#endif
 
-void DumpUnfreed()
-{
-	AllocList::iterator i;
-	unsigned int totalSize = 0;
+#ifdef OBJECT_DEBUG
+	atexit(object_dump);
+#endif
 
-	if(!allocList)
-		return;
+	gst_init(&argc, &argv);
 
-	CFile f("/tmp/enigma2_mem.out", "w");
-	if (!f)
-		return;
-	size_t len = 1024;
-	char *buffer = (char*)malloc(1024);
-	for(i = allocList->begin(); i != allocList->end(); i++)
+	// set pythonpath if unset
+	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
+	printf("PYTHONPATH: %s\n", getenv("PYTHONPATH"));
+	printf("DVB_API_VERSION %d DVB_API_VERSION_MINOR %d\n", DVB_API_VERSION, DVB_API_VERSION_MINOR);
+
+	bsodLogInit();
+
+	ePython python;
+	eMain main;
+
+#if 1
+	ePtr<gMainDC> my_dc;
+	gMainDC::getInstance(my_dc);
+
+	//int double_buffer = my_dc->haveDoubleBuffering();
+
+	ePtr<gLCDDC> my_lcd_dc;
+	gLCDDC::getInstance(my_lcd_dc);
+
+
+	/* ok, this is currently hardcoded for arabic. */
+	/* some characters are wrong in the regular font, force them to use the replacement font */
+	for (int i = 0x60c; i <= 0x66d; ++i)
+		eTextPara::forceReplacementGlyph(i);
+	eTextPara::forceReplacementGlyph(0xfdf2);
+	for (int i = 0xfe80; i < 0xff00; ++i)
+		eTextPara::forceReplacementGlyph(i);
+
+	eWidgetDesktop dsk(my_dc->size());
+	eWidgetDesktop dsk_lcd(my_lcd_dc->size());
+
+	dsk.setStyleID(0);
+	dsk_lcd.setStyleID(my_lcd_dc->size().width() == 96 ? 2 : 1);
+
+/*	if (double_buffer)
 	{
-		unsigned int tmp;
-		fprintf(f, "%s\tLINE %d\tADDRESS %p\t%d unfreed\ttype %d (btcount %d)\n",
-			i->second.file, i->second.line, (void*)i->second.address, i->second.size, i->second.type, i->second.btcount);
-		totalSize += i->second.size;
+		eDebug(" - double buffering found, enable buffered graphics mode.");
+		dsk.setCompositionMode(eWidgetDesktop::cmBuffered);
+	} */
 
-		char **bt_string = backtrace_symbols( i->second.backtrace, i->second.btcount );
-		for ( tmp=0; tmp < i->second.btcount; tmp++ )
+	wdsk = &dsk;
+	lcddsk = &dsk_lcd;
+
+	dsk.setDC(my_dc);
+	dsk_lcd.setDC(my_lcd_dc);
+
+	dsk.setBackgroundColor(gRGB(0,0,0,0xFF));
+#endif
+
+		/* redrawing is done in an idle-timer, so we have to set the context */
+	dsk.setRedrawTask(main);
+	dsk_lcd.setRedrawTask(main);
+
+	std::string active_skin = getConfigCurrentSpinner("config.skin.primary_skin");
+
+	eDebug("Loading spinners...");
+
+	{
+		int i;
+#define MAX_SPINNER 64
+		ePtr<gPixmap> wait[MAX_SPINNER];
+		for (i=0; i<MAX_SPINNER; ++i)
 		{
-			if ( bt_string[tmp] )
+			char filename[64];
+			std::string rfilename;
+			snprintf(filename, sizeof(filename), "${datadir}/enigma2/%s/wait%d.png", active_skin.c_str(), i + 1);
+			rfilename = eEnv::resolve(filename);
+			loadPNG(wait[i], rfilename.c_str());
+
+			if (!wait[i])
 			{
-				char *beg = strchr(bt_string[tmp], '(');
-				if ( beg )
-				{
-					std::string tmp1(beg+1);
-					int pos1=tmp1.find('+'), pos2=tmp1.find(')');
-					if ( pos1 != std::string::npos && pos2 != std::string::npos )
-					{
-						std::string tmp2(tmp1.substr(pos1,(pos2-pos1)));
-						tmp1.erase(pos1);
-						if (tmp1.length())
-						{
-							int state;
-							abi::__cxa_demangle(tmp1.c_str(), buffer, &len, &state);
-							if (!state)
-								fprintf(f, "%d %s%s\n", tmp, buffer,tmp2.c_str());
-							else
-								fprintf(f, "%d %s\n", tmp, bt_string[tmp]);
-						}
-					}
-				}
+				if (!i)
+					eDebug("failed to load %s! (%m)", rfilename.c_str());
 				else
-					fprintf(f, "%d %s\n", tmp, bt_string[tmp]);
+					eDebug("found %d spinner!", i);
+				break;
 			}
 		}
-		free(bt_string);
-		if (i->second.btcount)
-			fprintf(f, "\n");
+		if (i)
+			my_dc->setSpinner(eRect(ePoint(25, 25), wait[0]->size()), wait, i);
+		else
+			my_dc->setSpinner(eRect(25, 25, 0, 0), wait, 1);
 	}
-	free(buffer);
 
-	fprintf(f, "-----------------------------------------------------------\n");
-	fprintf(f, "Total Unfreed: %d bytes\n", totalSize);
-	fflush(f);
-};
+	gRC::getInstance()->setSpinnerDC(my_dc);
+
+	eRCInput::getInstance()->keyEvent.connect(slot(keyEvent));
+
+	printf("executing main\n");
+
+	bsodCatchSignals();
+	catchTermSignal();
+
+	setIoPrio(IOPRIO_CLASS_BE, 3);
+
+	/* start at full size */
+	eVideoWidget::setFullsize(true);
+
+	//	python.execute("mytest", "__main__");
+	python.execFile(eEnv::resolve("${libdir}/enigma2/python/mytest.py").c_str());
+
+	/* restore both decoders to full size */
+	eVideoWidget::setFullsize(true);
+
+	if (exit_code == 5) /* python crash */
+	{
+		eDebug("(exit code 5)");
+		bsodFatal(0);
+	}
+
+	dsk.paint();
+	dsk_lcd.paint();
+
+	{
+		gPainter p(my_lcd_dc);
+		p.resetClip(eRect(ePoint(0, 0), my_lcd_dc->size()));
+		p.clear();
+		p.flush();
+	}
+
+	return exit_code;
+}
+
+eWidgetDesktop *getDesktop(int which)
+{
+	return which ? lcddsk : wdsk;
+}
+
+eApplication *getApplication()
+{
+	return eApp;
+}
+
+void runMainloop()
+{
+	catchTermSignal();
+	eApp->runLoop();
+}
+
+const char *getEnigmaVersionString()
+{
+	return enigma2_date;
+}
+
+const char *getGStreamerVersionString()
+{
+	return gst_version_string();
+}
+
+#include <malloc.h>
+
+void dump_malloc_stats(void)
+{
+	struct mallinfo mi = mallinfo();
+	eDebug("MALLOC: %d total", mi.uordblks);
+}
+
+#ifdef USE_LIBVUGLES2
+#include <vuplus_gles.h>
+
+void setAnimation_current(int a)
+{
+	gles_set_animation_func(a);
+}
+
+void setAnimation_speed(int speed)
+{
+	gles_set_animation_speed(speed);
+}
+#else
+#ifndef HAVE_OSDANIMATION
+void setAnimation_current(int a) {}
+void setAnimation_speed(int speed) {}
 #endif
-
-Signal2<void, int, const std::string&> logOutput;
-int logOutputConsole = 1;
-int logOutputColors = 1;
-
-static bool inNoNewLine = false;
-
-static pthread_mutex_t DebugLock =
-	PTHREAD_ADAPTIVE_MUTEX_INITIALIZER_NP;
-
-
-static const char *alertToken[] = {
-// !!! all strings must be written in lower case !!!
-	"error",
-	"fail",
-	"not available",
-	"no module",
-	"no such file",
-	"cannot",
-	"invalid ",	//space after "invalid" to prevent false detect of "invalidate"
-	"bad parameter",
-	"not found",
-	NULL		//end of list
-};
-
-static const char *warningToken[] = {
-// !!! all strings must be written in lower case !!!
-	"warning",
-	"unknown",
-	"not implemented",
-	NULL		//end of list
-};
-
-bool findToken(char *src, const char **list)
-{
-	bool res = false;
-	if(!src || !list)
-		return res;
-
-	char *tmp = new char[strlen(src)+1];
-	if(!tmp)
-		return res;
-	int idx=0;
-	do{
-		tmp[idx] = tolower(src[idx]);
-	}while(src[idx++]);
-
-	for(idx=0; list[idx]; idx++)
-	{
-		if(strstr(tmp, list[idx]))
-		{
-			res = true;
-			break;
-		}
-	}
-	delete [] tmp;
-	return res;
-}
-
-void removeAnsiEsc(char *src)
-{
-	char *dest = src;
-	bool cut = false;
-	for(; *src; src++)
-	{
-		if (*src == (char)0x1b) cut = true;
-		if (!cut) *dest++ = *src;
-		if (*src == 'm' || *src == 'K') cut = false;
-	}
-	*dest = '\0';
-}
-
-void removeAnsiEsc(char *src, char *dest)
-{
-	bool cut = false;
-	for(; *src; src++)
-	{
-		if (*src == (char)0x1b) cut = true;
-		if (!cut) *dest++ = *src;
-		if (*src == 'm' || *src == 'K') cut = false;
-	}
-	*dest = '\0';
-}
-
-char *printtime(char buffer[], int size)
-{
-	struct tm loctime ;
-	struct timeval tim;
-	gettimeofday(&tim, NULL);
-	localtime_r(&tim.tv_sec, &loctime);
-	snprintf(buffer, size, "%02d:%02d:%02d.%03ld", loctime.tm_hour, loctime.tm_min, loctime.tm_sec, tim.tv_usec / 1000L);
-	return buffer;
-}
-
-extern void bsodFatal(const char *component);
-
-void _eFatal(const char *file, int line, const char *function, const char* fmt, ...)
-{
-	char timebuffer[32];
-	char header[256];
-	char buf[1024];
-	char ncbuf[1024];
-	printtime(timebuffer, sizeof(timebuffer));
-	snprintf(header, sizeof(header), "%s%s %s:%d %s ", inNoNewLine?"\n":"", timebuffer, file, line, function);
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	removeAnsiEsc(buf, ncbuf);
-	singleLock s(DebugLock);
-	logOutput(lvlFatal, std::string(header) + std::string(ncbuf) + "\n");
-
-	if (!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "FATAL: %s%s\n", header, ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "FATAL: %s%s\n", header, ncbuf);
-		}
-	else
-	{
-		snprintf(header, sizeof(header),
-					"%s"		/*newline*/
-			ANSI_RED	"%s "		/*color of timestamp*/
-			ANSI_GREEN	"%s:%d "	/*color of filename and linenumber*/
-			ANSI_BGREEN	"%s "		/*color of functionname*/
-			ANSI_BWHITE			/*color of debugmessage*/
-			, inNoNewLine?"\n":"", timebuffer, file, line, function);
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "FATAL: %s%s\n"ANSI_RESET, header , buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "FATAL: %s%s\n"ANSI_RESET, header , buf);
-	}
-	bsodFatal("enigma2");
-	inNoNewLine = false;
-}
-
-#ifdef DEBUG
-void _eDebug(const char *file, int line, const char *function, const char* fmt, ...)
-{
-	char flagstring[10];
-	char timebuffer[32];
-	char header[256];
-	char buf[1024];
-	char ncbuf[1024];
-	bool is_alert = false;
-	bool is_warning = false;
-
-	printtime(timebuffer, sizeof(timebuffer));
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	removeAnsiEsc(buf, ncbuf);
-	is_alert = findToken(ncbuf, alertToken);
-	if(!is_alert)
-		is_warning = findToken(ncbuf, warningToken);
-
-	if(is_alert)
-		snprintf(flagstring, sizeof(flagstring), "%s", "[ E ]");
-	else if(is_warning)
-		snprintf(flagstring, sizeof(flagstring), "%s", "[ W ]");
-	else
-		snprintf(flagstring, sizeof(flagstring), "%s", "[   ]");
-
-	snprintf(header, sizeof(header), "%s%s %s %s:%d %s ", inNoNewLine?"\n":"", timebuffer, flagstring, file, line, function);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(header) + std::string(ncbuf) + "\n");
-	if (logOutputConsole)
-	{
-		if (!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n", header, ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s\n", header, ncbuf);
-		}
-		else
-		{
-			snprintf(header, sizeof(header),
-						"%s"		/*newline*/
-						"%s%s "		/*color of timestamp*/
-				ANSI_GREEN	"%s:%d "	/*color of filename and linenumber*/
-				ANSI_BGREEN	"%s "		/*color of functionname*/
-				ANSI_BWHITE			/*color of debugmessage*/
-				, inNoNewLine?"\n":"", is_alert?ANSI_BRED:is_warning?ANSI_BYELLOW:ANSI_WHITE, timebuffer, file, line, function);
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n"ANSI_RESET, header, buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s\n"ANSI_RESET, header, buf);
-		}
-	}
-	inNoNewLine = false;
-}
-
-void _eDebugNoNewLineStart(const char *file, int line, const char *function, const char* fmt, ...)
-{
-	char flagstring[10];
-	char timebuffer[32];
-	char header[256];
-	char buf[1024];
-	char ncbuf[1024];
-	bool is_alert = false;
-	bool is_warning = false;
-
-	printtime(timebuffer, sizeof(timebuffer));
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	removeAnsiEsc(buf, ncbuf);
-	is_alert = findToken(ncbuf, alertToken);
-	if(!is_alert)
-		is_warning = findToken(ncbuf, warningToken);
-
-	if(is_alert)
-		snprintf(flagstring, sizeof(flagstring), "%s", "< E >");
-	else if(is_warning)
-		snprintf(flagstring, sizeof(flagstring), "%s", "< W >");
-	else
-		snprintf(flagstring, sizeof(flagstring), "%s", "<   >");
-
-	snprintf(header, sizeof(header), "%s%s %s %s:%d %s ", inNoNewLine?"\n":"", timebuffer, flagstring, file, line, function);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(header) + std::string(ncbuf));
-	if (logOutputConsole)
-	{
-		if (!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s", header, ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s", header, ncbuf);
-		}
-		else
-		{
-			snprintf(header, sizeof(header),
-						"%s"		/*newline*/
-						"%s%s "		/*color of timestamp*/
-				ANSI_GREEN	"%s:%d "	/*color of filename and linenumber*/
-				ANSI_BGREEN	"%s "		/*color of functionname*/
-				ANSI_BWHITE			/*color of debugmessage*/
-				, inNoNewLine?"\n":"", is_alert?ANSI_BRED:is_warning?ANSI_BYELLOW:ANSI_WHITE, timebuffer, file, line, function);
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s", header, buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s", header, buf);
-		}
-	}
-	inNoNewLine = true;
-}
-
-void eDebugNoNewLine(const char* fmt, ...)
-{
-	char buf[1024];
-	char ncbuf[1024];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	removeAnsiEsc(buf, ncbuf);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(ncbuf));
-	if (logOutputConsole)
-	{
-		if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-		{
-			int n;
-			char obuf[1024];
-			snprintf(obuf, sizeof(obuf), "%s", logOutputColors? buf : ncbuf);
-			n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-			if(n<0)
-				fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-		}
-		else
-			fprintf(stderr, "%s", logOutputColors? buf : ncbuf);
-	}
-}
-
-void eDebugNoNewLineEnd(const char* fmt, ...)
-{
-	char buf[1024];
-	char ncbuf[1024];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	va_end(ap);
-	removeAnsiEsc(buf, ncbuf);
-	singleLock s(DebugLock);
-	logOutput(lvlDebug, std::string(ncbuf) + "\n");
-	if (logOutputConsole)
-	{
-		if(!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s\n", ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s\n", ncbuf);
-		}
-		else
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s\n"ANSI_RESET, buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s\n"ANSI_RESET, buf);
-		}
-	}
-	inNoNewLine = false;
-}
-
-void _eWarning(const char *file, int line, const char *function, const char* fmt, ...)
-{
-	char timebuffer[32];
-	char header[256];
-	char buf[1024];
-	char ncbuf[1024];
-	printtime(timebuffer, sizeof(timebuffer));
-	snprintf(header, sizeof(header), "%s%s [!W!] %s:%d %s ", inNoNewLine?"\n":"", timebuffer, file, line, function);
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(buf, sizeof(buf), fmt, ap);
-	removeAnsiEsc(buf, ncbuf);
-	va_end(ap);
-	singleLock s(DebugLock);
-	logOutput(lvlWarning, std::string(header) + std::string(ncbuf) + "\n");
-	if (logOutputConsole)
-	{
-		if (!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n", header, ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s\n", header, ncbuf);
-		}
-		else
-		{
-			snprintf(header, sizeof(header),
-						"%s"		/*newline*/
-				ANSI_BYELLOW	"%s "	/*color of timestamp*/\
-				ANSI_GREEN	"%s:%d "	/*color of filename and linenumber*/
-				ANSI_BGREEN	"%s "		/*color of functionname*/
-				ANSI_BWHITE			/*color of debugmessage*/
-				, inNoNewLine?"\n":"", timebuffer, file, line, function);
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n"ANSI_RESET, header, buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s\n"ANSI_RESET, header, buf);
-		}
-	}
-	inNoNewLine = false;
-}
-#endif // DEBUG
-
-
-void ePythonOutput(const char *file, int line, const char *function, const char *string)
-{
-#ifdef DEBUG
-	char flagstring[10];
-	char timebuffer[32];
-	char header[256];
-	char buf[2*1024];
-	char ncbuf[2*1024];
-	bool is_alert = false;
-	bool is_warning = false;
-
-	printtime(timebuffer, sizeof(timebuffer));
-	if(strstr(file, "e2reactor.py") || strstr(file, "traceback.py"))
-		is_alert = true;
-	snprintf(buf, sizeof(buf), "%s", string);
-	removeAnsiEsc(buf, ncbuf);
-	is_alert |= findToken(ncbuf, alertToken);
-	if(!is_alert)
-		is_warning = findToken(ncbuf, warningToken);
-
-	if(is_alert)
-		snprintf(flagstring, sizeof(flagstring), "%s", "{ E }");
-	else if(is_warning)
-		snprintf(flagstring, sizeof(flagstring), "%s", "{ W }");
-	else
-		snprintf(flagstring, sizeof(flagstring), "%s", "{   }");
-
-	if(line)
-		snprintf(header, sizeof(header), "%s%s %s %s:%d %s ", inNoNewLine?"\n":"", timebuffer, flagstring, file, line, function);
-	else
-	{
-		snprintf(flagstring, sizeof(flagstring), "%s", "{ D }");
-		snprintf(header, sizeof(header), "%s%s %s ", inNoNewLine?"\n":"", timebuffer, flagstring);
-	}
-	singleLock s(DebugLock);
-	logOutput(lvlWarning, std::string(header) + std::string(ncbuf));
-	if (logOutputConsole)
-	{
-		if (!logOutputColors)
-		{
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s", header, ncbuf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s", header, ncbuf);
-		}
-		else
-		{
-			if(line)
-			{
-				snprintf(header, sizeof(header),
-							"%s"		/*newline*/
-							"%s%s "		/*color of timestamp*/
-					ANSI_CYAN	"%s:%d "	/*color of filename and linenumber*/
-					ANSI_BCYAN	"%s "		/*color of functionname*/
-					ANSI_BWHITE			/*color of debugmessage*/
-					, inNoNewLine?"\n":"", is_alert?ANSI_BRED:is_warning?ANSI_BYELLOW:ANSI_WHITE, timebuffer, file, line, function);
-			}
-			else
-			{
-				snprintf(header, sizeof(header),
-							"%s"		/*newline*/
-							"%s%s "		/*color of timestamp*/
-					ANSI_BWHITE			/*color of debugmessage*/
-					, inNoNewLine?"\n":"", ANSI_MAGENTA, timebuffer);
-			}
-
-			if(m_erroroutput && m_erroroutput->eErrorOutput::pipe_fd[1] && m_erroroutput->eErrorOutput::threadrunning)
-			{
-				int n;
-				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s"ANSI_RESET, header, buf);
-				n=write(m_erroroutput->eErrorOutput::pipe_fd[1], obuf, strlen(obuf));
-				if(n<0)
-					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
-			}
-			else
-				fprintf(stderr, "%s%s"ANSI_RESET, header, buf);
-		}
-	}
-#endif
-	inNoNewLine = false;
-}
-
-void eWriteCrashdump()
-{
-		/* implement me */
-}
+#endif 
