@@ -165,3 +165,27 @@ void eWriteCrashdump()
 {
 		/* implement me */
 } 
+void _eFatal(const char *file, int line, const char *function, const char* fmt, ...)
+{
+		/* implement me */
+}
+void _eDebug(const char *file, int line, const char *function, const char* fmt, ...)
+{
+		/* implement me */
+}
+void _eDebugNoNewLineStart(const char *file, int line, const char *function, const char* fmt, ...)
+{
+		/* implement me */
+}
+void eDebugNoNewLine(const char* fmt, ...)
+{
+		/* implement me */
+}
+void eDebugNoNewLineEnd(const char* fmt, ...)
+{
+		/* implement me */
+}
+void _eWarning(const char *file, int line, const char *function, const char* fmt, ...)
+{
+		/* implement me */
+}
