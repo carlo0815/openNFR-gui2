@@ -185,7 +185,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
-            self.feedurl = 'http://openvix.co.uk/index.php/downloads/'
+            self.feedurl = 'http://openvix.co.uk'
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
             self.feedurl = 'http://images.opendroid.org/5.3/'
