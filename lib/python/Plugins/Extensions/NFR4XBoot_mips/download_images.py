@@ -110,16 +110,6 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        mypixmap = mypath + 'atemio4you.png'
-        png = LoadPixmap(mypixmap)
-        name = _('Atemio4You')
-        desc = _('Download latest Atemio4You Image')
-        idx = 'atemio4you'
-        res = (name,
-         png,
-         idx,
-         desc)
-        self.list.append(res)
         mypixmap = mypath + 'openhdf.png'
         png = LoadPixmap(mypixmap)
         name = _('OpenHDF')
@@ -192,16 +182,13 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
-        elif self.distro == 'atemio4you':
-            self.feed = 'atemio4you'
-            self.feedurl = 'http://nightly.atemio4you.com/2.3/image'        
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
             self.feedurl1 = 'http://images.hdfreaks.cc'
             self.feedurl = 'http://images.hdfreaks.cc/menu.html'
         elif self.distro == 'openmips':
             self.feed = 'openmips'
-            self.feedurl = 'http://image.openmips.com/4.2'
+            self.feedurl = 'http://image.openmips.com/5.2'
         elif self.distro == 'custom':
             self.feed = 'custom'
             self.feedurl = 'http://feed.yt/bre2ze/image/'    
@@ -221,7 +208,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv' or self.distro == 'openatv-5.2' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'atemio4you' or self.distro == 'openmips' or self.distro == 'openhdf':
+        if self.distro == 'openatv' or self.distro == 'openatv-5.2' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openmips' or self.distro == 'openhdf':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
             req = urllib2.Request(self.feedurl)
@@ -237,12 +224,8 @@ class DownloadOnLineImage(Screen):
             except:
                     stb = 'no Image for this Box on this Side'
         if self.distro == 'openvix':
-            if box in ('xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'sf8', 'mutant2400', 'gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se'):
-                if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-                    box = 'ventonhdx'
-                    urlbox = 'Venton-Unibox-HDx'
-                    stb = '1'
-                elif box in ('xpeedlx1', 'xpeedlx2'):
+            if box in ('xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'vusolo2', 'vusolose', 'vuduo2', 'vusolo4k', 'mutant2400', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'osmini', 'spycat', 'uniboxeco'):
+                if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
                     urlbox = 'GI-Xpeed-LX'
                     stb = '1'
@@ -250,45 +233,29 @@ class DownloadOnLineImage(Screen):
                     box = 'xpeedlx3'
                     urlbox = 'GI-Xpeed-LX3'
                     stb = '1'
-                elif box in ('sf8'):
-                    box = 'sf8'
-                    urlbox = 'OCTAGON-SF8-HD'
-                    stb = '1'
                 elif box in ('vusolo2'):
                     box = 'vusolo2'
-                    urlbox = 'Vu%2BSolo2'
+                    urlbox = 'Vu+Solo2'
                     stb = '1'
+                elif box in ('vusolo4k'):
+                    box = 'vusolo4k'
+                    urlbox = 'Vu+Solo4K'
+                    stb = '1'   
                 elif box in ('vusolose'):
                     box = 'vusolose'
-                    urlbox = 'Vu%2BSolose'
-                    stb = '1'
-                elif box in ('vuuno'):
-                    box = 'vuuno'
-                    urlbox = 'Vu%2BUno'                    
+                    urlbox = 'Vu+Solo-SE'
                     stb = '1'
                 elif box in ('vuduo2'):
                     box = 'vuduo2'
-                    urlbox = 'Vu%2BDuo2'                    
-                    stb = '1'
-                elif box in ('vuduo'):
-                    box = 'vuduo'
-                    urlbox = 'Vu%2BDuo'                    
+                    urlbox = 'Vu+Duo2'                    
                     stb = '1'
                 elif box in ('mutant2400'):
                     box = 'mutant2400'
                     urlbox = 'Mutant-HD2400'                    
                     stb = '1'
-                elif box in ('gbquad'):
-                    box = 'gbquad'
-                    urlbox = 'GiGaBlue-HD-QUAD'                    
-                    stb = '1'
                 elif box in ('gbquadplus'):
                     box = 'gbquadplus'
                     urlbox = 'GiGaBlue-HD-QUAD-PLUS'                    
-                    stb = '1'
-                elif box in ('gb800se'):
-                    box = 'gb800se'
-                    urlbox = 'GiGaBlue-HD800SE'                    
                     stb = '1'
                 elif box in ('gb800ueplus'):
                     box = 'gb800ueplus'
@@ -297,12 +264,23 @@ class DownloadOnLineImage(Screen):
                 elif box in ('gb800seplus'):
                     box = 'gb800seplus'
                     urlbox = 'GiGaBlue-HD800SE-PLUS'                    
-                    stb = '1'                    
-   
+                    stb = '1'
+                elif box in ('osmini'):
+                    box = 'osmini'
+                    urlbox = 'OS-mini'                    
+                    stb = '1'
+                elif box in ('spycat'):
+                    box = 'spycat'
+                    urlbox = 'Spycat'                    
+                    stb = '1'
+                elif box in ('uniboxhde'):
+                    box = 'uniboxhde'
+                    urlbox = 'Venton-Unibox-HDeco-PLUS'                    
+                    stb = '1'     
             else:   
                 stb = 'no Image for this Box on this Side' 
         elif self.distro == 'opendroid':
-            if box in ('gbquad', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb800se'):
+            if box in ('gbquadplus', 'gb800ueplus', 'gb800seplus'):
                 box = 'GigaBlue'
                 urlbox = getBoxType()               
                 stb = '1'
@@ -313,8 +291,12 @@ class DownloadOnLineImage(Screen):
             elif box in ('xpeedlx3'):
                 box = 'GoldenInterstar'
                 urlbox = 'xpeedlx3'                
-                stb = '1'                
-            elif box in ('vusolo', 'vusolose', 'vusolo2', 'vuduo'):
+                stb = '1'
+            elif box in ('optimussos1', 'optimussos2', 'optimussos1plus', 'optimussos2plus', 'optimussos3plus', 'osmini'):
+                box = 'Edision'
+                urlbox = getBoxType()                
+                stb = '1'
+            elif box in ('vusolose', 'vusolo2', 'vuduo2'):
                 box = getBrandOEM()
                 urlbox = getBoxType()
                 stb = '1'
@@ -334,50 +316,34 @@ class DownloadOnLineImage(Screen):
                 box = 'Atemio'
                 urlbox = 'atemio6100'                
                 stb = '1'
-            elif box in ('formuler3'):
+            elif box in ('formuler3', 'formuler1'):
                 box = 'Formuler'
-                urlbox = 'formuler3'                
+                urlbox = getBoxType()                
                 stb = '1'    
-            elif box in ('formuler1'):
-                box = 'Formuler'
-                urlbox = 'formuler1'                
-                stb = '1'                                        
-            elif box in ('optimussos3plus'):
-                box = 'Edision'
-                urlbox = 'optimussos3plus'                
-                stb = '1'
-            elif box in ('optimussos2plus'):
-                box = 'Edision'
-                urlbox = 'optimussos2plus'                
-                stb = '1'
             elif box in ('uniboxhde'):
                 box = 'Venton-Unibox'
                 urlbox = 'uniboxhde'                
-                stb = '1'  
-                
+                stb = '1'
+                                
             else:   
                 stb = 'no Image for this Box on this Side'                                      
         elif self.distro == 'openpli':
-            if box in ('vusolo2', 'vusolose', 'vuuno', 'vuduo2', 'vuduo', 'mutant2400', 'quadbox2400', 'xp1000', 'formuler1', 'formuler3'):
+            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler1', 'formuler3'):
                if box in ('vusolo2'):
                     box = 'vusolo2'
                     urlbox = 'vuplus/vusolo2/' 
                     stb = '1'
-               if box in ('vusolose'):
+               elif box in ('vusolo4k'):
+                    box = 'vusolo4k'
+                    urlbox = 'vuplus/vusolo4k/' 
+                    stb = '1'                    
+               elif box in ('vusolose'):
                     box = 'vusolose'
                     urlbox = 'vuplus/vusolose/' 
-                    stb = '1'
-               elif box in ('vuuno'):
-                    box = 'vuuno'
-                    urlbox = 'vuplus/vuuno/' 
                     stb = '1'
                elif box in ('vuduo2'):
                     box = 'vuduo2'
                     urlbox = 'vuplus/vuduo2/' 
-                    stb = '1'
-               elif box in ('vuduo'):
-                    box = 'vuduo'
-                    urlbox = 'vuplus/vuduo/' 
                     stb = '1'
                elif box in ('mutant2400'):
                     box = 'hd2400'
@@ -387,10 +353,6 @@ class DownloadOnLineImage(Screen):
                     box = 'hd2400'
                     urlbox = 'mutant/hd2400/' 
                     stb = '1'
-               elif box in ('xp1000'):
-                    box = 'xp1000'
-                    urlbox = 'maxdigital/xp1000/' 
-                    stb = '1'
                elif box in ('formuler1'):
                     box = 'formuler1'
                     urlbox = 'formuler/formuler1/' 
@@ -399,6 +361,10 @@ class DownloadOnLineImage(Screen):
                     box = 'formuler3'
                     urlbox = 'formuler/formuler3/' 
                     stb = '1'
+               elif box in ('osmini'):
+                    box = 'osmini'
+                    urlbox = 'edision/osmini/' 
+                    stb = '1'                    
             else:   
                 stb = 'no Image for this Box on this Side'
         elif self.distro == 'custom':
@@ -421,6 +387,7 @@ class DownloadOnLineImage(Screen):
             box = self.box()
             self.hide()
             if self.distro == 'openvix':
+                print "url=", self.feedurl + '/openvix-builds/' + box[1]
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
@@ -484,10 +451,8 @@ class DownloadOnLineImage(Screen):
             url = self.feedurl
         elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
-  	elif self.distro == 'atemio4you':
-	    url = '%s/%s/' % (self.feedurl, box)             
         elif self.distro == 'openvix':
-            url = '%s/index.php?dir=%s' % (self.feedurl, urlbox)
+            url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opendroid':
             url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)        
         elif self.distro == 'openpli':
@@ -534,13 +499,10 @@ class DownloadOnLineImage(Screen):
                     t = line.find("<a href='%s/" % urlbox) 
                     t5 = line.find(".zip'")
                     self.imagelist.append(line[t + ttt + 10 :t5 + 4])                        
-                elif line.find('href="atemio4you-') > -1:
-                    t4 = line.find('atemio4you-')
+                elif line.find('href="openvix-') > -1:
+                    t4 = line.find('openvix-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                             
-                elif line.find('file=openvix-') > -1:
-                    t4 = line.find('file=')
-                    self.imagelist.append(line[t4 + 5:-2])
+                    self.imagelist.append(line[t4 :t5+4])
                 elif line.find('file=openvixhd-') > -1:
                     t4 = line.find('file=')
                     self.imagelist.append(line[t4 + 5:-2])
@@ -630,4 +592,3 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
-
