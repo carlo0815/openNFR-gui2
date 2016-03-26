@@ -71,7 +71,17 @@ class NFR4XChooseOnLineImage(Screen):
          desc) 
         self.list.append(res)
         self['list'].list = self.list
-
+        self.list.append(res)
+        mypixmap = mypath + 'openpli.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenPLi')
+        desc = _('Download latest OpenPLi Image')
+        idx = 'openpli'
+        res = (name,
+         png,
+         idx,
+         desc)
+         
     def quit(self):
         self.close()
 
@@ -100,6 +110,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk/openvix-builds'
+        elif self.distro == 'openpli':
+            self.feed = 'openpli'
+            self.feedurl = 'http://openpli.org/download'
         else:
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.2/images'
@@ -136,6 +149,14 @@ class DownloadOnLineImage(Screen):
                 stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side' 
+        elif self.distro == 'openpli':
+            if box in ('vusolo4k'):
+               if box in ('vusolo4k'):
+                    box = 'vusolo4k'
+                    urlbox = 'vuplus/vusolo4k/' 
+                    stb = '1'                    
+            else:   
+                stb = 'no Image for this Box on this Side'                
         return (box, urlbox, stb)
 
     def green(self, ret = None):
@@ -151,6 +172,8 @@ class DownloadOnLineImage(Screen):
             self.hide()
             if self.distro == 'openvix':
                 url = self.feedurl + '/' + box[1] + '/' + sel 
+            elif self.distro == 'openpli':
+                url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel                
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -207,6 +230,8 @@ class DownloadOnLineImage(Screen):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/%s' % (self.feedurl, urlbox)
+        elif self.distro == 'openpli':
+            url = '%s/%s' % (self.feedurl, urlbox)            
         elif self.distro == 'opennfr':
             url = '%s/%s' % (self.feedurl, box)
 	else:
@@ -255,6 +280,10 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
+                elif line.find('href="openpli-' ) > -1:
+                    t4 = line.find('openpli-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                        
         else:
             self.imagelist.append(stb)
         self['imageList'].l.setList(self.imagelist)
