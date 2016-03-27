@@ -462,12 +462,12 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2'):
+        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2', 'openatv-5.3'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opendroid':
-            url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)        
+            url = '%s/%s/index.php?dir=%s' % (self.feedurl, box, urlbox)       
         elif self.distro == 'openpli':
             url = '%s/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opennfr':
