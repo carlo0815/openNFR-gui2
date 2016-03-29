@@ -70,7 +70,15 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc) 
         self.list.append(res)
-        self['list'].list = self.list
+        mypixmap = mypath + 'openatv.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenATV-5.3')
+        desc = _('Download latest OpenATV Image')
+        idx = 'openatv-5.3'
+        res = (name,
+         png,
+         idx,
+         desc)
         self.list.append(res)
         mypixmap = mypath + 'openpli.png'
         png = LoadPixmap(mypixmap)
@@ -106,7 +114,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
         elif self.distro == 'openatv-5.2':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'
+        elif self.distro == 'openatv-5.3':
+            self.feed = 'openatv'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.3'    
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://www.openvix.co.uk/openvix-builds'
@@ -129,7 +140,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-5.2' or self.distro == 'opennfr':
+        if self.distro == 'openatv-5.2' or self.distro == 'openatv-5.3' or self.distro == 'opennfr':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
             try:
@@ -226,7 +237,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv-5.2'):
+        elif self.distro in ('openatv-5.2', 'openatv-5.3'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/%s' % (self.feedurl, urlbox)
