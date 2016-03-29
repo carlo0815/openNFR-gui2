@@ -399,6 +399,7 @@ def getBoolean(self):
                         return hasattr(self.source, "editmode") and not not self.source.editmode
                 return False        		
 
+ServiceInfo.subserviceGroups = readChannelsFromXml()
 ServiceInfo.getBoolean = getBoolean
 ServiceInfo.boolean = property(getBoolean)
 ServiceInfo.getPossibleSubservicesForCurrentChannel = getPossibleSubservicesForCurrentChannel
