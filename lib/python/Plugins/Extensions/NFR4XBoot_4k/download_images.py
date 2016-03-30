@@ -89,6 +89,8 @@ class NFR4XChooseOnLineImage(Screen):
          png,
          idx,
          desc)
+        self.list.append(res)
+        self['list'].list = self.list 
          
     def quit(self):
         self.close()
