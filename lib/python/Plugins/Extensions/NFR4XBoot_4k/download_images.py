@@ -292,8 +292,8 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
-                elif line.find('href="openpli-' ) > -1:
-                    t4 = line.find('openpli-')
+                elif line.find('href="http://downloads.pli-images.org' ) > -1:
+                    t4 = line.find('OpenPLi-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])                        
         else:
