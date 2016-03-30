@@ -164,10 +164,9 @@ class DownloadOnLineImage(Screen):
                 stb = 'no Image for this Box on this Side' 
         elif self.distro == 'openpli':
             if box in ('vusolo4k'):
-               if box in ('vusolo4k'):
-                    box = 'vusolo4k'
-                    urlbox = 'vuplus/vusolo4k/' 
-                    stb = '1'                    
+                box = 'vusolo4k'
+                urlbox = 'vuplus/vusolo4k/' 
+                stb = '1'                    
             else:   
                 stb = 'no Image for this Box on this Side'                
         return (box, urlbox, stb)
