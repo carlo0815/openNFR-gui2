@@ -50,7 +50,7 @@ from Tools.Directories import pathExists, fileExists
 from Tools.KeyBindings import getKeyDescription
 
 from enigma import eTimer, eServiceCenter, eDVBServicePMTHandler, iServiceInformation, iPlayableService, eServiceReference, eEPGCache, eActionMap
-from boxbranding import getBoxType, getBrandOEM, getMachineBrand, getMachineName, getMachineProcModel
+from boxbranding import getBoxType, getBrandOEM, getMachineBrand, getMachineName, getMachineProcModel, getMachineBuild
 
 from time import time, localtime, strftime
 from bisect import insort
@@ -2394,7 +2394,7 @@ class InfoBarPiP:
 								f.close()
 						self.session.pipshown = False
 				else:
-					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2':
+					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2' or getBoxType() in ('vusolo4k'):
 						self.session.pip = self.session.instantiateDialog(PictureInPicture)
 						self.session.pip.setAnimationMode(0)
 						self.session.pip.show()
