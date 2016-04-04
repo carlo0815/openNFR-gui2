@@ -28,7 +28,9 @@ def ConvertToHumanReadable(tp, tunertype = None):
 			eDVBFrontendParametersSatellite.Modulation_Auto : _("Auto"),
 			eDVBFrontendParametersSatellite.Modulation_QPSK : "QPSK",
 			eDVBFrontendParametersSatellite.Modulation_QAM16 : "QAM16",
-			eDVBFrontendParametersSatellite.Modulation_8PSK : "8PSK"}.get(tp.get("modulation"))
+			eDVBFrontendParametersSatellite.Modulation_8PSK : "8PSK",
+			eDVBFrontendParametersSatellite.Modulation_16APSK : "16APSK",
+			eDVBFrontendParametersSatellite.Modulation_32APSK : "32APSK"}.get(tp.get("modulation"))
 		ret["orbital_position"] = nimmanager.getSatName(int(tp.get("orbital_position")))
 		ret["polarization"] = {
 			eDVBFrontendParametersSatellite.Polarisation_Horizontal : _("Horizontal"),
