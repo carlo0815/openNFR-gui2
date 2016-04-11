@@ -261,7 +261,7 @@ INFO_SKIN2 =  """<screen name="PANEL-Info2"  position="center,center" size="530,
 ###################  Max Test ###################
 class PanelList(MenuList):
         if (getDesktop(0).size().width() == 1920):
-	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 50, enableWrapAround = True):
+	        def __init__(self, list, font0 = 38, font1 = 28, itemHeight = 60, enableWrapAround = True):
 		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 		        self.l.setFont(0, gFont("Regular", font0))
 		        self.l.setFont(1, gFont("Regular", font1))
@@ -276,8 +276,8 @@ class PanelList(MenuList):
 def MenuEntryItem(entry):
         if (getDesktop(0).size().width() == 1920):
 	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 40), font=0, text=entry[1]))  # menupunkt
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 50), png=entry[0]))  # png vorn
+	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 50), font=0, text=entry[1]))  # menupunkt
 	   return res
 	else:
 	   res = [entry]
@@ -353,10 +353,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Infos'), _("Infos"), 'Infos')))
 
 		self.onChangedEntry = []
-		if (getDesktop(0).size().width() == 1920):
-			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
-		else:
-		        self["Mlist"] = PanelList([])
+		self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
 		menu = 0
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
