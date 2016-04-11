@@ -71,21 +71,18 @@ config.misc.DeepStandby = NoSave(ConfigYesNo(default=False)) # detect deepstandb
 ####################################################
 
 def useSyncUsingChanged(configelement):
-	if configelement == "0":
+	if config.misc.SyncTimeUsing.value == "0":
 		print "[Time By]: Transponder"
-		value = True
-		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(value)
+		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(True)
+		enigma.eEPGCache.getInstance().timeUpdated()
 	else:
 		print "[Time By]: NTP"
-		value = False
-		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(value)
-		from Components.Console import Console
-		Console = Console()
-		Console.ePopen('/usr/bin/ntpdate ' + config.misc.NTPserver.value)
+		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(False)
+		enigma.eEPGCache.getInstance().timeUpdated()
 config.misc.SyncTimeUsing.addNotifier(useSyncUsingChanged)
 
 def NTPserverChanged(configelement):
-	if configelement == "pool.ntp.org":
+	if config.misc.NTPserver.value == "pool.ntp.org":
 		return
 	print "[NTPDATE] save /etc/default/ntpdate"
 	f = open("/etc/default/ntpdate", "w")
@@ -94,7 +91,7 @@ def NTPserverChanged(configelement):
 	os.chmod("/etc/default/ntpdate", 0755)
 	from Components.Console import Console
 	Console = Console()
-	Console.ePopen('/usr/bin/ntpdate ' + config.misc.NTPserver.value)
+	Console.ePopen('/usr/bin/ntpdate-sync')
 config.misc.NTPserver.addNotifier(NTPserverChanged, immediate_feedback = True)
 
 profile("Twisted")
