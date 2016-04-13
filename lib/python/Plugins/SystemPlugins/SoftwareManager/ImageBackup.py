@@ -20,7 +20,7 @@ import datetime
 import zipfile
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getDriverDate, getImageVersion, getImageBuild, getBrandOEM, getMachineBuild, getImageFolder, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
 
-VERSION = "Version 5.1 openNFR"
+VERSION = "Version 5.3 openNFR"
 
 HaveGZkernel = True
 if getBrandOEM() in ("fulan") or getBoxType() in ("vusolo4k"):
@@ -203,6 +203,7 @@ class ImageBackup(Screen):
 		if "jffs2" in self.ROOTFSTYPE.split():
 			cmd1 = "%s --root=/tmp/bi/root --faketime --output=%s/root.jffs2 %s" % (self.MKFS, self.WORKDIR, self.MKUBIFS_ARGS)
 			cmd2 = None
+			cmd3 = None
 		elif "tar.bz2" in self.ROOTFSTYPE.split():
 				cmd1 = "%s -cf %s/rootfs.tar -C /tmp/bi/root --exclude=/var/nmbd/* ." % (self.MKFS, self.WORKDIR)
 				cmd2 = "%s %s/rootfs.tar" % (self.BZIP2, self.WORKDIR)
@@ -388,7 +389,7 @@ class ImageBackup(Screen):
 
 	def make_zipfile(self, output_filename, source_dir):
 		if getBrandOEM() in ("fulan"):
-			output_zip = self.EXTRA + "/" + output_filename
+			output_zip = self.EXTRA1 + "/" + output_filename
 		else:
 			output_zip = self.EXTRA1 + "/" + output_filename
 		relroot = os.path.abspath(os.path.join(source_dir, os.pardir))
