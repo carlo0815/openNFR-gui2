@@ -8,6 +8,8 @@ from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformat
 from Tools.Transponder import ConvertToHumanReadable
 from Components.Converter.ChannelNumbers import channelnumbers
 from enigma import getDesktop
+import os
+import subprocess
 
 RT_HALIGN_LEFT = 0
 
@@ -22,7 +24,6 @@ def to_unsigned(x):
 	return x & 0xFFFFFFFF
 
 def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
-	print "b:", b
 	if not isinstance(b, str):
 		if valueType == TYPE_VALUE_HEX:
 			b = ("0x%0" + str(param) + "x") % to_unsigned(b)
@@ -43,15 +44,15 @@ def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
 		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, ""),
 		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, a),
-		(eListboxPythonMultiContent.TYPE_TEXT, 260, 0, 490, 40, 0, RT_HALIGN_LEFT, b)
+		(eListboxPythonMultiContent.TYPE_TEXT, 270, 0, 630, 40, 0, RT_HALIGN_LEFT, b)
 	]
 
 	if getDesktop(0).size().width() == 1280:
 	    return [
 		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
-		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 30, 0, RT_HALIGN_LEFT, ""),
-		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 25, 0, RT_HALIGN_LEFT, a),
-		(eListboxPythonMultiContent.TYPE_TEXT, 230, 0, 450, 25, 0, RT_HALIGN_LEFT, b)
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 24, 0, RT_HALIGN_LEFT, ""),
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 24, 0, RT_HALIGN_LEFT, a),
+		(eListboxPythonMultiContent.TYPE_TEXT, 230, 0, 450, 24, 0, RT_HALIGN_LEFT, b)
 	]
 
 class ServiceInfoList(HTMLComponent, GUIComponent):
@@ -68,8 +69,8 @@ class ServiceInfoList(HTMLComponent, GUIComponent):
 		self.l = eListboxPythonMultiContent()
 		self.list = source
 		self.l.setList(self.list)
-		self.l.setFont(0, gFont("Regular", 23))
-		self.l.setItemHeight(25)
+		self.l.setFont(0, gFont("Regular", 22))
+		self.l.setItemHeight(24)
 	
 	GUI_WIDGET = eListbox
 
@@ -145,15 +146,32 @@ class ServiceInfo(Screen):
 						aspect = "4:3"
 					else:
 						aspect = "16:9"
-
+                        codenumbers = subprocess.check_output(['timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F "=" "{print $2}" | awk -F "]" "{print $1}" | wc -l'], shell=True)
+			codesystem = subprocess.check_output(["timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '=' '{print $2}' | awk -F ']' '{print $1}'"], shell=True)
+			caidssyst = subprocess.check_output(["timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '(' '{print $2}' | awk -F ')' '{print $1}'"], shell=True)
 			Labels = ( (_("Name"), name, TYPE_TEXT),
 					(_("Provider"), self.getServiceInfoValue(iServiceInformation.sProvider), TYPE_TEXT),
 					(_("Videoformat"), aspect, TYPE_TEXT),
 					(_("Videosize"), resolution, TYPE_TEXT),
 					(_("Videocodec"), videocodec, TYPE_TEXT),
 					(_("Namespace"), self.getServiceInfoValue(iServiceInformation.sNamespace), TYPE_VALUE_HEX, 8),
-					(_("Service reference"), refstr, TYPE_TEXT))
+					(_("Service reference"), refstr, TYPE_TEXT),
+					(_("Coding Systems"), codenumbers, TYPE_TEXT))
 
+                        if codenumbers > 0:
+                                i = 0
+				caidssyst1 = caidssyst.splitlines()
+                                codesystem1 = codesystem.splitlines()
+				while i < int(codenumbers):
+                                        caidsystem = caidssyst1[i] + " " + codesystem1[i]
+                                        i += 1
+                                        newlabel = ( (_("%s " %i), caidsystem, TYPE_TEXT)) 
+                                        Labels = Labels + (newlabel,)
+
+                                        					
+
+			
+			
 			self.fillList(Labels)
 		else:
 			if self.transponder_info:
@@ -269,3 +287,4 @@ class ServiceInfo(Screen):
 			v = _("N/A")
 
 		return v
+
