@@ -2394,7 +2394,7 @@ class InfoBarPiP:
 								f.close()
 						self.session.pipshown = False
 				else:
-					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2' or getBoxType() in ('sf3038') or getBoxType() in ('vusolo4k'):
+					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2' or getBoxType() in ('vusolo4k'):
 						self.session.pip = self.session.instantiateDialog(PictureInPicture)
 						self.session.pip.setAnimationMode(0)
 						self.session.pip.show()
