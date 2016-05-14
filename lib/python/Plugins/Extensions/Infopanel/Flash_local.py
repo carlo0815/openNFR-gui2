@@ -409,9 +409,21 @@ class doFlashImage(Screen):
 		self.Start_Flashing()
 
 	def Start_Flashing(self):
+		#######################fix multiboot###################	
+		symtest = os.readlink("/sbin/init")
+		if ("init.sysvinit") in symtest:
+			if os.path.exists('/etc/init.d/volatile-media.sh.back'):
+				os.system('/etc/init.d/volatile-media.sh.back')
+			else:
+				os.system('/etc/init.d/volatile-media.sh')
+		else:
+			os.system('rm /sbin/init;ln -sfn /sbin/init.sysvinit /sbin/init')
+			if os.path.exists('/etc/init.d/volatile-media.sh.back'):
+				os.system('/etc/init.d/volatile-media.sh.back')
+			else:
+				os.system('/etc/init.d/volatile-media.sh')
 		print "Start Flashing"
 		#######################fix multiboot###################
-		os.system('rm /sbin/init;ln -sfn /sbin/init.sysvinit /sbin/init')
 		if os.path.exists(ofgwritePath):
 			text = _("Flashing: ")
 			if self.simulate:
