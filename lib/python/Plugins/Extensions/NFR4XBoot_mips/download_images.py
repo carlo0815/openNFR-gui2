@@ -179,10 +179,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
         elif self.distro == 'openatv':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+            self.feedurl = 'http://images1.mynonpublic.com/openatv/4.2'
         elif self.distro == 'openatv-5.2':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
+            self.feedurl = 'http://images1.mynonpublic.com/openatv/5.2'    
         elif self.distro == 'openatv-5.3':
             self.feed = 'openatv'
             self.feedurl = 'http://images.mynonpublic.com/openatv/5.3'
