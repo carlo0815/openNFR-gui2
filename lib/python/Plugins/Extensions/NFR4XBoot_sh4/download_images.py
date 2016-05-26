@@ -132,10 +132,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://taapat.ho.ua/Download'            
         elif self.distro == 'openatv':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/4.2'
+            self.feedurl = 'http://images1.mynonpublic.com/openatv/4.2'
         elif self.distro == 'openatv-5.2':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.2'    
+            self.feedurl = 'http://images1.mynonpublic.com/openatv/5.2'    
         elif self.distro == 'vixe2sh4':
             self.feed = 'vixe2sh4'
             self.feedurl = 'http://www.vix4.com/downloads/'           
