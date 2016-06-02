@@ -377,7 +377,15 @@ class DownloadOnLineImage(Screen):
                elif box in ('osmini'):
                     box = 'osmini'
                     urlbox = 'edision/osmini/' 
-                    stb = '1'                    
+                    stb = '1' 
+               elif box in ('spycatmini'):
+                    box = 'spycatmini'
+                    urlbox = 'spycat/spycatmini/' 
+                    stb = '1'
+               elif box in ('spycat'):
+                    box = 'spycat'
+                    urlbox = 'spycat/spycat/' 
+                    stb = '1'                      
             else:   
                 stb = 'no Image for this Box on this Side'
         elif self.distro == 'custom':
