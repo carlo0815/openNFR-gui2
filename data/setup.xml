@@ -212,6 +212,7 @@
 		<item level="1" requires="LCDMiniTV" text="Show PIP in the Front Display" description="You can Display PIP with or without OSD Menu">config.lcd.modepip</item>
 		<item level="1" requires="LCDMiniTV" text="Set Framerate for MiniTV" description="Lower Framerate save CPU Time">config.lcd.fpsminitv</item>
 		<item level="1" requires="LCDMiniTV" text="Show blinking rec symbol on Display during recording" description="Enable blinking rec symbol on the LCD Display">config.usage.blinking_rec_symbol_during_recording</item>
+		<item level="2" requires="LCDMiniTV" text="Screenshot of LCD in /tmp" description="Enable screenshot of LCD in /tmp">config.lcd.screenshot</item>
 		<item level="0" requires="VfdDisplay" text="Brightness (Normal)" description="Configure the brightness level of the front panel display for normal operation.">config.lcd.bright</item>
 		<item level="0" requires="VfdDisplay" text="Brightness (Standby)" description="Configure the brightness level of the front panel display for standby.">config.lcd.standby</item>
 		<item level="0" requires="VfdDisplay" text="Contrast" description="Configure the contrast level of the front panel display.">config.lcd.contrast</item>
