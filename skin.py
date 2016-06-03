@@ -173,7 +173,7 @@ addSkin('skin_box.xml')
 addSkin('skin_second_infobar.xml')
 display_skin_id = 1
 try:
-	if not addSkin(os.path.join('display', config.skin.display_skin.value)):
+	if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
 		raise DisplaySkinError, "display skin not found"
 except Exception, err:
 	print "SKIN ERROR:", err
@@ -182,7 +182,7 @@ except Exception, err:
 		skin = 'skin_display.xml'
 	print "defaulting to standard display skin...", skin
 	config.skin.display_skin.value = skin
-	skin = os.path.join('display', skin)
+	skin = os.path.join('display/lcdskins', skin)
 	addSkin(skin)
 	del skin
 
