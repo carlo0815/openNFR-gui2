@@ -100,7 +100,9 @@ self.session.openWithCallback(msgClosed, EpgLoadMsg)
 				<menu weight="5" level="0" text="Display" entryID="display_selection" requires="Display">
 				      <id val="display" />
 				      <item level="0" entryID="display_setup"><setup id="display" /></item>
-				      <item level="0" text="Skin setup" entryID="lcd_skin_setup" requires="LCDSKINSetup">
+				      <!--item level="0" text="Skin setup" entryID="lcd_skin_setup" requires="LCDSKINSetup"-->
+				      <item weight="5" level="0" text="Skin" requires="LCDSKINSetup"><screen module="LcdSkinSelector" screen="LCDSkinSelector"/></item>
+				      <item weight="10" level="0" text="Clock" requires="LCDSKINSetup"><screen module="LcdClockSelector" screen="LCDClockSelector"/></item> 				      	
 <code>
 from Screens.SkinSelector import LcdSkinSelector
 self.session.open(LcdSkinSelector)
