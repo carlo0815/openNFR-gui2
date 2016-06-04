@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<skin>
+	<windowstyle id="1" type="skinned">
+		<color color="#000000" name="Background"/>
+		<color color="#ffffff" name="LabelForeground"/>
+		<color color="#000000" name="ListboxBackground"/>
+		<color color="#ffffff" name="ListboxForeground"/>
+		<color color="#000000" name="ListboxSelectedBackground"/>
+		<color color="#ffffff" name="ListboxSelectedForeground"/>
+		<color color="#000000" name="ListboxMarkedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedForeground"/>
+		<color color="#000000" name="ListboxMarkedAndSelectedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedAndSelectedForeground"/>
+		<color color="#ffffff" name="WindowTitleForeground"/>
+		<color color="#000000" name="WindowTitleBackground"/>
+	</windowstyle>
+	<fonts>
+		<!-- pick a funky name for the font, so we don't conflict  -->
+		<font filename="nmsbd.ttf" name="FdLcD" scale="100"/>
+		<font filename="/usr/share/fonts/lcd.ttf" name="LCD" scale="100"/>
+		<font filename="/usr/share/fonts/OpenSans-Regular.ttf" name="RegularLCD" scale="95"/>
+	</fonts>
+
+<!-- template -->
+	<screen name="SummaryClockPanel">
+		<widget source="global.CurrentTime" render="Label" position="120,142" size="100,45" font="RegularLCD;40" halign="right" valign="bottom" noWrap="1">
+			<convert type="ClockToText"></convert>
+		</widget>
+	</screen>
+
+<!-- main-->
+	<screen name="InfoBarSummary" position="0,0" size="220,176">
+	<!--clock background-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_redeagle_bg.png" position="0,0" size="220,176" zPosition="0" />
+	<!--TIME-->
+	<widget source="global.CurrentTime" render="Label" position="18,0" size="76,134" font="RegularLCD;65" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#00bbbbbb">
+		<convert type="ClockToText">Format:%H</convert>
+	</widget>
+	<widget source="global.CurrentTime" render="Label" position="124,0" size="76,134" font="RegularLCD;65" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#00bbbbbb">
+		<convert type="ClockToText">Format:%M</convert>
+	</widget>
+	<!--DATE-->
+	<widget source="global.CurrentTime" render="Label" position="center,92" size="220,34" font="RegularLCD;23" halign="left" valign="center" zPosition="1" foregroundColor="#0046b8fa" transparent="1">
+		<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+	</widget>
+	<!--RECORD LED-->
+	<widget source="session.RecordState" render="Pixmap" pixmap="display/lcdskins/clock_lcd_digital_redeagle_rec.png" position="center,5" size="215,171" zPosition="10" transparent="1" alphatest="on" >
+		<convert type="ConditionalShowHide">Blink</convert>
+	</widget>
+<!--END-->
+</screen>
+	<screen name="StandbySummary" position="0,0" size="220,176">
+	<!--clock background-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_redeagle_bg.png" position="0,0" size="220,176" zPosition="0" />
+	<!--TIME-->
+	<widget source="global.CurrentTime" render="Label" position="18,0" size="76,134" font="RegularLCD;65" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#00bbbbbb">
+		<convert type="ClockToText">Format:%H</convert>
+	</widget>
+	<widget source="global.CurrentTime" render="Label" position="124,0" size="76,134" font="RegularLCD;65" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#00bbbbbb">
+		<convert type="ClockToText">Format:%M</convert>
+	</widget>
+	<!--DATE-->
+	<widget source="global.CurrentTime" render="Label" position="center,92" size="220,34" font="RegularLCD;23" halign="left" valign="center" zPosition="1" foregroundColor="#0046b8fa" transparent="1">
+		<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+	</widget>
+	<!--RECORD LED-->
+	<widget source="session.RecordState" render="Pixmap" pixmap="display/lcdskins/clock_lcd_digital_redeagle_rec.png" position="center,5" size="215,171" zPosition="10" transparent="1" alphatest="on" >
+		<convert type="ConditionalShowHide">Blink</convert>
+	</widget>
+<!--END-->
+</screen>
+	<include filename="/usr/share/enigma2/display/lcdskins/skin_display.xml" />
+</skin>
