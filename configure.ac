@@ -497,7 +497,6 @@ AC_CONFIG_FILES([Makefile
 	data/vfd128/Makefile
 	data/vfd140/Makefile
 	data/vfd255/Makefile
-	data/vfd255/lcdskins/Makefile
 	include/Makefile
 	lib/Makefile
 	lib/base/eenv.cpp
