@@ -67,7 +67,7 @@ class OMaClockLcd(Renderer):
 			l = 55
 		elif LCDSIZE480:
 			width = 475
-			height = 288
+			height = 316
 			l = 66			
 		elif LCDSIZE220:
 			width = 218
