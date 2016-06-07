@@ -489,6 +489,7 @@ AC_CONFIG_FILES([Makefile
 	data/display400/Makefile
 	data/display400/lcdskins/Makefile
 	data/display480/Makefile
+	data/display480/lcdskins/Makefile
 	data/display720/Makefile
 	data/spinner/Makefile
 	data/Spinner/Makefile
