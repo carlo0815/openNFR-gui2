@@ -287,10 +287,14 @@ class ImageBackup(Screen):
 				system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 		if self.MODEL in ("vusolo4k", "vuduo2", "vusolo2", "vusolo", "vuduo", "vuultimo", "vuzero" , "vuuno"):
 				cmdlist.append('echo "This file forces a reboot after the update." > %s/reboot.update' %self.MAINDEST)
+		elif self.MODEL in ("vuzero" , "vusolose"):
+				cmdlist.append('echo "This file forces the update." > %s/force.update' %self.MAINDEST)
+		elif self.MODEL in ("zgemmai55" , "sf98", "xpeedlxpro"):
+				cmdlist.append('echo "This file forces the update." > %s/force' %self.MAINDEST)
 		else:
 				cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)
  
-		if self.MODEL in ("gbquad", "gbquadplus", "gb800ue", "gb800ueplus", "gbultraue", "twinboxlcd"):
+		if self.MODEL in ("gbquad", "gbquadplus", "gb800ue", "gb800ueplus", "gbultraue", "twinboxlcd", "twinboxlcdci", "singleboxlcd", "sf208", "sf228"):
 			lcdwaitkey = '/usr/share/lcdwaitkey.bin'
 			lcdwarning = '/usr/share/lcdwarning.bin'
 			if path.exists(lcdwaitkey):
