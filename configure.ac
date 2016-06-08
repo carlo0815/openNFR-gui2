@@ -414,6 +414,7 @@ fi
 
 if test "$BOXTYPE" == "xc7362"; then
 	AC_DEFINE(KEY_FAV_TO_KEY_PVR, 1,[define FAV KEY to PVR])
+fi
 
 if test "$BOXTYPE" == "formuler1" -o "$BOXTYPE" == "formuler3" -o "$BOXTYPE" == "triplex" -o "$BOXTYPE" == "sf108"; then
 	AC_DEFINE(KEY_LAST_TO_KEY_BACK, 1,[define when rc sends a KEY_LAST event for its KEY_BACK key])
