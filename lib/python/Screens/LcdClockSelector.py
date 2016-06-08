@@ -25,6 +25,7 @@ class LCDClockSelector(Screen):
 
 		self.clocklist.sort()
 		self["ClockList"] = MenuList(self.clocklist)
+		self.clocklist.insert(0, "no Clock")
 		self["Preview"] = Pixmap()
 		self["lab1"] = Label(_("Select skin:"))
 		self["lab2"] = Label(_("Preview:"))
@@ -89,7 +90,10 @@ class LCDClockSelector(Screen):
 	def ok(self):
 		skinfile = self["ClockList"].getCurrent()
 		print "LCDSkinselector: Selected Skin: ", skinfile
-		config.skin.display_skin.value = skinfile
+		if skinfile == "no Clock":
+			config.skin.display_skin.value = "skin_display.xml"
+		else:
+                	config.skin.display_skin.value = skinfile
 		config.skin.display_skin.save()
 		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
