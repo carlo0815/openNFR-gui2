@@ -437,8 +437,8 @@ void eFastScan::fillBouquet(eBouquet *bouquet, std::map<int, eServiceReferenceDV
 		bouquet->m_bouquet_name = providerName;
 		int number = 1;
 		for (std::map<int, eServiceReferenceDVB>::const_iterator
-			eDebug("eFastScan::Servicefill %d", service);
 			service(numbered_channels.begin()); service != numbered_channels.end(); ++service)
+			eDebug("eFastScan::Servicefill %d", service);
 		{
 			if (originalNumbering)
 			{
