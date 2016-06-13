@@ -438,18 +438,15 @@ void eFastScan::fillBouquet(eBouquet *bouquet, std::map<int, eServiceReferenceDV
 		int number = 1;
 		for (std::map<int, eServiceReferenceDVB>::const_iterator
 			service(numbered_channels.begin()); service != numbered_channels.end(); ++service)
-			eDebug("eFastScan::Servicefill %d", service);
 		{
 			if (originalNumbering)
 			{
 				while (number < service->first)
 				{
-					m_dvb_service->m_provider_name;
 					eServiceReference ref(eServiceReference::idDVB, eServiceReference::isMarker | eServiceReference::isNumberedMarker);
 					ref.setName("-");
-					eDebug("eFastScan::eServiceReference %d", eServiceReference);
+					eDebug("eFastScan::eServiceReference %d", eServiceReference ref);
 					eDebug("eFastScan::reffill %d", ref);
-					eDebug("eFastScan::m_provider_name %d", m_provider_name);
 					bouquet->m_services.push_back(ref);
 					number++;
 				}
