@@ -445,7 +445,6 @@ void eFastScan::fillBouquet(eBouquet *bouquet, std::map<int, eServiceReferenceDV
 				{
 					eServiceReference ref(eServiceReference::idDVB, eServiceReference::isMarker | eServiceReference::isNumberedMarker);
 					ref.setName("-");
-					eDebug("eFastScan::eServiceReference %d", eServiceReference ref);
 					eDebug("eFastScan::reffill %d", ref);
 					bouquet->m_services.push_back(ref);
 					number++;
