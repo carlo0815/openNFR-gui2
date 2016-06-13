@@ -652,6 +652,7 @@ void eFastScan::parseResult()
 		if (bouquet)
 		{
 			/* fill our fastscan bouquet */
+			eDebug("eFastScan::channel1 %d", numbered_channels);
 			fillBouquet(bouquet, numbered_channels);
 		}
 		else
@@ -666,6 +667,7 @@ void eFastScan::parseResult()
 		eServiceReference favref(eServiceReference::idDVB, eServiceReference::flagDirectory, "FROM BOUQUET \"userbouquet.favourites.tv\" ORDER BY bouquet");
 		if (!db->getBouquet(favref, bouquet))
 		{
+			eDebug("eFastScan::channel2 %d", numbered_channels);
 			fillBouquet(bouquet, numbered_channels);
 		}
 	}
