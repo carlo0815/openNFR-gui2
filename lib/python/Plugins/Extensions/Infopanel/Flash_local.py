@@ -90,6 +90,9 @@ class FlashOnline(Screen):
 		}, -2)
 
 	def check_hdd(self):
+		if os.path.exists("/media/nfr4xboot"):
+			self.session.open(MessageBox, _("NFR4XBoot is installed!\nPlease uninstall NFR4XBoot and reboot the box."), type = MessageBox.TYPE_ERROR)
+			return False
 		if not os.path.exists("/media/hdd"):
 			self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
 			return False
