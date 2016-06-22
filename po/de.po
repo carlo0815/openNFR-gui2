@@ -13036,3 +13036,6 @@ msgstr "Auch im Standby"
 
 msgid "m3u-convert"
 msgstr "M3U / TV Bouquet Converter"
+
+msgid "NFR4XBoot is installed!\nPlease uninstall NFR4XBoot and reboot the box."
+msgstr "NFR4XBoot ist installiert!\nBitte NFR4XBoot deinstallieren und die Box neu starten."
