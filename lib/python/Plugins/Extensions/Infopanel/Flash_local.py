@@ -1,4 +1,5 @@
 from Plugins.SystemPlugins.Hotplug.plugin import hotplugNotifier
+from Plugins.Extensions.NFR4XBoot.plugin import *
 from Components.Button import Button
 from Components.Label import Label
 from Components.ActionMap import ActionMap
@@ -6,14 +7,18 @@ from Components.MenuList import MenuList
 from Components.FileList import FileList
 from Components.Task import Task, Job, job_manager, Condition
 from Components.Sources.StaticText import StaticText
+from Components.ProgressBar import ProgressBar
+from Components.Input import Input
 from Screens.Console import Console
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Screen import Screen
-from Screens.Console import Console
 from Screens.HelpMenu import HelpableScreen
 from Screens.TaskView import JobView
 from Tools.Downloader import downloadWithProgress
+from Tools.LoadPixmap import LoadPixmap
+from Tools.Directories import fileExists
+from skin import parseColor
 import urllib2
 import os
 import shutil
@@ -91,7 +96,9 @@ class FlashOnline(Screen):
 
 	def check_hdd(self):
 		if os.path.exists("/media/nfr4xboot"):
-			self.session.open(MessageBox, _("NFR4XBoot is installed!\nPlease uninstall NFR4XBoot and reboot the box."), type = MessageBox.TYPE_ERROR)
+			message = _('NFR4XBoot is still installed!\nNow removing NFR4XBoot and reboot the box. After reboot FlashLocal is available.\nYour installed images are not deleted and available after re-installing NFR4XBoot again.')
+			ybox = self.session.openWithCallback(self.removenfrxboot, MessageBox, message, MessageBox.TYPE_YESNO)
+			ybox.setTitle(_('Remove NFRXBoot'))
 			return False
 		if not os.path.exists("/media/hdd"):
 			self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
@@ -119,7 +126,21 @@ class FlashOnline(Screen):
 		except:
 			pass
 		return True
-
+	
+	def removenfrxboot(self, yesno):
+		if yesno:
+			os.system('rm /sbin/nfr4xinit')
+			os.system('rm /sbin/init')
+			os.system('ln -sfn /sbin/init.sysvinit /sbin/init')
+			os.system('chmod 777 /sbin/init')
+			os.system('mv /etc/init.d/volatile-media.sh.back /etc/init.d/volatile-media.sh')
+			os.system('rm /media/nfr4xboot/NFR4XBootI/.nfr4xboot')
+			os.system('rm /media/nfr4xboot/NFR4XBootI/.Flash')
+			os.system('rm /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location')
+			os.system('reboot -p')
+		else:
+			return
+            
 	def quit(self):
 		self.close()	
 		
