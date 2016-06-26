@@ -13037,5 +13037,5 @@ msgstr "Auch im Standby"
 msgid "m3u-convert"
 msgstr "M3U / TV Bouquet Converter"
 
-msgid "NFR4XBoot is installed!\nPlease uninstall NFR4XBoot and reboot the box."
-msgstr "NFR4XBoot ist installiert!\nBitte NFR4XBoot deinstallieren und die Box neu starten."
+msgid "NFR4XBoot is still installed!\nNow removing NFR4XBoot and reboot the box. After reboot FlashLocal is available.\nYour installed images are not deleted and available after re-installing NFR4XBoot again."
+msgstr "NFR4XBoot ist installiert!\nNFR4XBoot wird jetzt deinstalliert und die Box neu gestartet. Nach dem Neustart FlashLocal nochmals ausführen.\nDie installierten Images bleiben erhalten und stehen nach erneuter Installation von NFR4XBoot wieder zur Verfügung."
