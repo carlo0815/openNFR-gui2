@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from os import path as os_path, walk as os_walk, unlink as os_unlink
 import operator
-
 from Plugins.Plugin import PluginDescriptor
-
+from Screens.ServiceInfo import ServiceInfoList, ServiceInfoListEntry
+from ServiceReference import ServiceReference
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.config import config, ConfigSelection, ConfigYesNo, getConfigListEntry, ConfigSubsection, ConfigText
@@ -14,15 +14,15 @@ from Components.Pixmap import Pixmap
 from Components.ProgressBar import ProgressBar
 from Components.ServiceList import refreshServiceList
 from Components.ActionMap import ActionMap
-
-from enigma import eFastScan, eDVBFrontendParametersSatellite
+from Screens import InfoBarGenerics
+from Screens.InfoBar import InfoBar
 
 config.misc.fastscan = ConfigSubsection()
 config.misc.fastscan.last_configuration = ConfigText(default = "()")
 
-from enigma import eDVBFrontendParametersSatellite, eComponentScan, \
+from enigma import eFastScan, eDVBFrontendParametersSatellite, eDVBDB, eComponentScan, \
 	eDVBSatelliteEquipmentControl, eDVBFrontendParametersTerrestrial, \
-	eDVBFrontendParametersCable, eConsoleAppContainer, eDVBResourceManager
+	eDVBFrontendParametersCable, eConsoleAppContainer, eDVBResourceManager, eServiceReference, eServiceCenter
 from Screens.ServiceScan import ServiceScan	
 from Components.NimManager import nimmanager
 
@@ -142,6 +142,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 
 	def __init__(self, session, nimList):
 		Screen.__init__(self, session)
+		self.prevservice = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.setTitle(_("Fast Scan"))
 		
 		self.providers = {}
@@ -240,9 +241,35 @@ class FastScanScreen(ConfigListScreen, Screen):
 		parm.pilot = pilot
 		tlist.append(parm)
 		
-	def readXML(self, xml):
-		tlist = []
+	def restoreService(self):
+		if self.prevservice:
+			self.session.nav.playService(self.prevservice)
 
+
+	def readXML(self, xml):
+	        self.session.nav.stopService()
+		tlist = []
+		self.path = "/etc/enigma2"
+	       	lastsc1 = self.path + "/userbouquet.LastScanned.tv"
+	       	favlist1 = self.path + "/bouquets.tv"
+	       	newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
+                if os.path.isfile(favlist1):              
+                         f = open(favlist1, "a+")
+                         ret = f.read().split("\n")
+		         if newbouq11 in ret:
+				yy = ret.index(newbouq11)
+				ret.pop(yy)
+                         f.close()
+                         os.remove(favlist1)
+                yx = [newbouq11]
+                yx.extend(ret)
+                yz = open(favlist1, "w")
+                yz.write("\n".join(map(lambda x: str(x), yx)))
+                yz.close()     
+                h = open('/etc/enigma2/userbouquet.LastScanned.tv', "w")
+                h.write("#NAME Last Scanned\n")
+                h.close()
+                eDVBDB.getInstance().reloadBouquets()                	
 		import xml.dom.minidom as minidom
 		xmldoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + xml + ".xml"
 		xmldoc = minidom.parse(xmldoc)
@@ -325,12 +352,86 @@ class FastScanScreen(ConfigListScreen, Screen):
 						int(self.rolloff),
 						int(self.pilot))
 		 
-                self.session.open(ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
+                self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
 									
-	def bouqmake(self):
-	       print "scan ready"
-               self.close()
-               
+	def bouqmake(self, session):
+		global sname
+		self.path = "/etc/enigma2"
+		lastsc = self.path + "/userbouquet.LastScanned.tv"
+		newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
+        	favlist = self.path + "/bouquets.tv"
+        	newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\n'
+        	newbouq2 = '#NAME Last ' + self.scan_provider.value
+                newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
+                path = self.path
+        	prefix = self.scan_provider.value 
+        	txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + self.scan_provider.value.lower() + ".txt"
+        	hh = []
+                gg = open(txtdoc, "r")
+        	reta = gg.read().split("\n")
+		gg.close()
+                ff = open(lastsc, "r")
+        	retb = ff.read().split("\n")
+		ff.close()
+         	i = 1
+        	wx = [newbouq2]
+                while i+1 < len(retb):	       
+                	self.updateServiceName(int(i))
+                        if sname in reta:
+                        	#xx = retb.index(sname)
+                        	wx.append(retb[i])
+                        	
+                        i +=1
+                wz = open(newbouq, "w")
+                wz.write("\n".join(map(lambda x: str(x), wx)))
+                wz.close()
+                if os.path.isfile(favlist):              
+                         fy = open(favlist, "a+")
+                         rety = fy.read().split("\n")
+                         fy.close()
+                         os.remove(favlist)                
+                rety.pop(0)
+                rety.pop()
+                rety.append(newbouq1)
+                wv = open(favlist, "w")
+                wv.write("\n".join(map(lambda x: str(x), rety)))
+                wv.close()                   
+                eDVBDB.getInstance().reloadBouquets()
+
+	def searchNumberHelper(self, serviceHandler, num, bouquet):
+		servicelist = self.serviceHandler.list(bouquet)
+		if not servicelist is None:
+			while num:
+				serviceIterator = servicelist.getNext()
+				if not serviceIterator.valid(): #check end of list
+					break
+				playable = not (serviceIterator.flags & (eServiceReference.isMarker|eServiceReference.isDirectory))
+				if playable:
+					num -= 1;
+			if not num: #found service with searched number ?
+				return serviceIterator, 0
+		return None, num  
+
+	def updateServiceName(self, number):
+		global sname
+                bouquet = InfoBar.instance.servicelist.bouquet_root
+		service = None
+		self.serviceHandler = eServiceCenter.getInstance()
+		serviceHandler = self.serviceHandler
+		bouquetlist = serviceHandler.list(bouquet)
+		if not bouquetlist is None:
+			while number:
+				bouquet = bouquetlist.getNext()
+				if not bouquet.valid(): #check end of list
+					break
+				if bouquet.flags & eServiceReference.isDirectory:
+					service, number = self.searchNumberHelper(serviceHandler, number, bouquet)
+		if service is not None:
+			info = serviceHandler.info(service)
+			sname = info.getName(service).replace('\xc2\x86', '').replace('\xc2\x87', '')
+		else:
+			sname = _("Unknown Service")
+
         def keyGo(self):
 		prov = self.scan_provider.value.lower()
 		if prov == "tricolor" or prov == "kontinent" or prov == "telekarta" or prov == "ntvplus" or prov == "raduga" or prov == "hdplus":
@@ -366,6 +467,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 				providerName = self.scan_provider.getText())
 
 	def keyCancel(self):
+	        self.restoreService()
 		self.close()
 
 def FastScanMain(session, **kwargs):
@@ -401,3 +503,4 @@ def Plugins(**kwargs):
 		return PluginDescriptor(name=_("Fast Scan"), description="Scan Dutch/Belgian sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
 	else:
 		return []
+
