@@ -271,88 +271,91 @@ class FastScanScreen(ConfigListScreen, Screen):
                 h.close()
                 eDVBDB.getInstance().reloadBouquets()                	
 		import xml.dom.minidom as minidom
-		xmldoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + xml + ".xml"
-		xmldoc = minidom.parse(xmldoc)
-		tr_list = xmldoc.getElementsByTagName('transporder')
-		for lista in tr_list:      
-			frequency = lista.getAttribute("frequency")
-			symbolrate = lista.getAttribute("symbolrate")
-			fec = lista.getAttribute("fec")
-			orbpos = lista.getAttribute("orbpos")
-			pol = lista.getAttribute("pol")
-			system = lista.getAttribute("system")
-			modulation = lista.getAttribute("modulation")
+		try:
+                	xmldoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + xml + ".xml"
+			xmldoc = minidom.parse(xmldoc)
+			tr_list = xmldoc.getElementsByTagName('transporder')
+			for lista in tr_list:      
+				frequency = lista.getAttribute("frequency")
+				symbolrate = lista.getAttribute("symbolrate")
+				fec = lista.getAttribute("fec")
+				orbpos = lista.getAttribute("orbpos")
+				pol = lista.getAttribute("pol")
+				system = lista.getAttribute("system")
+				modulation = lista.getAttribute("modulation")
 					
-			self.frequency = frequency
-			self.symbolrate = symbolrate
-			if pol == "H":
-			    pol = 0
-			elif pol == "V":
-			    pol = 1
-			elif pol == "L":
-			    pol = 2
-			elif pol == "R":
-			    pol = 3
-			self.polarization =  pol # 0 - H, 1 - V, 2- CL, 3 - CR
+				self.frequency = frequency
+				self.symbolrate = symbolrate
+				if pol == "H":
+			    		pol = 0
+				elif pol == "V":
+			    		pol = 1
+				elif pol == "L":
+			    		pol = 2
+				elif pol == "R":
+			    		pol = 3
+				self.polarization =  pol # 0 - H, 1 - V, 2- CL, 3 - CR
 
-			if fec == "Auto":
-			    fec = 0
-			elif fec == "1/2":
-			    fec = 1
-			elif fec == "2/3":
-			    fec = 2
-			elif fec == "3/4":
-			    fec = 3
-			elif fec == "3/5":
-			    fec = 4
-			elif fec == "4/5":
-			    fec = 5
-			elif fec == "5/6":
-			    fec = 6
-			elif fec == "7/8":
-			    fec = 7
-			elif fec == "8/9":
-			    fec = 8
-			elif fec == "9/10":
-			    fec = 9
+				if fec == "Auto":
+			    		fec = 0
+				elif fec == "1/2":
+			    		fec = 1
+				elif fec == "2/3":
+			    		fec = 2
+				elif fec == "3/4":
+			    		fec = 3
+				elif fec == "3/5":
+			    		fec = 4
+				elif fec == "4/5":
+			    		fec = 5
+				elif fec == "5/6":
+			    		fec = 6
+				elif fec == "7/8":
+			    		fec = 7
+				elif fec == "8/9":
+			    		fec = 8
+				elif fec == "9/10":
+			    		fec = 9
 		
-			self.fec = fec # 0 - Auto, 1 - 1/2, 2 - 2/3, 3 - 3/4, 4 - 3/5, 5 - 4/5, 6 - 5/6, 7 - 7/8, 8 - 8/9 , 9 - 9/10,
+				self.fec = fec # 0 - Auto, 1 - 1/2, 2 - 2/3, 3 - 3/4, 4 - 3/5, 5 - 4/5, 6 - 5/6, 7 - 7/8, 8 - 8/9 , 9 - 9/10,
 			
-			self.inversion = 2 # 0 - off, 1 -on, 2 - AUTO
+				self.inversion = 2 # 0 - off, 1 -on, 2 - AUTO
 			
-			self.orbpos = orbpos
+				self.orbpos = orbpos
 			
-			if system == "DVBS":
-			    system = 0
-			elif system == "DVBS2":
-			    system = 1
+				if system == "DVBS":
+			    		system = 0
+				elif system == "DVBS2":
+			    		system = 1
 			    
-			self.system = system # DVB-S = 0, DVB-S2 = 1
+				self.system = system # DVB-S = 0, DVB-S2 = 1
 			
-			if modulation == "QPSK":
-			    modulation = 0
-			elif modulation == "8PSK":
-			    modulation = 1
+				if modulation == "QPSK":
+			    		modulation = 0
+				elif modulation == "8PSK":
+			    		modulation = 1
 			    
-			self.modulation = modulation # 0- QPSK, 1 -8PSK
+				self.modulation = modulation # 0- QPSK, 1 -8PSK
 			
-			self.rolloff = 0 #
+				self.rolloff = 0 #
 			
-			self.pilot = 2 # 0 - off, 1 - on 2 - AUTO
+				self.pilot = 2 # 0 - off, 1 - on 2 - AUTO
 		
-			print "add sat transponder"
-			self.addSatTransponder(tlist, int(self.frequency),
-						int(self.symbolrate),
-						int(self.polarization),
-						int(fec),
-						int(self.inversion),
-						int(orbpos),
-						int(self.system),
-						int(self.modulation),
-						int(self.rolloff),
-						int(self.pilot))
+				print "add sat transponder"
+				self.addSatTransponder(tlist, int(self.frequency),
+							int(self.symbolrate),
+							int(self.polarization),
+							int(fec),
+							int(self.inversion),
+							int(orbpos),
+							int(self.system),
+							int(self.modulation),
+							int(self.rolloff),
+							int(self.pilot))
 		 
-                self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
+                	self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
+                except:
+                        session.open(MessageBox, _("xml File missing, please check it."), MessageBox.TYPE_ERROR)
 									
 	def bouqmake(self, session):
 		global sname
@@ -365,39 +368,39 @@ class FastScanScreen(ConfigListScreen, Screen):
                 newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
                 path = self.path
         	prefix = self.scan_provider.value 
-        	txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + self.scan_provider.value.lower() + ".txt"
-        	hh = []
-                gg = open(txtdoc, "r")
-        	reta = gg.read().split("\n")
-		gg.close()
-                ff = open(lastsc, "r")
-        	retb = ff.read().split("\n")
-		ff.close()
-         	i = 1
-        	wx = [newbouq2]
-                while i+1 < len(retb):	       
-                	self.updateServiceName(int(i))
-                        if sname in reta:
-                        	#xx = retb.index(sname)
-                        	wx.append(retb[i])
+        	try:
+                	txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + self.scan_provider.value.lower() + ".txt"
+        		hh = []
+                	gg = open(txtdoc, "r")
+        		reta = gg.read().split("\n")
+			gg.close()
+                	ff = open(lastsc, "r")
+        		retb = ff.read().split("\n")
+			ff.close()
+         		i = 1
+        		wx = [newbouq2]
+                	while i+1 < len(retb):	       
+                		self.updateServiceName(int(i))
+                        		wx.append(retb[i])
                         	
-                        i +=1
-                wz = open(newbouq, "w")
-                wz.write("\n".join(map(lambda x: str(x), wx)))
-                wz.close()
-                if os.path.isfile(favlist):              
-                         fy = open(favlist, "a+")
-                         rety = fy.read().split("\n")
-                         fy.close()
-                         os.remove(favlist)                
-                rety.pop(0)
-                rety.pop()
-                rety.append(newbouq1)
-                wv = open(favlist, "w")
-                wv.write("\n".join(map(lambda x: str(x), rety)))
-                wv.close()                   
-                eDVBDB.getInstance().reloadBouquets()
-
+                        	i +=1
+                	wz = open(newbouq, "w")
+                	wz.write("\n".join(map(lambda x: str(x), wx)))
+                	wz.close()
+                	if os.path.isfile(favlist):              
+                        	fy = open(favlist, "a+")
+                        	rety = fy.read().split("\n")
+                        	fy.close()
+                        	os.remove(favlist)                
+                	rety.pop(0)
+                	rety.pop()
+                	rety.append(newbouq1)
+                	wv = open(favlist, "w")
+                	wv.write("\n".join(map(lambda x: str(x), rety)))
+                	wv.close()                   
+                	eDVBDB.getInstance().reloadBouquets()
+                except:
+                	session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
 	def searchNumberHelper(self, serviceHandler, num, bouquet):
 		servicelist = self.serviceHandler.list(bouquet)
 		if not servicelist is None:
@@ -503,4 +506,3 @@ def Plugins(**kwargs):
 		return PluginDescriptor(name=_("Fast Scan"), description="Scan Dutch/Belgian sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
 	else:
 		return []
-
