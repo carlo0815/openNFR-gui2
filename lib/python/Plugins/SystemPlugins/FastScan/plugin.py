@@ -381,7 +381,7 @@ class FastScanScreen(ConfigListScreen, Screen):
         		wx = [newbouq2]
                 	while i+1 < len(retb):	       
                 		self.updateServiceName(int(i))
-                        		wx.append(retb[i])
+                        	wx.append(retb[i])
                         	
                         	i +=1
                 	wz = open(newbouq, "w")
