@@ -148,15 +148,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers = {}
 		
 		#hacky way
-		self.providers['Kontinent'] = (0, 900, True)
-		self.providers['Ntvplus'] = (0, 900, True)
-		self.providers['Raduga'] = (0, 900, True)
-		self.providers['Telekarta'] = (0, 900, True)
-		self.providers['Tricolor'] = (0, 900, True)
-		self.providers['HDPlus'] = (0, 900, True)		
+		self.providers['HDPlus'] = (0, 900, True)
+		self.providers['Freesat_Slovakia'] = (0, 900, True)
+		self.providers['Freesat_Czech Republic'] = (0, 900, True)
+		self.providers['Freesat_Romania '] = (0, 900, True)
+		self.providers['Freesat_Hungary'] = (0, 900, True)
+		self.providers['Freesat_Moldavia '] = (0, 900, True)
 		
 		#orgin
-		self.providers['Canal Digitaal'] = (1, 900, True)
+		self.providers['CanalDigitaal'] = (1, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
 		self.providers['TÃ©lÃ©SAT'] = (0, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
@@ -437,7 +437,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 
         def keyGo(self):
 		prov = self.scan_provider.value.lower()
-		if prov == "tricolor" or prov == "kontinent" or prov == "telekarta" or prov == "ntvplus" or prov == "raduga" or prov == "hdplus":
+		if prov == "hdplus" or prov == "freesat_slovakia" or prov == "freesat_hungary" or prov == "freesat_czech_republic" or prov == "freesat_romania" or prov == "freesat_moldavia":
 		  self.readXML(self.scan_provider.value.lower())
 		else:
 		  config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value)`
