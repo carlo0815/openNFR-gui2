@@ -24,7 +24,6 @@ from Screens.HarddiskSetup import HarddiskSelection, HarddiskFsckSelection, Hard
 from Screens.SkinSelector import LcdSkinSelector
 from Screens.LogManager import *
 from Plugins.Plugin import PluginDescriptor
-from Plugins.SystemPlugins.PositionerSetup.plugin import PositionerSetup, RotorNimSelection
 from Plugins.SystemPlugins.NetworkBrowser.MountManager import AutoMountManager
 from Plugins.SystemPlugins.NetworkBrowser.NetworkBrowser import NetworkBrowser
 from Plugins.SystemPlugins.NetworkWizard.NetworkWizard import NetworkWizard
@@ -759,47 +758,51 @@ class QuickMenu(Screen):
 
 ######## TUNER TOOLS #######################
 	def PositionerMain(self):
-		nimList = nimmanager.getNimListOfType("DVB-S")
-		if len(nimList) == 0:
-			self.session.open(MessageBox, _("No positioner capable frontend found."), MessageBox.TYPE_ERROR)
+		if getBoxType() == '7300s':
+			self.session.open(MessageBox, _("No Positionerplugin found please Check it!"), MessageBox.TYPE_ERROR)	
 		else:
-			if len(NavigationInstance.instance.getRecordings()) > 0:
-				self.session.open(MessageBox, _("A recording is currently running. Please stop the recording before trying to configure the positioner."), MessageBox.TYPE_ERROR)
+			from Plugins.SystemPlugins.PositionerSetup.plugin import PositionerSetup, RotorNimSelection	
+			nimList = nimmanager.getNimListOfType("DVB-S")
+			if len(nimList) == 0:
+				self.session.open(MessageBox, _("No positioner capable frontend found."), MessageBox.TYPE_ERROR)
 			else:
-				usableNims = []
-				for x in nimList:
-					configured_rotor_sats = nimmanager.getRotorSatListForNim(x)
-					if len(configured_rotor_sats) != 0:
-						usableNims.append(x)
-				if len(usableNims) == 1:
-					self.session.open(PositionerSetup, usableNims[0])
-				elif len(usableNims) > 1:
-					self.session.open(RotorNimSelection)
+				if len(NavigationInstance.instance.getRecordings()) > 0:
+					self.session.open(MessageBox, _("A recording is currently running. Please stop the recording before trying to configure the positioner."), MessageBox.TYPE_ERROR)
 				else:
-					self.session.open(MessageBox, _("No tuner is configured for use with a diseqc positioner!"), MessageBox.TYPE_ERROR)
+					usableNims = []
+					for x in nimList:
+						configured_rotor_sats = nimmanager.getRotorSatListForNim(x)
+						if len(configured_rotor_sats) != 0:
+							usableNims.append(x)
+					if len(usableNims) == 1:
+						self.session.open(PositionerSetup, usableNims[0])
+					elif len(usableNims) > 1:
+						self.session.open(RotorNimSelection)
+					else:
+						self.session.open(MessageBox, _("No tuner is configured for use with a diseqc positioner!"), MessageBox.TYPE_ERROR)
 
 	def SatfinderMain(self):
 		if getBoxType() == '7300s':
-			self.session.open(MessageBox, _("No Satelitte-Tuner found please Check it!"), MessageBox.TYPE_ERROR)
+			self.session.open(MessageBox, _("No Positionerplugin found please Check it!"), MessageBox.TYPE_ERROR)
 		else:
-		from Plugins.SystemPlugins.Satfinder.plugin import Satfinder
-		nims = nimmanager.getNimListOfType("DVB-S")
+			from Plugins.SystemPlugins.Satfinder.plugin import Satfinder
+			nims = nimmanager.getNimListOfType("DVB-S")
 
-		nimList = []
-		for x in nims:
-			if not nimmanager.getNimConfig(x).configMode.value in ("loopthrough", "satposdepends", "nothing"):
-				nimList.append(x)
+			nimList = []
+			for x in nims:
+				if not nimmanager.getNimConfig(x).configMode.value in ("loopthrough", "satposdepends", "nothing"):
+					nimList.append(x)
 
-		if len(nimList) == 0:
-			self.session.open(MessageBox, _("No satellite frontend found!!"), MessageBox.TYPE_ERROR)
-		else:
-			if len(NavigationInstance.instance.getRecordings()) > 0:
-				self.session.open(MessageBox, _("A recording is currently running. Please stop the recording before trying to start the satfinder."), MessageBox.TYPE_ERROR)
+			if len(nimList) == 0:
+				self.session.open(MessageBox, _("No satellite frontend found!!"), MessageBox.TYPE_ERROR)
 			else:
-				if len(nimList) == 1:
-					self.session.open(Satfinder)
-				elif len(nimList) > 1:
-					self.session.open(Satfinder)
+				if len(NavigationInstance.instance.getRecordings()) > 0:
+					self.session.open(MessageBox, _("A recording is currently running. Please stop the recording before trying to start the satfinder."), MessageBox.TYPE_ERROR)
+				else:
+					if len(nimList) == 1:
+						self.session.open(Satfinder)
+					elif len(nimList) > 1:
+						self.session.open(Satfinder)
 
 		
 ######## SOFTWARE MANAGER TOOLS #######################
