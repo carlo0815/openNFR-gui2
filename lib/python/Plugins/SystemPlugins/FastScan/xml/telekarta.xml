@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<platform>
-      <transporder orbpos="850" frequency="12640" symbolrate="30000" fec="5/6" pol="V" system="DVBS" modulation="8PSK"/>
-</platform> 
