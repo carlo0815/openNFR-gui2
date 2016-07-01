@@ -364,7 +364,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 		newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
         	favlist = self.path + "/bouquets.tv"
         	newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\n'
-        	newbouq2 = '#NAME Last ' + self.scan_provider.value
+        	newbouq2 = '#NAME ' + self.scan_provider.value
                 newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
                 path = self.path
         	prefix = self.scan_provider.value 
@@ -381,7 +381,8 @@ class FastScanScreen(ConfigListScreen, Screen):
         		wx = [newbouq2]
                 	while i+1 < len(retb):	       
                 		self.updateServiceName(int(i))
-                        	wx.append(retb[i])
+                        	if sname in reta:
+                        		wx.append(retb[i])
                         	
                         	i +=1
                 	wz = open(newbouq, "w")
