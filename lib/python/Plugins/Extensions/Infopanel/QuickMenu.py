@@ -25,7 +25,6 @@ from Screens.SkinSelector import LcdSkinSelector
 from Screens.LogManager import *
 from Plugins.Plugin import PluginDescriptor
 from Plugins.SystemPlugins.PositionerSetup.plugin import PositionerSetup, RotorNimSelection
-from Plugins.SystemPlugins.Satfinder.plugin import Satfinder
 from Plugins.SystemPlugins.NetworkBrowser.MountManager import AutoMountManager
 from Plugins.SystemPlugins.NetworkBrowser.NetworkBrowser import NetworkBrowser
 from Plugins.SystemPlugins.NetworkWizard.NetworkWizard import NetworkWizard
@@ -780,6 +779,10 @@ class QuickMenu(Screen):
 					self.session.open(MessageBox, _("No tuner is configured for use with a diseqc positioner!"), MessageBox.TYPE_ERROR)
 
 	def SatfinderMain(self):
+		if getBoxType() == '7300s':
+			self.session.open(MessageBox, _("No Satelitte-Tuner found please Check it!"), MessageBox.TYPE_ERROR)
+		else:
+		from Plugins.SystemPlugins.Satfinder.plugin import Satfinder
 		nims = nimmanager.getNimListOfType("DVB-S")
 
 		nimList = []
