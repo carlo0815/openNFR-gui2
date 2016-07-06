@@ -158,15 +158,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		#orgin
 		self.providers['CanalDigitaal'] = (1, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
-		self.providers['TÃ©lÃ©SAT'] = (0, 920, True)
+		self.providers['TÃƒÂ©lÃƒÂ©SAT'] = (0, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['TÃ©lÃ©SAT Astra3'] = (1, 920, True)
+		self.providers['TÃƒÂ©lÃƒÂ©SAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria Astra3'] = (1, 950, False)
-		self.providers['AustriaSat MagyarorszÃ¡g Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat MagyarorszÃ¡g Astra 3'] = (1, 951, False)
+		self.providers['AustriaSat MagyarorszÃƒÂ¡g Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat MagyarorszÃƒÂ¡g Astra 3'] = (1, 951, False)
 		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False)                                     		
 		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
@@ -247,7 +247,8 @@ class FastScanScreen(ConfigListScreen, Screen):
 
 
 	def readXML(self, xml):
-	        self.session.nav.stopService()
+	        global ret
+                self.session.nav.stopService()
 		tlist = []
 		self.path = "/etc/enigma2"
 	       	lastsc1 = self.path + "/userbouquet.LastScanned.tv"
@@ -355,7 +356,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 		 
                 	self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
                 except:
-                        session.open(MessageBox, _("xml File missing, please check it."), MessageBox.TYPE_ERROR)
+                        self.session.open(MessageBox, _("xml File missing, please check it."), MessageBox.TYPE_ERROR)
 									
 	def bouqmake(self, session):
 		global sname
@@ -363,8 +364,9 @@ class FastScanScreen(ConfigListScreen, Screen):
 		lastsc = self.path + "/userbouquet.LastScanned.tv"
 		newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
         	favlist = self.path + "/bouquets.tv"
-        	newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\n'
+        	newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\r'
         	newbouq2 = '#NAME ' + self.scan_provider.value
+        	newbouq3 = '"userbouquet.' + self.scan_provider.value + '.tv"'
                 newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
                 path = self.path
         	prefix = self.scan_provider.value 
@@ -388,20 +390,22 @@ class FastScanScreen(ConfigListScreen, Screen):
                 	wz = open(newbouq, "w")
                 	wz.write("\n".join(map(lambda x: str(x), wx)))
                 	wz.close()
-                	if os.path.isfile(favlist):              
-                        	fy = open(favlist, "a+")
-                        	rety = fy.read().split("\n")
-                        	fy.close()
+                	rety = []
+                        if os.path.isfile(favlist):              
                         	os.remove(favlist)                
-                	rety.pop(0)
-                	rety.pop()
-                	rety.append(newbouq1)
+                        for zz in ret: 	       
+                        	if newbouq3 in zz:
+                        		print "no add"
+                                else:
+                                        rety.append(zz)
+                        rety[1:1] = [newbouq1]
                 	wv = open(favlist, "w")
                 	wv.write("\n".join(map(lambda x: str(x), rety)))
                 	wv.close()                   
                 	eDVBDB.getInstance().reloadBouquets()
                 except:
-                	session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
+                	print "error"
+                        self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
 	def searchNumberHelper(self, serviceHandler, num, bouquet):
 		servicelist = self.serviceHandler.list(bouquet)
 		if not servicelist is None:
