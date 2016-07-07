@@ -151,9 +151,9 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['HDPlus'] = (0, 900, True)
 		self.providers['Freesat_Slovakia'] = (0, 900, True)
 		self.providers['Freesat_Czech Republic'] = (0, 900, True)
-		self.providers['Freesat_Romania '] = (0, 900, True)
+		self.providers['Freesat_Romania'] = (0, 900, True)
 		self.providers['Freesat_Hungary'] = (0, 900, True)
-		self.providers['Freesat_Moldavia '] = (0, 900, True)
+		self.providers['Freesat_Moldavia'] = (0, 900, True)
 		self.providers['Astra_19_AustriaSat'] = (0, 900, True)
 		
 		#orgin
@@ -443,7 +443,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 
         def keyGo(self):
 		prov = self.scan_provider.value.lower()
-		if prov == "hdplus" or prov == "astra_19_austriasat" or prov == "freesat_slovakia" or prov == "freesat_hungary" or prov == "freesat_czech_republic" or prov == "freesat_romania" or prov == "freesat_moldavia":
+		if prov == "hdplus" or prov == "astra_19_austriasat" or prov == "freesat_romania" or prov == "freesat_slovakia" or prov == "freesat_hungary" or prov == "freesat_czech_republic" or prov == "freesat_moldavia":
 		  self.readXML(self.scan_provider.value.lower())
 		else:
 		  config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value)`
