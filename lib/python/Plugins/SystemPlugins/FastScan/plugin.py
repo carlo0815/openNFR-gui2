@@ -384,6 +384,7 @@ class FastScanScreen(ConfigListScreen, Screen):
         		wx = [newbouq2]
                 	while i+1 < len(retb):	       
                 		self.updateServiceName(int(i))
+                                print "sname:", sname
                                 if sname in reta:
                         		wx.append(retb[i])
                         	
