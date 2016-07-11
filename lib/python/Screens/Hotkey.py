@@ -60,7 +60,9 @@ hotkeys = [	(_("Red long"), "red_long", ""),
 	(_("F2"), "f2", ""),
 	(_("F2 long"), "f2_long", ""),
 	(_("F3"), "f3", ""),
-	(_("F3 long"), "f3_long", ""),]
+	(_("F3 long"), "f3_long", ""),
+	(_("F11/Context"), "f11", ""),
+	(_("F3/Context long"), "f11_long", ""),]
 
 config.misc.hotkey = ConfigSubsection()
 config.misc.hotkey.additional_keys = ConfigYesNo(default=True)
