@@ -26,7 +26,7 @@ int eDVBCICAManagerSession::receivedAPDU(const unsigned char *tag, const void *d
 		switch (tag[2])
 		{
 		case 0x31:
-			eDebug("ca info:");
+			eDebugNoNewLine("ca info:");
 			for (int i=0; i<len; i+=2)
 			{
 				eDebugNoNewLine("%04x ", (((const unsigned char*)data)[i]<<8)|(((const unsigned char*)data)[i+1]));
