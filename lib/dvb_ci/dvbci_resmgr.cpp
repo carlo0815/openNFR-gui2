@@ -26,11 +26,13 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 		case 0x11: // Tprofile
 			eDebugNoNewLine("mein cam kann: ");
 			if (!len)
-				eDebug("nichts");
+				eDebugNoNewLine("nichts");
 			else
+			{
 				for (int i=0; i<len; i++)
 					eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
-
+				eDebug("");
+			}
 			if (state == stateFirstProfileEnquiry)
 			{
 				// profile change
