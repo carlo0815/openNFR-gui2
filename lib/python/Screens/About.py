@@ -10,7 +10,7 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Console import Console
 from Components.Label import Label
 from enigma import eTimer, getEnigmaVersionString
-from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageVersion, getImageBuild, getDriverDate
+from boxbranding import getBoxType, getMachineBrand, getMachineBuild, getMachineName, getImageVersion, getImageBuild, getDriverDate
 
 from Components.Pixmap import MultiPixmap
 from Components.Network import iNetwork
@@ -32,8 +32,10 @@ class About(Screen):
 			AboutText += _("Chipset:\t\t BCM%s") % about.getChipSetString() + "\n"
 
 		cpuMHz = ""
-		if getBoxType() in ('vusolo4k'):
+		if getMachineBuild() in ('vusolo4k', 'hd51'):
 			cpuMHz = "   (1,5 GHz)"
+		elif getMachineBuild() in ('hd52'):
+                        cpuMHz = "   (1,7 GHz)"
 		else:
 			if path.exists('/proc/cpuinfo'):
 				f = open('/proc/cpuinfo', 'r')
@@ -49,7 +51,7 @@ class About(Screen):
 				except:
 					pass
 
-		AboutText += _("CPU:\t\t %s") % about.getCPUString() + "\n"
+		AboutText += _("CPU:\t\t %s") % about.getCPUString() + cpuMHz + "\n"
 		AboutText += _("Cores:\t\t %s") % about.getCpuCoresString() + "\n"
 		string = getDriverDate()
 		year = string[0:4]
