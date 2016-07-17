@@ -161,7 +161,7 @@ def getCPUSpeedString():
 
 
 def getCPUString():
-	if getBoxType() in ('xc7362', 'vusolo4k'):
+	if getBoxType() in ('xc7362', 'vusolo4k', 'mutant51', 'ax51'):
 		return "Broadcom"
 	else:
 		try:
