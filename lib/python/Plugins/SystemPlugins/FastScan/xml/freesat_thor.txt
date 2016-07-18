@@ -6,11 +6,11 @@ CT D/CT Art
 CT24
 Nova HD
 Nova
-NOva Cinema
+Nova Cinema
 Prima TV
 Prima Cool
 Prima Love
-Proma Zoom
+Prima Zoom
 TV Barrandov
 Markiza HD
 TV Markiza
@@ -57,17 +57,15 @@ Spektrum
 Spektrum Home
 Travel Channel HD
 Travel Channel
-Discovery ID
 DOQ
-Animel Planet HD
-Animel Planet
+Animal Planet HD
+Animal Planet
 NGC HD
 Nat Geo
-NatGeo Wild HD
+Nat Geo Wild HD
 Nat Geo Wild
 Fishing and Hunting
 CBS Reality
-Blackbelt TV
 Eurosport 1 HD
 Eurosport
 Eurosport 2 HD
@@ -80,7 +78,7 @@ NOVA Sport 1 HD
 NOVA Sport 1
 CT Sport
 Extreme Sports Channel
-National Geographic HD
+National Geographic RO
 Arena Sport
 Auto Motor Sport
 Food Network
@@ -88,7 +86,7 @@ TV Paprika
 Disney Channel
 JimJam
 Minimax Cz
-Megamix
+Megamax
 Nickelodeon Europe
 ducktv
 MTV Dance
