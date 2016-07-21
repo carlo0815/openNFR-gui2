@@ -368,19 +368,18 @@ class FastScanScreen(ConfigListScreen, Screen):
                         rety = []
                         freelists = ['Freesat_Thor', 'Freesat_Slovenske', 'Freesat_Czech_Republic', 'Freesat_Moldavia', 'Freesat_Hungary']
                         for fprovscan in freelists:
-                                self.scan_provider.value = fprovscan
 			        self.path = "/etc/enigma2"
 			        lastsc = self.path + "/userbouquet.LastScanned.tv"
-			        newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
+			        newbouq = self.path + "/userbouquet." + fprovscan + ".tv"
         		        favlist = self.path + "/bouquets.tv"
-        		        newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\r'
-        		        newbouq2 = '#NAME ' + self.scan_provider.value
-        		        newbouq3 = '"userbouquet.' + self.scan_provider.value + '.tv"'
+        		        newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + fprovscan + '.tv" ORDER BY bouquet\r'
+        		        newbouq2 = '#NAME ' + fprovscan
+        		        newbouq3 = '"userbouquet.' + fprovscan + '.tv"'
                 	        newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
                 	        path = self.path
-        		        prefix = self.scan_provider.value 
+        		        prefix = fprovscan 
                                 try:
-                                        txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + self.scan_provider.value.lower() + ".txt"
+                                        txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + fprovscan.lower() + ".txt"
                                         hh = []
                                         gg = open(txtdoc, "r")
                                         reta = gg.read().split("\n")
@@ -470,7 +469,6 @@ class FastScanScreen(ConfigListScreen, Screen):
                 	except:
                 		print "error"
                         	self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
-	
         
         def searchNumberHelper(self, serviceHandler, num, bouquet):
 		servicelist = self.serviceHandler.list(bouquet)
