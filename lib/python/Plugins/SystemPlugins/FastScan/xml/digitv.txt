@@ -1,169 +1,130 @@
 TVR 1
 TVR 2
 ProTV HD
-Pro TV
+Pro Tv
 ProTV International
-Prima TV
-Kanal D Romania
-Bucuresti 1 TV
-TV 2 HD (Hungary)
-DIGI World HD HU
+Prima
+Kanal D
+TV2 HD
+Digi World HD HU
 DIGI World
 National TV
-U (Romania)
+U tv
 Super TV 2
-Digi World Hungary
-Fanda TV
+DIGI World HU
+Fanda
 DIGI Life
-AcasÃ¡ TV
-Fashion TV Czech
-Digi 24
-Realitatea TV
-RTV (Romania)
+Acasa TV
+Fashion TV CZ/SK
+DIGI 24
+Realitatea
 Acasa TV Gold
 Hir TV
-CT 24
-VTV Romania
+CT24
 TV Doma
-Digi Sport 1 HD HU
-Digi Sport 1 RO-HU
+DIGI Sport 1 HD HU
 DIGI Sport 2 HD HU
 DIGI Sport 2 HU
-Digi Sport 2 RO-HU
-Digi Sport 3 RO
+Digi Sport 3 HD
 Digi Sport 1 HD RO
 Digi Sport 2 HD RO
-DIGI Sport Czechia & Slovakia
-DIGI Sport 2 Czechia & Slovakia
-DIGI Sport 2 Slovakia
-DIGI Sport 3 Slovakia
-Digi Sport 3 CZ HD
-Digi Sport 4 CZ SD
-DIGI Liga Majstrov 1
+DIGI Sport CZ/SK
+DIGI Sport 2 CZ
+Digi Sport 3 CZ
+Digi Sport 4
 Sport ro
-Sport 1 Hungary
-Sport 2 Hungary
-Sport 1 Czechia & Slovakia
+SPORT 1
+SPORT 2
+Sport1 SK-CZ
 Sport1 CZE (SVT)
 Sport2 CZE (SVT)
 Nova Sport
 CT Sport
-Eurosport
+Eurosport 1
 Eurosport 2
 Pro TV International
-History Channel Eastern Europe
-Digi Life Hungary
-Discovery Channel Eastern Europe
-National Geographic Romania
-National Geographic Europe
-CBS Reality
+History Channel
+DIGI Life HU
+Discovery Channel
+National Geographic RO
+National Geographic CE
 CBS Reality
 Animal Planet CE
 Discovery World
-Discovery Science Channel
-TLC Europe
-NatGeo Wild Central Europe
-NatGeo Wild Romania
-NatGeo Wild Hungary
-Viasat Nature CEE
+Discovery Science
+TLC
+Nat Geo Wild HU
+Nat Geo WILD HU
+Viasat Nature
 Viasat History
-Viasat Explorer
-Ozone Network
-Fishing & Hunting
-TV Paprika HU
+Viasat Explore
+OzoneNetwork
+Fishing and Hunting
 TV Paprika HU
 Pro Cinema
-Diva Universal Romania
-TV 1000 Balkan
-Universal Channel Central Europe
-Universal Czechia
-Story 5
-DigiFilm 1
+Diva Universal
+TV 1000
+Universal Channel CE
+UNI CZSK
+STORY5
+DIGI FILM
 DIGI Film HU
 FEM3
 HBO Romania
-HBO Hungary
-Pax TV Hungary
-HBO 2 Central Europe
-Pro 4
-HBO Comedy Central Europe
-Cinemax East Europe
-Film + Czechia & Slovakia
-FilmBox Extra
-Nova Cinema (Cz)
-Nova Cinema (Cz)
+HBO HU
+Pax TV
+HBO 2
+PRO4
+Cinemax
+Film+ CZE (SVT)
+Filmbox Extra
+NOVA CZ
 DIGI Animal World
 DIGI Sport 1 HU
-Disney Junior Romania
+Disney Junior
 Cool TV
-Film CafÃ©
+Film Cafe
 CBS Drama
-MiniMax Romania (6h-20h CET)
-Cartoon Network
-Disney Channel Romania, Bulgaria & Ukraine
-Disney Channel Hungary & Czechia
-Disney Channel Hungary & Czechia
-Nick Jr Hungary
-TV Fanda
-Boomerang
-Duck TV
-Minimax/Animax Hungary
-Happy TV
-Ring TV/TA 3 (Slovakia)
-MTV Romania
-MTV Czechia
-Kiss TV
+Cartoon
+Disney Channel
+Fanda
+KISS TV
 Mezzo
 Music Channel
-Music Channel Hungary
-MusicMix/SuperOne
+Music Channel HU
+SuperOne
 Favorit TV
-Etno TV
-Taraf TV
-H!T Music
+Etno
+Taraf Tv
+H!T Music Channel
 H!T Music RO
 Slagr TV
 Hora TV
-Hora TV
 Neptun TV
-Neptun TV
-H!T Music Romania
-Duna TV
-Duna TV
-Vojvodina 1
+Duna
+VOJVODINA1
 M1 HD
-M1 - Magyar TV
-Magyar TV 2
 Magyar ATV
 Magyar Slager TV
-Trinitas TV
-TVH 2.0
-TVH 2.0
+Trinitas
+TV H
 RTL Klub
-Speranta TV
-4! Story TV
-Superone
-TV Paprika Romania
-RTS 1 Serbia
+SperantaTV
 OBN
-DM Sat
+DM-SAT
 B92
-Markiza TV
-J@J
+Markiza
+Joj
 TV Barrandov
-TV 2 (Hungary)
-Viasat 3
+TV2
+VIASAT3
 Jednotka
 Dvojka
-CT 1
+CT1
 CT 2 HD
-CT 2
-Prima Family
-TV Nova
-Prima COOL
-J@J Plus
-Viasat 6
-Viasat 6
-Travel Channel/Playboy TV
-Spektrum TV Hungary
-Film CafÃ©
+CT2
+TV NOVA
+Prima Cool
+VIASAT6
+Travel Channel
+Spektrum
