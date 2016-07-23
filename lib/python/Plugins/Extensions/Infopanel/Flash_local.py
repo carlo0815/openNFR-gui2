@@ -65,11 +65,11 @@ class FlashOnline(Screen):
 		<ePixmap position="0,360"   zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" transparent="1" alphatest="on" />
 		<ePixmap position="140,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" transparent="1" alphatest="on" />
 		<ePixmap position="280,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" transparent="1" alphatest="on" />
-		<ePixmap position="420,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget name="key_red" render="Label" position="0,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_green" render="Label" position="140,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_yellow" render="Label" position="280,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_blue" render="Label" position="420,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<ePixmap position="420,360" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/blue.png" transparent="1" alphatest="on" />
+		<widget name="key_red" position="0,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="140,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_yellow" position="280,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_blue" position="420,360" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
 		<widget name="info-online" position="10,30" zPosition="1" size="450,100" font="Regular;20" halign="left" valign="top" transparent="1" />
 		<widget name="info-local" position="10,150" zPosition="1" size="450,200" font="Regular;20" halign="left" valign="top" transparent="1" />
 	</screen>"""
@@ -84,12 +84,12 @@ class FlashOnline(Screen):
 		
 		Screen.setTitle(self, _("Flash On the Fly"))
 		if SystemInfo["HaveMultiBoot"]:
-			self["key_blue"] = Button(_("STARTUP"))
+			self["key_yellow"] = Button(_("STARTUP"))
 		else:
-			self["key_blue"] = Button("")
+			self["key_yellow"] = Button("")
 		self["key_green"] = Button("Online")
 		self["key_red"] = Button(_("Exit"))
-		self["key_yellow"] = Button("Local")
+		self["key_blue"] = Button("Local")
 		self["info-local"] = Label(_("Local = Flash a image from local path /hdd/images"))
 		self["info-online"] = Label(_("Online = Download a image and flash it"))
 		
@@ -152,7 +152,7 @@ class FlashOnline(Screen):
 	def quit(self):
 		self.close()	
 		
-	def yellow(self):
+	def blue(self):
 		if self.check_hdd():
 			self.session.open(doFlashImage, online = False, list=self.list[self.selection], multi=self.multi, devrootfs=self.devrootfs)
 		else:
@@ -163,12 +163,12 @@ class FlashOnline(Screen):
 			self.session.open(doFlashImage, online = True, list=self.list[self.selection], multi=self.multi, devrootfs=self.devrootfs)
 		else:
 			self.close()
-	def blue(self):
+	def yellow(self):
 		if SystemInfo["HaveMultiBoot"]:
 			self.selection = self.selection + 1
 			if self.selection == len(self.list):
 				self.selection = 0
-			self["key_blue"].setText(_(self.list[self.selection]))
+			self["key_yellow"].setText(_(self.list[self.selection]))
 			self.multi = self.read_startup("/boot/" + self.list[self.selection]).split(".",1)[1].split(" ",1)[0]
 			self.multi = self.multi[-1:]
 			print "[Flash Online] MULTI:",self.multi
@@ -202,10 +202,10 @@ class doFlashImage(Screen):
 		<ePixmap position="140,460" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" transparent="1" alphatest="on" />
 		<ePixmap position="280,460" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" transparent="1" alphatest="on" />
 		<ePixmap position="420,460" zPosition="1" size="140,40" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/buttons/blue.png" transparent="1" alphatest="on" />
-		<widget name="key_red" render="Label" position="0,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_green" render="Label" position="140,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_yellow" render="Label" position="280,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-		<widget name="key_blue" render="Label" position="420,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_red" position="0,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_green" position="140,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_yellow" position="280,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+		<widget name="key_blue" position="420,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
 		<widget name="imageList" position="10,10" zPosition="1" size="450,450" font="Regular;20" scrollbarMode="showOnDemand" transparent="1" />
 	</screen>"""
 		
