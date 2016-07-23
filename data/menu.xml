@@ -2,6 +2,7 @@
 <menu text="Mainmenu" title="Main menu">
 	<id val="mainmenu" />
 		<item level="1" text="Plugins" entryID="plugin_selection"><screen module="PluginBrowser" screen="PluginBrowser" /></item>
+		<item level="0" text="MultiBoot" requires="HaveMultiBoot" entryID="deep_standby"><screen module="MultiBootStartup" screen="MultiBootStartup" /></item>
 <!--code>
 from Plugins.Extensions.Infopanel.plugin import YellowPanel
 self.session.open(YellowPanel)
