@@ -84,9 +84,9 @@ class FlashOnline(Screen):
 		
 		Screen.setTitle(self, _("Flash On the Fly"))
 		if SystemInfo["HaveMultiBoot"]:
-			self["key_blue"] = StaticText(_("STARTUP"))
+			self["key_blue"] = Button(_("STARTUP"))
 		else:
-			self["key_blue"] = StaticText("")
+			self["key_blue"] = Button("")
 		self["key_green"] = Button("Online")
 		self["key_red"] = Button(_("Exit"))
 		self["key_yellow"] = Button("Local")
