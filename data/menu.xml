@@ -2,7 +2,6 @@
 <menu text="Mainmenu" title="Main menu">
 	<id val="mainmenu" />
 		<item level="1" text="Plugins" entryID="plugin_selection"><screen module="PluginBrowser" screen="PluginBrowser" /></item>
-		<item level="0" text="MultiBoot" requires="HaveMultiBoot" entryID="deep_standby"><screen module="MultiBootStartup" screen="MultiBootStartup" /></item>
 <!--code>
 from Plugins.Extensions.Infopanel.plugin import YellowPanel
 self.session.open(YellowPanel)
@@ -158,5 +157,6 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item text="Restart GUI" entryID="restart_enigma" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">3</screen></item>
 			<item text="Deep standby" requires="DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="Shutdown" requires="!DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
+			<item text="MultiBoot" requires="HaveMultiBoot" entryID="deep_standby"><screen module="MultiBootStartup" screen="MultiBootStartup" /></item>
 		</menu>
 </menu> 
