@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+
 from os import path as os_path, walk as os_walk, unlink as os_unlink
 import operator
 from Plugins.Plugin import PluginDescriptor
@@ -469,6 +469,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                 	except:
                 		print "error"
                         	self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
+	
         
         def searchNumberHelper(self, serviceHandler, num, bouquet):
 		servicelist = self.serviceHandler.list(bouquet)
