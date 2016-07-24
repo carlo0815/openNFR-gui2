@@ -7,13 +7,13 @@ from Components.Label import Label
 from Components.MenuList import MenuList
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS
+from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LCDSKIN
 from os import path, walk
 from enigma import eEnv
 
 class LCDSkinSelector(Screen):
 	skinlist = []
-	root = eEnv.resolve("/usr/share/enigma2/display/lcdskins/")
+	root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
 
 	def __init__(self, session, args = None):
 
@@ -100,7 +100,7 @@ class LCDSkinSelector(Screen):
 			pngpath = pngpath.replace(".xml", "_prev.png")
 			pngpath = self.root+pngpath
 		except AttributeError:
-			pngpath = resolveFilename("/usr/share/enigma2/display/lcdskins/noprev.png")
+			pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
 		
 		if not path.exists(pngpath):
 			pngpath = eEnv.resolve("/usr/share/enigma2/display/lcdskins/noprev.png")		
