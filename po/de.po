@@ -12854,14 +12854,20 @@ msgstr "Aus-Taste"
 msgid "Power long"
 msgstr "Aus-Taste lang"
 
-msgid "F1/LAN long"
-msgstr "F1/LAN lang"
+msgid "F1 long"
+msgstr "F1 lang"
 
 msgid "F2 long"
 msgstr "F2 lang"
 
 msgid "F3 long"
 msgstr "F3 lang"
+
+msgid "F11/Context long"
+msgstr "F11/Context lang"
+
+msgid "Search/WEB long"
+msgstr "Suche/WEB lang"
 
 msgid "LED Display Setup"
 msgstr "LED Boxdisplay Einstellungen"
@@ -13039,3 +13045,18 @@ msgstr "M3U / TV Bouquet Converter"
 
 msgid "NFR4XBoot is still installed!\nNow removing NFR4XBoot and reboot the box. After reboot FlashLocal is available.\nYour installed images are not deleted and available after re-installing NFR4XBoot again."
 msgstr "NFR4XBoot ist installiert!\nNFR4XBoot wird jetzt deinstalliert und die Box neu gestartet. Nach dem Neustart FlashLocal nochmals ausführen.\nDie installierten Images bleiben erhalten und stehen nach erneuter Installation von NFR4XBoot wieder zur Verfügung."
+
+msgid "Ready to install packagegroup-base-samba ?"
+msgstr "Bereit zum Installieren der Pakete - base-samba ?"
+
+msgid "Place:"
+msgstr "Ort:"
+
+msgid "File name:"
+msgstr "Dateiname:"
+
+msgid "You can select with yellow the OnlineFlash Image\n or select Recovery to create a USB Disk Image for clean Install."
+msgstr "Mit Gelb den OnlineFlash Bereich auswählen\n oder wähle Recovery um ein USB Disk Image zur Installation zu erstellen." 
+
+msgid "Selected Image:\t\t %s"
+msgstr "Ausgewähltes Image:\t %s"
