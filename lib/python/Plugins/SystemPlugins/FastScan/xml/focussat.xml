@@ -15,7 +15,7 @@
       <transporder orbpos="3592" frequency="12073" symbolrate="28000" fec="7/8" pol="V" system="DVBS" modulation="QPSK"/>
       <transporder orbpos="3592" frequency="12092" symbolrate="28000" fec="7/8" pol="H" system="DVBS" modulation="QPSK"/>
       <transporder orbpos="3592" frequency="12111" symbolrate="28000" fec="7/8" pol="V" system="DVBS" modulation="QPSK"/>
-      <transporder orbpos="3592" frequency="12149" symbolrate="28000" fec="7/8" pol="V" system="DVBS2" modulation="8PSK"/>
+      <transporder orbpos="3592" frequency="12149" symbolrate="30000" fec="2/3" pol="V" system="DVBS2" modulation="8PSK"/>
       <transporder orbpos="3592" frequency="12188" symbolrate="28000" fec="7/8" pol="V" system="DVBS" modulation="QPSK"/>
       <transporder orbpos="3592" frequency="12226" symbolrate="27500" fec="5/6" pol="V" system="DVBS" modulation="QPSK"/>
       <transporder orbpos="3592" frequency="12265" symbolrate="28000" fec="7/8" pol="V" system="DVBS" modulation="QPSK"/>
