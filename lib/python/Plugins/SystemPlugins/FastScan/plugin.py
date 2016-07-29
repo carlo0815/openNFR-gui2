@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from os import path as os_path, walk as os_walk, unlink as os_unlink
 import operator
 from Plugins.Plugin import PluginDescriptor
@@ -159,19 +159,22 @@ class FastScanScreen(ConfigListScreen, Screen):
 		
 		#orgin
 		self.providers['CanalDigitaal'] = (1, 900, True)
+		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
-		self.providers['TÃƒÂ©lÃƒÂ©SAT'] = (0, 920, True)
+		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
+		self.providers['TéléSAT'] = (0, 920, True)
+		self.providers['TéléSAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
+		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False) 
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['TÃƒÂ©lÃƒÂ©SAT Astra3'] = (1, 920, True)
-		self.providers['HD Austria Astra3'] = (1, 950, False)
-		self.providers['AustriaSat MagyarorszÃƒÂ¡g Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat MagyarorszÃƒÂ¡g Astra 3'] = (1, 951, False)
-		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False)                                     		
-		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
-		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
+		self.providers['AustriaSat Magyarország Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat Magyarország Astra 3'] = (1, 951, False)
+		
+				
+		
+
 		
 		self.transponders = ((12515000, 22000000, eDVBFrontendParametersSatellite.FEC_5_6, 192,
 			eDVBFrontendParametersSatellite.Polarisation_Horizontal, eDVBFrontendParametersSatellite.Inversion_Unknown,
