@@ -112,20 +112,22 @@ class LCDSkinSelector(Screen):
 
 	def loadPreview(self):
 		pngpath = self["SkinList"].getCurrent()
-                if pngpath.startswith("OE-A_") or pngpath.startswith("OpenNFR_"):
-                	try:
-				pngpath = pngpath + ("/prev.png")
-				pngpath = self.root+pngpath
-			except AttributeError:
-				pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")                
-                else:
+                try:
+                	if pngpath.startswith("OE-A_") or pngpath.startswith("OpenNFR_"):
+                		try:
+					pngpath = pngpath + ("/prev.png")
+					pngpath = self.root+pngpath
+				except AttributeError:
+					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")                
+                	else:
                 
-                	try:
-				pngpath = pngpath.replace(".xml", "_prev.png")
-				pngpath = self.root+pngpath
-			except AttributeError:
-				pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
-		
+                		try:
+					pngpath = pngpath.replace(".xml", "_prev.png")
+					pngpath = self.root+pngpath
+				except AttributeError:
+					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
+		except AttributeError:
+		        pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
 		if not path.exists(pngpath):
 			pngpath = eEnv.resolve("/usr/share/enigma2/display/lcdskins/noprev.png")		
 		if self.previewPath != pngpath:
@@ -135,5 +137,4 @@ class LCDSkinSelector(Screen):
 
 	def restartGUI(self, answer):
 		if answer is True:
-			self.session.open(TryQuitMainloop, 3) 
-			
+			self.session.open(TryQuitMainloop, 3)
