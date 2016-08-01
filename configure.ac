@@ -493,7 +493,9 @@ AC_CONFIG_FILES([Makefile
 	data/keymaps/Makefile
 	data/displaytext/Makefile
 	data/display96/Makefile
+	data/display96/lcdskins/Makefile
 	data/display128/Makefile
+	data/display128/lcdskins/Makefile
 	data/display220/Makefile
 	data/display220/lcdskins/Makefile
 	data/display400/Makefile
@@ -501,13 +503,17 @@ AC_CONFIG_FILES([Makefile
 	data/display480/Makefile
 	data/display480/lcdskins/Makefile
 	data/display720/Makefile
+	data/display720/lcdskins/Makefile
 	data/spinner/Makefile
 	data/Spinner/Makefile
 	data/Spinner/default/Makefile
 	data/Spinner/Kreis/Makefile
 	data/vfd128/Makefile
+	data/vfd128/lcdskins/Makefile
 	data/vfd140/Makefile
+	data/vfd140/lcdskins/Makefile
 	data/vfd255/Makefile
+	data/vfd255/lcdskins/Makefile
 	include/Makefile
 	lib/Makefile
 	lib/base/eenv.cpp
