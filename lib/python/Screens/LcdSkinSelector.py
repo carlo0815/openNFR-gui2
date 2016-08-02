@@ -103,7 +103,11 @@ class LCDSkinSelector(Screen):
 					self.skinlist.append(skinname)
                                 		
 	def ok(self):
-		skinfile = self["SkinList"].getCurrent() + "/skin_display.xml"
+		skinstest = self["SkinList"].getCurrent()
+		if skinstest.startswith("OE-A_") or skinstest.startswith("OpenNFR_"):
+			skinfile = self["SkinList"].getCurrent() + "/skin_display.xml"
+		else:
+			skinfile = self["SkinList"].getCurrent()
 		print "LCDSkinselector: Selected Skin: ", skinfile
 		config.skin.display_skin.value = skinfile
 		config.skin.display_skin.save()
