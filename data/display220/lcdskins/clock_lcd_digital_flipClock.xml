@@ -78,5 +78,5 @@
 	</widget>
 <!--END-->
 </screen>
-	<include filename="/usr/share/enigma2/display/skin_display.xml" />
+	<include filename="/usr/share/enigma2/display/lcdskins/skin_display.xml" />
 </skin>
