@@ -119,7 +119,7 @@ class EPGSelection(Screen, HelpableScreen):
 				'yellow': (self.yellowButtonPressed, _('Search for similar events')),
 				'greenlong': (self.showTimerList, _('Show Timer List')),
 				'blue': (self.blueButtonPressed, _('Add a auto timer for current event')),
-				'bluelong': (self.bluelongButtonPressed, _('Show AutoTimer List'))
+				'bluelong': (self.blueButtonPressedLong, _('Show AutoTimer List'))
 			}, -1)
 		self['colouractions'].csel = self
 		self['recordingactions'] = HelpableActionMap(self, 'InfobarInstantRecord', 
@@ -816,6 +816,13 @@ class EPGSelection(Screen, HelpableScreen):
 		self.closeEventViewDialog()
 		self.longbuttonpressed = True
 		self.showAutoTimerList()
+
+	def blueButtonPressedLong(self):
+		self.closeEventViewDialog()
+		from InfoBar import InfoBar
+		InfoBarInstance = InfoBar.instance
+		if InfoBarInstance.LongButtonPressed:
+			self.showAutoTimerList()
 
 	def openSimilarList(self, eventid, refstr):
 		self.session.open(EPGSelection, refstr, None, eventid)
