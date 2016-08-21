@@ -14,10 +14,10 @@ TV Barrandov
 TA3
 Prima Love
 Fanda TV
-Slagr TV
 AXN Czech
 AXN White
 AXN Black
+Universal channel
 Comedy Central Extra
 CBS Reality
 Prima Zoom
@@ -40,7 +40,7 @@ Da Vinci Learning
 DOQ
 HBO CZE
 HBO2
-HBO3 HU
+HBO Comedy
 Cinemax
 Cinemax2
 Filmbox Extra
@@ -51,7 +51,6 @@ CS Mini/CS Film/Horor Film
 Film+ CZE
 AMC CE
 FilmBox Extra HD
-CT Sport HD
 NOVA Sport 1
 Sport1 CZE
 Sport2 CZE
@@ -69,18 +68,17 @@ Disney Channel
 JimJam
 Nickelodeon Europe
 Minimax Cz
+C8
 ducktv
 Cartoon Network
 Boomerang
 Megamax
-CT 2 HD
 CT D/CT Art
 CT1 HD
 Nova HD
 NOVA Sport 1 HD
 Discovery HD Showcase
 Animal Planet HD
-HBO HD
 Travel Channel HD
 History HD
 NGC HD
@@ -89,10 +87,8 @@ Arena Sport 1 HD
 Eurosport 1 HD
 Eurosport 2 HD
 Sport 2 HD
-Sport 1 HD
+HBO HD
 Sundance HD
-Jednotka HD
-Dvojka HD
 Mooz Dance HD
 MTV Europe
 MTV Music
@@ -105,7 +101,6 @@ Ocko
 Music Channel
 Mooz Dance
 Fashion TV
-TV Lux
 CNN
 Sky News
 CNBC Europe
@@ -120,16 +115,8 @@ RTL Klub
 CCTV News
 France 24
 TV5MONDE
+Blue Hustler
 Hustler TV
 Private TV
-Classical Greats
-Hip Hop
-Cool Jazz
-Rock n Roll Era
-Lounge
-Classic Rock
-Alternative
-Feel good music
-Total Hits
-Blues
+STINGRAY LITE TV
 RTR Rossia 
