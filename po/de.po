@@ -13060,3 +13060,6 @@ msgstr "Mit Gelb den OnlineFlash Bereich auswählen\n oder wähle Recovery um ei
 
 msgid "Selected Image:\t\t %s"
 msgstr "Ausgewähltes Image:\t %s"
+
+msgid "Use alternate bouquets numbering"
+msgstr "Benutze alternative Bouquets Nummerierung"
