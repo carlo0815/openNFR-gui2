@@ -400,9 +400,9 @@ class DownloadOnLineImage(Screen):
                     urlbox = 'formuler/formuler3/' 
                     stb = '1'
                elif box in ('formuler4'):
-+                    box = 'formuler4'
-+                    urlbox = 'formuler/formuler4/' 
-+                    stb = '1'     
+                    box = 'formuler4'
+                    urlbox = 'formuler/formuler4/' 
+                    stb = '1'     
                elif box in ('osmini'):
                     box = 'osmini'
                     urlbox = 'edision/osmini/' 
