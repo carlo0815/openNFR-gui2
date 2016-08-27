@@ -140,11 +140,11 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        mypixmap = mypath + 'custom.png'
+        mypixmap = mypath + 'openeight.png'
         png = LoadPixmap(mypixmap)
-        name = _('Custom')
-        desc = _('Download latest Custom Image')
-        idx = 'custom'
+        name = _('OpenEight')
+        desc = _('Download latest OpenEight Image')
+        idx = 'openeight'
         res = (name,
          png,
          idx,
@@ -201,10 +201,10 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://images.hdfreaks.cc/menu.html'
         elif self.distro == 'openmips':
             self.feed = 'openmips'
-            self.feedurl = 'http://image.openmips.com/5.2'
-        elif self.distro == 'custom':
-            self.feed = 'custom'
-            self.feedurl = 'http://feed.yt/bre2ze/image/'    
+            self.feedurl = 'http://image.openmips.com/5.3'
+        elif self.distro == 'openeight':
+            self.feed = 'openeight'
+            self.feedurl = 'http://openeight.de'
         else:
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.1/images'
@@ -329,7 +329,7 @@ class DownloadOnLineImage(Screen):
                 box = 'Atemio'
                 urlbox = 'atemio6100'                
                 stb = '1'
-            elif box in ('formuler4', 'formuler3', 'formuler1'):
+            elif box in ('formuler3', 'formuler1'):
                 box = 'Formuler'
                 urlbox = getBoxType()                
                 stb = '1'    
@@ -339,9 +339,34 @@ class DownloadOnLineImage(Screen):
                 stb = '1'
                                 
             else:   
-                stb = 'no Image for this Box on this Side'                                      
+                stb = 'no Image for this Box on this Side'
+        elif self.distro == 'openeight':
+            if box in ('sf208', 'sf228', 'sf108', 'sf3038', 'sf98'):
+               if box in ('sf228'):
+               		box = 'sf228'
+                	urlbox = getBoxType()               
+                	stb = '1'
+               elif box in ('sf208'):
+               		box = 'sf208'
+                	urlbox = getBoxType()               
+                	stb = '1'
+               elif box in ('sf98'):
+               		box = 'sf98'
+                	urlbox = getBoxType()               
+                	stb = '1'
+               elif box in ('sf3038'):
+               		box = 'sf3038'
+                	urlbox = getBoxType()               
+                	stb = '1'
+               elif box in ('sf108'):
+                    box = 'sf108'
+                    urlbox = getBoxType() 
+                    stb = '1'                    
+                
+            else:   
+                stb = 'no Image for this Box on this Side'    
         elif self.distro == 'openpli':
-            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler4', 'formuler1', 'formuler3'):
+            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler1', 'formuler3'):
                if box in ('vusolo2'):
                     box = 'vusolo2'
                     urlbox = 'vuplus/vusolo2/' 
@@ -374,10 +399,6 @@ class DownloadOnLineImage(Screen):
                     box = 'formuler3'
                     urlbox = 'formuler/formuler3/' 
                     stb = '1'
-               elif box in ('formuler4'):
-                    box = 'formuler4'
-                    urlbox = 'formuler/formuler4/' 
-                    stb = '1'
                elif box in ('osmini'):
                     box = 'osmini'
                     urlbox = 'edision/osmini/' 
@@ -391,13 +412,7 @@ class DownloadOnLineImage(Screen):
                     urlbox = 'spycat/spycat/' 
                     stb = '1'                      
             else:   
-                stb = 'no Image for this Box on this Side'
-        elif self.distro == 'custom':
-            if box in ('bre2ze'):
-                box = getBoxType()
-                stb = '1'
-            else:   
-                stb = 'no Image for this Box on this Side'
+                stb = 'no Image for this Box on this Side'        
         return (box, urlbox, stb)
 
     def green(self, ret = None):
@@ -416,12 +431,12 @@ class DownloadOnLineImage(Screen):
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
-            elif self.distro == 'custom':
-                url = self.feedurl + sel
+            elif self.distro == 'openeight':
+                url = self.feedurl + '/images/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
                 url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
             elif self.distro == 'opendroid':
-                url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel                
+                url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel            
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -470,11 +485,11 @@ class DownloadOnLineImage(Screen):
         stb = self.box()[2]
         print '[NFR4XBoot] FEED URL: ', self.feedurl
         print '[NFR4XBoot] BOXTYPE: ', box
-        print '[NFR4XBoot] URL-BOX: ', urlbox
+        print '[NFR4XBoot] URL-BOX: ', urlbox        
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2', 'openatv-5.3'):
+        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2', 'openatv-5.3','openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
@@ -486,8 +501,7 @@ class DownloadOnLineImage(Screen):
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
             url = '%s/%s' % (self.feedurl1, box)
-        elif self.distro == 'custom':
-            url = self.feedurl
+            
 	else:
             url = self.feedurl
         print '[NFR4XBoot] URL: ', url
@@ -509,16 +523,21 @@ class DownloadOnLineImage(Screen):
         tt = len(box)
         if stb == '1':
             for line in lines:
-                if line.find("<a href='%s/" % box) > -1:
-                    t = line.find("<a href='%s/" % box)
-                    t2 = line.find("'>egami")
-                    if self.feed in 'openatv':
-                        self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
-                    elif self.feed in 'egami':
-                        self.imagelist.append(line[t + tt + 10:t2])
-                    elif self.feed == 'openmips':
-                        line = line[t + tt + 10:t + tt + tt + 40]
-                        self.imagelist.append(line) 
+                if self.feed == "openeight":
+                    if line.find("/images/%s/" % box) > -1:
+                    		t = line.find('/images/%s/' % box)
+                    		self.imagelist.append(line[t+tt+9:t+tt+tt+40])
+                    elif line.find("<a href='%s/" % box) > -1:
+                    		t = line.find("<a href='%s/" % box)
+                    		t2 = line.find("'>egami")
+                    		if self.feed in 'openatv':
+                    			self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
+                    		elif self.feed in 'egami':
+                    			self.imagelist.append(line[t + tt + 10:t2])
+                    		elif self.feed in 'openmips':
+                    			line = line[t + tt + 10:t + tt + tt + 40]
+                    			self.imagelist.append(line)
+                    	
                 elif line.find("<a href='%s/" % urlbox) > -1:
                     ttt = len(urlbox)
                     t = line.find("<a href='%s/" % urlbox) 
@@ -549,7 +568,8 @@ class DownloadOnLineImage(Screen):
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4]) 
+                    self.imagelist.append(line[t4 :t5+4])
+                                
         else:
             self.imagelist.append(stb)
         self['imageList'].l.setList(self.imagelist)
