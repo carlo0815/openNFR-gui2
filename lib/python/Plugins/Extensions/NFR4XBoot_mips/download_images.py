@@ -329,7 +329,7 @@ class DownloadOnLineImage(Screen):
                 box = 'Atemio'
                 urlbox = 'atemio6100'                
                 stb = '1'
-            elif box in ('formuler3', 'formuler1'):
+            elif box in ('formuler4', 'formuler3', 'formuler1'):
                 box = 'Formuler'
                 urlbox = getBoxType()                
                 stb = '1'    
@@ -366,7 +366,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'    
         elif self.distro == 'openpli':
-            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler1', 'formuler3'):
+            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler4', 'formuler1', 'formuler3'):
                if box in ('vusolo2'):
                     box = 'vusolo2'
                     urlbox = 'vuplus/vusolo2/' 
@@ -399,6 +399,10 @@ class DownloadOnLineImage(Screen):
                     box = 'formuler3'
                     urlbox = 'formuler/formuler3/' 
                     stb = '1'
+               elif box in ('formuler4'):
++                    box = 'formuler4'
++                    urlbox = 'formuler/formuler4/' 
++                    stb = '1'     
                elif box in ('osmini'):
                     box = 'osmini'
                     urlbox = 'edision/osmini/' 
