@@ -167,15 +167,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
 		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
-		self.providers['TÃ©lÃ©SAT'] = (0, 920, True)
-		self.providers['TÃ©lÃ©SAT Astra3'] = (1, 920, True)
+		self.providers['TéléSAT'] = (0, 920, True)
+		self.providers['TéléSAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
 		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False) 
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['AustriaSat MagyarorszÃ¡g Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat MagyarorszÃ¡g Astra 3'] = (1, 951, False)
+		self.providers['AustriaSat Magyarország Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat Magyarország Astra 3'] = (1, 951, False)
 		
 				
 		
