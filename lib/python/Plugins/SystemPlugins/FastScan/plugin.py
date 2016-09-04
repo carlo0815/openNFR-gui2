@@ -167,15 +167,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
 		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
-		self.providers['TéléSAT'] = (0, 920, True)
-		self.providers['TéléSAT Astra3'] = (1, 920, True)
+		self.providers['TÃ©lÃ©SAT'] = (0, 920, True)
+		self.providers['TÃ©lÃ©SAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
 		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False) 
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['AustriaSat Magyarország Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat Magyarország Astra 3'] = (1, 951, False)
+		self.providers['AustriaSat MagyarorszÃ¡g Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat MagyarorszÃ¡g Astra 3'] = (1, 951, False)
 		
 				
 		
@@ -205,7 +205,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 		lastConfiguration = eval(config.misc.fastscan.last_configuration.value)
 		if not lastConfiguration:
 			lastConfiguration = (nimList[0][0], providerList[0], True, True, False, config.usage.alternative_number_mode.value)
-                print "nimList;", nimList
 		self.scan_nims = ConfigSelection(default = lastConfiguration[0], choices = nimList)
 		self.scan_provider = ConfigSelection(default = lastConfiguration[1], choices = providerList)
 		self.scan_hd = ConfigYesNo(default = lastConfiguration[2])
@@ -237,8 +236,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 
 
 	def addSatTransponder(self, tlist, frequency, symbol_rate, polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot):
-		print "Add Sat: frequ: " + str(frequency) + " symbol: " + str(symbol_rate) + " pol: " + str(polarisation) + " fec: " + str(fec) + " inversion: " + str(inversion) + " modulation: " + str(modulation) + " system: " + str(system) + " rolloff" + str(rolloff) + " pilot" + str(pilot)
-		print "orbpos: " + str(orbital_position)
 		parm = eDVBFrontendParametersSatellite()
 		parm.modulation = modulation
 		parm.system = system
@@ -353,7 +350,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 			
 				self.pilot = 2 # 0 - off, 1 - on 2 - AUTO
 		
-				print "add sat transponder"
 				self.addSatTransponder(tlist, int(self.frequency),
 							int(self.symbolrate),
 							int(self.polarization),
@@ -365,7 +361,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 							int(self.rolloff),
 							int(self.pilot))
 		 
-                        print "tuner:", int(self.scan_nims.value)
                 	self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
                 except:
                         #self.session.open(MessageBox, _("xml File missing, please check it."), MessageBox.TYPE_ERROR)
@@ -398,45 +393,50 @@ class FastScanScreen(ConfigListScreen, Screen):
        			i = 1
        			wx = [newbouq2]
        			wx1 = [newbouq2]
-                		
-                        while i+1 < len(retb):	       
-              			self.updateServiceName(int(i))
-                               	print "sname:", sname
-                               	if sname in reta:
-                                       	wx.append(sname + " " + retb[i])
+                	if retb[1].startswith("#SERVICE"):
+                        	while i+1 < len(retb):	       
+              				self.updateServiceName(int(i))
+                               		if sname in reta:
+                                       		wx.append(sname + " " + retb[i])
                         	
-                       		i +=1
-                	wz = open(newbouq_unsort, "w")
-                	wz.write("\n".join(map(lambda x: str(x), wx)))    #wx ersetzen mit neuer liste
-                	wz.close()
-                        for wwww in reta:
-                        	for s in wx:
-                                        if wwww in s:
-                                                s1 = s.lstrip(wwww)
-                                       		wx1.append(s1)
-                               	                break
-                	wz1 = open(newbouq, "w")
-                	wz1.write("\n".join(map(lambda x: str(x), wx1)))    #wx ersetzen mit neuer liste
-                	wz1.close()
+                       			i +=1
+                		wz = open(newbouq_unsort, "w")
+                		wz.write("\n".join(map(lambda x: str(x), wx)))    
+                		wz.close()
+                        	for wwww in reta:
+                        		for s in wx:
+                                        	if wwww in s:
+                                                	s1 = s.lstrip(wwww)
+                                       			wx1.append(s1)
+                               	                	break
+                		wz1 = open(newbouq, "w")
+                		wz1.write("\n".join(map(lambda x: str(x), wx1)))    
+                		wz1.close()
                         		
                  		
-                	rety = []
-                        if os.path.isfile(favlist):              
-                        	os.remove(favlist)                            	
-                        if os.path.isfile(newbouq_unsortlist):              
-                        	os.remove(newbouq_unsortlist)                
-                        for zz in ret: 	       
-                        	if newbouq3 in zz:
-                        		print "no add"
-                               	else:
-                                       	rety.append(zz)
-                        rety[1:1] = [newbouq1]
-                	wv = open(favlist, "w")
-                	wv.write("\n".join(map(lambda x: str(x), rety)))
-                	wv.close()                   
-                	eDVBDB.getInstance().reloadBouquets()
+                		rety = []
+                        	if os.path.isfile(favlist):              
+                        		os.remove(favlist)                            	
+                        	if os.path.isfile(newbouq_unsortlist):              
+                        		os.remove(newbouq_unsortlist)                
+                        	for zz in ret: 	       
+                        		if newbouq3 in zz:
+                        			print "no Service add"
+                               		else:
+                                       		rety.append(zz)
+                        	rety[1:1] = [newbouq1]
+                		wv = open(favlist, "w")
+                		wv.write("\n".join(map(lambda x: str(x), rety)))
+                		wv.close()                   
+                		eDVBDB.getInstance().reloadBouquets() 
+                        else:
+                		wv = open(favlist, "w")
+                		wv.write("\n".join(map(lambda x: str(x), ret)))
+                		wv.close()                   
+                		eDVBDB.getInstance().reloadBouquets()                         	
+                        	self.keyCancel()
                 except:
-                	print "Chanel-txt File missing, please check it."
+                        print 'My error, value:no xml found' 
                        	#self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
 	
         
@@ -469,7 +469,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 				if bouquet.flags & eServiceReference.isDirectory:
 					service, number = self.searchNumberHelper(serviceHandler, number, bouquet)
                 if service is not None:
-                        print "service:", service
 			info = serviceHandler.info(service)
 			sname = info.getName(service).replace('\xc2\x86', '').replace('\xc2\x87', '')
 		else:
@@ -531,7 +530,6 @@ def FastScanMain(session, **kwargs):
 		# collect all nims which are *not* set to "nothing"
 		for n in nimmanager.nim_slots:
 		        #nim  = nimmanager.nim_slots
-			print "n.config_mode:", n.config_mode
                         if not n.isCompatible("DVB-S"):
 				continue
 			if n.config_mode == "nothing":
@@ -540,17 +538,9 @@ def FastScanMain(session, **kwargs):
 				root_id = nimmanager.sec.getRoot(n.slot_id, int(n.config.connectedTo.value))
 				if n.type == nimmanager.nim_slots[root_id].type: # check if connected from a DVB-S to DVB-S2 Nim or vice versa
 					continue
-			
-                        
-                        #if nim.description.find("FBC") == -1:
-                                #print "fbc-tuner;", nim.slot 
-                                #print "fbcliste:", nim.description 
-				#if nim.slot %8 > 1:
-					#continue
 				
                         nimList.append((str(n.slot), n.friendly_full_description))
 		if nimList:
-		        print "nimlist1:", nimList
 			session.open(FastScanScreen, nimList)
 		else:
 			print "No suitable sat tuner found!"
@@ -568,4 +558,3 @@ def Plugins(**kwargs):
 		return PluginDescriptor(name=_("Fast Scan"), description="Scan Dutch/Belgian sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
 	else:
 		return []
-
