@@ -67,7 +67,7 @@ CS Mini/CS Film/Horor Film
 Film+ CZE
 AMC CE
 FilmBox Extra HD
-Arena Sport
+Slovak Sport
 NOVA Sport 1
 Sport1 CZE
 Sport2 CZE
@@ -92,7 +92,7 @@ Jednotka HD
 Markiza HD
 JOJ HD
 CT1 HD
-Arena Sport 1 HD
+Slovak Sport HD
 NOVA Sport 1 HD
 Discovery HD Showcase
 Animal Planet HD
@@ -183,3 +183,8 @@ CT Sport HD
 CT Sport
 CT D/CT Art
 Nova HD 
+Blue Hustler
+C8
+HBO Comedy
+STINGRAY LITE TV
+Universal channel 
