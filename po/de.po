@@ -13063,3 +13063,13 @@ msgstr "Ausgewähltes Image:\t %s"
 
 msgid "Use alternate bouquets numbering"
 msgstr "Benutze alternative Bouquets Nummerierung"
+
+msgid "page up"
+msgstr "Seite hoch"
+
+msgid "page down"
+msgstr "Seite runter"
+
+msgid "Select your skin and press OK to activate the selected skin."
+msgstr "Wähle einen Skin und drücke OK um den Skin zu aktivieren."
+
