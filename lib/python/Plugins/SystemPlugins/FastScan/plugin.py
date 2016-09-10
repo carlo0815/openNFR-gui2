@@ -160,6 +160,10 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Freesat_Romania'] = (0, 900, True)		
 		self.providers['Freesat_Slovenske'] = (0, 900, True)
 		self.providers['HDPlus'] = (0, 900, True)
+		self.providers['Sky_de_Starter'] = (0, 900, True)
+		self.providers['Sky_de_Cinema'] = (0, 900, True)
+		self.providers['Sky_de_Sport'] = (0, 900, True)		
+		self.providers['Sky_de_Bundesliga'] = (0, 900, True)		
 		self.providers['UPC'] = (0, 900, True)                		
 		
 		#orgin
@@ -167,15 +171,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
 		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
-		self.providers['TéléSAT'] = (0, 920, True)
-		self.providers['TéléSAT Astra3'] = (1, 920, True)
+		self.providers['TÃ©lÃ©SAT'] = (0, 920, True)
+		self.providers['TÃ©lÃ©SAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
 		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False) 
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['AustriaSat Magyarország Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat Magyarország Astra 3'] = (1, 951, False)
+		self.providers['AustriaSat MagyarorszÃ¡g Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat MagyarorszÃ¡g Astra 3'] = (1, 951, False)
 		
 				
 		
@@ -405,8 +409,10 @@ class FastScanScreen(ConfigListScreen, Screen):
                 		wz.close()
                         	for wwww in reta:
                         		for s in wx:
-                                        	if wwww in s:
-                                                	s1 = s.lstrip(wwww)
+                        	                www1 = s.rsplit("#", 1)
+                        	                wwww1 = www1[0].rstrip()
+                                        	if wwww1 == wwww:
+                                        	        s1 = "#" + www1[1]
                                        			wx1.append(s1)
                                	                	break
                 		wz1 = open(newbouq, "w")
@@ -418,8 +424,8 @@ class FastScanScreen(ConfigListScreen, Screen):
                         	if os.path.isfile(favlist):              
                         		os.remove(favlist)                            	
                         	if os.path.isfile(newbouq_unsortlist):              
-                        		os.remove(newbouq_unsortlist)                
-                        	for zz in ret: 	       
+                        		os.remove(newbouq_unsortlist)
+                        	for zz in ret:
                         		if newbouq3 in zz:
                         			print "no Service add"
                                		else:
@@ -477,7 +483,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 
         def keyGo(self):
 		prov = self.scan_provider.value.lower()
-                if prov == "astra_19_austriasat" or prov == "digitv" or prov == "focussat" or prov == "freesat_czech_republic" or prov == "freesat_hungary" or prov == "freesat_moldavia" or prov == "freesat_slovenske" or prov == "freesat_romania" or prov == "hdplus" or prov == "upc":
+                if prov == "astra_19_austriasat" or prov == "digitv" or prov == "focussat" or prov == "freesat_czech_republic" or prov == "freesat_hungary" or prov == "freesat_moldavia" or prov == "freesat_slovenske" or prov == "freesat_romania" or prov == "hdplus" or prov == "sky_de_starter" or prov == "sky_de_cinema" or prov == "sky_de_sport" or prov == "sky_de_bundesliga" or prov == "upc":
                   if self.scan_alternative_number_mode.value == True:
                         config.usage.alternative_number_mode.value = True
                         config.usage.alternative_number_mode.save()
@@ -558,3 +564,4 @@ def Plugins(**kwargs):
 		return PluginDescriptor(name=_("Fast Scan"), description="Scan Dutch/Belgian sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
 	else:
 		return []
+
