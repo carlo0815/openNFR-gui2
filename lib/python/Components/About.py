@@ -142,9 +142,9 @@ def getChipSetString():
 			return "unavailable"
 
 def getCPUSpeedString():
-	if getMachineBuild() in ('vusolo4k', 'hd51'):
+	if getMachineBuild() in ('vusolo4k'):
 		return "1,5 GHz"
-	elif getMachineBuild() in ('hd52'):
+	elif getMachineBuild() in ('hd52', 'hd51'):
 		return "1,7 GHz"
 	else:
 		try:
