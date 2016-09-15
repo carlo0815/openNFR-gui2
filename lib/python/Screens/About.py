@@ -33,9 +33,9 @@ class About(Screen):
 
 		cpuMHz = ""
 		if getMachineBuild() in ('vusolo4k'):
-			cpuMHz = "   (1,5 MHz)"
+			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('hd52', 'hd51'):
-                        cpuMHz = "   (1,7 MHz)"
+                        cpuMHz = "   (1,7 GHz)"
 		else:
 			if path.exists('/proc/cpuinfo'):
 				f = open('/proc/cpuinfo', 'r')
