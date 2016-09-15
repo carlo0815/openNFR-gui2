@@ -160,6 +160,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Freesat_Romania'] = (0, 900, True)		
 		self.providers['Freesat_Slovenske'] = (0, 900, True)
 		self.providers['HDPlus'] = (0, 900, True)
+		self.providers['Own_Scan'] = (0, 900, True)		
 		self.providers['Sky_de_Full'] = (0, 900, True)
 		self.providers['Sky_de_Bundesliga'] = (0, 900, True)
                 self.providers['Sky_de_Cinema'] = (0, 900, True)
@@ -173,15 +174,15 @@ class FastScanScreen(ConfigListScreen, Screen):
 		self.providers['Canal Digitaal Astra 1'] = (0, 900, True)
 		self.providers['TV Vlaanderen'] = (1, 910, True)
 		self.providers['TV Vlaanderen  Astra 1'] = (0, 910, True)
-		self.providers['TÃƒÂ©lÃƒÂ©SAT'] = (0, 920, True)
-		self.providers['TÃƒÂ©lÃƒÂ©SAT Astra3'] = (1, 920, True)
+		self.providers['TÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©SAT'] = (0, 920, True)
+		self.providers['TÃƒÆ’Ã‚Â©lÃƒÆ’Ã‚Â©SAT Astra3'] = (1, 920, True)
 		self.providers['HD Austria'] = (0, 950, False)
 		self.providers['Fast Scan Deutschland'] = (0, 960, False)
 		self.providers['Fast Scan Deutschland Astra3'] = (1, 960, False) 
 		self.providers['Skylink Czech Republic'] = (1, 30, False)
 		self.providers['Skylink Slovak Republic'] = (1, 31, False)
-		self.providers['AustriaSat MagyarorszÃƒÂ¡g Eutelsat 9E'] = (2, 951, False)
-		self.providers['AustriaSat MagyarorszÃƒÂ¡g Astra 3'] = (1, 951, False)
+		self.providers['AustriaSat MagyarorszÃƒÆ’Ã‚Â¡g Eutelsat 9E'] = (2, 951, False)
+		self.providers['AustriaSat MagyarorszÃƒÆ’Ã‚Â¡g Astra 3'] = (1, 951, False)
 		
 				
 		
@@ -566,7 +567,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 
         def keyGo(self):
 		prov = self.scan_provider.value.lower()
-                if prov == "astra_19_austriasat" or prov == "digitv" or prov == "focussat" or prov == "freesat_czech_republic" or prov == "freesat_hungary" or prov == "freesat_moldavia" or prov == "freesat_slovenske" or prov == "freesat_romania" or prov == "hdplus" or prov == "sky_de_starter" or prov == "sky_de_cinema" or prov == "sky_de_sport" or prov == "sky_de_bundesliga" or prov == "sky_de_entertainment" or prov == "sky_de_full" or prov == "upc":           
+                if prov == "astra_19_austriasat" or prov == "digitv" or prov == "focussat" or prov == "freesat_czech_republic" or prov == "freesat_hungary" or prov == "freesat_moldavia" or prov == "freesat_slovenske" or prov == "freesat_romania" or prov == "hdplus" or prov == "own_scan" or prov == "sky_de_starter" or prov == "sky_de_cinema" or prov == "sky_de_sport" or prov == "sky_de_bundesliga" or prov == "sky_de_entertainment" or prov == "sky_de_full" or prov == "upc":           
                   if self.scan_alternative_number_mode.value == True:
                         config.usage.alternative_number_mode.value = True
                         config.usage.alternative_number_mode.save()
@@ -644,6 +645,7 @@ def FastScanStart(menuid, **kwargs):
 
 def Plugins(**kwargs):
 	if nimmanager.hasNimType("DVB-S"):
-		return PluginDescriptor(name=_("Fast Scan"), description="Scan Dutch/Belgian sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
+		return PluginDescriptor(name=_("Fast Scan"), description="Scan Diefferent sat provider", where = PluginDescriptor.WHERE_MENU, fnc=FastScanStart)
 	else:
 		return []
+
