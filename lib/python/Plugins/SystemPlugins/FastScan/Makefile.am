@@ -4,6 +4,7 @@ SUBDIRS = xml
 
 install_PYTHON =	\
 	__init__.py \
+	readme.txt \	
 	plugin.py \
 	Scan.py
 
