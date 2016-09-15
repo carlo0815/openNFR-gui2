@@ -32,10 +32,10 @@ class About(Screen):
 			AboutText += _("Chipset:\t\t BCM%s") % about.getChipSetString() + "\n"
 
 		cpuMHz = ""
-		if getMachineBuild() in ('vusolo4k', 'hd51'):
-			cpuMHz = "   (1,5 GHz)"
-		elif getMachineBuild() in ('hd52'):
-                        cpuMHz = "   (1,7 GHz)"
+		if getMachineBuild() in ('vusolo4k'):
+			cpuMHz = "   (1,5 MHz)"
+		elif getMachineBuild() in ('hd52', 'hd51'):
+                        cpuMHz = "   (1,7 MHz)"
 		else:
 			if path.exists('/proc/cpuinfo'):
 				f = open('/proc/cpuinfo', 'r')
