@@ -347,9 +347,9 @@ class FastScanScreen(ConfigListScreen, Screen):
 				self.system = system # DVB-S = 0, DVB-S2 = 1
 			
 				if modulation == "QPSK":
-			    		modulation = 0
-				elif modulation == "8PSK":
 			    		modulation = 1
+				elif modulation == "8PSK":
+			    		modulation = 2
 			    
 				self.modulation = modulation # 0- QPSK, 1 -8PSK
 			
