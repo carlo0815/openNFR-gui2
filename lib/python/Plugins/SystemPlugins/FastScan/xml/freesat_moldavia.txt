@@ -13,7 +13,7 @@ CT24
 Prima TV
 Prima Cool
 Prima Love
-M3 Anno
+M3 Anno.
 RTL Klub
 m1
 m2 / Petofi
@@ -21,12 +21,11 @@ HirTV
 ATV
 Duna TV
 Duna World
-Slager TV.
+Slager TV
 STORY4
-STORY5 
+STORY5
 GALAXY
 Senzi
-Slagr TV
 Fanda TV
 Comedy Central Extra
 TV Barrandov
@@ -67,7 +66,7 @@ CS Mini/CS Film/Horor Film
 Film+ CZE
 AMC CE
 FilmBox Extra HD
-Slovak Sport
+Arena Sport 1
 NOVA Sport 1
 Sport1 CZE
 Sport2 CZE
@@ -92,7 +91,7 @@ Jednotka HD
 Markiza HD
 JOJ HD
 CT1 HD
-Slovak Sport HD
+Arena Sport 1 HD
 NOVA Sport 1 HD
 Discovery HD Showcase
 Animal Planet HD
@@ -106,7 +105,7 @@ Eurosport 1 HD
 Eurosport 2 HD
 Sport 2 HD
 Sport 1 HD
-Sundance HD
+Sundance TV
 Duna HD
 m2 HD
 CT 2 HD
@@ -117,7 +116,7 @@ MTV Hits
 MTV Dance
 Mooz Dance HD
 VH1
-VH1 Classic 
+VH1 Classic
 Ocko
 Music Channel
 Mooz Dance
@@ -149,7 +148,6 @@ Alternative
 Feel good music
 Total Hits
 Blues
-RTR Rossia
 SperantaTV
 TV2
 FEM3
@@ -175,16 +173,11 @@ Nickelodeon
 Minimax / C8 Hu
 Nick Jr
 RTL Klub HD
-Sport 1 HD
 MTV European
 VIVA Hungary
 Credo TV
 CT Sport HD
 CT Sport
 CT D/CT Art
-Nova HD 
+Nova HD
 Blue Hustler
-C8
-HBO Comedy
-STINGRAY LITE TV
-Universal channel 
