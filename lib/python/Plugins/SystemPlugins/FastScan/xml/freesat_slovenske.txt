@@ -11,7 +11,7 @@ CT2
 CT24
 Prima Cool
 Prima Love
-M3 Anno
+M3 Anno.
 RTL Klub
 m1
 m2 / Petofi
@@ -19,13 +19,12 @@ HirTV
 ATV
 Duna TV
 Duna World
-Slager TV.
+Slager TV
 STORY4
-STORY5 
+STORY5
 AXN Czech
 AXN White
 AXN Black
-Universal channel
 Comedy Central Extra
 TV Barrandov
 CBS Reality
@@ -50,7 +49,6 @@ Da Vinci Learning
 DOQ
 HBO CZE
 HBO2
-HBO Comedy
 Cinemax
 Cinemax2
 Filmbox Premium
@@ -60,7 +58,7 @@ CS Mini/CS Film/Horor Film
 Film+ CZE
 AMC CE
 Filmbox
-Slovak Sport
+Arena Sport 1
 NOVA Sport 1
 Sport1 CZE
 Sport2 CZE
@@ -77,13 +75,13 @@ Disney Channel
 JimJam
 Nickelodeon Europe
 Minimax Cz
-C8
+Minimax / C8 Hu
 ducktv
 Cartoon Network
 Boomerang
 Megamax
 CT1 HD
-Slovak Sport HD
+Arena Sport 1 HD
 NOVA Sport 1 HD
 Discovery HD Showcase
 Animal Planet HD
@@ -96,7 +94,7 @@ Eurosport 1 HD
 Eurosport 2 HD
 Sport 2 HD
 HBO HD
-Sundance HD
+Sundance TV
 Duna HD
 Mooz Dance HD
 MTV Europe
@@ -105,7 +103,7 @@ MTV Rocks
 MTV Hits
 MTV Dance
 VH1
-VH1 Classic 
+VH1 Classic
 Ocko
 Music Channel
 Mooz Dance
@@ -118,24 +116,21 @@ AlJazeera English
 CCTV News
 France 24
 TV5MONDE
-Blue Hustler 
+Blue Hustler
 Hustler TV
 Private TV
-STINGRAY LITE TV
+STV 1
 Kanal D
-Mynele TV
 TV Lux
 Romania TV
-RTR Rossia
 SperantaTV
-U (Romania)
+U tv
 Alternative
 AMCHu
 AXN CE
 Blues
 Classic Rock
 Classical Greats
-Comedy Central Extra
 Comedy Central Hungary
 Cool
 Cool Jazz
@@ -151,8 +146,6 @@ FEM3
 Film Cafe
 Film Mania
 Film+
-Filmbox
-Filmbox Premium
 Fox
 GALAXY
 HBO
@@ -172,7 +165,7 @@ Muzsika TV
 Nick Jr
 Nickelodeon
 NOVA Cinema
-Nova HD 
+Nova HD
 Paramount Channel Hungary
 Prima TV
 Rock n Roll Era
@@ -191,4 +184,4 @@ TV NOVA
 TV2
 Viasat3.
 Viasat6
-VIVA Hungary 
+VIVA Hungary
