@@ -1,13 +1,13 @@
 m1
 M1 HD
 m2 / Petofi
-M2 HD
+m2 HD
 M4 Sport
 m4 HD
 Duna TV
 Duna HD
 Duna World
-M3 Anno
+M3 Anno.
 RTL Klub
 TV2
 RTL2
@@ -24,7 +24,7 @@ M+
 ATV
 HirTV
 Echo TV
-Slager TV.
+Slager TV
 Muzsika TV
 CBS Reality
 Spektrum Home
@@ -96,7 +96,7 @@ Eurosport 1 HD
 Eurosport 2 HD
 Sport 1 HD
 HBO HD
-Sundance HD
+Sundance TV
 Mooz Dance HD
 MTV European
 VIVA Hungary
@@ -129,15 +129,12 @@ Alternative
 Feel good music
 Total Hits
 Blues
-RTR Rossia
 SperantaTV
-Credo TV 
 AMC CE
-Slovak Sport
-Slovak Sport HD
+Arena Sport 1
+Arena Sport 1 HD
 AXN Czech
 Blue Hustler
-C8
 CS Mini/CS Film/Horor Film
 CT D/CT Art
 CT Sport
@@ -161,7 +158,6 @@ JOJ HD
 JOJ Plus
 Markiza HD
 Minimax Cz
-MTV European
 Nickelodeon Europe
 NOVA Cinema
 Nova HD
@@ -178,7 +174,7 @@ Sport 2 HD
 Sport1 CZE
 Sport2 CZE
 Sport5
-STINGRAY LITE TV
+STV 1
 TA3
 TV Barrandov
 TV Doma
@@ -186,4 +182,3 @@ TV JOJ
 TV Lux
 TV Markiza
 TV NOVA
-Universal channel 
