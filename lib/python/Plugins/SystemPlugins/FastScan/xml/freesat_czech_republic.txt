@@ -17,7 +17,6 @@ Fanda TV
 AXN Czech
 AXN White
 AXN Black
-Universal channel
 Comedy Central Extra
 CBS Reality
 Prima Zoom
@@ -40,7 +39,6 @@ Da Vinci Learning
 DOQ
 HBO CZE
 HBO2
-HBO Comedy
 Cinemax
 Cinemax2
 Filmbox Premium
@@ -60,7 +58,7 @@ Eurosport
 Eurosport 2
 Extreme Sports Channel
 Auto Motor Sport
-Slovak Sport
+Arena Sport 1
 Fishing and Hunting
 Fine Living
 Food Network
@@ -68,7 +66,7 @@ Disney Channel
 JimJam
 Nickelodeon Europe
 Minimax Cz
-C8
+Minimax / C8 Hu
 ducktv
 Cartoon Network
 Boomerang
@@ -83,12 +81,12 @@ Travel Channel HD
 History HD
 NGC HD
 Nat Geo Wild HD
-Slovak Sport HD
+Arena Sport 1 HD
 Eurosport 1 HD
 Eurosport 2 HD
 Sport 2 HD
 HBO HD
-Sundance HD
+Sundance TV
 Mooz Dance HD
 MTV Europe
 MTV Music
@@ -118,25 +116,22 @@ TV5MONDE
 Blue Hustler
 Hustler TV
 Private TV
-STINGRAY LITE TV
-RTR Rossia 
+STV 1
 Alternative
 AMCHu
 Slovak Sport
 Slovak Sport HD
 ATV
 AXN CE
-AXN Czech
 Blues
 Classic Rock
 Classical Greats
-Comedy Central Extra
 Comedy Central Hungary
 Cool
 Cool Jazz
 CT 2 HD
 CT Sport HD
-Credo TV 
+Credo TV
 Dajto
 Duna HD
 Dvojka HD
@@ -146,8 +141,6 @@ FEM3
 Film Cafe
 Film Mania
 Film+
-Filmbox
-Filmbox Premium
 Fox
 GALAXY
 HBO
@@ -159,25 +152,22 @@ Kanal D
 Lounge
 M+
 M1 HD
-M2 HD
-M3 Anno
+m2 HD
+M3 Anno.
 m4 HD
 M4 Sport
-Minimax / C8 Hu
 Muzsika TV
 MTV European
 Nick Jr
 Nickelodeon
-Nickelodeon Europe
 Paramount Channel Hungary
-Private TV
 Rock n Roll Era
 Romania TV
 RTL Klub HD
 RTL+
 RTL2
 Senzi
-Slager TV.
+Slager TV
 Slagr TV
 Sorozat+
 SperantaTV
@@ -188,13 +178,9 @@ SportM
 STORY4
 STORY5
 SuperTV2
-TA3
 Total Hits
-TV Doma
-TV JOJ
 TV Lux
-TV Markiza
 TV2
 Viasat3.
 Viasat6
-VIVA Hungary 
+VIVA Hungary
