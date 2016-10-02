@@ -62,12 +62,19 @@ class About(Screen):
 		AboutText += _("CPU:\t\t %s") % about.getCPUString() + cpuMHz + "\n"
 		AboutText += _("Cores:\t\t %s") % about.getCpuCoresString() + "\n"
 		imagestarted = ""
+		bootname = ''
+	                if path.exists('/boot/bootname'):
+	                       f = open('/boot/bootname', 'r')
+		               bootname = f.readline().split('=')[1]
+		               f.close()
+
 		if path.exists('/boot/STARTUP'):
 			f = open('/boot/STARTUP', 'r')
 			f.seek(22)
 			image = f.read(1) 
 			f.close()
-			AboutText += _("Selected Image:\t\t %s") % "STARTUP_" + image + "\n"
+			if bootname: bootname = "   (%s)" %bootname 
+		        AboutText += _("Selected Image:\t%s") % "STARTUP_" + image + bootname + "\n"
 		string = getDriverDate()
 		year = string[0:4]
 		month = string[4:6]
