@@ -63,10 +63,10 @@ class About(Screen):
 		AboutText += _("Cores:\t\t %s") % about.getCpuCoresString() + "\n"
 		imagestarted = ""
 		bootname = ''
-	                if path.exists('/boot/bootname'):
-	                       f = open('/boot/bootname', 'r')
-		               bootname = f.readline().split('=')[1]
-		               f.close()
+	        if path.exists('/boot/bootname'):
+	                f = open('/boot/bootname', 'r')
+		        bootname = f.readline().split('=')[1]
+		        f.close()
 
 		if path.exists('/boot/STARTUP'):
 			f = open('/boot/STARTUP', 'r')
