@@ -27,7 +27,7 @@ class About(Screen):
 		OpenNFRVersion = _("OpenNFR %s") % about.getImageVersionString()
 		self["OpenNFRVersion"] = Label(OpenNFRVersion)
 		
-		AboutText = _("Model:\t\t %s %s\n") % (getMachineBrand(), getMachineName())
+		AboutText = _("Model:\t\t%s %s\n") % (getMachineBrand(), getMachineName())
 		
 		bootloader = ""
                 if path.exists('/sys/firmware/devicetree/base/bolt/tag'):
@@ -37,7 +37,7 @@ class About(Screen):
 			AboutText += _("Bootloader:\t\t%s\n") % (bootloader)
 
 		if path.exists('/proc/stb/info/chipset'):
-			AboutText += _("Chipset:\t\t BCM%s") % about.getChipSetString() + "\n"
+			AboutText += _("Chipset:\t\tBCM%s") % about.getChipSetString() + "\n"
 
 		cpuMHz = ""
 		if getMachineBuild() in ('vusolo4k') or bootloader == 'v29':
@@ -59,8 +59,8 @@ class About(Screen):
 				except:
 					pass
 
-		AboutText += _("CPU:\t\t %s") % about.getCPUString() + cpuMHz + "\n"
-		AboutText += _("Cores:\t\t %s") % about.getCpuCoresString() + "\n"
+		AboutText += _("CPU:\t\t%s") % about.getCPUString() + cpuMHz + "\n"
+		AboutText += _("Cores:\t\t%s") % about.getCpuCoresString() + "\n"
 		imagestarted = ""
 		bootname = ''
 	        if path.exists('/boot/bootname'):
@@ -74,35 +74,35 @@ class About(Screen):
 			image = f.read(1) 
 			f.close()
 			if bootname: bootname = "   (%s)" %bootname 
-		        AboutText += _("Selected Image:\t%s") % "STARTUP_" + image + bootname + "\n"
+		        AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image + bootname + "\n"
 		string = getDriverDate()
 		year = string[0:4]
 		month = string[4:6]
 		day = string[6:8]
 		driversdate = '-'.join((year, month, day))
-		AboutText += _("Drivers:\t\t %s") % driversdate + "\n"
-		AboutText += _("Image:\t\t %s") % about.getImageVersionString() + "\n"
-		AboutText += _("Build:\t\t %s") % getImageBuild() + "\n"		
-		AboutText += _("Kernel: \t\t %s") % about.getKernelVersionString() + "\n"
-		AboutText += _("Oe-Core:\t\t %s") % about.getEnigmaVersionString() + "\n"
-		AboutText += _("Enigma (re)starts:\t %d\n") % config.misc.startCounter.value
-		AboutText += _("GStreamer:\t\t %s") % about.getGStreamerVersionString() + "\n"	
-		AboutText += _("Python:\t\t %s") % about.getPythonVersionString() + "\n"
+		AboutText += _("Drivers:\t\t%s") % driversdate + "\n"
+		AboutText += _("Image:\t\t%s") % about.getImageVersionString() + "\n"
+		AboutText += _("Build:\t\t%s") % getImageBuild() + "\n"		
+		AboutText += _("Kernel: \t\t%s") % about.getKernelVersionString() + "\n"
+		AboutText += _("Oe-Core:\t\t%s") % about.getEnigmaVersionString() + "\n"
+		AboutText += _("Enigma (re)starts:\t%d\n") % config.misc.startCounter.value
+		AboutText += _("GStreamer:\t\t%s") % about.getGStreamerVersionString() + "\n"	
+		AboutText += _("Python:\t\t%s") % about.getPythonVersionString() + "\n"
 
 		fp_version = getFPVersion()
 		if fp_version is None:
 			fp_version = ""
 		elif fp_version != 0:
-			fp_version = _("Front Panel:\t\t %s") % fp_version 
+			fp_version = _("Front Panel:\t\t%s") % fp_version 
 			AboutText += fp_version + "\n\n"
 		else:
-			fp_version = _("Front Panel:\t\t Version unknown")
+			fp_version = _("Front Panel:\t\tVersion unknown")
 			AboutText += fp_version + "\n\n"
 
-		AboutText += _("Installed:\t\t %s") % about.getFlashDateString() + "\n"			
-		AboutText += _("Last Upgrade:\t\t %s") % about.getLastUpdateString() + "\n\n" 
-		AboutText += _("WWW:\t\t %s") % about.getImageUrlString() + "\n\n"
-		AboutText += _("based on:\t\t %s") % "github.com/oe-alliance" + "\n\n"
+		AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
+		AboutText += _("Last Upgrade:\t\t%s") % about.getLastUpdateString() + "\n\n" 
+		AboutText += _("WWW:\t\t%s") % about.getImageUrlString() + "\n\n"
+		AboutText += _("based on:\t\t%s") % "www.github.com/oe-alliance" + "\n\n"
 
 		self["FPVersion"] = StaticText(fp_version)
 
