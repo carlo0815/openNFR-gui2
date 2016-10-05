@@ -13058,8 +13058,8 @@ msgstr "Dateiname:"
 msgid "You can select with yellow the OnlineFlash Image\n or select Recovery to create a USB Disk Image for clean Install."
 msgstr "Mit Gelb den OnlineFlash Bereich auswählen\n oder wähle Recovery um ein USB Disk Image zur Installation zu erstellen." 
 
-msgid "Selected Image:\t\t %s"
-msgstr "Ausgewähltes Image:\t %s"
+msgid "Selected Image:\t\t%s"
+msgstr "Ausgewähltes Image:\t%s"
 
 msgid "Use alternate bouquets numbering"
 msgstr "Benutze alternative Bouquets Nummerierung"
@@ -13072,4 +13072,19 @@ msgstr "Seite runter"
 
 msgid "Select your skin and press OK to activate the selected skin."
 msgstr "Wähle einen Skin und drücke OK um den Skin zu aktivieren."
+
+msgid "MultiBoot Selector"
+msgstr "MultiBoot Auswahl"
+
+msgid "Select Image: %s"
+msgstr "Wähle Image: %s"
+
+msgid "Select Bootoption: %s"
+msgstr "Wähle Bootoption: %s"
+
+msgid "Do you want to reboot now with selected image?"
+msgstr "Möchtest du das ausgewählte Image jetzt starten?"
+
+msgid "Current Bootsettings: %s (%s)%s"
+msgstr "Aktuelle Bootsettings: %s (%s)%s"
 
