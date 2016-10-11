@@ -378,7 +378,6 @@ class FastScanScreen(ConfigListScreen, Screen):
 		global sname
 		global ret
 		ret1 = ret
-#####new		
 		if prov == "sky_de_full":
 		        provlist = ['Sky_de_Bundesliga', 'Sky_de_Cinema', 'Sky_de_Entertainment', 'Sky_de_Sport', 'Sky_de_Starter']
                         for xprov in provlist:
@@ -394,7 +393,6 @@ class FastScanScreen(ConfigListScreen, Screen):
        				newbouq3 = '"userbouquet.' + newprov + '.tv"'
                			newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
                			path = self.path
-       				#prefix = self.scan_provider.value 
        				try:
                				txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + newprov.lower() + ".txt"
        					hh = []
@@ -453,8 +451,83 @@ class FastScanScreen(ConfigListScreen, Screen):
                 		except:
                         		print 'My error, value:no xml found'
                         eDVBDB.getInstance().reloadBouquets()         
-                       			#self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)		
+#####new
+		elif prov in ('freesat_czech_republic', 'freesat_hungary', 'freesat_moldavia', 'freesat_slovenske'):
+			self.path = "/etc/enigma2"
+			lastsc = self.path + "/userbouquet.LastScanned.tv"
+			newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
+			newbouq_unsort = self.path + "/userbouquet." + self.scan_provider.value + ".tv_unsort"
+       			favlist = self.path + "/bouquets.tv"
+       			newbouq_unsortlist = self.path + newbouq_unsort
+       			newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\r'
+       			newbouq2 = '#NAME ' + self.scan_provider.value + ' '
+       			newbouq3 = '"userbouquet.' + self.scan_provider.value + '.tv"'
+               		newbouq11 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.LastScanned.tv" ORDER BY bouquet'
+               		path = self.path
+       			prefix = self.scan_provider.value 
+       			try:
+               			txtdoc = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/" + self.scan_provider.value.lower() + ".txt"
+       				hh = []
+               			gg = open(txtdoc, "r")
+       				reta = gg.read().split("\n")
+				gg.close()
+               			ff = open(lastsc, "r")
+       				retb = ff.read().split("\n")
+				ff.close()
+       				i = 1
+       				wx = [newbouq2]
+       				wx1 = [newbouq2]
+                		if retb[1].startswith("#SERVICE"):
+                        		while i+1 < len(retb):
+              					self.updateServiceName(int(i))
+                               			if sname in reta:
+                                       			wx.append(sname + " " + retb[i])
+                        	
+                       				i +=1
+                			wz = open(newbouq_unsort, "w")
+                			wz.write("\n".join(map(lambda x: str(x), wx)))    
+                			wz.close()
+                        		for wwww in reta:
+                        			for s in wx:
+                        	                	www1 = s.rsplit("#", 1)
+                        	                	wwww1 = www1[0].rstrip()
+                                        		if wwww1 == wwww:
+                                        	        	s1 = "#" + www1[1]
+                                       				wx1.append(s1)
+                               	                		break
+                			wz1 = open(newbouq, "w")
+                			wz1.write("\n".join(map(lambda x: str(x), wx1)))    
+                			wz1.close()
+                        		
+                 		
+                			rety = []
+                        		if os.path.isfile(favlist):              
+                        			os.remove(favlist)                            	
+                        		if os.path.isfile(newbouq_unsortlist):              
+                        			os.remove(newbouq_unsortlist)
+                        		for zz in ret:
+                        			if newbouq3 in zz:
+                        				print "no Service add"
+                               			else:
+                                       			rety.append(zz)
+                        		rety[1:1] = [newbouq1]
+                			wv = open(favlist, "w")
+                			wv.write("\n".join(map(lambda x: str(x), rety)))
+                			wv.close()
+                			os.system('cp /usr/lib/enigma2/python/Plugins/SystemPlugins/FastScan/xml/bouq/' + newbouq3 + ' /etc/enigma2/')
+                			eDVBDB.getInstance().reloadBouquets()
+                                 
+                        	else:
+                			wv = open(favlist, "w")
+                			wv.write("\n".join(map(lambda x: str(x), ret)))
+                			wv.close()                   
+                			eDVBDB.getInstance().reloadBouquets()                         	
+                        		self.keyCancel()
+                	except:
+                        	print 'My error, value:no xml found' 
+                       		#self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)                         		
 ###new end
+
 		else:
 			self.path = "/etc/enigma2"
 			lastsc = self.path + "/userbouquet.LastScanned.tv"
