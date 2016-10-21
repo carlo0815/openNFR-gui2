@@ -361,7 +361,15 @@ class DownloadOnLineImage(Screen):
                elif box in ('sf108'):
                     box = 'sf108'
                     urlbox = getBoxType() 
-                    stb = '1'                    
+                    stb = '1' 
+               elif box in ('sf128'):
+                    box = 'sf128'
+                    urlbox = getBoxType() 
+                    stb = '1'
+               elif box in ('sf138'):
+                    box = 'sf138'
+                    urlbox = getBoxType() 
+                    stb = '1'			
                 
             else:   
                 stb = 'no Image for this Box on this Side'    
