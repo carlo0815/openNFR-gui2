@@ -1927,7 +1927,7 @@ class NetworkFtp(Screen):
 		self['labstop'] = Label(_("Stopped"))
 		self['labrun'] = Label(_("Running"))
 		self['key_green'] = Label(_("Start"))
-		self["key_red"] = Label()
+		self['key_red'] = Label(_("Remove Service"))
 		self['key_yellow'] = Label(_("Autostart"))
 		self["key_blue"] =  Label()
 		self.Console = Console()
