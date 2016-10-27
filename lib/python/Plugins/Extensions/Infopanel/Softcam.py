@@ -11,9 +11,13 @@ def getcamcmd(cam):
 	if getcamscript(camname):
 		return config.NFRSoftcam.camdir.value + "/" + cam + " start"
 	elif ".x" in camname:
-	        if "mgcamd" in camname: 
+	        if "mgcamd" in camname:
 	        	return config.NFRSoftcam.camdir.value + "/" + cam
-	        else:	
+	        elif "oscam_oscamupdater" in camname:
+	                cam_name_1 = xcamname.strip(".x")
+			return config.NFRSoftcam.camdir.value + "/" + cam + " -bc " + \
+				config.NFRSoftcam.camconfig.value + "/" + cam_name_1
+	        else:
 			emus=[]
 			i = 0
 			for fAdd in glob ('/etc/*.emu'):
@@ -37,6 +41,22 @@ def getcamcmd(cam):
                                                     				return config.NFRSoftcam.camdir.value + "/" + cam + " " + start_emu[1]
                         	i = i + 1                        	
 				searchfile.close()
+			
+			for fAdd in glob ('/etc/init.d/softcam.*'):
+				emustart=[]
+				cam_name = xcamname.strip(".x")
+				cam_scripts = "/etc/init.d/softcam." + cam_name
+				if cam_name == "oscam_oscamupdater":
+				        cam_name1 = cam_name[6:]
+				        cam_scripts = "/etc/init.d/softcam." + cam_name1
+				if fAdd == cam_scripts:
+				        cam_starts = cam_scripts + " start"
+				        return cam_starts
+				else:
+                                        
+                                        print "no emustarter found in /etc/init.d please check!"
+                     	                return config.NFRSoftcam.camdir.value + "/" + cam
+			
 	
 	else:
 		if "oscam" in camname:
