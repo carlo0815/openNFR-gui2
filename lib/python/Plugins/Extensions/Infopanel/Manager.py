@@ -83,7 +83,6 @@ class NFRCamManager(Screen):
 			os.remove (fdelete)
 			
                 for fdelete in glob ('/usr/keys/*'):
-                        print "file:", fdelete
                 	if os.path.islink(fdelete):
 				os.unlink(fdelete)
 	        if os.path.isfile("/tmp/usbsoftcam"):
@@ -121,6 +120,16 @@ class NFRCamManager(Screen):
 				if "binname" in line:
 					emus.append(line[10:])
 			searchfile.close()
+			
+		for fAdd1 in glob ('/etc/init.d/softcam.*'):
+			searchfile1 = open(fAdd1, "r")
+			for line1 in searchfile1:
+				if 'echo "/usr/bin/' in line1:
+					line2 = line1[15:]
+					line3 = line2.split(" ")
+					line4 = line3[0]
+					emus.append(line4)
+			searchfile1.close()			
 	
 		for emu in emus:
 		        emu1 = emu.strip()
@@ -400,4 +409,4 @@ class ConfigEdit(Screen, ConfigListScreen):
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
-			self["config"].invalidate(self["config"].getCurrent())				
+			self["config"].invalidate(self["config"].getCurrent())	
