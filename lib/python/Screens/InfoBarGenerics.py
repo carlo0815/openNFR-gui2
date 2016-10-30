@@ -2842,6 +2842,11 @@ class InfoBarSubserviceSelection:
 				self.addSubserviceToBouquet(self.bouquets[0][1])
 				self.session.open(MessageBox, _("Service has been added to the favourites."), MessageBox.TYPE_INFO)
 
+	def playSubservice(self, ref):
+		if ref.getUnsignedData(6) == 0:
+			ref.setName("")
+		self.session.nav.playService(ref, checkParentalControl=False, adjust=False)				
+				
 	def bouquetSelClosed(self, confirmed):
 		self.bsel = None
 		del self.selectedSubservice
