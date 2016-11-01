@@ -13150,3 +13150,6 @@ msgstr "Fehler in Datei %s"
 
 msgid "Command line error!"
 msgstr "Kommandozeilen Fehler!"
+
+msgid "Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after restart move CI+ Modul back in Box! \n\nAfter successful Init please reboot your Box."
+msgstr "Bitte das CI+ Modul herausziehen und OK klicken! \n\nEnigma2 startet neu, danach das CI+ Modul wieder einstecken! \n\nNach erfolgreicher Initialisierung bitte die Box neu starten."
