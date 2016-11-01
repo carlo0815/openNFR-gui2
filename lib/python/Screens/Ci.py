@@ -831,11 +831,11 @@ class ciplusfix(ConfigListScreen, Screen):
 		self["key_red"] = Button(_("Exit"))
 		self["ok"] = Button("Start CI Fix")
 		self["key_green"] = Button("Start CI Fix")
-		self["info-fix"] = Label(_("Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after restart move CI+ Modul back in Box! \n\nAfter successful Init please reboot your Box."))
+		self["info-fix"] = Label(_("Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after restart move CI+ Modul back in Box! \n\nIf error 575, remove and move CI+ Modul again back in Box! \n\nAfter successful Init please reboot your Box."))
 		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions', 'CiSelectionActions'],
 		{
 			'red': self.cancel,
-			'ok': self.ok,
+			'ok': self.ok,n\n
 			'green': self.ok,
 			'cancel': self.cancel
 		}, -2)
