@@ -1,27 +1,36 @@
 from Screen import Screen
+from boxbranding import getBoxType
 from Components.ActionMap import ActionMap
 from Components.ActionMap import NumberActionMap
 from Components.Label import Label
 from Components.Pixmap import Pixmap
+from Components.Button import Button
 from Components.config import config, ConfigNumber, ConfigYesNo, ConfigSubsection, ConfigSelection, ConfigBoolean, ConfigInteger, ConfigSubList, NoSave, getConfigListEntry, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigNothing, ConfigPIN
 from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.Console import Console
+from Components.ScrollLabel import ScrollLabel
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import fileExists
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox 
 from Screens.InputBox import InputBox
+from Screens.Console import Console
 from Components.Input import Input
 from Screens.ChoiceBox import ChoiceBox
 from Components.AVSwitch import AVSwitch
-from Components.MenuList import MenuList 
+from Components.MenuList import MenuList
+from Plugins.Plugin import PluginDescriptor 
 import time
 from os import path as os_path, remove, unlink, rename, chmod, access, X_OK
-
+from enigma import *
 from enigma import eTimer, eDVBCI_UI, eDVBCIInterfaces
+import os
+
+import re
+import string
 
 MAX_NUM_CI = 4
-
+boxtype = getBoxType()
 def setCIBitrate(configElement):
 	if configElement.value == "no":
 		eDVBCI_UI.getInstance().setClockRate(configElement.slotid, eDVBCI_UI.rateNormal)
@@ -352,6 +361,7 @@ class CiSelection(Screen):
 		self.keyConfigEntry(KEY_RIGHT)
 
 	def appendEntries(self, slot, state):
+		boxtype = getBoxType()
 		self.state[slot] = state
 		self.list.append( (_("Reset"), ConfigNothing(), 0, slot) )
 		self.list.append( (_("Init"), ConfigNothing(), 1, slot) )
@@ -368,10 +378,12 @@ class CiSelection(Screen):
 		self.list.append(getConfigListEntry(_("Multiple service support"), config.ci[slot].canDescrambleMultipleServices))
 		if SystemInfo["CommonInterfaceSupportsHighBitrates"]:
 			self.list.append(getConfigListEntry(_("High bitrate support"), config.ci[slot].canHandleHighBitrates))
+		if boxtype in ("sf208", "sf228", "sf238", "twinboxlcd", "twinboxlcdci5", "singleboxlcd", "odinplus", "e4hd"):
+			self.list.append( (_("CI+ Fix Init"),ConfigNothing(), 3, slot) )			
 
 	def updateState(self, slot):
 		state = eDVBCI_UI.getInstance().getState(slot)
-		self.state[slot] = state
+		self.state[slot] = state                                                                      
 
 		slotidx=0
 		while len(self.list[slotidx]) < 3 or self.list[slotidx][3] != slot:
@@ -408,6 +420,7 @@ class CiSelection(Screen):
 
 	def okbuttonClick(self):
 		cur = self["entries"].getCurrent()
+		print "cur:", cur
 		if cur and len(cur) > 2:
 			action = cur[2]
 			slot = cur[3]
@@ -415,8 +428,14 @@ class CiSelection(Screen):
 				eDVBCI_UI.getInstance().setReset(slot)
 			elif action == 1:		#init
 				eDVBCI_UI.getInstance().setInit(slot)
+			elif action == 3:		#fix 
+				self.session.open(ciplusfix)
+			        
 			elif self.state[slot] == 2:
 				self.dlg = self.session.openWithCallback(self.dlgClosed, MMIDialog, slot, action)
+			elif self.state[slot] == 3:
+				self.session.open(MessageBox, _("Please remove Ci+ Modul and click ok!"), MessageBox.TYPE_INFO)
+				self.session.open(ciplusfix)
 
 	def cancel(self):
 		for slot in range(MAX_NUM_CI):
@@ -784,3 +803,47 @@ class CIHelperSetup(Screen, ConfigListScreen):
 
 	def myStop(self):
 		self.close()
+		
+class ciplusfix(ConfigListScreen, Screen):
+
+    skin = """
+               <screen name="CI+ Modul Fix Init" position="0,0" size="1280,720" title="CI+ Modul Fix Init" zPosition="1" flags="wfNoBorder">
+               <ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
+               <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+               <convert type="ClockToText">Default</convert>
+               </widget>
+               <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+               <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+               </widget>
+               <widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+               <ePixmap pixmap="skin_default/buttons/key_red.png" position="70,670" size="30,30" alphatest="blend" />
+               <ePixmap pixmap="skin_default/buttons/key_green.png" position="330,670" size="30,30" alphatest="blend" />
+               <widget name="key_red" position="105,672" size="240,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+               <widget name="key_green" position="365,672" size="540,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+               <ePixmap position="848,596" zPosition="2" size="350,44" pixmap="skin_default/icons/db.png" transparent="1" alphatest="blend" />
+               <ePixmap position="962,431" size="128,128" zPosition="2" pixmap="skin_default/icons/setup.png" transparent="1" alphatest="blend" />
+               <widget name="info-fix" position="75,110" zPosition="1" size="1280,720" font="Regular;23" halign="left" valign="top" transparent="1" />
+    </screen> """
+
+    def __init__(self, session, args = 0):
+		Screen.__init__(self, session)
+	
+		self["key_red"] = Button(_("Exit"))
+		self["ok"] = Button("Start CI Fix")
+		self["key_green"] = Button("Start CI Fix")
+		self["info-fix"] = Label(_("Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after restart move CI+ Modul back in Box! \n\nAfter successful Init please reboot your Box."))
+		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions', 'CiSelectionActions'],
+		{
+			'red': self.cancel,
+			'ok': self.ok,
+			'green': self.ok,
+			'cancel': self.cancel
+		}, -2)
+		self['status'] = Label()
+
+    def ok(self):
+		target = "init 4; /usr/bin/enigma2; reboot" 
+		self.session.open(Console, title=_("Restart CI+ Fix"), cmdlist = [target], closeOnSuccess = False)		
+		
+    def cancel(self):
+		self.close(False)		
