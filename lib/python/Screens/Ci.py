@@ -345,7 +345,7 @@ class CiSelection(Screen):
 
 	def selectionChanged(self):
 		cur_idx = self["entries"].getCurrentIndex()
-		self["text"].setText(_("Slot %d")%((cur_idx / 5)+1))
+		self["text"].setText(_("Slot %d")%((cur_idx / 6)+1))
 
 	def keyConfigEntry(self, key):
 		try:
