@@ -835,7 +835,7 @@ class ciplusfix(ConfigListScreen, Screen):
 		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions', 'CiSelectionActions'],
 		{
 			'red': self.cancel,
-			'ok': self.ok,n\n
+			'ok': self.ok,
 			'green': self.ok,
 			'cancel': self.cancel
 		}, -2)
