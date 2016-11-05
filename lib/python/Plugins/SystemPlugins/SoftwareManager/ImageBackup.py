@@ -26,7 +26,7 @@ from boxbranding import getBoxType, getMachineBrand, getMachineName, getDriverDa
 VERSION = "Version 5.3 openNFR"
 
 HaveGZkernel = True
-if getMachineBuild() in ("vusolo4k", "spark", "spark7162", "hd51", "hd52"):
+if getMachineBuild() in ("vusolo4k", "spark", "spark7162", "hd51", "hd52", 'sf4008'):
 	HaveGZkernel = False
 
 def Freespace(dev):
