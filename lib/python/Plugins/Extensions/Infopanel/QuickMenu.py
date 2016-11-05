@@ -938,7 +938,7 @@ class QuickMenuDevices(Screen):
 			device = parts[3]
 			if not search('sd[a-z][1-9]',device) and not search('mmcblk[0-9]p[1-9]',device):
 				continue
-			if getMachineBuild() in ('vusolo4k', 'hd51', 'hd52') and search('mmcblk0p[1-9]',device):
+			if getMachineBuild() in ('vusolo4k', 'hd51', 'hd52','sf4008') and search('mmcblk0p[1-9]',device):
  				continue
 			if device in list2:
 				continue
