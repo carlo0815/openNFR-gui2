@@ -34,10 +34,10 @@ eDVBCIMMISession::~eDVBCIMMISession()
 
 int eDVBCIMMISession::receivedAPDU(const unsigned char *tag, const void *data, int len)
 {
-	eDebugNoNewLineStart("SESSION(%d)/MMI %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
+	eDebugNoNewLine("SESSION(%d)/MMI %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
-	eDebugNoNewLineEnd("");
+	eDebug("");
 
 	if ((tag[0]==0x9f) && (tag[1]==0x88))
 		if (eDVBCI_UI::getInstance()->processMMIData(slot->getSlotID(), tag, data, len) == 1)
