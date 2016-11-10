@@ -971,20 +971,20 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		g_object_get (G_OBJECT (m_gst_playbin), "source", &source, NULL);
 		if (!source)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source");
 			goto seek_unpause;
 		}
 		factory = gst_element_get_factory(source);
 		g_object_unref(source);
 		if (!factory)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source factory");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source factory");
 			goto seek_unpause;
 		}
 		name = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
 		if (!name)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source name");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source name");
 			goto seek_unpause;
 		}
 		/*
@@ -1003,14 +1003,14 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 				if (ret == GST_STATE_CHANGE_SUCCESS)
 					return 0;
 			}
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - invalid state, state:%s pending:%s ret:%s",
+			eDebugNoNewLine("[eServiceMP3] trickSeek - invalid state, state:%s pending:%s ret:%s",
 				gst_element_state_get_name(state),
 				gst_element_state_get_name(pending),
 				gst_element_state_change_return_get_name(ret));
 		}
 		else
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - source '%s' is not supported", name);
+			eDebugNoNewLine("[eServiceMP3] trickSeek - source '%s' is not supported", name);
 		}
 seek_unpause:
 		eDebugNoNewLine(", doing seeking unpause\n");
