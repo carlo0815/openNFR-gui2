@@ -1,3 +1,4 @@
+Sky 1
 Discovery Channel
 National Geographic
 NatGeo Wild
@@ -25,6 +26,7 @@ Boomerang
 Cartoon Network
 RTL Living
 AXN Action
+Sky 1 HD
 Discovery HD
 NatGeo HD
 Nat Geo Wild HD
