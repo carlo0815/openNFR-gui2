@@ -23,7 +23,7 @@ import datetime
 import zipfile
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getDriverDate, getImageVersion, getImageBuild, getBrandOEM, getMachineBuild, getImageFolder, getMachineMtdRoot, getMachineUBINIZE, getMachineMKUBIFS, getMachineMtdKernel, getMachineKernelFile, getMachineRootFile, getImageFileSystem
 
-VERSION = "Version 5.3 openNFR"
+VERSION = "Version 6.0 openNFR"
 
 HaveGZkernel = True
 if getMachineBuild() in ("vusolo4k", "spark", "spark7162", "hd51", "hd52", 'sf4008'):
