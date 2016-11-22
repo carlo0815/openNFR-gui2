@@ -1275,7 +1275,11 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		if self.reload_sel is None:
 			self.reload_sel = self.getCurrent()
 		self.loadLocalSettings()
-		self["list"].reload(self.current_ref, self.selected_tags)
+		try:
+			self["list"].reload(self.current_ref, self.selected_tags)
+		except:
+			msg = _("one of Mounts not work, please set new Location!") 
+			self.session.open(MessageBox, msg, type = MessageBox.TYPE_ERROR, timeout = 5)		
 		self.updateTags()
 		title = ""
 		if config.usage.setup_level.index >= 2: # expert+
