@@ -20,6 +20,15 @@ def setLCDModeMinitTV(value):
 		f.close()
 	except:
 		pass
+		
+def setLCDModeMinitTV4k(value):
+	try:
+		print "value:", value 
+                f = open("/proc/stb/lcd/live_enable", "w")
+		f.write("value")
+		f.close()
+	except:
+		pass		
 
 class Standby2(Screen):
 	def Power(self):
@@ -32,9 +41,12 @@ class Standby2(Screen):
 		#unmute adc
 		self.leaveMute()
 		self.session.nav.playService(self.oldService)
-		# set LCDminiTV 
+		# set LCDminiTV
+                 
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 			setLCDModeMinitTV(config.lcd.modeminitv.value)
+		elif SystemInfo["Display"] and SystemInfo["LCDMiniTV4k"]:
+			setLCDModeMinitTV4k(config.lcd.modeminitv4k.value)
 		#kill me
 		self.close(True)
 
@@ -99,6 +111,9 @@ class Standby2(Screen):
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 			# set LCDminiTV off
 			setLCDModeMinitTV("0")
+		elif SystemInfo["Display"] and SystemInfo["LCDMiniTV4k"]:
+			# set LCDminiTV off
+			setLCDModeMinitTV4k("disable")			
 
 		self.paused_service = None
 		self.prev_running_service = None
@@ -286,8 +301,9 @@ class TryQuitMainloop(MessageBox):
 			self.session.nav.stopService()
 			self.quitScreen = self.session.instantiateDialog(QuitMainloopScreen,retvalue=self.retval)
 			self.quitScreen.show()
-			if getBoxType() == "vusolo4k":  #workaround for white display flash
-				open("/proc/stb/fp/oled_brightness", "w").write("0")
+			#if getBoxType() == "vusolo4k":  #workaround for white display flash
+				#open("/proc/stb/fp/oled_brightness", "w").write("0")
+			setLCDModeMinitTV4k(config.lcd.modeminitv4k.value)	
 			quitMainloop(self.retval)
 		else:
 			MessageBox.close(self, True)

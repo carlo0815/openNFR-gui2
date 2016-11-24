@@ -3493,6 +3493,10 @@ class InfoBarServiceErrorPopupSupport:
 		self.closeNotificationInstantiateDialog()
 		self.last_error = None
 		Notifications.RemovePopup(id = "ZapError")
+		if getBoxType() in ('vusolo4k'):
+			value = config.lcd.modeminitv4k.value
+			open("/proc/stb/lcd/live_enable", "w").write(value)
+		
 
 	def __tuneFailed(self):
 		if not config.usage.hide_zap_errors.value:
