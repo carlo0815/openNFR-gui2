@@ -2329,7 +2329,7 @@ class NetworkSamba(Screen):
 		self.Console = Console()
 		self.my_Samba_run = False
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
-		self.packagegroup = basegroup + '-samba'
+		self.packagegroup = basegroup + '-smbfs'
 		self.onLayoutFinish.append(self.InstallCheck)
 
 	def InstallCheck(self):
