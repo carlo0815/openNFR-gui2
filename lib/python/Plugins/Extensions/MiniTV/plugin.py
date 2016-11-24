@@ -2,6 +2,7 @@ from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 from Components.config import config, ConfigSubsection, ConfigSelection
 from enigma import eDBoxLCD
+from boxbranding import getBoxType
 
 config.plugins.minitv = ConfigSubsection()
 config.plugins.minitv.enable = ConfigSelection(default = "disable", choices = [ ("enable", "enable"), ("disable", "disable")])
@@ -38,7 +39,11 @@ class MiniTV:
 		self.setMiniTV("disable")
 
 	def leaveStandby(self):
-		self.setMiniTV(config.plugins.minitv.enable.value)
+	        if getBoxType() in ('vusolo4k'):
+	                value = config.lcd.modeminitv4k.value
+	                self.setMiniTV(value)
+                else:
+		        self.setMiniTV(config.plugins.minitv.enable.value)
 
 minitv_instance = MiniTV()
 
