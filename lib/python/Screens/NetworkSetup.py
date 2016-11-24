@@ -2382,7 +2382,7 @@ class NetworkSamba(Screen):
 		self.SambaStartStop()
 
 	def UninstallCheck(self):
-		self.packagegroup = self.packagegroup + ' ' + basegroup + '-samba'
+		self.packagegroup = self.packagegroup + ' ' + basegroup + '-smbfs-client'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.packagegroup, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
