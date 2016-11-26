@@ -301,7 +301,7 @@ class TryQuitMainloop(MessageBox):
 			self.session.nav.stopService()
 			self.quitScreen = self.session.instantiateDialog(QuitMainloopScreen,retvalue=self.retval)
 			self.quitScreen.show()
-			if getBoxType() == "vusolo4k":  #workaround for white display flash
+			#if getBoxType() == "vusolo4k":  #workaround for white display flash
 				#open("/proc/stb/fp/oled_brightness", "w").write("0")
 			setLCDModeMinitTV4k(config.lcd.modeminitv4k.value)	
 			quitMainloop(self.retval)
