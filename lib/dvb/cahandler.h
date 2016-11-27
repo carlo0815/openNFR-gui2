@@ -114,7 +114,7 @@ public:
 	eDVBCAService(const eServiceReferenceDVB &service);
 	~eDVBCAService();
 
-	const char *toString();
+	std::string toString();
 	int getCAPMTVersion();
 	int getNumberOfDemuxes();
 	uint8_t getUsedDemux(int index);
@@ -139,7 +139,7 @@ class iCryptoInfo : public iObject
 public:
 	iCryptoInfo();
 	~iCryptoInfo();
-private:	
+private:
 #endif
 public:
 	PSignal1<void, const char*> clientname;

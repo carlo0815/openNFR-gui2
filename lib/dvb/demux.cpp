@@ -236,6 +236,7 @@ RESULT eDVBSectionReader::start(const eDVBSectionFilterMask &mask)
 	notifier->start();
 
 	dmx_sct_filter_params sct;
+	memset(&sct, 0, sizeof(sct));
 	sct.pid     = mask.pid;
 	sct.timeout = 0;
 	sct.flags   = DMX_IMMEDIATE_START;
@@ -346,6 +347,8 @@ RESULT eDVBPESReader::start(int pid)
 	m_notifier->start();
 
 	dmx_pes_filter_params flt;
+	memset(&flt, 0, sizeof(flt));
+
 	flt.pes_type = DMX_PES_OTHER;
 	flt.pid     = pid;
 	flt.input   = DMX_IN_FRONTEND;
@@ -594,6 +597,13 @@ void eDVBRecordFileThread::flush()
 	}
 }
 
+eDVBRecordStreamThread::eDVBRecordStreamThread(int packetsize) :
+	eDVBRecordFileThread(packetsize, recordingBufferCount)
+{
+	eDebug("[eDVBRecordStreamThread] allocated %d buffers of %d kB", m_aio.size(), m_buffersize>>10);
+}
+
+
 int eDVBRecordStreamThread::writeData(int len)
 {
 	len = asyncWrite(len);
@@ -701,6 +711,8 @@ RESULT eDVBTSRecorder::start()
 	setBufferSize(1024*1024);
 
 	dmx_pes_filter_params flt;
+	memset(&flt, 0, sizeof(flt));
+
 	flt.pes_type = DMX_PES_OTHER;
 	flt.output  = DMX_OUT_TSDEMUX_TAP;
 	flt.pid     = i->first;
@@ -865,6 +877,7 @@ RESULT eDVBTSRecorder::startPID(int pid)
 {
 	while(true) {
 		uint16_t p = pid;
+		eDebug("[adenin]add PID %d(0x%04x)", p, p);
 		if (::ioctl(m_source_fd, DMX_ADD_PID, &p) < 0) {
 			perror("DMX_ADD_PID");
 			if (errno == EAGAIN || errno == EINTR) {
@@ -884,6 +897,7 @@ void eDVBTSRecorder::stopPID(int pid)
 	{
 		while(true) {
 			uint16_t p = pid;
+			eDebug("[adenin]rmove PID %d(0x%04x)", p, p);
 			if (::ioctl(m_source_fd, DMX_REMOVE_PID, &p) < 0) {
 				perror("DMX_REMOVE_PID");
 				if (errno == EAGAIN || errno == EINTR) {

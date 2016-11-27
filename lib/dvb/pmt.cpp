@@ -25,7 +25,7 @@
 #include <dvbsi++/application_name_descriptor.h>
 
 eDVBServicePMTHandler::eDVBServicePMTHandler()
-	:m_ca_servicePtr(0), m_dvb_scan(0), m_decode_demux_num(0xFF), m_no_pat_entry_delay(eTimer::create())
+	:m_ca_servicePtr(0), m_dvb_scan(0), m_decode_demux_num(0xFF), m_no_pat_entry_delay(eTimer::create()), m_have_cached_program(false)
 {
 	m_use_decode_demux = 0;
 	m_pmt_pid = -1;
@@ -192,7 +192,10 @@ void eDVBServicePMTHandler::PATready(int)
 		int pmtpid_single = -1;
 		int pmtpid = -1;
 		int cnt=0;
-		std::vector<ProgramAssociationSection*>::const_iterator i;
+		int tsid=-1;
+		std::vector<ProgramAssociationSection*>::const_iterator i = ptr->getSections().begin();
+		tsid = (*i)->getTableIdExtension(); // in PAT this is the transport stream id
+		eDebug("PAT TSID: 0x%04x (%d)", tsid, tsid);
 		for (i = ptr->getSections().begin(); pmtpid == -1 && i != ptr->getSections().end(); ++i)
 		{
 			const ProgramAssociationSection &pat = **i;
@@ -726,15 +729,24 @@ void eDVBServicePMTHandler::SDTScanEvent(int event)
 				eDebug("no channel list");
 			else
 			{
-				eDVBChannelID chid;
+				eDVBChannelID chid, curr_chid;
 				m_reference.getChannelID(chid);
-				if (chid == m_dvb_scan->getCurrentChannelID())
+				curr_chid = m_dvb_scan->getCurrentChannelID();
+				if (chid == curr_chid)
 				{
 					m_dvb_scan->insertInto(db, true);
 					eDebug("sdt update done!");
 				}
 				else
+				{
 					eDebug("ignore sdt update data.... incorrect transponder tuned!!!");
+					if (chid.dvbnamespace != curr_chid.dvbnamespace)
+						eDebug("incorrect namespace. expected: %x current: %x",chid.dvbnamespace.get(), curr_chid.dvbnamespace.get());
+					if (chid.transport_stream_id != curr_chid.transport_stream_id)
+						eDebug("incorrect transport_stream_id. expected: %x current: %x",chid.transport_stream_id.get(), curr_chid.transport_stream_id.get());
+					if (chid.original_network_id != curr_chid.original_network_id)
+						eDebug("incorrect namespace. expected: %x current: %x",chid.original_network_id.get(), curr_chid.original_network_id.get());
+				}
 			}
 			break;
 		}

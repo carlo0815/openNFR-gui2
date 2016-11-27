@@ -111,6 +111,12 @@ int eDVBScan::isValidONIDTSID(int orbital_position, eOriginalNetworkID onid, eTr
 	case 32: // NSS 806 (40.5W) 4059R, 3774L
 		ret = orbital_position != 3195 || tsid != 21;
 		break;
+	case 126:  // 11221H and 11387H on Utelsat 7.0E with same ONID/TSID (126/40700) and 11304H, 11262H (126/30300) 
+		ret = orbital_position != 70 || (tsid != 40700 && tsid !=30300);
+		break;
+	case 3622:  // 11881H and 12284V on Badr 26.0E with same ONID/TSID (3622/100)
+		ret = orbital_position != 260 || tsid != 100;
+		break;
 	default:
 		ret = onid.get() < 0xFF00;
 		break;
@@ -587,11 +593,11 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 			if (!found_count)
 			{
 				*i = feparm;  // update
-				SCAN_eDebug("update %d %d",*i, feparm);
+				SCAN_eDebug("update");
 			}
 			else
 			{
-				SCAN_eDebug("remove dupe %d", i++);
+				SCAN_eDebug("remove dupe");
 				m_ch_toScan.erase(i++);
 				continue;
 			}
@@ -602,7 +608,7 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 
 	if (found_count > 0)
 	{
-		SCAN_eDebug("already in todo list  %d", found_count);
+		SCAN_eDebug("already in todo list");
 		return;
 	}
 
@@ -1065,9 +1071,13 @@ void eDVBScan::channelDone()
 				}
 			}
 			SCAN_eDebug("name '%s', provider_name '%s'", sname, pname);
-			service->m_service_name = convertDVBUTF8(sname);
+			int tsonid = 0;
+			if( m_chid_current )
+				tsonid = ( m_chid_current.transport_stream_id.get() << 16 )
+					| m_chid_current.original_network_id.get();
+			service->m_service_name = convertDVBUTF8(sname,0,tsonid,0);
 			service->genSortName();
-			service->m_provider_name = convertDVBUTF8(pname);
+			service->m_provider_name = convertDVBUTF8(pname,0,tsonid,0);
 		}
 
 		if (!(m_flags & scanOnlyFree) || !m_pmt_in_progress->second.scrambled) {
@@ -1402,11 +1412,11 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 		{
 			if (it->second.scrambled)
 			{
-				SCAN_eDebug("is scrambled!");
+				SCAN_eDebugNoNewLine("is scrambled!");
 				is_crypted = true;
 			}
 			else
-				SCAN_eDebug("is free");
+				SCAN_eDebugNoNewLine("is free");
 		}
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
@@ -1449,10 +1459,11 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 					/* */
 
 					ref.setServiceType(servicetype);
-					service->m_service_name = convertDVBUTF8(d.getServiceName());
+					int tsonid=(sdt.getTransportStreamId() << 16) | sdt.getOriginalNetworkId();
+					service->m_service_name = convertDVBUTF8(d.getServiceName(),0,tsonid,0);
 					service->genSortName();
 
-					service->m_provider_name = convertDVBUTF8(d.getServiceProviderName());
+					service->m_provider_name = convertDVBUTF8(d.getServiceProviderName(),0,tsonid,0);
 					SCAN_eDebug("name '%s', provider_name '%s'", service->m_service_name.c_str(), service->m_provider_name.c_str());
 					break;
 				}
@@ -1466,7 +1477,7 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 						SCAN_eDebugNoNewLine(" %04x", *i);
 						service->m_ca.push_front(*i);
 					}
-					SCAN_eDebug(".");
+					SCAN_eDebugNoNewLine(".");
 					break;
 				}
 				default:
