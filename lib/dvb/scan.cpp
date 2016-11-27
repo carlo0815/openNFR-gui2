@@ -587,11 +587,11 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 			if (!found_count)
 			{
 				*i = feparm;  // update
-				SCAN_eDebug("update");
+				SCAN_eDebug("update %d %d",*i, feparm);
 			}
 			else
 			{
-				SCAN_eDebug("remove dupe");
+				SCAN_eDebug("remove dupe %d", i++);
 				m_ch_toScan.erase(i++);
 				continue;
 			}
@@ -602,7 +602,7 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 
 	if (found_count > 0)
 	{
-		SCAN_eDebug("already in todo list");
+		SCAN_eDebug("already in todo list  %d", found_count);
 		return;
 	}
 
