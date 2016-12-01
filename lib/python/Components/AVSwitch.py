@@ -532,6 +532,7 @@ def InitAVSwitch():
 
 	if have_colorspace:
 		def setHDMIColorspace(configElement):
+			sleep(0.1)
 			try:
 				f = open("/proc/stb/video/hdmi_colorspace", "w")
 				f.write(configElement.value)
@@ -541,7 +542,10 @@ def InitAVSwitch():
 		if getBoxType() in ('vusolo4k'):
 			config.av.hdmicolorspace = ConfigSelection(choices={
 					"Edid(Auto)": _("Auto"),
-					"Hdmi_Rgb": _("RGB")},
+					"Hdmi_Rgb": _("RGB"),
+					"444": _("YCbCr444"),
+					"422": _("YCbCr422"),
+					"420": _("YCbCr420")},
 					default = "Edid(Auto)")
 		else:
 			config.av.hdmicolorspace = ConfigSelection(choices={
