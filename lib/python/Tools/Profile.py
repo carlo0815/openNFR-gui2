@@ -66,7 +66,7 @@ def profile(id):
 				elif boxtype == "gb800seplus":
 					f = open("/dev/mcu", "w")
 					f.write("%d  \n" % perc)
-				elif boxtype in ("mixosf5", "gi9196m", "osmini", "spycatmini", "osminiplus"):
+				elif boxtype in ("mixosf5", "gi9196m", "osmini", "osmega", "spycatmini", "osminiplus"):
 					f = open("/proc/progress", "w")
 					f.write("%d" % perc)
 				elif boxtype in ("xpeedlx3", "atemionemesis"):
