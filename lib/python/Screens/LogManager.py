@@ -18,6 +18,8 @@ import Components.Task
 from Components.Pixmap import Pixmap,MultiPixmap
 from Components.config import getConfigListEntry, config, configfile, ConfigText, ConfigYesNo, NoSave
 from Screens.VirtualKeyBoard import VirtualKeyBoard
+from Tools.Directories import fileExists
+import os
 
 # Import smtplib for the actual sending function
 import smtplib, base64
@@ -194,7 +196,8 @@ class LogManager(Screen):
 				'red': self.changelogtype,
 				'green': self.showLog,
 				'yellow': self.deletelog,
-				'blue': self.sendlog,
+				#'blue': self.sendlog,
+				'blue': self.feedcheck,
 				'menu': self.createSetup,
 				"left": self.left,
 				"right": self.right,
@@ -205,7 +208,7 @@ class LogManager(Screen):
 		self["key_red"] = Button(_("Debug Logs"))
 		self["key_green"] = Button(_("View"))
 		self["key_yellow"] = Button(_("Delete"))
-		self["key_blue"] = Button(_("Send"))
+		self["key_blue"] = Button(_("Feedcheck"))
 
 		self.onChangedEntry = [ ]
 		self.sentsingle = ""
@@ -281,13 +284,17 @@ class LogManager(Screen):
 		self["LogsSize"].update(config.crash.debug_path.value)
 		import re
 		if self.logtype == 'crashlogs':
-			self["key_red"].setText(_("Crash Logs"))
-			self.logtype = 'debuglogs'
+			self["key_red"].setText(_("Crash Logs"))			
+			self.logtype = 'opkglogs'
 			self.matchingPattern = 'Enigma2'
+		elif self.logtype == 'opkglogs' and path.exists('/home/root/logs/feedcheck.log'):
+			self["key_red"].setText(_("Feed Logs"))
+			self.logtype = 'debuglogs'
+			self.matchingPattern = 'feedcheck'			
 		else:
 			self["key_red"].setText(_("Debug Logs"))
 			self.logtype = 'crashlogs'
-			self.matchingPattern = 'enigma2_crash_'
+			self.matchingPattern = 'enigma2_crash'
 		self["list"].matchingPattern = re.compile(self.matchingPattern)
 		self["list"].changeDir(self.defaultDir)
 
@@ -348,8 +355,15 @@ class LogManager(Screen):
 				remove(self.defaultDir + self.sel[0])
 			self["list"].changeDir(self.defaultDir)
 			self["LogsSize"].update(config.crash.debug_path.value)
-
-	def sendlog(self, addtionalinfo = None):
+			
+	def feedcheck(self):
+		if fileExists("/home/root/logs/feedcheck.log"):
+			os.system("rm -f /home/root/logs/feedcheck.log")
+			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+		else:
+			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			
+"""	def sendlog(self, addtionalinfo = None):
 		try:
 			self.sel = self["list"].getCurrent()[0]
 		except:
@@ -481,6 +495,7 @@ class LogManager(Screen):
 
 	def myclose(self):
 		self.close()
+"""
 
 class LogManagerViewLog(Screen):
 
