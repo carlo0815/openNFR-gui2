@@ -360,8 +360,10 @@ class LogManager(Screen):
 		if fileExists("/home/root/logs/feedcheck.log"):
 			os.system("rm -f /home/root/logs/feedcheck.log")
 			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
 		else:
 			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
 			
 """	def sendlog(self, addtionalinfo = None):
 		try:
