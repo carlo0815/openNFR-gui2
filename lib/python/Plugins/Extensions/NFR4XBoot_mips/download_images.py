@@ -82,16 +82,6 @@ class NFR4XChooseOnLineImage(Screen):
         self.list.append(res)
         mypixmap = mypath + 'openatv.png'
         png = LoadPixmap(mypixmap)
-        name = _('OpenATV')
-        desc = _('Download latest OpenATV Image')
-        idx = 'openatv'
-        res = (name,
-         png,
-         idx,
-         desc)
-        self.list.append(res)
-        mypixmap = mypath + 'openatv.png'
-        png = LoadPixmap(mypixmap)
         name = _('OpenATV-5.2')
         desc = _('Download latest OpenATV Image')
         idx = 'openatv-5.2'
@@ -177,9 +167,6 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'opennfr':
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
-        elif self.distro == 'openatv':
-            self.feed = 'openatv'
-            self.feedurl = 'http://images1.mynonpublic.com/openatv/4.2'
         elif self.distro == 'openatv-5.2':
             self.feed = 'openatv'
             self.feedurl = 'http://images1.mynonpublic.com/openatv/5.2'    
@@ -207,7 +194,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://openeight.de'
         else:
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.1/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.3/images'
         self['imageList'] = MenuList(self.imagelist)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'green': self.green,
          'red': self.quit,
@@ -221,7 +208,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv' or self.distro == 'openatv-5.2' or self.distro == 'openatv-5.3' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openmips' or self.distro == 'openhdf':
+        if self.distro == 'openatv-5.2' or self.distro == 'openatv-5.3' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openmips' or self.distro == 'openhdf':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
             req = urllib2.Request(self.feedurl)
@@ -501,7 +488,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv', 'egami', 'openmips', 'openatv-5.2', 'openatv-5.3','openeight'):
+        elif self.distro in ('egami', 'openmips', 'openatv-5.2', 'openatv-5.3','openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
