@@ -60,15 +60,15 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        mypixmap = mypath + 'openatv.png'
+        mypixmap = mypath + 'egami.png'
         png = LoadPixmap(mypixmap)
-        name = _('OpenATV-5.2')
-        desc = _('Download latest OpenATV Image')
-        idx = 'openatv-5.2'
+        name = _('Egami')
+        desc = _('Download latest Egami Image')
+        idx = 'egami'
         res = (name,
          png,
          idx,
-         desc) 
+         desc)
         self.list.append(res)
         mypixmap = mypath + 'openatv.png'
         png = LoadPixmap(mypixmap)
@@ -78,7 +78,7 @@ class NFR4XChooseOnLineImage(Screen):
         res = (name,
          png,
          idx,
-         desc)
+         desc) 
         self.list.append(res)
         mypixmap = mypath + 'openpli.png'
         png = LoadPixmap(mypixmap)
@@ -90,8 +90,28 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        self['list'].list = self.list 
-         
+        mypixmap = mypath + 'openhdf.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenHDF')
+        desc = _('Download latest OpenHDF Image')
+        idx = 'openhdf'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
+        mypixmap = mypath + 'openeight.png'
+        png = LoadPixmap(mypixmap)
+        name = _('OpenEight')
+        desc = _('Download latest OpenEight Image')
+        idx = 'openeight'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
+        self['list'].list = self.list
+
     def quit(self):
         self.close()
 
@@ -111,24 +131,31 @@ class DownloadOnLineImage(Screen):
         self.simulate = False
         self.imagePath = '/media/nfr4xboot/NFR4XBootUpload'
         self.distro = distro
-        if self.distro == 'opennfr':
+        if self.distro == 'egami':
+            self.feed = 'egami'
+            self.feedurl = 'http://image.egami-image.com'
+        elif self.distro == 'opennfr':
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
-        elif self.distro == 'openatv-5.2':
-            self.feed = 'openatv'
-            self.feedurl = 'http://images1.mynonpublic.com/openatv/5.2'
         elif self.distro == 'openatv-5.3':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/5.3'    
+            self.feedurl = 'http://images.mynonpublic.com/openatv/5.3'
         elif self.distro == 'openvix':
             self.feed = 'openvix'
-            self.feedurl = 'http://www.openvix.co.uk/openvix-builds'
+            self.feedurl = 'http://openvix.co.uk'
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
+        elif self.distro == 'openhdf':
+            self.feed = 'openhdf'
+            self.feedurl1 = 'http://images.hdfreaks.cc'
+            self.feedurl = 'http://images.hdfreaks.cc/menu.html'
+        elif self.distro == 'openeight':
+            self.feed = 'openeight'
+            self.feedurl = 'http://openeight.de'
         else:
             self.feed = 'opennfr'
-            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.2/images'
+            self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/5.3/images'
         self['imageList'] = MenuList(self.imagelist)
         self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'green': self.green,
          'red': self.quit,
@@ -142,7 +169,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-5.2' or self.distro == 'openatv-5.3' or self.distro == 'opennfr':
+        if self.distro == 'openatv-5.3' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openmips' or self.distro == 'openhdf':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
             try:
@@ -156,19 +183,37 @@ class DownloadOnLineImage(Screen):
             except:
                     stb = 'no Image for this Box on this Side'
         if self.distro == 'openvix':
-            if box in ('vusolo4k'):
-                box = 'vusolo4k'
-                urlbox = 'Vu+Solo4K'
-                stb = '1'
+            if box in ('vusolo4k', 'mutant51'):
+                if box in ('vusolo4k'):
+                    box = 'vusolo4k'
+                    urlbox = 'Vu+Solo4K'
+                    stb = '1'
+                elif box in ('mutant51'):
+                    box = 'mutant51'
+                    urlbox = 'Mutant-HD51'
+                    stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side' 
         elif self.distro == 'openpli':
-            if box in ('vusolo4k'):
-                box = 'vusolo4k'
-                urlbox = 'vuplus/vusolo4k/' 
-                stb = '1'                    
+            if box in ('vusolo4k', 'mutant51'):
+                if box in ('vusolo4k'):
+                    box = 'vusolo4k'
+                    urlbox = 'vuplus/vusolo4k/' 
+                    stb = '1'                    
+                elif box in ('mutant51'):
+                    box = 'hd51'
+                    urlbox = 'mutant/hd51/' 
+                    stb = '1'              
             else:   
                 stb = 'no Image for this Box on this Side'                
+        elif self.distro == 'openeight':
+            if box in ('sf4008'):
+               box = 'sf4008'
+               urlbox = getBoxType()               
+               stb = '1'
+                               
+            else:   
+                stb = 'no Image for this Box on this Side'                    
         return (box, urlbox, stb)
 
     def green(self, ret = None):
@@ -183,7 +228,8 @@ class DownloadOnLineImage(Screen):
             box = self.box()
             self.hide()
             if self.distro == 'openvix':
-                url = self.feedurl + '/' + box[1] + '/' + sel 
+                print "url=", self.feedurl + '/openvix-builds/' + box[1]
+                url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel                
             else:
@@ -234,18 +280,20 @@ class DownloadOnLineImage(Screen):
         stb = self.box()[2]
         print '[NFR4XBoot] FEED URL: ', self.feedurl
         print '[NFR4XBoot] BOXTYPE: ', box
-        print '[NFR4XBoot] URL-BOX: ', urlbox
+        print '[NFR4XBoot] URL-BOX: ', urlbox        
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('openatv-5.2', 'openatv-5.3'):
+        elif self.distro in ('egami', 'openmips', 'openatv-5.2', 'openatv-5.3', 'openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
-            url = '%s/%s' % (self.feedurl, urlbox)
+            url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
         elif self.distro == 'openpli':
-            url = '%s/%s' % (self.feedurl, urlbox)            
+            url = '%s/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opennfr':
             url = '%s/%s' % (self.feedurl, box)
+        elif self.distro == 'openhdf':
+            url = '%s/%s' % (self.feedurl1, box)
 	else:
             url = self.feedurl
         print '[NFR4XBoot] URL: ', url
@@ -261,17 +309,31 @@ class DownloadOnLineImage(Screen):
         except urllib2.HTTPError as e:
             print 'HTTP download ERROR: %s' % e.code
             return
-
-        lines = the_page.split('\n')
-        
+        if self.distro == 'openpli':
+            lines1 = the_page.split('\n')
+            for line1 in lines1:
+                if '<a href="http://downloads.pli-images.org/builds' in line1:
+                    lines = the_page.split('_usb.zip<')                    
+        else:
+            lines = the_page.split('\n')
+  
         tt = len(box)
         if stb == '1':
             for line in lines:
-                if line.find("<a href='%s/" % box) > -1:
-                    t = line.find("<a href='%s/" % box)
-                    t2 = line.find("'>egami")
-                    if self.feed in 'openatv':
-                        self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
+                if self.feed == "openeight":
+                    if line.find("/images/%s/" % box) > -1:
+                    		t = line.find('/images/%s/' % box)
+                    		self.imagelist.append(line[t+tt+9:t+tt+tt+40])
+                    elif line.find("<a href='%s/" % box) > -1:
+                    		t = line.find("<a href='%s/" % box)
+                    		t2 = line.find("'>egami")
+                    		if self.feed in 'openatv':
+                    			self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
+                    		elif self.feed in 'egami':
+                    			self.imagelist.append(line[t + tt + 10:t2])
+                    		elif self.feed in 'openmips':
+                    			line = line[t + tt + 10:t + tt + tt + 40]
+                    			self.imagelist.append(line)
                 elif line.find("<a href='%s/" % urlbox) > -1:
                     ttt = len(urlbox)
                     t = line.find("<a href='%s/" % urlbox) 
@@ -293,7 +355,11 @@ class DownloadOnLineImage(Screen):
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
                 elif line.find('href="http://downloads.pli-images.org' ) > -1:
-                    t4 = line.find('OpenPLi-')
+                    t4 = line.find('<a href="http://downloads.pli-images.org/builds')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4+  len(box) + 48:t5+4])    
+                elif line.find('href="openhdf-') > -1:
+                    t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])                        
         else:
