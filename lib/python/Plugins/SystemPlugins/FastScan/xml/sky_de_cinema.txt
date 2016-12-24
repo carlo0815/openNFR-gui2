@@ -8,6 +8,7 @@ Sky Cinema Emotion
 Sky Cinema Nostalgie
 Sky Cinema Hits
 Disney Cinemagic
+MGM
 TNT Film (TCM)
 Kinowelt TV
 Sky Cinema HD
@@ -17,3 +18,4 @@ Sky Cinema Family HD
 Sky Cinema Action HD
 Sky Cinema Hits HD
 Disney Cinemagic HD
+MGM HD
