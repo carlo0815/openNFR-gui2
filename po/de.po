@@ -11710,6 +11710,9 @@ msgstr "aufgrund des verwendeten Dateisystems dauert das Backup\n"
 msgid "will take about 3-12 minutes for this system\n"
 msgstr "zwischen 3-12 Minuten auf diesem System\n"
 
+msgid "will take about 1-4 minutes for this system\n"
+msgstr "zwischen 1-4 Minuten auf diesem System\n"
+
 msgid "this will take between 2 and 9 minutes\n"
 msgstr "zwischen 2-9 Minuten\n"
 
