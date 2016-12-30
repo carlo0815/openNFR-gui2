@@ -4,7 +4,7 @@ SUBDIRS = SoftwareManager PositionerSetup Satfinder \
 	VideoTune Hotplug \
 	CommonInterfaceAssignment \
 	HdmiCEC VideoClippingSetup \
-	VideoEnhancement WirelessLan NetworkWizard \
+	VideoEnhancement WirelessLan NetworkWizard NetworkBrowser2 \
 	SABnzbdSetup FastScan SatelliteEquipmentControl DiseqcTester LCNScanner
 
 if HAVE_LIBVUGLES2

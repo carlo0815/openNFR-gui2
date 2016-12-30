@@ -634,6 +634,34 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/meta/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/icons/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/lib/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ar/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ca/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/cs/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/da/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/de/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/el/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/en/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/es/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/fa/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/fi/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/fr/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/hu/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/is/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/it/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/lt/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/nl/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/no/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/pl/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/pt/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ru/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/sl/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/sr/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/sv/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/tr/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/meta/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkWizard/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkWizard/meta/Makefile
 	lib/python/Plugins/SystemPlugins/PositionerSetup/Makefile
