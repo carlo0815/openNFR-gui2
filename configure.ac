@@ -636,7 +636,7 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/meta/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkBrowser2/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkBrowser2/icons/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/lib/Makefile
+	lib/python/Plugins/SystemPlugins/NetworkBrowser2/netscan/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ar/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ca/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/cs/Makefile

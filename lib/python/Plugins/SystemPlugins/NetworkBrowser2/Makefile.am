@@ -1,6 +1,6 @@
 installdir = $(pkglibdir)/python/Plugins/SystemPlugins/NetworkBrowser
 
-SUBDIRS = meta icons lib locale
+SUBDIRS = meta icons netscan locale
 
 install_PYTHON =	\
 	*.py 
