@@ -6,7 +6,7 @@ install_PYTHON =	\
 	*.py 
 
 dist_install_DATA = \
-	*.xml \
+	netscantest \
 	*.so \
 	plugin.py \
 	LICENSE
