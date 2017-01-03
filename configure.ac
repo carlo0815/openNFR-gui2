@@ -634,15 +634,6 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/meta/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/icons/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/netscan/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ar/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/ar/LC_MESSAGES/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/de/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/de/LC_MESSAGES/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/locale/Makefile
-	lib/python/Plugins/SystemPlugins/NetworkBrowser2/meta/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkWizard/Makefile
 	lib/python/Plugins/SystemPlugins/NetworkWizard/meta/Makefile
 	lib/python/Plugins/SystemPlugins/PositionerSetup/Makefile
