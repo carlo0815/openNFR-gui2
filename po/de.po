@@ -13160,3 +13160,6 @@ msgstr "Bitte das CI+ Modul herausziehen und OK klicken! \n\nEnigma2 startet neu
 msgid "one of Mounts not work, please set new Location!"
 msgstr ""
 "Einer der Mounts funktioniert nicht, wähle bitte eine andere Quelle aus!"
+
+msgid "Installation aborted !"
+msgstr "Installation abgebrochen!"
