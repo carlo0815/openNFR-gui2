@@ -461,8 +461,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "\nPlease wait...almost ready! "')
 			cmdlist.append('echo " "')
 			cmdlist.append('echo "To restore the image:"')
-			cmdlist.append('echo "Please check the manual of the receiver"')
-			cmdlist.append('echo "on how to restore the image"')
+			cmdlist.append('echo "Use FlashLocal in Quickmenu"')
 		else:
 			cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo "Image creation failed - "')
