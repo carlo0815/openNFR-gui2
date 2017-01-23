@@ -13163,3 +13163,27 @@ msgstr ""
 
 msgid "Installation aborted !"
 msgstr "Installation abgebrochen!"
+
+msgid "To restore the image:"
+msgstr "Image wieder herstellen:"
+
+msgid "\nPlease wait...almost ready! "
+msgstr "\nBitte warten...fast fertig! "
+
+msgid "Use FlashLocal in Quickmenu"
+msgstr "Benutze Flash Lokal im Quickmenü"
+
+msgid "Image creation failed - "
+msgstr "Image Erstellung fehlgeschlagen - "
+
+msgid "Probable causes could be"
+msgstr "Mögliche Gründe könnten sein"
+
+msgid "     wrong back-up destination "
+msgstr "     falsches Medium ausgewählt"
+
+msgid "     no space left on back-up device"
+msgstr "     nicht genug Speicherplatz auf dem Medium"
+
+msgid "     no writing permission on back-up device"
+msgstr "     keine Schreibrechte für das Medium"
