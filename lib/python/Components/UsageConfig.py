@@ -1,6 +1,5 @@
 import os
 from time import time
-from time import time, mktime
 from boxbranding import getBoxType
 
 from enigma import setTunerTypePriorityOrder, setPreferredTuner, setSpinnerOnOff, setEnableTtCachingOnOff, eEnv
