@@ -30,7 +30,7 @@ class Log(object):
 	def d(text=""):
 		#DEBUG
 		LogConfig.init()
-		if LogConfig.level >= LOG_LEVEL_DEBUG:
+		if LogConfig.level() >= LOG_LEVEL_DEBUG:
 			callframe = _getframe(1)
 			Log._log(LOG_TYPE_DEBUG, text, callframe)
 

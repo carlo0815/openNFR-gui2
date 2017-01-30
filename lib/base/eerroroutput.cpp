@@ -10,30 +10,35 @@ DEFINE_REF(eErrorOutput)
 extern char *printtime(char buffer[], int size);
 
 eErrorOutput::eErrorOutput():
-	messages(this,1),
-	printout_timer(eTimer::create(this))
+	messages(this,1)
 {
-	threadrunning=true;
-	fprintf(stderr, "[eErrorOutput] Constructor\n");
+	printout_timer = eTimer::create(this);
+//	fprintf(stderr, "[eErrorOutput] Constructor\n");
 	fprintf(stderr, "[eErrorOutput] PIPE_BUF: %d\n", PIPE_BUF);
-	pipe2(pipe_fd, O_NONBLOCK);
+	if(!pipe2(pipe_fd, O_NONBLOCK))
 	{
 		int max_pipe_size;
 		CFile f("/proc/sys/fs/pipe-max-size", "r");
 		if (f)
 			if (fscanf(f, "%d", &max_pipe_size) == 1)
 				fprintf(stderr, "[eErrorOutput] F_SETPIPE_SZ: %d\n", fcntl(pipe_fd[0], F_SETPIPE_SZ, max_pipe_size));
+		fprintf(stderr, "[eErrorOutput] F_GETPIPE_SZ 0: %d\n", fcntl(pipe_fd[0], F_GETPIPE_SZ, 0));
 	}
-	fcntl(2, F_SETFL, O_NONBLOCK);
+	else
+	{
+		pipe_fd[0]=0;
+		pipe_fd[1]=0;
+	}
+	fcntl(fileno(stderr), F_SETFL, O_NONBLOCK);
 	CONNECT(messages.recv_msg, eErrorOutput::gotMessage);
 	CONNECT(printout_timer->timeout, eErrorOutput::printout);
 	printout_timer->start(100, true);
-	fprintf(stderr, "[eErrorOutput] F_GETPIPE_SZ 0: %d\n", fcntl(pipe_fd[0], F_GETPIPE_SZ, 0));
+	threadrunning=true;
 }
 
 eErrorOutput::~eErrorOutput()
 {
-	fprintf(stderr, "[eErrorOutput] Destructor\n");
+//	fprintf(stderr, "[eErrorOutput] Destructor\n");
 	printout_timer->stop();
 	messages.send(Message::quit);
 	kill();
@@ -41,16 +46,16 @@ eErrorOutput::~eErrorOutput()
 
 void eErrorOutput::thread()
 {
-	fprintf(stderr, "[eErrorOutput] start thread\n");
+//	fprintf(stderr, "[eErrorOutput] start thread\n");
 	hasStarted();
 	nice(4);
 	runLoop();
-	fprintf(stderr, "[eErrorOutput] behind runloop\n");
+//	fprintf(stderr, "[eErrorOutput] behind runloop\n");
 }
 
 void eErrorOutput::gotMessage( const Message &msg )
 {
-	fprintf(stderr, "[eErrorOutput] message %d\n" ,msg.type);
+//	fprintf(stderr, "[eErrorOutput] message %d\n" ,msg.type);
 	switch (msg.type)
 	{
 		case  Message::quit:
@@ -64,7 +69,11 @@ void eErrorOutput::gotMessage( const Message &msg )
 void eErrorOutput::thread_finished()
 {
 	threadrunning=false;
+	printout_timer->stop();
 	printout();
+
+	while(waitPrintout)
+		usleep(10000); // wait 10 milliseconds
 }
 
 void eErrorOutput::printout()
@@ -74,38 +83,45 @@ void eErrorOutput::printout()
 	static char c[PIPE_BUF] = "";
 	static int pos = 0;
 	static int cnt = 0;
-
-	char timebuffer[32];
-
-	if(!cnt)
+	do
 	{
-		pos = 0;
-		r = read(pipe_fd[0], c, PIPE_BUF);
-		if(r > 0)
-			cnt = r;
-	}
-
-	if(cnt)
-	{
-		w = write(2, &c[pos] , cnt);
-		if(w > 0)
+		if(!cnt)
 		{
-			cnt -= w;
-			pos += w;
+			pos = 0;
+			r = read(pipe_fd[0], c, PIPE_BUF);
+			if(r > 0)
+				cnt = r;
+			else
+			{
+				if(!threadrunning)
+				{
+					waitPrintout = false;
+					break;
+				}
+			}
 		}
-//		{
-//			usleep(10000);
-//			fprintf(stderr, "[eErrorOutput] error: read= %dbyte(s) write= %dbyte(s) %s\n", r, w, strerror(errno));
-//		}
-//		else
-//			fprintf(stderr, "error: %s\n",strerror(errno));
+
+		if(cnt)
+		{
+			w = write(fileno(stderr), &c[pos] , cnt);
+			if(w > 0)
+			{
+				cnt -= w;
+				pos += w;
+			}
+		}
+		if(!threadrunning)
+		{
+			waitPrintout = true;
+			usleep(25000);
+		}
+	}while(!threadrunning);
+
+	if(threadrunning)
+	{
+		if(r == PIPE_BUF)
+			printout_timer->start(25, true);
+		else
+			printout_timer->start(100, true);
 	}
-
-	//	printtime(timebuffer, sizeof(timebuffer));
-//	fprintf(stderr, "%s [eErrorOutput] error: read= %dbyte(s) write= %dbyte(s) \n",timebuffer, r, w);
-
-	if(r == PIPE_BUF)
-		printout_timer->start(25, true);
-	else
-		printout_timer->start(100, true);
 }

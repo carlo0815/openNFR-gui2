@@ -1,4 +1,5 @@
-from enigma import eServiceReference
+import Screens.InfoBar
+from enigma import eServiceReference, eTimer
 
 from Screens.Screen import Screen
 from Components.ServiceScan import ServiceScan as CScan
@@ -33,6 +34,14 @@ class ServiceScanSummary(Screen):
 
 class ServiceScan(Screen):
 
+	def up(self):
+		self["servicelist"].up()
+		self.session.summary.updateService(self["servicelist"].getCurrentSelection()[0])
+
+	def down(self):
+		self["servicelist"].down()
+		self.session.summary.updateService(self["servicelist"].getCurrentSelection()[0])
+
 	def ok(self):
 		if self["scan"].isDone():
 			try:
@@ -41,7 +50,7 @@ class ServiceScan(Screen):
 				lcn.buildAfterScan()
 			except Exception, e:
 				print e
-				
+
 			if self.currentInfobar.__class__.__name__ == "InfoBar":
 				selectedService = self["servicelist"].getCurrentSelection()
 				if selectedService and self.currentServiceList is not None:
@@ -78,13 +87,14 @@ class ServiceScan(Screen):
 		self.scanList = scanList
 
 		if hasattr(session, 'infobar'):
-			self.currentInfobar = session.infobar
+			self.currentInfobar = Screens.InfoBar.InfoBar.instance
 			if self.currentInfobar:
 				self.currentServiceList = self.currentInfobar.servicelist
 				if self.session.pipshown and self.currentServiceList:
 					if self.currentServiceList.dopipzap:
 						self.currentServiceList.togglePipzap()
-					del self.session.pip
+					if hasattr(self.session, 'pip'):
+						del self.session.pip
 					self.session.pipshown = False
 		else:
 			self.currentInfobar = None
@@ -104,17 +114,29 @@ class ServiceScan(Screen):
 
 		self["actions"] = ActionMap(["SetupActions", "MenuActions"],
 		{
+			"up": self.up,
+			"down": self.down,
 			"ok": self.ok,
 			"save": self.ok,
 			"cancel": self.cancel,
 			"menu": self.doCloseRecursive
 		}, -2)
-
+		self.setTitle(_("Service scan"))
 		self.onFirstExecBegin.append(self.doServiceScan)
+		self.scanTimer = eTimer()
+		self.scanTimer.callback.append(self.scanPoll)
+
+	def scanPoll(self):
+		if self["scan"].isDone():
+			self.scanTimer.stop()
+			self["servicelist"].moveToIndex(0)
+			if self["servicelist"].getCurrentSelection() is not None:
+				self.session.summary.updateService(self["servicelist"].getCurrentSelection()[0])
 
 	def doServiceScan(self):
 		self["servicelist"].len = self["servicelist"].instance.size().height() / self["servicelist"].l.getItemSize().height()
 		self["scan"] = CScan(self["scan_progress"], self["scan_state"], self["servicelist"], self["pass"], self.scanList, self["network"], self["transponder"], self["FrontendInfo"], self.session.summary)
+		self.scanTimer.start(250)
 
 	def createSummary(self):
 		return ServiceScanSummary

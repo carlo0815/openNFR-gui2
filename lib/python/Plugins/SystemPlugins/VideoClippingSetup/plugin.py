@@ -27,6 +27,7 @@ class VideoClippingCoordinates(Screen, ConfigListScreen):
 
 		self["ok"] = Button(_("OK"))
 		self["cancel"] = Button(_("Cancel"))
+		self.setTitle(_("Video clipping setup"))
 
 		self["actions"] = ActionMap(["SetupActions", "ColorActions", "MenuActions"],
 		{
@@ -120,10 +121,16 @@ def main(session, **kwargs):
 def startup(reason, **kwargs):
 	setConfiguredPosition()
 
+def startMain(menuid):
+	if menuid != "video_menu":
+		return [ ]
+
+	return [(_("Video clipping"), main, "video_clipping", 10)]
+
 def Plugins(**kwargs):
 	from os import path
 	if path.exists("/proc/stb/vmpeg/0/clip_left"):
 		from Plugins.Plugin import PluginDescriptor
-		return [PluginDescriptor(name = "Video clipping setup", description = "clip overscan / letterbox borders", where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main),
-					PluginDescriptor(name = "Video clipping  setup", description = "", where = PluginDescriptor.WHERE_SESSIONSTART, fnc = startup)]
+		return [PluginDescriptor(name = "Video clipping setup", description = "", where = PluginDescriptor.WHERE_SESSIONSTART, fnc = startup),
+					PluginDescriptor(name=_("Video clipping"), description=_("clip overscan / letterbox borders"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc=startMain)]
 	return []

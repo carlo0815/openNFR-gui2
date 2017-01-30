@@ -4,12 +4,15 @@ from config import KEY_LEFT, KEY_RIGHT, KEY_HOME, KEY_END, KEY_0, KEY_DELETE, KE
 from Components.ActionMap import NumberActionMap, ActionMap
 from enigma import eListbox, eListboxPythonConfigContent, eRCInput, eTimer, quitMainloop
 from Screens.MessageBox import MessageBox
+from Screens.ChoiceBox import ChoiceBox
+import skin
 
 class ConfigList(HTMLComponent, GUIComponent, object):
 	def __init__(self, list, session = None):
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonConfigContent()
-		self.l.setSeperation(350)
+		seperation, = skin.parameters.get("ConfigListSeperator", (350, ))
+		self.l.setSeperation(seperation)
 		self.timer = eTimer()
 		self.list = list
 		self.onSelectionChanged = [ ]
@@ -117,6 +120,19 @@ class ConfigList(HTMLComponent, GUIComponent, object):
 		if self.instance is not None:
 			self.instance.moveSelection(self.instance.pageDown)
 
+	def moveUp(self):
+		if self.instance is not None:
+			self.instance.moveSelection(self.instance.moveUp)
+
+	def moveDown(self):
+		if self.instance is not None:
+			self.instance.moveSelection(self.instance.moveDown)
+
+	def refresh(self):
+		for x in self.onSelectionChanged:
+			if x.__func__.__name__ == "selectionChanged":
+				x()
+
 class ConfigListScreen:
 	def __init__(self, list, session = None, on_change = None):
 		self["config_actions"] = NumberActionMap(["SetupActions", "InputAsciiActions", "KeyboardInputActions"],
@@ -141,8 +157,11 @@ class ConfigListScreen:
 			"7": self.keyNumberGlobal,
 			"8": self.keyNumberGlobal,
 			"9": self.keyNumberGlobal,
-			"0": self.keyNumberGlobal
+			"0": self.keyNumberGlobal,
+			"file" : self.keyFile
 		}, -1) # to prevent left/right overriding the listbox
+
+		self.onChangedEntry = []
 
 		self["VirtualKB"] = ActionMap(["VirtualKeyboardActions"],
 		{
@@ -159,6 +178,24 @@ class ConfigListScreen:
 
 		if not self.handleInputHelpers in self["config"].onSelectionChanged:
 			self["config"].onSelectionChanged.append(self.handleInputHelpers)
+
+	def createSummary(self):
+		self.setup_title = self.getTitle()
+		from Screens.Setup import SetupSummary
+		return SetupSummary
+
+	def getCurrentEntry(self):
+		return self["config"].getCurrent() and self["config"].getCurrent()[0] or ""
+
+	def getCurrentValue(self):
+		return self["config"].getCurrent() and str(self["config"].getCurrent()[1].getText()) or ""
+
+	def getCurrentDescription(self):
+		return self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2] or ""
+
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
 
 	def handleInputHelpers(self):
 		if self["config"].getCurrent() is not None:
@@ -200,10 +237,12 @@ class ConfigListScreen:
 	def keyLeft(self):
 		self["config"].handleKey(KEY_LEFT)
 		self.__changed()
+		self["config"].refresh()
 
 	def keyRight(self):
 		self["config"].handleKey(KEY_RIGHT)
 		self.__changed()
+		self["config"].refresh()
 
 	def keyHome(self):
 		self["config"].handleKey(KEY_HOME)
@@ -239,6 +278,20 @@ class ConfigListScreen:
 	def keyPageUp(self):
 		self["config"].pageUp()
 
+	def keyFile(self):
+		selection = self["config"].getCurrent()
+		if selection and selection[1].enabled and hasattr(selection[1], "description"):
+			self.session.openWithCallback(self.handleKeyFileCallback, ChoiceBox, selection[0],
+				list=zip(selection[1].description, selection[1].choices),
+				selection=selection[1].choices.index(selection[1].value),
+				keys=[])
+
+	def handleKeyFileCallback(self, answer):
+		if answer:
+			self["config"].getCurrent()[1].value = answer[1]
+			self["config"].invalidateCurrent()
+			self.__changed()
+
 	def saveAll(self):
 		restartgui = False
 		for x in self["config"].list:
@@ -265,6 +318,8 @@ class ConfigListScreen:
 
 	def cancelConfirm(self, result):
 		if not result:
+			if self.help_window_was_shown:
+				self["config"].getCurrent()[1].help_window.show()
 			return
 
 		for x in self["config"].list:
@@ -272,6 +327,11 @@ class ConfigListScreen:
 		self.close()
 
 	def closeMenuList(self, recursive = False):
+		self.help_window_was_shown = False
+		try:
+			self.HideHelp()
+		except:
+			pass
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"), default = False)
 		else:

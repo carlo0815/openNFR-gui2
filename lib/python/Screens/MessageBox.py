@@ -14,17 +14,29 @@ class MessageBox(Screen):
 	TYPE_WARNING = 2
 	TYPE_ERROR = 3
 
-	def __init__(self, session, text, type=TYPE_YESNO, timeout=-1, close_on_any_key=False, default=True, enable_input=True, msgBoxID=None, picon=True, simple=False, wizard=False, list=None, skin_name=None):
+	def __init__(self, session, text, type=TYPE_YESNO, timeout=-1, close_on_any_key=False, default=True, enable_input=True, msgBoxID=None, picon=True, simple=False, wizard=False, list=None, skin_name=None, timeout_default=None, windowTitle = None, title = "Message"):
+		if not windowTitle:
+			windowTitle = title
 		if not list: list = []
 		if not skin_name: skin_name = []
 		self.type = type
 		Screen.__init__(self, session)
 		self.skinName = ["MessageBox"]
+		if self.type == self.TYPE_YESNO:
+			self.setTitle(_("Question"))
+		elif self.type == self.TYPE_INFO:
+			self.setTitle(_("Information"))
+		elif self.type == self.TYPE_WARNING:
+			self.setTitle(_("Warning"))
+		elif self.type == self.TYPE_ERROR:
+			self.setTitle(_("Error"))
+		else:
+			self.setTitle(_(windowTitle))
 		if wizard:
 			from Components.config import config
 			from Components.Pixmap import MultiPixmap
 			self["rc"] = MultiPixmap()
-			self["rc"].setPixmapNum(config.misc.rcused.value)		
+			self["rc"].setPixmapNum(config.misc.rcused.value)
 			self.skinName = ["MessageBoxWizard"]
 
 		if simple:
@@ -41,6 +53,7 @@ class MessageBox(Screen):
 
 		self.text = _(text)
 		self.close_on_any_key = close_on_any_key
+		self.timeout_default = timeout_default
 
 		self["ErrorPixmap"] = Pixmap()
 		self["ErrorPixmap"].hide()
@@ -58,7 +71,7 @@ class MessageBox(Screen):
 				self["ErrorPixmap"].show()
 			elif picon == self.TYPE_YESNO:
 				self["QuestionPixmap"].show()
-			elif picon == self.TYPE_INFO:
+			elif picon == self.TYPE_INFO or picon == self.TYPE_WARNING:
 				self["InfoPixmap"].show()
 
 		self.messtype = type
@@ -71,7 +84,7 @@ class MessageBox(Screen):
 				self.list = [ (_("no"), False), (_("yes"), True) ]
 		else:
 			self.list = []
-		
+
 		self["list"] = MenuList(self.list)
 		if self.list:
 			self["selectedChoice"].setText(self.list[0][0])
@@ -185,7 +198,10 @@ class MessageBox(Screen):
 
 	def timeoutCallback(self):
 		print "Timeout!"
-		self.ok()
+		if self.timeout_default is not None:
+			self.close(self.timeout_default)
+		else:
+			self.ok()
 
 	def cancel(self):
 		if self["list"].list:

@@ -6,7 +6,9 @@ from Components.ConfigList import ConfigListScreen
 from Components.config import config, configfile, getConfigListEntry
 from Components.Sources.StaticText import StaticText
 
-if path.exists("/dev/hdmi_cec"):
+from Tools.Directories import fileExists
+
+if path.exists("/dev/hdmi_cec") or path.exists("/dev/misc/hdmi_cec0"):
 	import Components.HdmiCec
 
 class HdmiCECSetupScreen(Screen, ConfigListScreen):
@@ -71,6 +73,8 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Put your %s %s in standby") % (getMachineBrand(), getMachineName()), config.hdmicec.control_receiver_standby))
 			self.list.append(getConfigListEntry(_("Wakeup your %s %s from standby") % (getMachineBrand(), getMachineName()), config.hdmicec.control_receiver_wakeup))
 			self.list.append(getConfigListEntry(_("Minimum send interval"), config.hdmicec.minimum_send_interval))
+			if fileExists("/proc/stb/hdmi/preemphasis"):
+				self.list.append(getConfigListEntry(_("Use HDMI-preemphasis"), config.hdmicec.preemphasis))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 

@@ -156,7 +156,7 @@ inline FT_Error fontRenderClass::getGlyphImage(FTC_Image_Desc *font, FT_ULong gl
 
 std::string fontRenderClass::AddFont(const std::string &filename, const std::string &name, int scale, int renderflags)
 {
-	eDebugNoNewLine("[FONT] adding font %s...", filename.c_str());
+	eDebugNoNewLineStart("[FONT] adding font %s...", filename.c_str());
 	fflush(stdout);
 	int error;
 	fontListEntry *n=new fontListEntry;
@@ -166,7 +166,7 @@ std::string fontRenderClass::AddFont(const std::string &filename, const std::str
 	singleLock s(ftlock);
 
 	if ((error=FT_New_Face(library, filename.c_str(), 0, &face)))
-		eFatal(" failed: %s", strerror(error));
+		eDebugNoNewLineEnd(" failed: %s", strerror(error));
 
 	n->filename=filename;
 	n->face=name;
@@ -174,7 +174,7 @@ std::string fontRenderClass::AddFont(const std::string &filename, const std::str
 	FT_Done_Face(face);
 
 	n->next=font;
-	eDebug("OK (%s)", n->face.c_str());
+	eDebugNoNewLineEnd("OK (%s)", n->face.c_str());
 	font=n;
 
 	return n->face;
@@ -632,10 +632,16 @@ int eTextPara::renderString(const char *string, int rflags, int border)
 	if (!current_font)
 		return -1;
 
-	if (!current_face)
-		eFatal("eTextPara::renderString: no current_face");
-	if (!current_face->size)
-		eFatal("eTextPara::renderString: no current_face->size");
+	if ((FTC_Manager_LookupFace(fontRenderClass::instance->cacheManager,
+				current_font->scaler.face_id,
+				&current_face) < 0) ||
+	    (FTC_Manager_LookupSize(fontRenderClass::instance->cacheManager,
+				&current_font->scaler,
+				&current_font->size) < 0))
+	{
+		eDebug("FTC_Manager_Lookup_Size failed!");
+		return -1;
+	}
 
 	if (cursor.y()==-1)
 	{
@@ -659,17 +665,6 @@ int eTextPara::renderString(const char *string, int rflags, int border)
 		totalheight = height >> 6;
 		cursor=ePoint(area.x(), area.y()+(ascender>>6));
 		left=cursor.x();
-	}
-
-	if ((FTC_Manager_LookupFace(fontRenderClass::instance->cacheManager,
- 				    current_font->scaler.face_id,
- 				    &current_face) < 0) ||
-	    (FTC_Manager_LookupSize(fontRenderClass::instance->cacheManager,
-				    &current_font->scaler,
-				    &current_font->size) < 0))
-	{
-		eDebug("FTC_Manager_Lookup_Size failed!");
-		return -1;
 	}
 
 	std::vector<unsigned long> uc_string, uc_visual;
@@ -726,9 +721,15 @@ int eTextPara::renderString(const char *string, int rflags, int border)
 	FriBidiCharType dir=FRIBIDI_TYPE_ON;
 	uc_visual.resize(size);
 		// gaaanz lahm, aber anders geht das leider nicht, sorry.
-	FriBidiChar array[size], target[size];
+	FriBidiChar *array = new FriBidiChar[size];
+	FriBidiChar *target = new FriBidiChar[size];
 	std::copy(uc_shape.begin(), uc_shape.end(), array);
-	fribidi_log2vis(array, size, &dir, target, 0, 0, 0);
+	if(!fribidi_log2vis(array, size, &dir, target, 0, 0, 0))
+	{
+		delete [] target;
+		delete [] array;
+		return -1;
+	}
 	uc_visual.assign(target, target+size);
 
 	glyphs.reserve(size);
@@ -869,6 +870,8 @@ nprint:				isprintable=0;
 		lineChars.push_back(charCount);
 		charCount=0;
 	}
+	delete [] target;
+	delete [] array;
 	return 0;
 }
 

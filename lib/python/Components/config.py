@@ -225,7 +225,7 @@ class choicesList(object): # XXX: we might want a better name for this
 
 	def __len__(self):
 		return len(self.choices) or 1
-		
+
 	def updateItemDescription(self, index, descr):
 		if self.type == choicesList.LIST_TYPE_LIST:
 			orig = self.choices[index]
@@ -970,8 +970,6 @@ class ConfigInteger(ConfigSequence):
 class ConfigPIN(ConfigInteger):
 	def __init__(self, default, len = 4, censor = ""):
 		assert isinstance(default, int), "ConfigPIN default must be an integer"
-		if default == -1:
-			default = "aaaa"
 		ConfigSequence.__init__(self, seperator = ":", limits = [(0, (10**len)-1)], censor_char = censor, default = default)
 		self.len = len
 
@@ -987,90 +985,6 @@ class ConfigFloat(ConfigSequence):
 
 	float = property(getFloat)
 
-#### vuplus
-#Normal, LShift(42), RAlt(100), LShift+RAlt(100+42)/LArt(56)
-vukeymap_us_de = {
-	  2:[u"1", u"!", None, None]
-	, 3:[u"2", u"@", None, None]
-	, 4:[u"3", u"#", None, '\xc2\xa3']
-	, 5:[u"4", u"$", '\xc3\xa7', None]
-	, 6:[u"5", u"%", '\xc3\xbc', '\xe2\x82\xac']
-	, 7:[u"6", u"^", '\xc3\xb6', None]
-	, 8:[u"7", u"&", '\xc3\xa4', None]
-	, 9:[u"8", u"*", '\xc3\xa0', None]
-	,10:[u"9", u"(", '\xc3\xa8', None]
-	,11:[u"0", u")", '\xc3\xa9', None]
-	,12:[u"-", u"_", None, None]
-	,13:[u"=", u"+", "~", None]
-	,16:[u"q", u"Q", None, None]
-	,17:[u"w", u"W", None, None]
-	,18:[u"e", u"E", '\xe2\x82\xac', None]
-	,19:[u"r", u"R", None, None]
-	,20:[u"t", u"T", None, None]
-	,21:[u"y", u"Y", None, None]
-	,22:[u"u", u"U", None, None]
-	,23:[u"i", u"I", None, None]
-	,24:[u"o", u"O", None, None]
-	,25:[u"p", u"P", None, None]
-	,26:[u"[", u"{", None, None]
-	,27:[u"]", u"}", None, None]
-	,30:[u"a", u"A", None, None]
-	,31:[u"s", u"S", '\xc3\x9f', None]
-	,32:[u"d", u"D", None, None]
-	,33:[u"f", u"F", None, None]
-	,34:[u"g", u"G", None, None]
-	,35:[u"h", u"H", None, None]
-	,36:[u"j", u"J", None, None]
-	,37:[u"k", u"K", None, None]
-	,38:[u"l", u"L", None, None]
-	,39:[u";", u":", None, None]
-	,40:[u"\'", u"\"", None, None]
-	,41:['\xc2\xa7', '\xc2\xb0', '\xc2\xac', None]
-	,43:[u"\\", u"|", None, None]
-	,44:[u"z", u"Z", None, u"<"]
-	,45:[u"x", u"X", None, u">"]
-	,46:[u"c", u"C", '\xc2\xa2', None]
-	,47:[u"v", u"V", None, None]
-	,48:[u"b", u"B", None, None]
-	,49:[u"n", u"N", None, None]
-	,50:[u"m", u"M", '\xc2\xb5', None]
-	,51:[u",", "<", None, None]
-	,52:[u".", ">", None, None]
-	,53:[u"/", u"?", None, None]
-	,57:[u" ", None, None, None]
-}
-vumapidx = 0
-vukeymap = vukeymap_us_de
-rckeyboard_enable = False
-#if file("/proc/stb/info/vumodel").read().strip() not in ["bm750", "solo", uno"]:
-#	rckeyboard_enable = True
-
-def getCharValue(code):
-	global vumapidx
-	global vukeymap
-	global rckeyboard_enable
-	print "got ascii code : %d [%d]"%(code, vumapidx)
-	if rckeyboard_enable:
-		if code == 0:
-			vumapidx = 0
-			return None
-		elif code == 42:
-			vumapidx += 1
-			return None
-		elif code == 56:
-			vumapidx += 3
-			return None
-		elif code == 100:
-			vumapidx += 2
-			return None
-		try:
-			return vukeymap[code][vumapidx]
-		except:
-			return None
-	else:
-		return unichr(getPrevAsciiCode())
-#### vuplus	
-	
 # an editable text...
 class ConfigText(ConfigElement, NumericalTextInput):
 	def __init__(self, default = "", fixed_size = True, visible_width = False):
@@ -1179,12 +1093,8 @@ class ConfigText(ConfigElement, NumericalTextInput):
 			self.overwrite = not self.overwrite
 		elif key == KEY_ASCII:
 			self.timeout()
-			#### vuplus
-			#newChar = unichr(getPrevAsciiCode())
-			#if not self.useableChars or newChar in self.useableChars:
-			newChar = getCharValue(getPrevAsciiCode())
-			if (newChar is not None) and (not self.useableChars or newChar in self.useableChars):
-				#### vuplus
+			newChar = unichr(getPrevAsciiCode())
+			if not self.useableChars or newChar in self.useableChars:
 				if self.allmarked:
 					self.deleteAllChars()
 					self.allmarked = False
@@ -1252,6 +1162,7 @@ class ConfigText(ConfigElement, NumericalTextInput):
 		if session is not None:
 			from Screens.NumericalTextInputHelpDialog import NumericalTextInputHelpDialog
 			self.help_window = session.instantiateDialog(NumericalTextInputHelpDialog, self)
+			self.help_window.setAnimationMode(0)
 			self.help_window.show()
 
 	def onDeselect(self, session):
@@ -1320,6 +1231,13 @@ class ConfigSelectionNumber(ConfigSelection):
 		return self.choices.index(self.value)
 
 	index = property(getIndex)
+
+	def isChanged(self):
+		sv = self.saved_value
+		strv = str(self.tostring(self.value))
+		if sv is None and strv == str(self.default):
+			return False
+		return strv != str(sv)
 
 	def handleKey(self, key):
 		if not self.wraparound:
@@ -1901,7 +1819,7 @@ class Config(ConfigSubsection):
 		ConfigSubsection.__init__(self)
 
 	def pickle_this(self, prefix, topickle, result):
-		for (key, val) in topickle.items():
+		for (key, val) in sorted(topickle.items(), key=lambda x: int(x[0]) if x[0].isdigit() else x[0].lower()):
 			name = '.'.join((prefix, key))
 			if isinstance(val, dict):
 				self.pickle_this(name, val, result)
@@ -1964,9 +1882,7 @@ class Config(ConfigSubsection):
 			print "Config: Couldn't write %s" % filename
 
 	def loadFromFile(self, filename, base_file=True):
-		f = open(filename, "r")
-		self.unpickle(f.readlines(), base_file)
-		f.close()
+		self.unpickle(open(filename, "r"), base_file)
 
 config = Config()
 config.misc = ConfigSubsection()

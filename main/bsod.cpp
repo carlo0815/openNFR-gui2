@@ -20,7 +20,7 @@
 
 /************************************************/
 
-#define CRASH_EMAILADDR "nfr_e2@nachtfalke.biz"
+#define CRASH_EMAILADDR "forum at www.opena.tv"
 #define INFOFILE "/maintainer.info"
 
 #define RINGBUFFER_SIZE 16384
@@ -194,7 +194,7 @@ void bsodFatal(const char *component)
 
 		XmlGenerator xml(f);
 
-        xml.open("openNFR");
+		xml.open("openATV");
 
 		xml.open("enigma2");
 		xml.string("crashdate", tm_str);
@@ -223,7 +223,7 @@ void bsodFatal(const char *component)
 		xml.cDataFromFile("imageversion", "/etc/image-version");
 		xml.cDataFromFile("imageissue", "/etc/issue.net");
 		xml.close();
-		
+
 		xml.open("crashlogs");
 		xml.cDataFromString("enigma2crashlog", getLogBuffer());
 		xml.close();
@@ -239,7 +239,7 @@ void bsodFatal(const char *component)
 	gPainter p(my_dc);
 	p.resetOffset();
 	p.resetClip(eRect(ePoint(0, 0), my_dc->size()));
-	p.setBackgroundColor(gRGB(0x010000));
+	p.setBackgroundColor(gRGB(0x27408B));
 	p.setForegroundColor(gRGB(0xFFFFFF));
 
 	int hd =  my_dc->size().width() == 1920;

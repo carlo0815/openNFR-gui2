@@ -1,17 +1,20 @@
 from Components.config import config
 from Renderer import Renderer
 from enigma import eLabel, eTimer
-from boxbranding import getMachineProcModel
+from boxbranding import getBoxType
 from Components.VariableText import VariableText
 
 class RollerCharLCD(VariableText, Renderer):
+
 	def __init__(self):
 		Renderer.__init__(self)
 		VariableText.__init__(self)
-		if getMachineProcModel().startswith("ini-90"):
-			self.stringlength = 25
-		else:
+		self.moveTimerText = None
+		self.delayTimer = None
+		if getBoxType() == 'vuduo':
 			self.stringlength = 16
+		else:
+			self.stringlength = 12
 
 	GUI_WIDGET = eLabel
 
@@ -21,6 +24,10 @@ class RollerCharLCD(VariableText, Renderer):
 
 	def changed(self, what):
 		if what[0] == self.CHANGED_CLEAR:
+			if self.moveTimerText:
+				self.moveTimerText.stop()
+			if self.delayTimer:
+				self.delayTimer.stop()
 			self.text = ''
 		else:
 			self.text = self.source.text
@@ -44,8 +51,12 @@ class RollerCharLCD(VariableText, Renderer):
 		if self.x > 0:
 			txttmp = self.backtext[self.idx:]
 			self.text = txttmp[:self.stringlength]
-			self.idx += 1
-			self.x -= 1
+			str_length = 1
+			accents = self.text[:2]
+			if accents in ('\xc3\xbc', '\xc3\xa4', '\xc3\xb6', '\xc3\x84', '\xc3\x9c', '\xc3\x96', '\xc3\x9f'):
+				str_length = 2
+			self.idx = self.idx + str_length
+			self.x = self.x - str_length
 		if self.x == 0:
 			self.status = 'end'
 			self.text = self.backtext

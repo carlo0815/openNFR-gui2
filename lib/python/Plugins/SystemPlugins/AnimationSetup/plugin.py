@@ -6,13 +6,14 @@ from Components.MenuList import MenuList
 from Components.Sources.StaticText import StaticText
 from Components.config import config, ConfigNumber, ConfigSelectionNumber, getConfigListEntry
 from Plugins.Plugin import PluginDescriptor
-from boxbranding import getBrandOEM
 
 from enigma import setAnimation_current, setAnimation_speed
 
+from boxbranding import getBrandOEM
+
 # default = disabled
 g_default = {
-        "current": 1,
+        "current": 0,
         "speed"  : 20,
 }
 g_max_speed = 30
@@ -63,7 +64,7 @@ class AnimationSetupConfig(ConfigListScreen, Screen):
 
 	def keyGreen(self):
 		config.misc.window_animation_speed.save()
-                setAnimation_speed(int(config.misc.window_animation_speed.value))
+		setAnimation_speed(int(config.misc.window_animation_speed.value))
 		self.close()
 
 	def keyRed(self):
@@ -71,8 +72,8 @@ class AnimationSetupConfig(ConfigListScreen, Screen):
 		self.close()
 
 	def keyYellow(self):
-                global g_default
-                config.misc.window_animation_speed.value = g_default["speed"]
+		global g_default
+		config.misc.window_animation_speed.value = g_default["speed"]
 		self.makeConfigList()
 
 	def keyLeft(self):
@@ -135,7 +136,7 @@ class AnimationSetupScreen(Screen):
 			<widget source="key_blue" render="Label" position="420,0" zPosition="2" size="140,40" font="Regular;20" halign="center" valign="center" foregroundColor="#ffffff" backgroundColor="#18188b" transparent="1" />
 
 			<widget name="list" position="10,60" size="660,364" scrollbarMode="showOnDemand" />
-	                <widget source="introduction" render="Label" position="0,370" size="560,40" zPosition="10" font="Regular;20" valign="center" backgroundColor="#25062748" transparent="1" />
+			<widget source="introduction" render="Label" position="0,370" size="560,40" zPosition="10" font="Regular;20" valign="center" backgroundColor="#25062748" transparent="1" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -184,13 +185,13 @@ class AnimationSetupScreen(Screen):
 			setAnimation_current(key)
 		self.close()
 
-        def keyclose(self):
+	def keyclose(self):
 		setAnimation_current(config.misc.window_animation_default.value)
-                setAnimation_speed(int(config.misc.window_animation_speed.value))
+		setAnimation_speed(int(config.misc.window_animation_speed.value))
 		self.close()
 
 	def config(self):
-                self.session.open(AnimationSetupConfig)
+		self.session.open(AnimationSetupConfig)
 
 	def preview(self):
 		current = self["list"].getCurrent()

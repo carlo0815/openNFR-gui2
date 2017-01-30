@@ -7,6 +7,10 @@
 	#include <linux/stmfb.h>
 #endif
 
+#ifndef FB_DEV
+# define FB_DEV "/dev/fb0"
+#endif
+
 class fbClass
 {
 	int fbFd;
@@ -31,15 +35,17 @@ class fbClass
 	int m_number_of_pages;
 	int m_phys_mem;
 #ifdef SWIG
-	fbClass(const char *fb="/dev/fb0");
+	fbClass(const char *fb=FB_DEV);
 	~fbClass();
 public:
 #else
 public:
 	unsigned char *lfb;
+#if not defined(__sh__)
 	void enableManualBlit();
 	void disableManualBlit();
 	int showConsole(int state);
+#endif
 	int SetMode(int xRes, int yRes, int bpp);
 	void getMode(int &xres, int &yres, int &bpp);
 	int Available() { return available; }
@@ -54,7 +60,7 @@ public:
 	unsigned int Stride() { return stride; }
 	fb_cmap *CMAP() { return &cmap; }
 
-	fbClass(const char *fb="/dev/fb0");
+	fbClass(const char *fb=FB_DEV);
 	~fbClass();
 
 			// low level gfx stuff

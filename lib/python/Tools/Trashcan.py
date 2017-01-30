@@ -6,6 +6,7 @@ from Components.VariableText import VariableText
 import time
 import os
 import enigma
+from enigma import pNavigation
 
 def getTrashFolder(path=None):
 	# Returns trash folder without symlinks
@@ -24,9 +25,7 @@ def getTrashFolder(path=None):
 		return None
 
 def createTrashFolder(path=None):
-	print '[TRASHCAN DeBug path]', path
 	trash = getTrashFolder(path)
-	print '[TRASHCAN DeBug]', trash
 	if trash and os.access(os.path.split(trash)[0], os.W_OK):
 		if not os.path.isdir(trash):
 			try:
@@ -56,7 +55,7 @@ class Trashcan:
 		self.gotRecordEvent(None, None)
 
 	def gotRecordEvent(self, service, event):
-		self.recordings = len(self.session.nav.getRecordings())
+		self.recordings = len(self.session.nav.getRecordings(False,pNavigation.isRealRecording))
 		if event == enigma.iRecordableService.evEnd:
 			self.cleanIfIdle()
 

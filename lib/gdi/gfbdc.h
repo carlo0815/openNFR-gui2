@@ -6,7 +6,6 @@
 #include "gmaindc.h"
 
 #ifndef SWIG
-
 class gFBDC: public gMainDC
 {
 	fbClass *fb;

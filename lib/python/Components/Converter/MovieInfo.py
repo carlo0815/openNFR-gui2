@@ -7,7 +7,8 @@ class MovieInfo(Converter, object):
 	MOVIE_SHORT_DESCRIPTION = 0 # meta description when available.. when not .eit short description
 	MOVIE_META_DESCRIPTION = 1 # just meta description when available
 	MOVIE_REC_SERVICE_NAME = 2 # name of recording service
-	MOVIE_REC_FILESIZE = 3 # filesize of recording
+	MOVIE_REC_SERVICE_REF = 3 # referance of recording service
+	MOVIE_REC_FILESIZE = 4 # filesize of recording
 
 	def __init__(self, type):
 		if type == "ShortDescription":
@@ -18,6 +19,8 @@ class MovieInfo(Converter, object):
 			self.type = self.MOVIE_REC_SERVICE_NAME
 		elif type == "FileSize":
 			self.type = self.MOVIE_REC_FILESIZE
+		elif type == "RecordServiceRef":
+			self.type = self.MOVIE_REC_SERVICE_REF
 		else:
 			raise ElementError("'%s' is not <ShortDescription|MetaDescription|RecordServiceName|FileSize> for MovieInfo converter" % type)
 		Converter.__init__(self, type)
@@ -42,12 +45,20 @@ class MovieInfo(Converter, object):
 			elif self.type == self.MOVIE_REC_SERVICE_NAME:
 				rec_ref_str = info.getInfoString(service, iServiceInformation.sServiceref)
 				return ServiceReference(rec_ref_str).getServiceName()
+			elif self.type == self.MOVIE_REC_SERVICE_REF:
+				rec_ref_str = info.getInfoString(service, iServiceInformation.sServiceref)
+				return str(ServiceReference(rec_ref_str))
 			elif self.type == self.MOVIE_REC_FILESIZE:
 				if (service.flags & eServiceReference.flagDirectory) == eServiceReference.flagDirectory:
 					return _("Directory")
 				filesize = info.getInfoObject(service, iServiceInformation.sFileSize)
 				if filesize is not None:
-					return _("%d MB") % (filesize / (1024*1024))
+					if filesize >= 100000*1024*1024:
+						return _("%.0f GB") % (filesize / (1024.0*1024.0*1024.0))
+					elif filesize >= 100000*1024:
+						return _("%.2f GB") % (filesize / (1024.0*1024.0*1024.0))
+					else:
+						return _("%.0f MB") % (filesize / (1024.0*1024.0))
 		return ""
 
 	text = property(getText)

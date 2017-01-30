@@ -34,6 +34,7 @@ SCOPE_TIMESHIFT = 18
 SCOPE_ACTIVE_SKIN = 19
 SCOPE_LCDSKIN = 20
 SCOPE_ACTIVE_LCDSKIN = 21
+SCOPE_AUTORECORD = 22
 
 PATH_CREATE = 0
 PATH_DONTCREATE = 1
@@ -52,6 +53,7 @@ defaultPaths = {
 		SCOPE_SKIN_IMAGE: (eEnv.resolve("${datadir}/enigma2/"), PATH_DONTCREATE),
 		SCOPE_HDD: ("/media/hdd/movie/", PATH_DONTCREATE),
 		SCOPE_TIMESHIFT: ("/media/hdd/timeshift/", PATH_DONTCREATE),
+		SCOPE_AUTORECORD: ("/media/hdd/movie/", PATH_DONTCREATE),
 		SCOPE_MEDIA: ("/media/", PATH_DONTCREATE),
 		SCOPE_PLAYLIST: (eEnv.resolve("${sysconfdir}/enigma2/playlist/"), PATH_CREATE),
 
@@ -67,8 +69,9 @@ PATH_MOVE = 3 # move the fallback dir to the basedir (can be used for changes in
 fallbackPaths = {
 		SCOPE_CONFIG: [("/home/root/", FILE_MOVE),
 					   (eEnv.resolve("${datadir}/enigma2/defaults/"), FILE_COPY)],
-		SCOPE_HDD: [("/media/hdd/movies", PATH_MOVE)],
-		SCOPE_TIMESHIFT: [("/media/hdd/timeshift", PATH_MOVE)]
+		SCOPE_HDD: [("/media/hdd/movie", PATH_MOVE)],
+		SCOPE_TIMESHIFT: [("/media/hdd/timeshift", PATH_MOVE)],
+		SCOPE_AUTORECORD: [("/media/hdd/movie", PATH_MOVE)]
 	}
 
 def resolveFilename(scope, base = "", path_prefix = None):
@@ -255,7 +258,7 @@ def defaultRecordingLocation(candidate=None):
 		if not path.endswith('/'):
 			path += '/' # Bad habits die hard, old code relies on this
 	return path
-	
+
 
 def createDir(path, makeParents = False):
 	try:
@@ -305,9 +308,11 @@ def getRecordingFilename(basename, dirname = None):
 
 	if dirname is not None:
 		if not dirname.startswith('/'):
-			dirname = os.path.join(defaultRecordingLocation(), dirname)
+			from Components.config import config
+			dirname = os.path.join(defaultRecordingLocation(config.usage.default_path.value), dirname)
 	else:
-		dirname = defaultRecordingLocation()
+		from Components.config import config
+		dirname = defaultRecordingLocation(config.usage.default_path.value)
 	filename = os.path.join(dirname, filename)
 
 	i = 0

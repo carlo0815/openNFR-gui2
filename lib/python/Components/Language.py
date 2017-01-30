@@ -13,6 +13,8 @@ Lpackagename = "enigma2-locale-"
 class Language:
 	def __init__(self):
 		gettext.install('enigma2', resolveFilename(SCOPE_LANGUAGE, ""), unicode=0, codeset="utf-8")
+		gettext.bindtextdomain("enigma2", resolveFilename(SCOPE_LANGUAGE))
+		gettext.textdomain("enigma2")
 		self.activeLanguage = 0
 		self.catalog = None
 		self.lang = {}
@@ -25,16 +27,15 @@ class Language:
 		self.ll = os.listdir(LPATH)
 		# FIXME make list dynamically
 		# name, iso-639 language, iso-3166 country. Please don't mix language&country!
+		self.addLanguage("English (US)", "en", "US", "ISO-8859-15")
+		self.addLanguage("Deutsch", "de", "DE", "ISO-8859-15")
 		self.addLanguage("Arabic", "ar", "AE", "ISO-8859-15")
 		self.addLanguage("Български", "bg", "BG", "ISO-8859-15")
-		self.addLanguage("Bokmål", "nb", "NO", "ISO-8859-15")
 		self.addLanguage("Català", "ca", "AD", "ISO-8859-15")
 		self.addLanguage("Česky", "cs", "CZ", "ISO-8859-15")
 		self.addLanguage("Dansk", "da", "DK", "ISO-8859-15")
-		self.addLanguage("Deutsch", "de", "DE", "ISO-8859-15")
-		self.addLanguage("Ελληνικά", "el", "GR", "ISO-8859-15")
+		self.addLanguage("Ελληνικά", "el", "GR", "ISO-8859-7")
 		self.addLanguage("English (UK)", "en", "GB", "ISO-8859-15")
-		self.addLanguage("English (US)", "en", "US", "ISO-8859-15")
 		self.addLanguage("Español", "es", "ES", "ISO-8859-15")
 		self.addLanguage("Eesti", "et", "EE", "ISO-8859-15")
 		self.addLanguage("Persian", "fa", "IR", "ISO-8859-15")
@@ -68,7 +69,7 @@ class Language:
 	def addLanguage(self, name, lang, country, encoding):
 		try:
 			if lang in self.ll:
-				if country == "EN" or country == "BR":
+				if country == "GB" or country == "BR":
 					if (lang + "_" + country) in self.ll:
 						self.lang[str(lang + "_" + country)] = ((name, lang, country, encoding))
 						self.langlist.append(str(lang + "_" + country))
@@ -150,7 +151,7 @@ class Language:
 
 		if delLang:
 			print"DELETE LANG", delLang
-			if delLang == "en_US":
+			if delLang == "en_US" or delLang == "de_DE":
 				print"Default Language can not be deleted !!"
 				return
 			elif delLang == "en_GB" or delLang == "pt_BR":
@@ -164,12 +165,12 @@ class Language:
 			ll = os.listdir(LPATH)
 			for x in ll:
 				if len(x) > 2:
-					if x != lang:
+					if x != lang and x != "de":
 						x = x.lower()
 						x = x.replace('_','-')
 						os.system("opkg remove --autoremove --force-depends " + Lpackagename + x)
 				else:
-					if x != lang[:2] and x != "en":
+					if x != lang[:2] and x != "en" and x != "de":
 						os.system("opkg remove --autoremove --force-depends " + Lpackagename + x)
 					elif x == "pt":
 						if x != lang:

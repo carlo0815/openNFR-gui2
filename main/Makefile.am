@@ -52,11 +52,11 @@ enigma2_LDADD = \
 	@PTHREAD_LIBS@ \
 	@PYTHON_LDFLAGS@ \
 	@LIBDDVD_LIBS@ \
+	@ALSA_LIBS@ \
+	@AMCODEC_LIBS@ \
+	@AMADEC_LIBS@ \
+	@DVBCSA_LIBS@ \
 	-ltuxtxt -ltuxtxt32bpp -lcrypt -lrt -ldl
-
-if ENABLE_SH
-enigma2_LDADD += -lmmeimage
-endif
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 

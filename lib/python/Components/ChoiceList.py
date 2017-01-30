@@ -4,50 +4,50 @@ from enigma import RT_HALIGN_LEFT, eListboxPythonMultiContent, gFont
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists
 import skin
-from enigma import getDesktop
+from os import path
 
-def ChoiceEntryComponent(key="", text=None):
-    if getDesktop(0).size().width() == 1920:
-	if not text: text = ["--"]
+def row_delta_y():
+	font = skin.fonts["ChoiceList"]
+	return (int(font[2]) - int(font[1]))/2
+
+def ChoiceEntryComponent(key = None, text = ["--"]):
 	res = [ text ]
 	if text[0] == "--":
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 00, 1000, 25, 0, RT_HALIGN_LEFT, "-"*200))
+		x, y, w, h = skin.parameters.get("ChoicelistDash",(0, 2, 800, 25))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, x, y, w, h, 0, RT_HALIGN_LEFT, "-"*200))
 	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 65, 2, 1000, 40, 0, RT_HALIGN_LEFT, text[0]))
-		pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + key + ".png")
-		if fileExists(pngfile):
-			png = LoadPixmap(pngfile)
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 10, 2, 35, 35, png))
+		x, y, w, h = skin.parameters.get("ChoicelistName",(45, 2, 800, 25))
+		res.append((eListboxPythonMultiContent.TYPE_TEXT, x, y, w, h, 0, RT_HALIGN_LEFT, text[0]))
+		if key:
+			if key == "expandable":
+				pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "icons/expandable.png")
+			elif key == "expanded":
+				pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "icons/expanded.png")
+			elif key == "verticalline":
+				pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "icons/verticalline.png")
+			elif key == "bullet":
+				pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "icons/bullet.png")
+			else:
+				pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_%s.png" % key)
+			if fileExists(pngfile):
+				png = LoadPixmap(pngfile)
+				x, y, w, h = skin.parameters.get("ChoicelistIcon",(5, 0, 35, 25))
+				res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, x, y, w, h, png))
 	return res
-    if getDesktop(0).size().width() == 1280:
-	if not text: text = ["--"]
-	res = [ text ]
-	if text[0] == "--":
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 0, 00, 800, 25, 0, RT_HALIGN_LEFT, "-"*200))
-	else:
-		res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 00, 800, 25, 0, RT_HALIGN_LEFT, text[0]))
-		pngfile = resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/key_" + key + ".png")
-		if fileExists(pngfile):
-			png = LoadPixmap(pngfile)
-			res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHATEST, 5, 0, 35, 30, png))
-	return res
+
 class ChoiceList(MenuList):
 	def __init__(self, list, selection = 0, enableWrapAround=False):
-            if getDesktop(0).size().width() == 1920:	
 		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		font = skin.fonts["ChoiceList"]
-		self.l.setFont(0, gFont("Regular", 28))
-		self.l.setFont(1, gFont("Regular", 22))
-		self.l.setItemHeight(font[2])
-		self.selection = selection
-            else:
-		MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		font = skin.fonts["ChoiceList"]
+		font = skin.fonts.get("ChoiceList", ("Regular", 20, 30))
 		self.l.setFont(0, gFont(font[0], font[1]))
 		self.l.setItemHeight(font[2])
+		self.ItemHeight = font[2]
 		self.selection = selection
-                            
+
 	def postWidgetCreate(self, instance):
 		MenuList.postWidgetCreate(self, instance)
 		self.moveToIndex(self.selection)
 		self.instance.setWrapAround(True)
+
+	def getItemHeight(self):
+		return self.ItemHeight

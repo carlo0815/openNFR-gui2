@@ -209,6 +209,7 @@ protected:
 	eDVBServicePMTHandler m_service_handler_timeshift;
 	eDVBServiceEITHandler m_event_handler;
 	int m_current_audio_pid;
+	int m_current_video_pid_type;
 
 	eDVBServicePlay(const eServiceReference &ref, eDVBService *service);
 
@@ -219,10 +220,11 @@ protected:
 	void serviceEventTimeshift(int event);
 	Signal2<void,iPlayableService*,int> m_event;
 
-	int m_is_stream;
+	bool m_is_stream;
 
 		/* pvr */
-	int m_is_pvr, m_is_paused, m_timeshift_enabled, m_timeshift_active, m_timeshift_changed, m_save_timeshift;
+	bool m_is_pvr;
+	int m_is_paused, m_timeshift_enabled, m_timeshift_active, m_timeshift_changed, m_save_timeshift;
 	int m_first_program_info;
 
 	std::string m_timeshift_file, m_timeshift_file_next;

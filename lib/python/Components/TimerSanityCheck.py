@@ -1,11 +1,11 @@
-from time import localtime, mktime, gmtime
-
-from enigma import iServiceInformation, eServiceCenter, eServiceReference
-
 import NavigationInstance
+from time import localtime, mktime, gmtime
+from ServiceReference import ServiceReference
+from enigma import iServiceInformation, eServiceCenter, eServiceReference, getBestPlayableServiceReference
 from timer import TimerEntry
 
-
+from Tools.CIHelper import cihelper
+from Components.config import config
 class TimerSanityCheck:
 	def __init__(self, timerlist, newtimer=None):
 		self.localtimediff = 25*3600 - mktime(gmtime(25*3600))
@@ -36,7 +36,7 @@ class TimerSanityCheck:
 				if timer == self.newtimer:
 					return True
 				else:
-					if timer.begin == self.newtimer.begin:
+					if self.newtimer.begin >= timer.begin and self.newtimer.end <= timer.end:
 						fl1 = timer.service_ref.ref.flags & eServiceReference.isGroup
 						fl2 = self.newtimer.service_ref.ref.flags & eServiceReference.isGroup
 						if fl1 != fl2:
@@ -165,7 +165,21 @@ class TimerSanityCheck:
 		newTimerTunerType = None
 		cnt = 0
 		idx = 0
+		is_ci_use = 0
+		is_ci_timer_conflict = 0
 		overlaplist = []
+
+		ci_timer = False
+		if config.misc.use_ci_assignment.value and cihelper.ServiceIsAssigned(self.newtimer.service_ref.ref):
+			ci_timer = self.newtimer
+			ci_timer_begin = ci_timer.begin
+			ci_timer_end = ci_timer.end
+			ci_timer_dur = ci_timer_end - ci_timer_begin
+			ci_timer_events = []
+			for ev in self.nrep_eventlist:
+				if ev[2] == -1:
+					ci_timer_events.append((ev[0], ev[0] + ci_timer_dur))
+
 		for event in self.nrep_eventlist:
 			cnt += event[1]
 			if event[2] == -1: # new timer
@@ -174,14 +188,25 @@ class TimerSanityCheck:
 				timer = self.timerlist[event[2]]
 			if event[1] == self.bflag:
 				tunerType = [ ]
-				fakeRecService = NavigationInstance.instance.recordService(timer.service_ref, True)
+				if timer.service_ref.ref and timer.service_ref.ref.flags & eServiceReference.isGroup:
+					fakeRecService = NavigationInstance.instance.recordService(getBestPlayableServiceReference(timer.service_ref.ref, eServiceReference(), True), True)
+				else:
+					fakeRecService = NavigationInstance.instance.recordService(timer.service_ref, True)
 				if fakeRecService:
 					fakeRecResult = fakeRecService.start(True)
 				else:
 					fakeRecResult = -1
+				#print "[TimerSanityCheck] +++", len(NavigationInstance.instance.getRecordings(True)), fakeRecResult
+				if fakeRecResult == -6 and len(NavigationInstance.instance.getRecordings(True)) < 2:
+					print "[TimerSanityCheck] less than two timers in the simulated recording list - timer conflict is not plausible - ignored !"
+					fakeRecResult = 0
 				if not fakeRecResult: # tune okay
-					feinfo = fakeRecService.frontendInfo().getFrontendData()
-					tunerType.append(feinfo.get("tuner_type"))
+					#feinfo = fakeRecService.frontendInfo()
+					#if feinfo:
+					#	tunerType.append(feinfo.getFrontendData().get("tuner_type"))
+					if hasattr(fakeRecService, 'frontendInfo') and hasattr(fakeRecService.frontendInfo(), 'getFrontendData'):
+						feinfo = fakeRecService.frontendInfo().getFrontendData()
+						tunerType.append(feinfo.get("tuner_type"))
 				else: # tune failed.. so we must go another way to get service type (DVB-S, DVB-T, DVB-C)
 
 					def getServiceType(ref): # helper function to get a service type of a service reference
@@ -219,6 +244,24 @@ class TimerSanityCheck:
 						overlaplist.remove(entry)
 			else:
 				print "Bug: unknown flag!"
+
+			if ci_timer and cihelper.ServiceIsAssigned(timer.service_ref.ref):
+				if event[1] == self.bflag:
+					timer_begin = event[0]
+					timer_end = event[0] + (timer.end - timer.begin)
+				else:
+					timer_end = event[0]
+					timer_begin = event[0] - (timer.end - timer.begin)
+				if timer != ci_timer:
+					for ci_ev in ci_timer_events:
+						if (ci_ev[0] >= timer_begin and ci_ev[0] <= timer_end) or (ci_ev[1] >= timer_begin and ci_ev[1] <= timer_end):
+							if ci_timer.service_ref.ref != timer.service_ref.ref:
+								is_ci_timer_conflict = 1
+								break
+				if is_ci_timer_conflict == 1:
+					if ConflictTimer is None:
+						ConflictTimer = timer
+						ConflictTunerType = tunerType
 			self.nrep_eventlist[idx] = (event[0],event[1],event[2],cnt,overlaplist[:]) # insert a duplicate into current overlaplist
 			idx += 1
 

@@ -37,6 +37,11 @@ class SetupSummary(Screen):
 		self["SetupValue"].text = self.parent.getCurrentValue()
 		if hasattr(self.parent,"getCurrentDescription"):
 			self.parent["description"].text = self.parent.getCurrentDescription()
+		if self.parent.has_key('footnote'):
+			if self.parent.getCurrentEntry().endswith('*'):
+				self.parent['footnote'].text = (_("* = Restart Required"))
+			else:
+				self.parent['footnote'].text = (_(" "))
 
 class RecordingSettings(Screen,ConfigListScreen):
 	def removeNotifier(self):
@@ -176,6 +181,7 @@ class RecordingSettings(Screen,ConfigListScreen):
 		currentry = self["config"].getCurrent()
 		self.lastvideodirs = config.movielist.videodirs.value
 		self.lasttimeshiftdirs = config.usage.allowed_timeshift_paths.value
+		self.lastautorecorddirs = config.usage.allowed_autorecord_paths.value
 		if config.usage.setup_level.index >= 2:
 			txt = _("Default movie location")
 		else:

@@ -3,7 +3,7 @@ import os
 import time
 
 ECM_INFO = '/tmp/ecm.info'
-EMPTY_ECM_INFO = _("Free To Air"),'0','0','0'
+EMPTY_ECM_INFO = ' ','0','0','0'
 
 old_ecm_time = time.time()
 info = {}
@@ -55,7 +55,10 @@ class GetEcmInfo:
 				if 'ECM' in line:
 					linetmp = mgcam.split(' ')
 					info['eEnc'] = linetmp[1]
-					info['eCaid'] = linetmp[5][2:-1]
+					try:			
+						info['eCaid'] = linetmp[5][2:-1]
+					except:
+						info['eCaid'] = ""
 					continue
 				if 'source' in line:
 					linetmp = mgcam.split(' ')
@@ -77,8 +80,12 @@ class GetEcmInfo:
 					info['pid'] = line[line.find('pid 0x')+6:line.find(' =')]
 					info['provid'] = info.get('prov', '0')[:4]
 			data = self.getText()
+			return True
 		else:
 			info['ecminterval0'] = int(time.time()-ecm_time+0.5)
+
+	def getEcm(self):
+		return (self.pollEcmData(), ecm)
 
 	def getEcmData(self):
 		self.pollEcmData()

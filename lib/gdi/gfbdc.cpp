@@ -162,6 +162,9 @@ void gFBDC::exec(const gOpcode *o)
 		break;
 	case gOpcode::sendShow:
 	{
+#ifdef HAVE_OSDANIMATION
+		CFile::writeIntHex("/proc/stb/fb/animation_mode", 0x01);
+#endif
 #ifdef USE_LIBVUGLES2
 		gles_set_buffer((unsigned int *)surface.data);
 		gles_set_animation(1, o->parm.setShowHideInfo->point.x(), o->parm.setShowHideInfo->point.y(), o->parm.setShowHideInfo->size.width(), o->parm.setShowHideInfo->size.height());
@@ -171,7 +174,7 @@ void gFBDC::exec(const gOpcode *o)
 	case gOpcode::sendHide:
 	{
 #ifdef HAVE_OSDANIMATION
-		CFile::writeIntHex("/proc/stb/fb/animation_mode", 0x01);
+		CFile::writeIntHex("/proc/stb/fb/animation_mode", 0x10);
 #endif
 #ifdef USE_LIBVUGLES2
 		gles_set_buffer((unsigned int *)surface.data);
@@ -179,9 +182,6 @@ void gFBDC::exec(const gOpcode *o)
 #endif
 		break;
 	}
-#ifdef HAVE_OSDANIMATION
-		CFile::writeIntHex("/proc/stb/fb/animation_mode", 0x10);
-#endif
 #ifdef USE_LIBVUGLES2
 	case gOpcode::setView:
 	{
@@ -227,13 +227,8 @@ void gFBDC::setResolution(int xres, int yres, int bpp)
 	 * we need that to read the new screen dimesnions after a resolution change
 	 * without changing the frambuffer dimensions
 	 */
-	int m_xres;
-	int m_yres;
-	int m_bpp;
-	fb->getMode(m_xres, m_yres, m_bpp);
-
 	if (xres<0 && yres<0 ) {
-		fb->SetMode(m_xres, m_yres, bpp);
+		fb->SetMode(surface.x, surface.y, bpp);
 		return;
 	}
 #else

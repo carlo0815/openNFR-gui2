@@ -2,6 +2,8 @@ import os
 from enigma import eConsoleAppContainer
 from Components.Harddisk import harddiskmanager
 from Components.config import config
+from shutil import rmtree
+from boxbranding import getImageDistro, getImageVersion
 
 opkgDestinations = []
 opkgStatusPath = ''
@@ -84,6 +86,13 @@ class IpkgComponent:
 
 	def startCmd(self, cmd, args = None):
 		if cmd == self.CMD_UPDATE:
+			if getImageVersion() == '4.0':
+				if os.path.exists('/var/lib/opkg/lists'):
+					rmtree('/var/lib/opkg/lists')
+			else:
+				for fn in os.listdir('/var/lib/opkg'):
+					if fn.startswith(getImageDistro()):
+						os.remove('/var/lib/opkg/'+fn)
 			self.runCmdEx("update")
 		elif cmd == self.CMD_UPGRADE:
 			append = ""
@@ -104,7 +113,7 @@ class IpkgComponent:
 		elif cmd == self.CMD_INSTALL:
 			self.runCmd("--force-overwrite install " + args['package'])
 		elif cmd == self.CMD_REMOVE:
-			self.runCmd("remove --autoremove --force-depends " + args['package'])
+			self.runCmd("remove " + args['package'])
 		elif cmd == self.CMD_UPGRADE_LIST:
 			self.fetchedList = []
 			self.excludeList = []
@@ -142,9 +151,28 @@ class IpkgComponent:
 	def parseLine(self, data):
 		if self.currentCommand in (self.CMD_LIST, self.CMD_UPGRADE_LIST):
 			item = data.split(' - ', 2)
-			self.fetchedList.append(item)
-			self.callCallbacks(self.EVENT_LISTITEM, item)
-			return
+			if item[0].find('-settings-') > -1 and not config.plugins.softwaremanager.overwriteSettingsFiles.value:
+				self.excludeList.append(item)
+				return
+			elif item[0].find('kernel-module-') > -1 and not config.plugins.softwaremanager.overwriteDriversFiles.value:
+				self.excludeList.append(item)
+				return
+			elif item[0].find('-softcams-') > -1 and not config.plugins.softwaremanager.overwriteEmusFiles.value:
+				self.excludeList.append(item)
+				return
+			elif item[0].find('-picons-') > -1 and not config.plugins.softwaremanager.overwritePiconsFiles.value:
+				self.excludeList.append(item)
+				return
+			elif item[0].find('-bootlogo') > -1 and not config.plugins.softwaremanager.overwriteBootlogoFiles.value:
+				self.excludeList.append(item)
+				return
+			elif item[0].find('openatv-spinner') > -1 and not config.plugins.softwaremanager.overwriteSpinnerFiles.value:
+				self.excludeList.append(item)
+				return
+			else:
+				self.fetchedList.append(item)
+				self.callCallbacks(self.EVENT_LISTITEM, item)
+				return
 
 		try:
 			if data.startswith('Downloading'):

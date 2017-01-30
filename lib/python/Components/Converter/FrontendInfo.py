@@ -1,6 +1,7 @@
 from Components.Converter.Converter import Converter
 from Components.Element import cached
 from Components.config import config
+from Components.NimManager import nimmanager
 
 class FrontendInfo(Converter, object):
 	BER = 0
@@ -10,6 +11,7 @@ class FrontendInfo(Converter, object):
 	SNRdB = 4
 	SLOT_NUMBER = 5
 	TUNER_TYPE = 6
+	STRING = 7
 
 	def __init__(self, type):
 		Converter.__init__(self, type)
@@ -25,6 +27,11 @@ class FrontendInfo(Converter, object):
 			self.type = self.SLOT_NUMBER
 		elif type == "TYPE":
 			self.type = self.TUNER_TYPE
+		elif type.startswith("STRING"):
+			self.type = self.STRING
+			type = type.split(",")
+			self.space_for_tuners = len(type) > 1 and int(type[1]) or 10
+			self.space_for_tuners_with_spaces = len(type) > 2 and int(type[2]) or 6
 		else:
 			self.type = self.LOCK
 
@@ -50,6 +57,22 @@ class FrontendInfo(Converter, object):
 				percent = self.source.snr
 		elif self.type == self.TUNER_TYPE:
 			return self.source.frontend_type and self.frontend_type or "Unknown"
+		elif self.type == self.STRING:
+			string = ""
+			for n in nimmanager.nim_slots:
+				if n.type:
+					if n.slot == self.source.slot_number:
+						color = "\c0000??00"
+					elif self.source.tuner_mask & 1 << n.slot:
+						color = "\c00??????"
+					elif len(nimmanager.nim_slots) <= self.space_for_tuners:
+						color = "\c007?7?7?"
+					else:
+						continue
+					if string and len(nimmanager.nim_slots) <= self.space_for_tuners_with_spaces:
+						string += " "
+					string += color + chr(ord("A")+n.slot)
+			return string
 		if percent is None:
 			return "N/A"
 		return "%d %%" % (percent * 100 / 65536)
