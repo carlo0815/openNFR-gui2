@@ -1,11 +1,10 @@
+from boxbranding import getBoxType, getMachineProcModel, getMachineBuild
 from os import path
 
 from enigma import eDVBResourceManager, Misc_Options
 
 from Tools.Directories import fileExists, fileCheck
 from Tools.HardwareInfo import HardwareInfo
-
-from boxbranding import getBoxType, getMachineBuild
 
 SystemInfo = { }
 
@@ -38,12 +37,17 @@ SystemInfo["FrontpanelDisplay"] = fileExists("/dev/dbox/oled0") or fileExists("/
 SystemInfo["OledDisplay"] = fileExists("/dev/dbox/oled0") or getBoxType() in ('osminiplus')
 SystemInfo["LcdDisplay"] = fileExists("/dev/dbox/lcd0")
 SystemInfo["FBLCDDisplay"] = fileCheck("/proc/stb/fb/sd_detach")
+SystemInfo["VfdDisplay"] = getBoxType() not in ('vuultimo', 'xpeedlx3', 'et10000', 'mutant2400', 'quadbox2400', 'atemionemesis') and fileExists("/dev/dbox/oled0")
 SystemInfo["DeepstandbySupport"] = HardwareInfo().has_deepstandby()
 SystemInfo["Fan"] = fileCheck("/proc/stb/fp/fan")
 SystemInfo["FanPWM"] = SystemInfo["Fan"] and fileCheck("/proc/stb/fp/fan_pwm")
 SystemInfo["StandbyPowerLed"] = fileExists("/proc/stb/power/standbyled")
 SystemInfo["LEDButtons"] = getBoxType() == 'vuultimo'
 SystemInfo["WakeOnLAN"] = fileCheck("/proc/stb/power/wol") or fileCheck("/proc/stb/fp/wol")
+if getBoxType() in ('gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gbipbox'):
+	SystemInfo["WOL"] = False
+else:
+	SystemInfo["WOL"] = fileCheck("/proc/stb/power/wol") or fileCheck("/proc/stb/fp/wol")
 SystemInfo["HDMICEC"] = (fileExists("/dev/hdmi_cec") or fileExists("/dev/misc/hdmi_cec0")) and fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo")
 SystemInfo["SABSetup"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/SABnzbd/plugin.pyo")
 SystemInfo["SeekStatePlay"] = False
@@ -59,7 +63,11 @@ SystemInfo["VFD_scroll_repeats"] = fileCheck("/proc/stb/lcd/scroll_repeats")
 SystemInfo["VFD_scroll_delay"] = fileCheck("/proc/stb/lcd/scroll_delay")
 SystemInfo["VFD_initial_scroll_delay"] = fileCheck("/proc/stb/lcd/initial_scroll_delay")
 SystemInfo["VFD_final_scroll_delay"] = fileCheck("/proc/stb/lcd/final_scroll_delay")
+SystemInfo["CIHelper"] = fileExists("/usr/bin/cihelper")
+SystemInfo["isGBIPBOX"] = fileExists("/usr/lib/enigma2/python/gbipbox.so")
+SystemInfo["HaveMultiBoot"] = fileCheck("/boot/STARTUP") or fileCheck("/boot/STARTUP_1")
 SystemInfo["LCDMiniTV"] = fileExists("/proc/stb/lcd/mode")
+SystemInfo["LCDMiniTV4k"] = fileExists("/proc/stb/lcd/live_enable")
 SystemInfo["LCDMiniTVPiP"] = SystemInfo["LCDMiniTV"] and getBoxType() != 'gb800ueplus'
 SystemInfo["LcdLiveTV"] = fileCheck("/proc/stb/fb/sd_detach")
 SystemInfo["CIHelper"] = fileExists("/usr/bin/cihelper")

@@ -278,6 +278,12 @@ class LCD:
 		f = open('/proc/stb/lcd/mode', "w")
 		f.write(value)
 		f.close()
+		
+	def setLCDMiniTVMode4k(self, value):
+		print 'setLCDMiniTVMode4k',value
+		f = open('/proc/stb/lcd/live_enable', "w")
+		f.write(value)
+		f.close()		
 
 	def setLCDMiniTVPIPMode(self, value):
 		print 'setLCDMiniTVPIPMode',value
@@ -311,13 +317,17 @@ def InitLcd():
 		f = open("/proc/stb/lcd/mode", "r")
 		can_lcdmodechecking = f.read().strip().split(" ")
 		f.close()
-	else:
-		can_lcdmodechecking = False
+	elif fileExists("/proc/stb/lcd/live_enable"):
+		f = open("/proc/stb/lcd/live_enable", "r")
+		can_lcdmodechecking = f.read().strip().split(" ")
+		f.close()
+        else:
+			can_lcdmodechecking = False
 	SystemInfo["LCDMiniTV"] = can_lcdmodechecking
 
 	if detected:
 		ilcd = LCD()
-		if can_lcdmodechecking:
+		if can_lcdmodechecking and getBoxType() not in ('vusolo4k'):
 			def setLCDModeMinitTV(configElement):
 				try:
 					f = open("/proc/stb/lcd/mode", "w")
@@ -358,9 +368,36 @@ def InitLcd():
 					default = "0")
 			config.lcd.fpsminitv = ConfigSlider(default=30, limits=(0, 30))
 			config.lcd.modeminitv.addNotifier(setLCDModeMinitTV)
+			config.lcd.screenshot = ConfigNothing()
 			config.lcd.fpsminitv.addNotifier(setMiniTVFPS)
+		elif can_lcdmodechecking:
+			def setLCDModeMinitTV4k(configElement):
+				try:
+					f = open("/proc/stb/lcd/live_enable", "w")
+					f.write(configElement.value)
+					f.close()
+				except:
+					pass
+			def setMiniTVFPS(configElement):
+				pass
+			def setLCDModePiP(configElement):
+				pass
+			
+			def setLCDScreenshot(configElement):
+ 				ilcd.setScreenShot(configElement.value);			
+				
+			config.lcd.screenshot = ConfigYesNo(default=False)
+ 			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
+
+			config.lcd.modeminitv4k = ConfigSelection(choices={
+					"disable": _("normal"),
+					"enable": _("MiniTV")},
+					default = "0")
+			config.lcd.modeminitv4k.addNotifier(setLCDModeMinitTV4k)
+			config.lcd.screenshot = ConfigNothing()			
 		else:
 			config.lcd.modeminitv = ConfigNothing()
+			config.lcd.modeminitv4k = ConfigNothing()
 			config.lcd.screenshot = ConfigNothing()
 			config.lcd.fpsminitv = ConfigNothing()
 
@@ -411,12 +448,30 @@ def InitLcd():
 
 		def setLCDminitvmode(configElement):
 			ilcd.setLCDMiniTVMode(configElement.value)
+			
+		def setLCDminitvmode4k(configElement):
+			ilcd.setLCDMiniTVMode4k(configElement.value)				
 
 		def setLCDminitvpipmode(configElement):
 			ilcd.setLCDMiniTVPIPMode(configElement.value)
 
 		def setLCDminitvfps(configElement):
-			ilcd.setLCDMiniTVFPS(configElement.value)
+			ilcd.setLCDMiniTVFPS(configElement.value)			
+
+		def setLCDrepeat(configElement):
+			ilcd.setRepeat(configElement.value);
+
+		def setLCDscrollspeed(configElement):
+			ilcd.setScrollspeed(configElement.value);
+
+		if fileExists("/proc/stb/lcd/symbol_hdd"):
+			f = open("/proc/stb/lcd/symbol_hdd", "w")
+			f.write("0")
+			f.close()
+		if fileExists("/proc/stb/lcd/symbol_hddprogress"):
+			f = open("/proc/stb/lcd/symbol_hddprogress", "w")
+			f.write("0")
+			f.close()
 
 		def setLEDnormalstate(configElement):
 			ilcd.setLEDNormalState(configElement.value);
@@ -490,6 +545,11 @@ def InitLcd():
 			config.lcd.showTv = ConfigYesNo(default = False)
 			config.lcd.showTv.addNotifier(lcdLiveTvChanged)
 
+		if SystemInfo["LCDMiniTV4k"]:
+		        SystemInfo["LCDMiniTV"] = False
+			config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "0")
+			config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
+			
 		if SystemInfo["LCDMiniTV"]:
 			config.lcd.minitvmode = ConfigSelection([("0", _("normal")), ("1", _("MiniTV")), ("2", _("OSD")), ("3", _("MiniTV with OSD"))], "0")
 			config.lcd.minitvmode.addNotifier(setLCDminitvmode)
@@ -512,6 +572,12 @@ def InitLcd():
 			config.usage.vfd_scroll_delay.addNotifier(scroll_delay, immediate_feedback = False)
 			config.lcd.hdd = ConfigSelection([("0", _("No")), ("1", _("Yes"))], "1")
 		else:
+			config.lcd.hdd = ConfigNothing()		
+		if getBoxType() in ('mixosf5', 'mixosf5mini', 'gi9196m', 'gi9196lite', 'zgemmas2s', 'gi9196lite', 'zgemmash1', 'zgemmash2'):
+			config.lcd.scrollspeed = ConfigSlider(default = 150, increment = 10, limits = (0, 500))
+			config.lcd.scrollspeed.addNotifier(setLCDscrollspeed);
+			config.lcd.repeat = ConfigSelection([("0", _("None")), ("1", _("1X")), ("2", _("2X")), ("3", _("3X")), ("4", _("4X")), ("500", _("Continues"))], "3")
+			config.lcd.repeat.addNotifier(setLCDrepeat);		
 			config.lcd.hdd = ConfigNothing()
 
 		if SystemInfo["VFD_initial_scroll_delay"] and getBoxType() not in ('ixussone', 'ixusszero'):
@@ -539,10 +605,20 @@ def InitLcd():
 			config.usage.vfd_final_scroll_delay.addNotifier(final_scroll_delay, immediate_feedback = False)
 
 		if fileExists("/proc/stb/lcd/show_symbols"):
+			config.lcd.mode = ConfigNothing()
+		elif fileExists("/proc/stb/lcd/scroll_delay") and getBoxType() not in ('ixussone', 'ixusszero'):
+			config.lcd.hdd = ConfigSelection([("0", _("No")), ("1", _("Yes"))], "1")
+			config.lcd.scrollspeed = ConfigSlider(default = 150, increment = 10, limits = (0, 500))
+			config.lcd.scrollspeed.addNotifier(setLCDscrollspeed);
+			config.lcd.repeat = ConfigSelection([("0", _("None")), ("1", _("1X")), ("2", _("2X")), ("3", _("3X")), ("4", _("4X")), ("500", _("Continues"))], "3")
+			config.lcd.repeat.addNotifier(setLCDrepeat);		
 			config.lcd.mode = ConfigSelection([("0", _("No")), ("1", _("Yes"))], "1")
 			config.lcd.mode.addNotifier(setLCDmode);
 		else:
 			config.lcd.mode = ConfigNothing()
+			config.lcd.repeat = ConfigNothing()
+			config.lcd.scrollspeed = ConfigNothing()
+			config.lcd.hdd = ConfigNothing()			
 
 		if fileExists("/proc/stb/power/vfd") or fileExists("/proc/stb/lcd/vfd"):
 			config.lcd.power = ConfigSelection([("0", _("No")), ("1", _("Yes"))], "1")
@@ -609,6 +685,10 @@ def InitLcd():
 		("60000", "1 " + _("minute")),
 		("300000", "5 " + _("minutes")),
 		("noscrolling", _("off"))])
+		config.lcd.repeat = ConfigNothing()
+		config.lcd.scrollspeed = ConfigNothing()
+		config.lcd.scroll_speed = ConfigSelection(choices = [("300", _("normal"))])
+		config.lcd.scroll_delay = ConfigSelection(choices = [("noscrolling", _("off"))])		
 		config.lcd.showoutputresolution = ConfigNothing()
 		config.lcd.ledbrightness = ConfigNothing()
 		config.lcd.ledbrightness.apply = lambda : doNothing()

@@ -1,6 +1,8 @@
 import os
-from time import time
+from time import time, mktime
+from boxbranding import getBoxType
 from enigma import eDVBDB, eEPGCache, setTunerTypePriorityOrder, setPreferredTuner, setSpinnerOnOff, setEnableTtCachingOnOff, eEnv, Misc_Options, eBackgroundFileEraser, eServiceEvent, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP
+import enigma
 
 from Components.About import about
 from Components.Harddisk import harddiskmanager
@@ -16,12 +18,34 @@ from keyids import KEYIDS
 def InitUsageConfig():
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)
+        config.NFRTelnet = ConfigSubsection()
+        config.NFRTelnet.command = ConfigText(visible_width = 200)
+	config.NFRSoftcam = ConfigSubsection()
+	config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
+	config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
+	config.NFRSoftcam.waittime = ConfigSelection([('0',_("dont wait")),('1',_("1 second")), ('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='15')
+	config.plugins.infopanel_usermenus= ConfigText(visible_width = 200)
+	config.plugins.infopanel_redkey = ConfigSubsection()
+	config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Default (Softcam Panel")),('1',_("Quickmenu)")),('2',_("Infopanel"))])
+	config.plugins.infopanel_bluekey = ConfigSubsection()
+	config.plugins.infopanel_bluekey.list = ConfigSelection([('1',_("Default (Quickmenu)")),('0',_("Softcam Panel")),('2',_("Infopanel"))])
+	config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
+	config.plugins.infopanel_frozencheck = ConfigSubsection()
+	config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
+
+	config.plugins.configurationbackup = ConfigSubsection()
+	config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+	config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+	
 
 	config.workaround = ConfigSubsection()
 	config.workaround.blueswitch = ConfigSelection(default = "0", choices = [("0", _("QuickMenu/Extensions")), ("1", _("Extensions/QuickMenu"))])
 	config.workaround.deeprecord = ConfigYesNo(default = False)
 	config.workaround.wakeuptime = ConfigSelectionNumber(default = 5, stepwidth = 1, min = 0, max = 30, wraparound = True)
 	config.workaround.wakeupwindow = ConfigSelectionNumber(default = 5, stepwidth = 5, min = 5, max = 60, wraparound = True)
+
+	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
+	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)	
 
 	config.usage = ConfigSubsection()
 	config.usage.shutdownOK = ConfigBoolean(default = True)
@@ -46,10 +70,12 @@ def InitUsageConfig():
 	config.usage.crypto_icon_mode.addNotifier(refreshServiceList)
 	config.usage.record_indicator_mode = ConfigSelection(default = "3", choices = [("0", _("None")), ("1", _("Left from servicename")), ("2", _("Right from servicename")), ("3", _("Red colored"))])
 	config.usage.record_indicator_mode.addNotifier(refreshServiceList)
+	config.usage.panicbutton = ConfigYesNo(default = False)	
+	
 
 	# just merge note, config.usage.servicelist_column was allready there
 	choicelist = [("-1", _("Disable")), ("0", _("Eventname only"))]
-	for i in range(100,1325,25):
+	for i in range(100,1300,100):
 		choicelist.append(("%d" % i, ngettext("%d pixel wide", "%d pixels wide", i) % i))
 	config.usage.servicelist_column = ConfigSelection(default="-1", choices=choicelist)
 	config.usage.servicelist_column.addNotifier(refreshServiceList)
@@ -74,7 +100,7 @@ def InitUsageConfig():
 	config.usage.volume_step_fast = ConfigSelectionNumber(default = 3, stepwidth = 1, min = 1, max = 10, wraparound = False)
 
 	choicelist = []
-	for i in range(1, 21):
+	for i in range(1, 11):
 		choicelist.append(("%d" % i, ngettext("%d second", "%d seconds", i) % i))
 	config.usage.infobar_timeout = ConfigSelection(default = "5", choices = [("0", _("No timeout"))] + choicelist)
 	config.usage.show_infobar_on_zap = ConfigYesNo(default = True)
@@ -87,6 +113,7 @@ def InitUsageConfig():
 	config.usage.show_infobar_channel_number = ConfigYesNo(default = False)
 	config.usage.show_second_infobar = ConfigSelection(default = "1", choices = [("0", _("Off")), ("1", _("Event Info")), ("2", _("2nd Infobar INFO")), ("3", _("2nd Infobar ECM"))])
 	config.usage.second_infobar_timeout = ConfigSelection(default = "5", choices = [("0", _("No timeout"))] + choicelist)
+
 	def showsecondinfobarChanged(configElement):
 		if config.usage.show_second_infobar.value != "INFOBAREPG":
 			SystemInfo["InfoBarEpg"] = True
@@ -222,10 +249,45 @@ def InitUsageConfig():
 	choicelist = [("standby", _("Standby")),("deepstandby", _("Deep Standby"))]
 	config.usage.sleep_timer_action = ConfigSelection(default = "deepstandby", choices = choicelist)
 	choicelist = [("0", _("Disabled")),("event_standby", _("Execute after current event"))]
-	for i in range(900, 7201, 900):
+	config.usage.on_long_powerpress = ConfigSelection(default = "show_menu", choices = [
+		("show_menu", _("Show shutdown menu")),
+		("shutdown", _("Immediate shutdown")),
+		("standby", _("Standby")) ] )
+
+	config.usage.on_short_powerpress = ConfigSelection(default = "standby", choices = [
+		("show_menu", _("Show shutdown menu")),
+		("shutdown", _("Immediate shutdown")),
+		("standby", _("Standby")) ] )
+
+	choicelist = []
+	for i in range(-21600, 21601, 3600):
+		h = abs(i / 3600)
+		h = ngettext("%d hour", "%d hours", h) % h
+		if i < 0:
+			choicelist.append(("%d" % i, _("Shutdown in ") + h))
+		elif i > 0:
+			choicelist.append(("%d" % i, _("Standby in ") + h))
+		else:
+			choicelist.append(("0", "Do nothing"))
+	config.usage.inactivity_timer = ConfigSelection(default = "0", choices = choicelist)
+	config.usage.inactivity_timer_blocktime = ConfigYesNo(default = True)
+	config.usage.inactivity_timer_blocktime_begin = ConfigClock(default = mktime((0, 0, 0, 6, 0, 0, 0, 0, 0)))
+	config.usage.inactivity_timer_blocktime_end = ConfigClock(default = mktime((0, 0, 0, 23, 0, 0, 0, 0, 0)))		
+		
+		
+	choicelist = []
+	for i in range(-7200, 7201, 900):
 		m = abs(i / 60)
 		m = ngettext("%d minute", "%d minutes", m) % m
 		choicelist.append((str(i), _("Execute in ") + m))
+		if i < 0:
+			choicelist.append(("%d" % i, _("Shutdown in ") + m))
+		elif i > 0:
+			choicelist.append(("%d" % i, _("Standby in ") + m))
+		else:
+			choicelist.append(("event_shutdown", _("Shutdown after current event")))
+			choicelist.append(("0", "Disabled"))
+			choicelist.append(("event_standby", _("Standby after current event")))		
 	config.usage.sleep_timer = ConfigSelection(default = "0", choices = choicelist)
 
 	choicelist = [("show_menu", _("Show shutdown menu")), ("shutdown", _("Immediate shutdown")), ("standby", _("Standby")), ("sleeptimer", _("SleepTimer")), ("powertimerStandby", _("PowerTimer Standby")), ("powertimerDeepStandby", _("PowerTimer DeepStandby"))]
@@ -245,7 +307,15 @@ def InitUsageConfig():
 		(str(KEYIDS["KEY_TEXT"]), _("Teletext")),
 		(str(KEYIDS["KEY_SUBTITLE"]), _("Subtitle")),
 		(str(KEYIDS["KEY_FAVORITES"]), _("Favorites")) ])
-
+	
+	choicelist = [("0", "Disabled")]
+	for i in range(900, 7201, 900):
+		m = abs(i / 60)
+		m = ngettext("%d minute", "%d minutes", m) % m
+		choicelist.append(("%d" % i, _("after ") + m))
+	config.usage.standby_to_shutdown_timer = ConfigSelection(default = "0", choices = choicelist)
+	
+     
 	choicelist = [("0", "Disabled")]
 	for i in (5, 30, 60, 300, 600, 900, 1200, 1800, 2700, 3600):
 		if i < 60:
@@ -352,6 +422,7 @@ def InitUsageConfig():
 	])
 	config.usage.movielist_unseen = ConfigYesNo(default = True)
 
+	config.usage.movielist_show_cover = ConfigYesNo(default = True)
 	config.usage.swap_snr_on_osd = ConfigYesNo(default = False)
 	config.usage.swap_time_display_on_osd = ConfigSelection(default = "0", choices = [("0", _("Skin Setting")), ("1", _("Mins")), ("2", _("Mins Secs")), ("3", _("Hours Mins")), ("4", _("Hours Mins Secs")), ("5", _("Percentage"))])
 	config.usage.swap_media_time_display_on_osd = ConfigSelection(default = "0", choices = [("0", _("Skin Setting")), ("1", _("Mins")), ("2", _("Mins Secs")), ("3", _("Hours Mins")), ("4", _("Hours Mins Secs")), ("5", _("Percentage"))])
@@ -543,6 +614,7 @@ def InitUsageConfig():
 	config.timeshift.stopwhilerecording = ConfigYesNo(default = False)
 	config.timeshift.favoriteSaveAction = ConfigSelection([("askuser", _("Ask user")),("savetimeshift", _("Save and stop")),("savetimeshiftandrecord", _("Save and record")),("noSave", _("Don't save"))], "askuser")
 	config.timeshift.autorecord = ConfigYesNo(default = False)
+	config.timeshift.permanentrecording = ConfigYesNo(default = False)	
 	config.timeshift.isRecording = NoSave(ConfigYesNo(default = False))
 	config.timeshift.timeshiftMaxHours = ConfigSelectionNumber(min = 1, max = 999, stepwidth = 1, default = 12, wraparound = True)
 	config.timeshift.timeshiftMaxEvents = ConfigSelectionNumber(min = 1, max = 999, stepwidth = 1, default = 12, wraparound = True)
@@ -579,6 +651,7 @@ def InitUsageConfig():
 	config.seek.withjumps_avoid_zero   = ConfigYesNo(default = True)
 
 	config.crash = ConfigSubsection()
+	config.crash.details = ConfigYesNo(default = True)
 	config.crash.enabledebug = ConfigYesNo(default = False)
 	config.crash.debugloglimit = ConfigSelectionNumber(min = 1, max = 10, stepwidth = 1, default = 4, wraparound = True)
 	config.crash.daysloglimit = ConfigSelectionNumber(min = 1, max = 30, stepwidth = 1, default = 8, wraparound = True)
@@ -644,6 +717,7 @@ def InitUsageConfig():
 		("3", _("Everywhere"))])
 	config.misc.erase_flags.addNotifier(updateEraseFlags, immediate_feedback = False)
 
+	SystemInfo["ZapMode"] = os.path.exists("/proc/stb/video/zapmode") or os.path.exists("/proc/stb/video/zapping_mode")	
 	if SystemInfo["ZapMode"]:
 		try:
 			if os.path.exists("/proc/stb/video/zapping_mode"):
@@ -681,7 +755,7 @@ def InitUsageConfig():
 	config.subtitles.subtitle_fontsize  = ConfigSelection(choices = ["%d" % x for x in range(16,101) if not x % 2], default = "40")
 
 	subtitle_delay_choicelist = []
-	for i in range(-54000000, 54045000, 45000):
+	for i in range(-900000, 1845000, 45000):
 		if i == 0:
 			subtitle_delay_choicelist.append(("0", _("No delay")))
 		else:
@@ -809,6 +883,14 @@ def InitUsageConfig():
 					("1", _("with long OK press")),
 					("2", _("with exit button")),
 					("3", _("with left/right buttons"))])
+	config.vixsettings = ConfigSubsection()
+	config.vixsettings.Subservice = ConfigYesNo(default = True)
+	config.vixsettings.ColouredButtons = ConfigYesNo(default = True)
+	config.vixsettings.InfoBarEpg_mode = ConfigSelection(default="3", choices = [
+ 					("0", _("as plugin in extended bar")),
+ 					("1", _("with long OK press")),
+ 					("2", _("with exit button")),
+ 					("3", _("with left/right buttons"))])					
 	if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/CoolTVGuide/plugin.pyo"):
 		config.plisettings.PLIEPG_mode = ConfigSelection(default="cooltvguide", choices = [
 					("pliepg", _("Show Graphical EPG")),
@@ -921,6 +1003,9 @@ def InitUsageConfig():
 	config.epgselection.graph_yellow = ConfigSelection(default='epgsearch',choices=epg_colorkeys)
 	config.epgselection.graph_blue = ConfigSelection(default='autotimer', choices=epg_colorkeys)
 
+	if not os.path.exists('/usr/emu/'):
+		os.mkdir('/usr/emu/',0755)
+	softcams = os.listdir('/usr/emu/')
 	config.oscaminfo = ConfigSubsection()
 	config.oscaminfo.showInExtensions = ConfigYesNo(default=False)
 	config.oscaminfo.userdatafromconf = ConfigYesNo(default = True)
@@ -931,7 +1016,10 @@ def InitUsageConfig():
 	config.oscaminfo.port = ConfigInteger(default = 16002, limits=(0,65536) )
 	config.oscaminfo.intervall = ConfigSelectionNumber(min = 1, max = 600, stepwidth = 1, default = 10, wraparound = True)
 	SystemInfo["OScamInstalled"] = False
-
+	if getBoxType() in ('gbquadplus', 'gb800ueplus', 'gb800seplus', 'gb7362', 'twinboxlcd', '7210s', 'vusolo4k', 'odin2hybrid', 'odinplus', 'e4hd', 'singleboxlcd', 'sf208', 'sf228'):
+	        SystemInfo["ClockDisplay"] = True
+        else:
+	        SystemInfo["ClockDisplay"] = False 
 	config.cccaminfo = ConfigSubsection()
 	config.cccaminfo.showInExtensions = ConfigYesNo(default=False)
 	config.cccaminfo.serverNameLength = ConfigSelectionNumber(min = 10, max = 100, stepwidth = 1, default = 22, wraparound = True)
@@ -948,7 +1036,14 @@ def InitUsageConfig():
 	config.cccaminfo.ecmInfoPositionY = ConfigInteger(default=50)
 	config.cccaminfo.blacklist = ConfigText(default="/media/cf/CCcamInfo.blacklisted", fixed_size=False)
 	config.cccaminfo.profiles = ConfigText(default="/media/cf/CCcamInfo.profiles", fixed_size=False)
-
+	SystemInfo["CCcamInstalled"] = False
+	for softcam in softcams:
+		if softcam.lower().startswith('cccam'):
+			config.cccaminfo.showInExtensions = ConfigYesNo(default=True)
+			SystemInfo["CCcamInstalled"] = True
+		elif softcam.lower().startswith('oscam'):
+			config.oscaminfo.showInExtensions = ConfigYesNo(default=True)
+			SystemInfo["OScamInstalled"] = True
 	config.streaming = ConfigSubsection()
 	config.streaming.stream_ecm = ConfigYesNo(default = False)
 	config.streaming.descramble = ConfigYesNo(default = True)
