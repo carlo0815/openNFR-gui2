@@ -218,13 +218,13 @@ void _eFatal(const char *file, int line, const char *function, const char* fmt, 
 			{
 				int n;
 				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "FATAL: %s%s\n"ANSI_RESET, header , buf);
+				snprintf(obuf, sizeof(obuf), "FATAL: %s%s\n" ANSI_RESET, header , buf);
 				n=write(m_erroroutput->getPipe(), obuf, strlen(obuf));
 				if(n<0)
 					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
 			}
 			else
-				fprintf(stderr, "FATAL: %s%s\n"ANSI_RESET, header , buf);
+				fprintf(stderr, "FATAL: %s%s\n" ANSI_RESET, header , buf);
 	}
 	bsodFatal("enigma2");
 	inNoNewLine = false;
@@ -290,13 +290,13 @@ void _eDebug(const char *file, int line, const char *function, const char* fmt, 
 			{
 				int n;
 				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n"ANSI_RESET, header, buf);
+				snprintf(obuf, sizeof(obuf), "%s%s\n" ANSI_RESET, header, buf);
 				n=write(m_erroroutput->getPipe(), obuf, strlen(obuf));
 				if(n<0)
 					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
 			}
 			else
-				fprintf(stderr, "%s%s\n"ANSI_RESET, header, buf);
+				fprintf(stderr, "%s%s\n" ANSI_RESET, header, buf);
 		}
 	}
 	inNoNewLine = false;
@@ -433,13 +433,13 @@ void eDebugNoNewLineEnd(const char* fmt, ...)
 			{
 				int n;
 				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s\n"ANSI_RESET, buf);
+				snprintf(obuf, sizeof(obuf), "%s\n" ANSI_RESET, buf);
 				n=write(m_erroroutput->getPipe(), obuf, strlen(obuf));
 				if(n<0)
 					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
 			}
 			else
-				fprintf(stderr, "%s\n"ANSI_RESET, buf);
+				fprintf(stderr, "%s\n" ANSI_RESET, buf);
 		}
 	}
 	inNoNewLine = false;
@@ -489,7 +489,7 @@ void _eWarning(const char *file, int line, const char *function, const char* fmt
 			{
 				int n;
 				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s\n"ANSI_RESET, header, buf);
+				snprintf(obuf, sizeof(obuf), "%s%s\n" ANSI_RESET, header, buf);
 				n=write(m_erroroutput->getPipe(), obuf, strlen(obuf));
 				if(n<0)
 					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
@@ -580,13 +580,13 @@ void ePythonOutput(const char *file, int line, const char *function, const char 
 			{
 				int n;
 				char obuf[1024];
-				snprintf(obuf, sizeof(obuf), "%s%s"ANSI_RESET, header, buf);
+				snprintf(obuf, sizeof(obuf), "%s%s" ANSI_RESET, header, buf);
 				n=write(m_erroroutput->getPipe(), obuf, strlen(obuf));
 				if(n<0)
 					fprintf(stderr, "[eerror] row %d error: %s\n", __LINE__,strerror(errno));
 			}
 			else
-				fprintf(stderr, "%s%s"ANSI_RESET, header, buf);
+				fprintf(stderr, "%s%s" ANSI_RESET, header, buf);
 		}
 	}
 #endif
