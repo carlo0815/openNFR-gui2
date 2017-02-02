@@ -11,4 +11,4 @@ dist_install_DATA = \
 	caps.ttf \
 	eg.ttf \
 	lcd.ttf \
-	nmsbd.ttf \
+	nmsbd.ttf
