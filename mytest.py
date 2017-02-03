@@ -739,7 +739,8 @@ def runScreenTest():
 				wptime = startTime[0] - 120 # Gigaboxes already starts 2 min. before wakeup time
 			else:
 				wptime = startTime[0] - 240
-				
+		if startTime[1] == 3:
+			nextPluginName = " (%s)" % nextPluginName				
 		#if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb'):
 		#	print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 		#	setRTCtime(nowTime)
@@ -750,8 +751,7 @@ def runScreenTest():
 	config.misc.isNextRecordTimerAfterEventActionAuto.value = recordTimerWakeupAuto
 	config.misc.isNextRecordTimerAfterEventActionAuto.save()
 
-		if startTime[1] == 3:
-			nextPluginName = " (%s)" % nextPluginName
+
 	PowerTimerWakeupAuto = False
 	if wakeupList and wakeupList[0][1] == 3:
 		startTime = wakeupList[0]
