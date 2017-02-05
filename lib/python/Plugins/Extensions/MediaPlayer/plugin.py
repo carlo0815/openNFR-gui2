@@ -11,8 +11,8 @@ from Screens.HelpMenu import HelpableScreen
 from Screens.MessageBox import MessageBox
 from Screens.InputBox import InputBox
 from Screens.ChoiceBox import ChoiceBox
-from Screens.InfoBar import InfoBar, setAudioTrack
-from Screens.InfoBarGenerics import InfoBarSeek, InfoBarScreenSaver, InfoBarAudioSelection, InfoBarAspectSelection, InfoBarCueSheetSupport, InfoBarNotifications, InfoBarSubtitleSupport, InfoBarResolutionSelection
+from Screens.InfoBar import InfoBar
+from Screens.InfoBarGenerics import InfoBarSeek, InfoBarScreenSaver, InfoBarAudioSelection, InfoBarCueSheetSupport, InfoBarNotifications, InfoBarSubtitleSupport
 from Components.ActionMap import NumberActionMap, HelpableActionMap
 from Components.Label import Label
 from Components.Pixmap import Pixmap,MultiPixmap
@@ -100,21 +100,19 @@ class MediaPlayerInfoBar(Screen):
 		Screen.__init__(self, session)
 		self.skinName = "MoviePlayer"
 
-class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarAudioSelection, InfoBarAspectSelection, InfoBarCueSheetSupport, InfoBarNotifications, InfoBarSubtitleSupport, HelpableScreen, InfoBarResolutionSelection):
+class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarAudioSelection, InfoBarCueSheetSupport, InfoBarNotifications, InfoBarSubtitleSupport, HelpableScreen):
 	ALLOW_SUSPEND = True
 	ENABLE_RESUME_SUPPORT = True
 
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
 		InfoBarAudioSelection.__init__(self)
-		InfoBarAspectSelection.__init__(self)
 		InfoBarCueSheetSupport.__init__(self, actionmap = "MediaPlayerCueSheetActions")
 		InfoBarNotifications.__init__(self)
 		InfoBarBase.__init__(self)
 		InfoBarScreenSaver.__init__(self)
 		InfoBarSubtitleSupport.__init__(self)
 		HelpableScreen.__init__(self)
-		InfoBarResolutionSelection.__init__(self)
 		self.summary = None
 		self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.session.nav.stopService()
@@ -378,8 +376,8 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarScreenSaver, InfoBarSeek, InfoBarA
 			exts = [".mkv", ".avi", ".divx", ".mp4"]      # we need more extensions here ?
 			if ext.lower() in exts:
 				service = self.session.nav.getCurrentService()
-				if service:
-					setAudioTrack(service)
+				#if service:
+					#setAudioTrack(service)
 
 	def readTitleInformation(self):
 		currPlay = self.session.nav.getCurrentService()
