@@ -50,21 +50,26 @@ class SetupSummary(Screen):
 			self.onHide.append(self.removeWatcher)
 
 	def addWatcher(self):
-		self.parent.onChangedEntry.append(self.selectionChanged)
-		self.parent["config"].onSelectionChanged.append(self.selectionChanged)
-		self.selectionChanged()
+		if hasattr(self.parent,"onChangedEntry"):
+			self.parent.onChangedEntry.append(self.selectionChanged)
+			self.parent["config"].onSelectionChanged.append(self.selectionChanged)
+			self.selectionChanged()
 
 	def removeWatcher(self):
-		self.parent.onChangedEntry.remove(self.selectionChanged)
-		self.parent["config"].onSelectionChanged.remove(self.selectionChanged)
+		if hasattr(self.parent,"onChangedEntry"):
+			self.parent.onChangedEntry.remove(self.selectionChanged)
+			self.parent["config"].onSelectionChanged.remove(self.selectionChanged)
 
 	def selectionChanged(self):
-		if hasattr(self.parent,"getCurrentEntry"):
-			self["SetupEntry"].text = self.parent.getCurrentEntry()
-		if hasattr(self.parent,"getCurrentValue"):
-			self["SetupValue"].text = self.parent.getCurrentValue()
-		if hasattr(self.parent,"getCurrentDescription"):
+		self["SetupEntry"].text = self.parent.getCurrentEntry()
+		self["SetupValue"].text = self.parent.getCurrentValue()
+		if hasattr(self.parent,"getCurrentDescription") and self.parent.has_key("description"):
 			self.parent["description"].text = self.parent.getCurrentDescription()
+		if self.parent.has_key('footnote'):
+			if self.parent.getCurrentEntry().endswith('*'):
+				self.parent['footnote'].text = (_("* = Restart Required"))
+			else:
+				self.parent['footnote'].text = (_(" "))
 
 class Setup(ConfigListScreen, Screen):
 
@@ -92,7 +97,7 @@ class Setup(ConfigListScreen, Screen):
 		# for the skin: first try a setup_<setupID>, then Setup
 		self.skinName = ["setup_" + setup, "Setup" ]
 
-		self['footnote'] = Label(_("* = Restart Required"))
+		self['footnote'] = Label()
 		self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
 		self["VKeyIcon"] = Boolean(False)
@@ -179,10 +184,12 @@ class Setup(ConfigListScreen, Screen):
 				self["VKeyIcon"].boolean = False
 
 	def HideHelp(self):
+		self.help_window_was_shown = False
 		try:
 			if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
 				if self["config"].getCurrent()[1].help_window.instance is not None:
 					self["config"].getCurrent()[1].help_window.hide()
+					self.help_window_was_shown = True
 		except:
 			pass
 
@@ -204,25 +211,12 @@ class Setup(ConfigListScreen, Screen):
 	# for summary:
 	def changedEntry(self):
 		self.item = self["config"].getCurrent()
-		for x in self.onChangedEntry:
-			x()
 		try:
-			if isinstance(self["config"].getCurrent()[1], ConfigYesNo) or isinstance(self["config"].getCurrent()[1], ConfigSelection):
+			#FIXME This code prevents an LCD refresh for this ConfigElement(s)
+			if not isinstance(self["config"].getCurrent()[1], ConfigText):
 				self.createSetup()
 		except:
 			pass
-
-	def getCurrentEntry(self):
-		return self["config"].getCurrent() and self["config"].getCurrent()[0] or ""
-
-	def getCurrentValue(self):
-		return self["config"].getCurrent() and str(self["config"].getCurrent()[1].getText()) or ""
-
-	def getCurrentDescription(self):
-		return self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2] or ""
-
-	def createSummary(self):
-		return SetupSummary
 
 	def addItems(self, list, parentNode):
 		for x in parentNode:
@@ -231,12 +225,11 @@ class Setup(ConfigListScreen, Screen):
 			if x.tag == 'item':
 				item_level = int(x.get("level", 0))
 
-				if not self.levelChanged in config.usage.setup_level.notifiers and not self.onNotifiers:
-					config.usage.setup_level.notifiers.append(self.levelChanged)
+				if not self.onNotifiers:
 					self.onNotifiers.append(self.levelChanged)
 					self.onClose.append(self.removeNotifier)
 
-				if item_level > config.usage.setup_level.index or item_level > config.usage.setup_level.index:
+				if item_level > config.usage.setup_level.index:
 					continue
 
 				requires = x.get("requires")
@@ -272,3 +265,10 @@ def getSetupTitle(id):
 				return _("Settings...")
 			return x.get("title", "").encode("UTF-8")
 	raise SetupError("unknown setup id '%s'!" % repr(id))
+
+def getSetupTitleLevel(id):
+	xmldata = setupdom().getroot()
+	for x in xmldata.findall("setup"):
+		if x.get("key") == id:
+			return int(x.get("level", 0))
+	return 0
