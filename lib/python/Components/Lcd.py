@@ -1,13 +1,23 @@
 from boxbranding import getBoxType
+from sys import maxint
 
 from twisted.internet import threads
-from enigma import eDBoxLCD, eTimer
+from enigma import eDBoxLCD, eTimer, eActionMap
 
 from config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import fileExists
+from Screens.Screen import Screen
+import Screens.Standby
 import usb
 
+class dummyScreen(Screen):
+	skin = """<screen position="0,0" size="0,0" transparent="1">
+	<widget source="session.VideoPicture" render="Pig" position="0,0" size="0,0" backgroundColor="transparent" zPosition="1"/>
+	</screen>"""
+	def __init__(self, session, args=None):
+		Screen.__init__(self, session)
+		self.close()
 
 def IconCheck(session=None, **kwargs):
 	if fileExists("/proc/stb/lcd/symbol_network") or fileExists("/proc/stb/lcd/symbol_usb"):
@@ -30,7 +40,10 @@ class IconCheckPoller:
 		self.timer.stop()
 
 	def iconcheck(self):
-		threads.deferToThread(self.JobTask)
+		try:
+			threads.deferToThread(self.JobTask)
+		except:
+			pass
 		self.timer.startLongTimer(30)
 
 	def JobTask(self):
@@ -42,12 +55,8 @@ class IconCheckPoller:
 		elif fileExists('/sys/class/net/eth0/operstate'):
 			LinkState = open('/sys/class/net/eth0/operstate').read()
 			if LinkState != 'down':
-				try:
-					LinkState = open('/sys/class/net/eth0/carrier').read()
-				except:
-          				print "only Wlan"  
-				
-			LinkState = LinkState[:1]
+				LinkState = open('/sys/class/net/eth0/carrier').read()
+		LinkState = LinkState[:1]
 		if fileExists("/proc/stb/lcd/symbol_network") and config.lcd.mode.value == '1':
 			f = open("/proc/stb/lcd/symbol_network", "w")
 			f.write(str(LinkState))
@@ -100,6 +109,9 @@ class LCD:
 
 	def setFlipped(self, value):
 		eDBoxLCD.getInstance().setFlipped(value)
+		
+	def setScreenShot(self, value):
+ 		eDBoxLCD.getInstance().setDump(value)
 
 	def isOled(self):
 		return eDBoxLCD.getInstance().isOled()
@@ -187,6 +199,28 @@ class LCD:
 
 	def setLEDBlinkingTime(self, value):
 		eDBoxLCD.getInstance().setLED(value, 2)
+		
+
+	def setLCDMiniTVMode(self, value):
+		print 'setLCDMiniTVMode',value
+		f = open('/proc/stb/lcd/mode', "w")
+		f.write(value)
+		f.close()
+		
+	def setLCDMiniTVMode4k(self, value):
+		print 'setLCDMiniTVMode4k',value
+		f = open('/proc/stb/lcd/live_enable', "w")
+		f.write(value)
+		f.close()		
+
+	def setLCDMiniTVPIPMode(self, value):
+		print 'setLCDMiniTVPIPMode',value
+
+	def setLCDMiniTVFPS(self, value):
+		print 'setLCDMiniTVFPS',value
+		f = open('/proc/stb/lcd/fps', "w")
+		f.write("%d \n" % value)
+		f.close()		
 
 def leaveStandby():
 	config.lcd.bright.apply()
@@ -201,7 +235,7 @@ def standbyCounterChanged(configElement):
 	config.lcd.ledbrightnessdeepstandby.apply()
 
 def InitLcd():
-	if getBoxType() in ('e4hd', 'odinplus','odin2hybrid', 'nanoc', 'nano', 'axodinc', 'axodin', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'mixosf7', 'mixoslumi'):
+	if getBoxType() in ('sf98', 'e4hd', 'nanoc', 'nano', 'axodinc', 'axodin', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'mixosf7', 'mixoslumi'):
 		detected = False
 	else:
 		detected = eDBoxLCD.getInstance().detected()
@@ -212,12 +246,17 @@ def InitLcd():
 		f = open("/proc/stb/lcd/mode", "r")
 		can_lcdmodechecking = f.read().strip().split(" ")
 		f.close()
-	else:
+	elif fileExists("/proc/stb/lcd/live_enable"):
+		f = open("/proc/stb/lcd/live_enable", "r")
+		can_lcdmodechecking = f.read().strip().split(" ")
+		f.close()
+        else:
 		can_lcdmodechecking = False
 	SystemInfo["LCDMiniTV"] = can_lcdmodechecking
 
 	if detected:
-		if can_lcdmodechecking:
+		ilcd = LCD()
+		if can_lcdmodechecking and getBoxType() not in ('vusolo4k'):
 			def setLCDModeMinitTV(configElement):
 				try:
 					f = open("/proc/stb/lcd/mode", "w")
@@ -234,6 +273,9 @@ def InitLcd():
 					pass
 			def setLCDModePiP(configElement):
 				pass
+			
+			def setLCDScreenshot(configElement):
+ 				ilcd.setScreenShot(configElement.value);			
 
 			config.lcd.modepip = ConfigSelection(choices={
 					"0": _("off"),
@@ -244,6 +286,9 @@ def InitLcd():
 				config.lcd.modepip.addNotifier(setLCDModePiP)
 			else:
 				config.lcd.modepip = ConfigNothing()
+				
+			config.lcd.screenshot = ConfigYesNo(default=False)
+ 			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
 
 			config.lcd.modeminitv = ConfigSelection(choices={
 					"0": _("normal"),
@@ -253,9 +298,38 @@ def InitLcd():
 					default = "0")
 			config.lcd.fpsminitv = ConfigSlider(default=30, limits=(0, 30))
 			config.lcd.modeminitv.addNotifier(setLCDModeMinitTV)
+			config.lcd.screenshot = ConfigNothing()
 			config.lcd.fpsminitv.addNotifier(setMiniTVFPS)
+		elif can_lcdmodechecking:
+			def setLCDModeMinitTV4k(configElement):
+				try:
+					f = open("/proc/stb/lcd/live_enable", "w")
+					f.write(configElement.value)
+					f.close()
+				except:
+					pass
+			def setMiniTVFPS(configElement):
+				pass
+			def setLCDModePiP(configElement):
+				pass
+			
+			def setLCDScreenshot(configElement):
+ 				ilcd.setScreenShot(configElement.value);			
+				
+			config.lcd.screenshot = ConfigYesNo(default=False)
+ 			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
+
+			config.lcd.modeminitv4k = ConfigSelection(choices={
+					"disable": _("normal"),
+					"enable": _("MiniTV")},
+					default = "0")
+			config.lcd.modeminitv4k.addNotifier(setLCDModeMinitTV4k)
+			config.lcd.screenshot = ConfigNothing()
+	
 		else:
 			config.lcd.modeminitv = ConfigNothing()
+			config.lcd.modeminitv4k = ConfigNothing()
+			config.lcd.screenshot = ConfigNothing()
 			config.lcd.fpsminitv = ConfigNothing()
 
 		config.lcd.scroll_speed = ConfigSelection(default = "300", choices = [
@@ -293,6 +367,18 @@ def InitLcd():
 
 		def setLCDshowoutputresolution(configElement):
 			ilcd.setShowoutputresolution(configElement.value);
+			
+		def setLCDminitvmode(configElement):
+			ilcd.setLCDMiniTVMode(configElement.value)
+			
+		def setLCDminitvmode4k(configElement):
+			ilcd.setLCDMiniTVMode4k(configElement.value)			
+
+		def setLCDminitvpipmode(configElement):
+			ilcd.setLCDMiniTVPIPMode(configElement.value)
+
+		def setLCDminitvfps(configElement):
+			ilcd.setLCDMiniTVFPS(configElement.value)			
 
 		def setLCDrepeat(configElement):
 			ilcd.setRepeat(configElement.value);
@@ -355,6 +441,28 @@ def InitLcd():
 
 		config.lcd.flip = ConfigYesNo(default=False)
 		config.lcd.flip.addNotifier(setLCDflipped);
+		
+		if SystemInfo["LcdLiveTV"]:
+			def lcdLiveTvChanged(configElement):
+				open(SystemInfo["LcdLiveTV"], "w").write(configElement.value and "0" or "1")
+				from Screens.InfoBar import InfoBar
+				InfoBarInstance = InfoBar.instance
+				InfoBarInstance and InfoBarInstance.session.open(dummyScreen)
+			config.lcd.showTv = ConfigYesNo(default = False)
+			config.lcd.showTv.addNotifier(lcdLiveTvChanged)
+
+		if SystemInfo["LCDMiniTV4k"]:
+		        SystemInfo["LCDMiniTV"] = False
+			config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "0")
+			config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
+
+		if SystemInfo["LCDMiniTV"]:
+			config.lcd.minitvmode = ConfigSelection([("0", _("normal")), ("1", _("MiniTV")), ("2", _("OSD")), ("3", _("MiniTV with OSD"))], "0")
+			config.lcd.minitvmode.addNotifier(setLCDminitvmode)
+			config.lcd.minitvpipmode = ConfigSelection([("0", _("off")), ("5", _("PIP")), ("7", _("PIP with OSD"))], "0")
+			config.lcd.minitvpipmode.addNotifier(setLCDminitvpipmode)
+			config.lcd.minitvfps = ConfigSlider(default=30, limits=(0, 30))
+			config.lcd.minitvfps.addNotifier(setLCDminitvfps)		
 
 		if getBoxType() in ('mixosf5', 'mixosf5mini', 'gi9196m', 'gi9196lite', 'zgemmas2s', 'gi9196lite', 'zgemmash1', 'zgemmash2'):
 			config.lcd.scrollspeed = ConfigSlider(default = 150, increment = 10, limits = (0, 500))
@@ -444,3 +552,5 @@ def InitLcd():
 		config.lcd.ledblinkingtime = ConfigNothing()
 
 	config.misc.standbyCounter.addNotifier(standbyCounterChanged, initial_call = False)
+
+
