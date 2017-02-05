@@ -41,7 +41,7 @@ class Network:
 		return self.remoteRootFS
 
 	def isBlacklisted(self, iface):
-		return iface in ('lo', 'wifi0', 'wmaster0', 'sit0', 'tun0', 'sys0')
+		return iface in ('lo', 'wifi0', 'wmaster0', 'sit0', 'tun0', 'tap0')
 
 	def getInterfaces(self, callback = None):
 		self.configuredInterfaces = []
@@ -85,7 +85,7 @@ class Network:
 
 		for line in result.splitlines():
 			split = line.strip().split(' ',2)
-			if (split[1][:-1] == iface) or (split[1][:-1] == (iface + '@sys0')):
+			if split[1][:-1] == iface:
 				up = self.regExpMatch(upPattern, split[2])
 				mac = self.regExpMatch(macPattern, self.regExpMatch(macLinePattern, split[2]))
 				if up is not None:
@@ -305,8 +305,6 @@ class Network:
 				name = 'Zydas'
 			elif name == 'r871x_usb_drv':
 				name = 'Realtek'
-		elif os.path.exists("/tmp/bcm/%s"%iface):
-				name = 'Broadcom'
 		else:
 			name = _('Unknown')
 
@@ -363,7 +361,7 @@ class Network:
 		self.commands.append("/etc/init.d/avahi-daemon stop")
 		for iface in self.ifaces.keys():
 			if iface != 'eth0' or not self.onRemoteRootFS():
-				self.commands.append("ip addr flush dev " + iface)
+				self.commands.append("ip addr flush dev " + iface + " scope global")
 		self.commands.append("/etc/init.d/networking stop")
 		self.commands.append("killall -9 udhcpc")
 		self.commands.append("rm /var/run/udhcpc*")
@@ -444,7 +442,7 @@ class Network:
 		for iface in self.ifaces.keys():
 			if iface != 'eth0' or not self.onRemoteRootFS():
 				self.commands.append("ifdown " + iface)
-				self.commands.append("ip addr flush dev " + iface)
+				self.commands.append("ip addr flush dev " + iface + " scope global")
 		self.commands.append("/etc/init.d/networking stop")
 		self.commands.append("killall -9 udhcpc")
 		self.commands.append("rm /var/run/udhcpc*")
@@ -455,7 +453,10 @@ class Network:
 	def restartNetworkFinished(self,extra_args):
 		( callback ) = extra_args
 		if callback is not None:
-			callback(True)
+			try:
+				callback(True)
+			except:
+				pass
 
 	def getLinkState(self,iface,callback):
 		cmd = self.ethtool_bin + " " + iface
@@ -546,7 +547,7 @@ class Network:
 		commands = []
 		def buildCommands(iface):
 			commands.append("ifdown " + iface)
-			commands.append("ip addr flush dev " + iface)
+			commands.append("ip addr flush dev " + iface + " scope global")
 			#wpa_supplicant sometimes doesn't quit properly on SIGTERM
 			if os.path.exists('/var/run/wpa_supplicant/'+ iface):
 				commands.append("wpa_cli -i" + iface + " terminate")
@@ -607,7 +608,10 @@ class Network:
 		if self.activateInterfaceConsole:
 			if len(self.activateInterfaceConsole.appContainers) == 0:
 				if callback is not None:
-					callback(True)
+					try:
+						callback(True)
+					except:
+						pass
 
 	def sysfsPath(self, iface):
 		return '/sys/class/net/' + iface
@@ -616,11 +620,8 @@ class Network:
 		if iface in self.wlan_interfaces:
 			return True
 
-		try:
-			if os.path.isdir(self.sysfsPath(iface) + '/wireless'):
-				return True
-		except:
-			os.system("rm /etc/enigma2/settings;killall enigma2")
+		if os.path.isdir(self.sysfsPath(iface) + '/wireless'):
+			return True
 
 		# r871x_usb_drv on kernel 2.6.12 is not identifiable over /sys/class/net/'ifacename'/wireless so look also inside /proc/net/wireless
 		device = re.compile('[a-z]{2,}[0-9]*:')
@@ -639,8 +640,6 @@ class Network:
 
 	def getWlanModuleDir(self, iface = None):
 		devicedir = self.sysfsPath(iface) + '/device'
-		if not os.path.isdir(devicedir):
-			return None
 		moduledir = devicedir + '/driver/module'
 		if os.path.isdir(moduledir):
 			return moduledir
@@ -676,9 +675,6 @@ class Network:
 				return 'ralink'
 			if module == 'zd1211b':
 				return 'zydas'
-		elif os.path.exists("/tmp/bcm/%s"%iface):
-			return 'wl'
-
 		return 'wext'
 
 	def calc_netmask(self,nmask):

@@ -4,10 +4,12 @@ from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
 from ServiceReference import ServiceReference
-from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, eServiceCenter, getDesktop, RT_HALIGN_LEFT, RT_VALIGN_CENTER
+from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformation, eServiceCenter
 from Tools.Transponder import ConvertToHumanReadable
 from Components.Converter.ChannelNumbers import channelnumbers
-import skin
+from enigma import getDesktop
+import os
+import subprocess
 
 RT_HALIGN_LEFT = 0
 
@@ -22,7 +24,6 @@ def to_unsigned(x):
 	return x & 0xFFFFFFFF
 
 def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
-	screenwidth = getDesktop(0).size().width()
 	if not isinstance(b, str):
 		if valueType == TYPE_VALUE_HEX:
 			b = ("0x%0" + str(param) + "x") % to_unsigned(b)
@@ -38,54 +39,43 @@ def ServiceInfoListEntry(a, b, valueType=TYPE_TEXT, param=4):
 			b = "%d.%d%s" % (b // 10, b % 10, direction)
 		else:
 			b = str(b)
-
-	x, y, w, h = skin.parameters.get("ServiceInfo",(0, 0, 300, 30))
-	xa, ya, wa, ha = skin.parameters.get("ServiceInfoLeft",(0, 0, 300, 25))
-	xb, yb, wb, hb = skin.parameters.get("ServiceInfoRight",(300, 0, 600, 25))
-	return [
+	if getDesktop(0).size().width() == 1920:
+	    return [
 		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
-		(eListboxPythonMultiContent.TYPE_TEXT, x, y, w, h, 0, RT_HALIGN_LEFT, ""),
-		(eListboxPythonMultiContent.TYPE_TEXT, xa, ya, wa, ha, 0, RT_HALIGN_LEFT, a),
-		(eListboxPythonMultiContent.TYPE_TEXT, xb, yb, wb, hb, 0, RT_HALIGN_LEFT, b)
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, ""),
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 450, 40, 0, RT_HALIGN_LEFT, a),
+		(eListboxPythonMultiContent.TYPE_TEXT, 270, 0, 630, 40, 0, RT_HALIGN_LEFT, b)
+	]
+
+	if getDesktop(0).size().width() == 1280:
+	    return [
+		#PyObject *type, *px, *py, *pwidth, *pheight, *pfnt, *pstring, *pflags;
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 24, 0, RT_HALIGN_LEFT, ""),
+		(eListboxPythonMultiContent.TYPE_TEXT, 0, 0, 200, 24, 0, RT_HALIGN_LEFT, a),
+		(eListboxPythonMultiContent.TYPE_TEXT, 230, 0, 450, 24, 0, RT_HALIGN_LEFT, b)
 	]
 
 class ServiceInfoList(HTMLComponent, GUIComponent):
 	def __init__(self, source):
+	    if getDesktop(0).size().width() == 1920:
 		GUIComponent.__init__(self)
 		self.l = eListboxPythonMultiContent()
 		self.list = source
 		self.l.setList(self.list)
-		self.fontName = "Regular"
-		self.fontSize = 23
-		self.ItemHeight = 25
-
-	def applySkin(self, desktop, screen):
-		if self.skinAttributes is not None:
-			attribs = [ ]
-			for (attrib, value) in self.skinAttributes:
-				if attrib == "font":
-					font = skin.parseFont(value, ((1,1),(1,1)))
-					self.fontName = font.family
-					self.fontSize = font.pointSize
-				elif attrib == "itemHeight":
-					self.ItemHeight = int(value)
-				else:
-					attribs.append((attrib,value))
-			self.skinAttributes = attribs
-		rc = GUIComponent.applySkin(self, desktop, screen)
-		self.setFontsize()
-		self.l.setItemHeight(self.ItemHeight)
-		return rc
-
+		self.l.setFont(0, gFont("Regular", 32))
+		self.l.setItemHeight(36)
+	    else:
+		GUIComponent.__init__(self)
+		self.l = eListboxPythonMultiContent()
+		self.list = source
+		self.l.setList(self.list)
+		self.l.setFont(0, gFont("Regular", 22))
+		self.l.setItemHeight(24)
+	
 	GUI_WIDGET = eListbox
-
-	def setFontsize(self):
-		self.l.setFont(0, gFont(self.fontName, self.fontSize))
-		self.l.setFont(1, gFont(self.fontName, self.fontSize + 5))
 
 	def postWidgetCreate(self, instance):
 		self.instance.setContent(self.l)
-		self.setFontsize()
 
 TYPE_SERVICE_INFO = 1
 TYPE_TRANSPONDER_INFO = 2
@@ -142,7 +132,6 @@ class ServiceInfo(Screen):
 				refstr = _("N/A")
 			aspect = "-"
 			videocodec = "-"
-			videomode = "-"
 			resolution = "-"
 			if self.info:
 				videocodec =  ("MPEG2", "MPEG4", "MPEG1", "MPEG4-II", "VC1", "VC1-SM", "-" )[self.info and self.info.getInfo(iServiceInformation.sVideoType)]
@@ -157,19 +146,32 @@ class ServiceInfo(Screen):
 						aspect = "4:3"
 					else:
 						aspect = "16:9"
-				f = open("/proc/stb/video/videomode")
-				videomode = f.read()[:-1].replace('\n','')
-				f.close()
-
+                        codenumbers = subprocess.check_output(['timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F "=" "{print $2}" | awk -F "]" "{print $1}" | wc -l'], shell=True)
+			codesystem = subprocess.check_output(["timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '=' '{print $2}' | awk -F ']' '{print $1}'"], shell=True)
+			caidssyst = subprocess.check_output(["timeout -t 2 -s kill dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '(' '{print $2}' | awk -F ')' '{print $1}'"], shell=True)
 			Labels = ( (_("Name"), name, TYPE_TEXT),
 					(_("Provider"), self.getServiceInfoValue(iServiceInformation.sProvider), TYPE_TEXT),
 					(_("Videoformat"), aspect, TYPE_TEXT),
-					(_("Videomode"), videomode, TYPE_TEXT),
 					(_("Videosize"), resolution, TYPE_TEXT),
 					(_("Videocodec"), videocodec, TYPE_TEXT),
 					(_("Namespace"), self.getServiceInfoValue(iServiceInformation.sNamespace), TYPE_VALUE_HEX, 8),
-					(_("Service reference"), refstr, TYPE_TEXT))
+					(_("Service reference"), refstr, TYPE_TEXT),
+					(_("Coding Systems"), codenumbers, TYPE_TEXT))
 
+                        if codenumbers > 0:
+                                i = 0
+				caidssyst1 = caidssyst.splitlines()
+                                codesystem1 = codesystem.splitlines()
+				while i < int(codenumbers):
+                                        caidsystem = caidssyst1[i] + " " + codesystem1[i]
+                                        i += 1
+                                        newlabel = ( (_("%s " %i), caidsystem, TYPE_TEXT)) 
+                                        Labels = Labels + (newlabel,)
+
+                                        					
+
+			
+			
 			self.fillList(Labels)
 		else:
 			if self.transponder_info:
@@ -246,11 +248,10 @@ class ServiceInfo(Screen):
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("FEC"), frontendData["fec_inner"], TYPE_TEXT))
 			elif frontendDataOrg["tuner_type"] == "DVB-T":
-				channel = channelnumbers.getChannelNumber(frontendDataOrg["frequency"], frontendDataOrg["tuner_number"]) if channelnumbers.supportedChannels(frontendDataOrg["tuner_number"]) else None
 				return ((_("NIM"), chr(ord('A') + frontendData["tuner_number"]), TYPE_TEXT),
 						(_("Type"), frontendData["tuner_type"], TYPE_TEXT),
 						(_("Frequency"), frontendData["frequency"], TYPE_VALUE_DEC),
-						(_("Channel"), channel, TYPE_VALUE_DEC),
+						(_("Channel"), channelnumbers.getChannelNumber(frontendData["frequency"], frontendData["tuner_number"]), TYPE_VALUE_DEC),
 						(_("Inversion"), frontendData["inversion"], TYPE_TEXT),
 						(_("Bandwidth"), frontendData["bandwidth"], TYPE_VALUE_DEC),
 						(_("Code rate LP"), frontendData["code_rate_lp"], TYPE_TEXT),

@@ -203,6 +203,7 @@ class Wizard(Screen):
 		Wizard.instance = self
 
 		self.lcdCallbacks = []
+		self.first = False
 
 		self.disableKeys = False
 
@@ -421,6 +422,7 @@ class Wizard(Screen):
 				#self.selection = self.wizard[self.currStep]["evaluatedlist"][self["list"].l.getCurrentSelectionIndex()][1]
 				exec("self." + self.wizard[self.currStep]["onselect"] + "()")
 # 		print "up"
+		self.updateLcd()
 
 	def down(self):
 		self.resetCounter()
@@ -438,6 +440,38 @@ class Wizard(Screen):
 				#self.selection = self.wizard[self.currStep]["evaluatedlist"][self["list"].l.getCurrentSelectionIndex()][1]
 				exec("self." + self.wizard[self.currStep]["onselect"] + "()")
 # 		print "down"
+		self.updateLcd()
+
+	def updateLcd(self):
+		if self.wizard[self.currStep]["id"] == "end":
+			return
+		else:
+			displaytext = []
+			displaytext.append(self.getTranslation(self.wizard[self.currStep]["text"]))
+			if self.first:
+				try:
+					getlist = self.getTranslation(self.wizard[self.currStep]["list"][0][0])
+					if getlist is not None:
+						entry = getlist
+				except:
+					entry = ""
+				self.first = False
+			else:
+				if self.showList:
+					if self["list"].getCurrent() is not None:
+						getlistentry = self["list"].getCurrent()[0]
+						entry = getlistentry
+					else:
+						entry = ""
+				elif self.showConfig:
+					getconfigentry = self.wizard[self.currStep]["config"]
+					entry = getconfigentry
+				else:
+					entry = ""
+			displaytext.append(entry)
+#			print "set LCD text"
+			for x in self.lcdCallbacks:
+				x(displaytext)
 
 	def selChanged(self):
 		self.resetCounter()
@@ -507,6 +541,7 @@ class Wizard(Screen):
 			else:
 				self.currStep += 1
 				self.updateValues()
+			self.first = True
 		else:
 			if self.wizard[self.currStep].has_key("displaytext"):
 				displaytext = self.getTranslation(self.wizard[self.currStep]["displaytext"])
@@ -541,6 +576,7 @@ class Wizard(Screen):
 					self.onShown.remove(self.updateValues)
 			else:
 				self.afterAsyncCode()
+		self.updateLcd()
 
 	def afterAsyncCode(self):
 		if not self.updateValues in self.onShown:
@@ -601,7 +637,7 @@ class Wizard(Screen):
 						self.list.append((self.getTranslation(x[0]), x[1]))
 				self.wizard[self.currStep]["evaluatedlist"] = self.list
 				self["list"].list = self.list
-				self["list"].index = index
+				self["list"].index = 0
 			else:
 				self["list"].hide()
 

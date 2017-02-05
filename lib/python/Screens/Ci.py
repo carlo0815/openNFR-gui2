@@ -1,45 +1,25 @@
 from Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ConfigList import ConfigListScreen
-from boxbranding import getBoxType
 from Components.ActionMap import ActionMap
 from Components.ActionMap import NumberActionMap
 from Components.Label import Label
 from Components.Pixmap import Pixmap
-from Components.Button import Button
-from Components.config import config, ConfigNumber, ConfigYesNo, ConfigSubsection, ConfigSelection, ConfigBoolean, ConfigInteger, ConfigSubList, NoSave, getConfigListEntry, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigNothing, ConfigPIN
-from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.Console import Console
 from Components.Sources.StaticText import StaticText
 from Components.Sources.Boolean import Boolean
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigSubList, getConfigListEntry, KEY_LEFT, KEY_RIGHT, KEY_0, ConfigNothing, ConfigPIN, ConfigText, ConfigYesNo, NoSave
 from Components.ConfigList import ConfigList
-from Components.ScrollLabel import ScrollLabel
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import fileExists
-from Screens.Screen import Screen
-from Screens.MessageBox import MessageBox 
-from Screens.InputBox import InputBox
-from Screens.Console import Console
-from Components.Input import Input
-from Screens.ChoiceBox import ChoiceBox
-from Components.AVSwitch import AVSwitch
-from Components.MenuList import MenuList
-from Plugins.Plugin import PluginDescriptor 
-import time
 from os import path as os_path, remove, unlink, rename, chmod, access, X_OK
-from enigma import *
 from enigma import eTimer, eDVBCI_UI, eDVBCIInterfaces
 from Tools.BoundFunction import boundFunction
 from boxbranding import getBrandOEM, getBoxType
 import time
-import os
-
-import re
-import string
 
 MAX_NUM_CI = 4
-boxtype = getBoxType()
+
 def setCIBitrate(configElement):
 	if configElement.value == "no":
 		eDVBCI_UI.getInstance().setClockRate(configElement.slotid, eDVBCI_UI.rateNormal)
@@ -50,7 +30,7 @@ def setdvbCiDelay(configElement):
 	f = open("/proc/stb/tsmux/rmx_delay", "w")
 	f.write(configElement.value)
 	f.close()
-		
+
 def InitCiConfig():
 	config.ci = ConfigSubList()
 	config.cimisc = ConfigSubsection()
@@ -59,8 +39,7 @@ def InitCiConfig():
 		config.ci[slot].canDescrambleMultipleServices = ConfigSelection(choices = [("auto", _("Auto")), ("no", _("No")), ("yes", _("Yes"))], default = "auto")
 		config.ci[slot].use_static_pin = ConfigYesNo(default = True)
 		config.ci[slot].static_pin = ConfigPIN(default = 0)
-		config.ci[slot].show_ci_messages = ConfigYesNo(default = True)		
-		config.ci[slot].canDescrambleMultipleServices = ConfigSelection(choices = [("auto", _("Auto")), ("no", _("No")), ("yes", _("Yes"))], default = "no")
+		config.ci[slot].show_ci_messages = ConfigYesNo(default = True)
 		if SystemInfo["CommonInterfaceSupportsHighBitrates"]:
 			if getBrandOEM() in ('dags', 'blackbox'):
 				config.ci[slot].canHandleHighBitrates = ConfigSelection(choices = [("no", _("No")), ("yes", _("Yes"))], default = "yes")
@@ -157,7 +136,7 @@ class CISetup(Screen, ConfigListScreen):
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
 		return SetupSummary
-			
+
 class MMIDialog(Screen):
 	def __init__(self, session, slotid, action, handler = eDVBCI_UI.getInstance(), wait_text = "wait for ci...", screen_data = None ):
 		Screen.__init__(self, session)
@@ -215,25 +194,15 @@ class MMIDialog(Screen):
 			list.append( (entry[1], ConfigNothing(), entry[2]) )
 		if entry[0] == "PIN":
 			pinlength = entry[1]
-			pin = config.plugins.autopin.pin.value
-			if len(str(config.plugins.autopin.pin.value)) == 3:
-				pin = "0" + str(config.plugins.autopin.pin.value)
-				pinlength = 4
 			if entry[3] == 1:
 				# masked pins:
 				x = ConfigPIN(0, len = pinlength, censor = "*")
 			else:
 				# unmasked pins:
 				x = ConfigPIN(0, len = pinlength)
-			x.addEndNotifier(self.pinEntered)
 			self["subtitle"].setText(entry[2])
 			list.append( getConfigListEntry("", x) )
 			self["bottom"].setText(_("please press OK when ready"))
-			if config.plugins.autopin.enable.value:
-				self.okbuttonClick()
-
-	def pinEntered(self, value):
-		self.okbuttonClick()
 
 	def okbuttonClick(self):
 		self.timer.stop()
@@ -254,22 +223,10 @@ class MMIDialog(Screen):
 			self.handler.answerMenu(self.slotid, 0)
 			self.showWait()
 		elif self.tag == "ENQ":
-			pin = config.plugins.autopin.pin.value
-			if len(str(config.plugins.autopin.pin.value)) == 3:
-				pin = "0" + str(config.plugins.autopin.pin.value)
 			cur = self["entries"].getCurrent()
-			try:
-				answer = str(cur[1].value)
-			except:
-				answer = str(pin)
-
+			answer = str(cur[1].value)
 			length = len(answer)
-			
-			try:
-				pinlen = cur[1].getLength()
-			except:
-				pinlen = len(str(pin))
-			while length < pinlen:
+			while length < cur[1].getLength():
 				answer = '0'+answer
 				length+=1
 			self.answer = answer
@@ -283,7 +240,7 @@ class MMIDialog(Screen):
 			config.ci[self.slotid].static_pin.value = self.answer
 			config.ci[self.slotid].static_pin.save()
 		self.handler.answerEnq(self.slotid, self.answer)
-		self.showWait()				
+		self.showWait()
 
 	def closeMmi(self):
 		self.timer.stop()
@@ -312,26 +269,26 @@ class MMIDialog(Screen):
 		try:
 			self["entries"].handleKey(key)
 			if self.is_pin_list == 4:
-				self.okbuttonClick()			
+				self.okbuttonClick()
 		except:
 			pass
 
 	def keyNumberGlobal(self, number):
 		self.timer.stop()
 		if self.is_pin_list > -1:
-			self.is_pin_list += 1		
+			self.is_pin_list += 1
 		self.keyConfigEntry(KEY_0 + number)
 
 	def keyLeft(self):
 		self.timer.stop()
 		if self.is_pin_list > 0:
-			self.is_pin_list += -1		
+			self.is_pin_list += -1
 		self.keyConfigEntry(KEY_LEFT)
 
 	def keyRight(self):
 		self.timer.stop()
 		if self.is_pin_list > -1 and self.is_pin_list < 4:
-			self.is_pin_list += 1		
+			self.is_pin_list += 1
 		self.keyConfigEntry(KEY_RIGHT)
 
 	def updateList(self, list):
@@ -347,7 +304,8 @@ class MMIDialog(Screen):
 		self["title"].setText("")
 		self["subtitle"].setText("")
 		self["bottom"].setText("")
-		list = [(self.wait_text, ConfigNothing())]
+		list = [ ]
+		list.append( (self.wait_text, ConfigNothing()) )
 		self.updateList(list)
 
 	def showScreen(self):
@@ -422,7 +380,7 @@ class CiMessageHandler:
 		self.session = None
 		self.ci = { }
 		self.dlgs = { }
-		self.auto_close = False		
+		self.auto_close = False
 		eDVBCI_UI.getInstance().ciStateChanged.get().append(self.ciStateChanged)
 		if getBoxType() in ('vuzero'):
 			SystemInfo["CommonInterface"] = False
@@ -439,7 +397,7 @@ class CiMessageHandler:
 			file.close()
 			SystemInfo["CommonInterfaceCIDelay"] = True
 		except:
-			SystemInfo["CommonInterfaceCIDelay"] = False			
+			SystemInfo["CommonInterfaceCIDelay"] = False
 
 	def setSession(self, session):
 		self.session = session
@@ -519,7 +477,7 @@ class CiSelection(Screen):
 		menuList.l.setList(self.list)
 		self["entries"] = menuList
 		self["entries"].onSelectionChanged.append(self.selectionChanged)
-		self["text"] = Label(_("Slot %d")% 1)
+		self["text"] = Label(_("Slot %d")%(1))
 
 	def selectionChanged(self):
 		cur_idx = self["entries"].getCurrentIndex()
@@ -539,7 +497,6 @@ class CiSelection(Screen):
 		self.keyConfigEntry(KEY_RIGHT)
 
 	def appendEntries(self, slot, state):
-		boxtype = getBoxType()
 		self.state[slot] = state
 		self.list.append( (_("Reset"), ConfigNothing(), 0, slot) )
 		self.list.append( (_("Init"), ConfigNothing(), 1, slot) )
@@ -555,17 +512,14 @@ class CiSelection(Screen):
 		self.list.append(getConfigListEntry(_("Set pin code persistent"), config.ci[slot].use_static_pin))
 		self.list.append( ( _("Enter persistent PIN code"), ConfigNothing(), 5, slot) )
 		self.list.append( ( _("Reset persistent PIN code"), ConfigNothing(), 6, slot) )
-		self.list.append(getConfigListEntry(_("Show CI messages"), config.ci[slot].show_ci_messages))			
-
+		self.list.append(getConfigListEntry(_("Show CI messages"), config.ci[slot].show_ci_messages))
 		self.list.append(getConfigListEntry(_("Multiple service support"), config.ci[slot].canDescrambleMultipleServices))
 		if SystemInfo["CommonInterfaceSupportsHighBitrates"]:
 			self.list.append(getConfigListEntry(_("High bitrate support"), config.ci[slot].canHandleHighBitrates))
-		if boxtype in ("sf208", "sf228", "sf238", "twinboxlcd", "twinboxlcdci5", "singleboxlcd", "odinplus", "e4hd"):
-			self.list.append( (_("CI+ Fix Init"),ConfigNothing(), 3, slot) )			
 
 	def updateState(self, slot):
 		state = eDVBCI_UI.getInstance().getState(slot)
-		self.state[slot] = state                                                                      
+		self.state[slot] = state
 
 		slotidx=0
 		while len(self.list[slotidx]) < 3 or self.list[slotidx][3] != slot:
@@ -602,7 +556,6 @@ class CiSelection(Screen):
 
 	def okbuttonClick(self):
 		cur = self["entries"].getCurrent()
-		print "cur:", cur
 		if cur and len(cur) > 2:
 			action = cur[2]
 			slot = cur[3]
@@ -615,195 +568,27 @@ class CiSelection(Screen):
 			elif action == 6:
 				config.ci[slot].static_pin.value = 0
 				config.ci[slot].static_pin.save()
-				self.session.openWithCallback(self.cancelCB, MessageBox, _("The saved PIN was cleared."), MessageBox.TYPE_INFO)				
-			elif action == 3:		#fix 
-				self.session.open(ciplusfix)
-			        
+				self.session.openWithCallback(self.cancelCB, MessageBox, _("The saved PIN was cleared."), MessageBox.TYPE_INFO)
 			elif self.state[slot] == 2:
 				self.dlg = self.session.openWithCallback(self.dlgClosed, MMIDialog, slot, action)
-			elif self.state[slot] == 3:
-				self.session.open(MessageBox, _("Please remove Ci+ Modul and click ok!"), MessageBox.TYPE_INFO)
-				self.session.open(ciplusfix)
 
 	def cancelCB(self,value):
 		pass
-				
+
 	def cancel(self):
 		for slot in range(MAX_NUM_CI):
 			state = eDVBCI_UI.getInstance().getState(slot)
 			if state != -1:
 				CiHandler.unregisterCIMessageHandler(slot)
 		self.close()
-		
-		
-yes_no_descriptions = {False: _("no"), True: _("yes")}
-autopin_version="0.2"
-config.plugins.autopin = ConfigSubsection()
-config.plugins.autopin.enable = ConfigBoolean(default = False, descriptions=yes_no_descriptions)
-config.plugins.autopin.pin = ConfigInteger(default = 0, limits=(0,9999))
-config.plugins.autopin.show510 = ConfigBoolean(default = True, descriptions=yes_no_descriptions)
-		
-class AutoPin(Screen, ConfigListScreen):
-    skin = """
-	<screen position="center,center" size="460,180" title="Auto Pin" >
-        <widget name="config" position="10,10" size="440,120" scrollbarMode="showOnDemand" />
-        <widget name="buttonred" position="10,130" size="100,40" backgroundColor="red" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;18"/>
-        <widget name="buttongreen" position="120,130" size="100,40" backgroundColor="green" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;18"/>
-        <widget name="buttonyellow" position="230,130" size="100,40" backgroundColor="yellow" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;18"/>
-        <widget name="buttonblue" position="340,130" size="100,40" backgroundColor="blue" valign="center" halign="center" zPosition="2"  foregroundColor="white" font="Regular;18"/>
-        </screen>"""
 
-    def __init__(self, session, args = 0):
-	Screen.__init__(self, session)
-
-        self.onShown.append(self.setWindowTitle)
-        # explizit check on every entry
-	self.onChangedEntry = []
-	
-        self.list = []                                                  
-       	ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
-       	self.createSetup()       
-
-	self["logo"] = Pixmap()
-       	self["buttonred"] = Label(_("Cancel"))
-       	self["buttongreen"] = Label(_("OK"))
-       	self["buttonyellow"] = Label("")
-	self["buttonblue"] = Label(_("About"))
-        self["setupActions"] = ActionMap(["SetupActions", "ColorActions"],
-       	{
-       		"green": self.save,
-        	"red": self.cancel,
-	       	"yellow": self.cancel,
-        	"blue": self.about,
-            	"save": self.save,
-            	"cancel": self.cancel,
-            	"ok": self.save,
-       	})
-		
-	def showScreenAutoPin(self):
-		screen = self.handler.getMMIScreen(self.slotid)
-
-		list = [ ]
-
-		self.timer.stop()
-		if len(screen) > 0 and screen[0][0] == "CLOSE":
-			timeout = screen[0][1]
-			self.mmiclosed = True
-			if timeout > 0:
-				self.timer.start(timeout*1000, True)
-			else:
-				self.keyCancel()
-		else:
-			self.mmiclosed = False
-			self.tag = screen[0][0]
-			for entry in screen:
-				if entry[0] == "PIN":
-					self.addEntry(list, entry)
-				else:
-					if entry[0] == "TITLE":
-						self["title"].setText(entry[1])
-					elif entry[0] == "SUBTITLE":
-						self["subtitle"].setText(entry[1])
-					elif entry[0] == "BOTTOM":
-						self["bottom"].setText(entry[1])
-					elif entry[0] == "TEXT":
-						self.addEntry(list, entry)
-						# auto confirm 510
-						if not config.plugins.autopin.show510.value and entry[1].find(" 510 ") is not -1:
-							self.keyCancel()
-							return
-		self.updateList(list)
-
-
-	def addEntryAutoPin(self, list, entry):
-		if entry[0] == "TEXT":		#handle every item (text / pin only?)
-			list.append( (entry[1], ConfigNothing(), entry[2]) )
-		if entry[0] == "PIN":
-			pinlength = entry[1]
-			if entry[3] == 1:
-				# masked pins:
-				x = ConfigPIN(0, len = pinlength, censor = "*")
-			else:
-				# unmasked pins:
-				x = ConfigPIN(0, len = pinlength)
-			x.addEndNotifier(self.pinEntered)
-			self["subtitle"].setText(entry[2])
-			list.append( getConfigListEntry("", x) )
-			self["bottom"].setText(_("please press OK when ready"))
-			if config.plugins.autopin.enable.value:
-				# don't wait for entering 
-				self.pinEntered(0)
-
-	def okbuttonClickAutoPin(self):
-		self.timer.stop()
-		if not self.tag:
-			return
-		if self.tag == "WAIT":
-			print "do nothing - wait"
-		elif self.tag == "MENU":
-			print "answer MENU"
-			cur = self["entries"].getCurrent()
-			if cur:
-				self.handler.answerMenu(self.slotid, cur[2])
-			else:
-				self.handler.answerMenu(self.slotid, 0)
-			self.showWait()
-		elif self.tag == "LIST":
-			print "answer LIST"
-			self.handler.answerMenu(self.slotid, 0)
-			self.showWait()
-		elif self.tag == "ENQ":
-			cur = self["entries"].getCurrent()
-			if config.plugins.autopin.enable.value:
-				answer=str(config.plugins.autopin.pin.value)
-				length = len(answer)
-				while length < 4:
-					answer = '0'+answer
-					length+=1
-			else:
-				answer = str(cur[1].value)
-				length = len(answer)
-				while length < cur[1].getLength():
-					answer = '0'+answer
-					length+=1
-			self.handler.answerEnq(self.slotid, answer)
-			self.showWait()		
-		
-       	
-    def createSetup(self):                                                  
-       	self.list = []
-	self.list.append(getConfigListEntry(_("Enable"), config.plugins.autopin.enable))
-      	self.list.append(getConfigListEntry(_("PIN"), config.plugins.autopin.pin))
-      	self.list.append(getConfigListEntry(_("510")+" "+_("Message"), config.plugins.autopin.show510))
-        self["config"].list = self.list                                 
-        self["config"].l.setList(self.list)         
-       	
-    def changedEntry(self):                                                 
-       	self.createSetup()       
-		
-    def setWindowTitle(self):
-	self.setTitle(_("Auto Pin"))
-
-    def save(self):
-        for x in self["config"].list:
-           x[1].save()
-        self.close(True)
-
-    def cancel(self):
-        for x in self["config"].list:
-           x[1].cancel()
-        self.close(False)
-
-    def about(self):
-	self.session.open(MessageBox,_("Auto Pin by gutemine mod by openNFR")+" V%s " % autopin_version , MessageBox.TYPE_INFO)		
-		
 class PermanentPinEntry(Screen, ConfigListScreen):
 	def __init__(self, session, pin, pin_slot):
 		Screen.__init__(self, session)
 		self.skinName = ["ParentalControlChangePin", "Setup" ]
 		self.setup_title = _("Enter pin code")
 		self.onChangedEntry = [ ]
-		
+
 		self.slot = pin_slot
 		self.pin = pin
 		self.list = []
@@ -838,15 +623,15 @@ class PermanentPinEntry(Screen, ConfigListScreen):
 		if self.pin1.value == self.pin2.value:
 			self.pin.value = self.pin1.value
 			self.pin.save()
-			self.session.openWithCallback(self.close, MessageBox, _("The PIN code has been saved successfully."), MessageBox.TYPE_INFO)		
+			self.session.openWithCallback(self.close, MessageBox, _("The PIN code has been saved successfully."), MessageBox.TYPE_INFO)
 		else:
-			self.session.open(MessageBox, _("The PIN codes you entered are different."), MessageBox.TYPE_ERROR)		
-			
+			self.session.open(MessageBox, _("The PIN codes you entered are different."), MessageBox.TYPE_ERROR)
+
 	def cancel(self):
 		self.close(None)
- 
+
 	def keyNumberGlobal(self, number):
-		ConfigListScreen.keyNumberGlobal(self, number)	
+		ConfigListScreen.keyNumberGlobal(self, number)
 
 	# for summary:
 	def changedEntry(self):
@@ -861,8 +646,8 @@ class PermanentPinEntry(Screen, ConfigListScreen):
 
 	def createSummary(self):
 		from Screens.Setup import SetupSummary
-		return SetupSummary		
-		
+		return SetupSummary
+
 class CIHelper(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -1057,47 +842,4 @@ class CIHelperSetup(Screen, ConfigListScreen):
 
 	def myStop(self):
 		self.close()
-		
-class ciplusfix(ConfigListScreen, Screen):
 
-    skin = """
-               <screen name="CI+ Modul Fix Init" position="0,0" size="1280,720" title="CI+ Modul Fix Init" zPosition="1" flags="wfNoBorder">
-               <ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
-               <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-               <convert type="ClockToText">Default</convert>
-               </widget>
-               <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-               <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
-               </widget>
-               <widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
-               <ePixmap pixmap="skin_default/buttons/key_red.png" position="70,670" size="30,30" alphatest="blend" />
-               <ePixmap pixmap="skin_default/buttons/key_green.png" position="330,670" size="30,30" alphatest="blend" />
-               <widget name="key_red" position="105,672" size="240,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-               <widget name="key_green" position="365,672" size="540,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-               <ePixmap position="848,596" zPosition="2" size="350,44" pixmap="skin_default/icons/db.png" transparent="1" alphatest="blend" />
-               <ePixmap position="962,431" size="128,128" zPosition="2" pixmap="skin_default/icons/setup.png" transparent="1" alphatest="blend" />
-               <widget name="info-fix" position="75,110" zPosition="1" size="1280,720" font="Regular;23" halign="left" valign="top" transparent="1" />
-    </screen> """
-
-    def __init__(self, session, args = 0):
-		Screen.__init__(self, session)
-	
-		self["key_red"] = Button(_("Exit"))
-		self["ok"] = Button("Start CI Fix")
-		self["key_green"] = Button("Start CI Fix")
-		self["info-fix"] = Label(_("Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after restart move CI+ Modul back in Box! \n\nIf error 575, remove and move CI+ Modul again back in Box! \n\nAfter successful Init please reboot your Box."))
-		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions', 'CiSelectionActions'],
-		{
-			'red': self.cancel,
-			'ok': self.ok,
-			'green': self.ok,
-			'cancel': self.cancel
-		}, -2)
-		self['status'] = Label()
-
-    def ok(self):
-		target = "init 4; /usr/bin/enigma2; reboot" 
-		self.session.open(Console, title=_("Restart CI+ Fix"), cmdlist = [target], closeOnSuccess = False)		
-		
-    def cancel(self):
-		self.close(False)		

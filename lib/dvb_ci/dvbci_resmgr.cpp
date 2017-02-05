@@ -7,13 +7,13 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 {
 #ifdef __sh__
 	eDebug("eDVBCIResourceManagerSession::%s >", __func__);
-	eDebugNoNewLineStart("SESSION(%d) %02x %02x %02x (len = %d): ", session_nb, tag[0], tag[1], tag[2], len);
+	eDebugNoNewLine("SESSION(%d) %02x %02x %02x (len = %d): ", session_nb, tag[0], tag[1], tag[2], len);
 #else
-	eDebugNoNewLineStart("SESSION(%d) %02x %02x %02x: ", session_nb, tag[0], tag[1], tag[2]);
+	eDebugNoNewLine("SESSION(%d) %02x %02x %02x: ", session_nb, tag[0], tag[1], tag[2]);
 #endif
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
-	eDebugNoNewLineEnd("");
+	eDebug("");
 	if ((tag[0]==0x9f) && (tag[1]==0x80))
 	{
 		switch (tag[2])
@@ -24,14 +24,14 @@ int eDVBCIResourceManagerSession::receivedAPDU(const unsigned char *tag,const vo
 			return 1;
 			break;
 		case 0x11: // Tprofile
-			eDebugNoNewLineStart("mein cam kann: ");
+			eDebugNoNewLine("mein cam kann: ");
 			if (!len)
-				eDebugNoNewLineEnd("nichts");
+				eDebugNoNewLine("nichts");
 			else
 			{
 				for (int i=0; i<len; i++)
 					eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
-				eDebugNoNewLineEnd("");
+				eDebug("");
 			}
 			if (state == stateFirstProfileEnquiry)
 			{

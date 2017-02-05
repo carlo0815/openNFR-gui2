@@ -51,4 +51,3 @@ class NTPSyncPoller:
 		else:
 			print 'NO TIME SET'
 			self.timer.startLongTimer(10)
-

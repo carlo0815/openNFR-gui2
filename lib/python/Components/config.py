@@ -1819,7 +1819,7 @@ class Config(ConfigSubsection):
 		ConfigSubsection.__init__(self)
 
 	def pickle_this(self, prefix, topickle, result):
-		for (key, val) in sorted(topickle.items(), key=lambda x: int(x[0]) if x[0].isdigit() else x[0].lower()):
+		for (key, val) in topickle.items():
 			name = '.'.join((prefix, key))
 			if isinstance(val, dict):
 				self.pickle_this(name, val, result)
@@ -1882,7 +1882,9 @@ class Config(ConfigSubsection):
 			print "Config: Couldn't write %s" % filename
 
 	def loadFromFile(self, filename, base_file=True):
-		self.unpickle(open(filename, "r"), base_file)
+		f = open(filename, "r")
+		self.unpickle(f.readlines(), base_file)
+		f.close()
 
 config = Config()
 config.misc = ConfigSubsection()

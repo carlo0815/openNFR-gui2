@@ -17,29 +17,31 @@
 #define I2C_SLAVE_FORCE	0x0706
 #endif
 
-#define eDebugNoSimulateNoNewLineEnd(x...) \
-	do { \
-		if (!m_simulate) \
-			eDebugNoNewLineEnd(x); \
-	} while(0)
-
 #define eDebugNoSimulate(x...) \
 	do { \
 		if (!m_simulate) \
 			eDebug(x); \
 	} while(0)
-
-#define eDebugNoSimulateNoNewLineStart(x...) \
-	do { \
-		if (!m_simulate) \
-			eDebugNoNewLineStart(x); \
-	} while(0)
+#if 0
+		else \
+		{ \
+			eDebugNoNewLine("SIMULATE:"); \
+			eDebug(x); \
+		}
+#endif
 
 #define eDebugNoSimulateNoNewLine(x...) \
 	do { \
 		if (!m_simulate) \
 			eDebugNoNewLine(x); \
 	} while(0)
+#if 0
+		else \
+		{ \
+			eDebugNoNewLine("SIMULATE:"); \
+			eDebugNoNewLine(x); \
+		}
+#endif
 
 void eDVBDiseqcCommand::setCommandString(const char *str)
 {
@@ -854,7 +856,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 		ret = (int)(snr / 40.5);
 		sat_max = 1618;
 	}
-	else if (!strcmp(m_description, "AVL6211")) // ET10000
+	if (!strcmp(m_description, "AVL6211")) // ET10000
 	{
 		ret = (int)(snr / 37.5);
 		sat_max = 1700;
@@ -1140,27 +1142,6 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	{
 		ret = (snr * 2000) / 0xFFFF;
 		sat_max = 2000;
-	}
-	else if (!strcmp(m_description, "Si21662")) // SF4008 S2
-	{
-		ret = (int)(snr / 46.8);
-		sat_max = 1400;
-	}
-	else if (!strcmp(m_description, "Si21682")) // SF4008 T/T2/C
-	{
-	    int type = -1;
-		oparm.getSystem(type);
-		switch (type)
-		{
-			case feCable:
-				ret = (int)(snr / 17);
-				cab_max = 3800;
-				break;
-			case feTerrestrial:
-				ret = (int)(snr / 22.3);
-				ter_max = 2900;
-				break;
-		}
 	}
 
 	signalqualitydb = ret;
@@ -1592,25 +1573,23 @@ int eDVBFrontend::tuneLoopInt()  // called by m_tuneTimer
 					gettimeofday(&start, NULL);
 					sec_fe->sendDiseqc(m_sec_sequence.current()->diseqc);
 					gettimeofday(&end, NULL);
-					eDebugNoSimulateNoNewLineStart("[SEC] tuner %d sendDiseqc: ", m_dvbid);
+					eDebugNoSimulateNoNewLine("[SEC] tuner %d sendDiseqc: ", m_dvbid);
 					for (int i=0; i < m_sec_sequence.current()->diseqc.len; ++i)
 					eDebugNoSimulateNoNewLine("%02x", m_sec_sequence.current()->diseqc.data[i]);
 					if (!memcmp(m_sec_sequence.current()->diseqc.data, "\xE0\x00\x00", 3))
-						eDebugNoSimulateNoNewLineEnd("(DiSEqC reset)");
+						eDebugNoSimulateNoNewLine("(DiSEqC reset)");
 					else if (!memcmp(m_sec_sequence.current()->diseqc.data, "\xE0\x00\x03", 3))
-						eDebugNoSimulateNoNewLineEnd("(DiSEqC peripherial power on)");
+						eDebugNoSimulateNoNewLine("(DiSEqC peripherial power on)");
 					else
-						eDebugNoSimulateNoNewLineEnd("");
+						eDebugNoSimulateNoNewLine("");
 					duration = (((end.tv_usec - start.tv_usec)/1000) + 1000 ) % 1000;
 					duration_est = (m_sec_sequence.current()->diseqc.len * 14) + 10;
-					eDebugNoSimulateNoNewLineStart("[SEC] diseqc ioctl duration: %d ms", duration);
+					eDebugNoSimulateNoNewLine("[SEC] diseqc ioctl duration: %d ms", duration);
 					if (duration < duration_est)
 						delay = duration_est - duration;
 					if (delay > 94) delay = 94;
 					if (delay)
-						eDebugNoSimulateNoNewLineEnd(" -> extra guard delay %d ms",delay);
-					else
-						eDebugNoSimulateNoNewLineEnd("");
+						eDebugNoSimulateNoNewLine(" -> extra guard delay %d ms",delay);
 				}
 				++m_sec_sequence.current();
 				break;
@@ -1624,14 +1603,14 @@ int eDVBFrontend::tuneLoopInt()  // called by m_tuneTimer
 					gettimeofday(&start, NULL);
 					sec_fe->sendToneburst(m_sec_sequence.current()->toneburst);
 					gettimeofday(&end, NULL);
-					eDebugNoSimulateNoNewLineStart("[SEC] toneburst ioctl duration: %d ms",(end.tv_usec - start.tv_usec)/1000);
+					eDebugNoSimulateNoNewLine("[SEC] toneburst ioctl duration: %d ms",(end.tv_usec - start.tv_usec)/1000);
 					duration = (((end.tv_usec - start.tv_usec)/1000) + 1000 ) % 1000;
 					duration_est = 24;
 					if (duration < duration_est)
 						delay = duration_est - duration;
 					if (delay > 24) delay = 24;
 					if (delay)
-						eDebugNoSimulateNoNewLineEnd(" -> extra quard delay %d ms",delay);
+						eDebugNoSimulateNoNewLine(" -> extra quard delay %d ms",delay);
 				}
 				++m_sec_sequence.current();
 				break;
