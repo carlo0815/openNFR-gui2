@@ -97,13 +97,13 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		if self.nim.isCompatible("DVB-S"):
 			choices = {"nothing": _("not configured"),
 						"simple": _("Simple"),
-						"advanced": _("Advanced")}
+						"advanced": _("advanced")}
 			if len(nimmanager.canEqualTo(self.slotid)) > 0:
-				choices["equal"] = _("Equal to")
+				choices["equal"] = _("equal to")
 			if len(nimmanager.canDependOn(self.slotid)) > 0:
 				choices["satposdepends"] = _("Second cable of motorized LNB")
 			if len(nimmanager.canConnectTo(self.slotid)) > 0:
-				choices["loopthrough"] = _("Loop through to")
+				choices["loopthrough"] = _("loopthrough to")
 			if isFBCLink(self.nim):
 				choices = { "nothing": _("not configured"),
 						"advanced": _("advanced")}
