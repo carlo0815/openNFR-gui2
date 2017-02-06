@@ -40,6 +40,18 @@ if sz_w > 800:
 else:
 	HDSkn = False
 	
+cEditor = """<screen name="cEditor" position="40,90" size="1180,590" title="File-Explorer">
+                          <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
+                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+                          <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
+                          </screen>"""
                
 class vEditor(Screen):
 	global HDSkn
@@ -48,11 +60,11 @@ class vEditor(Screen):
                         skin = """
 			  <screen name="vEditor" position="40,90" size="1180,590" title="File-Explorer">
                           <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
-                          <ePixmap position="6,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" alphatest="blend" />
-                          <ePixmap position="332,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" alphatest="blend" />
-                          <ePixmap position="658,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" alphatest="blend" />
-                          <ePixmap position="984,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/blue.png" alphatest="blend" />
-                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
                           <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
                           <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
                           <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
@@ -62,31 +74,50 @@ class vEditor(Screen):
 			skin = """
 			<screen position="center,77" size="900,450" title="File-Explorer">
 				<widget name="filedata" position="2,0" size="896,450" itemHeight="25"/>
-			        <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" position="60,200" zPosition="0" size="140,40" alphatest="on" />
-		                <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
-		                <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
-			        <widget name="key_red" position="60,200" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="yellow" />
+			        <ePixmap pixmap="skin_default/buttons/key_red.png" position="60,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
+			        <widget name="key_red" position="60,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 			        <widget name="key_green" position="250,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 			        <widget name="key_yellow" position="440,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+			        <widget name="key_blue" position="640,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 
 			</screen>"""
 	else:
 		skin = """
 		<screen position="center,77" size="620,450" title="File-Explorer">
 			<widget name="filedata" position="0,0" size="620,450" itemHeight="25"/>
-			        <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" position="60,200" zPosition="0" size="140,40" alphatest="on" />
-		                <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
-		                <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_red.png" position="60,200" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
+			        <ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
 			        <widget name="key_red" position="60,200" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="yellow" />
-			        <widget name="key_green" position="250,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-        		        <widget name="key_yellow" position="440,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+			        <widget name="key_green" position="200,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+			        <widget name="key_yellow" position="400,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+			        <widget name="key_blue" position="600,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 
 		</screen>"""
 
+class cEditor(Screen):
+	skin = """
+	<screen name="cEditor" position="40,90" size="1180,590" title="File-Explorer">
+                          <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
+                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+                          <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+                          <eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
+                          </screen>"""
 	def __init__(self, session, file):
 		from Components.Sources.StaticText import StaticText
-		self.skin = vEditor.skin
+		
 		Screen.__init__(self, session)
+		self.skin = cEditor.skin
 		self.session = session
 		self.file_name = file
 		self.list = []
