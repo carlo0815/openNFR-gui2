@@ -13189,7 +13189,7 @@ msgid "     no writing permission on back-up device"
 msgstr "     keine Schreibrechte für das Medium"
 
 msgid "Ask user (with default as 'yes')"
-msgstr "Frage Benutzer (als default 'ja')"
+msgstr "Frage Benutzer (als Standard 'ja')"
 
 msgid "Ask user (with default as 'no')"
-msgstr "Frage Benutzer (als default 'nein')"
+msgstr "Frage Benutzer (als Standard 'nein')"
