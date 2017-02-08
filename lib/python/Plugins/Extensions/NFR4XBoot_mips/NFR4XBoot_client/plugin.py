@@ -106,10 +106,13 @@ class NFR4XBootImageChoose(Screen):
         self['label7'].setText(def_free_space_percent)
         self['label8'].setText(dev_free_space[0:-3] + ' MB')
         mypath = '/media/nfr4xboot/NFR4XBootI/'
-        myimages = os.listdir(mypath)
-        for fil in myimages:
-            if os.path.isdir(os.path.join(mypath, fil)):
-                self.list.append(fil)
+        try:
+            myimages = os.listdir(mypath)
+            for fil in myimages:
+                if os.path.isdir(os.path.join(mypath, fil)):
+                    self.list.append(fil)
+        except:
+            print "no other Image found"
 
         self['label11'].setText(str(len(self.list) - 1))
         self['config'].setList(self.list)
