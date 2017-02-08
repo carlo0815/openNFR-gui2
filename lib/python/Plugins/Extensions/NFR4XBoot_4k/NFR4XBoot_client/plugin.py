@@ -111,6 +111,8 @@ class NFR4XBootImageChoose(Screen):
             for fil in myimages:
                 if os.path.isdir(os.path.join(mypath, fil)):
                     self.list.append(fil)
+        except:
+            print "no other Image found"
 
         self['label11'].setText(str(len(self.list) - 1))
         self['config'].setList(self.list)
