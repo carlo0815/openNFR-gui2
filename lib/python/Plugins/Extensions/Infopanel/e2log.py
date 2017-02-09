@@ -62,7 +62,7 @@ class E2log(ConfigListScreen, Screen):
 		self.place = self.list[0][1].value
 		self.filename = self.list[1][1].value
 		if os.path.ismount(self.place) or os.path.exists(self.place):
-			target = "init 5; killall enigma2; /usr/bin/enigma2 > "+self.place+"/"+self.filename+" 2>&1" 
+			target = "init 5; sleep 2 ; /usr/bin/enigma2 > "+self.place+"/"+self.filename+" 2>&1"  
 			self.session.open(Console, title=_("E2_Log..."), cmdlist = [target], closeOnSuccess = False)		
                 else:
                         self.session.open(MessageBox, _("Folder not exist please try other!"), MessageBox.TYPE_INFO, timeout=10)
