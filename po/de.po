@@ -13193,3 +13193,6 @@ msgstr "Frage Benutzer (als Standard 'ja')"
 
 msgid "Ask user (with default as 'no')"
 msgstr "Frage Benutzer (als Standard 'nein')"
+
+msgid "Reception lists"
+msgstr "Empfangslisten"
