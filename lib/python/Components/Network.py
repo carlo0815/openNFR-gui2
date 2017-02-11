@@ -41,7 +41,7 @@ class Network:
 		return self.remoteRootFS
 
 	def isBlacklisted(self, iface):
-		return iface in ('lo', 'wifi0', 'wmaster0', 'sit0', 'tun0', 'tap0')
+		return iface in ('lo', 'wifi0', 'wmaster0', 'sit0', 'tun0', 'tap0', 'sys0')
 
 	def getInterfaces(self, callback = None):
 		self.configuredInterfaces = []
@@ -85,7 +85,7 @@ class Network:
 
 		for line in result.splitlines():
 			split = line.strip().split(' ',2)
-			if split[1][:-1] == iface:
+			if (split[1][:-1] == iface) or (split[1][:-1] == (iface + '@sys0')):
 				up = self.regExpMatch(upPattern, split[2])
 				mac = self.regExpMatch(macPattern, self.regExpMatch(macLinePattern, split[2]))
 				if up is not None:
@@ -640,6 +640,8 @@ class Network:
 
 	def getWlanModuleDir(self, iface = None):
 		devicedir = self.sysfsPath(iface) + '/device'
+		if not os.path.isdir(devicedir):
+			return None
 		moduledir = devicedir + '/driver/module'
 		if os.path.isdir(moduledir):
 			return moduledir
