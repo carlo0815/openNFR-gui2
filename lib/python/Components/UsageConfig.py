@@ -683,7 +683,7 @@ def InitUsageConfig():
 
 	crashlogheader = _("We are really sorry. Your receiver encountered " \
 					 "a software problem, and needs to be restarted.\n" \
-					 "Please send the logfile %senigma2_crash_xxxxxx.log to www.nachtfalke.biz.\n" \
+					 "Please send the logfile %senigma2_crash_xxxxxx.log to nfr_e2@nachtfalke.biz.\n" \
 					 "Your receiver restarts in 10 seconds!\n" \
 					 "Component: enigma2") % config.crash.debug_path.value
 	config.crash.debug_text = ConfigText(default=crashlogheader, fixed_size=False)
