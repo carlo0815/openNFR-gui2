@@ -13208,3 +13208,21 @@ msgstr "Erweitert"
 
 msgid "Version unknown"
 msgstr "Version unbekannt"
+
+msgid "Autorecord location"
+msgstr "Autoaufnahme Verzeichnis"
+
+msgid "Set pin code persistent"
+msgstr "PIN dauerhaft speichern"
+
+msgid "Enter persistent PIN code"
+msgstr "PIN eingeben"
+
+msgid "Reset persistent PIN code"
+msgstr "PIN zurücksetzen"
+
+msgid "Show CI messages"
+msgstr "Zeige CI Nachrichten"
+
+msgid "Show MiniTV in the Front Display"
+msgstr "Zeige MiniTV im front Display"
