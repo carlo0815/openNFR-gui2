@@ -421,6 +421,15 @@ class RestoreScreen(Screen, ConfigListScreen):
 	def restartGUI(self, ret = None):
 		self.session.open(Console, title = _("Your %s %s will Reboot...")% (getMachineBrand(), getMachineName()), cmdlist = ["killall -9 enigma2"])
 
+	def rebootSYS(self, ret = None):
+		try:
+			f = open("/tmp/rebootSYS.sh","w")
+			f.write("#!/bin/bash\n\nkillall -9 enigma2\nreboot\n")
+			f.close()
+			self.session.open(Console, title = _("Your %s %s will Reboot...")% (getMachineBrand(), getMachineName()), cmdlist = ["chmod +x /tmp/rebootSYS.sh", "/tmp/rebootSYS.sh"])
+		except:
+			self.restartGUI()
+
 	def restoreMetrixSkin(self, ret = None):
 		try:
 			from Plugins.Extensions.MyMetrixLite.MainSettingsView import MainSettingsView
