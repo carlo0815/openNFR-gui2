@@ -13225,4 +13225,4 @@ msgid "Show CI messages"
 msgstr "Zeige CI Nachrichten"
 
 msgid "Show MiniTV in the Front Display"
-msgstr "Zeige MiniTV im front Display"
+msgstr "Zeige MiniTV im Frontdisplay"
