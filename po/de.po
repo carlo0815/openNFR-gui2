@@ -13196,3 +13196,15 @@ msgstr "Frage Benutzer (als Standard 'nein')"
 
 msgid "Reception lists"
 msgstr "Empfangslisten"
+
+msgid "Equal to Tuner B"
+msgstr "Gleich wie Tuner B"
+
+msgid "Equal to Tuner A"
+msgstr "Gleich wie Tuner A"
+
+msgid "Advanced"
+msgstr "Erweitert"
+
+msgid "Version unknown"
+msgstr "Version unbekannt"
