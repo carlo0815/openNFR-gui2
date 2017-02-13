@@ -11,10 +11,14 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LCDSKIN
 from os import path, walk
 from enigma import eEnv
 import os
+from boxbranding import getBoxType
 
 class LCDSkinSelector(Screen):
 	skinlist = []
-	root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
+	if getBoxType() in ('vuduo2'):
+        	root = eEnv.resolve("${datadir}/enigma2/display/")
+        else:
+        	root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
 	root1 = eEnv.resolve("${datadir}/enigma2/display/")
 
 	def __init__(self, session, args = None):
@@ -89,10 +93,16 @@ class LCDSkinSelector(Screen):
                 for x in names:
                         if x.startswith("skin_") and x.endswith(".xml"):
 				if dirname <> self.root:
-					subdir = dirname[19:]
-					skinname = x
-					skinname = subdir + "/" + skinname
-					self.skinlist.append(skinname)
+				        if ("lcdskins") not in dirname:
+					        subdir = dirname[27:]
+					        skinname = x
+					        skinname = subdir + "/" + skinname
+					        self.skinlist.append(skinname)				        
+				        else:
+					        subdir = dirname[19:]
+					        skinname = x
+					        skinname = subdir + "/" + skinname
+					        self.skinlist.append(skinname)
 				else:
 					skinname = x
 					self.skinlist.append(skinname)
@@ -116,20 +126,31 @@ class LCDSkinSelector(Screen):
 
 	def loadPreview(self):
 		pngpath = self["SkinList"].getCurrent()
+		print "pngpath:", pngpath
                 try:
                 	if pngpath.startswith("OE-A_") or pngpath.startswith("OpenNFR_"):
                 		try:
 					pngpath = pngpath + ("/prev.png")
 					pngpath = self.root+pngpath
+					print "pngpath1:", pngpath
 				except AttributeError:
-					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")                
+					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")   
+				        print "pngpath4:", pngpath                                                     
                 	else:
                 
                 		try:
-					pngpath = pngpath.replace(".xml", "_prev.png")
-					pngpath = self.root+pngpath
+					if getBoxType() in ('vuduo2'):
+                                        	pngpath = pngpath.replace("skin_display.xml", "prev.png")
+						pngpath = self.root+pngpath
+						print "pngpath2a:", pngpath
+                                        else:
+                                        	pngpath = pngpath.replace(".xml", "_prev.png")
+						pngpath = self.root+pngpath
+						print "pngpath2b:", pngpath                                        
+                                         
 				except AttributeError:
 					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
+					print "pngpath3:", pngpath
 		except AttributeError:
 		        pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
 		if not path.exists(pngpath):
@@ -141,4 +162,4 @@ class LCDSkinSelector(Screen):
 
 	def restartGUI(self, answer):
 		if answer is True:
-			self.session.open(TryQuitMainloop, 3)
+			self.session.open(TryQuitMainloop, 3) 
