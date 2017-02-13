@@ -13226,3 +13226,21 @@ msgstr "Zeige CI Nachrichten"
 
 msgid "Show MiniTV in the Front Display"
 msgstr "Zeige MiniTV im Frontdisplay"
+
+msgid "Question"
+msgstr "Frage"
+
+msgid "Extended"
+msgstr "Erweitert"
+
+msgid "Reception Settings"
+msgstr "Empfangseinstellungen"
+
+msgid "Positioner (selecting satellites)"
+msgstr "Positioner (Satelliten auswählen)"
+
+msgid "Press OK to select satellites"
+msgstr "Drücke OK um den Satelliten auszuwählen"
+
+msgid "Extra motor options"
+msgstr "Spezielle Motoroptionen"
