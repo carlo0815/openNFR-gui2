@@ -13244,3 +13244,12 @@ msgstr "Drücke OK um den Satelliten auszuwählen"
 
 msgid "Extra motor options"
 msgstr "Spezielle Motoroptionen"
+
+msgid "After Recording"
+msgstr "Nach der Aufnahme"
+
+msgid "Yes, delete from Timerlist"
+msgstr "Ja, aus der Timerliste löschen und die Aufnahme beenden."
+
+msgid "Yes, delete from Timerlist and delete recording"
+msgstr "Ja, aus der Timerliste löschen und die Aufnahme löschen."
