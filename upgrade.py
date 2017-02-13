@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 
 opkgDestinations = ['/']
 opkgStatusPath = ''
-overwriteSettingsFiles = False
+overwriteSettingsFiles = True
 overwriteDriversFiles  = True
 overwriteEmusFiles     = True
 overwritePiconsFiles   = True
