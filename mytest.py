@@ -663,77 +663,18 @@ def runScreenTest():
 	if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb') or getMachineProcModel().startswith('ini'):
 		print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 		setRTCtime(nowTime)
-
-	#recordtimer
-	if session.nav.isRecordTimerImageStandard:	#check RecordTimer instance
-		tmp = session.nav.RecordTimer.getNextRecordingTime(getNextStbPowerOn = True)
-		nextRecordTime = tmp[0]
-		nextRecordTimeInStandby = tmp[1]
-	else:
-		nextRecordTime = session.nav.RecordTimer.getNextRecordingTime()
-		nextRecordTimeInStandby = session.nav.RecordTimer.isNextRecordAfterEventActionAuto()
-	#zaptimer
-	nextZapTime = session.nav.RecordTimer.getNextZapTime()
-	nextZapTimeInStandby = 0
-	#powertimer
-	tmp = session.nav.PowerTimer.getNextPowerManagerTime(getNextStbPowerOn = True)
-	nextPowerTime = tmp[0]
-	nextPowerTimeInStandby = tmp[1]
-	#plugintimer
-	tmp = plugins.getNextWakeupTime(getPluginIdent = True)
-	nextPluginTime = tmp[0]
-	nextPluginIdent = tmp[1] #"pluginname | pluginfolder"
-	tmp = tmp[1].lower()
-	#start in standby, depending on plugin type
-	if "epgrefresh" in tmp:
-		nextPluginName = "EPGRefresh"
-		nextPluginTimeInStandby = 1
-	elif "vps" in tmp:
-		nextPluginName = "VPS"
-		nextPluginTimeInStandby = 1
-	elif "serienrecorder" in tmp:
-		nextPluginName = "SerienRecorder"
-		nextPluginTimeInStandby = 0 # plugin function for deep standby from standby not compatible (not available)
-	elif "elektro" in tmp:
-		nextPluginName = "Elektro"
-		nextPluginTimeInStandby = 1
-	elif "minipowersave" in tmp:
-		nextPluginName = "MiniPowersave"
-		nextPluginTimeInStandby = 1
-	elif "enhancedpowersave" in tmp:
-		nextPluginName = "EnhancedPowersave"
-		nextPluginTimeInStandby = 1
-	else:
-		#default for plugins
-		nextPluginName = nextPluginIdent
-		nextPluginTimeInStandby = 0
 		
 	wakeupList = [
-		x for x in ((nextRecordTime, 0, nextRecordTimeInStandby),
-					(nextZapTime, 1, nextZapTimeInStandby),
-					(nextPowerTime, 2, nextPowerTimeInStandby),
-					(nextPluginTime, 3, nextPluginTimeInStandby))
+		x for x in ((session.nav.RecordTimer.getNextRecordingTime(), 0, session.nav.RecordTimer.isNextRecordAfterEventActionAuto()),
+					(session.nav.RecordTimer.getNextZapTime(), 1),
+					(plugins.getNextWakeupTime(), 2),
+					(session.nav.PowerTimer.getNextPowerManagerTime(), 3, session.nav.PowerTimer.isNextPowerManagerAfterEventActionAuto()))
 		if x[0] != -1
 	]
 	wakeupList.sort()
 	recordTimerWakeupAuto = False
-	if wakeupList and wakeupList[0][0] > 0:
+	if wakeupList and wakeupList[0][1] != 3:
 		startTime = wakeupList[0]
-		# wakeup time before timer begins
-		wptime = startTime[0] - (config.workaround.wakeuptime.value * 60)
-		if (wptime - nowTime) < 120: # no time to switch box back on
-			wptime = int(nowTime) + 120  # so switch back on in 120 seconds
-
-		#check for plugin-, zap- or power-timer to enable the 'forced' record-timer wakeup
-		forceNextRecord = 0
-		setStandby = startTime[2]
-		if startTime[1] != 0 and nextRecordTime > 0:
-			#when next record starts in 15 mins
-			if abs(nextRecordTime - startTime[0]) <= 900:
-				setStandby = forceNextRecord = 1
-			#by vps-plugin
-			elif startTime[1] == 3 and nextPluginName == "VPS":
-				setStandby = forceNextRecord = 1		
 		if (startTime[0] - nowTime) < 270: # no time to switch box back on
 			wptime = nowTime + 30  # so switch back on in 30 seconds
 		else:
@@ -764,7 +705,6 @@ def runScreenTest():
 				wptime = startTime[0] + 120 # Gigaboxes already starts 2 min. before wakeup time
 			else:
 				wptime = startTime[0]
-			nextPluginName = ""				
 		#if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb'):
 		#	print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 		#	setRTCtime(nowTime)
@@ -772,17 +712,6 @@ def runScreenTest():
 		setFPWakeuptime(wptime)
 		PowerTimerWakeupAuto = startTime[1] == 3 and startTime[2]
 		print 'PowerTimerWakeupAuto',PowerTimerWakeupAuto
-		#set next standby only after shutdown in deep standby
-		if Screens.Standby.quitMainloopCode != 1 and Screens.Standby.quitMainloopCode != 45:
-			setStandby = 2 # 0=no standby, but get in standby if wakeup to timer start > 60 sec (not for plugin-timer, here is no standby), 1=standby, 2=no standby, when before was not in deep-standby
-		config.misc.nextWakeup.value = "%d,%d,%d,%d,%d,%d" % (wptime,startTime[0],startTime[1],setStandby,nextRecordTime,forceNextRecord)
-	else:
-		config.misc.nextWakeup.value = "-1,-1,0,0,-1,0"
-		if not boxtype.startswith('azboxm'): #skip for Azbox (mini)ME - setting wakeup time to past reboots box 
-			setFPWakeuptime(int(nowTime) - 3600) #minus one hour -> overwrite old wakeup time
-		print "[mytest.py] no set next wakeup time"
-	config.misc.nextWakeup.save()
-	print "="*100		
 	config.misc.isNextPowerTimerAfterEventActionAuto.value = PowerTimerWakeupAuto
 	config.misc.isNextPowerTimerAfterEventActionAuto.save()
 
