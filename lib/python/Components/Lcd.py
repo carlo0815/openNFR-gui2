@@ -458,19 +458,20 @@ def InitLcd():
 				from Screens.InfoBar import InfoBar
 				InfoBarInstance = InfoBar.instance
 				InfoBarInstance and InfoBarInstance.session.open(dummyScreen)
+				setLCDLiveTv(configElement.value)
+				configElement.save()
+
 			config.lcd.showTv = ConfigYesNo(default = False)
 			config.lcd.showTv.addNotifier(lcdLiveTvChanged)
-			setLCDLiveTv(configElement.value)
-				configElement.save()
+			#try Ultimo4k
+			if "live_enable" in SystemInfo["LcdLiveTV"]:
+				config.misc.standbyCounter.addNotifier(standbyCounterChangedLCDLiveTV, initial_call = False)
 
 		if SystemInfo["LCDMiniTV4k"]:
 		        SystemInfo["LCDMiniTV"] = False
 			config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "0")
 			config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
-			#try Ultimo4k
-			if "live_enable" in SystemInfo["LcdLiveTV"]:
-				config.misc.standbyCounter.addNotifier(standbyCounterChangedLCDLiveTV, initial_call = False)
-
+			
 		if SystemInfo["LCDMiniTV"]:
 			config.lcd.minitvmode = ConfigSelection([("0", _("normal")), ("1", _("MiniTV")), ("2", _("OSD")), ("3", _("MiniTV with OSD"))], "0")
 			config.lcd.minitvmode.addNotifier(setLCDminitvmode)
