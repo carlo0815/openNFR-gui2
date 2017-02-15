@@ -32,7 +32,6 @@ def getWlConfigName(iface):
 
 def getWlConfName(iface):
 	return "/etc/wl.conf.%s" % iface
-
 class Wlan:
 	def __init__(self, iface = None):
 		self.iface = iface
