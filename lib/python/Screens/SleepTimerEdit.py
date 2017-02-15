@@ -138,4 +138,4 @@ class SleepTimerEdit(ConfigListScreen, Screen):
 					duration = event.getDuration()
 					end = start + duration
 					remaining = end - now
-		return remaining + config.recording.margin_after.value * 60 
+		return remaining + config.recording.margin_after.value * 60
