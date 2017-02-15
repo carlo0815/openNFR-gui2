@@ -13289,3 +13289,6 @@ msgstr "Sortiere nach Standard"
 
 msgid "On end of movie (as menu)"
 msgstr "Am Ende des Films (als Menü)"
+
+msgid "Mark service as dedicated 3D service"
+msgstr "Als 3D Kanal markieren"
