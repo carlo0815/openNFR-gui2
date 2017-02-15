@@ -30,6 +30,9 @@ def getWlanConfigName(iface):
 def getWlConfigName(iface):
 	return '/etc/wl.conf.%s' % iface
 
+def getWlConfName(iface):
+	return "/etc/wl.conf.%s" % iface
+
 class Wlan:
 	def __init__(self, iface = None):
 		self.iface = iface
@@ -145,8 +148,6 @@ class wpaSupplicant:
 		contents += "method="+encryption+"\n"
 		contents += "key="+psk+"\n"
 		print "content = \n"+contents
-		fp.write(contents)
-		fp.close()
 
 		fd = open(getWlConfName(iface), "w")
 		fd.write(contents)
