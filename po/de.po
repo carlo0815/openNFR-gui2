@@ -1105,9 +1105,6 @@ msgstr "automatischer Standby"
 msgid "Auto chapter split every ? minutes (0=never)"
 msgstr "Automatische Kapitelwechsel alle ? Minuten (0=nie)"
 
-msgid "Auto flesh"
-msgstr "Auto flesh"
-
 msgid "Auto focus"
 msgstr "Autofokus"
 
@@ -13278,6 +13275,9 @@ msgstr "alpharev dann neueste"
 msgid "Stop service on return to movie list"
 msgstr "Bei Stopp zurück zur Filmliste"
 
+msgid "Green"
+msgstr "Grün"
+
 msgid "Green long"
 msgstr "Grün lang"
 
@@ -13292,3 +13292,9 @@ msgstr "Am Ende des Films (als Menü)"
 
 msgid "Mark service as dedicated 3D service"
 msgstr "Als 3D Kanal markieren"
+
+msgid "Multisat all select"
+msgstr "Multisat alle Satelliten"
+
+msgid "Auto flesh"
+msgstr "Automatische Hautfarbe"
