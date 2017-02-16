@@ -13298,3 +13298,15 @@ msgstr "Multisat alle Satelliten"
 
 msgid "Auto flesh"
 msgstr "Automatische Hautfarbe"
+
+msgid "Show record indicator"
+msgstr "Zeige Aufnahme Anzeige"
+
+msgid "Left from servicename"
+msgstr "Links vom Sendernamen"
+
+msgid "Right from servicename"
+msgstr "Rechts vom Sendernamen"
+
+msgid "Red colored"
+msgstr "Sendername in rot" 
