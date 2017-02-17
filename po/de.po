@@ -13303,4 +13303,7 @@ msgid "Show record indicator"
 msgstr "Zeige Aufnahme Anzeige"
 
 msgid "Red colored"
-msgstr "Sendername in rot" 
+msgstr "Sendername in rot"
+
+msgid "No timeout"
+msgstr "Kein Timeout"
