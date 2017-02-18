@@ -15,7 +15,7 @@ from boxbranding import getBoxType
 
 class LCDSkinSelector(Screen):
 	skinlist = []
-	if getBoxType() in ('vuduo2'):
+	if getBoxType() in ('vuduo2', 'mutant51'):
         	root = eEnv.resolve("${datadir}/enigma2/display/")
         else:
         	root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
