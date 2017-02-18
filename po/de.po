@@ -5675,7 +5675,7 @@ msgid "Rating undefined"
 msgstr "Einstufung unbekannt"
 
 msgid "Read Userdata from oscam.conf"
-msgstr "Lese Benutzerdaten aus oscam.comf"
+msgstr "Lese Benutzerdaten aus oscam.conf"
 
 msgid "Reader"
 msgstr "Kartenleser"
@@ -13307,3 +13307,18 @@ msgstr "Sendername in rot"
 
 msgid "No timeout"
 msgstr "Kein Timeout"
+
+msgid "SoftCam path configuration"
+msgstr "Softcam-Pfad-Konfiguration"
+
+msgid "SoftCam config directory"
+msgstr "SoftCam-Config-Verzeichnis"
+
+msgid "SoftCam directory"
+msgstr "SoftCam-Verzeichnis"
+
+msgid "OscamInfoConfigScreen"
+msgstr "Oscam-Info Konfiguration"
+
+msgid "OscamInfoMenu"
+msgstr "Oscam Info - Hauptmenü"
