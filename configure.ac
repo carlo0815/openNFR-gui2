@@ -718,7 +718,7 @@ AC_CONFIG_FILES([Makefile
 	data/display720/Makefile
 	data/display720/lcdskins/Makefile
 	data/display800/Makefile
-	data/display800/Default_with_Picon_Fullscreen/Makefile
+	data/display800/lcdskins/Makefile
 	data/spinner/Makefile
 	data/Spinner/Makefile
 	data/Spinner/default/Makefile
