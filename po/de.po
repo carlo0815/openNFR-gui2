@@ -13331,3 +13331,14 @@ msgstr "traditionell (schnell)"
 
 msgid "Tuning algorithm"
 msgstr "Abstimmungsalgorithmus"
+
+msgid ""
+"GUI needs a restart to apply a new skin\n"
+"Do you want to Restart the GUI now?"
+msgstr ""
+"Die Benutzeroberfläche muss neu gestartet werden,\n"
+"um das neue Aussehen übernehmen zu können.\n"
+"Jetzt neu starten?"
+
+msgid "Show HDD progress"
+msgstr "Zeige HDD Fortschritt"
