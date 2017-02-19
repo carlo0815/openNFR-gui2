@@ -13322,3 +13322,12 @@ msgstr "Oscam-Info Konfiguration"
 
 msgid "OscamInfoMenu"
 msgstr "Oscam Info - Hauptmenü"
+
+msgid "reliable"
+msgstr "zuverlässig"
+
+msgid "traditional (fast)"
+msgstr "traditionell (schnell)"
+
+msgid "Tuning algorithm"
+msgstr "Abstimmungsalgorithmus"
