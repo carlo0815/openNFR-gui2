@@ -524,6 +524,24 @@ static ePtr<eDVBFrontendParameters> parseFrontendData(const char* line, int vers
 			feparm->setFlags(flags);
 			return feparm;
 		}
+		case 'a':
+		{
+			eDVBFrontendParametersATSC atsc;
+			int frequency,
+				inversion = eDVBFrontendParametersATSC::Inversion_Unknown,
+				modulation = eDVBFrontendParametersATSC::Modulation_Auto,
+				system = eDVBFrontendParametersATSC::System_ATSC,
+				flags = 0;
+			sscanf(line+2, "%d:%d:%d:%d:%d",
+				&frequency, &inversion, &modulation, &flags, &system);
+			atsc.frequency = frequency;
+			atsc.inversion = inversion;
+			atsc.modulation = modulation;
+			atsc.system = system;
+			feparm->setATSC(atsc);
+			feparm->setFlags(flags);
+			break;
+		}			
 		default:
 			return NULL;
 	}
