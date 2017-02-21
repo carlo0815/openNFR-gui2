@@ -43,6 +43,12 @@
 		}
 #endif
 
+define eDebugDeliverySystem(x...) \
+	do { \
+		if (m_DebugOptions & (1ULL << static_cast<int> (enumDebugOptions::DEBUG_DELIVERY_SYSTEM))) \
+			eDebug(x); \
+	} while(0)
+
 void eDVBDiseqcCommand::setCommandString(const char *str)
 {
 	if (!str)
@@ -505,6 +511,7 @@ eDVBFrontend::eDVBFrontend(const char *devicenodename, int fe, int &ok, bool sim
 	,m_fd(-1), m_dvbversion(0), m_rotor_mode(false), m_need_rotor_workaround(false)
 	,m_state(stateClosed), m_timeout(0), m_tuneTimer(0), m_fbc(false), m_need_delivery_system_workaround(true), m_type(-1), m_multitype(false)
 {
+	m_DebugOptions = (1ULL << static_cast<int>(enumDebugOptions::DEBUG_DELIVERY_SYSTEM));
 	m_filename = devicenodename;
 
 	m_timeout = eTimer::create(eApp);
@@ -2945,7 +2952,7 @@ int eDVBFrontend::isCompatibleWith(ePtr<iDVBFrontendParameters> &feparm)
 	bool preferred = (eDVBFrontend::getPreferredFrontend() >= 0 && m_slotid == eDVBFrontend::getPreferredFrontend());
 	if (feparm->getSystem(type) || feparm->getSystems(types) || !m_enabled)
 	{
-		eDebug("m_dvbid:%d m_slotid:%d type:%d types:%d m_enabled:%d", m_dvbid, m_slotid, type, types, m_enabled);		
+		eDebugDeliverySystem("m_dvbid:%d m_slotid:%d type:%d types:%d m_enabled:%d", m_dvbid, m_slotid, type, types, m_enabled);		
 		return 0;
 	}
 	if ((type == eDVBFrontend::feSatellite) || (types & (1 << eDVBFrontend::feSatellite)))
@@ -3160,26 +3167,29 @@ bool eDVBFrontend::supportsDeliverySystem(const fe_delivery_system_t &sys, bool 
 	std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(sys);
 	if (it != m_delsys.end() && it->second)
 	{
-/*		if (obeywhitelist && !m_delsys_whitelist.empty())
-		{
-			it = m_delsys_whitelist.find(sys);
-			if (it == m_delsys_whitelist.end() || !it->second) return false;
-		}*/
 		return true;
+		
+	if (obeywhitelist && !m_delsys_whitelist.empty())
+	{
+		it = m_delsys_whitelist.find(sys);
+		if (it != m_delsys_whitelist.end() && it->second)
+			return true;
 	}
 	return false;
 }
 
-void eDVBFrontend::setDeliverySystemWhitelist(const std::vector<fe_delivery_system_t> &whitelist)
+void eDVBFrontend::setDeliverySystemWhitelist(const std::vector<fe_delivery_system_t> &whitelist, bool append)
 {
-	m_delsys_whitelist.clear();
+	if(!append)
+		m_delsys_whitelist.clear();
+
 	for (unsigned int i = 0; i < whitelist.size(); i++)
 	{
 		m_delsys_whitelist[whitelist[i]] = true;
 	}
 	if (m_simulate_fe)
 	{
-		m_simulate_fe->setDeliverySystemWhitelist(whitelist);
+		m_simulate_fe->setDeliverySystemWhitelist(whitelist, append);
 	}
 }
 
