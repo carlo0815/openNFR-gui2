@@ -545,6 +545,7 @@ static ePtr<eDVBFrontendParameters> parseFrontendData(const char* line, int vers
 		default:
 			return NULL;
 	}
+	return feparm;
 }
 
 static eDVBChannelID parseChannelData(const char * line)
@@ -1547,7 +1548,7 @@ PyObject *eDVBDB::readTerrestrials(ePyObject ter_list, ePyObject tp_dict)
 					PyTuple_SET_ITEM(tuple, 8, PyInt_FromLong(hierarchy));
 					PyTuple_SET_ITEM(tuple, 9, PyInt_FromLong(inv));
 					PyTuple_SET_ITEM(tuple, 10, PyInt_FromLong(system));
-					PyTuple_SET_ITEM(tuple, 11, PyInt_FromLong(plpid));
+					PyTuple_SET_ITEM(tuple, 11, PyInt_FromLong(plp_id));
 					PyList_Append(tplist, tuple);
 					Py_DECREF(tuple);
 				}
