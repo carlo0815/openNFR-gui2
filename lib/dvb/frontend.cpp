@@ -3165,16 +3165,17 @@ bool eDVBFrontend::changeType(int type)
 bool eDVBFrontend::supportsDeliverySystem(const fe_delivery_system_t &sys, bool obeywhitelist)
 {
 	std::map<fe_delivery_system_t, bool>::iterator it = m_delsys.find(sys);
-	if (it != m_delsys.end() && it->second)
-	{
-		return true;
-		
+			
 	if (obeywhitelist && !m_delsys_whitelist.empty())
 	{
 		it = m_delsys_whitelist.find(sys);
 		if (it != m_delsys_whitelist.end() && it->second)
 			return true;
 	}
+	else
+		if (it != m_delsys.end() && it->second)
+			return true;
+
 	return false;
 }
 
