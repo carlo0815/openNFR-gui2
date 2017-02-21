@@ -881,7 +881,7 @@ std::string eDVBResourceManager::getFrontendCapabilities(int index)
 	return "";
 }
 
-void eDVBResourceManager::setFrontendType(int index, const char *type)
+void eDVBResourceManager::setFrontendType(int index, const char *type, bool append)
 {
 	for (eSmartPtrList<eDVBRegisteredFrontend>::iterator i(m_frontend.begin()); i != m_frontend.end(); ++i)
 	{
@@ -912,7 +912,7 @@ void eDVBResourceManager::setFrontendType(int index, const char *type)
 				whitelist.push_back(SYS_ATSC);
 				whitelist.push_back(SYS_DVBC_ANNEX_B);
 			}
-			i->m_frontend->setDeliverySystemWhitelist(whitelist);
+			i->m_frontend->setDeliverySystemWhitelist(whitelist, append);
 			break;
 		}
 	}
@@ -1311,8 +1311,10 @@ RESULT eDVBResourceManager::allocateChannel(const eDVBChannelID &channelid, eUse
 
 	int err = allocateFrontend(fe, feparm, simulate);
 	if (err)
+	{
+		eDebugNoSimulate("can't allocate frontend!");	
 		return err;
-
+	}
 	RESULT res;
 	ePtr<eDVBChannel> ch = new eDVBChannel(this, fe);
 
@@ -1320,6 +1322,7 @@ RESULT eDVBResourceManager::allocateChannel(const eDVBChannelID &channelid, eUse
 	if (res)
 	{
 		channel = 0;
+		eDebugNoSimulate("channel id not found!");
 		return errChidNotFound;
 	}
 
