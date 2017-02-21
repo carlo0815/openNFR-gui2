@@ -1753,7 +1753,7 @@ RESULT eDVBDB::removeServices(eDVBChannelID chid, unsigned int orbpos)
 				;
 			else if (system == iDVBFrontend::feATSC &&
 				(chid.dvbnamespace.get() == (int)0xEEEE0000 || chid.dvbnamespace.get() == (int)0xFFFF0000))
-				
+				;
 			else if ( chid.dvbnamespace != ch.dvbnamespace )
 				remove=false;
 		}
@@ -1903,7 +1903,7 @@ RESULT eDVBDB::removeFlags(unsigned int flagmask, eDVBChannelID chid, unsigned i
 				;
 			else if (system == iDVBFrontend::feATSC &&
 				(chid.dvbnamespace.get() == (int)0xEEEE0000 || chid.dvbnamespace.get() == (int)0xFFFF0000))
-				
+				;
 			else if ( chid.dvbnamespace != ch.dvbnamespace )
 				remove=false;
 		}
