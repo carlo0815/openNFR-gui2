@@ -424,6 +424,11 @@ void eDVBDB::parseServiceData(ePtr<eDVBService> s, std::string str)
 
 static ePtr<eDVBFrontendParameters> parseFrontendData(char* line, int version)
 {
+	char * options = strchr(line, ',');
+	if (options)
+		*options++ = '\0'; // options points to comma separated option blocks or to a '\0'
+
+	ePtr<eDVBFrontendParameters> feparm = new eDVBFrontendParameters;
 	switch(line[0])
 	{
 		case 's':
