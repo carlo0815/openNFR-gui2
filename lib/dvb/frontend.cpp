@@ -43,7 +43,7 @@
 		}
 #endif
 
-define eDebugDeliverySystem(x...) \
+#define eDebugDeliverySystem(x...) \
 	do { \
 		if (m_DebugOptions & (1ULL << static_cast<int> (enumDebugOptions::DEBUG_DELIVERY_SYSTEM))) \
 			eDebug(x); \
