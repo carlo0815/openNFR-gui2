@@ -4,8 +4,10 @@
 #include <vector>
 
 #include <dvbsi++/satellite_delivery_system_descriptor.h>
+#include <dvbsi++/s2_satellite_delivery_system_descriptor.h>
 #include <dvbsi++/cable_delivery_system_descriptor.h>
 #include <dvbsi++/terrestrial_delivery_system_descriptor.h>
+#include <dvbsi++/t2_delivery_system_descriptor.h>
 
 #include <lib/python/swig.h>
 #include <lib/dvb/idvb.h>
@@ -19,6 +21,7 @@ struct eDVBFrontendParametersSatellite
 {
 #ifndef SWIG
 	void set(const SatelliteDeliverySystemDescriptor  &);
+	void set(const S2SatelliteDeliverySystemDescriptor  &);
 #endif
 	enum {
 		Polarisation_Horizontal, Polarisation_Vertical, Polarisation_CircularLeft, Polarisation_CircularRight
@@ -49,10 +52,12 @@ struct eDVBFrontendParametersSatellite
 	enum {
 		Pilot_Off, Pilot_On, Pilot_Unknown
 	};
-
+	enum {
+		Band_Unknown, Band_C, Band_Ka, Band_Ku
+	};
 	enum {
 		PLS_Root, PLS_Gold, PLS_Combo, PLS_Unknown
-	};	
+	};
 
 	bool no_rotor_command_on_tune;
 	int frequency, symbol_rate;
@@ -212,7 +217,7 @@ public:
 	int getSystems() const;
 	int getIsId() const;
 	int getPLSMode() const;
-	int getPLSCode() const;	
+	int getPLSCode() const;
 	int getBandwidth() const;
 	int getCodeRateLp() const;
 	int getCodeRateHp() const;
@@ -248,7 +253,7 @@ public:
 	int getSystems() const;
 	int getIsId() const;
 	int getPLSMode() const;
-	int getPLSCode() const;	
+	int getPLSCode() const;
 };
 
 class eDVBCableTransponderData : public eDVBTransponderData
