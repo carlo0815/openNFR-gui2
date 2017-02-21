@@ -1,6 +1,7 @@
 from Screen import Screen
 from ServiceScan import ServiceScan
-from Components.config import config, ConfigSubsection, ConfigSelection, ConfigYesNo, ConfigInteger, getConfigListEntry, ConfigSlider, ConfigEnableDisable
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigYesNo, ConfigInteger, getConfigListEntry, ConfigSlider, ConfigEnableDisable, integer_limits
+
 from Components.ActionMap import NumberActionMap, ActionMap
 from Components.ConfigList import ConfigListScreen
 from Components.NimManager import nimmanager, getConfigSatlist
@@ -16,7 +17,7 @@ from boxbranding import getMachineBrand
 def buildTerTransponder(frequency,
 		inversion=2, bandwidth = 7000000, fechigh = 6, feclow = 6,
 		modulation = 2, transmission = 2, guard = 4,
-		hierarchy = 4, system = 0, plpid = 0):
+		hierarchy = 4, system = 0, plp_id = 0):
 #	print "freq", frequency, "inv", inversion, "bw", bandwidth, "fech", fechigh, "fecl", feclow, "mod", modulation, "tm", transmission, "guard", guard, "hierarchy", hierarchy
 	parm = eDVBFrontendParametersTerrestrial()
 	parm.frequency = frequency
@@ -29,7 +30,7 @@ def buildTerTransponder(frequency,
 	parm.guard_interval = guard
 	parm.hierarchy = hierarchy
 	parm.system = system
-	parm.plpid = plpid
+	parm.plp_id = plp_id
 	return parm
 
 def getInitialTransponderList(tlist, pos):
@@ -415,7 +416,7 @@ class TerrestrialTransponderSearchSupport:
 					parm.guard_interval = parm.GuardInterval_Auto
 					parm.hierarchy = parm.Hierarchy_Auto
 					parm.system = parm.System_DVB_T
-					parm.plpid = 0
+					parm.plp_id = 0
 					self.__tlist.append(parm)
 				else:
 					plp_list = data[5:]
@@ -437,7 +438,7 @@ class TerrestrialTransponderSearchSupport:
 						parm.guard_interval = parm.GuardInterval_Auto
 						parm.hierarchy = parm.Hierarchy_Auto
 						parm.system = parm.System_DVB_T2
-						parm.plpid = int(plp_id)
+						parm.plp_id = int(plp_id)
 						self.__tlist.append(parm)
 
 			tmpstr = _("Try to find used Transponders in terrestrial network.. please wait...")
@@ -542,6 +543,30 @@ class TerrestrialTransponderSearchSupport:
 		print "SCAN CMD : ",cmd
 		self.terrestrial_search_container.execute(cmd)
 
+class ConfigFrequency(ConfigInteger):
+	def __init__(self, default, limits = integer_limits):
+		self._value = None
+		ConfigInteger.__init__(self, default, limits)
+
+	def setValue(self, value):
+		if self._value != [value]:
+			self._value = [value]
+			self.changed()
+
+	value = property(ConfigInteger.getValue, setValue)
+
+class ConfigChannel(ConfigInteger):
+	def __init__(self, default, limits = integer_limits):
+		self._value = None
+		ConfigInteger.__init__(self, default, limits)
+
+	def setValue(self, value):
+		if self._value != [value]:
+			self._value = [value]
+			self.changed()
+
+	value = property(ConfigInteger.getValue, setValue)
+
 class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, TerrestrialTransponderSearchSupport):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -558,11 +583,15 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		self.systemEntry = None
 		self.modulationEntry = None
 		self.preDefSatList = None
-		self.TerrestrialTransponders = None
+		self.TerrestrialTransponders = ConfigSelection(choices = [])
+
 		self.TerrestrialRegionEntry = None
+		self.TerrestrialRegion = None
 		self.multiType = None
-		self.preDefTransponders = None
-		self.CableTransponders = None
+		self.preDefTransponders = ConfigSelection(choices = [])
+		
+		self.CableTransponders  = ConfigSelection(choices = [])
+		self.ATSCTransponders  = ConfigSelection(choices = [])
 
 		self.createConfig() 
 
@@ -672,7 +701,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		self.systemEntry = None
 		self.modulationEntry = None
 		self.preDefSatList = None
-#		self.TerrestrialTransponders = None
+		self.TerrestrialTransponders = None
 		self.TerrestrialRegionEntry = None
 		self.multiType = None
 		nim = nimmanager.nim_slots[index_to_scan]
@@ -754,6 +783,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				sat = self.satList[index_to_scan][self.scan_satselection[index_to_scan].index]
 				self.predefinedTranspondersList(sat[0])
 				self.list.append(getConfigListEntry(_('Transponder'), self.preDefTransponders))
+			
 			elif self.scan_type.value == "single_satellite":
 				self.updateSatList()
 				print self.scan_satselection[index_to_scan]
@@ -780,6 +810,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 			elif self.scan_typecable.value == "predefined_transponder":
 				self.predefinedCabTranspondersList()
 				self.list.append(getConfigListEntry(_('Transponder'), self.CableTransponders))
+				self.CableTransponders.value = self.CableTransponders.value
 			if config.Nims[index_to_scan].dvbc.scan_networkid.value:
 				self.networkid = config.Nims[index_to_scan].dvbc.scan_networkid.value
 				self.scan_networkScan.value = True
@@ -814,6 +845,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				self.list.append(self.TerrestrialRegionEntry)
 				self.predefinedTerrTranspondersList()
 				self.list.append(getConfigListEntry(_('Transponder'), self.TerrestrialTransponders))
+				self.TerrestrialTransponders.value = self.TerrestrialTransponders.value
 			elif self.scan_typeterrestrial.value == "complete":
 				self.TerrestrialRegion = self.terrestrial_nims_regions[index_to_scan]
 				self.TerrestrialRegionEntry = getConfigListEntry(_('Region'), self.TerrestrialRegion)
@@ -829,6 +861,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				#FIXME add region
 				self.predefinedATSCTranspondersList()
 				self.list.append(getConfigListEntry(_('Transponder'), self.ATSCTransponders))
+				self.ATSCTransponders.value = self.ATSCTransponders.value
 			elif self.scan_typeatsc.value == "complete":
 				pass #FIXME
 		self.list.append(getConfigListEntry(_("Network scan"), self.scan_networkScan))
@@ -862,7 +895,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				self.TerrestrialRegionEntry,
 				self.multiType,
 				self.modulationEntry):
-				self.createSetup()
+					self.createSetup()
 			elif len(cur) > 1:
 				if cur[1] in(
 				self.scan_ter.bandwidth,
@@ -876,8 +909,8 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				self.scan_ter.modulation, self.scan_ter.transmission,
 				self.scan_ter.guard, self.scan_ter.hierarchy, self.scan_ter.plp_id,
 				self.scan_cab.frequency, self.scan_cab.inversion, self.scan_cab.symbolrate,
-				self.scan_cab.modulation, self.scan_cab.fec
-				,self.preDefTransponders, self.CableTransponders, self.TerrestrialTransponders
+				self.scan_cab.modulation, self.scan_cab.fec,
+				self.preDefTransponders, self.CableTransponders, self.TerrestrialTransponders, self.ATSCTransponders
 				):
 					self.createSetup()
 			else:
@@ -1098,8 +1131,8 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 			(eDVBFrontendParametersCable.System_DVB_C_ANNEX_C, _("DVB-C ANNEX C"))])
 
 		# terrestial
-		self.scan_ter.frequency = ConfigInteger(default = defaultTer["frequency"], limits = (50000, 999000))
-		self.scan_ter.channel = ConfigInteger(default = 21, limits = (1, 99))
+		self.scan_ter.frequency = ConfigFrequency(default = defaultTer["frequency"], limits = (50000, 999000))
+		self.scan_ter.channel = ConfigChannel(default = 21, limits = (1, 99))
 		self.scan_ter.inversion = ConfigSelection(default = defaultTer["inversion"], choices = [
 			(eDVBFrontendParametersTerrestrial.Inversion_Off, _("Off")),
 			(eDVBFrontendParametersTerrestrial.Inversion_On, _("On")),
@@ -1234,24 +1267,47 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		self.scan_onlyfree = ConfigYesNo(default = False)
 		self.scan_networkScan = ConfigYesNo(default = False)
 
-		for x in (self.scan_sat.frequency,
-			self.scan_sat.inversion, self.scan_sat.symbolrate,
-			self.scan_sat.polarization, self.scan_sat.fec, self.scan_sat.pilot,
-			self.scan_sat.fec_s2, self.scan_sat.fec, self.scan_sat.modulation,
-			self.scan_sat.rolloff, self.scan_sat.system,
+		for x in (
+			self.scan_sat.frequency,
+			self.scan_sat.inversion,
+			self.scan_sat.symbolrate,
+			self.scan_sat.polarization,
+			self.scan_sat.fec,
+			self.scan_sat.pilot,
+			self.scan_sat.fec_s2,
+			self.scan_sat.fec,
+			self.scan_sat.modulation,
+			self.scan_sat.rolloff,
+			self.scan_sat.system,
+			self.preDefTransponders,
+
 			self.scan_ter.channel,
 			self.scan_ter.frequency,
 			self.scan_ter.inversion,
-			self.scan_ter.bandwidth, self.scan_ter.fechigh, self.scan_ter.feclow,
-			self.scan_ter.modulation, self.scan_ter.transmission,
-			self.scan_ter.guard, self.scan_ter.hierarchy,
-			self.scan_ter.plp_id,
-			self.scan_cab.frequency, self.scan_cab.inversion, self.scan_cab.symbolrate,
-			self.scan_cab.modulation, self.scan_cab.fec,
-			self.preDefTransponders, self.CableTransponders, self.TerrestrialTransponders):
+			self.scan_ter.bandwidth,
+			self.scan_ter.fechigh,
+			self.scan_ter.feclow,
+			self.scan_ter.modulation,
+			self.scan_ter.transmission,
+			self.scan_ter.guard,
+			self.scan_ter.hierarchy,
+ 			self.scan_ter.plp_id,
+			self.scan_ter.system,
+			self.scan_typeterrestrial,
+			self.TerrestrialRegion,
+			self.TerrestrialTransponders,
+
+			self.scan_cab.frequency,
+			self.scan_cab.inversion,
+			self.scan_cab.symbolrate,
+			self.scan_cab.modulation,
+			self.scan_cab.fec,
+			self.CableTransponders,
+
+			self.ATSCTransponders
+			):
 			if x is not None:
 				x.addNotifier(self.TriggeredByConfigElement, initial_call = False)
-
 		return True
 
 	def TriggeredByConfigElement(self, configElement):
@@ -1428,7 +1484,7 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 						guard = self.scan_ter.guard.value,
 						hierarchy = self.scan_ter.hierarchy.value,
 						system = self.scan_ter.system.value,
-						plpid = self.scan_ter.plp_id.value)
+						plp_id = self.scan_ter.plp_id.value)
 				removeAll = False
 			elif self.scan_typeterrestrial.value == "predefined_transponder":
 				if self.TerrestrialTransponders is not None:
@@ -1534,12 +1590,11 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 						default = str(i)
 					list.append((str(i), self.humanReadableTransponder(tp)))
 					i += 1
-			oldValue = None
-			if self.preDefTransponders is not None:
-				oldValue = self.preDefTransponders.value
- 			self.preDefTransponders = ConfigSelection(choices = list, default = default)
-			if oldValue is not None:
-				self.preDefTransponders.value = oldValue
+			if self.preDefTransponders is None:
+				self.preDefTransponders = ConfigSelection(choices = list, default = default)
+			else:
+				self.preDefTransponders.setChoices(choices = list, default = default)
+
 		return default
 
 	def humanReadableTransponder(self, tp):
@@ -1573,12 +1628,10 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 				list.append((str(i), '%s MHz %s' % (str(tp[1] / 1000000), channel)))
 				i += 1
 				print "channel", channel
-		oldValue = None
-		if self.TerrestrialTransponders is not None:
-			oldValue = self.TerrestrialTransponders.value
- 		self.TerrestrialTransponders = ConfigSelection(choices = list, default = default)
-		if oldValue is not None:
-			self.TerrestrialTransponders.value = oldValue
+		if self.TerrestrialTransponders is None:
+			self.TerrestrialTransponders = ConfigSelection(choices = list, default = default)
+		else:
+			self.TerrestrialTransponders.setChoices(choices = list, default = default)
 		return default
 
 	def compareTerrTransponders(self, tp, compare):
@@ -1611,12 +1664,10 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 					default = str(i)
 				list.append((str(i), self.humanReadableCabTransponder(tp)))
 				i += 1
-		oldValue = None
-		if self.CableTransponders is not None:
-			oldValue = self.CableTransponders.value
- 		self.CableTransponders = ConfigSelection(choices = list, default = default)
-		if oldValue is not None:
-			self.CableTransponders.value = oldValue
+		if self.CableTransponders is None:
+			self.CableTransponders = ConfigSelection(choices = list, default = default)
+		else:
+			self.CableTransponders.setChoices(choices = list, default = default)
 		return default
 
 	def humanReadableCabTransponder(self, tp):
@@ -1640,7 +1691,10 @@ class ScanSetup(ConfigListScreen, Screen, CableTransponderSearchSupport, Terrest
 		for i, tp in enumerate(tps):
 			if tp[0] == 3: #ATSC
 				list.append((str(i), '%s MHz' % (str(tp[1] / 1000000))))
-		self.ATSCTransponders = ConfigSelection(choices = list, default = default)
+		if self.ATSCTransponders is None:
+			self.ATSCTransponders = ConfigSelection(choices = list, default = default)
+		else:
+			self.ATSCTransponders.setChoices(choices = list, default = default)
 		return default
 
 	def startScan(self, tlist, flags, feid, networkid = 0):
