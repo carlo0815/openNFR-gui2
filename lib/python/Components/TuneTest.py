@@ -41,7 +41,7 @@ class Tuner:
 	def tuneTerr(self, frequency,
 		inversion=2, bandwidth = 7000000, fechigh = 6, feclow = 6,
 		modulation = 2, transmission = 2, guard = 4,
-		hierarchy = 4, system = 0, plpid = 0):
+		hierarchy = 4, system = 0, plp_id = 0):
 		if self.frontend:
 			print "[TuneTest] tuning to transponder with data", [frequency, inversion, bandwidth, fechigh, feclow, modulation, transmission, guard, hierarchy, system, plpid]
 			parm = eDVBFrontendParametersTerrestrial()
@@ -55,7 +55,7 @@ class Tuner:
 			parm.guard_interval = guard
 			parm.hierarchy = hierarchy
 			parm.system = system
-			parm.plpid = plpid
+			parm.plp_id = plp_id
 			self.tuneTerrObj(parm)
 
 	def tuneTerrObj(self, transponderObj):
