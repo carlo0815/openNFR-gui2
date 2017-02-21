@@ -422,7 +422,7 @@ void eDVBDB::parseServiceData(ePtr<eDVBService> s, std::string str)
 	}
 }
 
-static ePtr<eDVBFrontendParameters> parseFrontendData(const char* line, int version)
+static ePtr<eDVBFrontendParameters> parseFrontendData(char* line, int version)
 {
 	switch(line[0])
 	{
