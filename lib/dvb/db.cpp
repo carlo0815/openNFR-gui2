@@ -9,11 +9,13 @@
 #include <lib/base/eerror.h>
 #include <lib/base/estring.h>
 #include <lib/base/nconfig.h>
-#include <xmlccwrap/xmlccwrap.h>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
 #include <dvbsi++/service_description_section.h>
 #include <dvbsi++/descriptor_tag.h>
 #include <dvbsi++/service_descriptor.h>
 #include <dvbsi++/satellite_delivery_system_descriptor.h>
+#include <dvbsi++/s2_satellite_delivery_system_descriptor.h>
 #include <dirent.h>
 
 DEFINE_REF(eDVBService);
