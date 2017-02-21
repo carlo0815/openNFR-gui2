@@ -95,6 +95,7 @@ struct eDVBFrontendParametersTerrestrial
 {
 #ifndef SWIG
 	void set(const TerrestrialDeliverySystemDescriptor  &);
+	void set(const T2DeliverySystemDescriptor &);
 #endif
 	enum {
 		Bandwidth_8MHz, Bandwidth_7MHz, Bandwidth_6MHz, Bandwidth_Auto, Bandwidth_5MHz, Bandwidth_1_712MHz, Bandwidth_10MHz
