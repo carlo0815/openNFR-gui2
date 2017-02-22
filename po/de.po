@@ -13342,3 +13342,9 @@ msgstr ""
 
 msgid "Show HDD progress"
 msgstr "Zeige HDD Fortschritt"
+
+msgid "Equal to"
+msgatr "Gleich wie"
+
+msgid "Loop through to"
+msgstr "Verbunden mit"
