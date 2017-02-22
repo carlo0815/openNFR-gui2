@@ -251,15 +251,16 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					elif self.nimConfig.dvbc.scan_type.value == "steps":
 						self.list.append(getConfigListEntry(_("Frequency scan step size(khz)"), self.nimConfig.dvbc.scan_frequency_steps))
 					# TRANSLATORS: option name, indicating which type of (DVB-C) modulation should be scanned. The modulation type is printed in '%s'. E.g.: 'Scan QAM16'
-					self.list.append(getConfigListEntry(_("Scan %s") % "QAM16", self.nimConfig.dvbc.scan_mod_qam16))
-					self.list.append(getConfigListEntry(_("Scan %s") % "QAM32", self.nimConfig.dvbc.scan_mod_qam32))
-					self.list.append(getConfigListEntry(_("Scan %s") % "QAM64", self.nimConfig.dvbc.scan_mod_qam64))
-					self.list.append(getConfigListEntry(_("Scan %s") % "QAM128", self.nimConfig.dvbc.scan_mod_qam128))
-					self.list.append(getConfigListEntry(_("Scan %s") % "QAM256", self.nimConfig.dvbc.scan_mod_qam256))
-					self.list.append(getConfigListEntry(_("Scan %s") % "SR6900", self.nimConfig.dvbc.scan_sr_6900))
-					self.list.append(getConfigListEntry(_("Scan %s") % "SR6875", self.nimConfig.dvbc.scan_sr_6875))
-					self.list.append(getConfigListEntry(_("Scan additional SR"), self.nimConfig.dvbc.scan_sr_ext1))
-					self.list.append(getConfigListEntry(_("Scan additional SR"), self.nimConfig.dvbc.scan_sr_ext2))
+					if self.nim.description != "ATBM781x":
+						self.list.append(getConfigListEntry(_("Scan %s") % "QAM16", self.nimConfig.dvbc.scan_mod_qam16))
+						self.list.append(getConfigListEntry(_("Scan %s") % "QAM32", self.nimConfig.dvbc.scan_mod_qam32))
+						self.list.append(getConfigListEntry(_("Scan %s") % "QAM64", self.nimConfig.dvbc.scan_mod_qam64))
+						self.list.append(getConfigListEntry(_("Scan %s") % "QAM128", self.nimConfig.dvbc.scan_mod_qam128))
+						self.list.append(getConfigListEntry(_("Scan %s") % "QAM256", self.nimConfig.dvbc.scan_mod_qam256))
+						self.list.append(getConfigListEntry(_("Scan %s") % "SR6900", self.nimConfig.dvbc.scan_sr_6900))
+						self.list.append(getConfigListEntry(_("Scan %s") % "SR6875", self.nimConfig.dvbc.scan_sr_6875))
+						self.list.append(getConfigListEntry(_("Scan additional SR"), self.nimConfig.dvbc.scan_sr_ext1))
+						self.list.append(getConfigListEntry(_("Scan additional SR"), self.nimConfig.dvbc.scan_sr_ext2))
 			self.have_advanced = False
 		elif self.nim.isCompatible("DVB-T"):
 			self.configMode = getConfigListEntry(_("Configuration mode"), self.nimConfig.dvbt.configMode)
@@ -384,9 +385,9 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					self.list.append(getConfigListEntry(_("Threshold"), currLnb.threshold))
 				elif currLnb.unicable.value == "unicable_matrix":
 					nimmanager.sec.reconstructUnicableDate(currLnb.unicableMatrixManufacturer, currLnb.unicableMatrix, currLnb)
-					manufacturer_name = currLnb.unicableMatrixManufacturer.value
+					manufacturer_name = currLnb.unicableMatrixManufacturer.value.decode('utf-8')
 					manufacturer = currLnb.unicableMatrix[manufacturer_name]
-					product_name = manufacturer.product.value
+					product_name = manufacturer.product.value.decode('utf-8')
 					self.advancedManufacturer = getConfigListEntry(_("Manufacturer"), currLnb.unicableMatrixManufacturer)
 					self.list.append(self.advancedManufacturer)
 					if product_name in manufacturer.scr:
@@ -398,9 +399,9 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 						self.list.append(getConfigListEntry(_("Frequency"), manufacturer.vco[product_name][manufacturer.scr[product_name].index]))
 				elif currLnb.unicable.value == "unicable_lnb":
 					nimmanager.sec.reconstructUnicableDate(currLnb.unicableLnbManufacturer, currLnb.unicableLnb, currLnb)
-					manufacturer_name = currLnb.unicableLnbManufacturer.value
+					manufacturer_name = currLnb.unicableLnbManufacturer.value.decode('utf-8')
 					manufacturer = currLnb.unicableLnb[manufacturer_name]
-					product_name = manufacturer.product.value
+					product_name = manufacturer.product.value.decode('utf-8')
 					self.advancedManufacturer = getConfigListEntry(_("Manufacturer"), currLnb.unicableLnbManufacturer)
 					self.list.append(self.advancedManufacturer)
 					if product_name in manufacturer.scr:
