@@ -1741,7 +1741,7 @@ msgid "Command order"
 msgstr "Befehlsfolge"
 
 msgid "Command type"
-msgstr ""
+msgstr "Befehlsart"
 
 msgid "Committed DiSEqC command"
 msgstr "DiSEqC-Befehl übertragen"
@@ -13348,3 +13348,46 @@ msgstr "Gleich wie"
 
 msgid "Loop through to"
 msgstr "Verbunden mit"
+
+msgid "Help..."
+msgstr "Hilfe..."
+
+msgid "open servicelist(up)"
+msgstr "Senderliste öffnen(nach oben)"
+
+msgid "next channel in history"
+msgstr "Nächster Sender im Verlauf"
+
+msgid "previous channel in history"
+msgstr "Vorheriger Sender im Verlauf"
+
+msgid "previous channel"
+msgstr "Vorheriger Sender"
+
+msgid "next channel"
+msgstr "Nächster Sender"
+
+msgid "open servicelist(down)"
+msgstr "Senderliste öffnen(nach unten)"
+
+msgid "open find service"
+msgstr "Suche Sendernamen beginnend mit..."
+
+msgid "Enter Easy menu..."
+msgstr "Öffne Easy-Menü"
+
+msgid ""
+"The Easy Menu plugin is not installed!\n"
+"Please install it."
+msgstr ""
+"Plugin Easy Menu ist nicht installiert!\n"
+"Bitte installieren."
+
+msgid "Instant Record..."
+msgstr "Sofortaufnahme"
+
+msgid "Switch to previous subservice"
+msgstr "Schalte zum vorhergehenden Unterkanal"
+
+msgid "Switch to next subservice"
+msgstr "Schalte zum nächsten Unterkanal"
