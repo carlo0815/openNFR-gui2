@@ -191,6 +191,7 @@ class SecConfigure:
 				used_nim_slots.append((
 					slot.slot,
 					slot.description,
+					(slot.canBeCompatible("ATSC") and (slot.config.atsc.configMode.value != "nothing" and True or False)) or
 					(slot.canBeCompatible("DVB-S") and (slot.config.dvbs.configMode.value != "nothing" and True or False)) or
 					(slot.canBeCompatible("DVB-C") and (slot.config.dvbc.configMode.value != "nothing" and True or False)) or
 					(slot.canBeCompatible("DVB-T") and (slot.config.dvbt.configMode.value != "nothing" and True or False)),
@@ -198,7 +199,7 @@ class SecConfigure:
 					slot.frontend_id is None and -1 or slot.frontend_id))
 		eDVBResourceManager.getInstance().setFrontendSlotInformations(used_nim_slots)
 
-		for slot in nim_slots:		
+		for slot in nim_slots:
 			x = slot.slot
 			if slot.canBeCompatible("DVB-S"):
 				nim = slot.config.dvbs
@@ -303,22 +304,25 @@ class SecConfigure:
 				print "slot: " + str(x) + " configmode: " + str(nim.configMode.value)
 			if slot.canBeCompatible("DVB-C"):
 				nim = slot.config.dvbc
-				print "slot: " + str(x) + " configmode: " + str(nim.configMode.value)						
-		
+				print "slot: " + str(x) + " configmode: " + str(nim.configMode.value)
+
 		for slot in nim_slots:
-			if slot.isMultiType():
-				eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, "dummy", False) #to force a clear of m_delsys_whitelist
-				types = slot.getMultiTypeList()
-				for FeType in types.itervalues():
-					if FeType in ("DVB-S", "DVB-S2", "DVB-S2X") and config.Nims[slot.slot].dvbs.configMode.value == "nothing":
-						continue
-					elif FeType in ("DVB-T", "DVB-T2") and config.Nims[slot.slot].dvbt.configMode.value == "nothing":
-						continue
-					elif FeType in ("DVB-C", "DVB-C2") and config.Nims[slot.slot].dvbc.configMode.value == "nothing":
-						continue
-					eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, FeType, True)
-			else:
-				eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, slot.getType())
+			if slot.frontend_id is not None:
+				if slot.isMultiType():
+					eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, "dummy", False) #to force a clear of m_delsys_whitelist
+					types = slot.getMultiTypeList()
+					for FeType in types.itervalues():
+						if FeType in ("DVB-S", "DVB-S2", "DVB-S2X") and config.Nims[slot.slot].dvbs.configMode.value == "nothing":
+							continue
+						elif FeType in ("DVB-T", "DVB-T2") and config.Nims[slot.slot].dvbt.configMode.value == "nothing":
+							continue
+						elif FeType in ("DVB-C", "DVB-C2") and config.Nims[slot.slot].dvbc.configMode.value == "nothing":
+							continue
+						elif FeType in ("ATSC") and config.Nims[slot.slot].atsc.configMode.value == "nothing":
+							continue
+						eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, FeType, True)
+				else:
+					eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, slot.getType())
 		print "sec config completed"
 
 	def updateAdvanced(self, sec, slotid):
@@ -328,7 +332,7 @@ class SecConfigure:
 				if advanced.unicableconnected.value:
 					advanced.unicableconnectedTo.save_forced = True
 					self.linkNIMs(sec, slotid, int(advanced.unicableconnectedTo.value))
-					connto = self.getRoot(slotid, int(advanced.unicableconnectedTo.value))					
+					connto = self.getRoot(slotid, int(advanced.unicableconnectedTo.value))
 					if not self.linked.has_key(connto):
 						self.linked[connto] = []
 					self.linked[connto].append(slotid)
@@ -394,9 +398,9 @@ class SecConfigure:
 					sec.setLNBThreshold(11700000)
 				elif currLnb.lof.value == "unicable":
 					def setupUnicable(configManufacturer, ProductDict):
-						manufacturer_name = configManufacturer.value
+						manufacturer_name = configManufacturer.value.decode('utf-8')
 						manufacturer = ProductDict[manufacturer_name]
-						product_name = manufacturer.product.value
+						product_name = manufacturer.product.value.decode('utf-8')
 						if product_name == "None" and manufacturer.product.saved_value != "None":
 							product_name = manufacturer.product.value = manufacturer.product.saved_value
 						manufacturer_scr = manufacturer.scr
@@ -600,11 +604,14 @@ class SecConfigure:
 			SDict = val.get('unicableMatrix', None)
 		else:
 			return
-		# print "[reconstructUnicableDate] SDict %s" % SDict
+		#print "[reconstructUnicableDate] SDict %s" % SDict
 		if SDict is None:
 			return
 
+		if ManufacturerName is not None:
+			ManufacturerName = ManufacturerName.decode("utf-8")
 		print "ManufacturerName %s" % ManufacturerName
+
 		PDict = SDict.get(ManufacturerName, None)			#dict contained last stored device data
 		if PDict is None:
 			return
@@ -816,7 +823,7 @@ class NIM(object):
 		return (self.frontend_id is not None) or self.__is_empty
 
 	def isMultistream(self):
-		multistream = self.frontend_id and eDVBResourceManager.getInstance().frontendIsMultistream(self.frontend_id) or False
+		multistream = (self.frontend_id is not None) and eDVBResourceManager.getInstance().frontendIsMultistream(self.frontend_id) or False
 		# HACK due to poor support for VTUNER_SET_FE_INFO
 		# When vtuner does not accept fe_info we have to fallback to detection using tuner name
 		# More tuner names will be added when confirmed as multistream (FE_CAN_MULTISTREAM)
@@ -855,15 +862,15 @@ class NIM(object):
 			if self.isMultiType():
 				nim_text += self.description
 			else:
-				nim_text += self.description + " (" + self.friendly_type + ")"			
-
+				nim_text += self.description + " (" + self.friendly_type + ")"
 		return nim_text
 
 	friendly_full_description = property(getFriendlyFullDescription)
 	config_mode_dvbs = property(lambda self: config.Nims[self.slot].dvbs.configMode.value)
 	config_mode_dvbt = property(lambda self: config.Nims[self.slot].dvbt.configMode.value)
 	config_mode_dvbc = property(lambda self: config.Nims[self.slot].dvbc.configMode.value)
-	
+	config_mode_atsc = property(lambda self: config.Nims[self.slot].atsc.configMode.value)
+
 	config = property(lambda self: config.Nims[self.slot])
 	empty = property(lambda self: self.getType() is None)
 
@@ -885,9 +892,9 @@ class NimManager:
 
 	def getTranspondersTerrestrial(self, region):
 		return self.transpondersterrestrial[region]
-				     
+
 	def getTranspondersATSC(self, nim):
-		nimConfig = config.Nims[nim]
+		nimConfig = config.Nims[nim].atsc
 		if nimConfig.configMode.value != "nothing":
 			return self.transpondersatsc[self.atscList[nimConfig.atsc.index][0]]
 		return []
@@ -1079,6 +1086,7 @@ class NimManager:
 			db.readCables(self.cablesList, self.transponderscable)
 			print "Reading terrestrial.xml"
 			db.readTerrestrials(self.terrestrialsList, self.transpondersterrestrial)
+
 		if self.hasNimType("ATSC"):
 			print "[NimManager] Reading atsc.xml"
 			db.readATSC(self.atscList, self.transpondersatsc)
@@ -1174,7 +1182,7 @@ class NimManager:
 			else:
 				entry["frontend_device"] = entry["internally_connectable"] = None
 			if not (entry.has_key("multi_type")):
-				if entry["name"] == "DVB-T2/C USB-Stick": # workaround dvbsky hybrit usb stick
+				if entry["name"] == "DVB-T2/C USB-Stick": # workaround dvbsky hybrid usb stick
 					entry["multi_type"] = {'0': 'DVB-T'}
 					entry["multi_type"] = {'1': 'DVB-C'}
 				else:
@@ -1267,7 +1275,7 @@ class NimManager:
 						break
 				except:
 					pass
-						
+
 		slots.sort()
 		return slots
 
@@ -1279,7 +1287,7 @@ class NimManager:
 			if self.nim_slots[nim].canBeCompatible('DVB-S'):
 				mode = self.getNimConfig(nim).dvbs
 				if mode.configMode.value == "loopthrough" or mode.configMode.value == "satposdepends":
-					nimList.remove(nim)				
+					nimList.remove(nim)
 		return nimList
 
 	def canDependOn(self, slotid):
@@ -1294,7 +1302,7 @@ class NimManager:
 				if not nimHaveRotor and mode.configMode.value == "advanced":
 					for x in range(3601, 3607):
 						lnb = int(mode.advanced.sat[x].lnb.value)
-						if lnb != 0:						
+						if lnb != 0:
 							nimHaveRotor = True
 							break
 					if not nimHaveRotor:
@@ -1312,7 +1320,7 @@ class NimManager:
 							alreadyConnected = True
 							break
 					if not alreadyConnected:
-						positionerList.append(nim)					
+						positionerList.append(nim)
 		return positionerList
 
 	def getNimConfig(self, slotid):
@@ -1338,34 +1346,34 @@ class NimManager:
 			return connected
 		else:
 			res = False
-			if self.nim_slots[slotid].isCompatible("DVB-S"):
+			if self.nim_slots[slotid].canBeCompatible("DVB-S"):
 				nim = config.Nims[slotid].dvbs
 				configMode = nim.configMode.value
 				res = res or not (configMode == "nothing")
-			if self.nim_slots[slotid].isCompatible("DVB-T"):
+			if self.nim_slots[slotid].canBeCompatible("DVB-T"):
 				nim = config.Nims[slotid].dvbt
 				configMode = nim.configMode.value
 				res = res or not (configMode == "nothing")
-			if self.nim_slots[slotid].isCompatible("DVB-C"):
+			if self.nim_slots[slotid].canBeCompatible("DVB-C"):
 				nim = config.Nims[slotid].dvbc
 				configMode = nim.configMode.value
 				res = res or not (configMode == "nothing")
 			if self.nim_slots[slotid].canBeCompatible("ATSC"):
 				nim = config.Nims[slotid].atsc
 				configMode = nim.configMode.value
-				res = res or not (configMode == "nothing")				     
-			return res				
+				res = res or not (configMode == "nothing")
+			return res
 
 	def getSatListForNim(self, slotid):
 		list = []
-		if self.nim_slots[slotid].canBeCompatible("DVB-S"):	
-			nim = config.Nims[slotid].dvbs		
+		if self.nim_slots[slotid].canBeCompatible("DVB-S"):
+			nim = config.Nims[slotid].dvbs
 			configMode = nim.configMode.value
+
 			if configMode == "nothing":
 				return list
-			
 
-			if configMode == "equal":
+			elif configMode == "equal":
 				slotid = int(nim.connectedTo.value)
 				nim = config.Nims[slotid].dvbs
 				configMode = nim.configMode.value
@@ -1373,7 +1381,6 @@ class NimManager:
 				slotid = self.sec.getRoot(slotid, int(nim.connectedTo.value))
 				nim = config.Nims[slotid].dvbs
 				configMode = nim.configMode.value
-
 			if configMode == "simple":
 				dm = nim.diseqcMode.value
 				if dm in ("single", "toneburst_a_b", "diseqc_a_b", "diseqc_a_b_c_d"):
@@ -1532,6 +1539,7 @@ def InitNimManager(nimmgr, update_slots = []):
 	addNimConfig = False
 	try:
 		config.Nims
+
 	except:
 		addNimConfig = True
 
@@ -1543,6 +1551,7 @@ def InitNimManager(nimmgr, update_slots = []):
 			tmp.dvbs = ConfigSubsection()
 			tmp.dvbc = ConfigSubsection()
 			tmp.dvbt = ConfigSubsection()
+			tmp.atsc = ConfigSubsection()
 			config.Nims.append(tmp)
 
 	lnb_choices = {
@@ -1826,6 +1835,10 @@ def InitNimManager(nimmgr, update_slots = []):
 				from Screens.MessageBox import MessageBox
 				nim.advanced.unicableconnected.value = False
 				nim.advanced.unicableconnected.save()
+#TODO the following three lines correct the error: 'msgid' format string with unnamed arguments cannot be properly localized
+#				tuner1 = chr(int(x) + ord('A'))
+#				tuner2 =  chr(int(nim.advanced.unicableconnectedTo.saved_value) + ord('A'))
+#				txt = _("Misconfigured unicable connection from tuner %(tuner1)s to tuner %(tuner2)s!\nTuner %(tuner1)s option \"connected to\" are disabled now") % locals()
 				txt = _("Misconfigured unicable connection from tuner %s to tuner %s!\nTuner %s option \"connected to\" are disabled now") % (chr(int(x) + ord('A')), chr(int(nim.advanced.unicableconnectedTo.saved_value) + ord('A')), chr(int(x) + ord('A')),)
 				AddPopup(txt, type = MessageBox.TYPE_ERROR, timeout = 0, id = "UnicableConnectionFailed")
 
@@ -2017,7 +2030,7 @@ def InitNimManager(nimmgr, update_slots = []):
 			for x in nimmgr.cablesList:
 				list.append((str(n), x[0]))
 				n += 1
-			nim.scan_networkid = ConfigInteger(default = 0, limits = (0, 99999))				
+			nim.scan_networkid = ConfigInteger(default = 0, limits = (0, 99999))
 			possible_scan_types = [("bands", _("Frequency bands")), ("steps", _("Frequency steps"))]
 			if n:
 				possible_scan_types.append(("provider", _("Provider")))
@@ -2057,15 +2070,14 @@ def InitNimManager(nimmgr, update_slots = []):
 				n += 1
 			nim.terrestrial = ConfigSelection(choices = list)
 			nim.terrestrial_5V = ConfigOnOff()
-				     
+
 	def createATSCConfig(nim, x):
 		try:
 			nim.atsc
 		except:
 			list = [(str(n), x[0]) for n, x in enumerate(nimmgr.atscList)]
 			nim.atsc = ConfigSelection(choices = list)
-				     
-			
+
 	try:
 		for slot in nimmgr.nim_slots:
 			if slot.frontend_id is not None:
@@ -2087,9 +2099,8 @@ def InitNimManager(nimmgr, update_slots = []):
 	for slot in nimmgr.nim_slots:
 		x = slot.slot
 		nim = config.Nims[x]
-
 		if slot.canBeCompatible("DVB-S"):
-			nim = config.Nims[x].dvbs		
+			nim = config.Nims[x].dvbs
 			createSatConfig(nim, x, empty_slots)
 			config_mode_choices = [("nothing", _("nothing connected")),
 				("simple", _("simple")), ("advanced", _("advanced"))]
@@ -2102,14 +2113,14 @@ def InitNimManager(nimmgr, update_slots = []):
 			if slot.isMultiType():
 				tmp = ConfigSelection(config_mode_choices, "nothing")
 			else:
-				tmp = ConfigSelection(config_mode_choices, "simple")			
+				tmp = ConfigSelection(config_mode_choices, "simple")
 			tmp.slot_id = x
 			tmp.addNotifier(configModeChanged, initial_call = False)
 			nim.configMode = tmp
 			nim.configMode.connectedToChanged = boundFunction(connectedToChanged, x, nimmgr)
 			nim.connectedTo.addNotifier(boundFunction(connectedToChanged, x, nimmgr), initial_call = False)
 		if slot.canBeCompatible("DVB-C"):
-			nim = config.Nims[x].dvbc		
+			nim = config.Nims[x].dvbc
 			nim.configMode = ConfigSelection(
 				choices = {
 					"enabled": _("enabled"),
@@ -2118,7 +2129,7 @@ def InitNimManager(nimmgr, update_slots = []):
 				default = "enabled")
 			createCableConfig(nim, x)
 		if slot.canBeCompatible("DVB-T"):
-			nim = config.Nims[x].dvbt		
+			nim = config.Nims[x].dvbt
 			nim.configMode = ConfigSelection(
 				choices = {
 					"enabled": _("enabled"),
@@ -2127,6 +2138,7 @@ def InitNimManager(nimmgr, update_slots = []):
 				default = "enabled")
 			createTerrestrialConfig(nim, x)
 		if slot.canBeCompatible("ATSC"):
+			nim = config.Nims[x].atsc
 			nim.configMode = ConfigSelection(
 				choices = {
 					"enabled": _("enabled"),
@@ -2144,7 +2156,7 @@ def InitNimManager(nimmgr, update_slots = []):
 
 	def tunerTypeChanged(nimmgr, configElement):
 		if int(iDVBFrontend.dvb_api_version) < 5:
-			print "dvb_api_version ",iDVBFrontend.dvb_api_version		
+			print "dvb_api_version ",iDVBFrontend.dvb_api_version
 			print "api <5 or old style tuner driver"
 			fe_id = configElement.fe_id
 			slot = nimmgr.nim_slots[fe_id]
@@ -2167,10 +2179,12 @@ def InitNimManager(nimmgr, update_slots = []):
 						continue
 					elif FeType in ("DVB-C", "DVB-C2") and config.Nims[slot.slot].dvbc.configMode.value == "nothing":
 						continue
+					elif FeType in ("ATSC") and config.Nims[slot.slot].atsc.configMode.value == "nothing":
+						continue
 					eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, FeType, True)
 			else:
 				eDVBResourceManager.getInstance().setFrontendType(slot.frontend_id, slot.getType())
-			system = configElement.getText()			
+			system = configElement.getText()
 			if path.exists("/proc/stb/frontend/%d/mode" % fe_id):
 				cur_type = int(open("/proc/stb/frontend/%d/mode" % fe_id, "r").read())
 				if cur_type != int(configElement.value):
@@ -2183,10 +2197,11 @@ def InitNimManager(nimmgr, update_slots = []):
 						f.close()
 					except:
 						print "[info] no /sys/module/dvb_core/parameters/dvb_shutdown_timeout available"
+
 					for x in iDVBFrontendDict.iteritems():
 						if x[1] == system:
 							frontend.overrideType(x[0])
-	
+							break
 					frontend.closeFrontend()
 					f = open("/proc/stb/frontend/%d/mode" % fe_id, "w")
 					f.write(configElement.value)
@@ -2198,11 +2213,13 @@ def InitNimManager(nimmgr, update_slots = []):
 						f.close()
 					except:
 						print "[info] no /sys/module/dvb_core/parameters/dvb_shutdown_timeout available"
+
+
 					nimmgr.enumerateNIMs()
 				else:
 					print "tuner type is already %d" %cur_type
 			else:
-				print"[ERROR] path not found: /proc/stb/frontend/%d/mode" % fe_id					
+				print"[ERROR] path not found: /proc/stb/frontend/%d/mode" % fe_id
 
 	empty_slots = 0
 	for slot in nimmgr.nim_slots:
@@ -2250,9 +2267,10 @@ def InitNimManager(nimmgr, update_slots = []):
 			createTerrestrialConfig(nim, x)
 			empty = False
 		if slot.canBeCompatible("ATSC"):
+			nim = config.Nims[x].atsc
 			createATSCConfig(nim, x)
-			empty = False				     
+			empty = False
 		if empty:
 			empty_slots += 1
-					     
+
 nimmanager = NimManager()
