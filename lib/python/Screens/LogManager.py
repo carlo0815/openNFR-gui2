@@ -16,6 +16,8 @@ from datetime import datetime
 from enigma import eTimer, eBackgroundFileEraser, eLabel, getDesktop, gFont, fontRenderClass
 from Tools.TextBoundary import getTextBoundarySize
 from glob import glob
+from Tools.Directories import fileExists
+import os
 
 import Components.Task
 
@@ -194,7 +196,7 @@ class LogManager(Screen):
 				'red': self.changelogtype,
 				'green': self.showLog,
 				'yellow': self.deletelog,
-				'blue': self.sendlog,
+				'blue': self.feedcheck,
 				"left": self.left,
 				"right": self.right,
 				"down": self.down,
@@ -204,7 +206,7 @@ class LogManager(Screen):
 		self["key_red"] = Button(_("Debug Logs"))
 		self["key_green"] = Button(_("View"))
 		self["key_yellow"] = Button(_("Delete"))
-		self["key_blue"] = Button(_("Send"))
+		self["key_blue"] = Button(_("Feedcheck"))
 
 		self.onChangedEntry = [ ]
 		self.sentsingle = ""
@@ -278,12 +280,16 @@ class LogManager(Screen):
 		import re
 		if self.logtype == 'crashlogs':
 			self["key_red"].setText(_("Crash Logs"))
-			self.logtype = 'debuglogs'
+			self.logtype = 'opkglogs'
 			self.matchingPattern = 'Enigma2'
+		elif self.logtype == 'opkglogs' and path.exists('/home/root/logs/feedcheck.log'):
+			self["key_red"].setText(_("Feed Logs"))
+			self.logtype = 'debuglogs'
+			self.matchingPattern = 'feedcheck'			
 		else:
 			self["key_red"].setText(_("Debug Logs"))
 			self.logtype = 'crashlogs'
-			self.matchingPattern = 'enigma2_crash_'
+			self.matchingPattern = 'enigma2_crash'
 		self["list"].matchingPattern = re.compile(self.matchingPattern)
 		self["list"].changeDir(self.defaultDir)
 
@@ -345,7 +351,16 @@ class LogManager(Screen):
 			self["list"].changeDir(self.defaultDir)
 			self["LogsSize"].update(config.crash.debug_path.value)
 
-	def sendlog(self, addtionalinfo = None):
+	def feedcheck(self):
+		if fileExists("/home/root/logs/feedcheck.log"):
+			os.system("rm -f /home/root/logs/feedcheck.log")
+			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
+		else:
+			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
+			
+"""	def sendlog(self, addtionalinfo = None):def sendlog(self, addtionalinfo = None):
 		try:
 			self.sel = self["list"].getCurrent()[0]
 		except:
@@ -477,7 +492,7 @@ class LogManager(Screen):
 
 	def myclose(self):
 		self.close()
-
+"""
 class LogManagerViewLog(Screen):
 	def __init__(self, session, selected):
 		self.session = session
