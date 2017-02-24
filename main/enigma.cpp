@@ -16,6 +16,7 @@
 #include <lib/base/eerror.h>
 #include <lib/base/init.h>
 #include <lib/base/init_num.h>
+#include <lib/base/nconfig.h>
 #include <lib/gdi/gmaindc.h>
 #include <lib/gdi/glcddc.h>
 #include <lib/gdi/grc.h>
