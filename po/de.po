@@ -13391,3 +13391,6 @@ msgstr "Schalte zum vorhergehenden Unterkanal"
 
 msgid "Switch to next subservice"
 msgstr "Schalte zum nächsten Unterkanal"
+
+msgid "Feedcheck finished and log available."
+msgstr "Feedcheck abgeschlossen, Log ist verfügbar."
