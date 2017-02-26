@@ -45,7 +45,7 @@
 	</screen>
 
 	<screen name="InfoBarSummary" position="0,0" size="800,480">
-		<widget source="session.CurrentService" render="Label" position="1,20" size="800,75" font="FdLcD;71" halign="center" valign="center" foregroundColor="#FFFF00" >
+		<widget source="session.CurrentService" render="Label" position="8,20" size="780,75" font="FdLcD;71" halign="center" valign="center" foregroundColor="#FFFF00" >
 			<convert type="ServiceName">Name</convert>
 		</widget>
 		<widget source="session.Event_Now" render="Label" position="165,105" size="460,120" font="FdLcD;52" halign="center" valign="center" >
