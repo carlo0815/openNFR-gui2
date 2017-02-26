@@ -13402,7 +13402,7 @@ msgid "Set bluetooth audio delay."
 msgstr "Einstellung der Bluetooth Audioverzögerung"
 
 msgid "Show state message on non bluetooth setup screen."
-msgstr "Zeige Satusmeldungen im Bluetooth Menü an"
+msgstr "Zeige Statusmeldungen im Bluetooth Menü an"
 
 msgid "Try connect to last audiodevice on start enable"
 msgstr "Verbindung zum letzten Audio-Gerät wieder herstellen"
