@@ -117,8 +117,8 @@
 			<convert type="ValueRange">9,9</convert>
 			<convert type="ConditionalShowHide" />
 		</widget>
-		<!-- <ePixmap pixmap="record.png" position="540,400" size="60,60" zPosition="4" alphatest="blend" /> -->
-		<widget source="session.RecordState" render="Pixmap" pixmap="record.png" position="536,405" size="60,60" zPosition="4" alphatest="blend">
+		<!-- <ePixmap pixmap="record.png" position="530,390" size="60,60" zPosition="4" alphatest="blend" /> -->
+		<widget source="session.RecordState" render="Pixmap" pixmap="record.png" position="530,390" size="60,60" zPosition="4" alphatest="blend">
 			<convert type="ConditionalShowHide">Blink</convert>
 		</widget>
 		<panel name="SummaryClockPanel" />
