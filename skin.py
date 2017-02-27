@@ -173,7 +173,7 @@ addSkin('skin_box.xml')
 addSkin('skin_second_infobar.xml')
 display_skin_id = 1
 try:
-	if getBoxType() in ('vuduo2', 'mutant51'):
+	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008'):
                 print "addskin", addSkin(os.path.join('', config.skin.display_skin.value)) 
                 if not addSkin(os.path.join('display', config.skin.display_skin.value)):
 		        raise DisplaySkinError, "display skin not found"	
