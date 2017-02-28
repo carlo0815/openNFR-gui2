@@ -10,6 +10,7 @@ from boxbranding import getBoxType
 LCDSIZE400 = []
 LCDSIZE400 = False
 LCDSIZE480 = False
+LCDSIZE800 = False
 LCDSIZE220 = False
 
 if getBoxType() in ('twinboxlcd', 'gb800ueplus', 'gb800seplus', 'gbultraue', 'singleboxlcd', 'sf208', 'sf228', 'e4hd'):
@@ -18,10 +19,13 @@ elif getBoxType() in ('gbquadplus'):
 	LCDSIZE400 = True
 elif getBoxType() in ('vusolo4k'):
 	LCDSIZE480 = True
+elif getBoxType() in ('vuultimo4k'):
+	LCDSIZE800 = True
 else:
 	LCDSIZE400 = False
 	LCDSIZE480 = False
 	LCDSIZE220 = False
+	LCDSIZE800 = False
 #print "LCDSIZE400: ", LCDSIZE400
 
 class OMaClockLcd(Renderer):
@@ -68,7 +72,11 @@ class OMaClockLcd(Renderer):
 		elif LCDSIZE480:
 			width = 475
 			height = 316
-			l = 66			
+			l = 66
+		elif LCDSIZE800:
+			width = 792
+			height = 475
+			l = 110				
 		elif LCDSIZE220:
 			width = 218
 			height = 176
@@ -84,7 +92,9 @@ class OMaClockLcd(Renderer):
 			if LCDSIZE400:
 				l = l + 60
 			elif LCDSIZE480:
-				l = l + 72			
+				l = l + 72
+			elif LCDSIZE800:
+				l = l + 120					
 			elif LCDSIZE220:
 				l = l + 50
 			else:
@@ -94,7 +104,9 @@ class OMaClockLcd(Renderer):
 			if LCDSIZE400:
 				l = l + 50
 			elif LCDSIZE480:
-				l = l + 66			
+				l = l + 66
+			elif LCDSIZE800:
+				l = l + 100					
 			elif LCDSIZE220:
 				l = l + 40				
 			else:
