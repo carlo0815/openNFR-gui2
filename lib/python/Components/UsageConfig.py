@@ -1024,7 +1024,7 @@ def InitUsageConfig():
 	config.oscaminfo.port = ConfigInteger(default = 16002, limits=(0,65536) )
 	config.oscaminfo.intervall = ConfigSelectionNumber(min = 1, max = 600, stepwidth = 1, default = 10, wraparound = True)
 	SystemInfo["OScamInstalled"] = False
-	if getBoxType() in ('gbquadplus', 'gb800ueplus', 'gb800seplus', 'gbultraue', 'gb7362', 'twinboxlcd', '7210s', 'vusolo4k', 'odin2hybrid', 'odinplus', 'e4hd', 'singleboxlcd', 'sf208', 'sf228'):
+	if getBoxType() in ('gbquadplus', 'gb800ueplus', 'gb800seplus', 'gbultraue', 'gb7362', 'twinboxlcd', '7210s', 'vusolo4k', 'e4hd', 'singleboxlcd', 'sf208', 'sf228'):
 	        SystemInfo["ClockDisplay"] = True
         else:
 	        SystemInfo["ClockDisplay"] = False 
