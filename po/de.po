@@ -13406,3 +13406,6 @@ msgstr "Zeige Statusmeldungen im Bluetooth Menü an"
 
 msgid "Try connect to last audiodevice on start enable"
 msgstr "Verbindung zum letzten Audio-Gerät wieder herstellen"
+
+msgid "Set Framerate for MiniTV"
+msgstr "Bildfrequenzeinstellung für MiniTV"
