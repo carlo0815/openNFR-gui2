@@ -13409,3 +13409,6 @@ msgstr "Verbindung zum letzten Audio-Gerät wieder herstellen"
 
 msgid "Set Framerate for MiniTV"
 msgstr "Bildfrequenzeinstellung für MiniTV"
+
+msgid "Fullscreen"
+msgstr "Vollbild"
