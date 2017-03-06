@@ -43,7 +43,7 @@ class Tuner:
 		modulation = 2, transmission = 2, guard = 4,
 		hierarchy = 4, system = 0, plp_id = 0):
 		if self.frontend:
-			print "[TuneTest] tuning to transponder with data", [frequency, inversion, bandwidth, fechigh, feclow, modulation, transmission, guard, hierarchy, system, plpid]
+			print "[TuneTest] tuning to transponder with data", [frequency, inversion, bandwidth, fechigh, feclow, modulation, transmission, guard, hierarchy, system, plp_id]
 			parm = eDVBFrontendParametersTerrestrial()
 			parm.frequency = frequency
 			parm.inversion = inversion
