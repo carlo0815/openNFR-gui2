@@ -13412,3 +13412,30 @@ msgstr "Bildfrequenzeinstellung für MiniTV"
 
 msgid "Fullscreen"
 msgstr "Vollbild"
+
+msgid "0 (disabled)"
+msgstr "0 (deaktiviert)"
+
+msgid "Turning step size"
+msgstr "Dreh-Schrittweite"
+
+msgid "Max memory positions"
+msgstr "Max. Speicherpositionen"
+
+msgid "All satellites 1 (USALS)"
+msgstr "Alle Satelliten 1 (USALS)"
+
+msgid "All satellites 2 (USALS)"
+msgstr "Alle Satelliten 2 (USALS)"
+
+msgid "All satellites 3 (USALS)"
+msgstr "Alle Satelliten 3 (USALS)"
+
+msgid "All satellites 4 (USALS)"
+msgstr "Alle Satelliten 4 (USALS)"
+
+msgid "Selecting satellites 1 (USALS)"
+msgstr "Wähle Satelliten 1 (USALS)"
+
+msgid "Selecting satellites 2 (USALS)"
+msgstr "Wähle Satelliten 2 (USALS)"
