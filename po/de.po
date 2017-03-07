@@ -13444,7 +13444,7 @@ msgid "Sorry you can install a max of 10 images."
 msgstr "Sorry, aber du kannst maximal 10 Images installieren."
 
 msgid "Choose they way for installation"
-magstr "Wähle eine Möglichkeit zur Installation"
+msgstr "Wähle eine Möglichkeit zur Installation"
 
 msgid "Install from /media/nfr4xboot/NFR4XBootUpload"
 msgstr "Installiere von /media/nfr4xboot/NFR4XBootUpload"
