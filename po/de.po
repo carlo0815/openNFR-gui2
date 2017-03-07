@@ -13439,3 +13439,15 @@ msgstr "Wähle Satelliten 1 (USALS)"
 
 msgid "Selecting satellites 2 (USALS)"
 msgstr "Wähle Satelliten 2 (USALS)"
+
+msgid "Sorry you can install a max of 10 images."
+msgstr "Sorry, aber du kannst maximal 10 Images installieren."
+
+msgid "Choose they way for installation"
+magstr "Wähle eine Möglichkeit zur Installation"
+
+msgid "Install from /media/nfr4xboot/NFR4XBootUpload"
+msgstr "Installiere von /media/nfr4xboot/NFR4XBootUpload"
+
+msgid "Install from Internet (OpenPLi,OpenVix,OpenATV,Egami,OpenNFR,OpenHDF)"
+msgstr "Installiere Online (OpenPLi,OpenVix,OpenATV,Egami,OpenNFR,OpenHDF)"
