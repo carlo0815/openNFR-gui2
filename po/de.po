@@ -11566,7 +11566,7 @@ msgid "Sorry: Wrong image in flash found. You have to install in flash NFR Image
 msgstr "Sorry: Kein openNFR Image im Flash gefunden. Du musst openNFR im Flash installieren!"
 
 msgid "Choose they way for installation"
-msgstr "Wähle den Weg der Installation"
+msgstr "Wähle eine Möglichkeit zur Installation"
 
 msgid "Sorry: NFR4XBoot no work by this Box!"
 msgstr "Sorry: NFR4XBoot funktioniert nicht mit deiner Box!"
