@@ -13155,8 +13155,7 @@ msgid "Please remove CI+ Modul and click OK! \n\nThis restart Enigma2 and after 
 msgstr "Bitte das CI+ Modul herausziehen und OK klicken! \n\nEnigma2 startet neu, danach das CI+ Modul wieder einstecken! \n\nWenn Fehler 575 erscheint, das CI+ Modul aus- und wieder einstecken! \n\nNach erfolgreicher Initialisierung bitte die Box neu starten."
 
 msgid "one of Mounts not work, please set new Location!"
-msgstr ""
-"Einer der Mounts funktioniert nicht, wähle bitte eine andere Quelle aus!"
+msgstr "Einer der Mounts funktioniert nicht, wähle bitte eine andere Quelle aus!"
 
 msgid "Installation aborted !"
 msgstr "Installation abgebrochen!"
@@ -13376,12 +13375,8 @@ msgstr "Suche Sendernamen beginnend mit..."
 msgid "Enter Easy menu..."
 msgstr "Öffne Easy-Menü"
 
-msgid ""
-"The Easy Menu plugin is not installed!\n"
-"Please install it."
-msgstr ""
-"Plugin Easy Menu ist nicht installiert!\n"
-"Bitte installieren."
+msgid "The Easy Menu plugin is not installed!\nPlease install it."
+msgstr "Plugin Easy Menu ist nicht installiert!\nBitte installieren."
 
 msgid "Instant Record..."
 msgstr "Sofortaufnahme"
