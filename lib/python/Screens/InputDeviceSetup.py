@@ -258,7 +258,7 @@ class InputDeviceSetup(Screen, ConfigListScreen):
 
 
 class RemoteControlType(Screen, ConfigListScreen):
-	if getBrandOEM() in ('broadmedia','octagon','odin','protek','ultramini','ultramini') or getBoxType() in ('et7x00','et8500'):
+	if getBrandOEM() in ('broadmedia','octagon','odin','protek','ultramini','ultramini') or getBoxType() in ('et7x00','et8500','et1x000'):
 		rcList = [
 				("0", _("Default")),
 				("3", _("MaraM9")),
@@ -298,6 +298,7 @@ class RemoteControlType(Screen, ConfigListScreen):
 				("et9200", 11),
 				("et9500", 11),
 				("et10000", 9),
+				("et1x000", 504),
 				("formuler1",18),
 				("formuler3",18),
 				("formuler4",18),
