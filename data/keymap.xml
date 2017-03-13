@@ -126,8 +126,6 @@
 	<map context="InfobarHDMIActions">
 		<key id="KEY_AUX" mapto="HDMIin" flags="b" />
 		<key id="KEY_AUX" mapto="HDMIinLong" flags="l" />
-		<key id="KEY_CONTEXT_MENU" mapto="HDMIin" flags="b" />
-		<key id="KEY_CONTEXT_MENU" mapto="HDMIinLong" flags="l" />
 		<!--key id="KEY_F11" mapto="HDMIin" flags="b" /-->
 		<key id="KEY_F11" mapto="HDMIinLong" flags="l" />
 	</map>	
@@ -555,6 +553,7 @@
 
 	<map context="InfobarTeletextActions">
 		<key id="KEY_TEXT" mapto="startTeletext" flags="m" />
+		<key id="KEY_CONTEXT_MENU" mapto="startTeletext" flags="m" />
 	</map>
 
 	<map context="TeletextActions">
