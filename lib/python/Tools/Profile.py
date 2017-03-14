@@ -60,6 +60,9 @@ def profile(id):
 				elif boxtype == "formuler1":
 					f = open("/dev/dbox/oled0", "w")
 					f.write("   %d   " % perc)						
+				elif boxtype in ("sf4008", "g300"):
+					f = open("/dev/dbox/oled0", "w")
+					f.write("Load %d %%" % perc)
 				elif boxtype == "gb800se" or boxtype == "gb800solo":
 					f = open("/dev/dbox/oled0", "w")
 					f.write("%d  \n" % perc)
