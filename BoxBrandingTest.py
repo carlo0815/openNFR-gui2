@@ -22,3 +22,4 @@ print "getImageDistro=%s<" %boxbranding.getImageDistro()
 print "getImageFolder=%s<" %boxbranding.getImageFolder()
 print "getImageFileSystem=%s<" %boxbranding.getImageFileSystem()
 print "getImageArch=%s<" %boxbranding.getImageArch()
+

@@ -29,7 +29,7 @@
 			eDebug(x); \
 	} while(0)
 
-#define eDebugNoSimulateNoNewLineStart(x...) \
+#define eDebugNoSimulateNoNewLine(x...) \
 	do { \
 		if (!m_simulate) \
 			eDebugNoNewLine(x); \
@@ -1225,28 +1225,28 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	}
 	else if (!strcmp(m_description, "Vuplus DVB-S NIM(AVL2108)")) // VU+Ultimo/VU+Uno DVB-S2 NIM
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1600) + 0.2100) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1600) + 0.2100) * 100);
 	}
 	else if (!strcmp(m_description, "Vuplus DVB-S NIM(AVL6222)")
 		|| !strcmp(m_description, "Vuplus DVB-S NIM(AVL6211)")
 		|| !strcmp(m_description, "BCM7335 DVB-S2 NIM (internal)")
 		) // VU+
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1244) + 2.5079) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1244) + 2.5079) * 100);
 		if (!strcmp(m_description, "Vuplus DVB-S NIM(AVL6222)"))
 			sat_max = 1490;
 	}
 	else if (!strcmp(m_description, "BCM7356 DVB-S2 NIM (internal)")) // VU+ Solo2
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1800) - 1.0000) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1800) - 1.0000) * 100);
 	}
 	else if (!strcmp(m_description, "Vuplus DVB-S NIM(7376 FBC)")) // VU+ Solo4k
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1850) - 0.3500) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1850) - 0.3500) * 100);
 	}
 	else if (!strcmp(m_description, "BCM7346 (internal)")) // MaxDigital XP1000
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1880) + 0.1959) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1880) + 0.1959) * 100);
 	}
 	else if (!strcmp(m_description, "BCM7356 DVB-S2 NIM (internal)")
 		|| !strcmp(m_description, "BCM7346 DVB-S2 NIM (internal)")
@@ -1256,7 +1256,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 		|| !strcmp(m_description, "GIGA DVB-S2 NIM (SP2246T)")
 		) // Gigablue
 	{
-		ret = (int)((((double(snr) / (65536.0 / 100.0)) * 0.1800) - 1.0000) * 100);
+		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1800) - 1.0000) * 100);
 	}
 	else if (strstr(m_description, "GIGA DVB-C/T NIM (SP8221L)")
 		|| strstr(m_description, "GIGA DVB-C/T NIM (SI4765)")
@@ -1385,16 +1385,16 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 		switch (type)
 		{
 		case feSatellite:
-			signalquality = (ret >= sat_max ? 65536 : ret * 65536 / sat_max);
+			signalquality = (ret >= sat_max ? 65535 : ret * 65535 / sat_max);
 			break;
 		case feCable:
-			signalquality = (ret >= cab_max ? 65536 : ret * 65536 / cab_max);
+			signalquality = (ret >= cab_max ? 65535 : ret * 65535 / cab_max);
 			break;
 		case feTerrestrial:
-			signalquality = (ret >= ter_max ? 65536 : ret * 65536 / ter_max);
+			signalquality = (ret >= ter_max ? 65535 : ret * 65535 / ter_max);
 			break;
 		case feATSC:
-			signalquality = (ret >= atsc_max ? 65536 : ret * 65536 / atsc_max);
+			signalquality = (ret >= atsc_max ? 65535 : ret * 65535 / atsc_max);
 			break;
 		}
 	}
@@ -1809,25 +1809,23 @@ int eDVBFrontend::tuneLoopInt()  // called by m_tuneTimer
 					gettimeofday(&start, NULL);
 					sec_fe->sendDiseqc(m_sec_sequence.current()->diseqc);
 					gettimeofday(&end, NULL);
-					eDebugNoSimulateNoNewLineStart("[SEC] tuner %d sendDiseqc: ", m_dvbid);
+					eDebugNoSimulateNoNewLine("[SEC] tuner %d sendDiseqc: ", m_dvbid);
 					for (int i=0; i < m_sec_sequence.current()->diseqc.len; ++i)
 					eDebugNoSimulateNoNewLine("%02x", m_sec_sequence.current()->diseqc.data[i]);
 					if (!memcmp(m_sec_sequence.current()->diseqc.data, "\xE0\x00\x00", 3))
-						eDebugNoSimulateNoNewLineEnd("(DiSEqC reset)");
+						eDebugNoSimulateNoNewLine("(DiSEqC reset)");
 					else if (!memcmp(m_sec_sequence.current()->diseqc.data, "\xE0\x00\x03", 3))
-						eDebugNoSimulateNoNewLineEnd("(DiSEqC peripherial power on)");
+						eDebugNoSimulateNoNewLine("(DiSEqC peripherial power on)");
 					else
-						eDebugNoSimulateNoNewLineEnd("");
+						eDebugNoSimulateNoNewLine("");
 					duration = (((end.tv_usec - start.tv_usec)/1000) + 1000 ) % 1000;
 					duration_est = (m_sec_sequence.current()->diseqc.len * 14) + 10;
-					eDebugNoSimulateNoNewLineStart("[SEC] diseqc ioctl duration: %d ms", duration);
+					eDebugNoSimulateNoNewLine("[SEC] diseqc ioctl duration: %d ms", duration);
 					if (duration < duration_est)
 						delay = duration_est - duration;
 					if (delay > 94) delay = 94;
 					if (delay)
-						eDebugNoSimulateNoNewLineEnd(" -> extra guard delay %d ms",delay);
-					else
-						eDebugNoSimulateNoNewLineEnd("");
+						eDebugNoSimulateNoNewLine(" -> extra guard delay %d ms",delay);
 				}
 				++m_sec_sequence.current();
 				break;
@@ -1841,14 +1839,14 @@ int eDVBFrontend::tuneLoopInt()  // called by m_tuneTimer
 					gettimeofday(&start, NULL);
 					sec_fe->sendToneburst(m_sec_sequence.current()->toneburst);
 					gettimeofday(&end, NULL);
-					eDebugNoSimulateNoNewLineStart("[SEC] toneburst ioctl duration: %d ms",(end.tv_usec - start.tv_usec)/1000);
+					eDebugNoSimulateNoNewLine("[SEC] toneburst ioctl duration: %d ms",(end.tv_usec - start.tv_usec)/1000);
 					duration = (((end.tv_usec - start.tv_usec)/1000) + 1000 ) % 1000;
 					duration_est = 24;
 					if (duration < duration_est)
 						delay = duration_est - duration;
 					if (delay > 24) delay = 24;
 					if (delay)
-						eDebugNoSimulateNoNewLineEnd(" -> extra quard delay %d ms",delay);
+						eDebugNoSimulateNoNewLine(" -> extra quard delay %d ms",delay);
 				}
 				++m_sec_sequence.current();
 				break;

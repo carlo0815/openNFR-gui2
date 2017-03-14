@@ -97,7 +97,7 @@ public:
 	RESULT connectEvent(const Slot2<void,iPlayableService*,int> &event, ePtr<eConnection> &connection);
 	RESULT start();
 	RESULT stop();
-	RESULT setTarget(int target);
+	RESULT setTarget(int target, bool noaudio);
 
 	RESULT seek(ePtr<iSeekableService> &ptr);
 	RESULT pause(ePtr<iPauseableService> &ptr);
@@ -140,6 +140,7 @@ public:
 	std::string getInfoString(int w);
 	ePtr<iDVBTransponderData> getTransponderData();
 	void getAITApplications(std::map<int, std::string> &aitlist);
+	PyObject * getHbbTVApplications();
 	void getCaIds(std::vector<int> &caids, std::vector<int> &ecmpids);
 
 		// iAudioTrackSelection
@@ -204,6 +205,7 @@ protected:
 	int m_decoder_index;
 	int m_have_video_pid;
 	int m_tune_state;
+	bool m_noaudio;
 
 		/* in timeshift mode, we essentially have two channels, and thus pmt handlers. */
 	eDVBServicePMTHandler m_service_handler_timeshift;

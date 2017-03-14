@@ -476,7 +476,7 @@ eDVBUsbAdapter::eDVBUsbAdapter(int nr)
 		goto error;
 	}
 
-#ifdef TUNER_VUSOLO4K
+#ifdef VMSG_TYPE2
 #define VTUNER_GET_MESSAGE  11
 #define VTUNER_SET_RESPONSE 12
 #define VTUNER_SET_NAME     13
@@ -576,7 +576,7 @@ void *eDVBUsbAdapter::vtunerPump()
 		unsigned char pad[64]; /* nobody knows the much data the driver will try to copy into our struct, add some padding to be sure */
 	};
 
-#define DEMUX_BUFFER_SIZE (8 * ((188 / 4) * 4096)) /* 1.5MB */
+#define DEMUX_BUFFER_SIZE (16 * 1024 * 188 ) /* 3 MB */
 	ioctl(demuxFd, DMX_SET_BUFFER_SIZE, DEMUX_BUFFER_SIZE);
 
 	while (running)
@@ -611,7 +611,7 @@ void *eDVBUsbAdapter::vtunerPump()
 
 						if (pidcount > 1)
 						{
-							eDebug("[adenin]rmove PID %d(0x%04x)", pidList[i], pidList[i]);							
+							eDebug("[adenin]rmove PID %d(0x%04x)", pidList[i], pidList[i]);
 							::ioctl(demuxFd, DMX_REMOVE_PID, &pidList[i]);
 							pidcount--;
 						}
@@ -632,7 +632,7 @@ void *eDVBUsbAdapter::vtunerPump()
 
 						if (pidcount)
 						{
-							eDebug("[adenin]rmove PID %d(0x%04x)", pidList[i], pidList[i]);							
+							eDebug("[adenin]add PID %d(0x%04x)", message.pidlist[i], message.pidlist[i]);
 							::ioctl(demuxFd, DMX_ADD_PID, &message.pidlist[i]);
 							pidcount++;
 						}
@@ -871,11 +871,30 @@ bool eDVBResourceManager::frontendIsMultistream(int index)
 
 std::string eDVBResourceManager::getFrontendCapabilities(int index)
 {
+	fe_delivery_system_t delsys;
 	for (eSmartPtrList<eDVBRegisteredFrontend>::iterator i(m_frontend.begin()); i != m_frontend.end(); ++i)
 	{
 		if (i->m_frontend->getSlotID() == index)
 		{
-			return i->m_frontend->getCapabilities();
+			switch (i->m_frontend->getCurrentType())
+			{
+				case iDVBFrontend::feSatellite:
+					delsys = SYS_DVBS;
+					break;
+				case iDVBFrontend::feCable:
+#if defined SYS_DVBC_ANNEX_A
+					delsys = SYS_DVBC_ANNEX_A;
+#else
+					delsys = SYS_DVBC_ANNEX_AC;
+#endif
+					break;
+				case iDVBFrontend::feTerrestrial:
+					delsys = SYS_DVBT;
+					break;
+				default:
+					return i->m_frontend->getCapabilities();
+			}
+			return i->m_frontend->getCapabilities(delsys);
 		}
 	}
 	return "";
@@ -1312,7 +1331,7 @@ RESULT eDVBResourceManager::allocateChannel(const eDVBChannelID &channelid, eUse
 	int err = allocateFrontend(fe, feparm, simulate);
 	if (err)
 	{
-		eDebugNoSimulate("can't allocate frontend!");	
+		eDebugNoSimulate("can't allocate frontend!");
 		return err;
 	}
 	RESULT res;
@@ -1408,6 +1427,7 @@ RESULT eDVBResourceManager::allocatePVRChannel(const eDVBChannelID &channelid, e
 		 * (allowing e.g. epgcache to be started)
 		 */
 		ePtr<iDVBFrontendParameters> feparm;
+		if (m_list) m_list->getChannelFrontendData(channelid, feparm);
 		ch->setChannel(channelid, feparm);
 	}
 	channel = ch;
@@ -1512,7 +1532,7 @@ int tuner_type_channel_default(ePtr<iDVBChannelList> &channellist, const eDVBCha
 					case iDVBFrontend::feTerrestrial:
 						return 30000;
 					case iDVBFrontend::feATSC:
-						return 20000;						
+						return 20000;
 					default:
 						break;
 				}
@@ -2159,6 +2179,8 @@ RESULT eDVBChannel::setChannel(const eDVBChannelID &channelid, ePtr<iDVBFrontend
 	m_channel_id = channelid;
 	m_mgr->addChannel(channelid, this);
 
+	m_current_frontend_parameters = feparm;
+
 	if (!m_frontend)
 	{
 		/* no frontend, no need to tune (must be a streamed service) */
@@ -2169,7 +2191,6 @@ RESULT eDVBChannel::setChannel(const eDVBChannelID &channelid, ePtr<iDVBFrontend
 			/* if tuning fails, shutdown the channel immediately. */
 	int res;
 	res = m_frontend->get().tune(*feparm);
-	m_current_frontend_parameters = feparm;
 
 	if (res)
 	{

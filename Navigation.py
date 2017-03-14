@@ -61,20 +61,16 @@ class Navigation:
 			self.wakeuptime, self.timertime, self.wakeuptyp, self.getstandby, self.recordtime, self.forcerecord = -1,-1,0,0,-1,0
 		#print ctime(self.wakeuptime), ctime(self.timertime), self.wakeuptyp, self.getstandby, ctime(self.recordtime), self.forcerecord
 		now = time()
-		self.wakeupwindow_plus = self.timertime + 300
-		self.wakeupwindow_minus = self.wakeuptime - (config.workaround.wakeupwindow.value * 60)
+		timediff_wakeup = self.wakeuptime - now
+		timediff_timer = self.timertime - now
 		self.syncCount = 0
 
-		wasTimerWakeup, wasTimerWakeup_failure = getFPWasTimerWakeup(True)
+		wasTimerWakeup = getFPWasTimerWakeup()
 		#TODO: verify wakeup-state for boxes where only after shutdown removed the wakeup-state (for boxes where "/proc/stb/fp/was_timer_wakeup" is not writable (clearFPWasTimerWakeup() in StbHardware.py has no effect -> after x hours and restart/reboot is wasTimerWakeup = True)
 
 		print "="*100
-		if self.wakeuptime > 0: 
-			print "[NAVIGATION] wakeup time from deep-standby expected: *** %s ***" %(ctime(self.wakeuptime))
-			print "[NAVIGATION] timer wakeup detection window: %s - %s" %(ctime(self.wakeupwindow_minus),ctime(self.wakeupwindow_plus))
-			print "-"*100
 		thisBox = getBoxType()
-		if not config.workaround.deeprecord.value and (wasTimerWakeup_failure or thisBox in ('ixussone', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', 'beyonwizt3') or getBrandOEM() in ('ebox', 'azbox', 'xp', 'ini', 'dags', 'fulan', 'entwopia')):
+		if not config.workaround.deeprecord.value and (thisBox in ('ixussone', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', 'beyonwizt3') or getBrandOEM() in ('ebox', 'azbox', 'xp', 'ini', 'dags', 'fulan', 'entwopia')):
 			print"[NAVIGATION] FORCED DEEPSTANDBY-WORKAROUND FOR THIS BOXTYPE (%s)" %thisBox
 			config.workaround.deeprecord.setValue(True)
 			config.workaround.deeprecord.save()
@@ -89,7 +85,7 @@ class Navigation:
 				self.timesynctimer.start(5000, True)
 				print"[NAVIGATION] wait for time sync"
 				print "~"*100
-			elif now >= self.wakeupwindow_minus and now <= self.wakeupwindow_plus: # if there is a recording sheduled, set the wasTimerWakeup flag
+			elif abs(timediff_wakeup) <= 600 or abs(timediff_timer) <= 600: # if there is a recording sheduled in the next 10 mins or starting before 10 mins, set the wasTimerWakeup flag (wakeup time is 5 min before timer starts, some boxes starts but earlier than is set)
 				wasTimerWakeup = True
 				f = open("/tmp/was_timer_wakeup_workaround.txt", "w")
 				file = f.write(str(wasTimerWakeup))
@@ -123,9 +119,11 @@ class Navigation:
 
 	def wakeupCheck(self):
 		now = time()
+		timediff_wakeup = self.wakeuptime - now
+		timediff_timer = self.timertime - now
 		stbytimer = 5 # original was 15
 
-		if now >= self.wakeupwindow_minus and now <= self.wakeupwindow_plus:
+		if abs(timediff_wakeup) <= 600 or abs(timediff_timer) <= 600:
 			if self.syncCount > 0:
 				stbytimer = 0
 				if not self.__wasTimerWakeup:
@@ -158,7 +156,7 @@ class Navigation:
 				if not self.forcerecord:
 					print "[NAVIGATION] timer starts at %s" % ctime(self.timertime)
 			#check for standby
-			if not self.getstandby and self.wakeuptyp < 3 and self.timertime - now > 60 + stbytimer:
+			if not self.getstandby and self.wakeuptyp < 3 and timediff_timer > 60 + stbytimer:
 				self.getstandby = 1
 				print "[NAVIGATION] more than 60 seconds to wakeup - go in standby"
 			print "="*100
@@ -345,22 +343,14 @@ class Navigation:
 	def getRecordingsTypesOnly(self, type=pNavigation.isAnyRecording):
 		return self.pnav and self.pnav.getRecordingsTypesOnly(type)
 
-	def getRecordingsSlotIDsOnly(self, type=pNavigation.isAnyRecording):
-		return self.pnav and self.pnav.getRecordingsSlotIDsOnly(type)
-
 	def getRecordingsServicesAndTypes(self, type=pNavigation.isAnyRecording):
 		return self.pnav and self.pnav.getRecordingsServicesAndTypes(type)
 
-	def getRecordingsServicesAndTypesAndSlotIDs(self, type=pNavigation.isAnyRecording):
-		return self.pnav and self.pnav.getRecordingsServicesAndTypesAndSlotIDs(type)
-
 	def getRecordingsCheckBeforeActivateDeepStandby(self, modifyTimer = True):
 		# only for 'real' recordings
-		now = time()
-		rec = self.RecordTimer.isRecording()
+		rec = False
 		next_rec_time = self.RecordTimer.getNextRecordingTime()
-		if rec or (next_rec_time > 0 and (next_rec_time - now) < 360):
-			print '[NAVIGATION] - recording = %s, recording in next minutes = %s, save timeshift = %s' %(rec, next_rec_time - now < 360 and not (config.timeshift.isRecording.value and next_rec_time - now >= 298), config.timeshift.isRecording.value)
+		if self.RecordTimer.isRecording() or (next_rec_time > 0 and (next_rec_time - time()) < 360):
 			if not self.RecordTimer.isRecTimerWakeup():# if not timer wake up - enable trigger file for automatical shutdown after recording
 				f = open("/tmp/was_rectimer_wakeup", "w")
 				f.write('1')

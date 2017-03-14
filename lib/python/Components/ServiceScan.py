@@ -80,7 +80,7 @@ class ServiceScan:
 								tp.FEC_8_9 : "8/9", tp.FEC_3_5 : "3/5", tp.FEC_4_5 : "4/5",
 								tp.FEC_9_10 : "9/10", tp.FEC_None : "NONE" }.get(tp.fec, ""))
 						if tp.is_id > -1 and tp.system == tp.System_DVB_S2:
-							tp_text = ("%s IS %d") % (tp_text, tp.is_id)						
+							tp_text = ("%s IS %d") % (tp_text, tp.is_id)
 					elif tp_type == iDVBFrontend.feCable:
 						network = _("Cable")
 						tp = transponder.getDVBC()
@@ -141,7 +141,7 @@ class ServiceScan:
 								tp.Inversion_Off : _("Off"),
 								tp.Inversion_On :_("On"),
 								tp.Inversion_Unknown : _("Auto")
-							}.get(tp.inversion, ""))						
+							}.get(tp.inversion, ""))
 					else:
 						print "unknown transponder type in scanStatusChanged"
 				self.network.setText(network)

@@ -5,8 +5,7 @@ class Tuner:
 		self.frontend = frontend
 		self.ignore_rotor = ignore_rotor
 
-	## transponder = (0:frequency 1:symbolrate 2:polarisation 3:fec 4:inversion 5:orbpos 6:system 7:modulation 8:rolloff 9:pilot 10:is_id 11:pls_mode 12:pls_code 13:tsid 14:onid)
-	
+	# transponder = (0:frequency 1:symbolrate 2:polarisation 3:fec 4:inversion 5:orbpos 6:system 7:modulation 8:rolloff 9:pilot 10:is_id 11:pls_mode 12:pls_code 13:tsid 14:onid)
 	def tune(self, transponder):
 		if self.frontend:
 			print "[TuneTest] tuning to transponder with data", transponder
@@ -28,7 +27,7 @@ class Tuner:
 			else:
 				parm.is_id = -1
 				parm.pls_mode = 0
-				parm.pls_code = 0			
+				parm.pls_code = 0
 			self.tuneSatObj(parm)
 
 	def tuneSatObj(self, transponderObj):
@@ -83,7 +82,7 @@ class Tuner:
 			feparm.setDVBC(transponderObj)
 			self.lastparm = feparm
 			self.frontend.tune(feparm)
-			
+
 	def tuneATSC(self, transponder):
 		if self.frontend:
 			print "[TuneTest] tuning to transponder with data", transponder
@@ -285,7 +284,6 @@ class TuneTest:
 		self.timer.start(100, True)
 
 	# transponder = (0:frequency 1:symbolrate 2:polarisation 3:fec 4:inversion 5:orbpos 6:system 7:modulation 8:rolloff 9:pilot 10:is_id 11:pls_mode 12:pls_code 13:tsid 14:onid)
-	
 	def addTransponder(self, transponder):
 		self.transponderlist.append(transponder)
 

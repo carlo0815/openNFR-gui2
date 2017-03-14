@@ -210,6 +210,9 @@ public:
 	eTransportStreamID getParentTransportStreamID() const { return eTransportStreamID(data[6]); }
 	void setParentTransportStreamID( eTransportStreamID tsid ) { data[6]=tsid.get(); }
 
+	int getSourceID() const { return data[7]; }
+	void setSourceID(int sourceid) { data[7] = sourceid; }
+
 	eServiceReferenceDVB getParentServiceReference() const
 	{
 		eServiceReferenceDVB tmp(*this);
@@ -224,7 +227,7 @@ public:
 		return tmp;
 	}
 
-	eServiceReferenceDVB(eDVBNamespace dvbnamespace, eTransportStreamID transport_stream_id, eOriginalNetworkID original_network_id, eServiceID service_id, int service_type)
+	eServiceReferenceDVB(eDVBNamespace dvbnamespace, eTransportStreamID transport_stream_id, eOriginalNetworkID original_network_id, eServiceID service_id, int service_type, int source_id = 0)
 		:eServiceReference(eServiceReference::idDVB, 0)
 	{
 		setTransportStreamID(transport_stream_id);
@@ -232,6 +235,7 @@ public:
 		setDVBNamespace(dvbnamespace);
 		setServiceID(service_id);
 		setServiceType(service_type);
+		setSourceID(source_id);
 	}
 
 	void set(const eDVBChannelID &chid)
@@ -276,7 +280,8 @@ public:
 	{
 		cVPID, cMPEGAPID, cTPID, cPCRPID, cAC3PID,
 		cVTYPE, cACHANNEL, cAC3DELAY, cPCMDELAY,
-		cSUBTITLE, cAACHEAPID=12, cDDPPID, cacheMax
+		cSUBTITLE, cAACHEAPID=12, cDDPPID, cAACAPID,
+		cDATAPID, cPMTPID, cacheMax
 	};
 
 	int getCacheEntry(cacheID);
@@ -300,10 +305,11 @@ public:
 		dxHoldName=8,
 		dxNewFound=64,
 		dxIsDedicated3D=128,
+		dxIsParentalProtected=256,
 	};
 
 	bool usePMT() const { return !(m_flags & dxNoDVB); }
-	bool isHidden() const { return m_flags & dxDontshow; }
+	bool isHidden() const { return (m_flags & dxDontshow || m_flags & dxIsParentalProtected); }
 	bool isDedicated3D() const { return m_flags & dxIsDedicated3D; }
 
 	CAID_LIST m_ca;
@@ -489,7 +495,7 @@ public:
 	virtual int getSystems() const = 0;
 	virtual int getIsId() const = 0;
 	virtual int getPLSMode() const = 0;
-	virtual int getPLSCode() const = 0;	
+	virtual int getPLSCode() const = 0;
 	virtual int getBandwidth() const = 0;
 	virtual int getCodeRateLp() const = 0;
 	virtual int getCodeRateHp() const = 0;
@@ -683,7 +689,7 @@ class iDVBDemux: public iObject
 public:
 	virtual RESULT createSectionReader(eMainloop *context, ePtr<iDVBSectionReader> &reader)=0;
 	virtual RESULT createPESReader(eMainloop *context, ePtr<iDVBPESReader> &reader)=0;
-	virtual RESULT createTSRecorder(ePtr<iDVBTSRecorder> &recorder, int packetsize = 188, bool streaming=false)=0;
+	virtual RESULT createTSRecorder(ePtr<iDVBTSRecorder> &recorder, unsigned int packetsize = 188, bool streaming=false)=0;
 	virtual RESULT getMPEGDecoder(ePtr<iTSMPEGDecoder> &reader, int index = 0)=0;
 	virtual RESULT getSTC(pts_t &pts, int num=0)=0;
 	virtual RESULT getCADemuxID(uint8_t &id)=0;
