@@ -111,7 +111,7 @@ class FlashOnline(Screen):
 		if os.path.exists("/media/nfr4xboot"):
 			message = _('NFR4XBoot is still installed!\nNow removing NFR4XBoot and reboot the box. After reboot FlashLocal is available.\nYour installed images are not deleted and available after re-installing NFR4XBoot again.')
 			ybox = self.session.openWithCallback(self.removenfrxboot, MessageBox, message, MessageBox.TYPE_YESNO)
-			ybox.setTitle(_('Remove NFRXBoot'))
+			ybox.setTitle(_('Remove NFR4XBoot'))
 			return False
 		if not os.path.exists("/media/hdd"):
 			self.session.open(MessageBox, _("No /hdd found !!\nPlease make sure you have a HDD mounted.\n\nExit plugin."), type = MessageBox.TYPE_ERROR)
