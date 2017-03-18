@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<skin>
+	<windowstyle id="1" type="skinned">
+		<color color="#000000" name="Background"/>
+		<color color="#ffffff" name="LabelForeground"/>
+		<color color="#000000" name="ListboxBackground"/>
+		<color color="#ffffff" name="ListboxForeground"/>
+		<color color="#000000" name="ListboxSelectedBackground"/>
+		<color color="#ffffff" name="ListboxSelectedForeground"/>
+		<color color="#000000" name="ListboxMarkedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedForeground"/>
+		<color color="#000000" name="ListboxMarkedAndSelectedBackground"/>
+		<color color="#ffffff" name="ListboxMarkedAndSelectedForeground"/>
+		<color color="#ffffff" name="WindowTitleForeground"/>
+		<color color="#000000" name="WindowTitleBackground"/>
+	</windowstyle>
+	<fonts>
+		<!-- pick a funky name for the font, so we don't conflict  -->
+		<font filename="nmsbd.ttf" name="FdLcD" scale="100"/>
+		<font filename="/usr/share/fonts/lcd.ttf" name="LCD" scale="100"/>
+		<font filename="/usr/share/fonts/OpenSans-Regular.ttf" name="RegularLCD" scale="95"/>
+	</fonts>
+
+<!-- template -->
+
+<!-- main-->
+	<screen name="InfoBarSummary" position="0,0" size="800,480">
+	<!--clock background-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_bg.png" position="22,12" size="800,480" zPosition="0" />
+	<!--time line-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="95,182" size="260,8" zPosition="10" transparent="1" alphatest="on" />
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="440,182" size="260,8" zPosition="10" transparent="1" alphatest="on" />
+	<!--date line-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="182,384" size="431,6" zPosition="11" transparent="1" alphatest="on" />
+	<!--rad center-->
+	<!--ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_rad.png" position="103,8" size="14,114" zPosition="12" transparent="1" alphatest="on" /-->
+	<!--TIME-->
+	<widget source="global.CurrentTime" render="Label" position="75,60" size="300,268" font="RegularLCD;185" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#ffffff">
+		<convert type="ClockToText">Format:%H</convert>
+	</widget>
+	<widget source="global.CurrentTime" render="Label" position="420,60" size="300,268" font="RegularLCD;185" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#ffffff">
+		<convert type="ClockToText">Format:%M</convert>
+	</widget>
+	<!--DATE-->
+	<widget source="global.CurrentTime" render="Label" position="center,329" size="440,100" font="RegularLCD;88" halign="center" valign="center" zPosition="1" foregroundColor="#ffee22" transparent="1">
+		<convert type="ClockToText">ShortDate</convert>
+	</widget>
+	<!--RECORD LED-->
+	<widget source="session.RecordState" render="Pixmap" pixmap="display/lcdskins/clock_lcd_digital_flipClock_rec.png" position="22,12" size="800,480" zPosition="10" transparent="1" alphatest="on" >
+		<convert type="ConditionalShowHide">Blink</convert>
+	</widget>
+<!--END-->
+</screen>
+	<screen name="StandbySummary" position="0,0" size="800,480">
+	<!--clock background-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_bg.png" position="22,12" size="800,480" zPosition="0" />
+	<!--time line-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="40,91" size="138,4" zPosition="10" transparent="1" alphatest="on" />
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="222,91" size="138,4" zPosition="10" transparent="1" alphatest="on" />
+	<!--date line-->
+	<ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_split.png" position="86,198" size="230,3" zPosition="11" transparent="1" alphatest="on" />
+	<!--rad center-->
+	<!--ePixmap pixmap="display/lcdskins/clock_lcd_digital_flipClock_rad.png" position="103,8" size="14,114" zPosition="12" transparent="1" alphatest="on" /-->
+	<!--TIME-->
+	<widget source="global.CurrentTime" render="Label" position="45,24" size="120,134" font="RegularLCD;100" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#ffffff">
+		<convert type="ClockToText">Format:%H</convert>
+	</widget>
+	<widget source="global.CurrentTime" render="Label" position="232,24" size="120,134" font="RegularLCD;100" halign="center" valign="top" noWrap="1" zPosition="1" transparent="1" foregroundColor="#ffffff">
+		<convert type="ClockToText">Format:%M</convert>
+	</widget>
+	<!--DATE-->
+	<widget source="global.CurrentTime" render="Label" position="center,172" size="220,50" font="RegularLCD;42" halign="center" valign="center" zPosition="1" foregroundColor="#ffee22" transparent="1">
+		<convert type="ClockToText">ShortDate</convert>
+	</widget>
+	<!--RECORD LED-->
+	<widget source="session.RecordState" render="Pixmap" pixmap="display/lcdskins/clock_lcd_digital_flipClock_rec.png" position="0,0" size="800,480" zPosition="10" transparent="1" alphatest="on" >
+		<convert type="ConditionalShowHide">Blink</convert>
+	</widget>
+<!--END-->
+</screen>
+	<include filename="/usr/share/enigma2/display/lcdskins/skin_display.xml" />
+</skin>
