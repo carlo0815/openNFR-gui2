@@ -13446,3 +13446,15 @@ msgstr "Installiere von /media/nfr4xboot/NFR4XBootUpload"
     
 msgid "Install from Internet (OpenPLi,OpenVix,OpenATV,Egami,OpenNFR,OpenHDF)"    
 msgstr "Installiere Online (OpenPLi,OpenVix,OpenATV,Egami,OpenNFR,OpenHDF)"
+
+msgid "Change Boxmode to control Hardware Chip Modes*"
+msgstr "Boxmodus zur Hardwaresteuerung*"
+
+msgid "Switch Mode to enable HDR Modes or PIP Functions"
+msgstr "Wechselt den Boxmodus zur Aktivierung des HDR-Modus oder der PIP-Funktionen"
+
+msgid "enable PIP no HDR"
+msgstr "aktiviere PIP ohne HDR"
+
+msgid "12bit 4:2:0/4:2:2 no PIP"
+msgstr "12bit 4:2:0/4:2:2 ohne PIP"
