@@ -195,7 +195,7 @@
     <ePixmap name="mb_bg" position="center,center" zPosition="0" size="1280,718" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/frame_base-fs8.png" />
     <ePixmap name="mb_bgdock" position="center,630" zPosition="2" size="76,74" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/dock.png" alphatest="blend" />
     <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/icons/deletered.png" position="270,648" zPosition="2" size="40,40" transparent="1" alphatest="blend" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/icons/downloadgreen.png" position="420,648" zPosition="2" size="40,40" transparent="1" alphatest="blend" />
+    <!--<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/icons/downloadgreen.png" position="420,648" zPosition="2" size="40,40" transparent="1" alphatest="blend" />-->
     <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/icons/settingsblue.png" position="970,648" zPosition="2" size="40,40" transparent="1" alphatest="blend" />
     <widget name="filelist" transparent="1" position="136,205" zPosition="5" size="417,298" scrollbarMode="showOnDemand" />
     <widget name="fileinfo" zPosition="6" transparent="1" halign="left" position="736,205" size="408,306" font="Regular;15" foregroundColor="grey" />
