@@ -46,7 +46,7 @@ playlist = []
 #	from enigma import evfd
 #except Exception, e:
 #	print "Media Center: Import evfd failed"
-radirl = "http://ipkserver.hdmedia-universe.com/bmcradio/"
+radirl = 'http://dev.nachtfalke.biz/nfr/downloads/bmcradio/Radiolist/'
 #for lyrics
 def getEncodedString(value):
 	returnValue = ""
@@ -858,8 +858,8 @@ class MC_WebRadio(Screen, HelpableScreen):
 		time = config.plugins.mc_ap.jpg_delay.value * 1000
 		self.JpgTimer.start(time, True)
 	def showMenu(self):
-		if fileExists("/tmp/index.html"):
-			os.remove("/tmp/index.html")
+		if fileExists("/tmp/index.txt"):
+			os.remove("/tmp/index.txt")
 		menu = []
 		menu.append((_("70-80er"), "70-80er/"))
 		menu.append((_("Alternative"), "Alternative/"))
@@ -888,14 +888,14 @@ class MC_WebRadio(Screen, HelpableScreen):
 	def menuCallback(self, choice):
 		if choice is None:
 			return
-		os.system("echo "+ choice[1] +" > /tmp/.webselect | wget -O /tmp/index.html "+ radirl +""+ choice[1])
+		os.system("echo "+ choice[1] +" > /tmp/.webselect | wget -O /tmp/index.txt "+ radirl +""+ choice[1] + "index.txt")
 		self.session.openWithCallback(self.updd, MC_WebDown)
 class MC_WebDown(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		list = []
-		if fileExists("/tmp/index.html"):
-			names = open("/tmp/index.html").read().split('\n')
+		if fileExists("/tmp/index.txt"):
+			names = open("/tmp/index.txt").read().split('\n')
 			for x in names:
 				list.append((x, _(x)))
 		self["menu"] = List(list)
@@ -909,11 +909,11 @@ class MC_WebDown(Screen):
 		if selection is not None:
 			gen = open("/tmp/.webselect").read().split('\n')
 			os.system("wget -O '"+ mcpath +"radio/"+ selection[1] +"' '"+ radirl +""+ gen[0] +""+ selection[1].replace(" ", "%20") +"'")
-			os.remove("/tmp/index.html")
+			os.remove("/tmp/index.txt")
 			self.close()
 	def exit(self):
 		try:
-			os.remove("/tmp/index.html")
+			os.remove("/tmp/index.txt")
 		except:
 			print "no Index found"
 		self.close()
