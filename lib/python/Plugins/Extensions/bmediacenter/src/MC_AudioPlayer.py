@@ -912,7 +912,10 @@ class MC_WebDown(Screen):
 			os.remove("/tmp/index.html")
 			self.close()
 	def exit(self):
-		os.remove("/tmp/index.html")
+		try:
+			os.remove("/tmp/index.html")
+		except:
+			print "no Index found"
 		self.close()
 class MC_AudioPlaylist(Screen, InfoBarSeek):
 	def __init__(self, session):
