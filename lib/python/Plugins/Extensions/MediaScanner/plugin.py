@@ -1,6 +1,7 @@
 from Plugins.Plugin import PluginDescriptor
 from Components.Scanner import scanDevice
 from Screens.InfoBar import InfoBar
+from enigma import getDesktop
 from glob import glob
 import os
 
@@ -285,3 +286,9 @@ def Plugins(**kwargs):
 		PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
 		PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
 		]
+def Plugins(**kwargs):
+    screenwidth = getDesktop(0).size().width()
+    if screenwidth and screenwidth == 1920:
+        return [PluginDescriptor(name='MediaScanner', description=_('Scan files...'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaScannerFHD.png', fnc=main)]
+    else:
+        return [PluginDescriptor(name='MediaScanner', description=_('Scan files...'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaScanner.png', fnc=main)]
