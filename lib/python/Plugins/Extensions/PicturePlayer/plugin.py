@@ -1,4 +1,5 @@
 from Plugins.Plugin import PluginDescriptor
+from enigma import getDesktop
 
 #------------------------------------------------------------------------------------------
 
@@ -47,6 +48,8 @@ def filescan(**kwargs):
 		)
 
 def Plugins(**kwargs):
-	return	[
-	     PluginDescriptor(name = _("PicturePlayer"), description = _("Play back media files"), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc = main),
-		 PluginDescriptor(name=_("PicturePlayer"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan)]
+	screenwidth = getDesktop(0).size().width()
+        if screenwidth and screenwidth == 1920:
+		return	[PluginDescriptor(name = _("PicturePlayer"), description = _("Play back media files"), icon='pictureplayerfhd.png', where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc = main), PluginDescriptor(name = _("PicturePlayer"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan)]
+	else:
+		return	[PluginDescriptor(name = _("PicturePlayer"), description = _("Play back media files"), icon='pictureplayer.png', where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc = main), PluginDescriptor(name = _("PicturePlayer"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan)]

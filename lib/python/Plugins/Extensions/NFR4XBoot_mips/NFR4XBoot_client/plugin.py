@@ -200,4 +200,4 @@ def menu(menuid, **kwargs):
 from Plugins.Plugin import PluginDescriptor
 
 def Plugins(**kwargs):
-    return [PluginDescriptor(name='NFR4XBoot', description='NFR4X MultiBoot_Client', where=PluginDescriptor.WHERE_MENU, fnc=menu), PluginDescriptor(name='NFR4XBoot', description=_('E2 Light Multiboot'), icon='plugin_icon.png', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)]
+    return [PluginDescriptor(name='NFR4XBoot', description='NFR4X MultiBoot_Client', where=PluginDescriptor.WHERE_MENU, fnc=menu), PluginDescriptor(name='NFR4XBoot', description=_('E2 Light Multiboot'), icon='NFR4XBootFHD.png', where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)]

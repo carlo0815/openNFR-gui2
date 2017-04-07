@@ -8,4 +8,6 @@ dist_install_DATA = \
 	LICENSE \
 	maintainer.info \
 	keymap.xml \
-	menusort.xml
+	menusort.xml \
+	MenuSortFHD.png \
+	MenuSort.png

@@ -357,3 +357,10 @@ def Plugins(**kwargs):
 	else:
 		return [
 			PluginDescriptor(name = "Media Center", description = "Media Center Plugin for your OpenNFR-Image", icon="plugin.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main)]
+
+def Plugins(**kwargs):
+    screenwidth = getDesktop(0).size().width()
+    if screenwidth and screenwidth == 1920:
+        return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenterFHD.png', fnc=main)]
+    else:
+        return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenter.png', fnc=main)]
