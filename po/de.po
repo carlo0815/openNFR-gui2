@@ -13464,3 +13464,33 @@ msgstr "Der PIN wurde erfolgreich gespeichert"
 
 msgid "Would you save the entered PIN %s persistent?"
 msgstr "Möchten Sie die PIN %s dauerhaft speichern?"
+
+msgid "Please set up tuner A\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner A konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner B\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner B konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen" 
+
+msgid "Please set up tuner C\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner C konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner D\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner D konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner E\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner E konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner F\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner F konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen" 
+
+msgid "Please set up tuner G\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner G konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner H\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner H konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner I\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner I konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen"
+
+msgid "Please set up tuner J\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
+msgstr "Bitte Tuner J konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen" 
