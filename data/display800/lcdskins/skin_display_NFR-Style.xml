@@ -547,13 +547,13 @@
 		<panel name="SummaryClockPanel" />
 	</screen>
 	<screen name="QuickMenu_summary" position="0,0" size="800,480">
-		<widget source="parent.Title" render="Label" position="1,20" size="480,120" font="FdLcD;48" halign="center" valign="center" foregroundColor="#FFFF00" />
-		<eLabel position="0,130" size="480,1" backgroundColor="white" />
-		<widget source="parent.summary_description" render="Label" position="0,150" size="480,90" font="FdLcD;35" halign="center" valign="center" zPosition="1"/>
+		<widget source="parent.Title" render="Label" position="1,20" size="800,160" font="FdLcD;60" halign="center" valign="center" foregroundColor="#FFFF00" />
+		<eLabel position="0,200" size="800,2" backgroundColor="white" />
+		<widget source="parent.summary_description" render="Label" position="1,250" size="800,140" font="FdLcD;56" halign="center" valign="center" zPosition="1"/>
 	</screen>
 	<!-- Infopanel -->
 	<screen name="Infopanel_summary" position="0,0" size="800,480">
-		<widget source="parent.Title" render="Label" position="1,20" size="800,150" font="FdLcD;60" foregroundColor="#FFFF00" halign="center" valign="center" />
+		<widget source="parent.Title" render="Label" position="1,20" size="800,160" font="FdLcD;64" foregroundColor="#FFFF00" halign="center" valign="center" />
 		<eLabel position="0,200" size="800,2" backgroundColor="white" />
 		<widget source="parent.summary_description" render="Label" position="1,250" size="800,140" zPosition="1" font="FdLcD;60" halign="center" valign="center" />
 	</screen>
