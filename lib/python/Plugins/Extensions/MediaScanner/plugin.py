@@ -279,16 +279,20 @@ def filescan(**kwargs):
 		]
 
 def Plugins(**kwargs):
-	return [
-		PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, fnc=main),
-#		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
-		PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
-		PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
-		PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
-		]
-def Plugins(**kwargs):
     screenwidth = getDesktop(0).size().width()
     if screenwidth and screenwidth == 1920:
-        return [PluginDescriptor(name='MediaScanner', description=_('Scan files...'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaScannerFHD.png', fnc=main)]
+	    return [
+		    PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScannerFHD.png',fnc=main),
+    #		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
+		    PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+		    PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
+		    PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
+		    ]
     else:
-        return [PluginDescriptor(name='MediaScanner', description=_('Scan files...'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaScanner.png', fnc=main)]
+	    return [
+		    PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScanner.png',fnc=main),
+    #		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
+		    PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+		    PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
+		    PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
+		    ]	
