@@ -4,17 +4,19 @@ m2 / Petofi
 m2 HD
 M4 Sport
 m4 HD
+m5
+m5 HD
 Duna TV
 Duna HD
 Duna World
-M3 Anno.
+M3 Anno
 RTL Klub
 TV2
 RTL2
 RTL+
 Sorozat+
 SuperTV2
-FEM3
+Prime
 Cool
 STORY4
 STORY5
@@ -36,6 +38,7 @@ Fox
 FilmBox Extra HD
 Filmbox
 Paramount Channel Hungary
+Film+2
 Comedy Central Hungary
 Comedy Central Extra
 AXN CE
@@ -56,7 +59,7 @@ Cinemax2
 Discovery Channel
 Discovery Science
 TLC
-Discovery World
+DTX
 ID Xtra
 Nat Geo
 Nat Geo Wild
@@ -67,14 +70,20 @@ Viasat History
 HISTORY
 Da Vinci Learning
 DOQ
+Chili
+Izaura TV
+Fem3 HU
 Sport1
 Sport2
+Spiler TV
 Eurosport
 Eurosport 2
 Extreme Sports Channel
 Auto Motor Sport
 SportM
 Fishing and Hunting
+Spike Hungary
+Humor +
 GALAXY
 Disney Channel
 JimJam
@@ -85,18 +94,20 @@ Cartoon Network
 Boomerang
 Megamax
 Nick Jr
+Kiwi TV
 RTL Klub HD
 Discovery HD Showcase
 Animal Planet HD
 Travel Channel HD
 History HD
-NGC HD
+Nat Geo HD (HUN)
 Nat Geo Wild HD
 Eurosport 1 HD
 Eurosport 2 HD
 Sport 1 HD
 HBO HD
 Sundance TV
+Zenebutik
 Mooz Dance HD
 MTV European
 VIVA Hungary
@@ -114,7 +125,7 @@ Sky News
 CNBC Europe
 Bloomberg
 AlJazeera English
-CCTV News
+CGTN
 France 24
 TV5MONDE
 Hustler TV
@@ -130,6 +141,7 @@ Feel good music
 Total Hits
 Blues
 SperantaTV
+Credo TV
 AMC CE
 Arena Sport 1
 Arena Sport 1 HD
@@ -182,3 +194,7 @@ TV JOJ
 TV Lux
 TV Markiza
 TV NOVA
+FEM3
+Discovery World
+NGC HD
+CCTV News
