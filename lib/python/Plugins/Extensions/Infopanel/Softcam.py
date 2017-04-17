@@ -75,6 +75,9 @@ def getcamcmd(cam):
 		elif "mbox" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
 				config.NFRSoftcam.camconfig.value + "/mbox.cfg"
+		elif "gbox" in camname:
+			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
+				config.NFRSoftcam.camconfig.value + "/gbox.cfg"
 		elif "cccam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -C " + \
 				config.NFRSoftcam.camconfig.value + "/CCcam.cfg"
