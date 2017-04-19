@@ -13494,3 +13494,6 @@ msgstr "Bitte Tuner I konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Ty
 
 msgid "Please set up tuner J\nFor Hybrit Tuner Models switch Tuner Type with left and right keys"
 msgstr "Bitte Tuner J konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Typ mit der linken und rechten Taste einstellen" 
+
+msgid "Execute after current event"
+msgstr "Ausschalten nach aktueller Sendung"
