@@ -13497,3 +13497,6 @@ msgstr "Bitte Tuner J konfigurieren\nFür Receiver mit Hybrid Tuner den Tuner-Ty
 
 msgid "Execute after current event"
 msgstr "Ausschalten nach aktueller Sendung"
+
+msgid "Execute in "
+msgstr "Ausführen in "
