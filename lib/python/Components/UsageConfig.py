@@ -273,6 +273,12 @@ def InitUsageConfig():
 			choicelist.append(("%d" % i, _("Standby in ") + h))
 		else:
 			choicelist.append(("0", "Do nothing"))
+			
+	choicelist = [("0", _("Do nothing"))]
+	for i in range(900, 7201, 900):
+		m = abs(i / 60)
+		m = ngettext("%d minute", "%d minutes", m) % m
+		choicelist.append((str(i), _("Standby in ") + m))			
 	config.usage.inactivity_timer = ConfigSelection(default = "0", choices = choicelist)
 	config.usage.inactivity_timer_blocktime = ConfigYesNo(default = True)
 	config.usage.inactivity_timer_blocktime_begin = ConfigClock(default = mktime((0, 0, 0, 6, 0, 0, 0, 0, 0)))
