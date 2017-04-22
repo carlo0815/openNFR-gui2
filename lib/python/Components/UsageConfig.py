@@ -300,7 +300,7 @@ def InitUsageConfig():
 			choicelist.append(("event_standby", _("Standby after current event")))		
 	config.usage.sleep_timer = ConfigSelection(default = "0", choices = choicelist)
 
-	choicelist = [("show_menu", _("Show shutdown menu")), ("shutdown", _("Immediate shutdown")), ("standby", _("Standby")), ("sleeptimer", _("SleepTimer")), ("powertimerStandby", _("PowerTimer Standby")), ("powertimerDeepStandby", _("PowerTimer DeepStandby"))]
+	choicelist = [("show_menu", _("Show shutdown menu")), ("shutdown", _("Immediate shutdown")), ("standby", _("Standby")), ("sleeptimer", _("SleepTimer"))]
 	config.usage.on_long_powerpress = ConfigSelection(default = "show_menu", choices = choicelist)
 	config.usage.on_short_powerpress = ConfigSelection(default = "standby", choices = choicelist)
 
