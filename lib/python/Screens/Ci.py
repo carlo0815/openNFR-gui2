@@ -533,7 +533,7 @@ class CiSelection(Screen):
 		self.list.append(getConfigListEntry(_("Multiple service support"), config.ci[slot].canDescrambleMultipleServices))
 		if SystemInfo["CommonInterfaceSupportsHighBitrates"]:
 			self.list.append(getConfigListEntry(_("High bitrate support"), config.ci[slot].canHandleHighBitrates))
-		if boxtype in ("sf208", "sf228", "sf238", "twinboxlcd", "twinboxlcdci5", "singleboxlcd", "odinplus", "e4hd", "vusolo4k"):
+		if boxtype in ("sf208", "sf228", "sf238", "twinboxlcd", "twinboxlcdci5", "singleboxlcd", "odinplus", "e4hd"):
 			self.list.append( (_("CI+ Fix Init"),ConfigNothing(), 3, slot) )				
 
 	def updateState(self, slot):
