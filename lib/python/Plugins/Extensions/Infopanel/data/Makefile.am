@@ -7,7 +7,8 @@ dist_install_DATA = \
 	PluginHDDi.sh \
 	PluginHDDu.sh  \
 	PluginUSBi.sh  \
-	PluginUSBu.sh
+	PluginUSBu.sh  \
+	driver.sh
 	
 install-data-hook:
 	@chmod +x $(DESTDIR)$(installdir)/screenshot.sh
@@ -15,3 +16,4 @@ install-data-hook:
 	@chmod +x $(DESTDIR)$(installdir)/PluginHDDu.sh
 	@chmod +x $(DESTDIR)$(installdir)/PluginUSBi.sh
 	@chmod +x $(DESTDIR)$(installdir)/PluginUSBu.sh
+	@chmod +x $(DESTDIR)$(installdir)/driver.sh
