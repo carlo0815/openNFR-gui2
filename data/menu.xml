@@ -158,5 +158,22 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item text="Deep standby" requires="DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="Shutdown" requires="!DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="MultiBoot" requires="HaveMultiBoot" entryID="deep_standby"><screen module="MultiBootStartup" screen="MultiBootStartup" /></item>
+			<item level="0" requires="loadcidriver" text="Reboot with CI+ Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/home/root/driver.sh cidriver")
+system("reboot")
+		
+</code>
+			</item>
+			<item level="0" requires="loadcidriver" text="Reboot with Transcoding Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/home/root/driver.sh tcdriver")
+system("reboot")
+</code>
+			</item>
 		</menu>
 </menu> 
