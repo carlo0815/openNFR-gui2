@@ -175,5 +175,39 @@ system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh tcdr
 system("reboot")
 </code>
 			</item>
+			<item level="0" requires="loadci3driver" text="Reboot with CI+ Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ci3driver")
+system("reboot")
+		
+</code>
+			</item>
+			<item level="0" requires="loadci3driver" text="Reboot with IPTV Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ip3driver")
+system("reboot")
+</code>
+			</item>
+			<item level="0" requires="loadci4driver" text="Reboot with CI+ Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ci4driver")
+system("reboot")
+		
+</code>
+			</item>
+			<item level="0" requires="loadci4driver" text="Reboot with IPTV Driver">
+<code>
+from boxbranding import getBoxType
+from os import system, _exit
+system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ip4driver")
+system("reboot")
+</code>
+			</item>			
 		</menu>
 </menu> 
