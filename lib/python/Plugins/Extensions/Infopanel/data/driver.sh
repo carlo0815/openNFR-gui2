@@ -28,6 +28,40 @@ cidriver)
         cp -r /etc/extraci /lib/modules/$kernel/extra               
 	echo -e "done.\n"
 	;;
+ip3driver)
+	echo -n "enable ip Driver and reboot...\n "
+        rm /etc/modules-load.d/_formuler3.conf
+        cp /etc/modules-load.d/_formuler3.conf_ip /etc/modules-load.d/_formuler3.conf
+        rm -r /lib/modules/$kernel/extra
+        cp -r /etc/extraip /lib/modules/$kernel/extra        
+	echo -e "done.\n"
+	;;
+
+ci3driver)
+	echo -n "enable ci Driver and reboot...\n "
+        rm /etc/modules-load.d/_formuler3.conf
+        cp /etc/modules-load.d/_formuler3.conf_ci /etc/modules-load.d/_formuler3.conf
+        rm -r /lib/modules/$kernel/extra
+        cp -r /etc/extraci /lib/modules/$kernel/extra               
+	echo -e "done.\n"
+	;;
+ip4driver)
+	echo -n "enable ip Driver and reboot...\n "
+        rm /etc/modules-load.d/_formuler4.conf
+        cp /etc/modules-load.d/_formuler4.conf_ip /etc/modules-load.d/_formuler4.conf
+        rm -r /lib/modules/$kernel/extra
+        cp -r /etc/extraip /lib/modules/$kernel/extra        
+	echo -e "done.\n"
+	;;
+
+ci4driver)
+	echo -n "enable ci Driver and reboot...\n "
+        rm /etc/modules-load.d/_formuler4.conf
+        cp /etc/modules-load.d/_formuler4.conf_ci /etc/modules-load.d/_formuler4.conf
+        rm -r /lib/modules/$kernel/extra
+        cp -r /etc/extraci /lib/modules/$kernel/extra               
+	echo -e "done.\n"
+	;;	
 esac
 
 exit 0
