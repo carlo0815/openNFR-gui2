@@ -13500,3 +13500,16 @@ msgstr "Ausschalten nach aktueller Sendung"
 
 msgid "Execute in "
 msgstr "Ausführen in "
+
+msgid ""
+"PowerOff while Recording in progress!\n"
+"Entering standby, after recording the box will shutdown."
+msgstr ""
+"Zurzeit sind Aufnahmen aktiv oder starten gleich!\n"
+"Der Receiver wird jetzt in den Standby versetzt und am Ende der Aufnahme heruntergefahren."
+
+msgid "Reboot with CI+ Driver"
+msgstr "Neustart mit CI+ Treiber"
+
+msgid "Reboot with Transcoding Driver"
+msgstr "Neustart mit Transcoding Treiber"
