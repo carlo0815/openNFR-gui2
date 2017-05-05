@@ -13513,3 +13513,25 @@ msgstr "Neustart mit CI+ Treiber"
 
 msgid "Reboot with Transcoding Driver"
 msgstr "Neustart mit Transcoding Treiber"
+
+msgid "Backup current Channellist"
+msgstr "Aktuelle Kanalliste sichern"
+
+msgid ""
+"\n"
+"Backup your %s %s Channellist."
+msgstr ""
+"\n"
+"Sichert die Kanalliste deiner %s %s"
+
+msgid "Press ok or green button to install satellites.xml"
+msgstr "Drücke OK oder die grüne Taste zum Installieren der satellites.xml"
+
+msgid "Play with ServiceExtEplayer3"
+msgstr "Abspielen mit ServiceExtEplayer3"
+
+msgid "Play with ServiceGstPlayer"
+msgstr "Abspielen mit ServiceGstPlayer"
+
+msgid "Show Covers in Movielist"
+msgstr "Zeige Cover in Filmliste"
