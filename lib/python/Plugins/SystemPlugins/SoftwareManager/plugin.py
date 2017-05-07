@@ -55,6 +55,30 @@ config.plugins.softwaremanager.overwriteConfigFiles = ConfigSelection(
 config.plugins.softwaremanager.onSetupMenu = ConfigYesNo(default=False)
 config.plugins.softwaremanager.onBlueButton = ConfigYesNo(default=False)
 
+def Load_defaults():
+	config.plugins.softwaremanager = ConfigSubsection()
+	config.plugins.softwaremanager.overwriteSettingsFiles = ConfigYesNo(default=False)
+	config.plugins.softwaremanager.overwriteDriversFiles = ConfigYesNo(default=True)
+	config.plugins.softwaremanager.overwriteEmusFiles = ConfigYesNo(default=True)
+	config.plugins.softwaremanager.overwritePiconsFiles = ConfigYesNo(default=True)
+	config.plugins.softwaremanager.overwriteBootlogoFiles = ConfigYesNo(default=True)
+	config.plugins.softwaremanager.overwriteSpinnerFiles = ConfigYesNo(default=True)
+	config.plugins.softwaremanager.overwriteConfigFiles = ConfigSelection(
+					[
+					("Y", _("Yes, always")),
+					("N", _("No, never")),
+					("ask", _("Always ask"))
+					], "Y")
+
+	config.plugins.softwaremanager.updatetype = ConfigSelection(
+					[
+						("hot", _("Upgrade with GUI")),
+						("cold", _("Unattended upgrade without GUI")),
+					], "hot")
+	config.plugins.softwaremanager.epgcache = ConfigYesNo(default=False)
+
+Load_defaults()
+
 def write_cache(cache_file, cache_data):
 	#Does a cPickle dump
 	if not os_path.isdir( os_path.dirname(cache_file) ):
@@ -398,6 +422,14 @@ class SoftwareManagerSetup(Screen, ConfigListScreen):
 	def createSetup(self):
 		self.list = [ ]
 		self.overwriteConfigfilesEntry = getConfigListEntry(_("Overwrite configuration files?"), config.plugins.softwaremanager.overwriteConfigFiles)
+		self.overwriteSettingsfilesEntry = getConfigListEntry(_("Overwrite Setting Files ?"), config.plugins.softwaremanager.overwriteSettingsFiles)
+		self.overwriteDriversfilesEntry = getConfigListEntry(_("Overwrite Driver Files ?"), config.plugins.softwaremanager.overwriteDriversFiles)
+		self.overwriteEmusfilesEntry = getConfigListEntry(_("Overwrite Emu Files ?"), config.plugins.softwaremanager.overwriteEmusFiles)
+		self.overwritePiconsfilesEntry = getConfigListEntry(_("Overwrite Picon Files ?"), config.plugins.softwaremanager.overwritePiconsFiles)
+		self.overwriteBootlogofilesEntry = getConfigListEntry(_("Overwrite Bootlogo Files ?"), config.plugins.softwaremanager.overwriteBootlogoFiles)
+		self.overwriteSpinnerfilesEntry = getConfigListEntry(_("Overwrite Spinner Files ?"), config.plugins.softwaremanager.overwriteSpinnerFiles)
+		self.updatetypeEntry  = getConfigListEntry(_("Select Software Update"), config.plugins.softwaremanager.updatetype)
+
 		self.list.append(self.overwriteConfigfilesEntry)
 		self.list.append(getConfigListEntry(_("show softwaremanager in plugin menu"), config.plugins.softwaremanager.onSetupMenu))
 		self.list.append(getConfigListEntry(_("show softwaremanager on blue button"), config.plugins.softwaremanager.onBlueButton))
@@ -1907,4 +1939,4 @@ def Plugins(path, **kwargs):
 		list.append(PluginDescriptor(name=_("Software management"), description=_("Manage your %s %s's software") % (getMachineBrand(), getMachineName()), icon='SoftwareManagerFHD.png' , where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc=UpgradeMain))
 	if config.plugins.softwaremanager.onBlueButton.value:
 		list.append(PluginDescriptor(name=_("Software management"), description=_("Manage your %s %s's software") % (getMachineBrand(), getMachineName()), icon='SoftwareManagerFHD.png' , where = PluginDescriptor.WHERE_EXTENSIONSMENU, needsRestart = False, fnc=UpgradeMain))
-	return list
+	return list 
