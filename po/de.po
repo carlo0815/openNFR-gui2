@@ -13535,3 +13535,30 @@ msgstr "Abspielen mit ServiceGstPlayer"
 
 msgid "Show Covers in Movielist"
 msgstr "Zeige Cover in Filmliste"
+
+msgid "Upgrade with GUI"
+msgstr "Update mit Anzeige"
+
+msgid "Unattended upgrade without GUI"
+msgstr "Automatisches Update ohne Anzeige"
+
+msgid "Overwrite Setting Files ?"
+msgstr "Settings-Dateien überschreiben?"
+
+msgid "Overwrite Driver Files ?"
+msgstr "Treiber-Module überschreiben?"
+
+msgid "Overwrite Emu Files ?"
+msgstr "Emu-Dateien überschreiben?"
+
+msgid "Overwrite Picon Files ?"
+msgstr "Picons überschreiben?"
+
+msgid "Overwrite Bootlogo Files ?"
+msgstr "Bootlogos überschreiben?"
+
+msgid "Overwrite Spinner Files ?"
+msgstr "Spinner-Dateien überschreiben?"
+
+msgid "Select Software Update"
+msgstr "Auswahl Software Update"
