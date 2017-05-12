@@ -1929,6 +1929,8 @@ def startSetup(menuid):
 	return [ ]
 
 def Plugins(path, **kwargs):
+	config.plugins.softwaremanager.onSetupMenu = ConfigYesNo(default=False)
+        config.plugins.softwaremanager.onBlueButton = ConfigYesNo(default=False)
 	global plugin_path
 	plugin_path = path
 	list = [
