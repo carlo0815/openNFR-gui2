@@ -667,7 +667,7 @@ class PermanentPinEntry(Screen, ConfigListScreen):
 						if not config.plugins.autopin.show510.value and entry[1].find(" 510 ") is not -1:
 							self.keyCancel()
 							return
-		self.updateList(list)
+			self.updateList(list)
 
 	def cancel(self):
 		self.close(None)
