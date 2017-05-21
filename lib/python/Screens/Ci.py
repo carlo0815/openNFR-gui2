@@ -649,25 +649,7 @@ class PermanentPinEntry(Screen, ConfigListScreen):
 			self.pin.save()
 			self.session.openWithCallback(self.close, MessageBox, _("The PIN code has been saved successfully."), MessageBox.TYPE_INFO)
 		else:
-			self.mmiclosed = False
-			self.tag = screen[0][0]
-			for entry in screen:
-				if entry[0] == "PIN":
-					self.addEntry(list, entry)
-				else:
-					if entry[0] == "TITLE":
-						self["title"].setText(entry[1])
-					elif entry[0] == "SUBTITLE":
-						self["subtitle"].setText(entry[1])
-					elif entry[0] == "BOTTOM":
-						self["bottom"].setText(entry[1])
-					elif entry[0] == "TEXT":
-						self.addEntry(list, entry)
-						# auto confirm 510
-						if not config.plugins.autopin.show510.value and entry[1].find(" 510 ") is not -1:
-							self.keyCancel()
-							return
-			self.updateList(list)
+			self.session.open(MessageBox, _("The PIN codes you entered are different."), MessageBox.TYPE_ERROR)
 
 	def cancel(self):
 		self.close(None)
