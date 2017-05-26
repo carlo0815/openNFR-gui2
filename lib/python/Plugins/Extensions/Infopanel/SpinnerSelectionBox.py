@@ -77,7 +77,7 @@ class SpinnerSelectionBox(Screen):
 	def KeyBlue(self):
 		self.session.openWithCallback(self.Key_ex, MoveSpinner_int)
 		
-	def Key_ex(self, arg):
+	def Key_ex(self):
                 self.cancel()			
 
 
