@@ -184,7 +184,7 @@ class VideoEnhancement:
 
 				if not VideoEnhancement.firstRun:
 					self.setConfiguredValues()
-			if getBoxType() in ('gbquad', 'gbquadplus', 'gbuhdquad'):
+			if getBoxType() in ('gbquad', 'gbquadplus', 'gbquad4k'):
 				config.pep.sharpness = ConfigSlider(default=256, limits=(0,256))
 			else:
 				config.pep.sharpness = ConfigSlider(default=0, limits=(0,256))					
