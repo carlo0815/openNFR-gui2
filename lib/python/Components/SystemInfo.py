@@ -47,10 +47,6 @@ SystemInfo["loadcidriver"] = getBoxType() == 'formuler1'
 SystemInfo["loadci3driver"] = getBoxType() == 'formuler3'
 SystemInfo["loadci4driver"] = getBoxType() == 'formuler4'
 SystemInfo["WakeOnLAN"] = fileCheck("/proc/stb/power/wol") or fileCheck("/proc/stb/fp/wol")
-if getBoxType() in ('gbquad', 'gbquadplus','gb800ueplus', 'gb800seplus', 'gbipbox'):
-	SystemInfo["WOL"] = False
-else:
-	SystemInfo["WOL"] = fileCheck("/proc/stb/power/wol") or fileCheck("/proc/stb/fp/wol")
 SystemInfo["HDMICEC"] = (fileExists("/dev/hdmi_cec") or fileExists("/dev/misc/hdmi_cec0")) and fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo")
 SystemInfo["SABSetup"] = fileExists("/usr/lib/enigma2/python/Plugins/SystemPlugins/SABnzbd/plugin.pyo")
 SystemInfo["SeekStatePlay"] = False
@@ -68,18 +64,16 @@ SystemInfo["VFD_initial_scroll_delay"] = fileCheck("/proc/stb/lcd/initial_scroll
 SystemInfo["VFD_final_scroll_delay"] = fileCheck("/proc/stb/lcd/final_scroll_delay")
 SystemInfo["CIHelper"] = fileExists("/usr/bin/cihelper")
 SystemInfo["isGBIPBOX"] = fileExists("/usr/lib/enigma2/python/gbipbox.so")
-SystemInfo["HaveMultiBoot"] = fileCheck("/boot/STARTUP") or fileCheck("/boot/STARTUP_1")
+SystemInfo["HaveMultiBoot"] = fileCheck("/boot/STARTUP_1") and getMachineBuild() not in ('gb7252')
 SystemInfo["LCDMiniTV"] = fileExists("/proc/stb/lcd/mode")
 SystemInfo["LCDMiniTV4k"] = fileExists("/proc/stb/lcd/live_enable") and getBoxType() in ('vusolo4k')
 SystemInfo["LCDMiniTVPiP"] = SystemInfo["LCDMiniTV"] and getBoxType() != 'gb800ueplus'
 SystemInfo["LcdLiveTV"] = fileCheck("/proc/stb/fb/sd_detach")
-SystemInfo["CIHelper"] = fileExists("/usr/bin/cihelper")
 SystemInfo["grautec"] = fileExists("/tmp/usbtft")
 SystemInfo["3DMode"] = fileCheck("/proc/stb/fb/3dmode") or fileCheck("/proc/stb/fb/primary/3d")
 SystemInfo["3DZNorm"] = fileCheck("/proc/stb/fb/znorm") or fileCheck("/proc/stb/fb/primary/zoffset")
 SystemInfo["CanUse3DModeChoices"] = fileExists('/proc/stb/fb/3dmode_choices') and True or False
 SystemInfo["need_dsw"] = getBoxType() not in ('osminiplus')
-SystemInfo["HaveMultiBoot"] = fileCheck("/boot/STARTUP") or fileCheck("/boot/STARTUP_1")
 SystemInfo["HaveCISSL"] = fileCheck("/etc/ssl/certs/customer.pem") and fileCheck("/etc/ssl/certs/device.pem")
 SystemInfo["HaveTouchSensor"] = getBoxType() in ('dm520', 'dm525', 'dm900')
 SystemInfo["DefaultDisplayBrightness"] = getBoxType() == 'dm900' and 8 or 5

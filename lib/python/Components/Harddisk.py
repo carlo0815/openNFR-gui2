@@ -64,7 +64,7 @@ class Harddisk:
 	def __init__(self, device, removable = False):
 		self.device = device
 
-		if os.access("/dev/.udev", 0) or os.access("/run/udev/data", 0):
+		if os.access("/dev/.udev", 0):
 			self.type = DEVTYPE_UDEV
 		elif os.access("/dev/.devfsd", 0):
 			self.type = DEVTYPE_DEVFS
@@ -763,7 +763,7 @@ class HarddiskManager:
 				dev = int(readFile(devpath + "/dev").split(':')[0])
 			else:
 				dev = None
-			if getMachineBuild() in ('vuuno4k','vuultimo4k','vusolo4k','hd51','hd52','sf4008','dm900','dm7080','dm820', 'gb7252', 'dags7252', 'vs1500'):
+			if getMachineBuild() in ('vuuno4k','vuultimo4k','vusolo4k','hd51','hd52','sf4008','dm900','dm7080','dm820', gb7252', 'dags7252', 'vs1500'):
 				devlist = [1, 7, 31, 253, 254, 179] # ram, loop, mtdblock, romblock, ramzswap, mmc
 			else:
 				devlist = [1, 7, 31, 253, 254] # ram, loop, mtdblock, romblock, ramzswap

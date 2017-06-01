@@ -146,9 +146,9 @@ def getCPUSpeedString():
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
-	elif getMachineBuild() in ('vuuno4k','vuultimo4k'):
+	elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 		return "1,7 GHz"
-	elif getMachineBuild() in ('hd51','hd52','sf4008','et1x000'):
+	elif getMachineBuild() in ('hd51','hd52','sf4008'):
 		try:
 			import binascii
 			f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
@@ -178,7 +178,7 @@ def getCPUSpeedString():
 
 
 def getCPUString():
-	if getMachineBuild() in ('vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'et1x000'):
+	if getMachineBuild() in ('vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52','sf4008', 'gb7252', 'dags7252' 'vs1500'):
 		return "Broadcom"
 	else:
 		try:
