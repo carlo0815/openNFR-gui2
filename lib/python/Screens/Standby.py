@@ -132,6 +132,13 @@ class Standby2(Screen):
 			self.avswitch.setInput("SCART")
 		else:
 			self.avswitch.setInput("AUX")
+			
+		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
+		if gotoShutdownTime:
+			self.standbyTimeoutTimer = eTimer()
+			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
+			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
+
 		if (getBrandOEM() in ('fulan')):
 			open("/proc/stb/hdmi/output", "w").write("off")
 		self.onFirstExecBegin.append(self.__onFirstExecBegin)
@@ -146,6 +153,7 @@ class Standby2(Screen):
 			self.paused_service.unPauseService()
 		self.session.screen["Standby"].boolean = False
 		globalActionMap.setEnabled(True)
+		Notifications.RemovePopup(id = "RecordTimerQuitMainloop")
 
 	def __onFirstExecBegin(self):
 		global inStandby
@@ -155,6 +163,10 @@ class Standby2(Screen):
 
 	def createSummary(self):
 		return StandbySummary
+		
+	def standbyTimeout(self):
+		from RecordTimer import RecordTimerEntry
+		RecordTimerEntry.TryQuitMainloop(True)
 		
 	def stopService(self):
 		if config.servicelist.startupservice_standby.value:
@@ -315,3 +327,4 @@ class TryQuitMainloop(MessageBox):
 	def __onHide(self):
 		global inTryQuitMainloop
 		inTryQuitMainloop = False
+
