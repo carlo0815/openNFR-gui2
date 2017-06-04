@@ -6,7 +6,7 @@ import enigma
 
 from Components.About import about
 from Components.Harddisk import harddiskmanager
-from config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, ConfigFloat
+from config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber
 from Tools.Directories import resolveFilename, SCOPE_HDD, SCOPE_TIMESHIFT, SCOPE_AUTORECORD, SCOPE_SYSETC, defaultRecordingLocation, fileExists
 from Components.NimManager import nimmanager
 from Components.ServiceList import refreshServiceList
@@ -16,10 +16,6 @@ from boxbranding import getBoxType
 from keyids import KEYIDS
 
 def InitUsageConfig():
-	config.misc.SettingsVersion = ConfigFloat(default = [1,1], limits = [(1,10),(0,99)])
-	config.misc.SettingsVersion.value = [1,1]
-	config.misc.SettingsVersion.save_forced = True
-	config.misc.SettingsVersion.save()	
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)
         config.NFRTelnet = ConfigSubsection()
@@ -250,11 +246,15 @@ def InitUsageConfig():
 		("intermediate", _("Intermediate")),
 		("expert", _("Expert")) ])
 
-	choicelist = [("0", _("Do nothing"))]
-	for i in range(900, 7201, 900):
+	choicelist = [("0", "Do nothing")]
+	for i in range(-14400, 14401, 1800):
 		m = abs(i / 60)
 		m = ngettext("%d minute", "%d minutes", m) % m
-		choicelist.append((str(i), _("Standby in ") + m))	
+		if i < 0:
+			choicelist.append(("%d" % i, _("Shutdown in ") + m))
+		elif i > 0:
+			choicelist.append(("%d" % i, _("Standby in ") + m))
+                        	
 	config.usage.inactivity_timer = ConfigSelection(default = "0", choices = choicelist)
 	config.usage.inactivity_timer_blocktime = ConfigYesNo(default = True)
 	config.usage.inactivity_timer_blocktime_begin = ConfigClock(default = mktime((0, 0, 0, 6, 0, 0, 0, 0, 0)))
@@ -293,12 +293,12 @@ def InitUsageConfig():
 		(str(KEYIDS["KEY_SUBTITLE"]), _("Subtitle")),
 		(str(KEYIDS["KEY_FAVORITES"]), _("Favorites")) ])
 	
-	choicelist = [("0", "Disabled")]
-	for i in range(900, 7201, 900):
-		m = abs(i / 60)
-		m = ngettext("%d minute", "%d minutes", m) % m
-		choicelist.append(("%d" % i, _("after ") + m))
-	config.usage.standby_to_shutdown_timer = ConfigSelection(default = "0", choices = choicelist)
+	#choicelist = [("0", "Disabled")]
+	#for i in range(7200, 7201, 900):
+		#m = abs(i / 60)
+		#m = ngettext("%d minute", "%d minutes", m) % m
+		#choicelist.append(("%d" % i, _("Shutdown in ") + m))
+	#config.usage.standby_to_shutdown_timer = ConfigSelection(default = "0", choices = choicelist)
 	
      
 	choicelist = [("0", "Disabled")]
@@ -456,8 +456,7 @@ def InitUsageConfig():
 	config.usage.show_eit_nownext = ConfigYesNo(default = True)
 	config.usage.show_vcr_scart = ConfigYesNo(default = False)
 	config.usage.pic_resolution = ConfigSelection(default = None, choices = [(None, _("Same resolution as skin")), ("(720, 576)","720x576"), ("(1280, 720)", "1280x720"), ("(1920, 1080)", "1920x1080")])
-	config.usage.enable_delivery_system_workaround = ConfigYesNo(default = False)
-	
+
 	config.epg = ConfigSubsection()
 	config.epg.eit = ConfigYesNo(default = True)
 	config.epg.mhw = ConfigYesNo(default = False)
