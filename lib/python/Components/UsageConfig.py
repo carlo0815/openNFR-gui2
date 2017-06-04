@@ -293,12 +293,12 @@ def InitUsageConfig():
 		(str(KEYIDS["KEY_SUBTITLE"]), _("Subtitle")),
 		(str(KEYIDS["KEY_FAVORITES"]), _("Favorites")) ])
 	
-	#choicelist = [("0", "Disabled")]
-	#for i in range(7200, 7201, 900):
-		#m = abs(i / 60)
-		#m = ngettext("%d minute", "%d minutes", m) % m
-		#choicelist.append(("%d" % i, _("Shutdown in ") + m))
-	#config.usage.standby_to_shutdown_timer = ConfigSelection(default = "0", choices = choicelist)
+	choicelist = [("0", "Disabled")]
+	for i in range(7200, 7201, 900):
+		m = abs(i / 60)
+		m = ngettext("%d minute", "%d minutes", m) % m
+		choicelist.append(("%d" % i, _("Shutdown in ") + m))
+	config.usage.standby_to_shutdown_timer = ConfigSelection(default = "0", choices = choicelist)
 	
      
 	choicelist = [("0", "Disabled")]
