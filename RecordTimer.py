@@ -70,7 +70,12 @@ def findSafeRecordPath(dirname):
 			print '[RecordTimer] Failed to create dir "%s":' % dirname, ex
 			return None
 	return dirname
-
+	
+def checkForRecordings():
+	if NavigationInstance.instance.getRecordings():
+		return True
+	rec_time = NavigationInstance.instance.RecordTimer.getNextTimerTime(isWakeup=True)
+	return rec_time > 0 and (rec_time - time()) < 360
 # type 1 = digital television service
 # type 4 = nvod reference service (NYI)
 # type 17 = MPEG-2 HD digital television service
@@ -86,6 +91,59 @@ wasRecTimerWakeup = False
 
 # please do not translate log messages
 class RecordTimerEntry(timer.TimerEntry, object):
+	wasInStandby = False
+	wasInDeepStandby = False
+	receiveRecordEvents = False
+	@staticmethod
+	def keypress(key=None, flag=1):
+		if flag and (RecordTimerEntry.wasInStandby or RecordTimerEntry.wasInDeepStandby):
+			RecordTimerEntry.wasInStandby = False
+			RecordTimerEntry.wasInDeepStandby = False
+			eActionMap.getInstance().unbindAction('', RecordTimerEntry.keypress)
+
+	@staticmethod
+	def setWasInDeepStandby():
+		RecordTimerEntry.wasInDeepStandby = True
+		eActionMap.getInstance().bindAction('', -maxint - 1, RecordTimerEntry.keypress)
+
+	@staticmethod
+	def setWasInStandby():
+		if not RecordTimerEntry.wasInStandby:
+			if not RecordTimerEntry.wasInDeepStandby:
+				eActionMap.getInstance().bindAction('', -maxint - 1, RecordTimerEntry.keypress)
+			RecordTimerEntry.wasInDeepStandby = False
+			RecordTimerEntry.wasInStandby = True
+
+	@staticmethod
+	def shutdown():
+		quitMainloop(1)
+
+	@staticmethod
+	def staticGotRecordEvent(recservice, event):
+		if event == iRecordableService.evEnd:
+			print "RecordTimer.staticGotRecordEvent(iRecordableService.evEnd)"
+			if not checkForRecordings():
+				print "No recordings busy of sceduled within 6 minutes so shutdown"
+				RecordTimerEntry.shutdown() # immediate shutdown
+		elif event == iRecordableService.evStart:
+			print "RecordTimer.staticGotRecordEvent(iRecordableService.evStart)"
+
+	@staticmethod
+	def stopTryQuitMainloop():
+		print "RecordTimer.stopTryQuitMainloop"
+		NavigationInstance.instance.record_event.remove(RecordTimerEntry.staticGotRecordEvent)
+		RecordTimerEntry.receiveRecordEvents = False
+
+	@staticmethod
+	def TryQuitMainloop():
+		if not RecordTimerEntry.receiveRecordEvents and Screens.Standby.inStandby:
+			print "RecordTimer.TryQuitMainloop"
+			NavigationInstance.instance.record_event.append(RecordTimerEntry.staticGotRecordEvent)
+			RecordTimerEntry.receiveRecordEvents = True
+			# send fake event.. to check if another recordings are running or
+			# other timers start in a few seconds
+			RecordTimerEntry.staticGotRecordEvent(None, iRecordableService.evEnd)
+			
 	def __init__(self, serviceref, begin, end, name, description, eit, disabled = False, justplay = False, afterEvent = AFTEREVENT.AUTO, checkOldTimers = False, dirname = None, tags = None, descramble = 'notset', record_ecm = 'notset', isAutoTimer = False, always_zap = False):
 		timer.TimerEntry.__init__(self, int(begin), int(end))
 		if checkOldTimers:
@@ -809,6 +867,15 @@ class RecordTimer(timer.Timer):
 				return faketime
 		else:
 			return nextrectime
+			
+	def getNextTimerTime(self, isWakeup=False):
+		now = time()
+		for timer in self.timer_list:
+			next_act = timer.getNextActivation()
+			if next_act < now or isWakeup and timer.justplay and timer.zap_wakeup in ("from_standby", "never"):
+				continue
+			return next_act
+		return -1			
 
 	def isNextRecordAfterEventActionAuto(self):
 		for timer in self.timer_list:
