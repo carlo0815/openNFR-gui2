@@ -134,7 +134,9 @@ class Standby2(Screen):
 			self.avswitch.setInput("AUX")
 			
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
+		print "goto deep2"
 		if gotoShutdownTime:
+		        print "goto deep3"
 			self.standbyTimeoutTimer = eTimer()
 			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
@@ -153,6 +155,7 @@ class Standby2(Screen):
 			self.paused_service.unPauseService()
 		self.session.screen["Standby"].boolean = False
 		globalActionMap.setEnabled(True)
+		print "goto deep1"
 		Notifications.RemovePopup(id = "RecordTimerQuitMainloop")
 
 	def __onFirstExecBegin(self):
@@ -165,8 +168,9 @@ class Standby2(Screen):
 		return StandbySummary
 		
 	def standbyTimeout(self):
+	        print "goto deep3"
 		from RecordTimer import RecordTimerEntry
-		RecordTimerEntry.TryQuitMainloop(True)
+		RecordTimerEntry.TryQuitMainloop()
 		
 	def stopService(self):
 		if config.servicelist.startupservice_standby.value:
@@ -327,4 +331,3 @@ class TryQuitMainloop(MessageBox):
 	def __onHide(self):
 		global inTryQuitMainloop
 		inTryQuitMainloop = False
-
