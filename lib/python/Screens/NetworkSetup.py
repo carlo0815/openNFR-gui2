@@ -2247,7 +2247,9 @@ class NetworkOpenvpn(Screen):
 
 	def StartStopCallback(self, result = None, retval = None, extra_args = None):
 		openvpnfile = '0' 
- 		for file in os.listdir('/etc/openvpn'): 
+		if not os.path.exists('/etc/openvpn'):
+			os.makedirs('/etc/openvpn')
+		for file in os.listdir('/etc/openvpn'): 
  			if fnmatch.fnmatch(file, '*.conf'): 
  				print file 
  				openvpnfile = '1' 
