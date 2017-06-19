@@ -11722,6 +11722,12 @@ msgstr "Bitte den Kernel neu Flashen und Backup wiederholen"
 msgid "ofgwrite will stop enigma2 now to run the flash.\n"
 msgstr "ofgwrite stoppt Enigma2 jetzt und beginnt zu flashen.\n"
 
+msgid "ofgwrite flashing ready.\n"
+msgstr "Flashen per ofgwrite erledigt.\n"
+
+msgid "please press exit to go back to the menu.\n"
+msgstr "Bitte Exit drücken um zurück ins Menü zu gelangen.\n"
+
 msgid "Your %s %s will freeze during the flashing process.\n"
 msgstr "Deine %s %s ist während des Flashens nicht zu bedienen.\n"
 
