@@ -252,9 +252,7 @@
 	</map>
 
 	<map context="InfobarRedButtonActions">
-		<device name="dreambox advanced remote control (native)">
-			<key id="KEY_RED" mapto="OpenNFRBluePanelShow" flags="l" />
-		</device>
+		<key id="KEY_RED" mapto="activateRedButton" flags="l" />
 	</map>
 
 	<map context="InfobarTimerButtonActions">
