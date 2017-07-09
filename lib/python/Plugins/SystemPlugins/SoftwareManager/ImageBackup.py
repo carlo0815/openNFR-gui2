@@ -556,7 +556,15 @@ class ImageBackup(Screen):
 		}, -2)
 		
 	def createBackupJob(self):
-	        print "BackupTime:", BackupTime
+		if SystemInfo["HaveMultiBoot"]:
+			with open("/boot/STARTUP", 'r') as myfile:
+				data=myfile.read().replace('\n', '')
+			myfile.close()
+			cmdline = data.split("=",3)[3].split(" ",1)[0]
+			cmdline = cmdline.lstrip("/dev/")
+			self.MTDROOTFS = cmdline
+			self.MTDKERNEL = cmdline[:-1] + str(int(cmdline[-1:]) -1)
+		print "BackupTime:", BackupTime
 		job = Components.Task.Job(_("Image Manager"))
 
 		task = Components.Task.PythonTask(job, _("Backing Up..."))
