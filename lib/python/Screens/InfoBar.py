@@ -39,13 +39,25 @@ from Screens.HelpMenu import HelpableScreen
 profile("LOAD: OpenNFRBluePanel")
 from Plugins.Extensions.Infopanel.panel_key import OpenNFRBluePanel
 
+profile("LOAD: OpenNFRBluePanelLong")
+from Plugins.Extensions.Infopanel.panel_key import OpenNFRBluePanelLong
+
 profile("LOAD: OpenNFRRedPanel")
 from Plugins.Extensions.Infopanel.panel_key import OpenNFRREDPanel
+
+profile("LOAD: OpenNFRRedPanelLong")
+from Plugins.Extensions.Infopanel.panel_key import OpenNFRREDPanelLong
+
+profile("LOAD: OpenNFRGreenPanelLong")
+from Plugins.Extensions.Infopanel.panel_key import OpenNFRGreenPanelLong
+
+profile("LOAD: OpenNFRYellowPanelLong")
+from Plugins.Extensions.Infopanel.panel_key import OpenNFRYellowPanelLong
 	
 
 class InfoBar(InfoBarBase, InfoBarShowHide,
-	InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, OpenNFRBluePanel, OpenNFRREDPanel, 
-	InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarTimerButton, InfoBarVmodeButton,
+	InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, OpenNFRBluePanel, OpenNFRREDPanel, OpenNFRREDPanelLong, OpenNFRBluePanelLong,
+	OpenNFRGreenPanelLong, OpenNFRYellowPanelLong, InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarTimerButton, InfoBarVmodeButton,
 	HelpableScreen, InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarUnhandledKey,
 	InfoBarSubserviceSelection, InfoBarTimeshift, InfoBarSeek, InfoBarCueSheetSupport, InfoBarLongKeyDetection,
 	InfoBarSummarySupport, InfoBarTimeshiftState, InfoBarTeletextPlugin, InfoBarExtensions,
@@ -81,8 +93,8 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 
 		for x in HelpableScreen, \
 				InfoBarBase, InfoBarShowHide, \
-				InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, OpenNFRBluePanel, OpenNFRREDPanel, \
-				InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarTimerButton, InfoBarUnhandledKey, InfoBarVmodeButton,\
+				InfoBarNumberZap, InfoBarChannelSelection, InfoBarMenu, InfoBarEPG, InfoBarRdsDecoder, OpenNFRBluePanel, OpenNFRREDPanel, OpenNFRREDPanelLong, OpenNFRBluePanelLong, \
+				OpenNFRGreenPanelLong, OpenNFRYellowPanelLong, InfoBarInstantRecord, InfoBarAudioSelection, InfoBarRedButton, InfoBarTimerButton, InfoBarUnhandledKey, InfoBarVmodeButton,\
 				InfoBarAdditionalInfo, InfoBarNotifications, InfoBarDish, InfoBarSubserviceSelection, InfoBarLongKeyDetection, \
 				InfoBarTimeshift, InfoBarSeek, InfoBarCueSheetSupport, InfoBarSummarySupport, InfoBarTimeshiftState, \
 				InfoBarTeletextPlugin, InfoBarExtensions, InfoBarPiP, InfoBarSubtitleSupport, InfoBarJobman, InfoBarZoom, InfoBarHdmi, \
