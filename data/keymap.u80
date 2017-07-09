@@ -95,7 +95,11 @@
 
 	<map context="InfobarExtensions">
 		<key id="KEY_BLUE" mapto="OpenNFRBluePanelShow" flags="b" />
+		<key id="KEY_BLUE" mapto="OpenNFRBluePanelLongShow" flags="l" />		
 		<key id="KEY_RED" mapto="OpenNFRRedPanelShow" flags="b" />
+		<key id="KEY_RED" mapto="OpenNFRRedPanelLongShow" flags="l" />
+		<key id="KEY_GREEN" mapto="OpenNFRGreenPanelLongShow" flags="l" />
+		<key id="KEY_YELLOW" mapto="OpenNFRYellowPanelLongShow" flags="l" />		
 		<key id="KEY_YELLOW" mapto="extensions" flags="b" />
 	</map>
 

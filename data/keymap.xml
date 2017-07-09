@@ -95,7 +95,11 @@
 
 	<map context="InfobarExtensions">
 		<key id="KEY_BLUE" mapto="OpenNFRBluePanelShow" flags="b" />
+		<key id="KEY_BLUE" mapto="OpenNFRBluePanelLongShow" flags="l" />		
 		<key id="KEY_RED" mapto="OpenNFRRedPanelShow" flags="b" />
+		<key id="KEY_RED" mapto="OpenNFRRedPanelLongShow" flags="l" />
+		<key id="KEY_GREEN" mapto="OpenNFRGreenPanelLongShow" flags="l" />
+		<key id="KEY_YELLOW" mapto="OpenNFRYellowPanelLongShow" flags="l" />		
 		<key id="KEY_YELLOW" mapto="extensions" flags="b" />
 	</map>
 
@@ -480,7 +484,7 @@
 		<key id="KEY_NEXT" mapto="jumpNextFile" flags="m" />
 	</map>
 
-	<!--<map context="InfobarTimeshiftActivateActions">
+	<!--map context="InfobarTimeshiftActivateActions">
 		<device name="dreambox advanced remote control (native)">
 			<key id="KEY_PREVIOUSSONG" mapto="timeshiftActivateEnd" flags="m" />
 		</device>
@@ -491,7 +495,7 @@
 		<key id="KEY_PLAYPAUSE" mapto="timeshiftActivateEndAndPause" flags="m" />
 		<key id="KEY_PAUSE" mapto="timeshiftActivateEndAndPause" flags="m" />
 		<key id="KEY_REWIND" mapto="timeshiftActivateEnd" flags="m" />
-	</map>-->
+	</map-->
 
 	<map context="InfobarTimeshiftSeekPointerActions">
 		<key id="KEY_PLAYPAUSE" mapto="SeekPointerPlay" flags="m" />
@@ -953,4 +957,4 @@
 		<key id="KEY_F11" mapto="f11" flags="b" />
 		<key id="KEY_F11" mapto="f11_long" flags="l" />
 	</map>
-</keymap>
+</keymap> 
