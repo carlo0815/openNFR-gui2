@@ -246,16 +246,20 @@ class IPTV(Screen):
     def install(self):
         self.IPTVInstalled = True
         self.type = "TV"
-        for l in self.iptvlist:
-            self.convert = True
-            name_file = self.file_filter(l)
-            file = l         
-            self.Convert_m3u(l, file)
-            infotext = _('M3U Converter\n')
-            infotext += _('IPTV m3u Files convert to bouquetslist')
-            infotext += _('\n\n\n')
-            infotext += _('Update Bouquets and Services')
-            infotext += _('Press OK or EXIT to go back !')
+        if bool(self.iptvlist) is False:
+		infotext = _('M3U Converter\n')
+		infotext += _('no m3u list found in /etc/enigma2 !')        
+	else:
+            for l in self.iptvlist:
+                self.convert = True
+                name_file = self.file_filter(l)
+                file = l         
+                self.Convert_m3u(l, file)
+                infotext = _('M3U Converter\n')
+                infotext += _('IPTV m3u Files convert to bouquetslist')
+                infotext += _('\n\n\n')
+                infotext += _('Update Bouquets and Services')
+                infotext += _('Press OK or EXIT to go back !')
         
         self.Remove_hooks()
         self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)
