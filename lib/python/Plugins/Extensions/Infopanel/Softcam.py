@@ -9,12 +9,16 @@ def getcamcmd(cam):
 	camname = cam.lower()
 	xcamname = cam
 	if "gbox" in camname:
+                files=os.listdir("/lib")
+ 		for filename in files:
+                	if filename.startswith('ld-2'):
+                		ldcheck=filename
 		symcheck = "/lib/ld-linux.so.3"
 		if os.path.islink(symcheck):
 			print "Symlink exist to start gbox"
 		else:
 			print "Create Symlink to start gbox"
-			os.system("ln -sf '/lib/ld-2.24.so' '/lib/ld-linux.so.3'") 	
+			os.system("ln -sf " + ldcheck + " '/lib/ld-linux.so.3'") 	
 	if getcamscript(camname):
 		return config.NFRSoftcam.camdir.value + "/" + cam + " start"
 	elif ".x" in camname:
@@ -82,9 +86,6 @@ def getcamcmd(cam):
 		elif "mbox" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
 				config.NFRSoftcam.camconfig.value + "/mbox.cfg"
-		elif "gbox" in camname:
-			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
-				config.NFRSoftcam.camconfig.value + "/gbox.cfg"
 		elif "cccam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -C " + \
 				config.NFRSoftcam.camconfig.value + "/CCcam.cfg"
@@ -104,6 +105,9 @@ def getcamcmd(cam):
 				config.NFRSoftcam.camconfig.value + "/"
 		elif "rucam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -b"
+		elif "gbox" in camname:
+			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
+				config.NFRSoftcam.camconfig.value + "/gbox.cfg"	
  		elif "scam" in camname and not "oscam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -s " + \
 				config.NFRSoftcam.camconfig.value + "/"			
