@@ -13568,3 +13568,34 @@ msgstr "Spinner-Dateien überschreiben?"
 
 msgid "Select Software Update"
 msgstr "Auswahl Software Update"
+
+msgid ""
+"Enigma2 playback system was changed and Enigma2 should be restarted\n"
+"\n"
+"Do you want to restart it now?"
+msgstr ""
+"Das Enigma2-Wiedergabesystem wurde geändert und Enigma2 sollte neu gestartet "
+"werden\n"
+"\n"
+"Möchtest du es jetzt neu starten?"
+
+msgid "Enigma2 playback system"
+msgstr "Enigma2-Wiedergabesystem"
+
+msgid "Embedded subtitles"
+msgstr "Eingebettete Untertitel"
+
+msgid "Buffer size"
+msgstr "Puffergröße"
+
+msgid "Buffer duration"
+msgstr "Pufferdauer"
+
+msgid "Auto turn on subtitles"
+msgstr "Untertitel automatisch einschalten"
+
+msgid "Auto select stream"
+msgstr "Stream automatisch auswählen"
+
+msgid "Connection speed"
+msgstr "Verbindungsgeschwindigkeit"
