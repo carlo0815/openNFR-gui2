@@ -396,7 +396,6 @@ def InitUsageConfig():
 	channelpluginlist3 = [("Playlist", _("Playlist")), ("Mediaportal", _("MediaPortal")), ("IPTVPlayer", _("Iptvplayer")), ("BMC", _("BMC")), ("Youtube", _("Youtube")), ("MP3Browser", _("MP3Browser")), ("WebradioFS", _("WebradioFS")), ("TSMedia", _("TSmedia"))]
 	if getBoxType() in ('ax51', 'formuler1', 'mutant2400', 'mutant51', 'osmega', 'quadbox2400', 'triplex', 'vuduo2', 'vusolo2', 'vusolo4k', 'vusolose', 'vuultimo4k', 'sf4008'):
 					channelpluginlist2.append(("Kodi", _("Kodi")))       	                                        
-	config.usage.show_plugins3_in_servicelist = ConfigSelection(default=
 	config.usage.show_event_progress_in_servicelist.addNotifier(refreshServiceList)
 	config.usage.show_channel_numbers_in_servicelist.addNotifier(refreshServiceList)
 
