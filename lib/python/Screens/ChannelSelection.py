@@ -1567,7 +1567,7 @@ class ChannelSelectionBase(Screen):
                         
 	def reloadPlugin(self):
         	plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
-		self.close()
+		#self.close()
                 
 	def pluginsone(self):                
                 global pluginselect
