@@ -13599,3 +13599,27 @@ msgstr "Stream automatisch auswählen"
 
 msgid "Connection speed"
 msgstr "Verbindungsgeschwindigkeit"
+
+msgid "The BMediaCenter plugin is not installed!\nInstall now?"
+msgstr "Das BMediaCenter Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The MediaPortal plugin is not installed!\nInstall now?"
+msgstr "Das MediaPortal Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The IPTVPlayer plugin is not installed!\nInstall now?"
+msgstr "Das IPTVPlayer Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The Youtube plugin is not installed!\nInstall now?"
+msgstr "Das Youtube Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The Kodi plugin is not installed!\nInstall now?"
+msgstr "Das Kodi Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The MP3Browser plugin is not installed!\nInstall now?"
+msgstr "Das MP3Browser Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The TSmedia plugin is not installed!\nInstall now?"
+msgstr "Das TSmedia Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid "The WebradioFS plugin is not installed!\nInstall now?"
+msgstr "Das WebradioFS Plugin ist nicht installiert!\nJetzt installieren?"
