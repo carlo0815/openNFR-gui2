@@ -1611,7 +1611,7 @@ class ChannelSelectionBase(Screen):
 				self.session.open(DMC_MainMenu)
                         else:
                                 #self.session.open(MessageBox, _("The BMediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The BMediaCenter plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The BMediaCenter plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "Mediaportal":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal"):
 				try:
@@ -1621,7 +1621,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The MediaPortal plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MediaPortal plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MediaPortal plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "IPTVPlayer":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/IPTVPlayer"):
 				try:
@@ -1631,7 +1631,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The IPTVPlayer plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The IPTVPlayer plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The IPTVPlayer plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
     		elif pluginsuse == "Youtube":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/YouTube/plugin.pyo"):
 				try:
@@ -1641,7 +1641,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The Youtube plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Youtube plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Youtube plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
  		elif pluginsuse == "Kodi":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/Kodi/plugin.pyo"):
 				try:
@@ -1651,7 +1651,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The Kodi plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Kodi plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Kodi plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "MP3Browser":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo"):
 				try:
@@ -1661,7 +1661,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The MP3Browser plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MP3Browser plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MP3Browser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "TSMedia":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/plugin.pyo"):
 				try:
@@ -1671,7 +1671,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The TSmedia plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
                         else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The TSmedia plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The TSmedia plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "WebradioFS":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo"):
 				try:
@@ -1681,7 +1681,7 @@ class ChannelSelectionBase(Screen):
 				except Exception, e:
 					self.session.open(MessageBox, _("The WebradioFS plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
 		        else:
-		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The WebradioFS plugin is not installed!\nInstall now?."), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The WebradioFS plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		else:
 			print "nothing select"
 		
