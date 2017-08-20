@@ -18,7 +18,6 @@
 		<item level="2" text="Disable background scanning" description="When tuned to a service the system will normally scan the transponder for any changes and save them. Only set to 'yes' if you're absolutely sure of what you're doing.">config.misc.disable_background_scan</item>
 		<item level="2" text="Include ECM in http streams" description="ECM data will be included in the stream. This enables a client receiver to decode it.">config.streaming.stream_ecm</item>
 		<item level="2" text="Descramble http streams" description="Enables a feature so that the receiver can decrypt streams (if the ECM data is included in the stream and a valid card is available).">config.streaming.descramble</item>
-		<!--item level="1" text="Delivery system workaround" description="Workaround for old tuner driver" requires="need_dsw">config.usage.enable_delivery_system_workaround</item-->
 	</setup>
 	<setup key="userinterface" title="Settings...">
 		<item level="0" text="1st Infobar timeout" description="Set the time to hide the infobar.">config.usage.infobar_timeout</item>
@@ -57,7 +56,7 @@
 	<setup key="channelselection" title="Channel selection settings">
 		<item level="1" text="Pluginbutton Play" description="When enabled, you can use Play,Forward,Backward,Stop as Pluginstart from channellist.">config.usage.show_plugins_in_servicelist</item>
 		<item level="1" text="Pluginbutton Forward" description="When enabled, you can use Play,Forward,Backward,Stop as Pluginstart from channellist.">config.usage.show_plugins1_in_servicelist</item>
-		<item level="1" text="Pluginbutton Backward" description="When enabled, you can use Play,Forward,Backward,Stop as Pluginstart from channellist.">config.usage.show_plugins2_in_servicelist</item> 		
+		<item level="1" text="Pluginbutton Backward" description="When enabled, you can use Play,Forward,Backward,Stop as Pluginstart from channellist.">config.usage.show_plugins2_in_servicelist</item> 
 		<item level="1" text="Alternative numbering mode" description="When enabled, channel numbering will start at '1' for every bouquet.">config.usage.alternative_number_mode</item>
 		<item level="1" text="Channel list preview-zap" description="If set to 'yes' you can preview channels in the channel list directly. Press 'OK' to exit and zap to that channel, pressing 'EXIT' to return to the channel you started at. Menu is little bit slower.">config.servicelist.zap_preview</item>
 		<item level="1" text="Always show bouquets" description="With this option set to 'yes' the channel list will always show you the list of bouquets. If set to 'no' the current bouquet will be opened.">config.usage.show_bouquetalways</item>
@@ -361,4 +360,7 @@
 		<item level="2" text="Show translation packages" description="If set to 'yes' it will show the 'PO' packages in browser.">config.pluginbrowser.po</item>
 		<item level="2" text="Show source packages" description="If set to 'yes' it will show the 'SRC' packages in browser.">config.pluginbrowser.src</item>
 	</setup>
+	<setup key="multiboot" title="Setup Imageversion">
+		<item level="2" text="Show Imageversion" description="Select witch Imageversion to Download">config.usage.mbimageversion</item>
+	</setup>	
 </setupxml>
