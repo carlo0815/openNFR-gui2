@@ -12,6 +12,7 @@ from Screens.TaskView import JobView
 from Tools.Downloader import downloadWithProgress
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists, SCOPE_PLUGINS
+from Components.config import config, configfile, ConfigSubsection, ConfigText, ConfigSelection
 import urllib2
 import os
 import shutil
@@ -29,12 +30,38 @@ class NFR4XChooseOnLineImage(Screen):
         self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.KeyOk,
          'back': self.close})
 
+    def KeyOk1(self):
+        config.usage.mbimageversion.save()
+        mbimageValue = config.usage.mbimageversion.value
+        print "mbimageValue2:", mbimageValue
+	if returnValue is not None:
+	    print "returnValue:", returnValue
+	    print "mbimageValue:", mbimageValue
+            self.session.openWithCallback(self.quit, DownloadOnLineImage, returnValue, mbimageValue )
+        return    
+        
     def KeyOk(self):
+        global returnValue
+        global mbimageValue
         self.sel = self['list'].getCurrent()
         returnValue = self.sel[2]
-        if returnValue is not None:
-            self.session.openWithCallback(self.quit, DownloadOnLineImage, returnValue)
-        return
+        print "returnValue:", returnValue    
+	if returnValue in ('opennfr', 'openhdf', 'openatv-6.0'): 
+            from Screens.Setup import Setup
+	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1"))]
+	    if returnValue ==  'opennfr':
+	        MBImagelist.append(("5.3", _("5.3")))
+	    elif returnValue ==  'openhdf':
+	        MBImagelist.remove(("6.0", _("6.0")))
+                MBImagelist.append(("6.2", _("6.2")))
+                MBImagelist.append(("5.5", _("5.5")))
+	    config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
+	    self.session.openWithCallback(self.KeyOk1, Setup, "multiboot")
+            mbimageValue = config.usage.mbimageversion.value
+        else:
+            config.usage.mbimageversion.value = "0.0"
+            config.usage.mbimageversion.save()
+            self.KeyOk1()  
 
     def updateList(self):
         self.list = []
@@ -110,16 +137,6 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
-        mypixmap = mypath + 'openmips.png'
-        png = LoadPixmap(mypixmap)
-        name = _('OpenMIPS')
-        desc = _('Download latest OpenMIPS Image')
-        idx = 'openmips'
-        res = (name,
-         png,
-         idx,
-         desc)
-        self.list.append(res)
         mypixmap = mypath + 'openeight.png'
         png = LoadPixmap(mypixmap)
         name = _('OpenEight')
@@ -139,10 +156,11 @@ class NFR4XChooseOnLineImage(Screen):
 class DownloadOnLineImage(Screen):
     skin = '\n\t<screen position="center,center" size="560,500" title="NFR4XBoot - Download Image">\n\t\t<ePixmap position="0,460"   zPosition="1" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />\n\t\t<ePixmap position="140,460" zPosition="1" size="140,40" pixmap="skin_default/buttons/green.png" transparent="1" alphatest="on" />\n\t\t<widget name="key_red" position="0,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />\n\t\t<widget name="key_green" position="140,460" zPosition="2" size="140,40" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />\n\t\t<widget name="imageList" position="10,10" zPosition="1" size="550,450" font="Regular;20" scrollbarMode="showOnDemand" transparent="1" />\n\t</screen>'
 
-    def __init__(self, session, distro):
+    def __init__(self, session, distro, mbimageversion):
         Screen.__init__(self, session)
         self.session = session
-        ImageVersion = getImageVersion()
+        ImageVersion = mbimageversion
+        boxname = getBoxType()
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
         self['key_red'] = Button(_('Exit'))
@@ -159,23 +177,28 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/%s/images' %ImageVersion
         elif self.distro == 'openatv-6.0':
             self.feed = 'openatv'
-            self.feedurl = 'http://images.mynonpublic.com/openatv/6.0'
+            self.feedurl = 'http://images.mynonpublic.com/openatv/%s' %ImageVersion
         elif self.distro == 'openvix':
             self.feed = 'openvix'
             self.feedurl = 'http://openvix.co.uk'
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
-            self.feedurl = 'http://images.opendroid.org/5.3/'
+            self.feedurl = 'http://images.opendroid.org/6.3/'
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
-            self.feedurl1 = 'http://images.hdfreaks.cc'
-            self.feedurl = 'http://images.hdfreaks.cc/menu.html'
-        elif self.distro == 'openmips':
-            self.feed = 'openmips'
-            self.feedurl = 'http://image.openmips.com/5.3'
+            if ImageVersion == "5.5":
+                hdfImageVersion = "v55"
+            elif ImageVersion == "6.1":
+                hdfImageVersion = "v60"
+            elif ImageVersion == "6.2":
+                hdfImageVersion = "v62"
+            else:
+                hdfImageVersion = "v61"                                            
+            self.feedurl = 'http://%s.hdfreaks.cc/%s' % (hdfImageVersion, boxname)
+            self.feedurl1 = 'http://%s.hdfreaks.cc' % hdfImageVersion
         elif self.distro == 'openeight':
             self.feed = 'openeight'
             self.feedurl = 'http://openeight.de'
@@ -195,7 +218,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openmips' or self.distro == 'openhdf':
+        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
             req = urllib2.Request(self.feedurl)
@@ -315,7 +338,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'
         elif self.distro == 'openeight':
-            if box in ('sf208', 'sf228', 'sf108', 'sf3038', 'sf98'):
+            if box in ('sf208', 'sf228', 'sf108', 'sf3038', 'sf98', 'sf128', 'sf138'):
                if box in ('sf228'):
                		box = 'sf228'
                 	urlbox = getBoxType()               
@@ -348,7 +371,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side'    
         elif self.distro == 'openpli':
-            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'mutant2400', 'quadbox2400', 'formuler4', 'formuler1', 'formuler3'):
+            if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'spycatmini', 'spycat', 'mutant2400', 'quadbox2400', 'formuler4', 'formuler1', 'formuler3'):
                if box in ('vusolo2'):
                     box = 'vusolo2'
                     urlbox = 'vuplus/vusolo2/' 
@@ -420,7 +443,8 @@ class DownloadOnLineImage(Screen):
             elif self.distro == 'openeight':
                 url = self.feedurl + '/images/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
-                url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
+                url = self.feedurl + '/' + sel
+                #url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
             elif self.distro == 'opendroid':
                 url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel            
             else:
@@ -475,7 +499,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('egami', 'openmips', 'openatv-6.0','openeight'):
+        elif self.distro in ('egami', 'openatv-6.0','openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
@@ -520,10 +544,6 @@ class DownloadOnLineImage(Screen):
                     			self.imagelist.append(line[t + tt + 10:t + tt + tt + 39])
                     		elif self.feed in 'egami':
                     			self.imagelist.append(line[t + tt + 10:t2])
-                    		elif self.feed in 'openmips':
-                    			line = line[t + tt + 10:t + tt + tt + 40]
-                    			self.imagelist.append(line)
-                    	
                 elif line.find("<a href='%s/" % urlbox) > -1:
                     ttt = len(urlbox)
                     t = line.find("<a href='%s/" % urlbox) 
@@ -622,4 +642,4 @@ class ImageDownloadTask(Task):
         if self.aborted:
             self.finish(aborted=True)
         else:
-            Task.processFinished(self, 0)
+            Task.processFinished(self, 0) 
