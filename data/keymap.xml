@@ -411,7 +411,7 @@
 			<key id="KEY_YELLOW" mapto="pauseService" flags="b" />
 			<key id="KEY_GREEN" mapto="playpauseService" flags="b" />
 			<key id="KEY_RED" mapto="seekBack" flags="b" />
-			<key id="KEY_BLUE" mapto="seekFwd" flags="b" />
+			<!--<key id="KEY_BLUE" mapto="seekFwd" flags="b" />-->
 		</device>
 
 		<key id="KEY_PLAYPAUSE" mapto="playpauseService" flags="m" />
