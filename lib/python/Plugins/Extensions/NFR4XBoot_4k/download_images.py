@@ -33,10 +33,7 @@ class NFR4XChooseOnLineImage(Screen):
     def KeyOk1(self):
         config.usage.mbimageversion.save()
         mbimageValue = config.usage.mbimageversion.value
-        print "mbimageValue2:", mbimageValue
 	if returnValue is not None:
-	    print "returnValue:", returnValue
-	    print "mbimageValue:", mbimageValue
             self.session.openWithCallback(self.quit, DownloadOnLineImage, returnValue, mbimageValue )
         return    	
 
@@ -45,7 +42,6 @@ class NFR4XChooseOnLineImage(Screen):
         global mbimageValue		
         self.sel = self['list'].getCurrent()
         returnValue = self.sel[2]
-        print "returnValue:", returnValue    
 	if returnValue in ('opennfr', 'openhdf', 'openatv-6.0'): 	
             from Screens.Setup import Setup
 	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1"))]
@@ -55,10 +51,11 @@ class NFR4XChooseOnLineImage(Screen):
 	        MBImagelist.remove(("6.0", _("6.0")))
                 MBImagelist.append(("6.2", _("6.2")))
                 MBImagelist.append(("5.5", _("5.5")))
-	    config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
+	    #config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
 	    self.session.openWithCallback(self.KeyOk1, Setup, "multiboot")
             mbimageValue = config.usage.mbimageversion.value
         else:
+            config.usage.mbimageversion = ConfigSelection(default="6.1", choices = [("0.0", _("0.0"))]) 
             config.usage.mbimageversion.value = "0.0"
             config.usage.mbimageversion.save()
             self.KeyOk1()  
@@ -137,6 +134,26 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
+        mypixmap = mypath + 'satdreamgr.png'
+        png = LoadPixmap(mypixmap)
+        name = _('SatDreamgr')
+        desc = _('Download latest SatDreamgr Image')
+        idx = 'satdreamgr'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
+        mypixmap = mypath + 'hdmu.png'
+        png = LoadPixmap(mypixmap)
+        name = _('Hdmu')
+        desc = _('Download latest SatDreamgr Image')
+        idx = 'hdmu'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)                 
         self['list'].list = self.list
 
     def quit(self):
@@ -150,6 +167,8 @@ class DownloadOnLineImage(Screen):
         Screen.__init__(self, session)
         self.session = session
         ImageVersion = mbimageversion
+        distri = getBrandOEM()        
+    
         boxname = getBoxType()
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
@@ -174,6 +193,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
+        elif self.distro == 'hdmu':
+            self.feed = 'hdmu'
+            self.feedurl = 'http://www.hdmedia-universe.com/board/pages.php?pageid=1&'            
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
             if ImageVersion == "5.5":
@@ -189,6 +211,11 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openeight':
             self.feed = 'openeight'
             self.feedurl = 'http://openeight.de'
+        elif self.distro == 'satdreamgr':
+            if distri == "vuplus":
+                distri = "vu"           
+            self.feed = 'satdreamgr'
+            self.feedurl = 'http://sgcpm.com/satdreamgr-images-experimental/%s/%s' % (distri, boxname)         
         else:
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/6.0/images'
@@ -205,7 +232,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf':
+        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
             try:
@@ -218,6 +245,20 @@ class DownloadOnLineImage(Screen):
                                 break
             except:
                     stb = 'no Image for this Box on this Side'
+        if self.distro == 'hdmu':
+            self.feedurl1 = self.feedurl + "box=" + box
+            req = urllib2.Request(self.feedurl1)
+            stb = 'no Image for this Box on this Side'
+            try:
+                    response = urllib2.urlopen(req)
+                    tmp = response.readlines()
+                    for line in tmp:
+                        if '<a href="' in line:
+                            if box in line:
+                                stb = '1'
+                                break
+            except:
+                    stb = 'no Image for this Box on this Side'                    
         if self.distro == 'openvix':
             if box in ('vusolo4k', 'mutant51'):
                 if box in ('vusolo4k'):
@@ -249,7 +290,8 @@ class DownloadOnLineImage(Screen):
                stb = '1'
                                
             else:   
-                stb = 'no Image for this Box on this Side'                    
+                stb = 'no Image for this Box on this Side'
+                  
         return (box, urlbox, stb)
 
     def green(self, ret = None):
@@ -264,12 +306,19 @@ class DownloadOnLineImage(Screen):
             box = self.box()
             self.hide()
             if self.distro == 'openvix':
-                print "url=", self.feedurl + '/openvix-builds/' + box[1]
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
 	    elif self.distro == 'openhdf':
 		url = self.feedurl + '/' + sel
+	    elif self.distro == 'satdreamgr':
+		url = self.feedurl + '/' + sel
+	    elif self.distro == 'hdmu':
+	        self.feedurl2 = 'www.hdmedia-universe.com/images/'
+	        if box[0] == "sf4008":
+	            url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
+		else: 
+                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel		
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -332,6 +381,8 @@ class DownloadOnLineImage(Screen):
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
             url = '%s/%s' % (self.feedurl1, box)
+        elif self.distro == 'hdmu':
+            url = '%sbox=%s' % (self.feedurl, box)            
 	else:
             url = self.feedurl
         print '[NFR4XBoot] URL: ', url
@@ -392,6 +443,11 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
+                elif line.find('<a href="http://www.hdmedia-universe.com/images/') > -1:
+                    t4 = line.find('HDMU_')
+                    t5 = line.find('.zip"')
+                    if line[t4 :t5+4] != '':
+                        self.imagelist.append(line[t4 :t5+4])                    
                 elif line.find('href="http://downloads.pli-images.org' ) > -1:
                     t4 = line.find('<a href="http://downloads.pli-images.org/builds')
                     t5 = line.find('.zip"')
@@ -399,9 +455,14 @@ class DownloadOnLineImage(Screen):
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])                        
+                    self.imagelist.append(line[t4 :t5+4])   
+                elif line.find('href="Satdreamgr-') > -1:
+                    t4 = line.find('Satdreamgr-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])
         else:
             self.imagelist.append(stb)
+        print "self.imagelist:", self.imagelist     
         self['imageList'].l.setList(self.imagelist)
 
 
