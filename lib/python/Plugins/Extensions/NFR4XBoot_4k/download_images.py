@@ -275,8 +275,12 @@ class DownloadOnLineImage(Screen):
             if box in ('vusolo4k', 'mutant51'):
                 if box in ('vusolo4k'):
                     box = 'vusolo4k'
-                    urlbox = 'vuplus/vusolo4k/' 
-                    stb = '1'                    
+                    urlbox = 'vuplus/Solo+4K/' 
+                    stb = '1'
+                elif box in ('vuultimo4k'):
+                    box = 'vuultimo4k'
+                    urlbox = 'vuplus/Ultimo+4K/' 
+                    stb = '1'                                             
                 elif box in ('mutant51'):
                     box = 'hd51'
                     urlbox = 'mutant/hd51/' 
@@ -392,7 +396,6 @@ class DownloadOnLineImage(Screen):
         except urllib2.URLError as e:
             print 'URL ERROR: %s' % e
             return
-
         try:
             the_page = response.read()
         except urllib2.HTTPError as e:
@@ -401,11 +404,10 @@ class DownloadOnLineImage(Screen):
         if self.distro == 'openpli':
             lines1 = the_page.split('\n')
             for line1 in lines1:
-                if '<a href="http://downloads.pli-images.org/builds' in line1:
-                    lines = the_page.split('_usb.zip<')                    
+                if '<a href="http://downloads.openpli.org/builds/' in line1:
+                    lines = the_page.split('_usb.zip<')
         else:
             lines = the_page.split('\n')
-  
         tt = len(box)
         if stb == '1':
             for line in lines:
@@ -447,11 +449,11 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('HDMU_')
                     t5 = line.find('.zip"')
                     if line[t4 :t5+4] != '':
-                        self.imagelist.append(line[t4 :t5+4])                    
-                elif line.find('href="http://downloads.pli-images.org' ) > -1:
-                    t4 = line.find('<a href="http://downloads.pli-images.org/builds')
+                        self.imagelist.append(line[t4 :t5+4])  
+                elif line.find('href="http://downloads.openpli.org' ) > -1:
+                    t4 = line.find('<a href="http://downloads.openpli.org/builds/')
                     t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4+  len(box) + 48:t5+4])    
+                    self.imagelist.append(line[t4+  len(box) + 46:t5+4])    
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
@@ -462,7 +464,6 @@ class DownloadOnLineImage(Screen):
                     self.imagelist.append(line[t4 :t5+4])
         else:
             self.imagelist.append(stb)
-        print "self.imagelist:", self.imagelist     
         self['imageList'].l.setList(self.imagelist)
 
 
