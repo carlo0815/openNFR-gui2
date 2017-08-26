@@ -414,19 +414,15 @@ class DownloadOnLineImage(Screen):
             if box in ('vusolo2', 'vusolo4k', 'vusolose', 'vuduo2', 'osmini', 'spycatmini', 'spycat', 'mutant2400', 'quadbox2400', 'formuler4', 'formuler1', 'formuler3'):
                if box in ('vusolo2'):
                     box = 'vusolo2'
-                    urlbox = 'vuplus/vusolo2/' 
+                    urlbox = 'vuplus/Solo2/' 
                     stb = '1'
-               elif box in ('vusolo4k'):
-                    box = 'vusolo4k'
-                    urlbox = 'vuplus/vusolo4k/' 
-                    stb = '1'                    
                elif box in ('vusolose'):
                     box = 'vusolose'
-                    urlbox = 'vuplus/vusolose/' 
+                    urlbox = 'vuplus/Solo+SE/' 
                     stb = '1'
                elif box in ('vuduo2'):
                     box = 'vuduo2'
-                    urlbox = 'vuplus/vuduo2/' 
+                    urlbox = 'vuplus/Duo2/' 
                     stb = '1'
                elif box in ('mutant2400'):
                     box = 'hd2400'
@@ -438,27 +434,43 @@ class DownloadOnLineImage(Screen):
                     stb = '1'
                elif box in ('formuler1'):
                     box = 'formuler1'
-                    urlbox = 'formuler/formuler1/' 
+                    urlbox = 'formuler/F1/' 
                     stb = '1'
                elif box in ('formuler3'):
                     box = 'formuler3'
-                    urlbox = 'formuler/formuler3/' 
+                    urlbox = 'formuler/F3/' 
                     stb = '1'
                elif box in ('formuler4'):
                     box = 'formuler4'
-                    urlbox = 'formuler/formuler4/' 
-                    stb = '1'     
+                    urlbox = 'formuler/F4/' 
+                    stb = '1'
+               elif box in ('formuler4turbo'):
+                    box = 'formuler4turbo'
+                    urlbox = 'formuler/F4+Turbo/' 
+                    stb = '1'                             
                elif box in ('osmini'):
                     box = 'osmini'
-                    urlbox = 'edision/osmini/' 
+                    urlbox = 'edision/OS+mini/' 
+                    stb = '1'
+               elif box in ('osminiplus'):
+                    box = 'osminiplus'
+                    urlbox = 'edision/OS+mini+%2B/' 
                     stb = '1' 
+               elif box in ('osmega'):
+                    box = 'osmega'
+                    urlbox = 'edision/OS+mega/' 
+                    stb = '1'                                          
                elif box in ('spycatmini'):
                     box = 'spycatmini'
-                    urlbox = 'spycat/spycatmini/' 
+                    urlbox = 'spycat/Spycat+Mini/' 
                     stb = '1'
+               elif box in ('spycatminiplus'):
+                    box = 'spycatminiplus'
+                    urlbox = 'spycat/Spycat+Mini+Plus/' 
+                    stb = '1'                    
                elif box in ('spycat'):
                     box = 'spycat'
-                    urlbox = 'spycat/spycat/' 
+                    urlbox = 'spycat/Spycat/' 
                     stb = '1'                      
             else:   
                 stb = 'no Image for this Box on this Side'        
@@ -478,7 +490,7 @@ class DownloadOnLineImage(Screen):
             if self.distro == 'openvix':
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
-                url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
+                url = 'http://downloads.openpli.org/builds/' + box[0] + '/' + sel
             elif self.distro == 'openeight':
                 url = self.feedurl + '/images/' + box[0] + '/' + sel
             elif self.distro == 'openhdf':
@@ -607,9 +619,10 @@ class DownloadOnLineImage(Screen):
                 elif line.find('file=openvixhd-') > -1:
                     t4 = line.find('file=')
                     self.imagelist.append(line[t4 + 5:-2])
-                elif line.find('<a href="http://downloads.pli-images.org/builds/' + box + '/') > -1:
-                    line = line[-43 - tt:-9]
-                    self.imagelist.append(line)
+                elif line.find('href="http://downloads.openpli.org' ) > -1:
+                    t4 = line.find('<a href="http://downloads.openpli.org/builds/')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4+ len(box) + 46:t5+4]) 
                 elif line.find('<a href="download.php?file=' + box + '/') > -1:
                     t4 = line.find('file=' + box)
                     t5 = line.find('.zip" class="')
@@ -618,10 +631,6 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('opennfr-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
-                elif line.find('href="http://downloads.pli-images.org' ) > -1:
-                    t4 = line.find('OpenPLi-')
-                    t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4 :t5+4])    
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
@@ -702,4 +711,4 @@ class ImageDownloadTask(Task):
         if self.aborted:
             self.finish(aborted=True)
         else:
-            Task.processFinished(self, 0) 
+            Task.processFinished(self, 0)
