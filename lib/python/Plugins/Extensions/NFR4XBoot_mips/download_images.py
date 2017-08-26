@@ -17,7 +17,7 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType, getMachineBuild, getImageVersion, getBrandOEM
+from boxbranding import getBoxType, getMachineBuild, getImageVersion, getBrandOEM, getMachineBrand
 
 class NFR4XChooseOnLineImage(Screen):
     skin = '<screen name="NFR4XChooseOnLineImage" position="center,center" size="880,620" title="NFR4XBoot - Download OnLine Images" >\n\t\t\t  <widget source="list" render="Listbox" position="10,0" size="870,610" scrollbarMode="showOnDemand" transparent="1">\n\t\t\t\t  <convert type="TemplatedMultiContent">\n\t\t\t\t  {"template": [\n\t\t\t\t  MultiContentEntryText(pos = (0, 10), size = (830, 30), font=0, flags = RT_HALIGN_RIGHT, text = 0),\n\t\t\t\t  MultiContentEntryPixmapAlphaBlend(pos = (10, 0), size = (480, 60), png = 1),\n\t\t\t\t  MultiContentEntryText(pos = (0, 40), size = (830, 30), font=1, flags = RT_VALIGN_TOP | RT_HALIGN_RIGHT, text = 3),\n\t\t\t\t  ],\n\t\t\t\t  "fonts": [gFont("Regular", 28),gFont("Regular", 20)],\n\t\t\t\t  "itemHeight": 65\n\t\t\t\t  }\n\t\t\t\t  </convert>\n\t\t\t  </widget>\n\t\t  </screen>'
@@ -33,10 +33,7 @@ class NFR4XChooseOnLineImage(Screen):
     def KeyOk1(self):
         config.usage.mbimageversion.save()
         mbimageValue = config.usage.mbimageversion.value
-        print "mbimageValue2:", mbimageValue
 	if returnValue is not None:
-	    print "returnValue:", returnValue
-	    print "mbimageValue:", mbimageValue
             self.session.openWithCallback(self.quit, DownloadOnLineImage, returnValue, mbimageValue )
         return    
         
@@ -45,7 +42,6 @@ class NFR4XChooseOnLineImage(Screen):
         global mbimageValue
         self.sel = self['list'].getCurrent()
         returnValue = self.sel[2]
-        print "returnValue:", returnValue    
 	if returnValue in ('opennfr', 'openhdf', 'openatv-6.0'): 
             from Screens.Setup import Setup
 	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1"))]
@@ -59,9 +55,10 @@ class NFR4XChooseOnLineImage(Screen):
 	    self.session.openWithCallback(self.KeyOk1, Setup, "multiboot")
             mbimageValue = config.usage.mbimageversion.value
         else:
+            config.usage.mbimageversion = ConfigSelection(default="6.1", choices = [("0.0", _("0.0"))]) 
             config.usage.mbimageversion.value = "0.0"
             config.usage.mbimageversion.save()
-            self.KeyOk1()  
+            self.KeyOk1() 
 
     def updateList(self):
         self.list = []
@@ -147,6 +144,26 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc)
         self.list.append(res)
+        mypixmap = mypath + 'satdreamgr.png'
+        png = LoadPixmap(mypixmap)
+        name = _('SatDreamgr')
+        desc = _('Download latest SatDreamgr Image')
+        idx = 'satdreamgr'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)
+        mypixmap = mypath + 'hdmu.png'
+        png = LoadPixmap(mypixmap)
+        name = _('Hdmu')
+        desc = _('Download latest SatDreamgr Image')
+        idx = 'hdmu'
+        res = (name,
+         png,
+         idx,
+         desc)
+        self.list.append(res)                         
         self['list'].list = self.list
 
     def quit(self):
@@ -160,6 +177,7 @@ class DownloadOnLineImage(Screen):
         Screen.__init__(self, session)
         self.session = session
         ImageVersion = mbimageversion
+        distri = getMachineBrand() 
         boxname = getBoxType()
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
@@ -187,6 +205,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openpli':
             self.feed = 'openpli'
             self.feedurl = 'http://openpli.org/download'
+        elif self.distro == 'hdmu':
+            self.feed = 'hdmu'
+            self.feedurl = 'http://www.hdmedia-universe.com/board/pages.php?pageid=1&'                  
         elif self.distro == 'openhdf':
             self.feed = 'openhdf'
             if ImageVersion == "5.5":
@@ -202,6 +223,11 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'openeight':
             self.feed = 'openeight'
             self.feedurl = 'http://openeight.de'
+        elif self.distro == 'satdreamgr':
+            if distri == "Vu+":
+                distri = "vu"           
+            self.feed = 'satdreamgr'
+            self.feedurl = 'http://sgcpm.com/satdreamgr-images-experimental/%s/%s' % (distri.lower(), boxname)                
         else:
             self.feed = 'opennfr'
             self.feedurl = 'http://dev.nachtfalke.biz/nfr/feeds/6.0/images'
@@ -218,7 +244,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
         urlbox = getBoxType()
-        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf':
+        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
             req = urllib2.Request(self.feedurl)
@@ -233,6 +259,20 @@ class DownloadOnLineImage(Screen):
                                 break
             except:
                     stb = 'no Image for this Box on this Side'
+        if self.distro == 'hdmu':
+            self.feedurl1 = self.feedurl + "box=" + box
+            req = urllib2.Request(self.feedurl1)
+            stb = 'no Image for this Box on this Side'
+            try:
+                    response = urllib2.urlopen(req)
+                    tmp = response.readlines()
+                    for line in tmp:
+                        if '<a href="' in line:
+                            if box in line:
+                                stb = '1'
+                                break
+            except:
+                    stb = 'no Image for this Box on this Side'                     
         if self.distro == 'openvix':
             if box in ('xpeedlx1', 'xpeedlx2', 'xpeedlx3', 'vusolo2', 'vusolose', 'vuduo2', 'vusolo4k', 'mutant2400', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'osmini', 'spycat', 'uniboxeco'):
                 if box in ('xpeedlx1', 'xpeedlx2'):
@@ -436,7 +476,6 @@ class DownloadOnLineImage(Screen):
             box = self.box()
             self.hide()
             if self.distro == 'openvix':
-                print "url=", self.feedurl + '/openvix-builds/' + box[1]
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
             elif self.distro == 'openpli':
                 url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
@@ -445,6 +484,14 @@ class DownloadOnLineImage(Screen):
             elif self.distro == 'openhdf':
                 url = self.feedurl + '/' + sel
                 #url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
+	    elif self.distro == 'satdreamgr':
+		url = self.feedurl + '/' + sel
+	    elif self.distro == 'hdmu':
+	        self.feedurl2 = 'www.hdmedia-universe.com/images/'
+	        if box[0] == "sf4008":
+	            url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
+		else: 
+                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel		                
             elif self.distro == 'opendroid':
                 url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel            
             else:
@@ -499,7 +546,7 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('egami', 'openatv-6.0','openeight'):
+        if self.distro in ('egami', 'openatv-6.0','openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
@@ -511,6 +558,8 @@ class DownloadOnLineImage(Screen):
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
             url = '%s/%s' % (self.feedurl1, box)
+        elif self.distro == 'hdmu':
+            url = '%sbox=%s' % (self.feedurl, box)              
             
 	else:
             url = self.feedurl
@@ -520,6 +569,8 @@ class DownloadOnLineImage(Screen):
             response = urllib2.urlopen(req)
         except urllib2.URLError as e:
             print 'URL ERROR: %s' % e
+            self.imagelist.append(stb)
+            self['imageList'].l.setList(self.imagelist)
             return
 
         try:
@@ -575,6 +626,15 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
+                elif line.find('<a href="http://www.hdmedia-universe.com/images/') > -1:
+                    t4 = line.find('HDMU_')
+                    t5 = line.find('.zip"')
+                    if line[t4 :t5+4] != '':
+                        self.imagelist.append(line[t4 :t5+4])  
+                elif line.find('href="Satdreamgr-') > -1:
+                    t4 = line.find('Satdreamgr-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                                            
                                 
         else:
             self.imagelist.append(stb)
