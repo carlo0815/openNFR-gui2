@@ -30,7 +30,7 @@ class NFR4XChooseOnLineImage(Screen):
         self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.KeyOk,
          'back': self.close})
 
-    def KeyOk1(self):
+    def KeyOk1(self, res = None):
         config.usage.mbimageversion.save()
         mbimageValue = config.usage.mbimageversion.value
 	if returnValue is not None:
