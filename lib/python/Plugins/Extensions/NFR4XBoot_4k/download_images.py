@@ -51,7 +51,7 @@ class NFR4XChooseOnLineImage(Screen):
 	        MBImagelist.remove(("6.0", _("6.0")))
                 MBImagelist.append(("6.2", _("6.2")))
                 MBImagelist.append(("5.5", _("5.5")))
-	    #config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
+	    config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
 	    self.session.openWithCallback(self.KeyOk1, Setup, "multiboot")
             mbimageValue = config.usage.mbimageversion.value
         else:
