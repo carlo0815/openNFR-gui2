@@ -1556,6 +1556,8 @@ class ChannelSelectionBase(Screen):
                                 cmd += "opkg install --force-overwrite enigma2-plugin-extensions-tsmedia;"
                         elif pluginsuse == "WebradioFS":
                         	cmd += "opkg install --force-overwrite enigma2-plugin-extensions-webradiofs;"
+                        elif pluginsuse == "MovieBrowser":
+                        	cmd += "opkg install --force-overwrite enigma2-plugin-extensions-moviebrowser;"									
                         else:
                                 print "nothing select!"
                                 
@@ -1682,7 +1684,18 @@ class ChannelSelectionBase(Screen):
 					self.session.open(MessageBox, _("The WebradioFS plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
 		        else:
 		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The WebradioFS plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
-		else:
+		elif pluginsuse == "MovieBrowser":
+			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo"):
+				try:
+					from Plugins.Extensions.MovieBrowser.plugin import main as MovieBrowser
+					MovieBrowser(self.session)
+					no_plugin = False
+				except Exception, e:
+					self.session.open(MessageBox, _("The WebradioFS plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
+		        else:
+		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MovieBrowser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+
+						else:
 			print "nothing select"
 		
 			
