@@ -1691,7 +1691,7 @@ class ChannelSelectionBase(Screen):
 					MovieBrowser(self.session)
 					no_plugin = False
 				except Exception, e:
-					self.session.open(MessageBox, _("The WebradioFS plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
+					self.session.open(MessageBox, _("The MovieBrowser plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
 		        else:
 		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MovieBrowser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 
