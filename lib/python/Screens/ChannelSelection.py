@@ -1695,7 +1695,7 @@ class ChannelSelectionBase(Screen):
 		        else:
 		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MovieBrowser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 
-						else:
+		else:
 			print "nothing select"
 		
 			
