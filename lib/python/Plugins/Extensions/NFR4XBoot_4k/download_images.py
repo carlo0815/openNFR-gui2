@@ -168,7 +168,6 @@ class DownloadOnLineImage(Screen):
         self.session = session
         ImageVersion = mbimageversion
         distri = getBrandOEM()        
-    
         boxname = getBoxType()
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
@@ -231,8 +230,8 @@ class DownloadOnLineImage(Screen):
 
     def box(self):
         box = getBoxType()
-        urlbox = getBoxType()
-        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
+        urlbox = getBoxType()   
+        if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
             try:
@@ -245,6 +244,26 @@ class DownloadOnLineImage(Screen):
                                 break
             except:
                     stb = 'no Image for this Box on this Side'
+        if self.distro == 'egami':
+            if box == "ax51":
+                if box in ('ax51'):
+                    box = 'ax51'
+                    urlbox = 'hd51'
+                    stb = '1'
+            else:
+                self.feedurl1 = self.feedurl + "/index.php?open=" + box
+                req = urllib2.Request(self.feedurl1)
+                stb = 'no Image for this Box on this Side'
+                try:
+                        response = urllib2.urlopen(req)
+                        tmp = response.readlines()
+                        for line in tmp:
+                            if '<a href="' in line:
+                                if box in line:
+                                    stb = '1'
+                                    break
+                except:
+                        stb = 'no Image for this Box on this Side'                       
         if self.distro == 'hdmu':
             self.feedurl1 = self.feedurl + "box=" + box
             req = urllib2.Request(self.feedurl1)
@@ -272,7 +291,7 @@ class DownloadOnLineImage(Screen):
             else:   
                 stb = 'no Image for this Box on this Side' 
         elif self.distro == 'openpli':
-            if box in ('vusolo4k', 'mutant51'):
+            if box in ('vusolo4k', 'mutant51', 'ax51'):
                 if box in ('vusolo4k'):
                     box = 'vusolo4k'
                     urlbox = 'vuplus/Solo+4K/' 
@@ -281,10 +300,11 @@ class DownloadOnLineImage(Screen):
                     box = 'vuultimo4k'
                     urlbox = 'vuplus/Ultimo+4K/' 
                     stb = '1'                                             
-                elif box in ('mutant51'):
+                elif box in ('mutant51', 'ax51'):
                     box = 'hd51'
                     urlbox = 'mutant/hd51/' 
-                    stb = '1'              
+                    stb = '1'
+                                    
             else:   
                 stb = 'no Image for this Box on this Side'                
         elif self.distro == 'openeight':
@@ -322,7 +342,12 @@ class DownloadOnLineImage(Screen):
 	        if box[0] == "sf4008":
 	            url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
 		else: 
-                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel		
+                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel
+	    elif self.distro == 'egami':
+	        if box[0] == "ax51":
+	            url = 'http://image.egami-image.com/hd51/' + sel
+		else: 
+                    url = 'http://image.egami-image.com/' + box[0] + '/' + sel                    		
             else:
                 url = self.feedurl + '/' + box[0] + '/' + sel
             print '[NFR4XBoot] Image download url: ', url
@@ -375,8 +400,10 @@ class DownloadOnLineImage(Screen):
         self.imagelist = []
         if stb != '1':
             url = self.feedurl
-        elif self.distro in ('egami', 'openmips', 'openatv-6.0', 'openeight'):
+        elif self.distro in ('openmips', 'openatv-6.0', 'openeight'):
             url = '%s/index.php?open=%s' % (self.feedurl, box)
+        elif self.distro == 'egami':
+	    url = '%s/index.php?open=%s' % (self.feedurl, urlbox)
         elif self.distro == 'openvix':
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
         elif self.distro == 'openpli':
@@ -462,6 +489,11 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('Satdreamgr-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
+                elif line.find("<a href='") > -1:
+                    print "egami1"
+                    t4 = line.find('egami-')
+                    t5 = line.find('.zip"')
+                    self.imagelist.append(line[t4 :t5+4])                    
         else:
             self.imagelist.append(stb)
         self['imageList'].l.setList(self.imagelist)
@@ -529,3 +561,4 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
+
