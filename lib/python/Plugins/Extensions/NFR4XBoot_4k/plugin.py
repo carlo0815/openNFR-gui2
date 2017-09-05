@@ -228,6 +228,7 @@ class NFR4XBootImageChoose(Screen):
         
     def bootsetup(self):
         menulist = []
+        menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
         menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
         self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
 
@@ -236,11 +237,15 @@ class NFR4XBootImageChoose(Screen):
         if choice is None:
             return
         else:
+            if choice[1] == 'withnfr4xboot':
+                cmd0 = 'cp /sbin/nfr4x_multiboot /sbin/nfr4xinit'
+                cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
+                self.session.openWithCallback(self.close, Console, _('NFR4XBoot work with Bootmanager by Booting!'), [cmd0, cmd1])
             if choice[1] == 'withoutnfr4xboot':
                 cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
                 cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
                 self.session.openWithCallback(self.updateList, Console, _('NFR4XBoot work without Bootmanager by Booting!'), [cmd0, cmd1])
-            return       
+            return     
 
     def updateList(self):
         self.list = []
