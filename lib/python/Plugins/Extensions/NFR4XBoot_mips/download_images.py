@@ -179,6 +179,8 @@ class DownloadOnLineImage(Screen):
         ImageVersion = mbimageversion
         distri = getMachineBrand() 
         boxname = getBoxType()
+	if boxname == "twinboxlcdci5":
+	    boxname = "twinboxlcd" 
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
         self['key_red'] = Button(_('Exit'))
@@ -243,7 +245,11 @@ class DownloadOnLineImage(Screen):
 
     def box(self):
         box = getBoxType()
+	if box == "twinboxlcdci5":
+	    box = "twinboxlcd" 
         urlbox = getBoxType()
+	if urlbox == "twinboxlcdci5":
+	    urlbox = "twinboxlcd" 	
         if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'egami' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
             if box in ('xpeedlx1', 'xpeedlx2'):
                     box = 'xpeedlx'
