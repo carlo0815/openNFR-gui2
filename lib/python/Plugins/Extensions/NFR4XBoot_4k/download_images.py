@@ -230,7 +230,7 @@ class DownloadOnLineImage(Screen):
 
     def box(self):
         box = getBoxType()
-        urlbox = getBoxType()   
+        urlbox = getBoxType() 
         if self.distro == 'openatv-6.0' or self.distro == 'opennfr' or self.distro == 'openhdf' or self.distro == 'satdreamgr':
             req = urllib2.Request(self.feedurl)
             stb = 'no Image for this Box on this Side'
@@ -273,7 +273,7 @@ class DownloadOnLineImage(Screen):
                     tmp = response.readlines()
                     for line in tmp:
                         if '<a href="' in line:
-                            if box in line:
+                            if box and "images/arm" in line:
                                 stb = '1'
                                 break
             except:
@@ -339,10 +339,7 @@ class DownloadOnLineImage(Screen):
 		url = self.feedurl + '/' + sel
 	    elif self.distro == 'hdmu':
 	        self.feedurl2 = 'www.hdmedia-universe.com/images/'
-	        if box[0] == "sf4008":
-	            url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
-		else: 
-                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel
+	        url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
 	    elif self.distro == 'egami':
 	        if box[0] == "ax51":
 	            url = 'http://image.egami-image.com/hd51/' + sel
@@ -359,15 +356,20 @@ class DownloadOnLineImage(Screen):
 
             f = open(file_name, 'wb')
             f.close()
-            meta = u.info()
-            file_size = int(meta.getheaders('Content-Length')[0])
-            print 'Downloading: %s Bytes: %s' % (sel, file_size)
-            job = ImageDownloadJob(url, file_name, sel)
-            job.afterEvent = 'close'
-            job_manager.AddJob(job)
-            job_manager.failed_jobs = []
-            self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable=False, afterEventChangeable=False)
-            return
+            try:
+                meta = u.info()
+                file_size = int(meta.getheaders('Content-Length')[0])
+                print 'Downloading: %s Bytes: %s' % (sel, file_size)
+                job = ImageDownloadJob(url, file_name, sel)
+                job.afterEvent = 'close'
+                job_manager.AddJob(job)
+                job_manager.failed_jobs = []
+                self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable=False, afterEventChangeable=False)
+                return                
+            except:
+                self.session.open(MessageBox, _('The URL to this image is not correct !!'), type=MessageBox.TYPE_ERROR)
+                self.close()                
+
 
     def ImageDownloadCB(self, ret):
         if ret:
@@ -490,7 +492,6 @@ class DownloadOnLineImage(Screen):
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])
                 elif line.find("<a href='") > -1:
-                    print "egami1"
                     t4 = line.find('egami-')
                     t5 = line.find('.zip"')
                     self.imagelist.append(line[t4 :t5+4])                    
@@ -561,4 +562,3 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
-
