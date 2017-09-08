@@ -497,6 +497,8 @@ class DownloadOnLineImage(Screen):
                     self.imagelist.append(line[t4 :t5+4])                    
         else:
             self.imagelist.append(stb)
+        if "" in self.imagelist:
+            self.imagelist.remove('')	
         self['imageList'].l.setList(self.imagelist)
 
 
