@@ -274,7 +274,7 @@ class DownloadOnLineImage(Screen):
                     tmp = response.readlines()
                     for line in tmp:
                         if '<a href="' in line:
-                            if box and "images/mips" in line::
+                            if box and "images/mips" in line:
                                 stb = '1'
                                 break
             except:
