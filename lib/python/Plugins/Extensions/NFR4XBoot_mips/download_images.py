@@ -180,7 +180,7 @@ class DownloadOnLineImage(Screen):
         distri = getMachineBrand() 
         boxname = getBoxType()
 	if boxname == "twinboxlcdci5":
-	    boxname = "twinboxlcd" 
+	    boxname = "twinboxlcd" 	
         Screen.setTitle(self, _('NFR4XBoot - Download Image'))
         self['key_green'] = Button(_('Install'))
         self['key_red'] = Button(_('Exit'))
@@ -246,7 +246,7 @@ class DownloadOnLineImage(Screen):
     def box(self):
         box = getBoxType()
 	if box == "twinboxlcdci5":
-	    box = "twinboxlcd" 
+	    box = "twinboxlcd" 	
         urlbox = getBoxType()
 	if urlbox == "twinboxlcdci5":
 	    urlbox = "twinboxlcd" 	
@@ -274,7 +274,7 @@ class DownloadOnLineImage(Screen):
                     tmp = response.readlines()
                     for line in tmp:
                         if '<a href="' in line:
-                            if box in line:
+                            if box and "images/mips" in line::
                                 stb = '1'
                                 break
             except:
@@ -506,10 +506,7 @@ class DownloadOnLineImage(Screen):
 		url = self.feedurl + '/' + sel
 	    elif self.distro == 'hdmu':
 	        self.feedurl2 = 'www.hdmedia-universe.com/images/'
-	        if box[0] == "sf4008":
-	            url = 'http://www.hdmedia-universe.com/images/arm/' + box[0] + '/' + sel
-		else: 
-                    url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel		                
+                url = 'http://www.hdmedia-universe.com/images/mips/' + box[0] + '/' + sel		                
             elif self.distro == 'opendroid':
                 url = self.feedurl + '/' + box[0] + '/' + box[1] + '/' + sel            
             else:
@@ -523,15 +520,19 @@ class DownloadOnLineImage(Screen):
 
             f = open(file_name, 'wb')
             f.close()
-            meta = u.info()
-            file_size = int(meta.getheaders('Content-Length')[0])
-            print 'Downloading: %s Bytes: %s' % (sel, file_size)
-            job = ImageDownloadJob(url, file_name, sel)
-            job.afterEvent = 'close'
-            job_manager.AddJob(job)
-            job_manager.failed_jobs = []
-            self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable=False, afterEventChangeable=False)
-            return
+            try:		
+                meta = u.info()
+                file_size = int(meta.getheaders('Content-Length')[0])
+                print 'Downloading: %s Bytes: %s' % (sel, file_size)
+                job = ImageDownloadJob(url, file_name, sel)
+                job.afterEvent = 'close'
+                job_manager.AddJob(job)
+                job_manager.failed_jobs = []
+                self.session.openWithCallback(self.ImageDownloadCB, JobView, job, backgroundable=False, afterEventChangeable=False)
+                return
+            except:
+                self.session.open(MessageBox, _('The URL to this image is not correct !!'), type=MessageBox.TYPE_ERROR)
+                self.close()    	
 
     def ImageDownloadCB(self, ret):
         if ret:
@@ -653,6 +654,8 @@ class DownloadOnLineImage(Screen):
                                 
         else:
             self.imagelist.append(stb)
+        if "" in self.imagelist:
+            self.imagelist.remove('')		
         self['imageList'].l.setList(self.imagelist)
 
 
@@ -718,3 +721,4 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
+
