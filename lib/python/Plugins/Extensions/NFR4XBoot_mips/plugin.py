@@ -1,6 +1,7 @@
 from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName, getImageDistro, getMachineBrand, getImageFolder, getMachineRootFile 
 from Screens.Screen import Screen
 from Screens.Console import Console
+from Screens.Setup import Setup
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -153,6 +154,8 @@ class NFR4XBootInstallation(Screen):
                 self.close()
                 
     def install2(self, yesno):
+	config.NFRBootmanager = ConfigSubsection()
+	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
         if yesno:
             self.MACHINEBRAND = getMachineBrand()
             if  self.MACHINEBRAND == "Vu+":
@@ -180,6 +183,9 @@ class NFR4XBootInstallation(Screen):
             os.system('cp /sbin/nfr4x_multiboot /sbin/nfr4xinit')
             os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
             os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
+            out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
+            out3.write(config.NFRBootmanager.bootmanagertimeout.value)
+            out3.close()	
             out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
             out2.write('Flash')
             out2.close()
@@ -275,9 +281,12 @@ class NFR4XBootImageChoose(Screen):
         menulist = []
         menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
         menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
+	menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))	
         self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
 
     def menuBootsetupCallback(self, choice):
+	config.NFRBootmanager = ConfigSubsection()
+	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
         self.show()
         if choice is None:
             return
@@ -290,7 +299,22 @@ class NFR4XBootImageChoose(Screen):
                 cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
                 cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
                 self.session.openWithCallback(self.updateList, Console, _('NFR4XBoot work without Bootmanager by Booting!'), [cmd0, cmd1])
-            return       
+            if choice[1] == 'bootmanagertimeout':
+                self.session.openWithCallback(self.setupDone, Setup, 'bootmanagertimeout', 'Extensions/Infopanel')
+	    return 
+
+    def setupDone(self, test=None):
+	if config.NFRBootmanager.bootmanagertimeout == '':
+            config.NFRBootmanager.bootmanagertimeout = defaultprefix
+            config.NFRBootmanager.bootmanagertimeout.save()
+            out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
+            out3.write(config.NFRBootmanager.bootmanagertimeout.value)
+            out3.close()            
+        else:
+            config.NFRBootmanager.bootmanagertimeout.save()
+            out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
+            out3.write(config.NFRBootmanager.bootmanagertimeout.value)
+            out3.close()   
 
     def updateList(self):
         self.list = []
