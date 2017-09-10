@@ -10,4 +10,7 @@
         <item level="2" text="Query before image backup starts" requires="config.imagemanager.schedule" description="Query before starting image backup.">config.imagemanager.query</item>
         <!--item level="2" text="Max image backups to keep (0==all)" requires="config.imagemanager.schedule" description="Backups to keep">config.imagemanager.number_to_keep</item-->
     </setup>
+    <setup key="bootmanagertimeout" title="Setup">
+        <item level="2" text="Setup Timeout for NFR4XBootmanager" description="Setup Timeout for NFR4XBootmanager.">config.NFRBootmanager.bootmanagertimeout</item>
+    </setup>    
 </setupxml> 
