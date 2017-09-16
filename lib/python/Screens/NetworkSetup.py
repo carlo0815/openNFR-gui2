@@ -31,7 +31,7 @@ from Components.ActionMap import ActionMap, NumberActionMap, HelpableActionMap
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
 from Tools.LoadPixmap import LoadPixmap
 from Plugins.Plugin import PluginDescriptor
-from Plugins.Extensions.Infopanel.Softcamedit import vEditor
+from Plugins.Extensions.Infopanel.Softcamedit import vEditor, cEditor
 from Plugins.Extensions.Infopanel.nfsedit import NFS_EDIT
 from os import path, listdir
 import commands
@@ -2419,7 +2419,7 @@ class NetworkSamba(Screen):
 		
 	def Sambaedit(self):
 		if path.exists("/etc/samba/smb.conf"):
-                	self.session.open(vEditor, "/etc/samba/smb.conf")
+                	self.session.open(cEditor, "/etc/samba/smb.conf")
                 else:
                 	pass        	
 
