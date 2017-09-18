@@ -307,8 +307,12 @@ class QuickMenu(Screen):
 #### Softcamedit Menu ##############################
 	def Qsoftcamedit(self):
 		self.sublist = []
-		if path.exists("/usr/keys/oscam.server") or path.exists("/usr/keys/oscam.user") or path.exists("/usr/keys/oscam.conf") or path.exists("/usr/keys/oscam.dvbapi"):
-			self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit",_("Oscam Config Edit"),_("Oscam Config Edit")))
+		a_pfad = '/usr/keys/'
+		for ordner in os.listdir(a_pfad):
+                        if "oscam" in ordner:
+  				if path.exists("/usr/keys/%s/oscam.server" % ordner) or path.exists("/usr/keys/%s/oscam.user" % ordner) or path.exists("/usr/keys/%s/oscam.conf" % ordner) or path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
+                                        self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit",_("Oscam Config %s Edit" % ordner),_("Oscam Config %s Edit" % ordner)))
+                                        break
 		if path.exists("/usr/keys/CCcam.cfg"):
                 	self.sublist.append(QuickSubMenuEntryComponent("CCcam Config Edit",_("CCcam Config Edit"),_("CCcam Config Edit")))
 		if path.exists("/usr/keys/mg_cfg") or path.exists("/usr/keys/cccamd.list") or path.exists("/usr/keys/newcamd.list"):
@@ -324,6 +328,17 @@ class QuickMenu(Screen):
 #### Oscam Edit Menu ##############################
 	def Qoscamedit(self):
 		self.sublist = []
+		a_pfad = "/usr/keys/"
+		for ordner in os.listdir(a_pfad):
+			if "oscam" in ordner:
+				if path.exists("/usr/keys/%s/oscam.server" % ordner):
+					self.sublist.append(QuickSubMenuEntryComponent("Oscam.server %s Edit" % ordner,_("Oscam.server %s Edit" % ordner),_("open Oscam.server %s to Edit" % ordner)))
+                		if path.exists("/usr/keys/%s/oscam.user" % ordner):
+					self.sublist.append(QuickSubMenuEntryComponent("Oscam.user %s Edit" % ordner,_("Oscam.user %s Edit" % ordner),_("open Oscam.user %s to Edit" % ordner)))
+                		if path.exists("/usr/keys/%s/oscam.conf" % ordner):
+					self.sublist.append(QuickSubMenuEntryComponent("Oscam.conf %s Edit" % ordner,_("Oscam.conf %s Edit" % ordner),_("open Oscam.conf %s to Edit" % ordner)))
+                		if path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
+					self.sublist.append(QuickSubMenuEntryComponent("Oscam.dvbapi %s Edit" % ordner,_("Oscam.dvbapi %s Edit" % ordner),_("open Oscam.dvbapi %s to Edit" % ordner)))
 		if path.exists("/usr/keys/oscam.server"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.server Edit",_("Oscam.server Edit"),_("open Oscam.server to Edit")))
                 if path.exists("/usr/keys/oscam.user"):
@@ -613,7 +628,7 @@ class QuickMenu(Screen):
 		elif item[0] == _("Oscam.conf Edit"):
 			self.session.open(cEditor, "/usr/keys/oscam.conf")	
 		elif item[0] == _("Oscam.dvbapi Edit"):
-			self.session.open(cEditor, "/usr/keys/oscam.dvbapi")	
+			self.session.open(cEditor, "/usr/keys/oscam.dvbapi")				
 		elif item[0] == _("CCcam.cfg Edit"):
 			self.session.open(cEditor, "/usr/keys/CCcam.cfg")	
 		elif item[0] == _("mg.cfg Edit"):
@@ -732,7 +747,23 @@ class QuickMenu(Screen):
 			
 ######## Select tar Menu ############################################
 		elif item[0] == _("PackageManager"):
-			self.session.open(InfopanelManagerScreen)			
+			self.session.open(InfopanelManagerScreen)
+######## Select Oscam Config Edit Menu ##############################                       
+		a_pfad = "/usr/keys/"
+		for ordner in os.listdir(a_pfad):
+                        if "oscam" in ordner:			
+                                if item[0] == _("Oscam.server %s Edit" % ordner):
+					self.session.open(cEditor, "/usr/keys/%s/oscam.server" % ordner)
+                                        break	
+				elif item[0] == _("Oscam.user %s Edit" % ordner):
+					self.session.open(cEditor, "/usr/keys/%s/oscam.user" % ordner)
+                                        break	
+				elif item[0] == _("Oscam.conf %s Edit" % ordner):
+					self.session.open(cEditor, "/usr/keys/%s/oscam.conf" % ordner)
+                                        break	
+				elif item[0] == _("Oscam.dvbapi %s Edit" % ordner):
+					self.session.open(cEditor, "/usr/keys/%s/oscam.dvbapi" % ordner)
+                                        break                        			
 ######## OPEN SETUP MENUS ####################
 	def openSetup(self, dialog):
 		self.session.openWithCallback(self.menuClosed, Setup, dialog)
@@ -791,7 +822,7 @@ class QuickMenu(Screen):
 
 			nimList = []
 			for x in nims:
-				if not nimmanager.getNimConfig(x).dvbs.configMode.value in ("loopthrough", "satposdepends", "nothing"):
+				if not nimmanager.getNimConfig(x).configMode.value in ("loopthrough", "satposdepends", "nothing"):
 					nimList.append(x)
 
 			if len(nimList) == 0:
