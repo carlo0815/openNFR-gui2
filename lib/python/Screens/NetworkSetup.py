@@ -2418,8 +2418,8 @@ class NetworkSamba(Screen):
 		self.session.open(NetworkSambaLog)
 		
 	def Sambaedit(self):
-		if path.exists("/etc/samba/smb.conf"):
-                	self.session.open(cEditor, "/etc/samba/smb.conf")
+		if path.exists("/etc/samba/smb-user.conf"):
+                	self.session.open(cEditor, "/etc/samba/smb-user.conf")
                 else:
                 	pass        	
 
