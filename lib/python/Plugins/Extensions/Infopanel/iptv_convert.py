@@ -20,6 +20,8 @@ import urllib2
 import ssl
 import socket
 import time
+import shlex, subprocess
+from subprocess import Popen
 from glob import glob
 
 class IPTV(Screen):
@@ -394,8 +396,8 @@ class Iptvdownloadprov(Screen):
         cmd = ""
         cmd += "opkg install --force-overwrite curl;"
         cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
-        Console().ePopen(cmd)
-        time.sleep(2)
+        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel 
         name_file = self.file_filter(sel)
@@ -620,8 +622,8 @@ class Iptvdownloadkodi(Screen):
         cmd = ""
         cmd += "opkg install --force-overwrite curl;"
         cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
-        Console().ePopen(cmd)
-        time.sleep(2)
+        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel 
         name_file = self.file_filter(sel)
