@@ -744,7 +744,7 @@ class Iptvdownloadkodi(IPTV):
     def __init__(self, session, args = None):
         IPTV.__init__(self, session)
         self.skinName = IPTV.skin   
-        tlist = ["iptv_clean_extra", "iptv_clean_full", "iptv_clean_int", "iptv_clean_radio", "iptv_clean_tv"]
+        tlist = ["clean", "clean_radio", "clean_radio_at", "clean_radio_ch", "clean_radio_de", "clean_radio_fr", "clean_radio_nl", "clean_tv_atch", "clean_tv_extra", "clean_tv_international", "clean_tv_local", "clean_tv_main", "clean_tv_regional", "clean_tv_shop", "clean_tv_usuk"]
         self.session = session        
         self.Console = Console()
         self.IPTVInstalled = False
@@ -800,7 +800,7 @@ class Iptvdownloadkodi(IPTV):
         name_file1 = sel1
         cmd = ""
         cmd += "opkg install --force-overwrite curl;"
-        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
+        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
         process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
         process.wait()
         sel = "/etc/enigma2/" + sel1
