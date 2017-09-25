@@ -142,37 +142,38 @@ class IPTV_glob(Screen):
 
 
 class IPTV(Screen):
-    skin = """
-          <screen name="IPTV" position="center,center" size="1280,720" title="M3U Converter" flags="wfNoBorder">
-            <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-              <convert type="ClockToText">Default</convert>
-            </widget>
-            <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-              <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
-            </widget>
-            <ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
-            <ePixmap pixmap="skin_default/menu/db.png" position="848,596" size="350,44" alphatest="blend" zPosition="1" />
-            <ePixmap pixmap="skin_default/menu/nfr.png" position="950,430" size="150,150" alphatest="on" zPosition="1" />
-            <ePixmap pixmap="skin_default/menu/opennfr_info.png" position="837,95" size="379,216" alphatest="on" zPosition="1" />
-            <eLabel backgroundColor="grey" position="66,602" size="715,1" zPosition="0" />
-            <widget name="IPTVList" position="65,98" size="715,500" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
-            <widget name="text1" position="64,608" size="715,25" font="Regular;20" transparent="0" foregroundColor="cyan1" halign="center" backgroundColor="backtop" />
-            <widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
-            <eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
-            <widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
-            <ePixmap pixmap="skin_default/buttons/red.png" position=" 70,670" size="30,30" alphatest="blend" />
-            <ePixmap pixmap="skin_default/buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
-            <ePixmap pixmap="skin_default/buttons/yellow.png" position="650,670" size="30,30" alphatest="blend" />
-             <ePixmap pixmap="skin_default/buttons/blue.png" position="940,670" size="30,30" alphatest="blend" />   
-            <widget name="key_red" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-            <widget name="key_green" position="395,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-            <widget name="key_yellow" position="685,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-            <widget name="key_blue" position="975,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />    
-          </screen> """  
+    #skin = """
+          #<screen name="IPTV" position="center,center" size="1280,720" title="M3U Converter" flags="wfNoBorder">
+          #  <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+          #    <convert type="ClockToText">Default</convert>
+          #  </widget>
+          #  <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+          #    <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+          #  </widget>
+          #  <ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
+          #  <ePixmap pixmap="skin_default/menu/db.png" position="848,596" size="350,44" alphatest="blend" zPosition="1" />
+          #  <ePixmap pixmap="skin_default/menu/nfr.png" position="950,430" size="150,150" alphatest="on" zPosition="1" />
+          #  <ePixmap pixmap="skin_default/menu/opennfr_info.png" position="837,95" size="379,216" alphatest="on" zPosition="1" />
+           # <eLabel backgroundColor="grey" position="66,602" size="715,1" zPosition="0" />
+           # <widget name="IPTVList" position="65,98" size="715,500" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
+           # <widget name="text1" position="64,608" size="715,25" font="Regular;20" transparent="0" foregroundColor="cyan1" halign="center" backgroundColor="backtop" />
+           # <widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="backtop" transparent="1" foregroundColor="cyan1" />
+           # <eLabel position="837,95" zPosition="3" size="375,214" backgroundColor="unff000000" />
+          #  <widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
+          #  <ePixmap pixmap="skin_default/buttons/red.png" position=" 70,670" size="30,30" alphatest="blend" />
+          #  <ePixmap pixmap="skin_default/buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
+          #  <ePixmap pixmap="skin_default/buttons/yellow.png" position="650,670" size="30,30" alphatest="blend" />
+          #   <ePixmap pixmap="skin_default/buttons/blue.png" position="940,670" size="30,30" alphatest="blend" />   
+          #  <widget name="key_red" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+          #  <widget name="key_green" position="395,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+          #  <widget name="key_yellow" position="685,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+          #  <widget name="key_blue" position="975,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />    
+          #</screen> """  
     iptvlist =[]
 
     def __init__(self, session, args = None):
         self.m3ulist = []
+        self.skinName = "IPTV"
         self.session = session
         self.Console = Console()
         self.Version = args
@@ -292,20 +293,20 @@ class IPTV(Screen):
         self.Remove_hooks()
         self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)
         
-class Iptvdownload(Screen):
+class Iptvdownload(IPTV):
             
     iptvlist =[]
 
     def __init__(self, session, args = None):
-        Screen.__init__(self, session)
-        self.skinName = ["Iptvdownload", "IPTV" ]
+        IPTV.__init__(self, session)
+        Screen.setTitle(self, _("Iptv Download"))
+        self.skinName = "IPTV"
         tlist = ["German Provider Listen", "Kodinerds Listen", "Austria Provider Listen(ungetest)", "Schweizer Provider Listen(ungetest)"]
         self.session = session
         self.Console = Console()
         self.IPTVInstalled = False
         self.Version = args
         global kodi
-        Screen.__init__(self, session)
         self["IPTVList"] = MenuList(tlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select IPTVlists to Download"))
@@ -371,13 +372,13 @@ class Iptvdownloadprov(IPTV):
 
     def __init__(self, session, args = None):
         IPTV.__init__(self, session)
-        self.skinName = IPTV.skin
+        Screen.setTitle(self, _("Iptv Download German Providerlisten"))
+        self.skinName = "IPTV"
         tlist = ["1+1entertain-tv", "telekom-entertain", "vodafone-radioliste", "vodafone-tv-radioliste", "vodafone-tvliste",]
         self.session = session
         self.Console = Console()
         self.IPTVInstalled = False
         self.Version = args
-        Screen.__init__(self, session)
         self["IPTVList"] = MenuList(tlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select IPTVlist to download and add into TV Bouquet"))
@@ -494,14 +495,14 @@ class Iptvdownloadprovsuisse(IPTV):
     iptvlist =[]
 
     def __init__(self, session, args = None):
-        Screen.__init__(self, session)
-        self.skinName = IPTV.skin 
+        IPTV.__init__(self, session)
+        Screen.setTitle(self, _("Iptv Download Suisse Providerliste"))
+        self.skinName = "IPTV" 
         tlist = ["swisscom2017"]
         self.session = session
         self.Console = Console()
         self.IPTVInstalled = False
         self.Version = args
-        Screen.__init__(self, session)
         self["IPTVList"] = MenuList(tlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select IPTVlist to download and add into TV Bouquet"))
@@ -619,13 +620,13 @@ class Iptvdownloadprovaustria(IPTV):
 
     def __init__(self, session, args = None):
         IPTV.__init__(self, session)
-        self.skinName = IPTV.skin 
+        Screen.setTitle(self, _("Iptv Download Austria Providerliste"))
+        self.skinName = "IPTV"
         tlist = ["A1TV_Basis", "A1TV_Basis_HD", "A1TV_Radio-Sender", "A1TV_Plus_HD", "A1TV_Plus", "A1TV_ORF_Radio-Sender", "A1TV_HD"]
         self.session = session
         self.Console = Console()
         self.IPTVInstalled = False
         self.Version = args
-        Screen.__init__(self, session)
         self["IPTVList"] = MenuList(tlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select IPTVlist to download and add into TV Bouquet"))
@@ -743,13 +744,13 @@ class Iptvdownloadkodi(IPTV):
 
     def __init__(self, session, args = None):
         IPTV.__init__(self, session)
-        self.skinName = IPTV.skin   
+        Screen.setTitle(self, _("Iptv Download Kodinerdslisten"))
+        self.skinName = "IPTV"  
         tlist = ["clean", "clean_radio", "clean_radio_at", "clean_radio_ch", "clean_radio_de", "clean_radio_fr", "clean_radio_nl", "clean_tv_atch", "clean_tv_extra", "clean_tv_international", "clean_tv_local", "clean_tv_main", "clean_tv_regional", "clean_tv_shop", "clean_tv_usuk"]
         self.session = session        
         self.Console = Console()
         self.IPTVInstalled = False
         self.Version = args
-        Screen.__init__(self, session)
         self["IPTVList"] = MenuList(tlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select IPTVlist to download and add into TV Bouquet"))
