@@ -4,6 +4,7 @@ from Screens.Volume import Volume
 from Screens.Mute import Mute
 from GlobalActions import globalActionMap
 from config import config, ConfigSubsection, ConfigInteger
+from boxbranding import getBoxType
 
 profile("VolumeControl")
 #TODO .. move this to a own .py file
@@ -20,8 +21,12 @@ class VolumeControl:
 		assert not VolumeControl.instance, "only one VolumeControl instance is allowed!"
 		VolumeControl.instance = self
 
-		config.audio = ConfigSubsection()
-		config.audio.volume = ConfigInteger(default = 50, limits = (0, 100))
+		if getBoxType() in ('sf4008','sf3038'):
+			config.audio = ConfigSubsection()
+			config.audio.volume = ConfigInteger(default = 10, limits = (0, 100))
+		else:
+			config.audio = ConfigSubsection()
+			config.audio.volume = ConfigInteger(default = 50, limits = (0, 100))
 
 		self.volumeDialog = session.instantiateDialog(Volume)
 		self.muteDialog = session.instantiateDialog(Mute)
