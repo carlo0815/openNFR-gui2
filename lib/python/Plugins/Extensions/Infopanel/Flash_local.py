@@ -212,14 +212,14 @@ class FlashOnline(Screen):
 				for name in os.listdir(path):
 					if name != 'bootname' and os.path.isfile(os.path.join(path, name)):
 						try:
-							cmdline = self.read_startup("/boot/" + name).split("=",1)[1].split(" ",1)[0]
+							cmdline = self.read_startup("/boot/" + name).split("=",3)[3].split(" ",1)[0]
 						except IndexError:
 							continue
-						cmdline_startup = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
+						cmdline_startup = self.read_startup("/boot/STARTUP").split("=",3)[3].split(" ",1)[0]
 						if (cmdline != cmdline_startup) and (name != "STARTUP"):
 							files.append(name)
 				files.insert(0,"STARTUP")
-		elif getMachineBuild() in ("gb7252"):
+			elif getMachineBuild() in ("gb7252"):
 				for name in os.listdir(path):
 					if name != 'bootname' and os.path.isfile(os.path.join(path, name)):
 						try:
@@ -230,7 +230,7 @@ class FlashOnline(Screen):
 						if (cmdline != cmdline_startup) and (name != "STARTUP"):
 							files.append(name)
 				files.insert(0,"STARTUP")
-		else:
+			else:
 				for name in os.listdir(path):
 					if name != 'bootname' and os.path.isfile(os.path.join(path, name)):
 						try:
