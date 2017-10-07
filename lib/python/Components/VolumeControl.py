@@ -48,7 +48,9 @@ class VolumeControl:
 
 	def volUp(self):
                 vol = self.volctrl.getVolume()
-                if vol < 5:
+                if config.VolumeSetup.steps.value != "default":
+                    vol += int(config.VolumeSetup.steps.value)
+                elif vol < 5:
                     vol += 1
                 elif vol < 9:
                     vol += 2
@@ -63,7 +65,9 @@ class VolumeControl:
 
 	def volDown(self):
                 vol = self.volctrl.getVolume()
-                if vol <= 5:
+                if config.VolumeSetup.steps.value != "default":
+                    vol -= int(config.VolumeSetup.steps.value)                
+                elif vol <= 5:
                     vol -= 1
                 elif vol <= 9:
                     vol -= 2
