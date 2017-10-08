@@ -17,7 +17,7 @@ from Tools.Directories import fileExists
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox 
 from Screens.InputBox import InputBox
-from Screens.Console import Console
+from Screens.Console import Console as SConsole
 from Components.Input import Input
 from Screens.ChoiceBox import ChoiceBox
 from Components.AVSwitch import AVSwitch
@@ -906,7 +906,8 @@ class ciplusfix(ConfigListScreen, Screen):
 
     def ok(self):
 		target = "init 4; /usr/bin/enigma2; reboot" 
-		self.session.open(Console, title=_("Restart CI+ Fix"), cmdlist = [target], closeOnSuccess = False)		
+		self.session.open(SConsole, title=_("Restart CI+ Fix"), cmdlist = [target], closeOnSuccess = False)		
 		
     def cancel(self):
 		self.close(False)		
+
