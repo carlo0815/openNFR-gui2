@@ -695,7 +695,7 @@ class CIHelper(Screen):
 		self['key_green'] = Label(_("Start"))
 		self['key_yellow'] = Label(_("Autostart"))
 		self['key_blue'] = Label()
-		#self.Console = Console()
+		self.Console = Console()
 		self.my_cihelper_active = False
 		self.my_cihelper_run = False
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'SetupActions'], {'ok': self.setupcihelper, 'back': self.close, 'menu': self.setupcihelper, 'green': self.CIHelperStartStop, 'yellow': self.CIHelperset})
