@@ -118,6 +118,7 @@
 		<key id="KEY_NEXT" mapto="historyNext" flags="mr" />
 		<key id="KEY_BACK" mapto="historyBack" flags="mr" />
 		<key id="KEY_FORWARD" mapto="historyNext" flags="mr" />
+		<key id="KEY_ARCHIVE" mapto="historyBack" flags="mr" />
 		<key id="KEY_CHANNELUP" mapto="ChannelPlusPressed" flags="m" />
 		<key id="KEY_CHANNELDOWN" mapto="ChannelMinusPressed" flags="m" />
 		<key id="BTN_0" mapto="zapUp" flags="mr" />
@@ -217,6 +218,7 @@
 		<key id="KEY_TEXT" mapto="showText" flags="m" />
 		<key id="KEY_FILE" mapto="showMovies" flags="m" />
 		<key id="KEY_MEDIA" mapto="showMovies" flags="b" />
+		<key id="KEY_LIST" mapto="showMediaPlayer" flags="b" />
 		<!--<key id="KEY_MEDIA" mapto="showMediaPlayer" flags="m" />-->
 		<key id="KEY_PROGRAM" mapto="openTimerList" flags="m" />
 		<key id="KEY_BOOKMARKS" mapto="showPluginBrowser" flags="mm" />
@@ -270,6 +272,7 @@
 	<map context="InfobarPiPActions">
 		<key id="KEY_SCREEN" mapto="activatePiP" flags="m" />
 		<key id="KEY_SCREEN" mapto="activateHDMIPiP" flags="l" />
+		<key id="KEY_F6" mapto="activatePiP" flags="b" />
 	</map>
 	
 	<map context="InfobarHDMIActions">
@@ -897,7 +900,13 @@
 		<key id="KEY_RIGHT" mapto="down" flags="mr" />
 	</map>
 
-	<map context="HotkeyActions">
+	<map context="InfobarAspectSelectionActions">
+		<key id="KEY_GREEN" mapto="aspectSelection" flags="l" />
+		<key id="KEY_MODE" mapto="aspectSelection" flags="l" />
+		<key id="KEY_MODE" mapto="aspectSelection" flags="b" />
+        </map>
+        
+        <map context="HotkeyActions">
 		<key id="KEY_RED" mapto="red_long" flags="l" />
 		<key id="KEY_YELLOW" mapto="yellow" flags="b" />
 		<key id="KEY_YELLOW" mapto="yellow_long" flags="l" />
