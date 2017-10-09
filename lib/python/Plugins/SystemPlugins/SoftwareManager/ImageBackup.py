@@ -509,8 +509,7 @@ class ImageBackup(Screen):
                 closed = False
                 self.session = session
 		self.selection = 0
-		self.list = self.list_files("/boot")
-                self.MODEL = getBoxType()
+		self.MODEL = getBoxType()
 		self.OEM = getBrandOEM()
 		self.MACHINEBUILD = getMachineBuild()
 		self.MACHINENAME = getMachineName()
@@ -532,7 +531,8 @@ class ImageBackup(Screen):
 		else:
 			self.MTDBOOT = "none"
                         self.EMMCIMG = "none"
-		print "[FULL BACKUP] BOX MACHINEBUILD = >%s<" %self.MACHINEBUILD
+		self.list = self.list_files("/boot")
+                print "[FULL BACKUP] BOX MACHINEBUILD = >%s<" %self.MACHINEBUILD
 		print "[FULL BACKUP] BOX MACHINENAME = >%s<" %self.MACHINENAME
 		print "[FULL BACKUP] BOX MACHINEBRAND = >%s<" %self.MACHINEBRAND
 		print "[FULL BACKUP] BOX MODEL = >%s<" %self.MODEL
@@ -658,7 +658,7 @@ class ImageBackup(Screen):
 			self.path = PATH
 			for name in listdir(self.path):
 				if path.isfile(path.join(self.path, name)):
-					if getMachineBuild in ("hd51","vs1500","h7","ceryon7252"):
+					if self.MACHINEBUILD in ("hd51","vs1500","h7","ceryon7252"):
 						cmdline = self.read_startup("/boot/" + name).split("=",3)[3].split(" ",1)[0]
 					else:
 						cmdline = self.read_startup("/boot/" + name).split("=",1)[1].split(" ",1)[0]
