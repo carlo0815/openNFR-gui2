@@ -25,7 +25,7 @@ import urllib2
 import os
 import shutil
 import math
-from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion, getMachineKernelFile, getMachineRootFile
+from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBuild, getMachineBrand, getBrandOEM, getImageVersion, getMachineKernelFile, getMachineRootFile
 distro =  getImageDistro()
 ImageVersion = getImageVersion()
 ROOTFSBIN = getMachineRootFile()
