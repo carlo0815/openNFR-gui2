@@ -186,11 +186,8 @@ class FlashOnline(Screen):
 			if getMachineBuild() in ("gb7252"):
 				self.multi = self.read_startup("/boot/" + self.list[self.selection]).split(".",1)[1].split(":",1)[0]
 				self.multi = self.multi[-1:]
-			else:
-				self.multi = self.read_startup("/boot/" + self.list[self.selection]).split(".",1)[1].split("",1)[0]
-				self.multi = self.multi[-1:]
-			print "[Flash Online] MULTI:",self.multi
-			if getMachineBuild() in ("hd51","vs1500","h7","ceryon7252"):
+				print "[Flash Online] MULTI:",self.multi
+			elif getMachineBuild() in ("hd51","vs1500","h7","ceryon7252"):
 				cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",3)[3].split(" ",1)[0]
 			else:
 				cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",1)[1].split(" ",1)[0]
@@ -240,7 +237,7 @@ class FlashOnline(Screen):
 						cmdline_startup = self.read_startup("/boot/cmdline.txt").split("=",1)[1].split(" ",1)[0]
 						if (cmdline != cmdline_startup) and (name != "cmdline.txt"):
 							files.append(name)
-				files.insert(0,"cmdline.txt")
+     				files.insert(0,"cmdline.txt")
 		else:
 			files = "None"
 		return files
