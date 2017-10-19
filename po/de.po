@@ -13623,3 +13623,10 @@ msgstr "Das TSmedia Plugin ist nicht installiert!\nJetzt installieren?"
 
 msgid "The WebradioFS plugin is not installed!\nInstall now?"
 msgstr "Das WebradioFS Plugin ist nicht installiert!\nJetzt installieren?"
+
+msgid ""
+"Your %s %s will be restarted after the installation of service\n"
+"Ready to install %s ?"
+msgstr ""
+"Die %s %s wird neu gestartet wenn der Service installiert ist.\n"
+"Bereit \"%s\" zu installieren?"
