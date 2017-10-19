@@ -829,7 +829,7 @@ class NumberZap(Screen):
 
 		self.Timer = eTimer()
 		self.Timer.callback.append(self.keyOK)
-		self.Timer.start(5000, True)
+		self.Timer.start(2100, True)
 
 class InfoBarNumberZap:
 	""" Handles an initial number for NumberZapping """
