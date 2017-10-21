@@ -1920,18 +1920,15 @@ class InfoBarSeek:
 		if pauseable is not None:
 			if self.seekstate[0] and self.seekstate[3] == '||':
 				print "resolved to PAUSE"
-				self.leaveMute()
 				self.activityTimer.stop()
 				pauseable.pause()
 			elif self.seekstate[0] and self.seekstate[3] == 'END':  
 				print "resolved to STOP"
-				self.leaveMute()
 				self.activityTimer.stop()
 				service.stop()
 			elif self.seekstate[1]:
 				if not pauseable.setFastForward(self.seekstate[1]):
 					print "resolved to FAST FORWARD"
-					self.setMute()
 					pass
 				else:
 					self.seekstate = self.SEEK_STATE_PLAY
@@ -1939,7 +1936,6 @@ class InfoBarSeek:
 			elif self.seekstate[2]:
 				if not pauseable.setSlowMotion(self.seekstate[2]):
 					print "resolved to SLOW MOTION"
-					self.setMute()
 					pass
 					# print "resolved to SLOW MOTION"
 				else:
@@ -1947,7 +1943,6 @@ class InfoBarSeek:
 					# print "SLOW MOTION not possible: resolved to PAUSE"
 			else:
  				print "resolved to PLAY"
-				self.leaveMute()
 				self.activityTimer.start(200, False)
 				pauseable.unpause()
 
