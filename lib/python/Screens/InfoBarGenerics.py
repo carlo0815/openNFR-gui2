@@ -2573,16 +2573,17 @@ class InfoBarJobman:
 # depends on InfoBarExtensions
 class InfoBarPiP:
 	def __init__(self):
-		InfoBarHdmi.__init__(self)
 		try:
 			self.session.pipshown
 		except:
 			self.session.pipshown = False
-		if SystemInfo.get("NumVideoDecoders", 1) > 1 and isinstance(self, InfoBarEPG):
+
+		self.lastPiPService = None
+
+		if SystemInfo["PIPAvailable"] and isinstance(self, InfoBarEPG):
 			self["PiPActions"] = HelpableActionMap(self, "InfobarPiPActions",
 				{
-					"activatePiP": (self.showPiP, _("Activate PiP")),
-					"activateHDMIPiP": (self.HDMIInLong, _("Activate HDMI-IN PiP")),
+					"activatePiP": (self.activePiP, self.activePiPName),
 				})
 			if self.allowPiP:
 				self.addExtension((self.getShowHideName, self.showPiP, lambda: True), "blue")
@@ -2592,6 +2593,9 @@ class InfoBarPiP:
 			else:
 				self.addExtension((self.getShowHideName, self.showPiP, self.pipShown), "blue")
 				self.addExtension((self.getMoveName, self.movePiP, self.pipShown), "green")
+
+		self.lastPiPServiceTimeoutTimer = eTimer()
+                self.lastPiPServiceTimeoutTimer.callback.append(self.clearLastPiPService)
 
 	def pipShown(self):
 		return self.session.pipshown
@@ -2679,6 +2683,23 @@ class InfoBarPiP:
 			except:
 				pass
 			
+	def clearLastPiPService(self):
+		self.lastPiPService = None
+
+	def activePiP(self):
+		if self.servicelist and self.servicelist.dopipzap or not self.session.pipshown:
+			self.showPiP()
+		else:
+			self.togglePipzap()
+
+	def activePiPName(self):
+		if self.servicelist and self.servicelist.dopipzap:
+			return _("Disable Picture in Picture")
+		if self.session.pipshown:
+			return _("Zap focus to Picture in Picture")
+		else:
+			return _("Activate Picture in Picture")
+	
 	def swapPiP(self):
 		swapservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		pipref = self.session.pip.getCurrentService()
@@ -3846,22 +3867,13 @@ class InfoBarHdmi:
 		self.hdmi_enabled = False
 		self.hdmi_enabled_full = False
 		self.hdmi_enabled_pip = False
-                try:
-                	if self.add_extensions:
-                	        self.add_extensions = True
-                        else:
-                                self.add_extensions = False
-                except:                
-                       self.add_extensions = False
-		if getMachineProcModel().startswith('ini-90') or getMachineProcModel().startswith('ini-80'):
-		        if not self.add_extensions:
-				if not self.hdmi_enabled_full:
-					self.addExtension((self.getHDMIInFullScreen, self.HDMIInFull, lambda: True), "blue")
-				if not self.hdmi_enabled_pip:
-					self.addExtension((self.getHDMIInPiPScreen, self.HDMIInPiP, lambda: True), "green")
-				self.add_extensions = True
-                                        	
-		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions", 
+
+		if getMachineBuild() in ('inihdp', 'hd2400', 'dm7080', 'dm820', 'dm900', 'dm920', 'gb7252', 'vuultimo4k','et13000','sf5008') or getBoxType() in ('spycat4k','spycat4kcombo'):
+			if not self.hdmi_enabled_full:
+				self.addExtension((self.getHDMIInFullScreen, self.HDMIInFull, lambda: True), "blue")
+			if not self.hdmi_enabled_pip:
+				self.addExtension((self.getHDMIInPiPScreen, self.HDMIInPiP, lambda: True), "green")
+		self["HDMIActions"] = HelpableActionMap(self, "InfobarHDMIActions",
 			{
 				"HDMIin":(self.HDMIIn, _("Switch to HDMI in mode")),
 				"HDMIinLong":(self.HDMIInLong, _("Switch to HDMI in mode")),
