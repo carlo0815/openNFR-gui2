@@ -169,7 +169,7 @@ class NFR4XBootInstallation(Screen):
                 mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
             cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
             os.system(cmd)
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
+            os.system('cp /sbin/nfr4x_multiboot /sbin/nfr4xinit')
             os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
             os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
             out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
