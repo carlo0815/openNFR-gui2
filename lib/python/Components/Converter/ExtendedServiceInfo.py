@@ -12,7 +12,7 @@ class ExtendedServiceInfo(Converter, object):
     PROVIDER = 4
     FROMCONFIG = 5
     ALL = 6
-	TUNERINFO = 7
+    TUNERINFO = 7
 
     def __init__(self, type):
         Converter.__init__(self, type)
