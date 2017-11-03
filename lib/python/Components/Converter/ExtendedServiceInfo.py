@@ -1,127 +1,158 @@
-# -*- coding: utf-8 -*-
-from Components.config import config, ConfigText
+from Components.config import config
 from Components.Converter.Converter import Converter
 from Components.Element import cached
-from ServiceReference import ServiceReference
-from enigma import eServiceCenter, eServiceReference, iServiceInformation, iPlayableService
-from string import upper
-import gettext
+from enigma import eServiceCenter, eServiceReference, iServiceInformation
+from xml.etree.cElementTree import parse
 
 class ExtendedServiceInfo(Converter, object):
-	TUNERINFO = 0
-	SERVICENAME = 1
-	SERVICENUMBER = 2
-	ORBITALPOSITION = 3
-	FROMCONFIG = 4
-	ALL = 5
+    SERVICENAME = 0
+    SERVICENUMBER = 1
+    ORBITALPOSITION = 2
+    SATNAME = 3
+    PROVIDER = 4
+    FROMCONFIG = 5
+    ALL = 6
+	TUNERINFO = 7
 
-	def __init__(self, type):
-		Converter.__init__(self, type)
-		self.list = []
-		self.getList()
-		
-		if type == "TunerInfo":
-			self.type = self.TUNERINFO
-		elif type == "ServiceName":
-			self.type = self.SERVICENAME
-		elif type == "ServiceNumber":
-			self.type = self.SERVICENUMBER
-		elif type == "OrbitalPosition":
-			self.type = self.ORBITALPOSITION
-		elif type == "Config":
-			self.type = self.FROMCONFIG
-		else:
-			self.type = self.ALL
+    def __init__(self, type):
+        Converter.__init__(self, type)
+        self.list = []
+		self.satNames = {}
+        self.readSatXml()
+        self.getLists()
+        if type == 'ServiceName':
+            self.type = self.SERVICENAME
+        elif type == 'ServiceNumber':
+            self.type = self.SERVICENUMBER
+        elif type == 'OrbitalPosition':
+            self.type = self.ORBITALPOSITION
+        elif type == 'SatName':
+            self.type = self.SATNAME
+        elif type == 'Provider':
+            self.type = self.PROVIDER
+        elif type == 'Config':
+            self.type = self.FROMCONFIG
+		elif type == "TunerInfo":
+			self.type = self.TUNERINFO			
+        else:
+            self.type = self.ALL
 
-	@cached
-	def getText(self):
-		service = self.source.service
-		info = service and service.info()
-		if not info:
-			return ""
-		
-		text = ""
-		
+    @cached
+    def getText(self):
+        service = self.source.service
+        info = service and service.info()
+        if not info:
+            return ''
+        text = ''
+        name = info.getName().replace('\xc2\x86', '').replace('\xc2\x87', '')
+        number = self.getServiceNumber(name, info.getInfoString(iServiceInformation.sServiceref))
+        orbital = self.getOrbitalPosition(info)
+        satName = self.satNames.get(orbital, orbital)
 		tunerinfo = self.getTunerInfo(service)
-		orbital = self.getOrbitalPosition(service)
-		name = info.getName().replace('\xc2\x86', '').replace('\xc2\x87', '')
-		number = self.getServiceNumber(name)
-
-		if self.type == self.TUNERINFO:
-			if config.usage.setup_level.value == "expert":
-				text = tunerinfo
-			else:
-				text = ""
-				
-		elif self.type == self.SERVICENAME:
-			text = name
-		elif self.type == self.SERVICENUMBER:
-			if config.usage.setup_level.value == "expert":
-				text = number
-			else:
-				text = ""
-			
-		elif self.type == self.ORBITALPOSITION:
-			if config.usage.setup_level.value == "expert":
-				text = orbital
-			else:
-				text = ""
-		elif self.type == self.FROMCONFIG:
-			if config.plugins.ExtendedServiceInfo.showServiceNumber.value == True:
-				text = "%s. %s" % (number, name)
-			else:
-				text = name
-			if config.plugins.ExtendedServiceInfo.showOrbitalPosition.value == True and orbital != "":
-				text = "%s (%s)" % (text, orbital)
+        if self.type == self.SERVICENAME:
+            text = name
+        elif self.type == self.SERVICENUMBER:
+            text = number
+        elif self.type == self.ORBITALPOSITION:
+            text = orbital
+        elif self.type == self.SATNAME:
+            text = satName
+        elif self.type == self.PROVIDER:
+            text = info.getInfoString(iServiceInformation.sProvider)
+        elif self.type == self.FROMCONFIG:
+            if config.plugins.ExtendedServiceInfo.showServiceNumber.value == True and number != '':
+                text = '%s. %s' % (number, name)
+            else:
+                text = name
+            if config.plugins.ExtendedServiceInfo.showOrbitalPosition.value == True and orbital != '':
+                if config.plugins.ExtendedServiceInfo.orbitalPositionType.value == 'name':
+                    text = '%s (%s)' % (text, satName)
+                else:
+                    text = '%s (%s)' % (text, orbital)
+        elif self.type == self.TUNERINFO:
+			text = tunerinfo
 		else:
-			text = "%s. %s" % (number, name)
-			if orbital != "":
-				text = "%s (%s) " % (text, orbital)
+            if number == '':
+                text = name
+            else:
+                text = '%s. %s' % (number, name)
+            if orbital != '':
+                text = '%s (%s)' % (text, orbital)
+        return text
+
+    text = property(getText)
+
+    def changed(self, what):
+        Converter.changed(self, what)
+
+    def getListFromRef(self, ref):
+        list = []
+        serviceHandler = eServiceCenter.getInstance()
+        services = serviceHandler.list(ref)
+        bouquets = services and services.getContent('SN', True)
+        for bouquet in bouquets:
+            services = serviceHandler.list(eServiceReference(bouquet[0]))
+            channels = services and services.getContent('SN', True)
+            for channel in channels:
+                if not channel[0].startswith('1:64:'):
+                    list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
+
+        return list
+
+    def getLists(self):
+        self.tv_list = self.getListFromRef(eServiceReference('1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 195) || (type == 25) FROM BOUQUET "bouquets.tv" ORDER BY bouquet'))
+        self.radio_list = self.getListFromRef(eServiceReference('1:7:2:0:0:0:0:0:0:0:(type == 2) FROM BOUQUET "bouquets.radio" ORDER BY bouquet'))
+
+    def readSatXml(self):
+        satXml = parse('/etc/tuxbox/satellites.xml').getroot()
+        if satXml is not None:
+            for sat in satXml.findall('sat'):
+                name = sat.get('name') or None
+                position = sat.get('position') or None
+                if name is not None and position is not None:
+                    position = '%s.%s' % (position[:-1], position[-1:])
+                    if position.startswith('-'):
+                        position = '%sW' % position[1:]
+                    else:
+                        position = '%sE' % position
+                    if position.startswith('.'):
+                        position = '0%s' % position
+                    self.satNames[position] = name
+
+        return
+
+    def getServiceNumber(self, name, ref):
+        list = []
+        if ref.startswith('1:0:2'):
+            list = self.radio_list
+        elif ref.startswith('1:0:1'):
+            list = self.tv_list
+        number = ''
+        if name in list:
+            for idx in range(1, len(list)):
+                if name == list[idx - 1]:
+                    number = str(idx)
+                    break
+
+        return number
+
+    def getOrbitalPosition(self, info):
+        transponderData = info.getInfoObject(iServiceInformation.sTransponderData)
+        orbital = 0
+        if transponderData is not None:
+            if isinstance(transponderData, float):
+                return ''
+            if transponderData.has_key('tuner_type'):
+                if transponderData['tuner_type'] == 'DVB-S' or transponderData['tuner_type'] == 'DVB-S2':
+                    orbital = transponderData['orbital_position']
+                    orbital = int(orbital)
+                    if orbital > 1800:
+                        orbital = str(float(3600 - orbital) / -1.0) + 'W'
+                    else:
+                        orbital = str(float(orbital) / -1.0) + 'E'
+                    return orbital
+        return ''
 		
-		return text
-
-	text = property(getText)
-
-	def changed(self, what):
-		Converter.changed(self, what)
-
-	def getServiceNumber(self, name):
-		if name in self.list:
-			for idx in range(1, len(self.list)):
-				if name == self.list[idx-1]:
-					return str(idx)
-		else:
-			return ""
-
-	def getList(self):
-		serviceHandler = eServiceCenter.getInstance()
-		services = serviceHandler.list(eServiceReference('1:134:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 195) || (type == 25) FROM BOUQUET "bouquets.tv" ORDER BY bouquet'))
-		bouquets = services and services.getContent("SN", True)
-		
-		for bouquet in bouquets:
-			services = serviceHandler.list(eServiceReference(bouquet[0]))
-			channels = services and services.getContent("SN", True)
-			
-			for channel in channels:
-				if not channel[0].startswith("1:64:"): # Ignore marker
-					self.list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
-
-	def getOrbitalPosition(self, service):
-		feinfo = service.frontendInfo()
-		orbital = 0
-		if feinfo is not None:
-			frontendData = feinfo and feinfo.getAll(True)
-			if frontendData is not None:
-				if frontendData.has_key("tuner_type"):
-					if frontendData["tuner_type"] == "DVB-S":
-						orbital = int(frontendData["orbital_position"])
-		
-		if orbital > 1800:
-			return str((float(3600 - orbital))/10.0) + "°W"
-		elif orbital > 0:
-			return str((float(orbital))/10.0) + "°E"
-		return ""
-
 	def getTunerInfo(self, service):
 		tunerinfo = ""
 		feinfo = (service and service.frontendInfo())
@@ -148,5 +179,6 @@ class ExtendedServiceInfo(Converter, object):
 					tunerinfo = (frequency + " " + ar_pol[polarisation_i] + " " + ar_fec[fec_i] + " " + symbolrate)
 				return tunerinfo
 		else:
-			return ""
+			return ""		
+		
 
