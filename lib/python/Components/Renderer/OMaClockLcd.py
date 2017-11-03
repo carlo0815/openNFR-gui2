@@ -15,7 +15,7 @@ LCDSIZE220 = False
 
 if getBoxType() in ('twinboxlcd', 'gb800ueplus', 'gb800seplus', 'gbultraue', 'singleboxlcd', 'sf208', 'sf228', 'e4hd'):
 	LCDSIZE220 = True
-elif getBoxType() in ('gbquadplus'):
+elif getBoxType() in ('gbquadplus', 'gbquad4k', 'gbue4k'):
 	LCDSIZE400 = True
 elif getBoxType() in ('vusolo4k'):
 	LCDSIZE480 = True
