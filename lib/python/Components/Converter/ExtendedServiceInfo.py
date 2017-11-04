@@ -14,17 +14,17 @@ class ExtendedServiceInfo(Converter, object):
 	SERVICENUMBER = 2
 	ORBITALPOSITION = 3
 	FROMCONFIG = 4
-    SATNAME = 5
-    PROVIDER = 6	
+	SATNAME = 5
+	PROVIDER = 6	
 	ALL = 7
 
 	def __init__(self, type):
 		Converter.__init__(self, type)
 		self.list = []
-        self.satNames = {}
-        self.readSatXml()
-        self.getLists()
-		
+        	self.satNames = {}
+        	self.readSatXml()
+        	self.getLists()
+        	self.getList()
 		if type == "TunerInfo":
 			self.type = self.TUNERINFO
 		elif type == "ServiceName":
@@ -35,10 +35,10 @@ class ExtendedServiceInfo(Converter, object):
 			self.type = self.ORBITALPOSITION
 		elif type == "Config":
 			self.type = self.FROMCONFIG
-        elif type == 'SatName':
-            self.type = self.SATNAME
-        elif type == 'Provider':
-            self.type = self.PROVIDER		
+		elif type == 'SatName':
+			self.type = self.SATNAME
+		elif type == 'Provider':
+			self.type = self.PROVIDER		
 		else:
 			self.type = self.ALL
 
@@ -76,10 +76,10 @@ class ExtendedServiceInfo(Converter, object):
 				text = orbital
 			else:
 				text = ""
-        elif self.type == self.SATNAME:
-            text = satName
-        elif self.type == self.PROVIDER:
-            text = info.getInfoString(iServiceInformation.sProvider)				
+		elif self.type == self.SATNAME:
+			text = satName
+		elif self.type == self.PROVIDER:
+			text = info.getInfoString(iServiceInformation.sProvider)				
 		elif self.type == self.FROMCONFIG:
 			if config.plugins.ExtendedServiceInfo.showServiceNumber.value == True:
 				text = "%s. %s" % (number, name)
@@ -119,6 +119,11 @@ class ExtendedServiceInfo(Converter, object):
 			for channel in channels:
 				if not channel[0].startswith("1:64:"): # Ignore marker
 					self.list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
+					
+	def getLists(self):
+		self.tv_list = self.getListFromRef(eServiceReference('1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 195) || (type == 25) FROM BOUQUET "bouquets.tv" ORDER BY bouquet'))
+		self.radio_list = self.getListFromRef(eServiceReference('1:7:2:0:0:0:0:0:0:0:(type == 2) FROM BOUQUET "bouquets.radio" ORDER BY bouquet'))
+					
 
 	def getOrbitalPosition(self, service):
 		feinfo = service.frontendInfo()
@@ -131,9 +136,9 @@ class ExtendedServiceInfo(Converter, object):
 						orbital = int(frontendData["orbital_position"])
 		
 		if orbital > 1800:
-			return str((float(3600 - orbital))/10.0) + "°W"
+			return str((float(3600 - orbital))/10.0) + "Â°W"
 		elif orbital > 0:
-			return str((float(orbital))/10.0) + "°E"
+			return str((float(orbital))/10.0) + "Â°E"
 		return ""
 
 	def getTunerInfo(self, service):
@@ -164,34 +169,34 @@ class ExtendedServiceInfo(Converter, object):
 		else:
 			return ""
 			
-    def getListFromRef(self, ref):
-        list = []
-        serviceHandler = eServiceCenter.getInstance()
-        services = serviceHandler.list(ref)
-        bouquets = services and services.getContent('SN', True)
-        for bouquet in bouquets:
-            services = serviceHandler.list(eServiceReference(bouquet[0]))
-            channels = services and services.getContent('SN', True)
-            for channel in channels:
-                if not channel[0].startswith('1:64:'):
-                    list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
+	def getListFromRef(self, ref):
+		list = []
+		serviceHandler = eServiceCenter.getInstance()
+		services = serviceHandler.list(ref)
+		bouquets = services and services.getContent('SN', True)
+		for bouquet in bouquets:
+			services = serviceHandler.list(eServiceReference(bouquet[0]))
+			channels = services and services.getContent('SN', True)
+			for channel in channels:
+                		if not channel[0].startswith('1:64:'):
+                    			list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
 
-        return list
+        	return list
 
-    def readSatXml(self):
-        satXml = parse('/etc/tuxbox/satellites.xml').getroot()
-        if satXml is not None:
-            for sat in satXml.findall('sat'):
-                name = sat.get('name') or None
-                position = sat.get('position') or None
-                if name is not None and position is not None:
-                    position = '%s.%s' % (position[:-1], position[-1:])
-                    if position.startswith('-'):
-                        position = '%sW' % position[1:]
-                    else:
-                        position = '%sE' % position
-                    if position.startswith('.'):
-                        position = '0%s' % position
-                    self.satNames[position] = name
+	def readSatXml(self):
+        	satXml = parse('/etc/tuxbox/satellites.xml').getroot()
+        	if satXml is not None:
+            		for sat in satXml.findall('sat'):
+                		name = sat.get('name') or None
+                		position = sat.get('position') or None
+                		if name is not None and position is not None:
+                    			position = '%s.%s' % (position[:-1], position[-1:])
+                    			if position.startswith('-'):
+                        			position = '%sW' % position[1:]
+                    			else:
+                        			position = '%sE' % position
+                    			if position.startswith('.'):
+                        			position = '0%s' % position
+                    			self.satNames[position] = name
 
-        return		
+        	return	
