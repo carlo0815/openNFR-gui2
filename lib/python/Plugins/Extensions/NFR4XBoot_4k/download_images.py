@@ -279,7 +279,7 @@ class DownloadOnLineImage(Screen):
             except:
                     stb = 'no Image for this Box on this Side'                    
         if self.distro == 'openvix':
-            if box in ('vusolo4k', 'mutant51'):
+            if box in ('vusolo4k', 'mutant51', 'gbquad4k'):
                 if box in ('vusolo4k'):
                     box = 'vusolo4k'
                     urlbox = 'Vu+Solo4K'
@@ -287,6 +287,10 @@ class DownloadOnLineImage(Screen):
                 elif box in ('mutant51'):
                     box = 'mutant51'
                     urlbox = 'Mutant-HD51'
+                    stb = '1'
+                elif box in ('gbquad4k'):
+                    box = 'gbquad4k'
+                    urlbox = 'GiGaBlue-UHD-QUAD-4K'
                     stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side' 
