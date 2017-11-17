@@ -61,3 +61,7 @@ endif
 if HAVE_BWLCD128
 SUBDIRS += vfd128
 endif
+
+if HAVE_7SEGMENT
+SUBDIRS += 7segment
+endif
