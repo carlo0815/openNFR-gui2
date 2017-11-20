@@ -155,7 +155,7 @@ class NFR4XChooseOnLineImage(Screen):
         mypixmap = mypath + 'hdmu.png'
         png = LoadPixmap(mypixmap)
         name = _('Hdmu')
-        desc = _('Download latest SatDreamgr Image')
+        desc = _('Download latest HDMU Image')
         idx = 'hdmu'
         res = (name,
          png,
