@@ -328,6 +328,10 @@ class DownloadOnLineImage(Screen):
             except:
                     stb = 'no Image for this Box on this Side'
         if self.distro == 'hdmu':
+            if box == "formuler1":
+                    box = "FormulerF1"
+	    elif box == "formuler1": 
+                    box = "FormulerF3"
             self.feedurl1 = self.feedurl + "box=" + box
             req = urllib2.Request(self.feedurl1)
             stb = 'no Image for this Box on this Side'
@@ -775,4 +779,5 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
+
 
