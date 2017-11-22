@@ -130,7 +130,11 @@ def getModelString():
 def getChipSetString():
 	if getMachineBuild() in ('dm7080','dm820'):
 		return "7435"
-	elif getMachineBuild() in ('hd51'):
+	elif getMachineBuild() in ('dm520','dm525'):
+		return "73625"
+	elif getMachineBuild() in ('dm900','dm920','et13000','sf5008'):
+		return "7252S"
+	elif getMachineBuild() in ('hd51','vs1500','h7'):
 		return "7251S"
 	else:
 		try:
@@ -148,7 +152,7 @@ def getCPUSpeedString():
 		return "1,3 GHz"
 	elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 		return "1,7 GHz"
-	elif getMachineBuild() in ('hd51','hd52','sf4008'):
+	elif getMachineBuild() in ('hd51','hd52','sf4008','vs1500','et1x000','h7','et13000','sf5008'):
 		try:
 			import binascii
 			f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
@@ -178,7 +182,7 @@ def getCPUSpeedString():
 
 
 def getCPUString():
-	if getMachineBuild() in ('vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52','sf4008', 'gb7252', 'dags7252' 'vs1500'):
+	if getMachineBuild() in ('vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'dags7252', 'vs1500', 'et1x000', 'xc7439','h7','8100s','et13000','sf5008'):
 		return "Broadcom"
 	else:
 		try:

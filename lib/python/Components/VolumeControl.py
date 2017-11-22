@@ -21,7 +21,7 @@ class VolumeControl:
 		assert not VolumeControl.instance, "only one VolumeControl instance is allowed!"
 		VolumeControl.instance = self
 
-		if getBoxType() in ('sf4008','sf3038'):
+		if getBoxType() in ('sf4008','sf3038','sf128','sf138'):
 			config.audio = ConfigSubsection()
 			config.audio.volume = ConfigInteger(default = 10, limits = (0, 100))
 		else:
