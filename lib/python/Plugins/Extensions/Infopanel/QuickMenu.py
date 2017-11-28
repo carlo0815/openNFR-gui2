@@ -313,6 +313,8 @@ class QuickMenu(Screen):
   				if path.exists("/usr/keys/%s/oscam.server" % ordner) or path.exists("/usr/keys/%s/oscam.user" % ordner) or path.exists("/usr/keys/%s/oscam.conf" % ordner) or path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
                                         self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit",_("Oscam Config %s Edit" % ordner),_("Oscam Config %s Edit" % ordner)))
                                         break
+		if path.exists("/usr/keys/oscam.server") or path.exists("/usr/keys/oscam.user") or path.exists("/usr/keys/oscam.conf") or path.exists("/usr/keys/oscam.dvbapi"):
+                	self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit",_("Oscam Config Edit"),_("Oscam Config Edit")))
 		if path.exists("/usr/keys/CCcam.cfg"):
                 	self.sublist.append(QuickSubMenuEntryComponent("CCcam Config Edit",_("CCcam Config Edit"),_("CCcam Config Edit")))
 		if path.exists("/usr/keys/mg_cfg") or path.exists("/usr/keys/cccamd.list") or path.exists("/usr/keys/newcamd.list"):
