@@ -1,32 +1,79 @@
 #!/bin/sh
 
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-datarootdir=@datarootdir@
+prefix=/usr
+exec_prefix=/usr
+datarootdir=${prefix}/share
+
+#wetek kodi start
+if [ -e /usr/bin/kodi ]; then
+	if [ -e /etc/.kodistart ]; then
+		rm -f /etc/.kodistart
+		echo 0 >  /sys/class/video/disable_video
+		/usr/bin/kodi
+		echo 1 > /sys/class/graphics/fb0/blank
+		if grep -q 1080 /etc/enigma2/settings; then
+			echo "0 0 1919 1079" > /sys/class/video/axis
+			echo 1080p50Hz > /sys/class/display/mode
+		else
+			echo "0 0 1279 719" > /sys/class/video/axis
+			echo 720p50Hz > /sys/class/display/mode
+		fi
+		echo 0 >  /sys/class/video/disable_video
+		echo 0 > /sys/class/graphics/fb0/blank
+	fi
+fi
+
+#check for /etc/enigma2 folder
+if [ ! -d /etc/enigma2 ] ; then
+	mkdir -p /etc/enigma2
+fi
+
+# workaround for corrupt ssl files
+if [ ! "$(grep config.misc.firstrun /etc/enigma2/settings)" == "config.misc.firstrun=false" ]; then
+	rm -rf /etc/enigma2/cert.pem &
+	rm -rf /etc/enigma2/key.pem &
+fi
 
 # update NTP time if NTP Time Enabled
 if [ "$(grep config.misc.SyncTimeUsing /etc/enigma2/settings)" == "config.misc.SyncTimeUsing=1" ]; then
 	/usr/sbin/ntpdate -s -u pool.ntp.org &
 fi
 
-if [ -x @bindir@/showiframe ]; then
-	killall -9 showiframe; sleep 1
-	if [ -f @sysconfdir@/enigma2/backdrop.mvi ]; then
-		@bindir@/showiframe @sysconfdir@/enigma2/backdrop.mvi
-	elif [ -f @datadir@/backdrop.mvi ]; then
-		@bindir@/showiframe @datadir@/backdrop.mvi
+if [ -x /usr/bin/showiframe ]; then
+	if [ -e /proc/stb/info/boxtype ]; then
+		stbcheck=`cat /proc/stb/info/boxtype`
+		if [ ! $stbcheck == "u5" ]; then
+			killall -9 showiframe; sleep 1
+		fi
+	else
+		killall -9 showiframe; sleep 1
+	fi
+	if [ -f /etc/enigma2/backdrop.mvi ]; then
+		/usr/bin/showiframe /etc/enigma2/backdrop.mvi
+	elif [ -f /usr/share/backdrop.mvi ]; then
+		/usr/bin/showiframe /usr/share/backdrop.mvi
 	fi
 fi
 
-
-
 # hook to execute scripts always before enigma2 start
-if [ -x @bindir@/enigma2_pre_start.sh ]; then
-	@bindir@/enigma2_pre_start.sh
+if [ -x /usr/bin/enigma2_pre_start.sh ]; then
+	/usr/bin/enigma2_pre_start.sh
+fi
+
+if [ -e /proc/stb/info/hwmodel ]; then
+   stbcheck=`cat /proc/stb/info/hwmodel | cut -c1-8`
+   if [ $stbcheck == "optimuss" ]; then
+      string=`mount | grep 'sda1' | cut -d " " -f3`
+      if [ -e $string/sat-soft/settings.sh ]; then
+         chmod 755 $string/sat-soft/settings.sh
+         $string/sat-soft/settings.sh
+      fi
+   fi
 fi
 
 if [ -d /home/root ]; then
 	cd /home/root
+	export HOME=/home/root
 fi
 
 #check for sundtek tuner helper lib
@@ -36,15 +83,56 @@ else
 	LIBS="/usr/lib/libopen.so.0.0.0"
 fi
 
+#check for specific pagecache helper lib
+if [ -e /usr/lib/libpagecache.so ]; then
+	LIBS="$LIBS /usr/lib/libpagecache.so"
+fi
+
+#check for receiver specific passthrough helper lib
+if [ -e /usr/lib/libpassthrough.so ]; then
+	LIBS="$LIBS /usr/lib/libpassthrough.so"
+fi
+
+if [ ! -e /etc/enigma2/settings ]; then
+	touch /etc/enigma2/settings
+fi
+
+#check for default sat settings
+stbcheck=00
+if [ -e /proc/stb/info/subtype ]; then
+   stbcheck=`cat /proc/stb/info/subtype`
+fi
+if [ -e /etc/defaultsat.tar.gz ] && [ ! -e /etc/enigma2/lamedb ] && [ ! $stbcheck == "01" ] && [ ! $stbcheck == "1" ]; then
+	tar -xzf /etc/defaultsat.tar.gz -C /etc/enigma2
+fi
+
 sync
+
+# in case sysctl.conf is not properly loaded - load sysctl.conf here again...
+sysctl -p
+
+(sleep 2; echo "enigma2 is the main pvr application... adjust oom score!"; PID=$(pidof enigma2); \
+        [ -e /proc/$PID/oom_score_adj ] && echo "-999" > /proc/$PID/oom_score_adj || echo "-17" > /proc/$PID/oom_adj;) &
+
 if [ "$(grep config.crash.enabledebug /etc/enigma2/settings)" == "config.crash.enabledebug=true" ]; then
-	if [ "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" != "" -a -d "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" ]; then
-		LD_PRELOAD=$LIBS @bindir@/enigma2 &> $(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')Enigma2-$(date +%d-%m-%Y_%H-%M-%S).log
-	else
-		LD_PRELOAD=$LIBS @bindir@/enigma2 &> /home/root/logs/Enigma2-$(date +%d-%m-%Y_%H-%M-%S).log
+	RANDOMIZE1970=''
+	time=`date +%Y` ;
+	if [ "$time" = 1970 ]; then
+		RANDOMIZE1970="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 5 | tr -d '\n')"
 	fi
+	LOGFOLDER="/home/root/logs/"
+	if [ ! -d $LOGFOLDER ] ; then mkdir -p $LOGFOLDER; fi
+	if [ "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" != "" -a -d "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" ]; then
+		LOGFOLDER=$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')
+	fi
+	LD_PRELOAD=$LIBS /usr/bin/enigma2 --debug-no-color &> ${LOGFOLDER}Enigma2-debug-$(date +%Y%m%d_%H-%M-%S)${RANDOMIZE1970}.log
 else
-	LD_PRELOAD=$LIBS @bindir@/enigma2
+	# in case $TERM is "linux" the serial output is activated - discard debug output
+	if [ "$TERM" = linux ]; then
+		LD_PRELOAD=$LIBS /usr/bin/enigma2 2> /dev/null
+	else
+		LD_PRELOAD=$LIBS /usr/bin/enigma2
+	fi
 fi
 
 # enigma2 exit codes:
@@ -56,11 +144,33 @@ fi
 # >128 signal
 
 ret=$?
+
+if [ "$ret" -ne "1" ]; then
+	if [ -e /proc/stb/info/boxtype ]; then
+		stbcheck=`cat /proc/stb/info/boxtype`
+		if [ $stbcheck == "u5" ]; then
+			killall -9 showiframe; sleep 5
+		fi
+	fi
+fi
+
 case $ret in
 	1)
-		/sbin/halt
+		if [ -e /proc/stb/info/boxtype ]; then
+			stbcheck=`cat /proc/stb/info/boxtype`
+			if [ $stbcheck == "u5" ]; then
+				/usr/bin/hihalt
+			else
+				/sbin/halt
+			fi
+		else
+			/sbin/halt
+		fi
 		;;
 	2)
+		if [ -f /proc/stb/fp/force_restart ]; then
+			echo 1 > /proc/stb/fp/force_restart
+		fi
 		/sbin/reboot
 		;;
 	3)
@@ -73,6 +183,10 @@ case $ret in
 		sleep 1;
 		/sbin/rmmod fp
 		/sbin/modprobe fp
+		/sbin/reboot
+		;;
+	16)
+		echo "rescue" > /proc/stb/fp/boot_mode
 		/sbin/reboot
 		;;
 	42)
@@ -89,6 +203,10 @@ case $ret in
 		/usr/bin/showiframe /usr/lib/enigma2/python/Plugins/SystemPlugins/MICOMUpgrade/reboot.mvi
 		# Wait forever for the user to power off
 		while(true) ; do sleep 60 ; done
+		;;
+	45)
+		echo "    " > /dev/lcd0
+		/usr/bin/gigablue_wol
 		;;
 	*)
 		rm -f /tmp/.listen.camd.socket.ignore
