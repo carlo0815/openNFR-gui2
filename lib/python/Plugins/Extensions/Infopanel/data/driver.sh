@@ -10,6 +10,14 @@ if ! [  -f "/etc/modules-load.d/_formuler1.conf_ci" ] ; then
 	cp -r /etc/modules-load.d/_formuler1.conf /etc/modules-load.d/_formuler1.conf_ci
 	echo copy modload
 fi
+if ! [  -f "/etc/modules-load.d/_formuler3.conf_ci" ] ; then
+	cp -r /etc/modules-load.d/_formuler3.conf /etc/modules-load.d/_formuler3.conf_ci
+	echo copy modload
+fi
+if ! [  -f "/etc/modules-load.d/_formuler4.conf_ci" ] ; then
+	cp -r /etc/modules-load.d/_formuler4.conf /etc/modules-load.d/_formuler4.conf_ci
+	echo copy modload
+fi
 case "$1" in
 tcdriver)
 	echo -n "enable tc Driver and reboot...\n "
@@ -65,3 +73,4 @@ ci4driver)
 esac
 
 exit 0
+
