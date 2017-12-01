@@ -112,16 +112,16 @@ class NFR4XChooseOnLineImage(Screen):
          idx,
          desc) 
         self.list.append(res)
-        mypixmap = mypath + 'openpli.png'
-        png = LoadPixmap(mypixmap)
-        name = _('OpenPLi')
-        desc = _('Download latest OpenPLi Image')
-        idx = 'openpli'
-        res = (name,
-         png,
-         idx,
-         desc)
-        self.list.append(res)
+        #mypixmap = mypath + 'openpli.png'
+        #png = LoadPixmap(mypixmap)
+        #name = _('OpenPLi')
+        #desc = _('Download latest OpenPLi Image')
+        #idx = 'openpli'
+        #res = (name,
+         #png,
+         #idx,
+         #desc)
+        #self.list.append(res)
         mypixmap = mypath + 'openhdf.png'
         png = LoadPixmap(mypixmap)
         name = _('OpenHDF')
@@ -261,9 +261,9 @@ class DownloadOnLineImage(Screen):
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
             self.feedurl = 'http://images.opendroid.org/%s' %ImageVersion                          
-        elif self.distro == 'openpli':
-            self.feed = 'openpli'
-            self.feedurl = 'http://openpli.org/download'
+        #elif self.distro == 'openpli':
+            #self.feed = 'openpli'
+            #self.feedurl = 'http://openpli.org/download'
         elif self.distro == 'hdmu':
             self.feed = 'hdmu'
             self.feedurl = 'http://www.hdmedia-universe.com/board/pages.php?pageid=1&'            
@@ -396,23 +396,23 @@ class DownloadOnLineImage(Screen):
                     stb = '1'
             else:   
                 stb = 'no Image for this Box on this Side' 
-        elif self.distro == 'openpli':
-            if box in ('vusolo4k', 'mutant51', 'ax51'):
-                if box in ('vusolo4k'):
-                    box = 'vusolo4k'
-                    urlbox = 'vuplus/Solo+4K/' 
-                    stb = '1'
-                elif box in ('vuultimo4k'):
-                    box = 'vuultimo4k'
-                    urlbox = 'vuplus/Ultimo+4K/' 
-                    stb = '1'                                             
-                elif box in ('mutant51', 'ax51'):
-                    box = 'hd51'
-                    urlbox = 'mutant/hd51/' 
-                    stb = '1'
+        #elif self.distro == 'openpli':
+            #if box in ('vusolo4k', 'mutant51', 'ax51'):
+                #if box in ('vusolo4k'):
+                    #box = 'vusolo4k'
+                    #urlbox = 'vuplus/Solo+4K/' 
+                    #stb = '1'
+                #elif box in ('vuultimo4k'):
+                    #box = 'vuultimo4k'
+                    #urlbox = 'vuplus/Ultimo+4K/' 
+                    #stb = '1'                                             
+                #elif box in ('mutant51', 'ax51'):
+                    #box = 'hd51'
+                    #urlbox = 'mutant/hd51/' 
+                   # stb = '1'
                                     
-            else:   
-                stb = 'no Image for this Box on this Side'                
+            #else:   
+                #stb = 'no Image for this Box on this Side'                
         elif self.distro == 'openeight':
             if box in ('sf4008'):
                box = 'sf4008'
@@ -437,8 +437,8 @@ class DownloadOnLineImage(Screen):
             self.hide()
             if self.distro == 'openvix':
                 url = self.feedurl + '/openvix-builds/' + box[1] + '/' + sel 
-            elif self.distro == 'openpli':
-                url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
+            #elif self.distro == 'openpli':
+                #url = 'http://downloads.pli-images.org/builds/' + box[0] + '/' + sel
             elif self.distro == 'pure2':
                 url = 'http://pur-e2.club/OU/images/6.1/' + BRANDOEM + '/' + sel
             elif self.distro == 'opendroid':
@@ -520,8 +520,8 @@ class DownloadOnLineImage(Screen):
             url = '%s/openvix-builds/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opendroid':
             url = '%s/%s/index.php?dir=%s' % (self.feedurl, BRANDOEMDROID, MASCHINEBUILD)
-        elif self.distro == 'openpli':
-            url = '%s/%s' % (self.feedurl, urlbox)
+        #elif self.distro == 'openpli':
+            #url = '%s/%s' % (self.feedurl, urlbox)
         elif self.distro == 'opennfr':
             url = '%s/%s' % (self.feedurl, box)
         elif self.distro == 'openhdf':
@@ -544,13 +544,13 @@ class DownloadOnLineImage(Screen):
         except urllib2.HTTPError as e:
             print 'HTTP download ERROR: %s' % e.code
             return
-        if self.distro == 'openpli':
-            lines1 = the_page.split('\n')
-            for line1 in lines1:
-                if '<a href="http://downloads.openpli.org/builds/' in line1:
-                    lines = the_page.split('_usb.zip<')
-        else:
-            lines = the_page.split('\n')
+        #if self.distro == 'openpli':
+            #lines1 = the_page.split('\n')
+            #for line1 in lines1:
+                #if '<a href="http://downloads.openpli.org/builds/' in line1:
+                    #lines = the_page.split('_usb.zip<')
+        #else:
+        lines = the_page.split('\n')
         tt = len(box)
         if stb == '1':
             for line in lines:
@@ -601,10 +601,10 @@ class DownloadOnLineImage(Screen):
                     t5 = line.find('.zip"')
                     if line[t4 :t5+4] != '':
                         self.imagelist.append(line[t4 :t5+4])  
-                elif line.find('href="http://downloads.openpli.org' ) > -1:
-                    t4 = line.find('<a href="http://downloads.openpli.org/builds/')
-                    t5 = line.find('.zip"')
-                    self.imagelist.append(line[t4+  len(box) + 46:t5+4])    
+                #elif line.find('href="http://downloads.openpli.org' ) > -1:
+                    #t4 = line.find('<a href="http://downloads.openpli.org/builds/')
+                    #t5 = line.find('.zip"')
+                    #self.imagelist.append(line[t4+  len(box) + 46:t5+4])    
                 elif line.find('href="openhdf-') > -1:
                     t4 = line.find('openhdf-')
                     t5 = line.find('.zip"')
@@ -686,3 +686,4 @@ class ImageDownloadTask(Task):
             self.finish(aborted=True)
         else:
             Task.processFinished(self, 0)
+
