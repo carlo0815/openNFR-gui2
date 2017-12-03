@@ -72,7 +72,7 @@ public:
 	std::string getInfoString(int w);
 	ePtr<iServiceInfoContainer> getInfoObject(int w);
 
-	void setQpipMode(bool value, bool audio) { }
+	void setQpipMode(bool value, bool audio) { };
 
 private:
 	friend class eServiceFactoryHDMI;
