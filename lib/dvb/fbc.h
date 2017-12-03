@@ -10,7 +10,7 @@
 class eDVBResourceManager;
 class eDVBRegisteredFrontend;
 
-class eFBCTunerManager: public iObject, public Object
+class eFBCTunerManager: public iObject, public sigc::trackable
 {
 private:
 	DECLARE_REF(eFBCTunerManager);
