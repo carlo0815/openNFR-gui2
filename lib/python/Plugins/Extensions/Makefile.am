@@ -14,11 +14,15 @@ SUBDIRS += DVDPlayer
 endif
 
 if VUSOLO4K
-SUBDIRS += MiniTV
+SUBDIRS += MiniTV QuadPip
 endif
 
 if VUULTIMO4K
-SUBDIRS += MiniTV
+SUBDIRS += MiniTV QuadPip
+endif
+
+if GB7252
+SUBDIRS += QuadPip
 endif
 
 install_PYTHON = __init__.py

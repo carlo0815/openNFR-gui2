@@ -145,6 +145,7 @@ AM_CONDITIONAL(GBULTRAUE, test "$BOXTYPE" == gbultraue)
 AM_CONDITIONAL(GBULTRAUEH, test "$BOXTYPE" == gbultraueh)
 AM_CONDITIONAL(GBQUADPLUS, test "$BOXTYPE" == gbquadplus)
 AM_CONDITIONAL(GBQUAD, test "$BOXTYPE" == gbquad)
+AM_CONDITIONAL(GB7252, test "$BOXTYPE" == gb7252)
 AM_CONDITIONAL(GBQUAD4K, test "$BOXTYPE" == gbquad4k)
 AM_CONDITIONAL(GBUE4K, test "$BOXTYPE" == gbue4k)
 AM_CONDITIONAL(GBX1, test "$BOXTYPE" == gbx1)
@@ -880,6 +881,7 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/AccuWeather/wheathericons/Makefile
 	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/Makefile
 	lib/python/Plugins/Extensions/AccuWeather/xbmcweather/small/Makefile
+	lib/python/Plugins/Extensions/QuadPip/Makefile
 	lib/python/Plugins/SystemPlugins/Makefile
 	lib/python/Plugins/SystemPlugins/CableScan/Makefile
 	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/Makefile
