@@ -1,13 +1,6 @@
 installdir = $(pkglibdir)/python/Plugins/Extensions
 
-SUBDIRS = TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer SocketMMI DVDBurn Modem Infopanel AccuWeather MenuSort bmediacenter MainMenu2
-
-if HAVE_MB4K
-SUBDIRS +=  NFR4XBoot_4k
-else 
-SUBDIRS +=  NFR4XBoot_mips
-endif	
-
+SUBDIRS = NFR4XBoot TuxboxPlugins CutListEditor PicturePlayer MediaScanner MediaPlayer SocketMMI DVDBurn Modem Infopanel AccuWeather MenuSort bmediacenter MainMenu2
 
 if HAVE_LIBDDVD
 SUBDIRS += DVDPlayer
