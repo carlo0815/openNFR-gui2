@@ -1,4 +1,4 @@
-from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName, getImageDistro, getMachineBrand, getImageFolder, getMachineRootFile 
+from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName, getImageDistro, getMachineBrand, getImageFolder, getMachineRootFile, getImageArch  
 from Screens.Screen import Screen
 from Screens.Console import Console
 from Screens.Setup import Setup
@@ -683,14 +683,15 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
                     cmd1 = 'python ' + pluginpath + '/ex_init.py'
                 else:
                     cmd1 = 'python ' + pluginpath + '/ex_init.pyo'
-                cmd = '%s %s %s %s %s %s %s %s' % (cmd1,
+                cmd = '%s %s %s %s %s %s %s %s %s' % (cmd1,
                  source,
                  target.replace(' ', '.'),
                  str(self.sett.value),
                  str(self.bootquest.value),
                  str(self.zipdelete.value),
                  getImageFolder(),
-                 getMachineRootFile())
+                 getMachineRootFile(),
+                 getImageArch())						   
                 print '[NFR4X-BOOT]: ', cmd
                 self.session.open(Console, _('NFR4XBoot: Install new image'), [message, cmd])
 
