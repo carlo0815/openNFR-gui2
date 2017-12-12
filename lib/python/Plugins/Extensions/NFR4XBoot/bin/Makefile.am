@@ -9,10 +9,7 @@ else
 	dist_install_DATA += \	
 	nfr4xbm  \
 	nfr4xinitboot \
-	fbclear  \
-	sfdisk
-install-data-hook:
-	@chmod +x $(DESTDIR)$(installdir)/sfdisk
+	fbclear  
 endif 	
 
 	
