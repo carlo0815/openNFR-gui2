@@ -11,8 +11,9 @@ else
 	nfr4xinitboot \
 	fbclear  \
 	sfdisk
+install-data-hook:
+	@chmod +x $(DESTDIR)$(installdir)/sfdisk
 endif 	
 
 	
-install-data-hook:
-	@chmod +x $(DESTDIR)$(installdir)/sfdisk
+
