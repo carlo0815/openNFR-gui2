@@ -1,4 +1,4 @@
-from enigma import eDVBDB, eDVBResourceManager
+from enigma import eDVBDB, eDVBResourceManager, getLinkedSlotID, isFBCLink
 from Screens.Screen import Screen
 from Components.SystemInfo import SystemInfo
 from Components.ActionMap import ActionMap
@@ -6,10 +6,12 @@ from Components.ConfigList import ConfigListScreen
 from Components.NimManager import nimmanager
 from Components.Button import Button
 from Components.Label import Label
+from Components.Pixmap import Pixmap
 from Components.SelectionList import SelectionList, SelectionEntryComponent
-from Components.config import getConfigListEntry, config, configfile, ConfigNothing, ConfigSatlist, ConfigYesNo
+from Components.config import getConfigListEntry, config, configfile, ConfigNothing, ConfigSatlist, ConfigYesNo, ConfigSubsection, ConfigSelection
 from Components.Sources.StaticText import StaticText
 from Components.Sources.List import List
+from Components.Sources.Boolean import Boolean
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.ServiceStopScreen import ServiceStopScreen
@@ -23,20 +25,101 @@ from os import path
 
 from  Tools.BugHunting import printCallSequence
 
-def isFBCTuner(nim):
-	if nim.description.find("FBC") == -1:
-		return False
-	return True
+def setForceLNBPowerChanged(configElement):
+	f = open("/proc/stb/frontend/fbc/force_lnbon", "w")
+	f.write(configElement.value)
+	f.close()
 
-def isFBCRoot(nim):
-	if nim.slot %8 < 2:
-		return True
-	return False
+def setForceToneBurstChanged(configElement):
+	f = open("/proc/stb/frontend/fbc/force_toneburst", "w")
+	f.write(configElement.value)
+	f.close()
 
-def isFBCLink(nim):
-	if isFBCTuner(nim) and not isFBCRoot(nim):
-		return True
-	return False
+config.tunermisc = ConfigSubsection()
+if SystemInfo["ForceLNBPowerChanged"]:
+	config.tunermisc.forceLnbPower = ConfigSelection(default = "off", choices = [ ("on", _("Yes")), ("off", _("No"))] )
+	config.tunermisc.forceLnbPower.addNotifier(setForceLNBPowerChanged)
+
+if SystemInfo["ForceToneBurstChanged"]:
+	config.tunermisc.forceToneBurst = ConfigSelection(default = "disable", choices = [ ("enable", _("Yes")), ("disable", _("No"))] )
+	config.tunermisc.forceToneBurst.addNotifier(setForceToneBurstChanged)
+
+class TunerSetup(Screen, ConfigListScreen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.skinName = ["Setup" ]
+		self.setup_title = _("Tuner settings")
+		self["HelpWindow"] = Pixmap()
+		self["HelpWindow"].hide()
+		self["VKeyIcon"] = Boolean(False)
+		self['footnote'] = Label()
+
+		self.onChangedEntry = [ ]
+
+		self.list = [ ]
+		ConfigListScreen.__init__(self, self.list, session = session, on_change = self.changedEntry)
+
+		from Components.ActionMap import ActionMap
+		self["actions"] = ActionMap(["SetupActions", "MenuActions", "ColorActions"],
+			{
+				"cancel": self.keyCancel,
+				"save": self.apply,
+				"menu": self.closeRecursive,
+			}, -2)
+
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
+		self["description"] = Label("")
+
+		self.createSetup()
+		self.onLayoutFinish.append(self.layoutFinished)
+
+	def layoutFinished(self):
+		self.setTitle(self.setup_title)
+
+	def createSetup(self):
+		level = config.usage.setup_level.index
+
+		self.list = [ ]
+
+		if level >= 1:
+			if SystemInfo["ForceLNBPowerChanged"]:
+				self.list.append(getConfigListEntry(_("Force LNB Power"), config.tunermisc.forceLnbPower, _("Force LNB Tuner Power settings.")))
+			if SystemInfo["ForceToneBurstChanged"]:
+				self.list.append(getConfigListEntry(_("Force ToneBurst"), config.tunermisc.forceToneBurst, _("Force LNB Tuner ToneBurst settings.")))
+
+		self["config"].list = self.list
+		self["config"].l.setList(self.list)
+		if config.usage.sort_settings.value:
+			self["config"].list.sort()
+
+	def keyRight(self):
+		ConfigListScreen.keyRight(self)
+		self.createSetup()
+
+	def confirm(self, confirmed):
+		self.keySave()
+
+	def apply(self):
+		self.keySave()
+
+	# for summary:
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
+
+	def getCurrentEntry(self):
+		return self["config"].getCurrent()[0]
+
+	def getCurrentValue(self):
+		return str(self["config"].getCurrent()[1].getText())
+
+	def getCurrentDescription(self):
+		return self["config"].getCurrent() and len(self["config"].getCurrent()) > 2 and self["config"].getCurrent()[2] or ""
+
+	def createSummary(self):
+		from Screens.Setup import SetupSummary
+		return SetupSummary
 
 class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 	def createSimpleSetup(self, list, mode):
@@ -90,8 +173,8 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		self.showAdditionalMotorOptions = getConfigListEntry(_("Extra motor options"), self.additionalMotorOptions)
 		self.list.append(self.showAdditionalMotorOptions)
 		if self.additionalMotorOptions.value:
-			self.list.append(getConfigListEntry("   " + _("Horizontal turning speed") + " [" + chr(176) + "/sec]", nim.turningspeedH))
-			self.list.append(getConfigListEntry("   " + _("Vertical turning speed") + " [" + chr(176) + "/sec]", nim.turningspeedV))
+			self.list.append(getConfigListEntry("   " + _("Horizontal turning speed") + " [" + chr(176) + _("/sec]"), nim.turningspeedH))
+			self.list.append(getConfigListEntry("   " + _("Vertical turning speed") + " [" + chr(176) + _("/sec]"), nim.turningspeedV))
 			self.list.append(getConfigListEntry("   " + _("Turning step size") + " [" + chr(176) + "]", nim.tuningstepsize))
 			self.list.append(getConfigListEntry("   " + _("Max memory positions"), nim.rotorPositions))
 
@@ -106,9 +189,9 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				choices["satposdepends"] = _("Second cable of motorized LNB")
 			if len(nimmanager.canConnectTo(self.slotid)) > 0:
 				choices["loopthrough"] = _("Loop through to")
-			if isFBCLink(self.nim):
+			if isFBCLink(self.nim.slot):
 				choices = { "nothing": _("not configured"),
-						"advanced": _("advanced")}
+						"advanced": _("Advanced")}
 			if self.nim.isMultiType():
 				self.nimConfig.dvbs.configMode.setChoices(choices, default = "nothing")
 			else:
@@ -146,6 +229,13 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		self.selectSatsEntry = None
 		self.advancedSelectSatsEntry = None
 		self.singleSatEntry = None
+		self.terrestrialRegionsEntry = None
+		self.cableRegionsEntry = None
+
+		if not hasattr(self, "terrestrialCountriesEntry"):
+			self.terrestrialCountriesEntry = None
+		if not hasattr(self, "cableCountriesEntry"):
+			self.cableCountriesEntry = None
 
 		if self.nim.isMultiType():
 			try:
@@ -168,7 +258,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 			self.list.append(self.configMode)
 
 			if nimConfig.configMode.value == "simple":			#simple setup
-				self.diseqcModeEntry = getConfigListEntry(pgettext("Satellite configuration mode", "Mode"), nimConfig.diseqcMode, _("Change settings for your switch modes: single lnb, tonburst or diseqc"))
+				self.diseqcModeEntry = getConfigListEntry(pgettext(_("Satellite configuration mode"), _("Mode")), nimConfig.diseqcMode, _("Change settings for your switch modes: single lnb, tonburst or diseqc"))
 				self.list.append(self.diseqcModeEntry)
 				if nimConfig.diseqcMode.value in ("single", "toneburst_a_b", "diseqc_a_b", "diseqc_a_b_c_d"):
 					self.createSimpleSetup(self.list, nimConfig.diseqcMode.value)
@@ -219,10 +309,6 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				self.list.append(getConfigListEntry(_("Tone amplitude"), nimConfig.toneAmplitude))
 			if path.exists("/proc/stb/frontend/%d/use_scpc_optimized_search_range" % self.nim.slot) and config.usage.setup_level.index >= 2: # expert
 				self.list.append(getConfigListEntry(_("SCPC optimized search range"), nimConfig.scpcSearchRange))
-			if path.exists("/proc/stb/frontend/fbc/force_lnbon") and config.usage.setup_level.index >= 2: # expert
-				self.list.append(getConfigListEntry(_("Force LNB Power"), self.nimConfig.dvbs.forceLnbPower))
-			if path.exists("/proc/stb/frontend/fbc/force_toneburst") and config.usage.setup_level.index >= 2: # expert
-				self.list.append(getConfigListEntry(_("Force ToneBurst"), self.nimConfig.dvbs.forceToneBurst))
 
 		elif self.nim.isCompatible("DVB-C"):
 			self.configMode = getConfigListEntry(_("Configuration mode"), self.nimConfig.dvbc.configMode)
@@ -232,7 +318,29 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				self.cableScanType=getConfigListEntry(_("Used service scan type"), self.nimConfig.dvbc.scan_type)
 				self.list.append(self.cableScanType)
 				if self.nimConfig.dvbc.scan_type.value == "provider":
-					self.list.append(getConfigListEntry(_("Provider to scan"), self.nimConfig.dvbc.scan_provider))
+					# country/region tier one
+					if self.cableCountriesEntry is None:
+						cablecountrycodelist = nimmanager.getCablesCountrycodeList()
+						cablecountrycode = nimmanager.getCableCountrycode(self.slotid)
+						default = cablecountrycode in cablecountrycodelist and cablecountrycode or None
+						choices = [("all", _("All"))]+sorted([(x, self.countrycodeToCountry(x)) for x in cablecountrycodelist], key=lambda listItem: listItem[1])
+						self.cableCountries = ConfigSelection(default = default, choices = choices)
+						self.cableCountriesEntry = getConfigListEntry(_("Country"), self.cableCountries)
+						self.originalCableRegion = self.nimConfig.dvbc.scan_provider.value
+					# country/region tier two
+					if self.cableCountries.value == "all":
+						cableNames = [x[0] for x in sorted(sorted(nimmanager.getCablesList(), key=lambda listItem: listItem[0]), key=lambda listItem: self.countrycodeToCountry(listItem[2]))]
+					else:
+						cableNames = sorted([x[0] for x in nimmanager.getCablesByCountrycode(self.cableCountries.value)])
+					default = self.nimConfig.dvbc.scan_provider.value in cableNames and self.nimConfig.dvbc.scan_provider.value or None
+					self.cableRegions = ConfigSelection(default = default, choices = cableNames)
+					def updateCableProvider(configEntry):
+						self.nimConfig.dvbc.scan_provider.value = configEntry.value
+						self.nimConfig.dvbc.scan_provider.save()
+					self.cableRegions.addNotifier(updateCableProvider)
+					self.cableRegionsEntry = getConfigListEntry(_("Region"), self.cableRegions)
+					self.list.append(self.cableCountriesEntry)
+					self.list.append(self.cableRegionsEntry)
 				else:
 					if self.nimConfig.dvbc.scan_type.value == "bands":
 						# TRANSLATORS: option name, indicating which type of (DVB-C) band should be scanned. The name of the band is printed in '%s'. E.g.: 'Scan EU MID band'
@@ -267,7 +375,29 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 			self.list.append(self.configMode)
 			self.have_advanced = False
 			if self.nimConfig.dvbt.configMode.value == "enabled":
-				self.list.append(getConfigListEntry(_("Terrestrial provider"), self.nimConfig.dvbt.terrestrial))
+				# country/region tier one
+				if self.terrestrialCountriesEntry is None:
+					terrestrialcountrycodelist = nimmanager.getTerrestrialsCountrycodeList()
+					terrestrialcountrycode = nimmanager.getTerrestrialCountrycode(self.slotid)
+					default = terrestrialcountrycode in terrestrialcountrycodelist and terrestrialcountrycode or None
+					choices = [("all", _("All"))]+sorted([(x, self.countrycodeToCountry(x)) for x in terrestrialcountrycodelist], key=lambda listItem: listItem[1])
+					self.terrestrialCountries = ConfigSelection(default = default, choices = choices)
+					self.terrestrialCountriesEntry = getConfigListEntry(_("Country"), self.terrestrialCountries)
+					self.originalTerrestrialRegion = self.nimConfig.dvbt.terrestrial.value
+				# country/region tier two
+				if self.terrestrialCountries.value == "all":
+					terrstrialNames = [x[0] for x in sorted(sorted(nimmanager.getTerrestrialsList(), key=lambda listItem: listItem[0]), key=lambda listItem: self.countrycodeToCountry(listItem[2]))]
+				else:
+					terrstrialNames = sorted([x[0] for x in nimmanager.getTerrestrialsByCountrycode(self.terrestrialCountries.value)])
+				default = self.nimConfig.dvbt.terrestrial.value in terrstrialNames and self.nimConfig.dvbt.terrestrial.value or None
+				self.terrestrialRegions = ConfigSelection(default = default, choices = terrstrialNames)
+				def updateTerrestrialProvider(configEntry):
+					self.nimConfig.dvbt.terrestrial.value = configEntry.value
+					self.nimConfig.dvbt.terrestrial.save()
+				self.terrestrialRegions.addNotifier(updateTerrestrialProvider)
+				self.terrestrialRegionsEntry = getConfigListEntry(_("Region"), self.terrestrialRegions)
+				self.list.append(self.terrestrialCountriesEntry)
+				self.list.append(self.terrestrialRegionsEntry)
 				if not getBoxType() in ('spycat'):
 					self.list.append(getConfigListEntry(_("Enable 5V for active antenna"), self.nimConfig.dvbt.terrestrial_5V))
 		elif self.nim.isCompatible("ATSC"):
@@ -278,6 +408,10 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 			self.have_advanced = False
 		else:
 			self.have_advanced = False
+
+		if config.usage.setup_level.index > 1:
+			self.list.append(getConfigListEntry(_("Force Legacy Signal Stats"), self.nimConfig.force_legacy_signal_stats))
+
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 
@@ -288,7 +422,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					 self.advancedLof, self.advancedPowerMeasurement, self.turningSpeed,
 					 self.advancedType, self.advancedSCR, self.advancedDiction, self.advancedManufacturer, self.advancedUnicable, self.advancedConnected, self.advancedUnicableTuningAlgo,
 					 self.toneburst, self.committedDiseqcCommand, self.uncommittedDiseqcCommand, self.singleSatEntry,
-					 self.commandOrder, self.showAdditionalMotorOptions, self.cableScanType, self.multiType)
+					 self.commandOrder, self.showAdditionalMotorOptions, self.cableScanType, self.terrestrialCountriesEntry, self.cableCountriesEntry, self.multiType)
 		if self["config"].getCurrent() == self.multiType and self.multiType:
 			update_slots = [self.slotid]
 			from Components.NimManager import InitNimManager
@@ -354,19 +488,19 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		self.list.append(self.advancedLnbsEntry)
 
 		if currLnb:
-			if isFBCLink(self.nim):
+			if isFBCLink(self.nim.slot):
 				if currLnb.lof.value != "unicable":
 					currLnb.lof.value = "unicable"
 			self.list.append(getConfigListEntry(_("Priority"), currLnb.prio))
-			self.advancedLof = getConfigListEntry("LOF", currLnb.lof)
+			self.advancedLof = getConfigListEntry(_("LOF"), currLnb.lof)
 			self.list.append(self.advancedLof)
 			if currLnb.lof.value == "user_defined":
-				self.list.append(getConfigListEntry("LOF/L", currLnb.lofl))
-				self.list.append(getConfigListEntry("LOF/H", currLnb.lofh))
+				self.list.append(getConfigListEntry(_("LOF/L"), currLnb.lofl))
+				self.list.append(getConfigListEntry(_("LOF/H"), currLnb.lofh))
 				self.list.append(getConfigListEntry(_("Threshold"), currLnb.threshold))
 
 			if currLnb.lof.value == "unicable":
-				self.advancedUnicable = getConfigListEntry("Unicable "+_("Configuration mode"), currLnb.unicable)
+				self.advancedUnicable = getConfigListEntry(_("Unicable ")+_("Configuration mode"), currLnb.unicable)
 				self.list.append(self.advancedUnicable)
 				if currLnb.unicable.value == "unicable_user":
 					self.advancedDiction = getConfigListEntry(_("Diction"), currLnb.dictionuser)
@@ -380,9 +514,10 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					self.advancedSCR = getConfigListEntry(_("Channel"), satcr)
 					self.list.append(self.advancedSCR)
 					self.list.append(getConfigListEntry(_("Frequency"), stcrvco))
-					self.list.append(getConfigListEntry("LOF/L", currLnb.lofl))
-					self.list.append(getConfigListEntry("LOF/H", currLnb.lofh))
+					self.list.append(getConfigListEntry(_("LOF/L"), currLnb.lofl))
+					self.list.append(getConfigListEntry(_("LOF/H"), currLnb.lofh))
 					self.list.append(getConfigListEntry(_("Threshold"), currLnb.threshold))
+					self.list.append(getConfigListEntry(_("LNB/Switch Bootup time [ms]"), currLnb.bootuptimeuser))
 				elif currLnb.unicable.value == "unicable_matrix":
 					nimmanager.sec.reconstructUnicableDate(currLnb.unicableMatrixManufacturer, currLnb.unicableMatrix, currLnb)
 					manufacturer_name = currLnb.unicableMatrixManufacturer.value.decode('utf-8')
@@ -420,7 +555,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				for id in connectable:
 					choices.append((str(id), nimmanager.getNimDescription(id)))
 				if len(choices):
-					if isFBCLink(self.nim):
+					if isFBCLink(self.nim.slot):
 						if nimConfig_advanced.unicableconnected.value != True:
 							nimConfig_advanced.unicableconnected.value = True
 					self.advancedConnected = getConfigListEntry(_("connected"), nimConfig_advanced.unicableconnected)
@@ -692,7 +827,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 
 	def keyLeft(self):
 		cur = self["config"].getCurrent()
-		if cur and isFBCLink(self.nim):
+		if cur and isFBCLink(self.nim.slot):
 			checkList = (self.advancedLof, self.advancedConnected)
 			if cur in checkList:
 				return
@@ -711,7 +846,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 
 	def keyRight(self):
 		cur = self["config"].getCurrent()
-		if cur and isFBCLink(self.nim):
+		if cur and isFBCLink(self.nim.slot):
 			checkList = (self.advancedLof, self.advancedConnected)
 			if cur in checkList:
 				return
@@ -754,6 +889,12 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 
 		for x in self["config"].list:
 			x[1].cancel()
+		if hasattr(self, "originalTerrestrialRegion"):
+			self.nimConfig.terrestrial.value = self.originalTerrestrialRegion
+			self.nimConfig.terrestrial.save()
+		if hasattr(self, "originalCableRegion"):
+			self.nimConfig.cable.scan_provider.value = self.originalCableRegion
+			self.nimConfig.cable.scan_provider.save()
 		# we need to call saveAll to reset the connectedTo choices
 		self.saveAll()
 		self.restoreService(_("Zap back to service before tuner setup?"))
@@ -778,6 +919,16 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				x[1].cancel()
 			self.setTextKeyBlue()
 			self.createSetup()
+
+	def countrycodeToCountry(self, cc):
+		if not hasattr(self, 'countrycodes'):
+			self.countrycodes = {}
+			from Tools.CountryCodes import ISO3166
+			for country in ISO3166:
+				self.countrycodes[country[2]] = country[0]
+		if cc.upper() in self.countrycodes:
+			return self.countrycodes[cc.upper()]
+		return cc
 
 	# for summary:
 	def changedEntry(self):
@@ -831,8 +982,7 @@ class NimSelection(Screen):
 				if x.isCompatible("DVB-S"):
 					nimConfig = nimmanager.getNimConfig(x.slot).dvbs
 					configMode = nimConfig.configMode.value
-					if isFBCLink(x) and configMode != "advanced":
-						from enigma import getLinkedSlotID
+					if isFBCLink(x.slot) and configMode != "advanced":
 						link = getLinkedSlotID(x.slot)
 
 						if link == -1:
@@ -858,10 +1008,16 @@ class NimSelection(Screen):
 		nim = self["nimlist"].getCurrent()
 		nim = nim and nim[3]
 
-		nimConfig = nimmanager.getNimConfig(nim.slot).dvbs
-		if isFBCLink(nim) and nimConfig.configMode.value == "loopthrough":
-			return
+		if isFBCLink(nim.slot):
+			if nim.isCompatible("DVB-S"):
+				nimConfig = nimmanager.getNimConfig(nim.slot).dvbs
+			elif nim.isCompatible("DVB-C"):
+				nimConfig = nimmanager.getNimConfig(nim.slot).dvbc
+			elif nim.isCompatible("DVB-T"):
+				nimConfig = nimmanager.getNimConfig(nim.slot).dvbt
 
+			if nimConfig.configMode.value == "loopthrough":
+				return
 		if nim is not None and not nim.empty and nim.isSupported():
 			self.session.openWithCallback(boundFunction(self.NimSetupCB, self["nimlist"].getIndex()), self.resultclass, nim.slot)
 
@@ -935,7 +1091,7 @@ class NimSelection(Screen):
 							text = _("Simple")
 					elif nimConfig.configMode.value == "advanced":
 						text = _("Advanced")
-					if isFBCLink(x) and nimConfig.configMode.value != "advanced":
+					if isFBCLink(x.slot) and nimConfig.configMode.value != "advanced":
 						text += _("\n<This tuner is configured automatically>")
 				elif x.isCompatible("DVB-T"):
 					nimConfig = nimmanager.getNimConfig(x.slot).dvbt
