@@ -150,6 +150,8 @@ def getCPUSpeedString():
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
+	elif getMachineBuild() in ('u5', 'u5pvr'):
+		return "1,6 GHz"	
 	elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 		return "1,7 GHz"
 	elif getMachineBuild() in ('hd51','hd52','sf4008','vs1500','et1x000','h7','et13000','sf5008'):
@@ -184,6 +186,8 @@ def getCPUSpeedString():
 def getCPUString():
 	if getMachineBuild() in ('vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'dags7252', 'vs1500', 'et1x000', 'xc7439','h7','8100s','et13000','sf5008'):
 		return "Broadcom"
+	elif getMachineBuild() in ('u5', 'u5pvr'):
+		return "Hisilicon"	
 	else:
 		try:
 			system="unknown"
@@ -211,7 +215,9 @@ def getCpuCoresString():
 			if len(splitted) > 1:
 				splitted[1] = splitted[1].replace('\n','')
 				if splitted[0].startswith("processor"):
-					if int(splitted[1]) > 0:
+					if getMachineBuild() in ('vuultimo4k','u5','u5pvr'):
+ 						cores = 4						
+					elif int(splitted[1]) > 0:
 						cores = 2
 					else:
 						cores = 1

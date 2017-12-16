@@ -44,6 +44,8 @@ class About(Screen):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
+		elif getMachineBuild() in ('u5','u5pvr'):
+			cpuMHz = "   (1,6 GHz)"			
 		elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 			cpuMHz = "   (1,7 GHz)"
 		elif getMachineBuild() in ('sf5008','et13000','et1x000','hd52','hd51','sf4008','vs1500','h7'):
@@ -475,6 +477,15 @@ class SystemNetworkInfo(Screen):
 				self.AboutText += _("MAC:") + "\t" + wlan0['hwaddr'] + "\n"
 			self.iface = 'wlan0'
 
+		wlan1 = about.getIfConfig('wlan1')
+		if wlan1.has_key('addr'):
+			self.AboutText += _("IP:") + "\t" + wlan1['addr'] + "\n"
+			if wlan1.has_key('netmask'):
+				self.AboutText += _("Netmask:") + "\t" + wlan1['netmask'] + "\n"
+			if wlan1.has_key('hwaddr'):
+				self.AboutText += _("MAC:") + "\t" + wlan1['hwaddr'] + "\n"
+			self.iface = 'wlan1'
+
 		rx_bytes, tx_bytes = about.getIfTransferredData(self.iface)
 		self.AboutText += "\n" + _("Bytes received:") + "\t" + rx_bytes + "\n"
 		self.AboutText += _("Bytes sent:") + "\t" + tx_bytes + "\n"
@@ -497,7 +508,7 @@ class SystemNetworkInfo(Screen):
 		if data is not None:
 			if data is True:
 				if status is not None:
-					if self.iface == 'wlan0' or self.iface == 'ra0':
+					if self.iface == 'wlan0' or self.iface == 'wlan1' or self.iface == 'ra0':
 						if status[self.iface]["essid"] == "off":
 							essid = _("No Connection")
 						else:
