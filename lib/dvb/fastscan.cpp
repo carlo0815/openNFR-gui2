@@ -295,7 +295,7 @@ const FastScanTransportStreamList *FastScanNetworkSection::getTransportStreams(v
 
 DEFINE_REF(eFastScan);
 
-eFastScan::eFastScan(int pid, const char *providername, eDVBFrontendParametersSatellite transponderparameters, bool originalnumbering, bool fixedserviceinfo)
+eFastScan::eFastScan(int pid, const char *providername, eDVBFrontendParametersSatellite transponderparameters, bool originalnumbering, bool fixedserviceinfo, bool createradiobouquet)
 {
 	m_pid = pid;
 	providerName = providername;
@@ -303,6 +303,7 @@ eFastScan::eFastScan(int pid, const char *providername, eDVBFrontendParametersSa
 	transponderParameters = transponderparameters;
 	originalNumbering = originalnumbering;
 	useFixedServiceInfo = fixedserviceinfo;
+	createRadioBouquet = createradiobouquet;
 	versionNumber = -1;
 }
 
