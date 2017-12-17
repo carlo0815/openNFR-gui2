@@ -9,7 +9,6 @@
 #include <lib/dvb/subtitle.h>
 #include <lib/dvb/teletext.h>
 #include <lib/dvb/radiotext.h>
-#include <lib/base/filepush.h>
 
 class eStaticServiceDVBInformation;
 class eStaticServiceDVBBouquetInformation;
@@ -71,6 +70,9 @@ inline int eDVBServiceList::compareLessEqual(const eServiceReference &a, const e
 class eDVBServiceBase: public iFrontendInformation
 {
 protected:
+	static bool tryFallbackTuner(eServiceReferenceDVB &service,
+			bool &is_stream, bool is_pvr, bool simulate);
+
 	eDVBServicePMTHandler m_service_handler;
 public:
 		// iFrontendInformation
@@ -141,7 +143,7 @@ public:
 	ePtr<iDVBTransponderData> getTransponderData();
 	void getAITApplications(std::map<int, std::string> &aitlist);
 	PyObject * getHbbTVApplications();
-	void getCaIds(std::vector<int> &caids, std::vector<int> &ecmpids);
+	void getCaIds(std::vector<int> &caids, std::vector<int> &ecmpids, std::vector<std::string> &ecmdatabytes);
 
 		// iAudioTrackSelection
 	int getNumberOfTracks();
@@ -327,3 +329,4 @@ public:
 };
 
 #endif
+
