@@ -46,7 +46,7 @@
 #define eDebugNoSimulateNoNewLineStart(x...) \
 	do { \
 		if (!m_simulate) \
-			eDebugNoNewLineStart(x); \
+			eDebugNoNewLine(x); \
 	} while(0)
 
 #define eDebugNoSimulateNoNewLine(x...) \
