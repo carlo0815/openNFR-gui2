@@ -2869,7 +2869,7 @@ void eDVBServicePlay::updateDecoder(bool sendSeekableStateChanged)
 		eDebug("[eDVBServicePlay] getting program info failed.");
 	else
 	{
-		eDebugNoNewLineStart("[eDVBServicePlay] have %zd video stream(s)", program.videoStreams.size());
+		eDebugNoNewLine("[eDVBServicePlay] have %zd video stream(s)", program.videoStreams.size());
 		if (!program.videoStreams.empty())
 		{
 			eDebugNoNewLine(" (");
