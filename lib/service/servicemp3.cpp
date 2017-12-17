@@ -1197,20 +1197,20 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		g_object_get (m_gst_playbin, "source", &source, NULL);
 		if (!source)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source");
+			eDebug("[eServiceMP3] trickSeek - cannot get source");
 			goto seek_unpause;
 		}
 		factory = gst_element_get_factory(source);
 		g_object_unref(source);
 		if (!factory)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source factory");
+			eDebug("[eServiceMP3] trickSeek - cannot get source factory");
 			goto seek_unpause;
 		}
 		name = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
 		if (!name)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source name");
+			eDebug("[eServiceMP3] trickSeek - cannot get source name");
 			goto seek_unpause;
 		}
 		/*
@@ -1237,7 +1237,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		}
 		else
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - source '%s' is not supported", name);
+			eDebug("[eServiceMP3] trickSeek - source '%s' is not supported", name);
 		}
 seek_unpause:
 		eDebug(", doing seeking unpause\n");
