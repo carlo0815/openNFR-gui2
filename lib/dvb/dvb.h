@@ -4,13 +4,13 @@
 #ifndef SWIG
 
 #include <lib/base/ebase.h>
-#include <lib/base/filepush.h>
 #include <lib/base/elock.h>
 #include <lib/dvb/idvb.h>
 #include <lib/dvb/demux.h>
 #include <lib/dvb/frontend.h>
 #include <lib/dvb/tstools.h>
 #include <lib/dvb/esection.h>
+#include "filepush.h"
 #include <connection.h>
 #include <lib/dvb/fbc.h>
 
@@ -162,7 +162,7 @@ class eDVBResourceManager: public iObject, public sigc::trackable
 	DECLARE_REF(eDVBResourceManager);
 	int avail, busy;
 
-	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD, DM7080, DM820, DM520, DM525, DM900, GIGABLUE, DM500HDV2, DM800SEV2, WETEKPLAY, WETEKPLAY2};
+	enum { DM7025, DM800, DM500HD, DM800SE, DM8000, DM7020HD, DM7080, DM820, DM520, DM525, DM900, DM920, GIGABLUE, DM500HDV2, DM800SEV2, WETEKPLAY, WETEKPLAY2, WETEKHUB};
 
 	int m_boxtype;
 
@@ -187,6 +187,7 @@ private:
 	ePtr<iDVBChannelList> m_list;
 	ePtr<iDVBSatelliteEquipmentControl> m_sec;
 	static eDVBResourceManager *instance;
+	ePtr<eFBCTunerManager> m_fbc_mng;
 
 	friend class eDVBChannel;
 	friend class eFBCTunerManager;
@@ -225,6 +226,7 @@ public:
 	int canAllocateChannel(const eDVBChannelID &channelid, const eDVBChannelID &ignore, int &system, bool simulate=false);
 
 		/* allocate channel... */
+	bool frontendPreferenceAllowsChannelUse(const eDVBChannelID &channelid, eUsePtr<iDVBChannel> channel, bool simulate);
 	RESULT allocateChannel(const eDVBChannelID &channelid, eUsePtr<iDVBChannel> &channel, bool simulate=false);
 	RESULT allocatePVRChannel(const eDVBChannelID &channelid, eUsePtr<iDVBPVRChannel> &channel);
 	static RESULT getInstance(ePtr<eDVBResourceManager> &);
@@ -236,7 +238,7 @@ public:
 
 			   there might be a priority given to certain frontend/chid
 			   combinations. this will be evaluated here. */
-	RESULT allocateFrontend(ePtr<eDVBAllocatedFrontend> &fe, ePtr<iDVBFrontendParameters> &feparm, bool simulate=false);
+	RESULT allocateFrontend(ePtr<eDVBAllocatedFrontend> &fe, ePtr<iDVBFrontendParameters> &feparm, bool simulate=false, bool returnScoreOnly=false);
 
 	RESULT allocateFrontendByIndex(ePtr<eDVBAllocatedFrontend> &fe, int slot_index);
 			/* allocate a demux able to filter on the selected frontend. */
@@ -312,6 +314,7 @@ public:
 
 	RESULT requestTsidOnid();
 	int reserveDemux();
+	int getDvrId();
 private:
 	ePtr<eDVBAllocatedFrontend> m_frontend;
 	ePtr<eDVBAllocatedDemux> m_demux, m_decoder_demux;
@@ -330,7 +333,7 @@ private:
 	ePtr<eConnection> m_conn_frontendStateChanged;
 
 		/* for PVR playback */
-	eDVBChannelFilePush *m_pvr_thread;
+	ePtr<eDVBChannelFilePush> m_pvr_thread;
 	void pvrEvent(int event);
 
 	int m_pvr_fd_dst;
@@ -344,7 +347,7 @@ private:
 	int m_skipmode_m, m_skipmode_n, m_skipmode_frames, m_skipmode_frames_remainder;
 
 	std::list<std::pair<off_t, off_t> > m_source_span;
-	void getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &start, size_t &size);
+	void getNextSourceSpan(off_t current_offset, size_t bytes_read, off_t &start, size_t &size, int blocksize);
 	void flushPVR(iDVBDemux *decoding_demux=0);
 
 	eSingleLock m_cuesheet_lock;
