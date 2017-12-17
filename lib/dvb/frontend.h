@@ -190,7 +190,8 @@ public:
 	bool supportsDeliverySystem(const fe_delivery_system_t &sys, bool obeywhitelist);
 	void setDeliverySystemWhitelist(const std::vector<fe_delivery_system_t> &whitelist, bool append=false);
 	bool setDeliverySystem(fe_delivery_system_t delsys);
-
+	
+	int initModeList();
 	void reopenFrontend();
 	int openFrontend();
 	int closeFrontend(bool force=false, bool no_delayed=false);
