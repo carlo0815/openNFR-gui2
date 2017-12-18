@@ -419,7 +419,7 @@ int eListboxServiceContent::setCurrentMarked(bool state)
 					else
 					{
 						int pos = cursorGet();
-						eDebugNoNewLineStart("[eListboxServiceContent] move %s to %d ", ref.toString().c_str(), pos);
+						eDebugNoNewLine("[eListboxServiceContent] move %s to %d ", ref.toString().c_str(), pos);
 						if (list->moveService(ref, cursorGet()))
 							eDebugNoNewLine("failed\n");
 						else
