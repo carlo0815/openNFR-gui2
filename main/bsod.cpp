@@ -104,19 +104,44 @@ static bool bsodhandled = false;
 void bsodFatal(const char *component)
 {
 	/* show no more than one bsod while shutting down/crashing */
-	if (bsodhandled)
-		return;
+	if (bsodhandled) return;
 	bsodhandled = true;
 
-	if (!component)
-		component = "Enigma2";
+	std::string lines = getLogBuffer();
 
-	/* Retrieve current ringbuffer state */
-	const char* logp1;
-	unsigned int logs1;
-	const char* logp2;
-	unsigned int logs2;
-	retrieveLogBuffer(&logp1, &logs1, &logp2, &logs2);
+		/* find python-tracebacks, and extract "  File "-strings */
+	size_t start = 0;
+
+	std::string crash_emailaddr = CRASH_EMAILADDR;
+	std::string crash_component = "enigma2";
+
+	if (component)
+		crash_component = component;
+	else
+	{
+		while ((start = lines.find("\n  File \"", start)) != std::string::npos)
+		{
+			start += 9;
+			size_t end = lines.find("\"", start);
+			if (end == std::string::npos)
+				break;
+			end = lines.rfind("/", end);
+				/* skip a potential prefix to the path */
+			unsigned int path_prefix = lines.find("/usr/", start);
+			if (path_prefix != std::string::npos && path_prefix < end)
+				start = path_prefix;
+
+			if (end == std::string::npos)
+				break;
+
+			std::string filename(lines.substr(start, end - start) + INFOFILE);
+			std::ifstream in(filename.c_str());
+			if (in.good()) {
+				std::getline(in, crash_emailaddr) && std::getline(in, crash_component);
+				in.close();
+			}
+		}
+	}
 
 	FILE *f;
 	std::string crashlog_name;
@@ -156,42 +181,43 @@ void bsodFatal(const char *component)
 		localtime_r(&t, &tm);
 		strftime(tm_str, sizeof(tm_str), "%a %b %_d %T %Y", &tm);
 
-		fprintf(f,
-			"openNFR Enigma2 crash log\n\n"
-			"crashdate=%s\n"
-			"compiledate=%s\n"
-			"skin=%s\n"
-			"sourcedate=%s\n"
-			"branch=%s\n"
-			"rev=%s\n"
-			"component=%s\n\n",
-			tm_str,
-			__DATE__,
-			getConfigString("config.skin.primary_skin", "Default Skin").c_str(),
-			enigma2_date,
-			enigma2_branch,
-			enigma2_rev,
-			component);
+		XmlGenerator xml(f);
 
-		stringFromFile(f, "stbmodel", "/proc/stb/info/boxtype");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/vumodel");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/model");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/hwmodel");
-		stringFromFile(f, "stbmodel", "/proc/stb/info/gbmodel");
-		stringFromFile(f, "kernelcmdline", "/proc/cmdline");
-		stringFromFile(f, "nimsockets", "/proc/bus/nim_sockets");
-		stringFromFile(f, "imageversion", "/etc/image-version");
-		stringFromFile(f, "imageissue", "/etc/issue.net");
+		xml.open("openNFR");
 
-		/* dump the log ringbuffer */
-		fprintf(f, "\n\n");
-		if (logp1)
-			fwrite(logp1, 1, logs1, f);
-		if (logp2)
-			fwrite(logp2, 1, logs2, f);
+		xml.open("enigma2");
+		xml.string("crashdate", tm_str);
+		xml.string("compiledate", __DATE__);
+		xml.string("contactemail", crash_emailaddr);
+		xml.comment("Please email this crashlog to above address");
 
-		/* dump the kernel log */
-		getKlog(f);
+		xml.string("skin", getConfigString("config.skin.primary_skin", "Default Skin"));
+		xml.string("sourcedate", enigma2_date);
+		xml.string("version", PACKAGE_VERSION);
+		xml.close();
+
+		xml.open("image");
+		if(access("/proc/stb/info/boxtype", F_OK) != -1) {
+			xml.stringFromFile("stbmodel", "/proc/stb/info/boxtype");
+		}
+		else if (access("/proc/stb/info/vumodel", F_OK) != -1) {
+			xml.stringFromFile("stbmodel", "/proc/stb/info/vumodel");
+		}
+		else if (access("/proc/stb/info/model", F_OK) != -1) {
+			xml.stringFromFile("stbmodel", "/proc/stb/info/model");
+		}
+		xml.cDataFromCmd("kernelversion", "uname -a");
+		xml.stringFromFile("kernelcmdline", "/proc/cmdline");
+		xml.stringFromFile("nimsockets", "/proc/bus/nim_sockets");
+		xml.cDataFromFile("imageversion", "/etc/image-version");
+		xml.cDataFromFile("imageissue", "/etc/issue.net");
+		xml.close();
+
+		xml.open("crashlogs");
+		xml.cDataFromString("enigma2crashlog", getLogBuffer());
+		xml.close();
+
+		xml.close();
 
 		fclose(f);
 	}
@@ -202,7 +228,7 @@ void bsodFatal(const char *component)
 	gPainter p(my_dc);
 	p.resetOffset();
 	p.resetClip(eRect(ePoint(0, 0), my_dc->size()));
-	p.setBackgroundColor(gRGB(0x27408B));
+	p.setBackgroundColor(gRGB(0x010000));
 	p.setForegroundColor(gRGB(0xFFFFFF));
 
 	int hd =  my_dc->size().width() == 1920;
@@ -220,62 +246,32 @@ void bsodFatal(const char *component)
 		"a software problem, and needs to be restarted.\n"
 		"Please send the logfile " << crashlog_name << " to " << crash_emailaddr << ".\n"
 		"Your receiver restarts in 10 seconds!\n"
-		"Component: " << component;
+		"Component: " << crash_component;
 	
 	os << getConfigString("config.crash.debug_text", os_text.str());
 
 	p.renderText(usable_area, os.str().c_str(), gPainter::RT_WRAP|gPainter::RT_HALIGN_LEFT);
 
-	std::string logtail;
-	int lines = 20;
-	
-	if (logp2)
+	usable_area = eRect(hd ? 30 : 100, hd ? 180 : 170, my_dc->size().width() - (hd ? 60 : 180), my_dc->size().height() - (hd ? 30 : 20));
+
+	int i;
+
+	start = std::string::npos + 1;
+	for (i=0; i<20; ++i)
 	{
-		unsigned int size = logs2;
-		while (size) {
-			const char* r = (const char*)memrchr(logp2, '\n', size);
-			if (r) {
-				size = r - logp2;
-				--lines;
-				if (!lines) {
-					logtail = std::string(r, logs2 - size);
-					break;
-				} 
-			}
-			else {
-				logtail = std::string(logp2, logs2);
-				break;
-			}
+		start = lines.rfind('\n', start - 1);
+		if (start == std::string::npos)
+		{
+			start = 0;
+			break;
 		}
 	}
 
-	if (lines && logp1)
-	{
-		unsigned int size = logs1;
-		while (size) {
-			const char* r = (const char*)memrchr(logp1, '\n', size);
-			if (r) {
-				--lines;
-				size = r - logp1;
-				if (!lines) {
-					logtail += std::string(r, logs1 - size);
-					break;
-				} 
-			}
-			else {
-				logtail += std::string(logp1, logs1);
-				break;
-			}
-		}
-	}
+	font = new gFont("Regular", hd ? 21 : 14);
+	p.setFont(font);
 
-	if (!logtail.empty())
-	{
-		font = new gFont("Regular", hd ? 21 : 14);
-		p.setFont(font);
-		usable_area = eRect(hd ? 30 : 100, hd ? 180 : 170, my_dc->size().width() - (hd ? 60 : 180), my_dc->size().height() - (hd ? 30 : 20));
-		p.renderText(usable_area, logtail, gPainter::RT_HALIGN_LEFT);
-	}
+	p.renderText(usable_area,
+		lines.substr(start), gPainter::RT_HALIGN_LEFT);
 	sleep(10);
 
 	/*
