@@ -116,7 +116,7 @@ void bsodFatal(const char *component)
 	unsigned int logs1;
 	const char* logp2;
 	unsigned int logs2;
-	retrieveLogBuffer(&logp1, &logs1, &logp2, &logs2);
+	//retrieveLogBuffer(&logp1, &logs1, &logp2, &logs2);
 
 	FILE *f;
 	std::string crashlog_name;
