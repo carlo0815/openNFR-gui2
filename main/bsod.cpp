@@ -20,7 +20,7 @@
 
 /************************************************/
 
-#define CRASH_EMAILADDR "forum at www.opena.tv"
+#define CRASH_EMAILADDR "forum at www.nachtfalke.biz"
 #define INFOFILE "/maintainer.info"
 
 #define RINGBUFFER_SIZE 16384
@@ -194,7 +194,7 @@ void bsodFatal(const char *component)
 
 		XmlGenerator xml(f);
 
-		xml.open("openATV");
+		xml.open("openNFR");
 
 		xml.open("enigma2");
 		xml.string("crashdate", tm_str);
