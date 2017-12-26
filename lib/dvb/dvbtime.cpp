@@ -255,19 +255,6 @@ eDVBLocalTimeHandler::eDVBLocalTimeHandler()
 	else
 	{
 		res_mgr->connectChannelAdded(sigc::mem_fun(*this,&eDVBLocalTimeHandler::DVBChannelAdded), m_chanAddedConn);
-		time_t now = time(0);
-		if ( now < 1072224000 ) // 01.01.2004
-			eDebug("RTC not ready... wait for transponder time");
-		else // inform all who's waiting for valid system time..
-		{
-			eDebug("Use valid Linux Time :) (RTC?)");
-			noRTC();
-			if (strncmp(mybox,"gb800solo", sizeof(mybox)) == 0 || strncmp(mybox,"gb800se", sizeof(mybox)) == 0 || strncmp(mybox,"gb800ue", sizeof(mybox)) == 0)
-				m_time_ready = false; //sorry no RTC
-			else
-			    m_time_ready = true;
-			/*emit*/ m_timeUpdated();
-		}
 	}
 	CONNECT(m_updateNonTunedTimer->timeout, eDVBLocalTimeHandler::updateNonTuned);
 }
