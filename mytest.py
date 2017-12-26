@@ -76,6 +76,10 @@ config.misc.DeepStandby = NoSave(ConfigYesNo(default=False)) # detect deepstandb
 ####################################################
 
 def useSyncUsingChanged(configelement):
+	if os.path.isfile("/usr/bin/dvbdate"):
+		from Components.Console import Console
+		Console = Console()
+		Console.ePopen('/usr/bin/dvbdate')	
 	if config.misc.SyncTimeUsing.value == "0":
 		print "[Time By]: Transponder"
 		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(True)
