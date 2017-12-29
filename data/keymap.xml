@@ -261,7 +261,7 @@
 	</map>
 
 	<map context="InfobarSubserviceSelectionActions">
-		<key id="KEY_GREEN" mapto="GreenPressed" flags="m" />
+		<key id="KEY_GREEN" mapto="GreenPressed" flags="b" />
 		<!--key id="KEY_GREEN" mapto="OpenNFRRedPanelShow" flags="b" /-->
 	</map>
 
