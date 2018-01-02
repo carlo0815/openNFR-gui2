@@ -1125,15 +1125,15 @@ def filescan(**kwargs):
 
 from Plugins.Plugin import PluginDescriptor
 def Plugins(**kwargs):
-	return [
-		PluginDescriptor(name = _("Media player"), description = _("Play back media files"), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = False, fnc = main),
+    screenwidth = getDesktop(0).size().width()
+    if screenwidth and screenwidth == 1920:
+        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayerFHD.png', fnc=main),
 		PluginDescriptor(name = _("Media Player"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+		PluginDescriptor(name = _("Media Player"), description = _("Play back media files"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc = menu)
+        ]
+    else:
+        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayer.png', fnc=main),
+        	PluginDescriptor(name = _("Media Player"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
 		PluginDescriptor(name = _("Media Player"), description = _("Play back media files"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc = menu)
 	]
 
-def Plugins(**kwargs):
-    screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:
-        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayerFHD.png', fnc=main)]
-    else:
-        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayer.png', fnc=main)]
