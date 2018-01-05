@@ -78,12 +78,8 @@ class BootlogoSetupScreen(Screen):
 				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
  				<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
 				<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/yellow.png" position="370,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/blue.png" position="550,480" size="30,30" alphatest="blend" />
 				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_yellow" render="Label" position="405,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_blue" render="Label" position="590,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
                </screen>"""	
 	def __init__(self, session):
@@ -96,8 +92,6 @@ class BootlogoSetupScreen(Screen):
 		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
 		self["key_red"] = StaticText(_("Exit"))
 		self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("Back2Flash"))
-		self["key_yellow"] = StaticText(_("Outsourcing"))			
 		vpath = "/usr/share/enigma2/bootlogos/"	
 		ulogo=[]
 		ulogo = os.listdir(vpath)
@@ -185,12 +179,8 @@ class RadiologoSetupScreen(Screen):
 				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
  				<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
 				<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/yellow.png" position="370,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/blue.png" position="550,480" size="30,30" alphatest="blend" />
 				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_yellow" render="Label" position="405,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_blue" render="Label" position="590,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
                 </screen>"""	
 	def __init__(self, session):
@@ -203,8 +193,6 @@ class RadiologoSetupScreen(Screen):
 		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
 		self["key_red"] = StaticText(_("Exit"))
 		self["key_green"] = StaticText(_("Save"))
-		self["key_blue"] = StaticText(_("Back2Flash"))
-		self["key_yellow"] = StaticText(_("Outsourcing"))			
 		vpath = "/usr/share/enigma2/radiologos/"	
 		uradio=[]
 		uradio = os.listdir(vpath)
