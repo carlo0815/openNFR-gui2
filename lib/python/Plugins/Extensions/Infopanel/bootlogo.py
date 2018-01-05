@@ -108,8 +108,6 @@ class BootlogoSetupScreen(Screen):
 				"red": self.Exit,                                				
 				"ok": self.ok,
 				"green": self.ok,
-				"blue": self.KeyBlue,
-				"yellow": self.KeyYellow,				
 			}, 1)
 			
                 self.Mlist = []
@@ -209,8 +207,6 @@ class RadiologoSetupScreen(Screen):
 				"red": self.Exit,                                				
 				"ok": self.ok,
 				"green": self.ok,
-				"blue": self.KeyBlue,
-				"yellow": self.KeyYellow,					
 			}, 1)
 			
                 self.Mlist = []

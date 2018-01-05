@@ -107,8 +107,6 @@ class BootvideoSetupScreen(Screen):
 				"red": self.Exit,                                				
 				"ok": self.ok,
 				"green": self.ok,
-				"blue": self.KeyBlue,
-				"yellow": self.KeyYellow,
 				"info": self.KeyInfo,
                                 				
 			}, 1)
