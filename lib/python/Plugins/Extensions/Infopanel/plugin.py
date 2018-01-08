@@ -319,7 +319,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.skin = MENU_SKIN
 		global check_update
 		check_update = 0
-		self.onShown.append(self.checkTraficLight)
+		#self.onShown.append(self.checkTraficLight)
 		self.onShown.append(self.setWindowTitle)
                 self.service = None
 		self['spaceused'] = ProgressBar()			
@@ -371,34 +371,34 @@ class Infopanel(Screen, InfoBarPiP):
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 
-	def checkTraficLight(self):
-                global check_update
-                if config.opennfrupdate.enablecheckupdate.value is True:
-                	if check_update == 0:
-                		check_update = 1
-				currentTimeoutDefault = socket.getdefaulttimeout()
-				socket.setdefaulttimeout(3)
-				try:
-					if os.path.isfile("/tmp/lastrelease.txt"):
-                                		os.system("rm -f /tmp/lastrelease.txt")
-					d = os.popen("wget -P /tmp http://dev.nachtfalke.biz/nfr/feeds/lastrelease.txt").read()
-					tmpOnlineStatus = open("/tmp/lastrelease.txt", "r").read()
-                                	tmpFlashStatus = open("/etc/version", "r").read()
-					if int(tmpOnlineStatus) > int(tmpFlashStatus):
-						message = _("new Release avaible")
-						self.session.openWithCallback(self.setWindowTitle(), MessageBox, _("New Releaseimage on Server, read more about it by http://www.nachtfalke.biz/f742-opennfr-images.html"), MessageBox.TYPE_INFO, timeout=5)
-                        		else:
-                        			print "no new Release avaible"                                                                	
-				except:
-					print "no internetconnection to check imageupdates"
+	#def checkTraficLight(self):
+                #global check_update
+                #if config.opennfrupdate.enablecheckupdate.value is True:
+                	#if check_update == 0:
+                		#check_update = 1
+				#currentTimeoutDefault = socket.getdefaulttimeout()
+				#socket.setdefaulttimeout(3)
+				#try:
+					#if os.path.isfile("/tmp/lastrelease.txt"):
+                                		#os.system("rm -f /tmp/lastrelease.txt")
+					#d = os.popen("wget -P /tmp http://dev.nachtfalke.biz/nfr/feeds/lastrelease.txt").read()
+					#tmpOnlineStatus = open("/tmp/lastrelease.txt", "r").read()
+                                	#tmpFlashStatus = open("/etc/version", "r").read()
+					#if int(tmpOnlineStatus) > int(tmpFlashStatus):
+						#message = _("new Release avaible")
+						#self.session.openWithCallback(self.setWindowTitle(), MessageBox, _("New Releaseimage on Server, read more about it by http://www.nachtfalke.biz/f742-opennfr-images.html"), MessageBox.TYPE_INFO, timeout=5)
+                        		#else:
+                        		#	print "no new Release avaible"                                                                	
+				#except:
+				#	print "no internetconnection to check imageupdates"
 
-				socket.setdefaulttimeout(currentTimeoutDefault)
-                	else:
-                		pass        	
+				#socket.setdefaulttimeout(currentTimeoutDefault)
+                	#else:
+                	#	pass        	
 
-                else:
-                	check_update = 1
-                        self.setWindowTitle()
+                #else:
+                #	check_update = 1
+                #        self.setWindowTitle()
                 	
 	def isProtected(self):
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.infopanel.value
