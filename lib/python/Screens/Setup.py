@@ -264,7 +264,7 @@ def getSetupTitle(id):
 			if _(x.get("title", "").encode("UTF-8")) == _("OSD Settings") or _(x.get("title", "").encode("UTF-8")) == _("Softcam Setup") or _(x.get("title", "").encode("UTF-8")) == _("EPG settings"):
 				return _("Settings...")
 			return x.get("title", "").encode("UTF-8")
-	#raise SetupError("unknown setup id '%s'!" % repr(id))
+	raise SetupError("unknown setup id '%s'!" % repr(id))
 
 def getSetupTitleLevel(id):
 	xmldata = setupdom().getroot()
