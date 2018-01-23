@@ -261,8 +261,14 @@ class DMC_MainMenu(Screen):
 				from MC_AudioPlayer import MC_AudioPlayer
 				self.session.open(MC_AudioPlayer)
 			elif selection[1] == "MC_WebRadio":
-				from MC_AudioPlayer import MC_WebRadio
-				self.session.open(MC_WebRadio)
+			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
+                                        from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
+                                        self.session.open(SHOUTcastWidget)
+                                else:
+					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
+					self.InstallCheckSHOUT()				
+				#from MC_AudioPlayer import MC_WebRadio
+				#self.session.open(MC_WebRadio)
 			elif selection[1] == "MC_VLCPlayer":
 				if pathExists("/usr/lib/enigma2/python/Plugins/Extensions/VlcPlayer/") == True:
 					from MC_VLCPlayer import MC_VLCServerlist
