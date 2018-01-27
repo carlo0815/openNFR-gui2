@@ -220,9 +220,9 @@ class Disks():
 				return -1
 			
 		if fstype == 0:
-			ret = os.system("/sbin/fsck.ext4 /dev/%s" % fdevice)
+			ret = os.system("/sbin/fsck /dev/%s" % fdevice)
 		elif fstype == 1:
-			ret = os.system("/sbin/fsck.ext3 /dev/%s" % fdevice)
+			ret = os.system("/sbin/fsck /dev/%s" % fdevice)
 		elif fstype == 2:
 			ret = os.system("/usr/bin/ntfsfix /dev/%s" % fdevice)
 		elif fstype == 3:
