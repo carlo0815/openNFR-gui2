@@ -175,16 +175,18 @@ class HddSetup(Screen):
 				
 		
 	def yellow(self):
-		if len(self.mdisks.disks) > 0:
-			self.sindex = self['menu'].getIndex()
-			self.session.openWithCallback(self.chooseFSType, ExtraMessageBox, "Please select your preferred configuration.", "HDD Partitioner",
-										[ [ "One partition", "partitionmanager.png" ],
-										[ "Two partitions (50% - 50%)", "partitionmanager.png" ],
-										[ "Two partitions (75% - 25%)", "partitionmanager.png" ],
-										[ "Three partitions (33% - 33% - 33%)", "partitionmanager.png" ],
-										[ "Four partitions (25% - 25% - 25% - 25%)", "partitionmanager.png" ],
-										[ "Cancel", "cancel.png" ],
-										], 1, 5)
+                from Plugins.Extensions.Infopanel.eparted import Ceparted
+                self.session.open(Ceparted)
+                #if len(self.mdisks.disks) > 0:
+			#self.sindex = self['menu'].getIndex()
+			#self.session.openWithCallback(self.chooseFSType, ExtraMessageBox, "Please select your preferred configuration.", "HDD Partitioner",
+										#[ [ "One partition", "partitionmanager.png" ],
+										#[ "Two partitions (50% - 50%)", "partitionmanager.png" ],
+										#[ "Two partitions (75% - 25%)", "partitionmanager.png" ],
+										#[ "Three partitions (33% - 33% - 33%)", "partitionmanager.png" ],
+										#[ "Four partitions (25% - 25% - 25% - 25%)", "partitionmanager.png" ],
+										#[ "Cancel", "cancel.png" ],
+									#	], 1, 5)
 		
 	def green(self):
 		if len(self.mdisks.disks) > 0:
