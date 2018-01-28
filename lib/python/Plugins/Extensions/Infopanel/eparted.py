@@ -123,8 +123,8 @@ rereaddevices = False
 #-------------------------------------------------------------------------------------
 
 class Ceparted(Screen):
-	skin = """<screen position="center,center" size="600,200" title="eParted v0.13">
-			<widget name="list" position="5,5" size="590,190" />
+	skin = """<screen position="center,center" size="700,300" title="eParted v0.13">
+			<widget name="list" position="5,5" size="690,290" />
 		</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -174,12 +174,12 @@ class Ceparted(Screen):
 #-------------------------------------------------------------------------------------
 
 class AddPart(Screen, ConfigListScreen):
-	skin = """<screen name="AddPart" position="center,center" size="600,190" title="add Partition" >
+	skin = """<screen name="AddPart" position="center,center" size="700,290" title="add Partition" >
 			<ePixmap pixmap="skin_default/buttons/red.png" position="5,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
 			<ePixmap pixmap="skin_default/buttons/green.png" position="155,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
 			<widget render="Label" source="key_red" position="5,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
 			<widget render="Label" source="key_green" position="155,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
-			<widget name="config" position="5,60" size="590,120" scrollbarMode="showOnDemand" />
+			<widget name="config" position="5,60" size="690,220" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, maxsize, unit, countpart):
@@ -239,11 +239,11 @@ class Cpart(Screen):
 	PA_TYPE_LAST = 2
 	PA_TYPE_FREE = 4
 
-	skin = """<screen position="center,center" size="670,200" title="eParted">
-			<widget source="list" render="Listbox" position="0,0" size="670,160" scrollbarMode="showOnDemand" enableWrapAround="on">
+	skin = """<screen position="center,center" size="770,300" title="eParted">
+			<widget source="list" render="Listbox" position="0,0" size="760,260" scrollbarMode="showOnDemand" enableWrapAround="on">
 			<convert type="TemplatedMultiContent">
 				{"template": [
-				MultiContentEntryText(pos = (0,5), size = (50, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
+				MultiContentEntryText(pos = (2,5), size = (50, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
 				MultiContentEntryText(pos = (60,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=1),
 				MultiContentEntryText(pos = (210,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=2),
 				MultiContentEntryText(pos = (360,5), size = (150, 30), font=0, flags = RT_HALIGN_LEFT, text=3),
@@ -254,12 +254,12 @@ class Cpart(Screen):
 				}
 			</convert>
 			</widget>
-			<widget name="PixmapRed" position="25,170" size="15,16" pixmaps="skin_default/buttons/button_red_off.png,skin_default/buttons/button_red.png" transparent="1" alphatest="on" />
-			<widget name="LabelRed" position="50,160" size="150,40" font="Regular;19" valign="center" />
-			<widget name="PixmapGreen" position="225,170" size="15,16" pixmaps="skin_default/buttons/button_green_off.png,skin_default/buttons/button_green.png" transparent="1" alphatest="on" />
-			<widget name="LabelGreen" position="250,160" size="150,40" font="Regular;19" valign="center" />
-			<widget name="PixmapBlue" position="425,170" size="15,16" pixmaps="skin_default/buttons/button_blue_off.png,skin_default/buttons/button_blue.png" transparent="1" alphatest="on" />
-			<widget name="LabelBlue" position="450,160" size="150,40" font="Regular;19" valign="center" />
+			<widget name="PixmapRed" position="25,270" size="15,16" pixmaps="skin_default/buttons/button_red_off.png,skin_default/buttons/button_red.png" transparent="1" alphatest="on" />
+			<widget name="LabelRed" position="50,260" size="150,40" font="Regular;19" valign="center" />
+			<widget name="PixmapGreen" position="225,270" size="15,16" pixmaps="skin_default/buttons/button_green_off.png,skin_default/buttons/button_green.png" transparent="1" alphatest="on" />
+			<widget name="LabelGreen" position="250,260" size="150,40" font="Regular;19" valign="center" />
+			<widget name="PixmapBlue" position="425,270" size="15,16" pixmaps="skin_default/buttons/button_blue_off.png,skin_default/buttons/button_blue.png" transparent="1" alphatest="on" />
+			<widget name="LabelBlue" position="450,260" size="150,40" font="Regular;19" valign="center" />
 		</screen>"""
 
 	def __init__(self, session, entry):
@@ -487,8 +487,8 @@ class Cpart(Screen):
 			self["LabelBlue"].setText("")
 
 class Cpartexe(Screen):
-	skin = """<screen position="center,center" size="670,400" title=" ">
-			<widget source="list" render="Listbox" position="0,0" size="670,360" scrollbarMode="showOnDemand" enableWrapAround="on">
+	skin = """<screen position="center,center" size="770,500" title=" ">
+			<widget source="list" render="Listbox" position="0,0" size="770,460" scrollbarMode="showOnDemand" enableWrapAround="on">
 			<convert type="TemplatedMultiContent">
 				{"template": [
 				MultiContentEntryText(pos = (40,5), size = (630, 30), font=0, flags = RT_HALIGN_LEFT, text=0),
@@ -499,8 +499,8 @@ class Cpartexe(Screen):
 				}
 			</convert>
 			</widget>
-			<widget name="PixmapButton" position="25,370" size="15,16" pixmaps="skin_default/buttons/button_green.png,skin_default/buttons/button_green_off.png" transparent="1" alphatest="on" />
-			<widget name="LabelButton" position="50,360" size="620,40" font="Regular;19" valign="center" />
+			<widget name="PixmapButton" position="25,470" size="15,16" pixmaps="skin_default/buttons/button_green.png,skin_default/buttons/button_green_off.png" transparent="1" alphatest="on" />
+			<widget name="LabelButton" position="50,460" size="620,40" font="Regular;19" valign="center" />
 		</screen>"""
 
 	def __init__(self, session, comlist):
