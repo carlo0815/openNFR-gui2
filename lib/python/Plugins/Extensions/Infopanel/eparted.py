@@ -174,12 +174,12 @@ class Ceparted(Screen):
 #-------------------------------------------------------------------------------------
 
 class AddPart(Screen, ConfigListScreen):
-	skin = """<screen name="AddPart" position="center,center" size="700,290" title="add Partition" >
+	skin = """<screen name="AddPart" position="center,center" size="770,300" title="add Partition" >
 			<ePixmap pixmap="skin_default/buttons/red.png" position="5,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
 			<ePixmap pixmap="skin_default/buttons/green.png" position="155,5" zPosition="0" size="140,40" transparent="1" alphatest="on" />
 			<widget render="Label" source="key_red" position="5,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
 			<widget render="Label" source="key_green" position="155,5" size="140,40" zPosition="2" valign="center" halign="center" backgroundColor="red" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" />
-			<widget name="config" position="5,60" size="690,220" scrollbarMode="showOnDemand" />
+			<widget name="config" position="5,60" size="760,260" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session, maxsize, unit, countpart):
@@ -422,7 +422,7 @@ class Cpart(Screen):
 		partnr = val[PA_NR]
 		if mkpart:
 			fs = val[PA_FS]
-			com = "parted -s -a optimal %s mkpart primary %s %s%s %s%s" % (self.__devpath, fs, val[PA_START], self.__unit, val[PA_END], self.__unit)
+			com = "parted -s -a optimal %s mkpart primary %s %s%s %s%s | sleep 35 | echo -e  y" % (self.__devpath, fs, val[PA_START], self.__unit, val[PA_END], self.__unit)
 			list.append((com , _("create partition %s") % partnr, None))
 		
 		mountdev = None
@@ -433,12 +433,14 @@ class Cpart(Screen):
 		elif val[PA_FS] == "fat32":
 			mkfs = "/sbin/mkfs.vfat"
 		else:
+			print 436
 			mkfs = "/sbin/mkfs." + val[PA_FS]
 			mountdev = self.__devpath + partnr
 			if val[PA_FS] == "xfs":
 				mkfs += " -f"
-
-		com = "%s %s%s" % (mkfs, self.__devpath, partnr)
+		
+		print 442
+		com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath, partnr)
 		list.append((com , _("make filesystem '%s' on partition %s (%d %s)") % (val[PA_FS], partnr, val[PA_SIZE], self.__unit), mountdev))
 		
 	def __delPart2Comlist(self, list, val):
