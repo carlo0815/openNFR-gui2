@@ -433,11 +433,13 @@ class Iptvdownloadprov(IPTV):
             return
         print"[openNFR_M3U_convert] Current selection: %s" % sel1
         name_file1 = sel1
-        cmd = ""
-        cmd += "opkg install --force-overwrite curl;"
-        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
-        process.wait()
+        import urllib
+        urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)        
+        #cmd = ""
+        #cmd += "opkg install --force-overwrite curl;"
+        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
+        #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        #process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel
         self.IPTV_glob = IPTV_glob(sel, file)
@@ -557,11 +559,13 @@ class Iptvdownloadprovsuisse(IPTV):
             return
         print"[openNFR_M3U_convert] Current selection: %s" % sel1
         name_file1 = sel1
-        cmd = ""
-        cmd += "opkg install --force-overwrite curl;"
-        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
-        process.wait()
+        import urllib
+        urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)         
+        #cmd = ""
+        #cmd += "opkg install --force-overwrite curl;"
+        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
+        #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        #process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel 
         self.IPTV_glob = IPTV_glob(sel, file)
@@ -681,11 +685,13 @@ class Iptvdownloadprovaustria(IPTV):
             return
         print"[openNFR_M3U_convert] Current selection: %s" % sel1
         name_file1 = sel1
-        cmd = ""
-        cmd += "opkg install --force-overwrite curl;"
-        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
-        process.wait()
+        import urllib
+        urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)         
+        #cmd = ""
+        #cmd += "opkg install --force-overwrite curl;"
+        ##cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
+        #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        #process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel 
         self.IPTV_glob = IPTV_glob(sel, file)
@@ -799,11 +805,13 @@ class Iptvdownloadkodi(IPTV):
             return
         print"[openNFR_M3U_convert] Current selection: %s" % sel1
         name_file1 = sel1
-        cmd = ""
-        cmd += "opkg install --force-overwrite curl;"
-        cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
-        process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
-        process.wait()
+        import urllib
+        urllib.urlretrieve('https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s' %name_file1, '/etc/enigma2/%s' %name_file1) 
+        #cmd = ""
+        #cmd += "opkg install --force-overwrite curl;"
+        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
+        #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
+        #process.wait()
         sel = "/etc/enigma2/" + sel1
         file = sel 
         self.IPTV_glob = IPTV_glob(sel, file)
@@ -855,4 +863,3 @@ class Iptvdownloadkodi(IPTV):
         
         self.Remove_hooks()
         self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)       
-                      
