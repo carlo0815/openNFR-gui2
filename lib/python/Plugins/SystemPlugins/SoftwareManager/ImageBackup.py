@@ -522,7 +522,7 @@ class ImageBackup(Screen):
                 self.ROOTFSBIN = getMachineRootFile()
 		self.KERNELBIN = getMachineKernelFile()
 		self.ROOTFSTYPE = getImageFileSystem()
-		if self.MACHINEBUILD in ("hd51","vs1500","h7","ceryon7252"):
+		if self.MACHINEBUILD in ("hd51","vs1500","h7","8100s"):
 			self.MTDBOOT = "mmcblk0p1"
 			self.EMMCIMG = "disk.img"
 		elif self.MACHINEBUILD in ("xc7439"):
@@ -629,11 +629,16 @@ class ImageBackup(Screen):
 			if self.selection == len(self.list):
 				self.selection = 0
 			self["key_yellow"].setText(_(self.list[self.selection]))
-			if self.MACHINEBUILD in ("hd51","vs1500","h7","ceryon7252"):
+			if self.MACHINEBUILD in ("hd51","vs1500","h7"):
 				if self.list[self.selection] == "Recovery":
 					cmdline = self.read_startup("/boot/STARTUP").split("=",3)[3].split(" ",1)[0]
 				else:
 					cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",3)[3].split(" ",1)[0]
+			elif self.MACHINEBUILD in ("8100s"):
+				if self.list[self.selection] == "Recovery":
+					cmdline = self.read_startup("/boot/STARTUP").split("=",4)[4].split(" ",1)[0]
+				else:
+					cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",4)[4].split(" ",1)[0]
 			else:
 				if self.list[self.selection] == "Recovery":
 					cmdline = self.read_startup("/boot/cmdline.txt").split("=",1)[1].split(" ",1)[0]
@@ -658,8 +663,10 @@ class ImageBackup(Screen):
 			self.path = PATH
 			for name in listdir(self.path):
 				if path.isfile(path.join(self.path, name)):
-					if self.MACHINEBUILD in ("hd51","vs1500","h7","ceryon7252"):
+					if self.MACHINEBUILD in ("hd51","vs1500","h7"):
 						cmdline = self.read_startup("/boot/" + name).split("=",3)[3].split(" ",1)[0]
+					elif self.MACHINEBUILD in ("8100s"):
+						cmdline = self.read_startup("/boot/" + name).split("=",4)[4].split(" ",1)[0]
 					else:
 						cmdline = self.read_startup("/boot/" + name).split("=",1)[1].split(" ",1)[0]
 					if cmdline in Harddisk.getextdevices("ext4"):
@@ -807,7 +814,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "Check: kerneldump"')
 		cmdlist.append("sync")
 
-		if SystemInfo["HaveMultiBootHD"] and self.list[self.selection] == "Recovery":
+		if ( SystemInfo["HaveMultiBootHD"] or SystemInfo["HaveMultiBootCY"]) and self.list[self.selection] == "Recovery":
 			GPT_OFFSET=0
 			GPT_SIZE=1024
 			BOOT_PARTITION_OFFSET = int(GPT_OFFSET) + int(GPT_SIZE)

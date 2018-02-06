@@ -18,4 +18,8 @@ if GB7252
 SUBDIRS += QuadPip
 endif
 
+if S8100
+SUBDIRS += MiniTV
+endif
+
 install_PYTHON = __init__.py
