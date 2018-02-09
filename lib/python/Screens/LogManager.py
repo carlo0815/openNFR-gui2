@@ -1,4 +1,4 @@
-﻿from Screens.Screen import Screen
+from Screens.Screen import Screen
 from Components.GUIComponent import GUIComponent
 from Components.VariableText import VariableText
 from Components.ActionMap import ActionMap
@@ -18,6 +18,7 @@ from Tools.TextBoundary import getTextBoundarySize
 from glob import glob
 from Tools.Directories import fileExists
 import os
+from enigma import eConsoleAppContainer
 
 import Components.Task
 
@@ -353,11 +354,11 @@ class LogManager(Screen):
 
 	def feedcheck(self):
 		if fileExists("/home/root/logs/feedcheck.log"):
-			os.system("rm -f /home/root/logs/feedcheck.log")
-			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			eConsoleAppContainer().execute("rm -f /home/root/logs/feedcheck.log")
+			eConsoleAppContainer().execute("opkg update > /home/root/logs/feedcheck.log 2>&1")
 			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
 		else:
-			os.system("opkg update > /home/root/logs/feedcheck.log 2>&1")
+			eConsoleAppContainer().execute("opkg update > /home/root/logs/feedcheck.log 2>&1")
 			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
 			
 """	def sendlog(self, addtionalinfo = None):def sendlog(self, addtionalinfo = None):
