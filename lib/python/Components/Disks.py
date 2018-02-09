@@ -1,5 +1,6 @@
 import os
 import re
+from enigma import eConsoleAppContainer
 
 class Disks():
 	ptypes = {
@@ -197,7 +198,7 @@ class Disks():
 			return -2
 			
 		# we need to call mdev just to be sure all devices are populated
-		os.system("/sbin/mdev -s")
+		eConsoleAppContainer().execute("/sbin/mdev -s")
 		return 0
 		
 	# return value:
@@ -220,13 +221,13 @@ class Disks():
 				return -1
 			
 		if fstype == 0:
-			ret = os.system("/sbin/fsck /dev/%s" % fdevice)
+			ret = eConsoleAppContainer().execute("/sbin/fsck /dev/%s" % fdevice)
 		elif fstype == 1:
-			ret = os.system("/sbin/fsck /dev/%s" % fdevice)
+			ret = eConsoleAppContainer().execute("/sbin/fsck /dev/%s" % fdevice)
 		elif fstype == 2:
-			ret = os.system("/usr/bin/ntfsfix /dev/%s" % fdevice)
+			ret = eConsoleAppContainer().execute("/usr/bin/ntfsfix /dev/%s" % fdevice)
 		elif fstype == 3:
-			ret = os.system("/usr/sbin/dosfsck -a /dev/%s" % fdevice)
+			ret = eConsoleAppContainer().execute("/usr/sbin/dosfsck -a /dev/%s" % fdevice)
 		
 		if len(oldmp) > 0:
 			self.mount(fdevice, oldmp)
@@ -277,7 +278,7 @@ class Disks():
 				self.mount(dev, oldmp)
 			return -3
 		
-		ret = os.system(cmd)
+		ret = eConsoleAppContainer().execute(cmd)
 		
 		if len(oldmp) > 0:
 			self.mount(dev, oldmp)
