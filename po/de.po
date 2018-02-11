@@ -13630,3 +13630,12 @@ msgid ""
 msgstr ""
 "Die %s %s wird neu gestartet wenn der Service installiert ist.\n"
 "Bereit \"%s\" zu installieren?"
+
+msgid "Switch between Audio-,Subtitlepage"
+msgstr "Wähle zwischen Audio-,Untertitelseite"
+
+msgid "controlled by HDMI"
+msgstr "gesteuert über HDMI"
+
+msgid "always"
+msgstr "immer"
