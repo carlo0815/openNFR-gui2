@@ -352,7 +352,7 @@ class RemoteControlType(Screen, ConfigListScreen):
 				("18", _("F1/F3/F4/F4-TURBO/TRIPLEX")),
 				("19", _("HD2400")),
 				("20", _("Zgemma Star S/2S/H1/H2")),
-				("21", _("Zgemma H.S/H.2S/H.2H/H5"))
+				("21", _("Zgemma H.S/H.2S/H.2H/H5")),
 				("24", _("Axas E4HD Ultra"))
 				]
 		defaultRcList = [
@@ -386,7 +386,7 @@ class RemoteControlType(Screen, ConfigListScreen):
 				("sh1", 20),
 				("sf5008", 9),
 				("h3", 21),
-				("h5", 21)
+				("h5", 21),
 				("e4hd", 24)
 				]
 
