@@ -266,7 +266,7 @@ def InitLcd():
 
 	if detected:
 		ilcd = LCD()
-		if can_lcdmodechecking and getBoxType() not in ('vusolo4k'):
+		if can_lcdmodechecking and getBoxType() not in ('vusolo4k', 'e4hdultra'):
 			def setLCDModeMinitTV(configElement):
 				try:
 					print 'setLCDModeMinitTV',configElement.value
