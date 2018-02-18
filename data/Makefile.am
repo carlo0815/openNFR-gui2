@@ -3,6 +3,7 @@ SUBDIRS = spinner fonts extensions keymaps bootvideos radiologos bootlogos Spinn
 dist_pkgdata_DATA = \
 	encoding.conf \
 	keymap.* \
+	keytranslation.xml \
 	menu.xml \
 	black.mvi \
 	rcpositions.xml \
