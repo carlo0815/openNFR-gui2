@@ -70,8 +70,8 @@ FLAG_IS_DEDICATED_3D = 128 #define in lib/dvb/idvb.h as dxNewFound = 64 and dxIs
 
 class BouquetSelector(Screen):
 	def __init__(self, session, bouquets, selectedFunc, enableWrapAround=True):
-		import ChannelSelection
-		reload(ChannelSelection)
+		#import ChannelSelection
+		#reload(ChannelSelection)
                 Screen.__init__(self, session)
 		Screen.setTitle(self, _("Choose Bouquet"))
 
