@@ -976,8 +976,6 @@ class QuickMenuDevices(Screen):
 				continue
 			if getMachineBuild() in ('xc7439') and search('mmcblk1p[1-9]',device):
 				continue
-			if getMachineBuild() in ('u5') and search('mmcblk1p[1]',device):
-				continue
 			if device in list2:
 				continue
 			self.buildMy_rec(device)
