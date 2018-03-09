@@ -442,9 +442,18 @@ def InitUsageConfig():
 		("300", _("normal")),
 		("100", _("fast"))])
 	config.lcd = ConfigSubsection()	
-	config.lcd.modeminitv4k = ConfigSelection(default = "0", choices = [
-        	("disable", _("normal")),
-		("enable", _("MiniTV"))])
+	if getBoxType() in ('e4hdultra'):
+		config.lcd.modeminitv4k = ConfigSelection(default = "disable", choices = [
+        		("disable", _("normal")),
+			("enable", _("MiniTV"))])
+	else:
+		config.lcd.modeminitv4k = ConfigSelection(default = "0", choices = [
+        		("disable", _("normal")),
+			("enable", _("MiniTV"))])
+	config.lcd.modepip = ConfigSelection(default = "0", choices = [
+        	("0", _("off")),
+		("1", _("on"))])
+		
 			
 
 	def SpinnerOnOffChanged(configElement):

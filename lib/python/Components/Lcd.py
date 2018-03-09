@@ -3,6 +3,8 @@ from sys import maxint
 
 from twisted.internet import threads
 from enigma import eDBoxLCD, eTimer, eActionMap
+import os
+import commands
 
 from config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
 from Components.SystemInfo import SystemInfo
@@ -221,7 +223,13 @@ class LCD:
 		f.close()		
 
 	def setLCDMiniTVPIPMode(self, value):
-		print 'setLCDMiniTVPIPMode',value
+		try:
+			f = open('/proc/stb/lcd/live_decoder', "w")
+			f.write(value)
+			f.close()
+			print 'setLCDMiniTVPIPMode',value
+		except:
+			pass
 
 	def setLCDMiniTVFPS(self, value):
 		print 'setLCDMiniTVFPS',value
@@ -294,7 +302,7 @@ def InitLcd():
 						"0": _("off"),
 						"4": _("PIP"),
 						"6": _("PIP with OSD")},
-						default = "0")
+						default = "0")		
 			else:
 				config.lcd.modepip = ConfigSelection(choices={
 						"0": _("off"),
@@ -345,18 +353,41 @@ def InitLcd():
 			def setMiniTVFPS(configElement):
 				pass
 			def setLCDModePiP(configElement):
+				try:
+					print 'setMiniTVPIP',configElement.value
+					f = open("/proc/stb/lcd/live_decoder", "w")
+					f.write(configElement.value)
+					f.close()
+				except:
+					pass
 				pass
 			
 			def setLCDScreenshot(configElement):
- 				ilcd.setScreenShot(configElement.value);			
+ 				ilcd.setScreenShot(configElement.value);
+				
+			if getBoxType() in ('e4hdultra'):
+				config.lcd.modepip = ConfigSelection(choices={
+						"0": _("off"),
+						"1": _("on"),},
+						default = "0")
+			if config.misc.boxtype.value in ('e4hdultra'):
+				config.lcd.modepip.addNotifier(setLCDModePiP)
+			else:
+				config.lcd.modepip = ConfigNothing()
 				
 			config.lcd.screenshot = ConfigYesNo(default=False)
- 			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
-
-			config.lcd.modeminitv4k = ConfigSelection(choices={
-					"disable": _("normal"),
-					"enable": _("MiniTV")},
-					default = "0")
+ 			config.lcd.screenshot.addNotifier(setLCDScreenshot)					
+			if getBoxType() in ('e4hdultra'):
+				config.lcd.modeminitv4k = ConfigSelection(choices={
+						"disable": _("normal"),
+						"enable": _("MiniTV")},
+						default = "disable")
+			else:
+				config.lcd.modeminitv4k = ConfigSelection(choices={
+						"disable": _("normal"),
+						"enable": _("MiniTV")},
+						default = "0")
+			
 			config.lcd.modeminitv4k.addNotifier(setLCDModeMinitTV4k)
 			config.lcd.screenshot = ConfigNothing()
 	
@@ -484,7 +515,10 @@ def InitLcd():
 		
 		if SystemInfo["LcdLiveTV"]:
 			def lcdLiveTvChanged(configElement):
-				open(SystemInfo["LcdLiveTV"], "w").write(configElement.value and "0" or "1")
+				if getBoxType() in ('e4hdultra'):
+					open(SystemInfo["LcdLiveTV"], "w").write(configElement.value and "disable" or "enable")
+				else:
+					open(SystemInfo["LcdLiveTV"], "w").write(configElement.value and "0" or "1")
 				from Screens.InfoBar import InfoBar
 				InfoBarInstance = InfoBar.instance
 				InfoBarInstance and InfoBarInstance.session.open(dummyScreen)
@@ -499,9 +533,13 @@ def InitLcd():
 
 		if SystemInfo["LCDMiniTV4k"]:
 		        SystemInfo["LCDMiniTV"] = False
-			config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "0")
-			config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
-			
+			if getBoxType() in ('e4hdultra'):
+				config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "disable")
+				config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
+			else:
+				config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "0")
+				config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
+				
 		if SystemInfo["LCDMiniTV"] and config.misc.boxtype.value not in ( 'gbquad', 'gbquadplus', 'gbquad4k', 'gbue4k'):
 			config.lcd.minitvmode = ConfigSelection([("0", _("normal")), ("1", _("MiniTV")), ("2", _("OSD")), ("3", _("MiniTV with OSD"))], "0")
 			config.lcd.minitvmode.addNotifier(setLCDminitvmode)
@@ -618,5 +656,3 @@ def standbyCounterChangedLCDLiveTV(dummy):
 		if leaveStandbyLCDLiveTV not in inStandby.onClose:
 			inStandby.onClose.append(leaveStandbyLCDLiveTV)
 		setLCDLiveTv(False)
-
-

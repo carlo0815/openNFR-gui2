@@ -3772,6 +3772,16 @@ class InfoBarServiceErrorPopupSupport:
 		if getBoxType() in ('vusolo4k'):
 			value = config.lcd.modeminitv4k.value
 			open("/proc/stb/lcd/live_enable", "w").write(value)
+		elif getBoxType() in ('e4hdultra'):
+			try:
+				value = config.lcd.modeminitv4k.value
+				print 'Infobargenerics set MiniTV4K to:',value
+				open("/proc/stb/lcd/live_enable", "w").write(value)
+				value = config.lcd.modepip.value
+				print 'Infobargenerics set MiniPIP to:',value
+				open("/proc/stb/lcd/live_decoder", "w").write(value)
+			except:
+				pass
 		
 
 	def __tuneFailed(self):

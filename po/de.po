@@ -13229,6 +13229,9 @@ msgstr "Zeige CI Nachrichten"
 msgid "Show MiniTV in the Front Display"
 msgstr "Zeige MiniTV im Frontdisplay"
 
+msgid "Show PIP in the Front Display"
+msgstr "Zeige PIP im MiniTV"
+
 msgid "Question"
 msgstr "Frage"
 
