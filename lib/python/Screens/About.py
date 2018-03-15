@@ -247,7 +247,7 @@ class Devices(Screen):
 			if not parts:
 				continue
 			device = parts[3]
-			if not search('sd[a-z][1-9]', device):
+			if not search('sd[a-z][1-9]', device) or not search('mmcblk1p[1-9]', device):
 				continue
 			if device in list2:
 				continue
