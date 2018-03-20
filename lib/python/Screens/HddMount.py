@@ -39,9 +39,11 @@ class HddMount(Screen):
                     
 	def __init__(self, session, device, partition):
 		Screen.__init__(self, session)
-		
-		self.device = device
-		self.partition = partition
+		if "mmcblk1" in device:
+			self.device = device + "p"
+		else:			
+			self.device = device			
+               	self.partition = partition
 		self.mountpoints = MountPoints()
 		self.mountpoints.read()
 		self.fast = False
@@ -122,9 +124,9 @@ class HddMount(Screen):
 		mountp = ""
 	        f = open('/proc/mounts', 'r')
 		for line in f.readlines():
-			if path in line:
+                        if path in line:
 				partsp = line.strip().split()
-				mountp = str(partsp[1])
+                                mountp = str(partsp[1])
 				break
 		
 		f.close()
@@ -145,7 +147,11 @@ class HddMount(Screen):
 					return
 			self.mountpoints.delete(self.cpath)
 			if not self.fast:
-				self.mountpoints.add(self.device, self.partition, self.cpath)
+                                if self.device == "mmcblk1p":
+                                        self.device1 = "mmcblk1"
+                                else:
+                                        self.device1 = self.device                               
+                                self.mountpoints.add(self.device1, self.partition, self.cpath)
 			self.mountpoints.write()
 			if not self.mountpoints.mount(self.device, self.partition, self.cpath):
 				self.session.open(MessageBox, _("Cannot mount new drive.\nPlease check filesystem or format it and try again"), MessageBox.TYPE_ERROR)
@@ -200,22 +206,34 @@ class HddFastRemove(Screen):
 		self.disks = list ()
 		self.mounts = list ()
 		for disk in self.mdisks.disks:
-			if disk[2] == True:
+                        if disk[2] == True:
 				diskname = disk[3]
 				for partition in disk[5]:
 					mp = ""
 					rmp = ""
 					try:
-						mp = self.mountpoints.get(partition[0][:3], int(partition[0][3:]))
-						rmp = self.mountpoints.getRealMount(partition[0][:3], int(partition[0][3:]))
+                                        	if "mmcblk1" in partition[0][:7]:
+                                                	mp = self.mountpoints.get(partition[0][:7], int(partition[0][8:]))
+					        	rmp = self.mountpoints.getRealMount(partition[0][:7], int(partition[0][8:]))
+                                        	else: 
+                                                	mp = self.mountpoints.get(partition[0][:3], int(partition[0][3:]))
+					        	rmp = self.mountpoints.getRealMount(partition[0][:3], int(partition[0][3:]))
 					except Exception, e:
 						pass
 					if len(mp) > 0:
-						self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][3:], mp)))
-						self.mounts.append(mp)
+						if "mmcblk1" in partition[0][:7]:
+                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][7:], mp)))
+							self.mounts.append(mp)						
+						else:
+                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][3:], mp)))
+							self.mounts.append(mp)
 					elif len(rmp) > 0:
-						self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][3:], rmp)))
-						self.mounts.append(rmp)
+						if "mmcblk1" in partition[0][:7]:
+                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][7:], rmp)))
+							self.mounts.append(rmp)						
+						else:
+                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][3:], rmp)))
+							self.mounts.append(rmp)
 						
 		self["menu"] = List(self.disks)
 		self["key_red"] = Button(_("Umount"))

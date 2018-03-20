@@ -59,7 +59,8 @@ class HddSetup(Screen):
 		
 		self.mdisks = Disks()
 		for disk in self.mdisks.disks:
-			capacity = "%d MB" % (disk[1] / (1024 * 1024))
+			print "disk:", disk
+                        capacity = "%d MB" % (disk[1] / (1024 * 1024))
 			self.disks.append(DiskEntry(disk[3], capacity, disk[2]))
 		
 		self["menu"] = List(self.disks)
@@ -95,6 +96,7 @@ class HddSetup(Screen):
 		
 	def checkDefault(self):
 		mp = MountPoints()
+		print "mp:", mp
 		mp.read()
 		if not mp.exist("/hdd"):
 			mp.add(self.mdisks.disks[self.sindex][0], 1, "/hdd")
@@ -199,7 +201,9 @@ class HddSetup(Screen):
 			if len(self.mdisks.disks[self.sindex][5]) == 0:
 				self.session.open(MessageBox, _("You need to initialize your storage device first"), MessageBox.TYPE_ERROR)
 			else:
-				self.session.open(HddPartitions, self.mdisks.disks[self.sindex])
+				print "self.mdisks.disks[self.sindex]:", self.mdisks.disks[self.sindex]
+				print "self.sindex:", self.sindex
+                                self.session.open(HddPartitions, self.mdisks.disks[self.sindex])
 		
 	def quit(self):
 		self.close()

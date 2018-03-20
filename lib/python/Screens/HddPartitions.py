@@ -69,14 +69,18 @@ class HddPartitions(Screen):
 			"red": self.red,
 			"cancel": self.quit,
 		}, -2)
-		
 		if len(self.disk[5]) > 0:
+		        print "self.disk[5]:", self.disk[5]
+                        print "self.disk[5][0][3]:", self.disk[5][0][3]
 			if self.disk[5][0][3] == "83" or self.disk[5][0][3] == "7" or self.disk[5][0][3] == "b":
 				self["key_green"].setText(_("Check"))
 				self["key_yellow"].setText(_("Format"))
-				
 				mp = self.mountpoints.get(self.disk[0], 1)
+				print "self.disk[0]:", self.disk[0]
 				rmp = self.mountpoints.getRealMount(self.disk[0], 1)
+				print "mp:", mp
+				print "rmp:", rmp				
+				print "self.disk:", self.disk				
 				if len(mp) > 0 or len(rmp) > 0:
 					self.mounted = True
 					self["key_red"].setText(_("Umount"))
@@ -116,8 +120,13 @@ class HddPartitions(Screen):
 			
 	def mkfs(self):
 		disks = Disks()
-		ret = disks.mkfs(self.disk[5][self.index][0][:3], self.index+1, self.fstype)
-		if ret == 0:
+	        if "mmcblk1" in (self.disk[0]):
+	        	ret = disks.mkfs(self.disk[5][self.index][0][:7], self.index+1, self.fstype)
+	        	print "ret1", ret
+	        else:
+			ret = disks.mkfs(self.disk[5][self.index][0][:3], self.index+1, self.fstype)
+			print "ret2", ret
+                if ret == 0:
 			self.session.open(MessageBox, _("Format terminated with success"), MessageBox.TYPE_INFO)
 		elif ret == -2:
 			self.session.open(MessageBox, _("Cannot format current drive.\nA record in progress, timeshit or some external tools (like samba and nfsd) may cause this problem.\nPlease stop this actions/applications and try again"), MessageBox.TYPE_ERROR)
@@ -128,7 +137,8 @@ class HddPartitions(Screen):
 		return "ext4" in open("/proc/filesystems").read()
 	
 	def domkfs(self, result):
-		if self.disk[5][self.index][3] == "83":
+		print "self.disk:", self.disk
+                if self.disk[5][self.index][3] == "83":
 			if self.isExt4Supported():
 				if result < 2:
 					self.fstype = result
@@ -230,7 +240,7 @@ class HddPartitions(Screen):
 					self.mountpoints.umount(rmp)
 				self.refreshMP()
 			else:
-				self.session.openWithCallback(self.refreshMP, HddMount, self.disk[0], self.sindex+1)
+                                self.session.openWithCallback(self.refreshMP, HddMount, self.disk[0], self.sindex+1)
 		
 	def quit(self):
 		self.close()
