@@ -168,7 +168,7 @@ class Ceparted(Screen):
 						name = x[0][DEV_PATH]
 					tstr = name
 					tstr += "  (%s - %d %s %s)" % (x[0][DEV_SIZE], len(x) - 1, _("partition(s)"), x[0][DEV_PATH])
-					list.append((tstr, (name, x[0][DEV_PATH], x[0][DEV_SIZE])))
+                                        list.append((tstr, (name, x[0][DEV_PATH], x[0][DEV_SIZE])))
 			self["list"].setList(list)
 
 #-------------------------------------------------------------------------------------
@@ -283,6 +283,7 @@ class Cpart(Screen):
 		self["LabelBlue"] = Label()
 
 		self.__devpath = entry[DEV_PATH]
+		print "self.__devpath:", self.__devpath
 		self.__fullsize = 0
 		self.__old_part_list = []
 		self.__new_part_list = []
@@ -440,12 +441,20 @@ class Cpart(Screen):
 				mkfs += " -f"
 		
 		print 442
-		com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath, partnr)
+		if "mmcblk1" in self.__devpath:
+		        self.__devpath1 = self.__devpath + "p"
+			com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath1, partnr)		
+		else:
+			com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath, partnr)
 		list.append((com , _("make filesystem '%s' on partition %s (%d %s)") % (val[PA_FS], partnr, val[PA_SIZE], self.__unit), mountdev))
 		
 	def __delPart2Comlist(self, list, val):
 		partnr = val[PA_NR]
-		dev = "%s%s" % (self.__devpath, partnr)
+		if "mmcblk1" in self.__devpath:
+                        self.__devpath1 = self.__devpath +"p"
+                	dev = "%s%s" % (self.__devpath1, partnr)		
+		else:
+                	dev = "%s%s" % (self.__devpath, partnr)
 		mp = ismounted(dev)
 		if mp is not None:
 			if myExecute("umount %s" % mp, self.session):
