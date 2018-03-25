@@ -59,6 +59,9 @@ class NFR4XBootInstallation(Screen):
                 if line.find('/media/usb') != -1:
                     myusb = '/media/usb/'
                     continue
+                if line.find('/media/mmc') != -1:
+                    mymmc = '/media/mmc/'
+                    continue
                 if line.find('/hdd') != -1:
                     myhdd = '/media/hdd/'
                     continue
@@ -71,6 +74,10 @@ class NFR4XBootInstallation(Screen):
             self.list.append(myusb)
         else:
             myusb
+        if mymmc:
+            self.list.append(mymmc)
+        else:
+            mymmc
         if myhdd:
             myhdd
             self.list.append(myhdd)
@@ -132,6 +139,9 @@ class NFR4XBootInstallation(Screen):
             f = open('/proc/mounts', 'r')
             for line in f.readlines():
                 if line.find('/media/usb') != -1:
+                    check = True
+                    continue
+                if line.find('/media/mmc1') != -1:
                     check = True
                     continue
                 if line.find('/hdd') != -1:
