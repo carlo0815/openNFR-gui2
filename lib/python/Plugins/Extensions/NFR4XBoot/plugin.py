@@ -141,7 +141,7 @@ class NFR4XBootInstallation(Screen):
                 if line.find('/media/usb') != -1:
                     check = True
                     continue
-                if line.find('/media/mmc1') != -1:
+                if line.find('/media/mmc') != -1:
                     check = True
                     continue
                 if line.find('/hdd') != -1:
