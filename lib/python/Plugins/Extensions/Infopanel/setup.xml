@@ -12,5 +12,8 @@
     </setup>
     <setup key="bootmanagertimeout" title="Setup">
         <item level="2" text="Setup Timeout for NFR4XBootmanager" description="Setup Timeout for NFR4XBootmanager.">config.NFRBootmanager.bootmanagertimeout</item>
-    </setup>    
+    </setup>
+    <setup key="maxbackup" title="Setup">
+        <item level="2" text="Setup max. backups on storage" description="Setup max. backups on storage 0=all">config.imagemanager.backupmax</item>
+    </setup>           
 </setupxml> 
