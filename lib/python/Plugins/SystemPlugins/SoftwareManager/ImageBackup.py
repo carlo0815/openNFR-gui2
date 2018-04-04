@@ -30,9 +30,9 @@ import Components.Task
 from Screens.TaskView import JobView
 from Screens.Standby import TryQuitMainloop
 from Tools.Notifications import AddPopupWithCallback
-from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigSelection, ConfigText, ConfigNumber, NoSave, ConfigClock
+from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigSelection, ConfigText, ConfigNumber, NoSave, ConfigClock, ConfigInteger 
 from Components.Harddisk import harddiskmanager, getProcMounts
-
+import shutil
 import urllib
 
 VERSION = "Version %s openNFR" % getImageVersion()
@@ -52,6 +52,7 @@ config.imagemanager.schedule = ConfigYesNo(default=False)
 config.imagemanager.scheduletime = ConfigClock(default=0)  # 1:00
 config.imagemanager.nextbackuptime = ConfigClock(default=0)  # 1:00
 config.imagemanager.repeattype = ConfigSelection(default="daily", choices=[("daily-", _("Daily-")),("daily", _("Daily")), ("weekly", _("Weekly")), ("monthly", _("30 Days"))])
+config.imagemanager.backupmax = ConfigInteger(default=0, limits=(0, 99))
 config.imagemanager.backupretry = ConfigNumber(default=30)
 config.imagemanager.backupretrycount = NoSave(ConfigNumber(default=0))
 config.imagemanager.nextscheduletime = NoSave(ConfigNumber(default=0))
@@ -118,6 +119,7 @@ class TimerImageManager(Screen):
 		self["backupstatus"] = Label()
 		self["key_green"] = Button(_("Standart Backup"))
 		self["key_yellow"] = Button(_("Timer backup"))
+		self["key_blue"] = Button(_("Max. backup 0=deactivated"))
 
 		self.BackupRunning = False
 		self.onChangedEntry = []
@@ -232,6 +234,7 @@ class TimerImageManager(Screen):
 											  'cancel': self.close,
 											  'green': self.GreenPressed,
 											  'yellow': self.createSetup,
+											  'blue': self.createMaxSetup,
 											  "up": self.refreshUp,
 											  "down": self.refreshDown,
 											  }, -1)
@@ -245,6 +248,7 @@ class TimerImageManager(Screen):
 											  {
 											  'cancel': self.close,
 											  'yellow': self.createSetup,
+											  'blue': self.createMaxSetup,
 											  }, -1)
 
 				self['lab1'].setText(_("Device: None available"))
@@ -254,6 +258,7 @@ class TimerImageManager(Screen):
 										  'cancel': self.close,
 										  'green': self.GreenPressed,
 										  'yellow': self.createSetup,
+										  'blue': self.createMaxSetup,										  
 										  "up": self.refreshUp,
 										  "down": self.refreshDown,
 										  "ok": self.GreenPressed,
@@ -276,7 +281,14 @@ class TimerImageManager(Screen):
 
 	def createSetup(self):
 		self.session.openWithCallback(self.setupDone, Setup, 'timerimagemanager', 'Extensions/Infopanel')
+		
+	def createMaxSetup(self):
+		self.session.openWithCallback(self.setupMaxDone, Setup, 'maxbackup', 'Extensions/Infopanel')		
 
+	def setupMaxDone(self, test=None):
+		print "set Max Backupt to:", config.imagemanager.backupmax.value
+		pass
+		
 	def setupDone(self, test=None):
 		if config.imagemanager.folderprefix.value == '':
 			config.imagemanager.folderprefix.value = defaultprefix
@@ -323,10 +335,8 @@ class TimerImageManager(Screen):
 		ybox.setTitle(_("Backup Confirmation"))
 
 	def doBackup(self, answer):
-	        print "1"
 		if answer is True:
 			self.ImageBackup = ImageBackup(self.session)
-			print "2"
 			Components.Task.job_manager.AddJob(self.ImageBackup.createBackupJob())
 			self.BackupRunning = True
 			self["key_green"].setText(_("View Progress"))
@@ -473,7 +483,6 @@ class AutoImageManagerTimer:
 		else:
 			print "[ImageManager] Running Backup", strftime("%c", localtime(now))
 			self.ImageBackup = ImageBackup(self.session)
-			print "3"
 			Components.Task.job_manager.AddJob(self.ImageBackup.createBackupJob())
 			
 #GML - Note that fact that the job has been *scheduled*.
@@ -565,7 +574,7 @@ class ImageBackup(Screen):
 		}, -2)
 		
 	def createBackupJob(self):
-		if SystemInfo["HaveMultiBoot"]:
+                if SystemInfo["HaveMultiBoot"]:
 			with open("/boot/STARTUP", 'r') as myfile:
 				data=myfile.read().replace('\n', '')
 			myfile.close()
@@ -687,8 +696,31 @@ class ImageBackup(Screen):
 		return "XX"
 
 	def doFullBackup(self, DIRECTORY):
-		self.DIRECTORY = DIRECTORY
-		self.TITLE = _("Full back-up on %s") % (self.DIRECTORY)
+                self.DIRECTORY = DIRECTORY
+                self.BackupDirectory5 = "%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL)
+                images = listdir(self.BackupDirectory5)
+                lenimages = 0
+                for fil in images:
+	        	if path.isdir(path.join(self.BackupDirectory5, fil)):
+		                lenimages = lenimages + 1
+                	else:
+                                lenimages = lenimages
+                if lenimages < config.imagemanager.backupmax.value or config.imagemanager.backupmax.value == 0:
+                	print "imageanzahl noch nicht erreicht"
+                else:
+                	datum=[]
+                	for i in images:
+                		xi = self.BackupDirectory5 + i
+				datum+=[os.path.getmtime(xi)]
+                		datum.sort()
+			for m in images:
+				xm = self.BackupDirectory5 + m
+				deleteimage = config.imagemanager.backupmax.value - 1 
+				if os.path.getmtime(xm) in datum[:-deleteimage]:
+					shutil.rmtree(xm)
+				else:
+					print "hold image"	
+                self.TITLE = _("Full back-up on %s") % (self.DIRECTORY)
 		self.START = time()
 		self.DATE = strftime("%Y%m%d_%H%M", localtime(self.START))
 		self.IMAGEVERSION = self.imageInfo() #strftime("%Y%m%d", localtime(self.START))
