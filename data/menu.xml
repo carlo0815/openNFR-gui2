@@ -78,6 +78,12 @@ self.session.openWithCallback(msgClosed, EpgLoadMsg)
 					<item level="2" text="3D setup" entryID="osd3dsetup" requires="CanChange3DOsd"><screen module="UserInterfacePositioner" screen="OSD3DSetupScreen"/></item>
 					<item level="2" text="Position setup" entryID="osdsetup" requires="OsdSetup"><screen module="UserInterfacePositioner" screen="UserInterfacePositioner"/></item>
 					<item level="0" text="Skin setup" entryID="skin_setup"><screen module="SkinSelector" screen="SkinSelector"/></item>
+					<item weight="15" level="0" text="OpenNFR Skins Install" entryID="opennfrskinsinstall">
+					<code>
+from Plugins.Extensions.Infopanel.PluginWizard import PluginSkinInstall
+self.session.open(PluginSkinInstall)
+					</code>	
+                                </item>        				
 				</menu>
 				<item level="1" text="Input devices" entryID="input_device_setup"><screen module="InputDeviceSetup" screen="InputDeviceSelection" /></item>
 				<item weight="4" level="0" text="Language" entryID="language_setup"><screen module="LanguageSelection" /></item>
