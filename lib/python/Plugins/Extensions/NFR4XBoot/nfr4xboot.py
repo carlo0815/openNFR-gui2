@@ -141,7 +141,7 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
            os.system('rm -rf ' + sourcefile)
         else:
            os.system('echo "[NFR4XBoot] keep  %s for next time"'% sourcefile) 
-	if "cortexa15hf" or "armv7ahf" in getImageArch:
+	if "cortexa15hf" in getImageArch:
            if os.path.exists(media_nf + '/NFR4XBootUpload/%s'% getimagefolder):
               os.chdir('%s'% getimagefolder)
 			
