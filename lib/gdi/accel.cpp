@@ -15,10 +15,29 @@
 // #define ACCEL_DEBUG
 
 gAccel *gAccel::instance;
+
+#if not defined(HAVE_HISILICON_ACCEL)
 #if not defined(__sh__)
 #define BCM_ACCEL
 #else
 #define STMFB_ACCEL
+#endif
+#endif
+
+#ifdef HAVE_HISILICON_ACCEL 
+extern int  dinobot_accel_init(void);
+extern void dinobot_accel_close(void);
+extern void dinobot_accel_blit(
+		int src_addr, int src_width, int src_height, int src_stride, int src_format,
+		int dst_addr, int dst_width, int dst_height, int dst_stride,
+		int src_x, int src_y, int width, int height,
+		int dst_x, int dst_y, int dwidth, int dheight,
+		int pal_addr,int pal_size, int flags);
+extern void dinobot_accel_fill(
+		int dst_addr, int dst_width, int dst_height, int dst_stride,
+		int x, int y, int width, int height,
+		unsigned long color);
+extern bool dinobot_accel_has_alphablending();
 #endif
 
 #ifdef STMFB_ACCEL
@@ -47,6 +66,7 @@ extern void ati_accel_fill(
 		int x, int y, int width, int height,
 		unsigned long color);
 #endif
+
 #ifdef BCM_ACCEL
 extern int bcm_accel_init(void);
 extern void bcm_accel_close(void);
@@ -61,6 +81,8 @@ extern void bcm_accel_fill(
 		int x, int y, int width, int height,
 		unsigned long color);
 extern bool bcm_accel_has_alphablending();
+extern int bcm_accel_accumulate();
+extern int bcm_accel_sync();
 #endif
 
 gAccel::gAccel():
@@ -79,6 +101,9 @@ gAccel::gAccel():
 #ifdef BCM_ACCEL
 	m_bcm_accel_state = bcm_accel_init();
 #endif
+#ifdef HAVE_HISILICON_ACCEL
+	dinobot_accel_init();
+#endif
 }
 
 gAccel::~gAccel()
@@ -92,25 +117,28 @@ gAccel::~gAccel()
 #ifdef BCM_ACCEL
 	bcm_accel_close();
 #endif
+#ifdef HAVE_HISILICON_ACCEL
+	dinobot_accel_close();
+#endif
 	instance = 0;
 }
 
 #ifdef ACCEL_DEBUG
 void gAccel::dumpDebug()
 {
-	eDebug("-- gAccel info --");
+	eDebug("[gAccel] info --");
 	for (MemoryBlockList::const_iterator it = m_accel_allocation.begin();
 		 it != m_accel_allocation.end();
 		 ++it)
 	 {
 		 gUnmanagedSurface *surface = it->surface;
 		 if (surface)
-			eDebug("surface: (%d (%dk), %d (%dk)) %p %dx%d:%d",
+			eDebug("[gAccel] surface: (%d (%dk), %d (%dk)) %p %dx%d:%d",
 					it->index, it->index >> (10 - ACCEL_ALIGNMENT_SHIFT),
 					it->size, it->size >> (10 - ACCEL_ALIGNMENT_SHIFT),
 					surface, surface->stride, surface->y, surface->bpp);
 		else
-			eDebug("   free: (%d (%dk), %d (%dk))",
+			eDebug("[gAccel]    free: (%d (%dk), %d (%dk))",
 					it->index, it->index >> (10 - ACCEL_ALIGNMENT_SHIFT),
 					it->size, it->size >> (10 - ACCEL_ALIGNMENT_SHIFT));
 	 }
@@ -133,7 +161,7 @@ void gAccel::releaseAccelMemorySpace()
 		{
 			int size = surface->y * surface->stride;
 #ifdef ACCEL_DEBUG
-			eDebug("%s: Re-locating %p->%x(%p) %dx%d:%d", __func__, surface, surface->data_phys, surface->data, surface->x, surface->y, surface->bpp);
+			eDebug("[gAccel] %s: Re-locating %p->%x(%p) %dx%d:%d", __func__, surface, surface->data_phys, surface->data, surface->x, surface->y, surface->bpp);
 #endif
 			unsigned char *new_data = new unsigned char [size];
 			memcpy(new_data, surface->data, size);
@@ -162,6 +190,9 @@ bool gAccel::hasAlphaBlendingSupport()
 {
 #ifdef BCM_ACCEL
 	return bcm_accel_has_alphablending();
+#endif
+#ifdef HAVE_HISILICON_ACCEL
+	return dinobot_accel_has_alphablending();
 #else
 	return false;
 #endif
@@ -277,6 +308,51 @@ int gAccel::blit(gUnmanagedSurface *dst, gUnmanagedSurface *src, const eRect &p,
 		return 0;
 	}
 #endif
+#ifdef HAVE_HISILICON_ACCEL
+		unsigned long pal_addr = 0;
+		unsigned int  pal_size = 0;
+		int src_format = 0;
+		if (src->bpp == 32)
+			src_format = 0;
+		else if ((src->bpp == 8) && src->clut.data)
+		{
+			src_format = 1;
+			pal_size = src->clut.colors*4*16/16;
+			pal_addr = (unsigned long)new unsigned char [pal_size];
+			/* sync pal */
+			if (src->clut.data_phys == 0)
+			{
+				/* sync pal */
+				unsigned long *pal = (unsigned long*)pal_addr;
+				for (int i = 0; i < src->clut.colors; ++i)
+				    *pal++ = src->clut.data[i].argb() ^ 0xFF000000;
+				src->clut.data_phys = pal_addr;
+				eDebug("!!!!!!!!!![gAccel] pal_addr1 %x clors=%d!!!!!!!!!!",pal_addr,src->clut.colors);
+			}
+			else
+			{
+				//memcpy((void*)pal_addr ,(void *)src->clut.data_phys,pal_size);
+				unsigned long *pal = (unsigned long*)pal_addr;
+				for (int i = 0; i < src->clut.colors; ++i)
+				    *pal++ = src->clut.data[i].argb() ^ 0xFF000000;
+				eDebug("!!!!!!!!!![gAccel] pal_addr2 %x clors=%d!!!!!!!!!!",pal_addr,src->clut.colors);
+			}
+		} else
+			return -1; /* unsupported source format */
+
+		dinobot_accel_blit(
+			src->data_phys, src->x, src->y, src->stride, src_format,
+			dst->data_phys, dst->x, dst->y, dst->stride,
+			area.left(), area.top(), area.width(), area.height(),
+			p.x(), p.y(), p.width(), p.height(),
+			pal_addr, pal_size,flags);
+
+		if(pal_size && pal_addr)
+		{
+			delete (unsigned char *)pal_addr;
+		}
+		return 0;
+#endif
 	return -1;
 }
 
@@ -301,6 +377,36 @@ int gAccel::fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col)
 		return 0;
 	}
 #endif
+
+#ifdef HAVE_HISILICON_ACCEL
+	dinobot_accel_fill(
+		dst->data_phys, dst->x, dst->y, dst->stride,
+		area.left(), area.top(), area.width(), area.height(),
+		col);
+	return 0;
+#endif
+	return -1;
+}
+
+int gAccel::accumulate()
+{
+#ifdef BCM_ACCEL
+	if (!m_bcm_accel_state)
+	{
+		return bcm_accel_accumulate();
+	}
+#endif
+	return -1;
+}
+
+int gAccel::sync()
+{
+#ifdef BCM_ACCEL
+	if (!m_bcm_accel_state)
+	{
+		return bcm_accel_sync();
+	}
+#endif
 	return -1;
 }
 
@@ -310,19 +416,19 @@ int gAccel::accelAlloc(gUnmanagedSurface* surface)
 	int size = stride * surface->y;
 	if (!size)
 	{
-		eDebug("accelAlloc called with size 0");
+		eDebug("[gAccel] accelAlloc called with size 0");
 		return -2;
 	}
 	if (surface->bpp == 8)
 		size += 256 * 4;
 	else if (surface->bpp != 32)
 	{
-		eDebug("Accel does not support bpp=%d", surface->bpp);
+		eDebug("[gAccel] Accel does not support bpp=%d", surface->bpp);
 		return -4;
 	}
 
 #ifdef ACCEL_DEBUG
-	eDebug("[%s] %p size=%d %dx%d:%d", __func__, surface, size, surface->x, surface->y, surface->bpp);
+	eDebug("[gAccel] [%s] %p size=%d %dx%d:%d", __func__, surface, size, surface->x, surface->y, surface->bpp);
 #endif
 
 	size += ACCEL_ALIGNMENT_MASK;
@@ -354,7 +460,7 @@ int gAccel::accelAlloc(gUnmanagedSurface* surface)
 		}
 	}
 
-	eDebug("accel alloc failed\n");
+	eDebug("[gAccel] accel alloc failed\n");
 	return -3;
 }
 
@@ -364,7 +470,7 @@ void gAccel::accelFree(gUnmanagedSurface* surface)
 	if (phys_addr != 0)
 	{
 #ifdef ACCEL_DEBUG
-		eDebug("[%s] %p->%x %dx%d:%d", __func__, surface, surface->data_phys, surface->x, surface->y, surface->bpp);
+		eDebug("[gAccel] [%s] %p->%x %dx%d:%d", __func__, surface, surface->data_phys, surface->x, surface->y, surface->bpp);
 #endif
 		/* The lock scope is "good enough", the only other method that
 		 * might alter data_phys is the global release, and that will
