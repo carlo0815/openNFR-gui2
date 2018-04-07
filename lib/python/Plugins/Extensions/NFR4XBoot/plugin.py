@@ -50,7 +50,7 @@ class NFR4XBootInstallation(Screen):
         self.updateList()
 
     def updateList(self):
-        myusb, myhdd = ('', '')
+        myusb, myhdd, mymmc = ('', '', '')
         myoptions = []
         if fileExists('/proc/mounts'):
             fileExists('/proc/mounts')
