@@ -13642,3 +13642,69 @@ msgstr "gesteuert über HDMI"
 
 msgid "always"
 msgstr "immer"
+
+msgid "To save push green button"
+msgstr "Zum speichern grüne Taste drücken"
+
+msgid "Teletext base visibbility"
+msgstr "Sichtbarkeit Videotext"
+
+msgid "Web browser base visibility"
+msgstr "Sichtbarkeit Webbrowser"
+
+msgid "save"
+msgstr "Speichern"
+
+msgid "Set the time to hide the infobar."
+msgstr "Bestimmt die Anzeigedauer der Infoleiste."
+
+msgid "Fade the infobar when hiding"
+msgstr "Hiermit kannst du einstellen, ob die Infobar langsam ausgeblendet werden soll."
+
+msgid "Configure the infobar fading speed"
+msgstr "Hier kannst du die Ausblendegeschwindigkeit der Infobar einstellen."
+
+msgid "Enable and set the duration of the second infobar (press OK twice) that may include more information on the current service."
+msgstr "Zweite Infoleiste mit Zusatzinformationen aktivieren und ihre Anzeigedauer bestimmen (OK zweimal drücken). Die Oberfläche muss dies unterstützen."
+
+msgid "Set the time to hide the second infobar. The bar also disappears on pressing 'OK'."
+msgstr "Bestimmt die Anzeigedauer der 2. Infoleiste. Sie verschwindet auch bei Druck auf OK."
+
+msgid "Show openNFR spinning logo when the system is busy."
+msgstr "Hiermit wird eingestellt, ob der openNFR-Spinner angezeigt werden soll, wenn das System ausgelastet ist"
+
+msgid "IPv6 Setup"
+msgstr "IPv6-Einstellungen"
+
+msgid "Allows you to enable/disable displaying icons on the frontpanel."
+msgstr "Anzeige von Icons auf dem Geräte-Display erlauben."
+
+msgid "This option allows you choose how to display the remaining/elapsed time for live tv."
+msgstr "Diese Option erlaubt dir zu wählen, ob verbleibende/verstrichene Zeit oder beides für Transponder angezeigt wird."
+
+msgid "This option allows you choose how to display the remaining/elapsed time for Media playback."
+msgstr "Diese Option erlaubt dir zu wählen, ob verbleibende/verstrichene Zeit oder beides in Medienwiedergabe angezeigt wird."
+
+msgid "Power On Display"
+msgstr "Display einschalten"
+
+msgid "This option allows you to Power Off the display."
+msgstr "Diese Option erlaubt es dir, das Display komplett aus zu schalten."
+
+msgid "Show HDMI-Output Res"
+msgstr "Zeige HDMI Auflösung"
+
+msgid "Show HDMI Output Resulution"
+msgstr "Diese Option erlaubt es, die HDMI Auflösung auf dem Display anzuzeigen"
+
+msgid "Disable the HDD Process on VFD"
+msgstr "Diese Option erlaubt es, das HDD Symbol auf dem Display anzuzeigen"
+
+msgid "Configure the function of a long press on the power button."
+msgstr "Konfiguriere die Funktion, die bei langem Drücken der Power-Taste ausgeführt werden soll."
+
+msgid "Configure the function of a short press on the power button."
+msgstr "Konfiguriert die Funktion, die bei kurzem Drücken der Power-Taste ausgeführt werden soll."
+
+msgid "Select what you want the TV button to activate:"
+msgstr "Wähle was die TV Taste bewirken soll:"
