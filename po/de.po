@@ -13708,3 +13708,44 @@ msgstr "Konfiguriert die Funktion, die bei kurzem Drücken der Power-Taste ausge
 
 msgid "Select what you want the TV button to activate:"
 msgstr "Wähle was die TV Taste bewirken soll:"
+
+msgid "Set the default location for your autorecord-files. Press 'OK' to add new locations, select left/right to select an existing location."
+msgstr ""
+"Wähle das Standardverzeichnis für automatische Aufnahmen.\n"
+"'OK' um ein neues Verzeichnis zu wählen oder links/rechts um bestehende Verzeichnisse zu wählen."
+
+msgid "Pluginbutton Play"
+msgstr "Plugintaste Wiedergabe"
+
+msgid "Pluginbutton Forward"
+msgstr "Plugintaste Vorwärts"
+
+msgid "Pluginbutton Backward"
+msgstr "Plugintaste Zurück"
+
+msgid "When enabled, you can use Play,Forward,Backward,Stop as Pluginstart from channellist."
+msgstr "Wenn aktiviert, können Sie \"Wiedergabe, Vorwärts, Zurück, Stop als Pluginstart\" von der Senderliste aus verwenden."
+
+msgid "Configure if and how the record indicator will be shown in the channel selection list."
+msgstr "Konfigurieren ob und wie Icons für die Aufnahme in der Senderliste gezeigt werden."
+
+msgid "Configure if and how wide the service name column will be shown in the channel selection list."
+msgstr "Konfigurieren ob und wie Sendernamen in der Senderliste gezeigt werden."
+
+msgid "Force Legacy Signal Stats"
+msgstr "Erzwinge ursprünglichen Signalstatus"
+
+msgid "Do you really want to move to trashcan ?"
+msgstr "Wirklich in den Mülleimer verschieben?"
+
+msgid "MountEdit"
+msgstr "Mount-Editor"
+
+msgid "MountView"
+msgstr "Mount Übersicht"
+
+msgid "UserManager"
+msgstr "Benutzerverwaltung"
+
+msgid "Configure if epg.dat should be saved at all."
+msgstr "Konfigurieren Sie, ob die EPG Daten gespeichert werden sollen."
