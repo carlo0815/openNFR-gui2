@@ -698,6 +698,8 @@ class ImageBackup(Screen):
 	def doFullBackup(self, DIRECTORY):
                 self.DIRECTORY = DIRECTORY
                 self.BackupDirectory5 = "%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL)
+                if not path.exists("%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL)):
+                        mkdir("%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL))
                 images = listdir(self.BackupDirectory5)
                 lenimages = 0
                 for fil in images:
