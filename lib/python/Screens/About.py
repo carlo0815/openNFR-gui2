@@ -44,7 +44,7 @@ class About(Screen):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
-		elif getMachineBuild() in ('u5','u5pvr'):
+		elif getMachineBuild() in ('u5','u53','u52','u5pvr','h9'):
 			cpuMHz = "   (1,6 GHz)"			
 		elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 			cpuMHz = "   (1,7 GHz)"
