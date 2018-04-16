@@ -30,6 +30,7 @@ class SkinSelectorBase:
 
 		self["key_red"] = StaticText(_("Close"))
 		self["key_green"] = StaticText(_("Save"))
+		self["key_yellow"] = StaticText(_("Download_openNFRskin"))
 		self["introduction"] = StaticText(_("Press OK to activate the selected skin."))
 		self["SkinList"] = MenuList(self.skinlist)
 		self["Preview"] = Pixmap()
@@ -41,6 +42,7 @@ class SkinSelectorBase:
 			"cancel": self.close,
 			"red": self.close,
 			"green": self.ok,
+			"yellow": self.skin,
 			"up": self.up,
 			"down": self.down,
 			"left": self.left,
@@ -129,6 +131,13 @@ class SkinSelectorBase:
 	def restartGUI(self, answer):
 		if answer is True:
 			self.session.open(TryQuitMainloop, 3)
+	
+	def skin(self, args = None):
+		from Plugins.Extensions.Infopanel.PluginWizard import PluginSkinInstall
+		#self.session.open(PluginSkinInstall)
+		self.session.openWithCallback(self.close,PluginSkinInstall)
+		#SkinSelectorBase.__init__(self, args)
+	
 
 class SkinSelector(Screen, SkinSelectorBase):
 	SKINXML = "skin.xml"
