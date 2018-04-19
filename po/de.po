@@ -13749,3 +13749,72 @@ msgstr "Benutzerverwaltung"
 
 msgid "Configure if epg.dat should be saved at all."
 msgstr "Konfigurieren Sie, ob die EPG Daten gespeichert werden sollen."
+
+msgid "Number of rows to display"
+msgstr "Hier kann man einstellen, wie viele Zeilen angezeigt werden sollen."
+
+msgid "Use the extended List"
+msgstr "Die erweiterte Liste verwenden"
+
+msgid "Update delay for Events in List. Scrolling in List is faster with higher delay, specialy on big Lists !"
+msgstr "Updateverzögerung für Events in der Liste. Das Scrollverhalten wird schneller mit einer höheren Verzögerung, speziell bei größeren Listen !"
+
+msgid "Shows the Covers in Movielist and Moviebar"
+msgstr "Zeigt die Cover in der Filmliste und Filmleiste"
+
+msgid "Select the player which will be used for Enigma2 playback."
+msgstr "Wähle den Player, der für die Wiedergabe von Enigma2 verwendet werden soll."
+
+msgid "Select sink which you want to use."
+msgstr "Wähle Sink welches du benutzen willst"
+
+msgid "Turn on the embedded subtitles support."
+msgstr "Aktiviere die Unterstützung für eingebettete Untertitel."
+
+msgid "Set buffer size in kilobytes."
+msgstr "Lege die Puffergröße in Kilobyte fest"
+
+msgid "Set buffer duration in seconds."
+msgstr "Lege die Pufferdauer in Sekunden fest."
+
+msgid "Automatically turn on subtitles if available."
+msgstr "Untertitel automatisch einschalten, falls verfügbar."
+
+msgid "Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices."
+msgstr "Aktiviere den Explorer, um verschiedene Qualitäts-Streams aus der HLS-Varianten-Playlist abzurufen und sie über Subdienste auszuwählen."
+
+msgid "Turn on auto-selection of streams according to set Connection speed."
+msgstr "Aktivieren der automatischen Auswahl von Streams gemäß der Verbindungsgeschwindigkeit."
+
+msgid "Set connection speed in kb/s, according to which you want to have streams auto-selected"
+msgstr "Stelle die Verbindungsgeschwindigkeit in kb/s ein, so wie du die Streams haben möchtest"
+
+msgid "Turn on AAC software decoding."
+msgstr "Aktiviere AAC-Software-Decodierung."
+
+msgid "Turn on EAC3 software decoding."
+msgstr "Aktiviere der EAC3-Software-Decodierung."
+
+msgid "Turn on AC3 software decoding."
+msgstr "Aktiviere AC3-Software-Decodierung."
+
+msgid "Turn on DTS software decoding."
+msgstr "Aktiviere DTS-Software-Decodierung."
+
+msgid "Turn on MP3 software decoding."
+msgstr "Aktiviere MP3-Software-Decodierung."
+
+msgid "Turn on WMA1, WMA2, WMA/PRO software decoding."
+msgstr "Aktiviere WMA1, WMA2, WMA/PRO-Software-Decodierung."
+
+msgid "Turn on downmix to stereo, when software decoding is in use"
+msgstr "Aktiviere Downmix zu Stereo, wenn die Software Dekodierung verwendet wird."
+
+msgid "Software decoder use LPCM for injection (otherwise wav PCM will be used)"
+msgstr "Software Decoder für die LPCM-Injektion verwenden (andernfalls wird PCM verwendet)"
+
+msgid "Set which RTMP protocol implementation will be used for playback of RTMP streams"
+msgstr "Legt fest, welche RTMP-Protokollimplementierung für die Wiedergabe im RTMP-Stream verwendet werden soll"
+
+msgid "Download_openNFRskin"
+msgstr "Download openNFR-Skins"
