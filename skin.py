@@ -122,6 +122,7 @@ try:
 	name = skin_user_skinname()
 	if name is not None:
 		addSkin(name, SCOPE_CONFIG)
+		print "addSkin:", addSkin
 	else:
 		addSkin('skin_user.xml', SCOPE_CONFIG)
 except (SkinError, IOError, AssertionError), err:
@@ -137,7 +138,31 @@ try:
 	loadSkin(primary_skin_path + 'skin_user_header.xml', SCOPE_SKIN)
 	print "[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml')
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined header file for skin"	
+	print "[openNFR] not loading user defined header file for skin"
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_infobar.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined infobar file for skin", (primary_skin_path + 'skin_user_infobar.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined infobar file for skin"	
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_sib.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined sib file for skin", (primary_skin_path + 'skin_user_sib.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined sib file for skin"
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_ch_se.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined ch_se file for skin", (primary_skin_path + 'skin_user_ch_se.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined ch_se file for skin"
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_ev.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined ev file for skin"                	                	
 	
 	
 def load_modular_files():
