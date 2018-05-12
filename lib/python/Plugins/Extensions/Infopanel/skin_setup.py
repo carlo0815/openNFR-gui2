@@ -7,7 +7,7 @@
 #This means you also have to distribute
 #source code of your modifications.
 
-from enigma import eTimer
+from enigma import eTimer, ePicLoad, getDesktop, loadPic
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigYesNo, NoSave, ConfigNothing, ConfigNumber
 from Components.ConfigList import ConfigListScreen
@@ -28,7 +28,9 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.WeatherID import get_woeid_from_yahoo
 from Tools import Notifications
 from os import listdir, remove, rename, system, path, symlink, chdir, makedirs
+from Components.AVSwitch import AVSwitch
 import shutil
+import glob
 
 from __init__ import _
 
@@ -87,7 +89,6 @@ class WeatherLocationChoiceList(Screen):
 
 	def createChoiceList(self):
 		list = []
-		print self.location_list
 		for x in self.location_list:
 			list.append((str(x[1]), str(x[0])))
 		self["choicelist"].l.setList(list)
@@ -126,8 +127,37 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		self.skin_lines = []
 		self.changed_screens = False
 		Screen.__init__(self, session)
-		
+                global cur_skin
+                global color_test
+                global font_test
+                global infobar_test
+                global sib_test
+                global ch_se_test                
+                global ev_test                
+		color_test = True
+		font_test = True
+		infobar_test = True
+		sib_test = True
+		ch_se_test = True
+		ev_test = True		
+                self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
+                if glob.glob(self.skin_base_dir + 'colors_*') == True:
+                        color_test = False                
+                if glob.glob(self.skin_base_dir + 'font_*') == True:
+                	font_test = False                
+                if glob.glob(self.skin_base_dir + 'infobar_*') == True:
+                	infobar_test = False                
+                if glob.glob(self.skin_base_dir + 'sib_*') == True:			
+			sib_test = False
+                if glob.glob(self.skin_base_dir + 'ch_se_*') == True:			
+			ch_se_test = False                            
+                if glob.glob(self.skin_base_dir + 'ev_*') == True:			
+			ev_test = False                                            
+                		
 		self.start_skin = config.skin.primary_skin.value
+		self.Scale = AVSwitch().getFramebufferScale()
+		self.PicLoad = ePicLoad()
+		self['Preview'] = Pixmap()
 	        self.getInitConfig()
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
@@ -153,46 +183,110 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		self.createConfigList()
 
 	def getInitConfig(self):
-		global cur_skin
 		self.title = _("%s - Setup") % cur_skin
 		self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
 		self.default_font_file = "font_Original.xml"
 		self.default_color_file = "colors_Original.xml"
+		self.default_infobar_file = "infobar_Original.xml"
+		self.default_sib_file = "sib_Original.xml"
+		self.default_ch_se_file = "ch_se_Original.xml"		
+		self.default_ev_file = "ev_Original.xml"		
 		self.color_file = "skin_user_colors.xml"
 		self.font_file = "skin_user_header.xml"
-		current_color = self.getCurrentColor()
-		color_choices = self.getPossibleColor()
-		default_color = ("default", _("Default"))
-		if current_color is None:
-			current_color = default_color
-		if default_color not in color_choices:
-			color_choices.append(default_color)
-		current_color = current_color[0]
-		current_font = self.getCurrentFont() 
-		font_choices = self.getPossibleFont()
-		default_font = ("default", _("Default"))
-		if current_font is None:
-			current_font = default_font
-		if default_font not in font_choices:
-			font_choices.append(default_font)
-		current_font = current_font[0]
+		self.infobar_file = "skin_user_infobar.xml"
+		self.sib_file = "skin_user_sib.xml"
+		self.ch_se_file = "skin_user_ch_se.xml"
+		self.ev_file = "skin_user_ev.xml"		
+                if color_test == True:
+			current_color = self.getCurrentColor()
+			color_choices = self.getPossibleColor()
+			default_color = ("default")
+			self.myNfrHD_style = NoSave(ConfigSelection(default=current_color, choices = color_choices))
+			if current_color is None:
+				current_color = default_color
+			if default_color not in color_choices:
+				color_choices.append(default_color)
+			current_color = current_color
+                if font_test == True:
+			current_font = self.getCurrentFont() 
+			font_choices = self.getPossibleFont()
+			default_font = ("default")
+			self.myNfrHD_font = NoSave(ConfigSelection(default=current_font, choices = font_choices))		
+			if current_font is None:
+				current_font = default_font
+			if default_font not in font_choices:
+				font_choices.append(default_font)
+			current_font = current_font
+		if infobar_test == True:
+			current_infobar = self.getCurrentInfobar()
+			infobar_choices = self.getPossibleInfobar()
+			default_infobar = ("default")
+			self.myNfrHD_infobar = NoSave(ConfigSelection(default=current_infobar, choices = infobar_choices))		
+			if current_infobar is None:
+				current_infobar = default_infobar
+			if default_infobar not in infobar_choices:
+				infobar_choices.append(default_infobar)
+			current_infobar = current_infobar
+		if sib_test == True:
+                        current_sib = self.getCurrentSib() 
+			sib_choices = self.getPossibleSib()
+			default_sib = ("default")
+			self.myNfrHD_sib = NoSave(ConfigSelection(default=current_sib, choices = sib_choices))		
+			if current_sib is None:
+				current_sib = default_sib
+			if default_sib not in sib_choices:
+				sib_choices.append(default_sib)
+			current_sib = current_sib
+		if ch_se_test == True:
+                        current_ch_se = self.getCurrentCh_se() 
+			ch_se_choices = self.getPossibleCh_se()
+			default_ch_se = ("default")
+			self.myNfrHD_ch_se = NoSave(ConfigSelection(default=current_ch_se, choices = ch_se_choices))		
+			if current_ch_se is None:
+				current_ch_se = default_ch_se
+			if default_ch_se not in ch_se_choices:
+				ch_se_choices.append(default_ch_se)
+			current_ch_se = current_ch_se			
+		if ev_test == True:
+                        current_ev = self.getCurrentEV() 
+			ev_choices = self.getPossibleEV()
+			default_ev = ("default")
+			self.myNfrHD_ev = NoSave(ConfigSelection(default=current_ev, choices = ev_choices))		
+			if current_ev is None:
+				current_ev = default_ev
+			if default_ev not in ev_choices:
+				ev_choices.append(default_ev)
+			current_ev = current_ev			
+		
 		myatile_active = self.getmyAtileState()
 		self.myNfrHD_active = NoSave(ConfigYesNo(default=myatile_active))
-		choices = self.getPossibleFont()
-		self.myNfrHD_font = NoSave(ConfigSelection(default=current_font, choices = font_choices))
-		self.myNfrHD_style = NoSave(ConfigSelection(default=current_color, choices = color_choices))
-		self.myNfrHD_fake_entry = NoSave(ConfigNothing())
+		#choices = self.getPossibleFont()
+		self.myNfrHD_fake_entry = NoSave(ConfigNothing())		
 
 	def createConfigList(self):
-		self.set_color = getConfigListEntry(_("Style:"), self.myNfrHD_style)
-		self.set_font = getConfigListEntry(_("Font:"), self.myNfrHD_font)
 		self.set_myatile = getConfigListEntry(_("Enable %s pro:") % cur_skin, self.myNfrHD_active)
 		self.set_new_skin = getConfigListEntry(_("Change skin"), ConfigNothing())
 		self.find_woeid = getConfigListEntry(_("Search weather location ID"), ConfigNothing())
 		self.list = []
 		self.list.append(self.set_myatile)
-		self.list.append(self.set_color)
-		self.list.append(self.set_font)
+		if color_test == True:
+                	self.set_color = getConfigListEntry(_("Style:"), self.myNfrHD_style)	
+			self.list.append(self.set_color)
+		if font_test == True:
+                	self.set_font = getConfigListEntry(_("Font:"), self.myNfrHD_font)	
+			self.list.append(self.set_font)
+		if infobar_test == True:
+                	self.set_infobar = getConfigListEntry(_("Infobar:"), self.myNfrHD_infobar)	
+			self.list.append(self.set_infobar)
+		if sib_test == True:
+		        self.set_sib = getConfigListEntry(_("Secondinfobar:"), self.myNfrHD_sib)
+			self.list.append(self.set_sib)
+		if ch_se_test == True:
+		        self.set_ch_se = getConfigListEntry(_("Channelselection:"), self.myNfrHD_ch_se)
+			self.list.append(self.set_ch_se)			
+		if ev_test == True:
+		        self.set_ev = getConfigListEntry(_("Eventview:"), self.myNfrHD_ev)
+			self.list.append(self.set_ev)			
 		self.list.append(self.set_new_skin)
 		self.list.append(getConfigListEntry(_("---Weather---"), self.myNfrHD_fake_entry))
 		self.list.append(getConfigListEntry(_("Refresh interval in minutes:"), config.plugins.NfrHD.refreshInterval))
@@ -210,11 +304,25 @@ class NfrHD_Config(Screen, ConfigListScreen):
 			self["key_yellow"].setText("")
 
 	def changedEntry(self):
-		if self["config"].getCurrent() == self.set_color:
-			self.setPicture(self.myNfrHD_style.value)
-		elif self["config"].getCurrent() == self.set_font:
-			self.setPicture(self.myNfrHD_font.value)
-		elif self["config"].getCurrent() == self.set_myatile:
+		if color_test == True:
+                	if self["config"].getCurrent() == self.set_color:
+				self.setPicture(self.myNfrHD_style.value)
+		if font_test == True:		
+			if self["config"].getCurrent() == self.set_font:
+				self.setPicture(self.myNfrHD_font.value)
+		if infobar_test == True:		
+			if self["config"].getCurrent() == self.set_infobar:
+				self.setPicture(self.myNfrHD_infobar.value)
+		if sib_test == True:		
+			if self["config"].getCurrent() == self.set_sib:
+				self.setPicture(self.myNfrHD_sib.value)
+		if ch_se_test == True:		
+			if self["config"].getCurrent() == self.set_ch_se:
+				self.setPicture(self.myNfrHD_ch_se.value)				
+		if ev_test == True:		
+			if self["config"].getCurrent() == self.set_ev:
+				self.setPicture(self.myNfrHD_ev.value)				
+		if self["config"].getCurrent() == self.set_myatile:
 			if self.myNfrHD_active.value:
 		        	if cur_skin == "skin_default":
 			        	self["key_yellow"].setText("skin_default Pro")
@@ -224,10 +332,24 @@ class NfrHD_Config(Screen, ConfigListScreen):
 				self["key_yellow"].setText("")
 
 	def selectionChanged(self):
-		if self["config"].getCurrent() == self.set_color:
-			self.setPicture(self.myNfrHD_style.value)
-		elif self["config"].getCurrent() == self.set_font:
-			self.setPicture(self.myNfrHD_font.value)
+		if color_test == True:	
+			if self["config"].getCurrent() == self.set_color:
+				self.setPicture(self.myNfrHD_style.value)
+		if font_test == True:		
+			if self["config"].getCurrent() == self.set_font:
+				self.setPicture(self.myNfrHD_font.value)
+		if infobar_test == True:		
+			if self["config"].getCurrent() == self.set_infobar:
+				self.setPicture(self.myNfrHD_infobar.value)
+		if sib_test == True:		
+			if self["config"].getCurrent() == self.set_sib:
+				self.setPicture(self.myNfrHD_sib.value)
+		if ch_se_test == True:		
+			if self["config"].getCurrent() == self.set_ch_se:
+				self.setPicture(self.myNfrHD_ch_se.value)
+		if ev_test == True:		
+			if self["config"].getCurrent() == self.set_ev:
+				self.setPicture(self.myNfrHD_ev.value)
 		else:
 			self["Picture"].hide()
 
@@ -259,8 +381,9 @@ class NfrHD_Config(Screen, ConfigListScreen):
 				friendly_name = f.replace(search_str, "")
 				friendly_name = friendly_name.replace(".xml", "")
 				friendly_name = friendly_name.replace("_", " ")
-				color_list.append((f, friendly_name))
-		return color_list
+				color_list.append(f)
+		color_list.append("default")
+                return color_list
 
 	def getPossibleFont(self):
 		font_list = []
@@ -270,9 +393,58 @@ class NfrHD_Config(Screen, ConfigListScreen):
 				friendly_name = f.replace(search_str, "")
 				friendly_name = friendly_name.replace(".xml", "")
 				friendly_name = friendly_name.replace("_", " ")
-				font_list.append((f, friendly_name))
-		return font_list
+				font_list.append(f)
+		font_list.append("default")
+                return font_list
+		
+	def getPossibleInfobar(self):
+		infobar_list = []
+		for f in sorted(listdir(self.skin_base_dir), key=str.lower):
+			search_str = 'infobar_'
+			if f.endswith('.xml') and f.startswith(search_str):
+				friendly_name = f.replace(search_str, "")
+				friendly_name = friendly_name.replace(".xml", "")
+				friendly_name = friendly_name.replace("_", " ")
+				infobar_list.append(f)
+		infobar_list.append("default")
+                return infobar_list
 
+	def getPossibleSib(self):
+		sib_list = []
+		for f in sorted(listdir(self.skin_base_dir), key=str.lower):
+			search_str = 'sib_'
+			if f.endswith('.xml') and f.startswith(search_str):
+				friendly_name = f.replace(search_str, "")
+				friendly_name = friendly_name.replace(".xml", "")
+				friendly_name = friendly_name.replace("_", " ")
+				sib_list.append(f)
+		sib_list.append("default")
+                return sib_list
+                
+	def getPossibleCh_se(self):
+		ch_se_list = []
+		for f in sorted(listdir(self.skin_base_dir), key=str.lower):
+			search_str = 'ch_se_'
+			if f.endswith('.xml') and f.startswith(search_str):
+				friendly_name = f.replace(search_str, "")
+				friendly_name = friendly_name.replace(".xml", "")
+				friendly_name = friendly_name.replace("_", " ")
+				ch_se_list.append(f)
+		ch_se_list.append("default")
+                return ch_se_list                
+                
+	def getPossibleEV(self):
+		ev_list = []
+		for f in sorted(listdir(self.skin_base_dir), key=str.lower):
+			search_str = 'ev_'
+			if f.endswith('.xml') and f.startswith(search_str):
+				friendly_name = f.replace(search_str, "")
+				friendly_name = friendly_name.replace(".xml", "")
+				friendly_name = friendly_name.replace("_", " ")
+				ev_list.append(f)
+		ev_list.append("default")
+                return ev_list
+                
 	def getmyAtileState(self):
 		chdir(self.skin_base_dir)
 		if path.exists("mySkin"):
@@ -296,7 +468,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		friendly_name = filename.replace(search_str, "")
 		friendly_name = friendly_name.replace(".xml", "")
 		friendly_name = friendly_name.replace("_", " ")
-		return (filename, friendly_name)
+		return (filename)
 
 	def getCurrentFont(self):
 		myfile = self.skin_base_dir + self.font_file
@@ -314,10 +486,85 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		friendly_name = filename.replace(search_str, "")
 		friendly_name = friendly_name.replace(".xml", "")
 		friendly_name = friendly_name.replace("_", " ")
-		return (filename, friendly_name)
+		return (filename)
+		
+	def getCurrentInfobar(self):
+		myfile = self.skin_base_dir + self.infobar_file
+		if not path.exists(myfile):
+			if path.exists(self.skin_base_dir + self.default_infobar_file):
+				if path.islink(myfile):
+					remove(myfile)
+				chdir(self.skin_base_dir)
+				symlink(self.default_infobar_file, self.infobar_file)
+			else:
+				return None
+		filename = path.realpath(myfile)
+		filename = path.basename(filename)
+		search_str = 'infobar_'
+		friendly_name = filename.replace(search_str, "")
+		friendly_name = friendly_name.replace(".xml", "")
+		friendly_name = friendly_name.replace("_", " ")
+		return (filename)
+
+	def getCurrentSib(self):
+		myfile = self.skin_base_dir + self.sib_file
+		if not path.exists(myfile):
+			if path.exists(self.skin_base_dir + self.default_sib_file):
+				if path.islink(myfile):
+					remove(myfile)
+				chdir(self.skin_base_dir)
+				symlink(self.default_sib_file, self.sib_file)
+			else:
+				return None
+		filename = path.realpath(myfile)
+		filename = path.basename(filename)
+		search_str = 'sib_'
+		friendly_name = filename.replace(search_str, "")
+		friendly_name = friendly_name.replace(".xml", "")
+		friendly_name = friendly_name.replace("_", " ")
+		return (filename)
+		
+	def getCurrentCh_se(self):
+		myfile = self.skin_base_dir + self.ch_se_file
+		if not path.exists(myfile):
+			if path.exists(self.skin_base_dir + self.default_ch_se_file):
+				if path.islink(myfile):
+					remove(myfile)
+				chdir(self.skin_base_dir)
+				symlink(self.default_ch_se_file, self.ch_se_file)
+			else:
+				return None
+		filename = path.realpath(myfile)
+		filename = path.basename(filename)
+		search_str = 'ch_se_'
+		friendly_name = filename.replace(search_str, "")
+		friendly_name = friendly_name.replace(".xml", "")
+		friendly_name = friendly_name.replace("_", " ")
+		return (filename)
+                
+	def getCurrentEV(self):
+		myfile = self.skin_base_dir + self.ev_file
+		if not path.exists(myfile):
+			if path.exists(self.skin_base_dir + self.default_ev_file):
+				if path.islink(myfile):
+					remove(myfile)
+				chdir(self.skin_base_dir)
+				symlink(self.default_ev_file, self.ev_file)
+			else:
+				return None
+		filename = path.realpath(myfile)
+		filename = path.basename(filename)
+		search_str = 'ev_'
+		friendly_name = filename.replace(search_str, "")
+		friendly_name = friendly_name.replace(".xml", "")
+		friendly_name = friendly_name.replace("_", " ")
+		return (filename)                		
 
 	def setPicture(self, f):
-		pic = f.replace(".xml", ".png")
+                try:
+                        pic = f.replace(".xml", ".png")
+                except:
+                        pic = "default.png"                        
 		preview = self.skin_base_dir + "preview/preview_" + pic
 		if path.exists(preview):
 			self["Picture"].instance.setPixmapFromFile(preview)
@@ -341,7 +588,8 @@ class NfrHD_Config(Screen, ConfigListScreen):
 			self.keyGreen()
 
 	def openSkinSelector(self):
-		return cur_skin
+		self.session.openWithCallback(self.skinChanged, SkinSelector)
+
 
 	def openSkinSelectorDelayed(self):
 		self.delaytimer = eTimer()
@@ -363,7 +611,6 @@ class NfrHD_Config(Screen, ConfigListScreen):
 
 	def select_weather_id_callback(self, res):
 		if res and isInteger(res):
-			print res
 			config.plugins.NfrHD.woeid.value = int(res)
 
 	def skinChanged(self, ret = None):
@@ -392,9 +639,33 @@ class NfrHD_Config(Screen, ConfigListScreen):
 				remove(self.color_file)
 			if self.myNfrHD_style.value != 'default':
 				symlink(self.myNfrHD_style.value, self.color_file)
+			if path.exists(self.infobar_file):
+				remove(self.infobar_file)
+			elif path.islink(self.infobar_file):
+				remove(self.infobar_file)
+			if self.myNfrHD_infobar.value != 'default':
+				symlink(self.myNfrHD_infobar.value, self.infobar_file)
+			if path.exists(self.sib_file):
+				remove(self.sib_file)
+			elif path.islink(self.sib_file):
+				remove(self.sib_file)
+			if self.myNfrHD_sib.value != 'default':
+				symlink(self.myNfrHD_sib.value, self.sib_file)
+			if path.exists(self.ch_se_file):
+				remove(self.ch_se_file)
+			elif path.islink(self.ch_se_file):
+				remove(self.ch_se_file)
+			if self.myNfrHD_ch_se.value != 'default':
+				symlink(self.myNfrHD_ch_se.value, self.ch_se_file)
+			if path.exists(self.ev_file):
+				remove(self.ev_file)
+			elif path.islink(self.ev_file):
+				remove(self.ev_file)
+			if self.myNfrHD_ev.value != 'default':
+				symlink(self.myNfrHD_ev.value, self.ev_file)                                                                		
 			if self.myNfrHD_active.value:
 				if not path.exists("mySkin") and path.exists("mySkin_off"):
-						symlink("mySkin_off","mySkin")
+					symlink("mySkin_off","mySkin")
 			else:
 				if path.exists("mySkin"):
 					if path.exists("mySkin_off"):
