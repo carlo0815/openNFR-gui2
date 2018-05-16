@@ -153,6 +153,17 @@ class FlashOnline(Screen):
 	
 	def removenfrxboot(self, yesno):
 		if yesno:
+			f = file('/etc/fstab','r')
+			lines = f.readlines()
+			f.close()
+			for line in lines:
+				if "/media/nfr4xboot" in line:
+					lines.remove(line)
+			os.system("rm /etc/fstab")
+			f = file('/etc/fstab','w')  
+			for l in lines:
+				f.write(l)
+			f.close()
 			os.system('rm /sbin/nfr4xinit')
 			os.system('rm /sbin/init')
 			os.system('ln -sfn /sbin/init.sysvinit /sbin/init')
