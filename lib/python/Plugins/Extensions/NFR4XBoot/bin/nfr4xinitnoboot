@@ -8,6 +8,7 @@ else
 		LIBDIR=/lib/modules/`ls /lib/modules | tail -n 1`
 	fi
 	if [ `mount | grep /proc | wc -l` -lt 1 ]; then
+	        /bin/mount -a
 		/bin/mount -t proc proc /proc > /dev/null 2>&1
 		/bin/mount -t sysfs sysfs /sys > /dev/null 2>&1
 		/sbin/depmod -Ae > /dev/null 2>&1
