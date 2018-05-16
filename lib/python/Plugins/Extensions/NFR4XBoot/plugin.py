@@ -166,7 +166,9 @@ class NFR4XBootInstallation(Screen):
     def install2(self, yesno):
 	config.NFRBootmanager = ConfigSubsection()
 	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
-        if yesno:
+        if getMachineBuild() in ("u5", "u51", "u52", "u53", "u5pvr"):
+            self.install3(False)
+        elif yesno:
             self.MACHINEBRAND = getMachineBrand()
             if  self.MACHINEBRAND == "Vu+":
                 os.system("opkg install packagegroup-base-nfs")	
@@ -177,6 +179,7 @@ class NFR4XBootInstallation(Screen):
             self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
 
     def install3(self, yesno):
+        print "yesno:", yesno
         if yesno:
             cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
             os.system(cmd2)
@@ -188,6 +191,15 @@ class NFR4XBootInstallation(Screen):
 		        mntdev = line.split(' ')[0]
                 f.close()
                 mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                os.system("mv /etc/fstab /etc/fstab1")
+                os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
+                os.system("rm /etc/fstab1")
+                os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
+                fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults	       1        1'
+                fileHandle = open ('/etc/fstab', 'a')
+                fileHandle.write(fstabuuidwrite)
+                fileHandle.close()                
             cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
             os.system(cmd)
             os.system('cp /sbin/nfr4x_multiboot /sbin/nfr4xinit')
@@ -226,6 +238,15 @@ class NFR4XBootInstallation(Screen):
 		        mntdev = line.split(' ')[0]
                 f.close()
                 mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                os.system("mv /etc/fstab /etc/fstab1")
+                os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
+                os.system("rm /etc/fstab1")
+                os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
+                fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults	       1        1'
+                fileHandle = open('/etc/fstab', 'a')
+                fileHandle.write(fstabuuidwrite)
+                fileHandle.close()
             cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
             os.system(cmd)
             os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
@@ -552,6 +573,19 @@ class NFR4XBootImageChoose(Screen):
             return
         else:
             if choice[1] == 'rmnfr4xboot':
+                f = file('/etc/fstab','r')
+                lines = f.readlines()
+                f.close()
+                print "lines:", lines
+                for line in lines:
+                    if "/media/nfr4xboot" in line:
+                        lines.remove(line)
+                os.system("/etc/fstab")
+                f = file('/etc/fstab','w')  
+                for l in lines:
+                    f.write(l)
+                f.close()
+                
                 cmd0 = "echo -e '\n\nNFR4XBoot preparing to remove....'"
                 cmd1 = 'rm /sbin/nfr4xinit'
                 cmd1a = "echo -e '\n\nNFR4XBoot removing boot manager....'"
