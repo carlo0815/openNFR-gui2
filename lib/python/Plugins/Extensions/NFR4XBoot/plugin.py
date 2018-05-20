@@ -309,11 +309,13 @@ class NFR4XBootImageChoose(Screen):
         
     def bootsetup(self):
         menulist = []
-        menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
-        menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
-	menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))	
+        if getMachineBuild() not in ("u5", "u51", "u52", "u53", "u5pvr"):
+            menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
+            menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
+	    menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))
+        else:
+            menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))	
         self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
-
     def menuBootsetupCallback(self, choice):
 	config.NFRBootmanager = ConfigSubsection()
 	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
