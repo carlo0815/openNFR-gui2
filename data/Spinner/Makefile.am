@@ -1,2 +1,2 @@
-SUBDIRS = default Kreis
+SUBDIRS = default Kreis WM
 installdir = $(pkgdatadir)/Spinner
