@@ -797,7 +797,7 @@ AC_CONFIG_FILES([Makefile
 	data/Spinner/Makefile
 	data/Spinner/default/Makefile
 	data/Spinner/Kreis/Makefile
-	data/Spinner/WM/Makefile
+	data/Spinner/wm2018/Makefile
 	data/vfd128/Makefile
 	data/vfd128/lcdskins/Makefile
 	data/vfd140/Makefile
