@@ -1,2 +1,2 @@
-SUBDIRS = default Kreis WM
+SUBDIRS = default Kreis wm2018
 installdir = $(pkgdatadir)/Spinner
