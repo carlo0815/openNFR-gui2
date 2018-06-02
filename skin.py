@@ -100,7 +100,7 @@ def get_modular_files(name, scope = SCOPE_SKIN):
 config.skin = ConfigSubsection()
 
 # on SD hardware, ViX Night HD will not be available
-DEFAULT_SKIN = "Utopia_HD/skin.xml"
+DEFAULT_SKIN = "NFR_Skin/skin.xml"
 if not fileExists(resolveFilename(SCOPE_SKIN, DEFAULT_SKIN)):
 	# in that case, fallback to Magic (which is an SD skin)
 	DEFAULT_SKIN = "skin.xml"
