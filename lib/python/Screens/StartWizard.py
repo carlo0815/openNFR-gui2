@@ -18,15 +18,12 @@ import os
 config.misc.firstrun = ConfigBoolean(default = True)
 config.misc.languageselected = ConfigBoolean(default = True)
 config.misc.videowizardenabled = ConfigBoolean(default = True)
+config.defaultskinSetup = ConfigSubsection()
+config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='default Utopia')
 
 class StartWizard(WizardLanguage, Rc):
 	def __init__(self, session, silent = True, showSteps = False, neededTag = None):
 		self.xmlfile = ["startwizard.xml"]
-		if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
-			print "skinselection allready selected"
-		else:
-                	self.session.open(DefaulSkinchange)
-                	os.system('reboot')
                 WizardLanguage.__init__(self, session, showSteps = False)
 		Rc.__init__(self)
 		self["wizard"] = Pixmap()
@@ -43,8 +40,11 @@ class StartWizard(WizardLanguage, Rc):
 		config.misc.firstrun.setValue(0)
 		config.misc.firstrun.save()
 		configfile.save()
-	
-wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 0)
+if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
+	print "skinselection allready selected"
+else:
+	wizardManager.registerWizard(DefaulSkinchange, config.defaultskinSetup.steps.value, priority = 0)
+wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 1)
 wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
 wizardManager.registerWizard(NfrWizardSetupScreen, config.misc.firstrun.value, priority = 30)
