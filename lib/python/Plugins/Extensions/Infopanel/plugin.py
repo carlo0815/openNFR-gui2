@@ -82,7 +82,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 		pass
 
 from Screens.CronTimer import *
-from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config
+from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config, DefaulSkinchange
 from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
@@ -601,6 +601,8 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(HddSetup)
 		elif menu == "SwapManager":
 			self.session.open(SwapOverviewScreen)
+		elif menu == "DefaulteSkin-Steps":
+			self.session.open(DefaulSkinchange)				
 		elif menu == "Volume-Steps":
 			self.session.open(VolumeSteps)			
 		elif menu == "Red-Key-Action":
@@ -734,6 +736,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('SkinSetup'), _("SkinSetup"), 'SkinSetup')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('DefaulteSkin-Steps'), _("DefaulteSkin-Steps"), 'DefaulteSkin-Steps')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Volume-Steps'), _("VolumeSteps"), 'Volume-Steps')))		
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action'), _("Red Panel"), 'Red-Key-Action')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('Red-Key-Action-Long'), _("Red Panel Long"), 'Red-Key-Action-Long')))
