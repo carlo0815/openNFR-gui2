@@ -6,7 +6,7 @@ from os import path, remove, listdir
 
 profile("LOAD:enigma_skin")
 from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop
-from Components.config import ConfigSubsection, ConfigText, config, ConfigYesNo, ConfigSelection, ConfigNothing
+from Components.config import ConfigSubsection, ConfigText, config, ConfigYesNo, ConfigSelection, ConfigNothing,  configfile
 from Components.Converter.Converter import Converter
 from Components.Sources.Source import Source, ObsoleteSource
 from Components.SystemInfo import SystemInfo
@@ -100,10 +100,17 @@ def get_modular_files(name, scope = SCOPE_SKIN):
 config.skin = ConfigSubsection()
 
 # on SD hardware, ViX Night HD will not be available
-DEFAULT_SKIN = "NFR_Skin/skin.xml"
+
+config.defaultskinSetup = ConfigSubsection()
+config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='default Utopia')
+if config.defaultskinSetup.steps.value == "default SmokeR":
+       	DEFAULT_SKIN = "NFR_Skin/skin.xml"
+elif config.defaultskinSetup.steps.value == "default Utopia":
+       	DEFAULT_SKIN = "skin_default/skin.xml"        
+
 if not fileExists(resolveFilename(SCOPE_SKIN, DEFAULT_SKIN)):
 	# in that case, fallback to Magic (which is an SD skin)
-	DEFAULT_SKIN = "skin.xml"
+	DEFAULT_SKIN = "NFR_Skin/skin.xml"
 
 config.skin.primary_skin = ConfigText(default=DEFAULT_SKIN)
 
@@ -908,7 +915,18 @@ class SkinContextStack(SkinContext):
 		return SizeTuple(pos), SizeTuple(size)
 
 def readSkin(screen, skin, names, desktop):
-	if not isinstance(names, list):
+	#try:
+        	#if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
+			#print "skinselection allready selected"
+		#else:
+		        #from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
+              		#DefaulSkinchange.__init__(self, session)
+              		#os.system('reboot')	
+        #except:
+                #from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
+              	#DefaulSkinchange.__init__(self, session)
+              	#os.system('reboot')        
+        if not isinstance(names, list):
 		names = [names]
 
 	# try all skins, first existing one have priority
