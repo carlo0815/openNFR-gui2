@@ -4,7 +4,7 @@ from Screens.WizardUserInterfacePositioner import UserInterfacePositionerWizard
 from Screens.VideoWizard import VideoWizard
 from Screens.Rc import Rc
 from Screens.Screen import Screen
-
+from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
 from boxbranding import getBoxType
 
 from Components.Pixmap import Pixmap
@@ -13,6 +13,7 @@ from Components.config import *
 from LanguageSelection import LanguageWizard
 from Screens.Nfrstartwizard import NfrWizardSetupScreen
 from boxbranding import getBoxType,  getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
+import os
 
 config.misc.firstrun = ConfigBoolean(default = True)
 config.misc.languageselected = ConfigBoolean(default = True)
@@ -21,7 +22,12 @@ config.misc.videowizardenabled = ConfigBoolean(default = True)
 class StartWizard(WizardLanguage, Rc):
 	def __init__(self, session, silent = True, showSteps = False, neededTag = None):
 		self.xmlfile = ["startwizard.xml"]
-		WizardLanguage.__init__(self, session, showSteps = False)
+		if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
+			print "skinselection allready selected"
+		else:
+                	self.session.open(DefaulSkinchange)
+                	os.system('reboot')
+                WizardLanguage.__init__(self, session, showSteps = False)
 		Rc.__init__(self)
 		self["wizard"] = Pixmap()
 		Screen.setTitle(self, _("Welcome..."))
