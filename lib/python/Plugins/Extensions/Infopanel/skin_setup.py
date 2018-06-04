@@ -9,7 +9,7 @@
 
 from enigma import eTimer, ePicLoad, getDesktop, loadPic
 from Components.ActionMap import ActionMap
-from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigYesNo, NoSave, ConfigNothing, ConfigNumber, configfile
+from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigYesNo, NoSave, ConfigNothing, ConfigNumber, configfile, ConfigBoolean
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.MenuList import MenuList
@@ -864,13 +864,13 @@ class DefaulSkinchange(ConfigListScreen, Screen):
 		Screen.setTitle(self, _("Default Skin Setup") + "...")
 		self.setup_title = _("Default Skin Setup") + "..."
 		config.defaultskinSetup = ConfigSubsection()
-		config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='default utopia')
+		config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='nothing')
 
                 self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
 		self["status"] = StaticText()
-		self['footnote'] = Label("")
-		self["description"] = Label("")
+		self['footnote'] = Label("testtesttest")
+                self["description"] = StaticText("now Using Bootlogo: ")
 		self["labelExitsave"] = Label("[Exit] = " +_("Cancel") +"              [Ok] =" +_("Save"))
 
 		self.onChangedEntry = [ ]
@@ -925,11 +925,15 @@ class DefaulSkinchange(ConfigListScreen, Screen):
 		return SetupSummary
 
 	def saveAll(self):
+
 		for x in self["config"].list:
 			print "x1:", x[1] 
                         x[1].save()
-			print 
+                configfile.save()
+                config.misc.skindefaultwizardenabled.value = False
+		config.misc.skindefaultwizardenabled.save()
 		configfile.save()
+		os.system("reboot")
 
 	def keySave(self):
 		self.saveAll()
