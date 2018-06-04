@@ -40,7 +40,7 @@ class StartWizard(WizardLanguage, Rc):
 		config.misc.firstrun.setValue(0)
 		config.misc.firstrun.save()
 		configfile.save()
-wizardManager.registerWizard(DefaulSkinchange, True, priority = 0)
+wizardManager.registerWizard(DefaulSkinchange, config.misc.videowizardenabled.value, priority = 0)
 wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 1)
 wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
