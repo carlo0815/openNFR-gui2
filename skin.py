@@ -102,7 +102,7 @@ config.skin = ConfigSubsection()
 # on SD hardware, ViX Night HD will not be available
 
 config.defaultskinSetup = ConfigSubsection()
-config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='default Utopia')
+config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))])
 if config.defaultskinSetup.steps.value == "default SmokeR":
        	DEFAULT_SKIN = "NFR_Skin/skin.xml"
 elif config.defaultskinSetup.steps.value == "default Utopia":
