@@ -18,8 +18,7 @@ import os
 config.misc.firstrun = ConfigBoolean(default = True)
 config.misc.languageselected = ConfigBoolean(default = True)
 config.misc.videowizardenabled = ConfigBoolean(default = True)
-config.defaultskinSetup = ConfigSubsection()
-config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='default Utopia')
+config.misc.skindefaultwizardenabled = ConfigBoolean(default = True)
 
 class StartWizard(WizardLanguage, Rc):
 	def __init__(self, session, silent = True, showSteps = False, neededTag = None):
@@ -40,7 +39,7 @@ class StartWizard(WizardLanguage, Rc):
 		config.misc.firstrun.setValue(0)
 		config.misc.firstrun.save()
 		configfile.save()
-wizardManager.registerWizard(DefaulSkinchange, config.misc.videowizardenabled.value, priority = 0)
+wizardManager.registerWizard(DefaulSkinchange, config.misc.skindefaultwizardenabled.value, priority = 0)
 wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 1)
 wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
