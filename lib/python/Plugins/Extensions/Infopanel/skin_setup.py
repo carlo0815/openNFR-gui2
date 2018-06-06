@@ -861,7 +861,7 @@ class DefaulSkinchange(ConfigListScreen, Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skinName = "Setup"
-		Screen.setTitle(self, _("Default Skin Setup") + "...")
+		Screen.setTitle(self, _("Default Skin Setup") + "...After selection and ok click box reboot!")
 		self.setup_title = _("Default Skin Setup") + "..."
 		config.defaultskinSetup = ConfigSubsection()
 		config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='nothing')
@@ -933,6 +933,7 @@ class DefaulSkinchange(ConfigListScreen, Screen):
                 config.misc.skindefaultwizardenabled.value = False
 		config.misc.skindefaultwizardenabled.save()
 		configfile.save()
+		self.session.open(MessageBox,_("Box will reboot to activated selected Defaultskin"), MessageBox.TYPE_INFO, timeout=5)
 		os.system("reboot")
 
 	def keySave(self):
