@@ -11079,7 +11079,7 @@ msgstr ""
 msgid "Setup network. Here you can setup DHCP, IP, DNS"
 msgstr "Netzwerkeinstellungen. Hier koennen Sie DHCP, IP, DNS einrichten"
 
-msgid "Setup Network Services (Samba, Ftp, NFS,...)"
+msgid "Setup Network Services (Samba, Ftp, NFS, ...)"
 msgstr "Einstellungen fuer Netzwerkdienste (Samba, Ftp, NFS,...)"
 
 msgid "Restart network and remount connections"
@@ -13646,7 +13646,7 @@ msgstr "immer"
 msgid "To save push green button"
 msgstr "Zum speichern grüne Taste drücken"
 
-msgid "Teletext base visibbility"
+msgid "Teletext base visibility"
 msgstr "Sichtbarkeit Videotext"
 
 msgid "Web browser base visibility"
@@ -13818,3 +13818,6 @@ msgstr "Legt fest, welche RTMP-Protokollimplementierung für die Wiedergabe im R
 
 msgid "Download_openNFRskin"
 msgstr "Download openNFR-Skins"
+
+msgid "Second cable of motorized LNB"
+msgstr "Zweites Kabel vom Rotor"
