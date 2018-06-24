@@ -9,7 +9,7 @@ from enigma import eEPGCache, getBestPlayableServiceReference, eServiceReference
 
 from Components.config import config
 from Components import Harddisk
-from Components.UsageConfig import defaultMoviePath
+from Components.UsageConfig import defaultMoviePath, calcFrontendPriorityIntval
 from Components.TimerSanityCheck import TimerSanityCheck
 from Screens.MessageBox import MessageBox
 import Screens.Standby
@@ -18,7 +18,7 @@ from Tools.XMLTools import stringToXML
 import timer
 import NavigationInstance
 from ServiceReference import ServiceReference
-
+from enigma import pNavigation, eDVBFrontend
 
 # ok, for descriptions etc we have:
 # service reference	 (to get the service name)
@@ -190,6 +190,9 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			self.descramble = descramble
 			self.record_ecm = record_ecm
 
+		config.usage.frontend_priority_intval.setValue(calcFrontendPriorityIntval(config.usage.frontend_priority, config.usage.frontend_priority_multiselect, config.usage.frontend_priority_strictly))
+		config.usage.recording_frontend_priority_intval.setValue(calcFrontendPriorityIntval(config.usage.recording_frontend_priority, config.usage.recording_frontend_priority_multiselect, config.usage.recording_frontend_priority_strictly))
+		self.needChangePriorityFrontend = config.usage.recording_frontend_priority_intval.value != "-2" and config.usage.recording_frontend_priority_intval.value != config.usage.frontend_priority_intval.value			
 		self.isAutoTimer = isAutoTimer
 		self.wasInStandby = False
 
@@ -515,7 +518,19 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			return False
 		self.end = new_end
 		return True
-
+		
+	def setRecordingPreferredTuner(self, setdefault=False):
+		if self.needChangePriorityFrontend:
+			elem = None
+			if not self.change_frontend and not setdefault:
+				elem = config.usage.recording_frontend_priority_intval.value
+				self.change_frontend = True
+			elif self.change_frontend and setdefault:
+				elem = config.usage.frontend_priority_intval.value
+				self.change_frontend = False
+			if elem is not None:
+				setPreferredTuner(int(elem))
+				
 	def sendStandbyNotification(self, answer):
 		if answer:
 			Notifications.AddNotification(Screens.Standby.Standby)
