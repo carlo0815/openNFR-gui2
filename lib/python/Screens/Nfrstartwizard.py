@@ -11,6 +11,7 @@ from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, Radiologo
 from Plugins.Extensions.Infopanel.outofflash import *
 from Components.ConfigList import ConfigListScreen
 from Components.config import *
+from Components.Console import Console
 from Components.Sources.StaticText import StaticText
 
 
@@ -125,6 +126,8 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 		if config.wizardsetup.OpenNFRaddonsWizardSetup.value == True:
                 	self.session.open(OpenNFRWizardSetup)                  		
                 if config.wizardsetup.UserInterfacePositionerWizard.value == True:
+                        self.Console = Console()
+                        self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')			
 			self.session.open(UserInterfacePositionerWizard)                 		
 		if config.wizardsetup.OpenWebifConfig.value == True:
                 	self.session.open(OpenWebifConfig)                		
