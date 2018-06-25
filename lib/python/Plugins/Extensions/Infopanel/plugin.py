@@ -716,7 +716,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
                 self.tlist.append(MenuEntryItem((InfoEntryComponent('ImageUpdateCheck'), _("ImageUpdateCheck"), 'ImageUpdateCheck')))
-                self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
+                #self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
