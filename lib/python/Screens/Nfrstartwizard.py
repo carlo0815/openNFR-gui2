@@ -13,6 +13,7 @@ from Components.ConfigList import ConfigListScreen
 from Components.config import *
 from Components.Console import Console
 from Components.Sources.StaticText import StaticText
+from Screens.Setup import Setup
 
 
 config.wizardsetup								= ConfigSubsection()
@@ -27,6 +28,7 @@ config.wizardsetup.bootvideomoveout						= ConfigYesNo(default = False)
 config.wizardsetup.UserInterfacePositionerWizard				= ConfigYesNo(default = False) 
 config.wizardsetup.OpenWebifConfig						= ConfigYesNo(default = False)
 config.wizardsetup.OpenNFRaddonsWizardSetup					= ConfigYesNo(default = False)
+config.wizardsetup.poweroffsetup						= ConfigYesNo(default = False)
 
 
 class NfrWizardSetupScreen(Screen, ConfigListScreen):
@@ -87,6 +89,7 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 		self.list.append(getConfigListEntry(_("OpenWebif Setup"), config.wizardsetup.OpenWebifConfig))
 		self.list.append(getConfigListEntry(_("OpenNFR-Addons Setup"), config.wizardsetup.OpenNFRaddonsWizardSetup))
 		self.list.append(getConfigListEntry(_("Plugins Move out of Flash"), config.wizardsetup.pluginmoveoutwizard))
+		self.list.append(getConfigListEntry(_("Power Off Menu Setup"), config.wizardsetup.poweroffsetup))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 
@@ -154,6 +157,11 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 			SpinnerSelector(self.session)
 	        if config.wizardsetup.pluginwizard.value == True:
 	                from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
-			self.session.open(PluginInstall)                                  
+			self.session.open(PluginInstall)
+                if  config.wizardsetup.poweroffsetup.value == True:
+                        self.openSetup("remotesetup")        			
 		self.close()
+		
+	def openSetup(self, dialog):
+                self.session.openWithCallback(self.close, Setup, dialog)		
                 
