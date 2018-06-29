@@ -13821,3 +13821,6 @@ msgstr "Download openNFR-Skins"
 
 msgid "Second cable of motorized LNB"
 msgstr "Zweites Kabel vom Rotor"
+
+msgid "Preferred tuner for recordings"
+msgstr "Bevorzugter Tuner für Aufnahmen"
