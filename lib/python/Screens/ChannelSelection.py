@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#from Screens.InfoBar import MoviePlayer
 from boxbranding import getMachineBuild, getMachineBrand, getMachineName
 import os
 from Tools.Profile import profile
@@ -10,6 +11,7 @@ from enigma import eConsoleAppContainer, eDVBDB, eEnv
 import Screens.InfoBar
 import Screens.MovieSelection
 import Components.ParentalControl
+from Screens.InfoBar import *
 from Components.About import about
 from Components.Button import Button
 from Components.ServiceList import ServiceList, refreshServiceList
@@ -1606,7 +1608,7 @@ class ChannelSelectionBase(Screen):
                         print "nothing select"    
                         	
 		if pluginsuse == "Playlist":
-			self.session.open(Screens.MovieSelection.MovieSelection)
+		        self.showMovies()
 		elif pluginsuse == "BMC":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
 				from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
@@ -1697,7 +1699,27 @@ class ChannelSelectionBase(Screen):
 
 		else:
 			print "nothing select"
-		
+
+	def showMovies(self, defaultRef=None):
+		self.lastservice1 = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		if self.lastservice1 and ':0:/' in self.lastservice1.toString():
+			self.lastservice1 = enigma.eServiceReference(config.movielist.curentlyplayingservice.value)
+		self.session.openWithCallback(self.movieSelected, Screens.MovieSelection.MovieSelection, defaultRef)
+
+	def movieSelected(self, service):
+		ref = self.lastservice1
+		if service is None:
+			if ref and not self.session.nav.getCurrentlyPlayingServiceOrGroup():
+				self.session.nav.playService(ref)
+		else:
+			from Components.ParentalControl import parentalControl
+			if parentalControl.isServicePlayable(service, self.openMoviePlayer):
+				self.openMoviePlayer(service)
+				
+	def openMoviePlayer(self, ref):
+		from Screens.InfoBar import MoviePlayer
+                self.session.open(MoviePlayer, ref, slist=self.servicelist, lastservice=self.session.nav.getCurrentlyPlayingServiceOrGroup())
+				
 			
 	def applyKeyMap(self):
 		if config.usage.show_channel_jump_in_servicelist.value == "alpha":
@@ -2709,7 +2731,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				# This unfortunately won't work with subservices
 				self.setCurrentSelection(self.session.pip.getCurrentService())
 			else:
-				lastservice = eServiceReference(self.lastservice.value)
+                                lastservice = eServiceReference(self.lastservice.value)
 				if lastservice.valid() and self.getCurrentSelection() != lastservice:
 					self.setCurrentSelection(lastservice)
 		self.asciiOff()
