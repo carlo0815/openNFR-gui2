@@ -163,5 +163,5 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 		self.close()
 		
 	def openSetup(self, dialog):
-                self.session.openWithCallback(self.close, Setup, dialog)		
-                
+                self.session.openWithCallback(self.close, Setup, dialog)
+
