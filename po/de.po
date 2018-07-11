@@ -13824,3 +13824,6 @@ msgstr "Zweites Kabel vom Rotor"
 
 msgid "Preferred tuner for recordings"
 msgstr "Bevorzugter Tuner für Aufnahmen"
+
+msgid "You have installed Softcamfeed, with this Ci+ Installation will be broken! You will deinstall Softcamfeed manually?"
+msgstr "Sie haben den Softcamfeed installiert, dadurch wird die CI+ Installation zerstört! Wollen Sie den Softcamfeed deinstallieren?"
