@@ -69,6 +69,7 @@ class PluginBrowser(Screen, ProtectedScreen):
 		ProtectedScreen.__init__(self)		
 		self.firsttime = True
 
+
 		self["key_red"] = Button(_("Remove plugins"))
 		self["key_green"] = Button(_("Download plugins"))
 		self["key_yellow"] = Button(_("PluginInstallWizard"))
@@ -123,7 +124,21 @@ class PluginBrowser(Screen, ProtectedScreen):
 		self.session.open(Setup, "pluginbrowsersetup")
 		
 	def wizardinstall(self):
-		self.session.open(PluginInstall)
+	        if os.path.isfile("/etc/opkg/secret-feed.conf"):
+	                self.session.openWithCallback(self.wizardinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
+	        else:
+                        self.session.open(PluginInstall)
+		
+        def wizardinstallmsg(self, ret):
+                if ret == False:
+                        self.session.open(PluginInstall)
+                else:
+                        self.session.openWithCallback(self.callbackremove1, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
+                        #self.delete()	
+        
+        def callbackremove1(self):
+                os.system("opkg update")
+                self.session.open(PluginInstall)
                 
 	def wizarddeinstall(self):
 		self.session.open(PluginDeinstall)               		
@@ -206,6 +221,23 @@ class PluginBrowser(Screen, ProtectedScreen):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.REMOVE)
 
 	def download(self):
+	        if os.path.isfile("/etc/opkg/secret-feed.conf"):
+	                self.session.openWithCallback(self.downloadinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
+	        else:
+                        self.download1()
+		
+        def downloadinstallmsg(self, ret):
+                if ret == False:
+                        self.download1()
+                else:
+                        self.session.openWithCallback(self.callbackremove, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
+                        #self.delete()	
+        
+        def callbackremove(self):
+                os.system("opkg update")
+                self.download1()
+
+        def download1(self):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.DOWNLOAD, self.firsttime)
 		self.firsttime = False
 
@@ -571,4 +603,4 @@ class PluginDownloadBrowser(Screen):
 				list.append(PluginCategoryComponent(x, expandableIcon, self.listWidth))
 		self.list = list
 		self["list"].l.setList(list)
-		self["text"] = Label(_("Downloading plugin information complete."))
+		self["text"] = Label(_("Downloading plugin information complete.")) 
