@@ -793,11 +793,10 @@ AC_CONFIG_FILES([Makefile
 	data/display720/lcdskins/Makefile
 	data/display800/Makefile
 	data/display800/lcdskins/Makefile
-	data/spinner/Makefile
 	data/Spinner/Makefile
 	data/Spinner/default/Makefile
 	data/Spinner/Kreis/Makefile
-	data/Spinner/wm2018/Makefile
+	data/Spinner/NFR/Makefile
 	data/vfd128/Makefile
 	data/vfd128/lcdskins/Makefile
 	data/vfd140/Makefile

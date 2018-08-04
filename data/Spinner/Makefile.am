@@ -1,2 +1,2 @@
-SUBDIRS = default Kreis wm2018
+SUBDIRS = default Kreis NFR
 installdir = $(pkgdatadir)/Spinner
