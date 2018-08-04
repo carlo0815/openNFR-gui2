@@ -13827,3 +13827,27 @@ msgstr "Bevorzugter Tuner für Aufnahmen"
 
 msgid "You have installed Softcamfeed, with this Ci+ Installation will be broken! You will deinstall Softcamfeed manually?"
 msgstr "Sie haben den Softcamfeed installiert, dadurch wird die CI+ Installation zerstört! Wollen Sie den Softcamfeed deinstallieren?"
+
+msgid "Preferred tuners for recordings, multiple selection allowed"
+msgstr "Bevorzugte Tuner für Aufnahmen, mehrfachauswahl erlaubt"
+
+msgid "In expert mode, configure which tuners will be preferred for recordings, when more than one tuner is available."
+msgstr "Konfigurieren Sie im Expertenmodus, welche Tuner für Aufnahmen bevorzugt werden, wenn mehr als ein Tuner verfügbar ist."
+
+msgid "Configure which tuner for recordings will be preferred, when more than one tuner is available."
+msgstr "Konfigurieren Sie, welcher Tuner für Aufnahmen bevorzugt wird, wenn mehr als ein Tuner verfügbar ist."
+
+msgid "Experimental mode"
+msgstr "Experimenteller Modus"
+
+msgid "Experimental:strict limitation to preferred tuners for recordings"
+msgstr "Experimentell: Strenge Beschränkung auf bevorzugte Tuner für Aufnahmen"
+
+msgid "Configure whether another tuner from the preferred list is allocated for recordings instead of sharing a tuner than is already active receiving the same live TV channel."
+msgstr "Konfigurieren Sie, ob ein anderer Tuner aus der bevorzugten Liste für Aufnahmen zugewiesen wird, anstatt einen Tuner zu teilen falls er bereits aktiv ist und denselben Live-TV Kanal empfängt."
+
+msgid "Default Skin Setup...After selection and ok click box reboot!"
+msgstr "Standard Skin Auswahl... Nach der Auswahl und OK klicken wird die Box neu Starten!"
+
+msgid "Default Skin Setup"
+msgstr "Standard Skin Auswahl"
