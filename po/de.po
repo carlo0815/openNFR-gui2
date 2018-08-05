@@ -13847,7 +13847,7 @@ msgid "Configure whether another tuner from the preferred list is allocated for 
 msgstr "Konfigurieren Sie, ob ein anderer Tuner aus der bevorzugten Liste für Aufnahmen zugewiesen wird, anstatt einen Tuner zu teilen falls er bereits aktiv ist und denselben Live-TV Kanal empfängt."
 
 msgid "After selection and ok click box reboot!"
-msgstr "Nach der Auswahl und OK klicken wird die Box neu Starten!"
+msgstr "Nach Auswahl und OK klicken wird die Box neu Starten!"
 
 msgid "Default Skin Setup"
 msgstr "Standard Skin Auswahl"
