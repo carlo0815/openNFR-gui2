@@ -13846,8 +13846,8 @@ msgstr "Experimentell: Strenge Beschränkung auf bevorzugte Tuner für Aufnahmen
 msgid "Configure whether another tuner from the preferred list is allocated for recordings instead of sharing a tuner than is already active receiving the same live TV channel."
 msgstr "Konfigurieren Sie, ob ein anderer Tuner aus der bevorzugten Liste für Aufnahmen zugewiesen wird, anstatt einen Tuner zu teilen falls er bereits aktiv ist und denselben Live-TV Kanal empfängt."
 
-msgid "Default Skin Setup...After selection and ok click box reboot!"
-msgstr "Standard Skin Auswahl... Nach der Auswahl und OK klicken wird die Box neu Starten!"
+msgid "After selection and ok click box reboot!"
+msgstr "Nach Auswahl und OK klicken wird die Box neu Starten!"
 
 msgid "Default Skin Setup"
 msgstr "Standard Skin Auswahl"
