@@ -13840,7 +13840,7 @@ msgstr "Konfigurieren Sie, welcher Tuner für Aufnahmen bevorzugt wird, wenn meh
 msgid "Experimental mode"
 msgstr "Experimenteller Modus"
 
-msgid "Experimental:strict limitation to preferred tuners for recordings"
+msgid "Experimental: strict limitation to preferred tuners for recordings"
 msgstr "Experimentell: Strenge Beschränkung auf bevorzugte Tuner für Aufnahmen"
 
 msgid "Configure whether another tuner from the preferred list is allocated for recordings instead of sharing a tuner than is already active receiving the same live TV channel."
