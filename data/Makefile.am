@@ -1,4 +1,4 @@
-SUBDIRS = fonts extensions keymaps bootvideos radiologos bootlogos Spinner
+SUBDIRS = spinner fonts extensions keymaps bootvideos radiologos bootlogos Spinner
 
 dist_pkgdata_DATA = \
 	encoding.conf \
