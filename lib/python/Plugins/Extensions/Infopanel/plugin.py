@@ -1803,7 +1803,7 @@ class NFRPasswdScreen(Screen):
     def SetPasswd(self):
         self.container = eConsoleAppContainer()
         self.container.appClosed.append(self.runFinished)
-        self.container.dataAvail.append(self.dataAvail)
+        self.container.dataAvail.append(self.processOutputLine)
         retval = self.container.execute('passwd %s' % self.user)
         if retval == 0:
             self.session.open(MessageBox, _('Sucessfully changed password for root user to:\n%s ' % self.password), MessageBox.TYPE_INFO)
