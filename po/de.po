@@ -13851,3 +13851,13 @@ msgstr "Standard Skin Auswahl"
 
 msgid "Configure which tuner will be preferred for recordings, when more than one tuner is available. 'Disabled' would select a tuner based on preferred tuner in customise screen. 'Auto' would choose based on E2's default rules, ignoring preferred tuner in customise screen."
 msgstr "Konfigurieren Sie, welcher Tuner für Aufnahmen bevorzugt wird, wenn mehr als ein Tuner verfügbar ist. 'Deaktiviert' würde einen Tuner auf der Basis des bevorzugten Tuners auswählen. 'Auto' würde basierend auf den Standardregeln von E2 auswählen und den bevorzugten Tuner im Bildschirm ignorieren."
+
+msgid ""
+"You have installed Softcamfeed, with this Ci+ Installation will be broken!\n"
+"\n" 
+"You will deinstall Softcamfeed manually?"
+
+msgstr ""
+"Du hast Softcamfeed installiert, damit funktioniert Ci + nicht mehr!\n"
+"\n"
+"Du deinstallierst Softcamfeed manuell?"
