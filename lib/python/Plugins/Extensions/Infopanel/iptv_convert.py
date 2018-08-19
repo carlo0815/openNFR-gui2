@@ -73,6 +73,9 @@ class IPTV_glob(Screen):
                 line = line.replace('#EXTINF:-1 tvg-shift=2 ,','#DESCRIPTION: ')
                 line = line.replace('#EXTINF:-1 group-title=','#DESCRIPTION: ')            
                 line = line.replace('#EXTINF:','#DESCRIPTION: ')
+                if 'group-title=' in line:
+                    line1 = line.split('group-title=')[1]
+                    line = "#DESCRIPTION:  " + line1		
                 line = line.replace('tvg-name=','')
                 line = line.replace('tvg-shift=2 ,','')
                 line = line.replace('tvg-shift=2 tvg-logo=-TV ,','')
