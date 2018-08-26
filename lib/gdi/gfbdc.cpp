@@ -15,7 +15,7 @@
 #include <lib/base/cfile.h>
 #endif
 
-#ifdef CONFIG_ION || defined(CONFIG_HISILICON_FB)
+#ifdef CONFIG_ION
 #include <lib/gdi/grc.h>
 
 extern void bcm_accel_blit(
@@ -175,7 +175,8 @@ void gFBDC::exec(const gOpcode *o)
 #else
 		fb->blit();
 #endif
-#ifdef CONFIG_ION || defined(CONFIG_HISILICON_FB)
+
+#ifdef CONFIG_ION
 		if (surface_back.data_phys)
 		{
 			gUnmanagedSurface s(surface);
