@@ -175,6 +175,7 @@ void gFBDC::exec(const gOpcode *o)
 #else
 		fb->blit();
 #endif
+
 #ifdef CONFIG_ION
 		if (surface_back.data_phys)
 		{
