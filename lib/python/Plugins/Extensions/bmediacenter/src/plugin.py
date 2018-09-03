@@ -30,12 +30,6 @@ if getDesktop(0).size().width() == 1920:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skinHD.xml")
 else:
 	loadSkin("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/skin.xml")
-#try:
-#	from enigma import evfd
-#	config.plugins.mc_global.vfd.value = 'on'
-#	config.plugins.mc_global.save()
-#except Exception as e:
-#	print 'Media Center: Import evfd failed'
 try:
 	from Plugins.Extensions.DVDPlayer.plugin import *
 	dvdplayer = True
@@ -54,7 +48,9 @@ class DMC_MainMenu(Screen):
 		self.Console = Console()
 		self.oldbmcService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self.session.nav.stopService()
-		# Disable OSD Transparency
+		global sessions
+		sessions = session
+                # Disable OSD Transparency
 		try:
 			self.can_osd_alpha = open("/proc/stb/video/alpha", "r") and True or False
 		except:
@@ -91,8 +87,6 @@ class DMC_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-		#if config.plugins.mc_global.vfd.value == "on":
-		#	evfd.getInstance().vfd_write_string(_("My Music"))
 		if config.plugins.mc_globalsettings.upnp_enable.value:
 			if fileExists("/media/upnp") is False:
 				os.mkdir("/media/upnp")
@@ -180,8 +174,6 @@ class DMC_MainMenu(Screen):
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 13:
 			self["menu"].setIndex(1)
-		#if self["menu"].getIndex() == 14:
-		#	self["menu"].setIndex(1)
 		self.update()
 	def prev(self):
 		self["menu"].selectPrevious()
@@ -237,10 +229,9 @@ class DMC_MainMenu(Screen):
 			self["left"].instance.setPixmapFromFile(mcpath +"MenuIconWeblinkssw.png")
 			self["middle"].instance.setPixmapFromFile(mcpath +"MenuIconSettings.png")
 			self["right"].instance.setPixmapFromFile(mcpath +"MenuIconMusicsw.png")				
-			
-		#if config.plugins.mc_global.vfd.value == "on":
-		#	evfd.getInstance().vfd_write_string(self["menu"].getCurrent()[0])
+
 		self["text"].setText(self["menu"].getCurrent()[0])
+		
 	def okbuttonClick(self):
 		from Screens.MessageBox import MessageBox
 		selection = self["menu"].getCurrent()
@@ -267,8 +258,7 @@ class DMC_MainMenu(Screen):
                                 else:
 					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckSHOUT()				
-				#from MC_AudioPlayer import MC_WebRadio
-				#self.session.open(MC_WebRadio)
+
 			elif selection[1] == "MC_VLCPlayer":
 				if pathExists("/usr/lib/enigma2/python/Plugins/Extensions/VlcPlayer/") == True:
 					from MC_VLCPlayer import MC_VLCServerlist
@@ -286,7 +276,6 @@ class DMC_MainMenu(Screen):
                                        self.session.open(OperaBrowser, url)
                                        global browserinstance
 		                else:
-#                                       self.session.openWithCallback(self.browserCallback, BrowserRemoteControl, url)
 			                self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckWebbrowser()
                         elif selection[1] == "SHOUTcast":
@@ -311,13 +300,18 @@ class DMC_MainMenu(Screen):
 					self.InstallCheckMUZU()
 			elif selection[1] == "TSMedia":
 			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/") == True:
-                                        from Plugins.Extensions.TSmedia.plugin import TSmediabootlogo
-                                        self.session.open(TSmediabootlogo)
+                                        self.TSPlugins()
                                 else:
 					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
 					self.InstallCheckTSMedia()				
 			else:
 				self.session.open(MessageBox,("Error: Could not find plugin %s\ncoming soon ... :)") % (selection[1]),  MessageBox.TYPE_INFO)
+
+	def TSPlugins(self, **kwargs):
+	        from Plugins.Extensions.TSmedia.plugin import main as tsmain
+                from Plugins.Plugin import PluginDescriptor
+                tsmain(sessions, **kwargs)
+
 	def error(self, error):
 		from Screens.MessageBox import MessageBox
 		self.session.open(MessageBox,("UNEXPECTED ERROR:\n%s") % (error),  MessageBox.TYPE_INFO)
@@ -334,8 +328,6 @@ class DMC_MainMenu(Screen):
 				open("/proc/stb/video/alpha", "w").write(str(trans))
 			except:
 				print "Set OSD Transparacy failed"
-		#if config.plugins.mc_global.vfd.value == "on":
-		#	evfd.getInstance().vfd_write_string(_("Media Center"))
 		os.system('umount /media/upnp')
 		self.session.nav.playService(self.oldbmcService)
 		self.close()
