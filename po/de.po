@@ -13861,3 +13861,9 @@ msgstr ""
 "Du hast Softcamfeed installiert, damit funktioniert Ci + nicht mehr!\n"
 "\n"
 "Du deinstallierst Softcamfeed manuell?"
+
+msgid "Preferred tuners, multiple selection allowed"
+msgstr "Bevorzugte Tuner, Mehrfachauswahl möglich"
+
+msgid "Experimental: strict limitation to preferred tuners"
+msgstr "Experimentell: strikte Beschränkung auf bevorzugte Tuner"
