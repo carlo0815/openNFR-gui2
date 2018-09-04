@@ -13867,3 +13867,9 @@ msgstr "Bevorzugte Tuner, Mehrfachauswahl möglich"
 
 msgid "Experimental: strict limitation to preferred tuners"
 msgstr "Experimentell: strikte Beschränkung auf bevorzugte Tuner"
+
+msgid "In expert mode, configure which tuners will be preferred for recordings, when more than one tuner is available."
+msgstr "Konfiguriere im Expertenmodus, welche Tuner für Aufnahmen bevorzugt werden sollen, wenn mehr als ein Tuner verfügbar ist."
+
+msgid "Configure whether another tuner from the preferred list is allocated instead of sharing a tuner that is already active recording the same channel."
+msgstr "Konfiguriere, ob ein weiterer bevorzugter Tuner belegt wird, selbst wenn ein anderer Tuner mit verwendet werden könnte, der den gleichen Kanal aufnimmt."
