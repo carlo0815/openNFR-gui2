@@ -13873,3 +13873,13 @@ msgstr "Konfiguriere im Expertenmodus, welche von mehreren Tunern bevorzugt benu
 
 msgid "Configure whether another tuner from the preferred list is allocated instead of sharing a tuner that is already active recording the same channel."
 msgstr "Konfiguriere, ob ein weiterer bevorzugter Tuner belegt wird, selbst wenn ein anderer Tuner mit verwendet werden könnte, der den gleichen Kanal aufnimmt."
+
+msgid ""
+"\n"
+"<This tuner is configured automatically>"
+msgstr ""
+"\n"
+"<Dieser Tuner wird automatisch verwaltet>"
+
+msgid "Clock"
+msgstr "Uhr"
