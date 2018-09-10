@@ -13883,3 +13883,6 @@ msgstr ""
 
 msgid "Clock"
 msgstr "Uhr"
+
+msgid "Press left/right to select Image"
+msgstr "Drücke links / rechts, um ein Image auszuwählen"
