@@ -672,7 +672,7 @@ msgid "Activate PiP"
 msgstr "Aktiviere PiP"
 
 msgid "Activate Picture in Picture"
-msgstr "Aktiviere Bild in Bild"
+msgstr "Bild in Bild aktivieren"
 
 msgid "Turn on HDMI-IN Full screen mode"
 msgstr "HDMI IN als Vollbild wiedergeben"
@@ -13886,3 +13886,6 @@ msgstr "Uhr"
 
 msgid "Press left/right to select Image"
 msgstr "Drücke links / rechts, um ein Image auszuwählen"
+
+msgid "Enable Quad PIP"
+msgstr "Quad-PIP aktivieren"
