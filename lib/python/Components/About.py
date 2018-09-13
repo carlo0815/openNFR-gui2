@@ -150,10 +150,12 @@ def getCPUSpeedString():
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
-	elif getMachineBuild() in ('u51','u52','u53','u5','u5pvr','h9','cc1','sf8008'):
+	elif getMachineBuild() in ('u51','u52','u5','u5pvr','h9','cc1','sf8008'):
 		return "1,6 GHz"	
 	elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 		return "1,7 GHz"
+	elif getMachineBuild() in ('alien5','u53'):
+		return "2,0 GHz"
 	elif getMachineBuild() in ('hd51','hd52','sf4008','vs1500','et1x000','h7','et13000','sf5008'):
 		try:
 			import binascii
