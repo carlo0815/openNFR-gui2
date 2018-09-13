@@ -44,10 +44,12 @@ class About(Screen):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
-		elif getMachineBuild() in ('u5','u53','u52','u51','u5pvr','h9','cc1','sf8008'):
+		elif getMachineBuild() in ('u5','u52','u51','u5pvr','h9','cc1','sf8008'):
 			cpuMHz = "   (1,6 GHz)"			
 		elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252'):
 			cpuMHz = "   (1,7 GHz)"
+		elif getMachineBuild() in ('alien5','u53'):
+			cpuMHz = "   (2,0 GHz)"
 		elif getMachineBuild() in ('sf5008','et13000','et1x000','hd52','hd51','sf4008','vs1500','h7'):
                         try:
 				import binascii
