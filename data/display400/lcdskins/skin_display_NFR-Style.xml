@@ -62,11 +62,11 @@
 			<convert type="ValueRange">3,3</convert>
 			<convert type="ConditionalShowHide" />
 		</widget>
-		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="0,200" size="110,25" halign="left" foregroundColor="#ff0000" font="FdLcD;24" zPosition="1" noWrap="1" >
+		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="0,200" size="118,25" halign="left" foregroundColor="#ff0000" font="FdLcD;24" zPosition="1" noWrap="1" >
 			<convert type="ConfigEntryTest">config.usage.blinking_rec_symbol_during_recording,True,CheckSourceBoolean</convert>
 			<convert type="ConditionalShowHide">Blink</convert>
 		</widget>
-		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="0,200" size="110,25" halign="left" foregroundColor="#ff0000" font="FdLcD;24" zPosition="1" noWrap="1" >
+		<widget source="session.RecordState" render="FixedLabel" text="Recording" position="0,200" size="118,25" halign="left" foregroundColor="#ff0000" font="FdLcD;24" zPosition="1" noWrap="1" >
 			<convert type="ConfigEntryTest">config.usage.blinking_rec_symbol_during_recording,False,CheckSourceBoolean</convert>
 			<convert type="ConditionalShowHide" />
 		</widget>
