@@ -13899,8 +13899,8 @@ msgstr "Rote Taste: Sendernamen an/aus"
 msgid "  Menu key : Select quad channel"
 msgstr "Menütaste: Quad-PiP Senderwahl"
 
-msgid "Choice where to put "%s""
-msgstr "Wähle Position für "%s""
+msgid "Choice where to put %s "
+msgstr "Wähle Position für %s "
 
 msgid ""
 "EPG key : Switch to quad PiP entry\n"
