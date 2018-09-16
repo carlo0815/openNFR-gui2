@@ -13889,3 +13889,31 @@ msgstr "Drücke links / rechts, um ein Image auszuwählen"
 
 msgid "Enable Quad PIP"
 msgstr "Quad-PIP aktivieren"
+
+msgid "Quad PiP Channel Selection"
+msgstr "Quad-PiP-Senderauswahl"
+
+msgid "  Red key : Show/Hide channel name"
+msgstr "Rote Taste: Sendernamen an/aus"
+
+msgid "  Menu key : Select quad channel"
+msgstr "Menütaste: Quad-PiP Senderwahl"
+
+msgid "Choice where to put "%s""
+msgstr "Wähle Position für "%s""
+
+msgid ""
+"EPG key : Switch to quad PiP entry\n"
+"Ok key : Add to new entry\n"
+"PVR key : Input channel name\n"
+"Exit key : Finish channel edit"
+msgstr ""
+"Wähle eine der folgenden Tasten...\n"
+"\n"
+"Ok :  Als neuen Eintrag hinzufügen\n"
+"\n"
+"EPG : Zum Quad-PiP-Eintrag wechseln\n"
+"\n"
+"PVR : Sendernamen eingeben\n"
+"\n"
+"Exit : Senderbearbeitung beenden"
