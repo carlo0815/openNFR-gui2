@@ -7426,6 +7426,9 @@ msgstr "System"
 msgid "System temperature: %s"
 msgstr "Systemtemperatur: %s"
 
+msgid "Processor temperature:\t%s"
+msgstr "Processor Temperatur:\t%s"
+
 msgid "System: "
 msgstr ""
 
