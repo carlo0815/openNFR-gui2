@@ -13922,4 +13922,4 @@ msgstr ""
 "Exit : Senderbearbeitung beenden"
 
 msgid "Configure the duration in minutes and action, which could be shut down or standby, for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer" 
-msgstr "Konfiguriere die Dauer in Minuten und Aktion, also Ausschalt-Timer heruntergefahren oder in den Standby-Modus schalten. Eintrag wählen und auf OK oder grün klicken, um den Sleeptimer zu starten/zu stoppen"
+msgstr "Konfiguriere die Dauer in Minuten und Aktion, könnte also herunterfahren oder in den Standby-Modus schalten sein. Eintrag wählen und auf OK oder grün klicken, um den Sleeptimer zu starten/zu stoppen"
