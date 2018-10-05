@@ -13923,3 +13923,101 @@ msgstr ""
 
 msgid "Configure the duration in minutes and action, which could be shut down or standby, for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer" 
 msgstr "Konfiguriere die Dauer in Minuten und Aktion, könnte also herunterfahren oder in den Standby-Modus schalten sein. Eintrag wählen und auf OK oder grün klicken, um den Sleeptimer zu starten/zu stoppen"
+
+##Easy_Setup
+
+msgid "Enable Fullbackup after Easy-Setup?"
+msgstr "Aktiviere Fullbackup nach dem Easy-Setup?"
+
+msgid "Default is enable and Fullbackup will start after all Setups are ready."
+msgstr "Als Standard aktiviert und das Fullbackup startet nach dem Ende des Easy-Setups."
+
+msgid "Enable HDD/USB/SD Mounts Setup?"
+msgstr "Aktiviere HDD/USB/SD Mount Einstellungen?"
+
+msgid "Choose your Device mounts (USB, HDD, others...)."
+msgstr "Wähle deine Mount Einstellungen für (HDD, USB usw)."
+
+msgid "Enable Records Setup?"
+msgstr "Aktiviere Aufnahme Einstellungen?"
+
+msgid "Choose your recording config."
+msgstr "Wähle deine Aufnahme Konfiguration."
+
+msgid "Enable Timeshift Setup?"
+msgstr "Aktiviere Timeshift Einstellungen?"
+
+msgid "Choose your timeshift config."
+msgstr "Wähle deine Timeshift Konfiguration."
+
+msgid "Enable Keymap Setup?"
+msgstr "Aktiviere Keymap Einstellungen?"
+
+msgid "Choose your keymap."
+msgstr "Wähle deine Keymap."
+
+msgid "Enable Hotkey Setup?"
+msgstr "Aktiviere Hotkey Setup?"
+
+msgid "Choose your remote buttons."
+msgstr "Wähle die Tasten deiner Fernbedienung."
+
+msgid "Enable Channellist Setup?"
+msgstr "Aktiviere Kanallisten Einstellungen?"
+
+msgid "Choose your Channel selection config."
+msgstr "Wähle deine Kanallisten Konfiguration."
+
+msgid "Enable M3U Convert to Channellist Setup?"
+msgstr "Aktiviere M3U-Converter zur Senderliste?"
+
+msgid "Install your IPTV-m3u-files into channellist.\nFirst you must coppy a M3U-List to /etc/enigma2"
+msgstr "Installiere deine IPTV-m3u-Liste in die Senderliste.\nZuerst musst du eine M3U-Liste nach /etc/enigma2 kopieren"
+
+msgid "Enable Menusort Setup?"
+msgstr "Aktiviere Menusort Einstellungen?"
+
+msgid "Choose your Mainmenu sorts."
+msgstr "Wähle deine Hauptmenü Sortierung."
+
+msgid "Enable HDMI-CEC Setup?"
+msgstr "Aktiviere HDMI-CEC Einstellungen?"
+
+msgid "Choose your HDMI-CEC config."
+msgstr "Wähle deine HDMI-CEC Einstellungen."
+
+msgid "Enable Password change?"
+msgstr "Aktiviere Passwort Änderung?"
+
+msgid "Change the rootpassword for login in ftp, telnet and webif."
+msgstr "Ändere das Rootpasswort für das Login per FTP, Telnet und WebIF."
+
+msgid "Enable Display Setup?"
+msgstr "Aktiviere Display Einstellungen?"
+
+msgid "Choose your Display config."
+msgstr "Wähle deine Display Konfiguration."
+
+msgid "Enable Position Setup?"
+msgstr "Aktiviere Positions Einstellungen?"
+
+msgid "Choose your OSD Position in TV"
+msgstr "Wähle deine OSD Einstellungen für dein TV."
+
+msgid "Enable OpenWebif Setup?"
+msgstr "Aktiviere OpenWebIF Einstellungen?"
+
+msgid "Choose your Openwebif config."
+msgstr "Wähle deine OpenWebIF Konfiguration."
+
+msgid "Enable OpenNFR-Addons Setup?
+msgstr "Aktiviere OpenNFR-Addons Einstellungen?"
+
+msgid "Install OpenNFR Plugins."
+msgstr "Installiere OpenNFR Plugins."
+
+msgid "Enable Power Off Menu Setup?"
+msgstr "Aktiviere Ausschaltmenü Einstellungen?"
+
+msgid "Choose your Powerbutton Funktion on Remotecontrol."
+msgstr "Wähle die Funktion des Ausschalteschalters deiner Fernbedienung."
