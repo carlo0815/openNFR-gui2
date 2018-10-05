@@ -14010,7 +14010,7 @@ msgstr "Aktiviere OpenWebIF Einstellungen?"
 msgid "Choose your Openwebif config."
 msgstr "Wähle deine OpenWebIF Konfiguration."
 
-msgid "Enable OpenNFR-Addons Setup?
+msgid "Enable OpenNFR-Addons Setup?"
 msgstr "Aktiviere OpenNFR-Addons Einstellungen?"
 
 msgid "Install OpenNFR Plugins."
