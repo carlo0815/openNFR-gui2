@@ -225,8 +225,10 @@ self.condition = nimmanager.somethingConnected()
 			<condition>
 self.condition = self.isLastWizard
 			</condition>		
-			<text value="Your %s %s offers three levels of configuration options:\n\nSimple - We suggest this level if this is your first contact with a %s %s.\nIntermediate - This level enables you to change some more options, mainly the graphical user interface and the behaviour of your %s %s.\nExpert - This gives you full control over all available settings of your %s %s.\n\nWarning: Higher levels may lead to increased usage complexity." />
-			<displaytext value="Your %s %s offers three levels of configuration options:\n\nSimple - We suggest this level if this is your first contact with a %s %s.\nIntermediate - This level enables you to change some more options, mainly the graphical user interface and the behaviour of your %s %s.\nExpert - This gives you full control over all available settings of your %s %s.\n\nWarning: Higher levels may lead to increased usage complexity." />
-			<list type="config" configelement="config.usage.setup_level" />
+		<code>
+from Plugins.Extensions.Infopanel.easy_setup import EasySetup
+self.session.open(EasySetup)
+self.isLastWizard = False
+		</code>
 		</step>
 </wizard>

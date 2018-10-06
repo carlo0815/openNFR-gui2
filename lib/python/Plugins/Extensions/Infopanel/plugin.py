@@ -89,6 +89,7 @@ from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
 from Plugins.Extensions.Infopanel.diskspeed import Disk_Speed
 from Plugins.Extensions.Infopanel.iptv_convert import IPTV
+from Plugins.Extensions.Infopanel.easy_setup import EasySetup
 from Screens.HddSetup import HddSetup
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
@@ -361,6 +362,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("PluginManager" ), _("Plugin-Manager"), ("plugin-manager"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent ("QuickMenu" ), _("Quick-Menu"), ("QuickMenu"))))
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Extras'), _("Extras"), 'Extras')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('easy-setup'), _("EasySetup"), 'easy-setup')))		
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('Infos'), _("Infos"), 'Infos')))
 
 		self.onChangedEntry = []
@@ -548,7 +550,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "DiskSpeed":
 			self.session.open(Disk_Speed)
 		elif menu == "m3u-convert":
-			self.session.open(IPTV)			
+			self.session.open(IPTV)
+		elif menu == "easy-setup":
+			self.session.open(EasySetup)                        			
 		elif menu == "PasswordChange":
 			self.session.open(NFRPasswdScreen)
 		elif menu == "UserMainMenu":

@@ -150,7 +150,7 @@ class Wizard(Screen):
 	def __init__(self, session, showSteps = True, showStepSlider = True, showList = True, showConfig = True):
 		Screen.__init__(self, session)
 
-		self.isLastWizard = False # can be used to skip a "goodbye"-screen in a wizard
+		self.isLastWizard = True # can be used to skip a "goodbye"-screen in a wizard
 
 		self.stepHistory = []
 
