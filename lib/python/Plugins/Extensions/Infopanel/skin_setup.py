@@ -958,4 +958,9 @@ class DefaulSkinchange(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
+                	if config.defaultskinSetup.steps.value == "nothing":
+                		configfile.save()
+                		config.misc.skindefaultwizardenabled.value = False
+				config.misc.skindefaultwizardenabled.save()
+				configfile.save() 			
 			self.close() 			
