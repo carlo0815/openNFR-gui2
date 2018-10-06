@@ -940,8 +940,12 @@ class DefaulSkinchange(ConfigListScreen, Screen):
                 config.misc.skindefaultwizardenabled.value = False
 		config.misc.skindefaultwizardenabled.save()
 		configfile.save()
-		self.session.open(MessageBox,_("Box will reboot to activated selected Defaultskin"), MessageBox.TYPE_INFO, timeout=5)
-		os.system("reboot")
+                if config.defaultskinSetup.steps.value == "nothing":
+                        self.session.open(MessageBox,_("nothing selected Utopia will be used without reboot!"), MessageBox.TYPE_INFO, timeout=5)
+                        self.close()
+                else:        
+		        self.session.open(MessageBox,_("Box will reboot to activated selected Defaultskin"), MessageBox.TYPE_INFO, timeout=5)
+                        os.system("reboot")
 
 	def keySave(self):
 		self.saveAll()
