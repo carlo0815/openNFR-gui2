@@ -131,6 +131,7 @@ class EasySetup(ConfigListScreen, Screen):
 	Screen.__init__(self, session)
 	self.skinName = ["Setup"]
 	config.easysetup = ConfigSubsection()
+	config.easysetup.restart = ConfigBoolean(default = False)	
 	config.easysetup.backup = ConfigYesNo(default=True)	
 	config.easysetup.hddsetup = ConfigYesNo(default=False)
 	config.easysetup.records = ConfigYesNo(default=False)
@@ -214,6 +215,8 @@ class EasySetup(ConfigListScreen, Screen):
         if config.easysetup.Keymap.value is True:
             self.session.openWithCallback(self.run5, KeymapSel)
         else:
+            config.easysetup.restart.setValue(False)
+	    config.easysetup.restart.save()
             self.run5()                        
 
     def run5(self):
@@ -301,10 +304,19 @@ class EasySetup(ConfigListScreen, Screen):
     def run12(self):
         self.runed = "12"
         if config.easysetup.backup.value is True:
-            self.session.openWithCallback(self.close,ImageBackup)
+            self.session.openWithCallback(self.closetest,ImageBackup)
         else:
-            self.close()
-			
+            self.closetest()
+            
+    def closetest(self):            
+	if config.easysetup.restart.value == True:
+            config.easysetup.restart.setValue(False)
+	    config.easysetup.restart.save()
+            quitMainloop(3)
+	else:
+            config.easysetup.restart.setValue(False)
+	    config.easysetup.restart.save()
+            self.close()		
     def openSetup(self, dialog):
          self.session.openWithCallback(self.menuClosed, Setup, dialog)        
 
@@ -461,14 +473,18 @@ class KeymapSel(ConfigListScreen, Screen):
 		return file[file.rfind('/') +1:]
 
 	def changedFinished(self):
-		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI") +"\n"+_("Do you want to restart now?"), MessageBox.TYPE_YESNO)
+		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup") +"\n"+_("Do you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
 		self.close()
 
 	def ExecuteRestart(self, result):
 		if result:
-			quitMainloop(3)
+			config.easysetup.restart.setValue(True)
+			config.easysetup.restart.save()
+                        self.close()			
 		else:
-			self.close()
+			config.easysetup.restart.setValue(False)
+			config.easysetup.restart.save()			
+                        self.close()
                         
 class NFRPasswdScreen(Screen):
 
