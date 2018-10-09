@@ -11,17 +11,23 @@ from Components import Harddisk
 from os import path, listdir, system
 class MultiBootStartup(ConfigListScreen, Screen):
 	skin = """
-	<screen name="MultiBootStartup" position="center,center" size="500,200"  flags="wfNoBorder" title="MultiBoot STARTUP Selector" backgroundColor="transparent">
-		<eLabel name="b" position="0,0" size="500,200" backgroundColor="#00ffffff" zPosition="-2" />
-		<eLabel name="a" position="1,1" size="498,198" backgroundColor="#00000000" zPosition="-1" />
-		<widget source="Title" render="Label" position="10,10" foregroundColor="#00ffffff" size="480,50" halign="center" font="Regular; 35" backgroundColor="#00000000" />
-		<eLabel name="line" position="1,69" size="498,1" backgroundColor="#00ffffff" zPosition="1" />
-		<widget source="config" render="Label" position="10,90" size="480,60" halign="center" font="Regular; 30" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<widget source="key_red" render="Label" position="35,162" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<widget source="key_green" render="Label" position="228,162" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<widget source="key_yellow" render="Label" position="421,212" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<eLabel position="25,159" size="6,40" backgroundColor="#00e61700" />
-		<eLabel position="216,159" size="6,40" backgroundColor="#0061e500" />
+	<screen name="MultiBootStartupDS" position="center,center" size="700,350" title="MultiBoot STARTUP Selector">
+    		<eLabel name="b" position="0,0" size="700,350" backgroundColor="background" zPosition="-2" />
+    		<eLabel name="a" position="1,1" size="698,348" backgroundColor="background" zPosition="-1" />
+    		<eLabel text="Press left/right to select Image" backgroundColor="white" font="Regular; 24" foregroundColor="black" halign="center" position="10,125" size="580,40" transparent="0" zPosition="3" />
+    		<widget source="config" render="Label" position=" 10,15" size="680,90" itemHeight="30" halign="center" font="Regular; 30" enableWrapAround="1" transparent="1" scrollbarMode="showOnDemand" />
+    		<widget source="options" render="Label" position="10,168" size="680,40" halign="left" valign="center" font="Regular; 24" backgroundColor="background" foregroundColor="white" transparent="1" />
+    		<eLabel position="-15,267" size="711,1" backgroundColor="grey" />
+    		<widget name="description" position="11,270" size="680,30" halign="center" valign="center" font="Regular;19" backgroundColor="background" foregroundColor="cyan" transparent="1" />
+    		<ePixmap pixmap="skin_default/buttons/red.png" position="20,315" size="30,30" zPosition="2" alphatest="blend" />
+    		<ePixmap pixmap="skin_default/buttons/green.png" position="210,315" size="30,30" zPosition="2" alphatest="blend" />
+    		<ePixmap pixmap="skin_default/buttons/key_yellow.png" position="366,315" size="30,30" zPosition="2" alphatest="blend" />
+    		<widget source="key_red" render="Label" position="55,315" size="160,24" zPosition="2" font="Regular;20" backgroundColor="black" transparent="1" />
+    		<widget source="key_green" render="Label" position="245,315" size="160,24" zPosition="2" font="Regular;20" backgroundColor="black" transparent="1" />
+    		<widget source="key_yellow" render="Label" position="401,315" size="160,24" zPosition="2" font="Regular;20" backgroundColor="black" transparent="1" />
+    		<ePixmap position="612,125" size="81,40" zPosition="10" pixmap="skin_default/buttons/key_leftright.png" transparent="1" alphatest="blend" />
+    		<widget name="cancel" position="0,0" size="0,0" />
+    		<widget name="ok" position="0,0" size="0,0" />
 	</screen>
 	"""
 	def __init__(self, session):
