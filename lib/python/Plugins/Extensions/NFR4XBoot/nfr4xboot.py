@@ -135,8 +135,11 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
     sourcefile = media_nf + '/NFR4XBootUpload/%s.zip' % source
     if os.path.exists(sourcefile):
         os.chdir(media_nf + '/NFR4XBootUpload')
+        if os.path.exists(media_nf + '/NFR4XBootUpload/usb_update.bin'):
+           os.system('rm -rf ' + media_nf + '/NFR4XBootUpload/usb_update.bin')
         os.system('echo "[NFR4XBoot] Extracking ZIP image file"')
         os.system('unzip ' + sourcefile)
+
         if zipdelete == "True":
            os.system('rm -rf ' + sourcefile)
         else:
