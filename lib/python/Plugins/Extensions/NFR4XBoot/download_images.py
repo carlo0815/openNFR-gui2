@@ -218,7 +218,7 @@ class DownloadOnLineImage(Screen):
             BRANDOEM = 'gigablue'
         elif boxname in ('mutant51'):
             BRANDOEM = 'mutant'
-        elif boxname in ('sf128', 'sf208', 'sf3038', 'sf4008'):
+        elif boxname in ('sf128', 'sf208', 'sf3038', 'sf4008', 'sf5008'):
             BRANDOEM = 'octagon'
         elif boxname in ('osmega'):
             BRANDOEM = 'xcore' 
@@ -234,7 +234,7 @@ class DownloadOnLineImage(Screen):
         elif boxname in ('xpeedlx3'):
             BRANDOEMDROID = 'GoldenInterstar'
             MASCHINEBUILD = boxname
-        elif boxname in ('sf98', 'sf108', 'sf128', 'sf138', 'sf208', 'sf228', 'sf3038', 'sf4008'):
+        elif boxname in ('sf98', 'sf108', 'sf128', 'sf138', 'sf208', 'sf228', 'sf3038', 'sf4008', 'sf5008'):
             BRANDOEMDROID = 'Octagon'
             MASCHINEBUILD = boxname
         elif boxname in ('mutant51', 'ax51'):
@@ -261,7 +261,7 @@ class DownloadOnLineImage(Screen):
             self.feedurl = 'http://openvix.co.uk'
 	elif self.distro == 'pure2':
             self.feed = 'pure2'
-            self.feedurl = 'http://pur-e2.club/OU/images/?dir=6.1' 
+            self.feedurl = 'http://pur-e2.club/OU/images/index.php?dir=6.2' 
         elif self.distro == 'opendroid':
             self.feed = 'opendroid'
             self.feedurl = 'http://images.opendroid.org/%s' %ImageVersion
@@ -377,11 +377,12 @@ class DownloadOnLineImage(Screen):
                     response = urllib2.urlopen(req)
                     tmp = response.readlines()
                     for line in tmp:
-                        if '<a href="' in line:
+                        if '/OU/images/index.php?dir=6.2' in line:
                             if box in line:
                                 stb = '1'
                                 break
             except:
+                    print "3"
                     stb = 'no Image for this Box on this Side'  					
         if self.distro == 'opendroid':
             if box == "ax51":
@@ -587,7 +588,7 @@ class DownloadOnLineImage(Screen):
                 url = self.feedurl + '/' + sel
                 #url = 'http://images.hdfreaks.cc/' + box[0] + '/' + sel
             elif self.distro == 'pure2':
-                url = 'http://pur-e2.club/OU/images/6.1/' + BRANDOEM + '/' + sel
+                url = 'http://pur-e2.club/OU/images/6.2/' + BRANDOEM + '/' + sel
             elif self.distro == 'opendroid':
                 url = self.feedurl + '/' + BRANDOEMDROID + '/' + MASCHINEBUILD + '/' + sel				
             elif self.distro == 'satdreamgr':
@@ -733,7 +734,7 @@ class DownloadOnLineImage(Screen):
                     t4 = line.find('file=' + box)
                     t5 = line.find('.zip" class="')
                     self.imagelist.append(line[t4 + len(box) + 6:t5 + 4])
-                elif line.find('<a href="6.1/' + BRANDOEM + "/" + box) > -1:
+                elif line.find('<a class="autoindex_a" href="/OU/images/index.php?dir=6.2/' + BRANDOEM + "/&amp;file=" + box) > -1:
                         t4 = line.find(box + '-PurE2')
                         t5 = line.find('.zip"')
                         self.imagelist.append(line[t4 :t5+4])

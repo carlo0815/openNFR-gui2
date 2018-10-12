@@ -166,7 +166,7 @@ class NFR4XBootInstallation(Screen):
     def install2(self, yesno):
 	config.NFRBootmanager = ConfigSubsection()
 	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
-        if getMachineBuild() in ("u5", "u51", "u52", "u53", "u5pvr"):
+        if getMachineBuild() in ("u5", "u51", "u52", "u53", "u5pvr", "sf8008"):
             self.install3(False)
         elif yesno:
             self.MACHINEBRAND = getMachineBrand()
@@ -309,7 +309,7 @@ class NFR4XBootImageChoose(Screen):
         
     def bootsetup(self):
         menulist = []
-        if getMachineBuild() not in ("u5", "u51", "u52", "u53", "u5pvr"):
+        if getMachineBuild() not in ("u5", "u51", "u52", "u53", "u5pvr", "sf8008"):
             menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
             menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
 	    menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))
