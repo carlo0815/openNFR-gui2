@@ -46,17 +46,23 @@ class NFR4XChooseOnLineImage(Screen):
             from Screens.Setup import Setup
 	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1")), ("6.2", _("6.2"))]
 	    if returnValue ==  'opennfr':
-	        MBImagelist.append(("5.3", _("5.3")))
+	        MBImagelist.append(("6.3", _("6.3")))
 	    elif returnValue ==  'opendroid':
 	        MBImagelist.append(("6.4", _("6.4")))
 	        MBImagelist.remove(("6.0", _("6.0")))
 	        MBImagelist.remove(("6.1", _("6.1")))   			
 	    elif returnValue ==  'openhdf':
-	        MBImagelist.remove(("6.0", _("6.0")))
+	        MBImagelist.remove(("6.1", _("6.1")))
                 MBImagelist.append(("6.2", _("6.2")))
-                MBImagelist.append(("5.5", _("5.5")))
-	    if returnValue ==  'opendroid':
-                config.usage.mbimageversion = ConfigSelection(default="6.4", choices = MBImagelist)	    
+                MBImagelist.append(("6.3", _("6.3")))
+	    elif returnValue ==  'opendroid':
+	        MBImagelist.append(("6.6", _("6.6")))
+	        MBImagelist.append(("6.7", _("6.7")))
+	        MBImagelist.remove(("6.0", _("6.0")))	    
+	        MBImagelist.remove(("6.1", _("6.1")))	    
+	        MBImagelist.remove(("6.2", _("6.2")))
+            if returnValue ==  'opendroid':    	    
+                config.usage.mbimageversion = ConfigSelection(default="6.6", choices = MBImagelist)	    
 	    else:
                 config.usage.mbimageversion = ConfigSelection(default="6.1", choices = MBImagelist)
 	    self.session.openWithCallback(self.KeyOk1, Setup, "multiboot")
@@ -280,7 +286,7 @@ class DownloadOnLineImage(Screen):
             elif ImageVersion == "6.2":
                 hdfImageVersion = "v62"
             else:
-                hdfImageVersion = "v61"                                            
+                hdfImageVersion = "v63"                                            
             self.feedurl = 'http://%s.hdfreaks.cc/%s' % (hdfImageVersion, boxname)
             self.feedurl1 = 'http://%s.hdfreaks.cc' % hdfImageVersion
         elif self.distro == 'openeight':
