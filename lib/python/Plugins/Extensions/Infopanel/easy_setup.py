@@ -309,16 +309,23 @@ class EasySetup(ConfigListScreen, Screen):
             self.closetest()
             
     def closetest(self):            
-	if config.easysetup.restart.value == True:
-            config.easysetup.restart.setValue(False)
-	    config.easysetup.restart.save()
-            quitMainloop(3)
+        config.misc.firstrun = ConfigBoolean(default = True)
+        if config.easysetup.restart.value == True:
+            if config.misc.firstrun.value == False:
+                config.easysetup.restart.setValue(False)
+	        config.easysetup.restart.save()
+                quitMainloop(3)            
+            else:
+                print "restart after Wizard"
+                self.close()
+
 	else:
             config.easysetup.restart.setValue(False)
 	    config.easysetup.restart.save()
             self.close()		
+
     def openSetup(self, dialog):
-         self.session.openWithCallback(self.menuClosed, Setup, dialog)        
+         self.session.openWithCallback(self.menuClosed, Setup, dialog)
 
     def menuClosed(self, *res):
         if self.runed == "1":
@@ -473,7 +480,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		return file[file.rfind('/') +1:]
 
 	def changedFinished(self):
-		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup") +"\n"+_("Do you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
+		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup\nDo you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
 		self.close()
 
 	def ExecuteRestart(self, result):

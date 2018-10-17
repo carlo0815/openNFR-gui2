@@ -14021,3 +14021,6 @@ msgstr "Aktiviere Ausschaltmenü Einstellungen?"
 
 msgid "Choose your Powerbutton Funktion on Remotecontrol."
 msgstr "Wähle die Funktion des Ausschalteschalters deiner Fernbedienung."
+
+msgid "Keymap changed, you need to restart the GUI after finish EasySetup\nDo you want to restart after finish EasySetup?"
+msgstr "Keymap geändert, die GUI muss nach dem EasySetup neu gestartet werden\nSoll der Neustart durchgeführt werden?"

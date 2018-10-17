@@ -129,6 +129,7 @@ import Screens.Rc
 from Tools.BoundFunction import boundFunction
 from Plugins.Plugin import PluginDescriptor
 
+
 profile("misc")
 had = dict()
 
@@ -594,6 +595,13 @@ def runScreenTest():
 	enigma.ePythonConfigQuery.setQueryFunc(configfile.getResolvedKey)
 
 	def runNextScreen(session, screensToRun, *result):
+		config.easysetup = ConfigSubsection()
+		config.easysetup.restart = ConfigBoolean(default = False)
+		if config.easysetup.restart.value == True:
+			print "restart after Wizard2"
+			config.easysetup.restart.setValue(False)
+			config.easysetup.restart.save()
+			enigma.quitMainloop(3)
 		if result:
 			print "[mytest.py] quitMainloop #3"
 			enigma.quitMainloop(*result)
