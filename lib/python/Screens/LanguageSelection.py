@@ -86,7 +86,7 @@ class LanguageSelection(Screen):
 		global inWizzard
 		if inWizzard:
 			inWizzard = False
-			self.session.openWithCallback(self.deletelanguagesCB, MessageBox, _("Do you want to delete all other languages?"), default = False)
+			self.close()
 		else:
 			self.close(self.oldActiveLanguage != config.osd.language.value)
 
