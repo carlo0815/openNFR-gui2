@@ -147,7 +147,8 @@ class EasySetup(ConfigListScreen, Screen):
 	config.wizardsetup.UserInterfacePositionerWizard = ConfigYesNo(default = False) 
 	config.wizardsetup.OpenWebifConfig = ConfigYesNo(default = False)
 	config.wizardsetup.OpenNFRaddonsWizardSetup = ConfigYesNo(default = False)
-	config.wizardsetup.poweroffsetup = ConfigYesNo(default = False)	
+	config.wizardsetup.poweroffsetup = ConfigYesNo(default = False)
+	config.wizardsetup.ipkinstall = ConfigYesNo(default = False)        	
 	self.backup = '0'
 	self.runed = '0'
         self['spaceused'] = ProgressBar()
@@ -173,6 +174,7 @@ class EasySetup(ConfigListScreen, Screen):
 	list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositionerWizard, _("Choose your OSD Position in TV")))		
 	list.append(getConfigListEntry(_('Enable OpenWebif Setup?'), config.wizardsetup.OpenWebifConfig, _("Choose your Openwebif config.")))
 	list.append(getConfigListEntry(_('Enable OpenNFR-Addons Setup?'), config.wizardsetup.OpenNFRaddonsWizardSetup, _("Install OpenNFR Plugins.")))		
+	list.append(getConfigListEntry(_('Enable Install local extension Setup?'), config.wizardsetup.ipkinstall, _("Scan for local extensions and install them.")))                	
 	list.append(getConfigListEntry(_('Enable Power Off Menu Setup?'), config.wizardsetup.poweroffsetup, _("Choose your Powerbutton Funktion on Remotecontrol.")))                	
 	
         self["key_red"] = Label(_("Exit"))
@@ -299,7 +301,18 @@ class EasySetup(ConfigListScreen, Screen):
         if config.wizardsetup.poweroffsetup.value is True:
             self.openSetup("remotesetup")
         else:
-            self.run12()                                                
+            self.run11e()
+            
+    def run11e(self):
+        self.runed = "11e"
+        if config.wizardsetup.ipkinstall.value is True:
+	    try:
+		from Plugins.Extensions.MediaScanner.plugin import main
+		main(self.session)
+	    except:
+		self.session.open(MessageBox, _("Sorry MediaScanner is not installed!"), MessageBox.TYPE_INFO, timeout = 10)
+        else:
+            self.run12()                                                             
             
     def run12(self):
         self.runed = "12"
@@ -357,7 +370,9 @@ class EasySetup(ConfigListScreen, Screen):
         elif self.runed == "11c":
             self.run11d()
         elif self.runed == "11d":
-            self.run12()                                                           
+            self.run11e()
+        elif self.runed == "11e":
+            self.run12()                                                                          
               
     def dontSaveAndExit(self):
         for x in self['config'].list:
