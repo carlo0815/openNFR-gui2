@@ -81,6 +81,7 @@ from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
 from Plugins.Extensions.Infopanel.diskspeed import Disk_Speed
+from Plugins.Extensions.Infopanel.InstallTarGZ import InfopanelManagerScreen
 from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
 from Plugins.Extensions.Infopanel.Manager import *
@@ -298,21 +299,19 @@ class EasySetup(ConfigListScreen, Screen):
             
     def run11d(self):
         self.runed = "11d"
+        if config.wizardsetup.ipkinstall.value is True:
+	    self.session.openWithCallback(self.run11e,InfopanelManagerScreen)
+        else:
+            self.run11e()  
+
+    def run11e(self):
+        self.runed = "11e"
         if config.wizardsetup.poweroffsetup.value is True:
             self.openSetup("remotesetup")
         else:
-            self.run11e()
+            self.run12()
             
-    def run11e(self):
-        self.runed = "11e"
-        if config.wizardsetup.ipkinstall.value is True:
-	    try:
-		from Plugins.Extensions.MediaScanner.plugin import main
-		main(self.session)
-	    except:
-		self.session.open(MessageBox, _("Sorry MediaScanner is not installed!"), MessageBox.TYPE_INFO, timeout = 10)
-        else:
-            self.run12()                                                             
+                                                            
             
     def run12(self):
         self.runed = "12"
@@ -495,7 +494,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		return file[file.rfind('/') +1:]
 
 	def changedFinished(self):
-		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup\nDo you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
+		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup") +"\n"+_("Do you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
 		self.close()
 
 	def ExecuteRestart(self, result):
