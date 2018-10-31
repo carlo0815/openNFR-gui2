@@ -14033,3 +14033,35 @@ msgstr "Aktiviere Installation lokaler Erweiterungen?"
 
 msgid "Scan for local extensions and install them."
 msgstr "Suche nach lokalen Erweiterungen und installiere sie."
+
+msgid "Include AIT in recordings"
+msgstr "Integriere AIT-Daten in Aufnahmen"
+
+msgid "If enabled, AIT data is included in recordings."
+msgstr ""
+"Wenn aktiviert,\n"
+"sind in den Aufzeichnungen AIT-Daten enthalten."
+
+msgid "Show recording symbol depending on recording type"
+msgstr "Zeige Aufnahmesymbol, wenn Aufnahmetyp"
+
+msgid "Configure whether the 'recording' symbol (in the display skin and LCD skin) is visible for real recordings only or also for streaming and pseuso recordings (e.g. EPGrefresh)."
+msgstr "Legt fest, ob das Aufnahme-Symbol (auf Bildschirm und LCD Display) nur bei echten Aufnahmen sichtbar ist oder auch bei Streaming bzw. Pseudo-Aufnahmen (z.B. EPG Refresh)"
+
+msgid "Show warning before box restart based on recording type"
+msgstr "Zeige Warnung vor Neustart, wenn Aufnahmetyp"
+
+msgid "Configure for which types of recordings a warning about active recordings is shown when attempting to restart the box or the GUI."
+msgstr "Legt fest, ob beim Neustart eine Warnung wegen laufender Aufnahmen nur bei echten Aufnahmen erfolgt oder auch bei Streaming bzw. Pseudo-Aufnahmen (z.B. EPG Refresh)"
+
+msgid "real recordings or streaming"
+msgstr "echte Aufnahmen / Streaming"
+
+msgid "real or pseudo recordings"
+msgstr "echte/Pseudo-Aufnahmen"
+
+msgid "any recordings"
+msgstr "alle Aufnahmen"
+
+msgid "real recordings"
+msgstr "echte Aufnahmen"
