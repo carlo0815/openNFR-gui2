@@ -32,7 +32,7 @@ from Screens.Hotkey import HotkeySetup
 from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 from Plugins.Extensions.Infopanel.iptv_convert import IPTV
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
-from Screens.WizardUserInterfacePositioner import UserInterfacePositionerWizard
+from Screens.UserInterfacePositioner import UserInterfacePositioner
 from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
 	try:
@@ -145,7 +145,7 @@ class EasySetup(ConfigListScreen, Screen):
        	config.easysetup.hdmicec = ConfigYesNo(default=False)
 	config.easysetup.password = ConfigYesNo(default=False)
 	config.easysetup.displaysetup = ConfigYesNo(default=False)
-	config.wizardsetup.UserInterfacePositionerWizard = ConfigYesNo(default = False) 
+	config.wizardsetup.UserInterfacePositioner = ConfigYesNo(default = False) 
 	config.wizardsetup.OpenWebifConfig = ConfigYesNo(default = False)
 	config.wizardsetup.OpenNFRaddonsWizardSetup = ConfigYesNo(default = False)
 	config.wizardsetup.poweroffsetup = ConfigYesNo(default = False)
@@ -172,7 +172,7 @@ class EasySetup(ConfigListScreen, Screen):
         	list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 	list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))		
 	list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
-	list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositionerWizard, _("Choose your OSD Position in TV")))		
+	list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositioner, _("Choose your OSD Position in TV")))		
 	list.append(getConfigListEntry(_('Enable OpenWebif Setup?'), config.wizardsetup.OpenWebifConfig, _("Choose your Openwebif config.")))
 	list.append(getConfigListEntry(_('Enable OpenNFR-Addons Setup?'), config.wizardsetup.OpenNFRaddonsWizardSetup, _("Install OpenNFR Plugins.")))		
 	list.append(getConfigListEntry(_('Enable Install local extension Setup?'), config.wizardsetup.ipkinstall, _("Scan for local extensions and install them.")))                	
@@ -276,10 +276,10 @@ class EasySetup(ConfigListScreen, Screen):
             
     def run11a(self):
         self.runed = "11a"
-        if config.wizardsetup.UserInterfacePositionerWizard.value is True:
+        if config.wizardsetup.UserInterfacePositioner.value is True:
             self.Console = Console()
             self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')			
-            self.session.openWithCallback(self.run11b,UserInterfacePositionerWizard)  
+            self.session.openWithCallback(self.run11b,UserInterfacePositioner)  
         else:
             self.run11b()
             
