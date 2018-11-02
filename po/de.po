@@ -14065,3 +14065,9 @@ msgstr "alle Aufnahmen"
 
 msgid "real recordings"
 msgstr "echte Aufnahmen"
+
+msgid "Configure the duration in hours and action, which could be shut down or standby, when the receiver is not controlled."
+msgstr "Konfiguriere die Dauer in Stunden und Aktion, könnte also herunterfahren oder in den Standby-Modus schalten sein, wenn der Receiver nicht gesteuert wird."
+
+msgid "Configure the duration when the receiver should go to shut down in case the receiver is in standby mode."
+msgstr "Konfiguriere die Dauer in der dein Empfänger heruntergefahren werden soll, falls sich der Receiver im Standby-Modus befindet."
