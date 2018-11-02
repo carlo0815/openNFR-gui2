@@ -494,7 +494,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		return file[file.rfind('/') +1:]
 
 	def changedFinished(self):
-		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup") +"\n"+_("Do you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
+		self.session.openWithCallback(self.ExecuteRestart, MessageBox, _("Keymap changed, you need to restart the GUI after finish EasySetup\nDo you want to restart after finish EasySetup?"), MessageBox.TYPE_YESNO)
 		self.close()
 
 	def ExecuteRestart(self, result):
