@@ -33,8 +33,11 @@ def setLCDModeMinitTV4k(value):
 class Standby2(Screen):
 	def Power(self):
 		print "leave standby"
-		if (getBrandOEM() in ('fulan','clap') or getBoxType() in ('sf8008')):
-			open("/proc/stb/hdmi/output", "w").write("on")
+		if (getBrandOEM() in ('fulan','clap','dinobot') or getBoxType() in ('sf8008','ustym4kpro')):
+			try:
+				open("/proc/stb/hdmi/output", "w").write("on")
+			except:
+				pass
 		#set input to encoder
 		self.avswitch.setInput("ENCODER")
 		#restart last played service
@@ -141,8 +144,11 @@ class Standby2(Screen):
 			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
 
-		if (getBrandOEM() in ('fulan','clap') or getBoxType() in ('sf8008')):
-			open("/proc/stb/hdmi/output", "w").write("off")
+		if (getBrandOEM() in ('fulan','clap','dinobot') or getBoxType() in ('sf8008','ustym4kpro')):
+			try:
+				open("/proc/stb/hdmi/output", "w").write("off")
+			except:
+				pass
 		self.onFirstExecBegin.append(self.__onFirstExecBegin)
 		self.onClose.append(self.__onClose)
 
