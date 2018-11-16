@@ -14071,3 +14071,72 @@ msgstr "Konfiguriere die Dauer in Stunden und Aktion, könnte also herunterfahre
 
 msgid "Configure the duration when the receiver should go to shut down in case the receiver is in standby mode."
 msgstr "Konfiguriere die Dauer in der dein Empfänger heruntergefahren werden soll, falls sich der Receiver im Standby-Modus befindet."
+
+msgid "HbbTV Applications"
+msgstr "HbbTV Anwendungen"
+
+msgid "Please choose an HbbTV application."
+msgstr "Bitte eine HbbTV-Anwendung auswählen."
+
+msgid "YouTube TV is a new way to watch YouTube videos on GigaBlue"
+msgstr "YouTube-TV ist eine neue Art, YouTube-Videos auf einer GigaBlue-Box anzusehen"
+
+msgid "Start YouTube TV"
+msgstr "YouTube TV-Starter"
+
+msgid "* Start YouTube TV"
+msgstr "YouTube TV starten"
+
+msgid "* Setting YouTube TV"
+msgstr "YouTube TV einstellen"
+
+msgid "* RC Help"
+msgstr "Fernbedienungstasten-Hilfe"
+
+msgid "Exit YoutubeTV"
+msgstr "YouTube TV beenden"
+
+msgid "Play selected video"
+msgstr "Gewähltes Video abspielen"
+
+msgid "Back key"
+msgstr "Zurück-Taste"
+
+msgid "Move right"
+msgstr "Nach rechts gehen"
+
+msgid "Move left"
+msgstr "Nach links gehen"
+
+msgid "Move up"
+msgstr "Nach oben gehen"
+
+msgid "Move down"
+msgstr "Nach unten gehen"
+
+msgid "Search a video"
+msgstr "Ein Video suchen"
+
+msgid "Skip forward 10 sec"
+msgstr "10 Sek. Vorwärts springen"
+
+msgid "Play current video"
+msgstr "Aktuelles Video abspielen"
+
+msgid "Pause current video"
+msgstr "Aktuelles Video pausieren"
+
+msgid "Skip backward 10 sec"
+msgstr "10 Sek. Rückwärts springen"
+
+msgid "Setting"
+msgstr "Einstellungen"
+
+msgid "YouTube TV Settings"
+msgstr "YouTube TV-Einstellungen"
+
+msgid "Do not show YouTube TV Starter again"
+msgstr "YouTube TV Starter nicht mehr anzeigen"
+
+msgid "Enable Ntpd when start YoutubeTV"
+msgstr "Aktiviere Ntpd, wenn YouTube TV gestartet wird"
