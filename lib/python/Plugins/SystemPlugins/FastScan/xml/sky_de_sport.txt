@@ -25,11 +25,10 @@ Sky Sport 8 HD
 Sky Sport 9 HD
 Sky Sport 10 HD
 Sky Sport 11 HD
-Sport1+ HD
-Sport1 US HD
-Sport1 US HD1
+Sky Sport UHD
 Eurosport 1 HD
 Eurosport 2 HD
+Eurosport 2 HD Xtra
 Eurosport360HD 1
 Eurosport360HD 2
 Eurosport360HD 3
@@ -39,3 +38,5 @@ Eurosport360HD 6
 Eurosport360HD 7
 Eurosport360HD 8
 Eurosport360HD 9
+DAZN 1 Bar HD
+DAZN 2 Bar HD
