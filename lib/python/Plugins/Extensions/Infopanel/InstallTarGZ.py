@@ -83,11 +83,11 @@ class InfopanelManagerScreen(Screen):
         fivepng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/clear.png'))
         sevenpng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/zip.png'))
         eightpng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/rar.png'))
-        self.list.append((_('ipk Installer'), 'two', _('Install ipk Files From /tmp /media/usb /media/hdd /media/sda1'), twopng))
+        self.list.append((_('ipk Installer'), 'two', _('Install ipk Files From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), twopng))
         self.list.append((_('Advanced ipk Installer'), 'tree', _('--force-reinstall --force-overwrite'), twopng))
-        self.list.append((_('tar.gz , bh.tgz , nab.tgz Installer'), 'one', _('Install Above Formats From /tmp /media/usb /media/hdd /media/sda1'), onepng))
-        self.list.append((_('zip Installer'), 'seven', _('Install zip Files From /tmp /media/usb /media/hdd /media/sda1'), sevenpng))
-        self.list.append((_('rar Installer'), 'eight', _('Install rar Files From /tmp /media/usb /media/hdd /media/sda1'), eightpng))
+        self.list.append((_('tar.gz , bh.tgz , nab.tgz Installer'), 'one', _('Install Above Formats From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), onepng))
+        self.list.append((_('zip Installer'), 'seven', _('Install zip Files From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), sevenpng))
+        self.list.append((_('rar Installer'), 'eight', _('Install rar Files From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), eightpng))
         self.list.append((_('TMP USB HDD Cleaner'), 'five', _('Remove ipk , tar.gz , bh.tgz , nab.tgz , zip , rar Files'), fivepng))
         self['menu'].setList(self.list)
 
@@ -121,8 +121,8 @@ class InfopanelManagerScreen(Screen):
         elif item is 'eight':
             self.session.openWithCallback(self.mList, InstallRar)
         elif item is 'five':
-            os.system('rm -rf /tmp/*.ipk /tmp/*.gz /tmp/*.tgz /tmp/*.zip /tmp/*.rar /media/usb/*.ipk /media/usb/*.gz /media/usb/*.tgz /media/usb/*.zip /media/usb/*.rar /media/hdd/*.ipk /media/hdd/*.gz /media/hdd/*.tgz /media/hdd/*.zip /media/hdd/*.rar /media/sda1/*.ipk /media/sda1/*.gz /media/sda1/*.tgz /media/sda1/*.zip /media/sda1/*.rar')
-            self.mbox = self.session.open(MessageBox, _('All ipk , tar.gz , bh.tgz , nab.tgz , zip , rar Files Removed From /tmp /media/usb /media/hdd /media/sda1'), MessageBox.TYPE_INFO, timeout = 3)
+            os.system('rm -rf /tmp/*.ipk /tmp/*.gz /tmp/*.tgz /tmp/*.zip /tmp/*.rar /media/usb/*.ipk /media/usb/*.gz /media/usb/*.tgz /media/usb/*.zip /media/usb/*.rar /media/hdd/*.ipk /media/hdd/*.gz /media/hdd/*.tgz /media/hdd/*.zip /media/hdd/*.rar /media/mmc/*.ipk /media/mmc/*.gz /media/mmc/*.tgz /media/mmc/*.zip /media/mmc/*.rar /media/sda1/*.ipk /media/sda1/*.gz /media/sda1/*.tgz /media/sda1/*.zip /media/sda1/*.rar')
+            self.mbox = self.session.open(MessageBox, _('All ipk , tar.gz , bh.tgz , nab.tgz , zip , rar Files Removed From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), MessageBox.TYPE_INFO, timeout = 3)
 
 
 
@@ -169,7 +169,7 @@ class InstallTarGZ(Screen):
     def nList(self):
         global fileplace1
         self.list = []
-        ipklist = os.popen('ls -lh  /tmp/*.tar.gz /tmp/*.bh.tgz /tmp/*.nab.tgz /media/usb/*.tar.gz /media/usb/*.bh.tgz /media/usb/*.nab.tgz /media/hdd/*.tar.gz /media/hdd/*.bh.tgz /media/hdd/*.nab.tgz /media/sda1/*.tar.gz /media/sda1/*.bh.tgz /media/sda1/*.nab.tgz')
+        ipklist = os.popen('ls -lh  /tmp/*.tar.gz /tmp/*.bh.tgz /tmp/*.nab.tgz /media/usb/*.tar.gz /media/usb/*.bh.tgz /media/usb/*.nab.tgz /media/hdd/*.tar.gz /media/hdd/*.bh.tgz /media/hdd/*.nab.tgz /media/mmc/*.tar.gz /media/mmc/*.bh.tgz /media/mmc/*.nab.tgz /media/sda1/*.tar.gz /media/sda1/*.bh.tgz /media/sda1/*.nab.tgz')
         ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/tarmini.png'))
         for line in ipklist.readlines():
             dstring = line.split('/')
@@ -249,7 +249,7 @@ class InstallIpk(Screen):
     def nList(self):
         global fileplace2
         self.list = []
-        ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/sda1/*.ipk')
+        ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/mmc/*.ipk /media/sda1/*.ipk')
         ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/ipkmini.png'))
         for line in ipklist.readlines():
             dstring = line.split('/')
@@ -328,7 +328,7 @@ class InstallZip(Screen):
     def nList(self):
         global fileplace3
         self.list = []
-        ipklist = os.popen('ls -lh  /tmp/*.zip /media/usb/*.zip /media/hdd/*.zip /media/sda1/*.zip')
+        ipklist = os.popen('ls -lh  /tmp/*.zip /media/usb/*.zip /media/hdd/*.zip /media/mmc/*.zip /media/sda1/*.zip')
         ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/zipmini.png'))
         for line in ipklist.readlines():
             dstring = line.split('/')
@@ -411,7 +411,7 @@ class AdvInstallIpk(Screen):
     def nList(self):
         global fileplace4
         self.list = []
-        ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/sda1/*.ipk')
+        ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/mmc/*.ipk /media/sda1/*.ipk')
         ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/ipkmini.png'))
         for line in ipklist.readlines():
             dstring = line.split('/')
@@ -491,7 +491,7 @@ class InstallRar(Screen):
     def nList(self):
         global fileplace5
         self.list = []
-        ipklist = os.popen('ls -lh  /tmp/*.rar /media/usb/*.rar /media/hdd/*.rar /media/sda1/*.rar')
+        ipklist = os.popen('ls -lh  /tmp/*.rar /media/usb/*.rar /media/hdd/*.rar /media/mmc/*.rar /media/sda1/*.rar')
         ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/rarmini.png'))
         for line in ipklist.readlines():
             dstring = line.split('/')
