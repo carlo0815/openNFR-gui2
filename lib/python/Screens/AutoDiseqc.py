@@ -21,7 +21,9 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 192, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		-1, 0, 0,
+		eDVBFrontendParametersSatellite.No_Stream_Id_Filter,
+		eDVBFrontendParametersSatellite.PLS_Gold,
+		0, # default gold PLS code
 		1079, 1, "Astra 1 19.2e"),
 
 		# astra 235 astra ses
@@ -30,7 +32,9 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 235, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		-1, 0, 0,
+		eDVBFrontendParametersSatellite.No_Stream_Id_Filter,
+		eDVBFrontendParametersSatellite.PLS_Gold,
+		0, # default gold PLS code
 		3224, 3, "Astra 3 23.5e"),
 
 		# astra 282 bbc
@@ -39,7 +43,9 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 282, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		-1, 0, 0,
+		eDVBFrontendParametersSatellite.No_Stream_Id_Filter,
+		eDVBFrontendParametersSatellite.PLS_Gold,
+		0, # default gold PLS code
 		2045, 2, "Astra 2 28.2e"),
 
 		# hotbird 130 rai
@@ -48,7 +54,9 @@ class AutoDiseqc(Screen, ConfigListScreen):
 		eDVBFrontendParametersSatellite.Inversion_Off, 130, \
 		eDVBFrontendParametersSatellite.System_DVB_S, eDVBFrontendParametersSatellite.Modulation_Auto, \
 		eDVBFrontendParametersSatellite.RollOff_auto, eDVBFrontendParametersSatellite.Pilot_Unknown, \
-		-1, 0, 0,
+		eDVBFrontendParametersSatellite.No_Stream_Id_Filter,
+		eDVBFrontendParametersSatellite.PLS_Gold,
+		0, # default gold PLS code
 		12400, 318, "Hotbird 13.0e"),
 	]
 
