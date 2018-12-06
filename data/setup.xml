@@ -12,7 +12,20 @@
 	<setup key="usage" title="Customize">
 		<item level="0" text="Setup mode" description="Choose which level of menu/settings to display. 'Expert' level shows all items.">config.usage.setup_level</item>
 		<item level="1" text="Enable teletext caching" description="When enabled, teletext pages will be cached, allowing faster access.">config.usage.enable_tt_caching</item>
-		<item level="1" text="12V output" description="12V output." requires="12V_Output">config.usage.output_12V</item>
+		<item level="1" text="Teletext font and resolution" description="Configure the display resolution and the font used for teletext.">config.usage.tuxtxt_font_and_res</item>
+		<item level="1" tt_level="1" text="Teletext UseTTF (0=fixed font, 1=TrueType)" description="Configure whether a fixed font or a scalable TrueType font is used for teletext.">config.usage.tuxtxt_UseTTF</item>
+		<item level="1" tt_level="1" text="Teletext TTFBold (0=normal, 1=bold)" description="Configure whether a bold TrueType font is used for teletext.">config.usage.tuxtxt_TTFBold</item>
+		<item level="1" tt_level="1" text="Teletext TTFScreenResX (screen X resolution)" description="Configure the screen resolution for teletext (Not all skins support full-HD teletext).">config.usage.tuxtxt_TTFScreenResX</item>
+		<item level="1" tt_level="1" text="Teletext StartX (left border)" description="Configure the start coordinate in x of the teletext display area.">config.usage.tuxtxt_StartX</item>
+		<item level="1" tt_level="1" text="Teletext EndX (right border)" description="Configure the end coordinate in x of the teletext display area.">config.usage.tuxtxt_EndX</item>
+		<item level="1" tt_level="1" text="Teletext StartY (lower border)" description="Configure the start coordinate in y of the teletext display area.">config.usage.tuxtxt_StartY</item>
+		<item level="1" tt_level="1" text="Teletext EndY (upper border)" description="Configure the end coordinate in y of the teletext display area.">config.usage.tuxtxt_EndY</item>
+		<item level="1" tt_level="1" text="Teletext TTFShiftY (vertical letter position)" description="Adjust the vertical position of the letters used for teletext.">config.usage.tuxtxt_TTFShiftY</item>
+		<item level="1" tt_level="1" text="Teletext TTFShiftX (horizontal letter position)" description="Adjust the horizontal position of the letters used for teletext.">config.usage.tuxtxt_TTFShiftX</item>
+		<item level="1" tt_level="1" text="Teletext TTFWidthFactor16 (TrueType letter width)" description="Configure the width of the TrueType font letters used for teletext.">config.usage.tuxtxt_TTFWidthFactor16</item>
+		<item level="1" tt_level="1" text="Teletext TTFHeightFactor16 (TrueType letter height)" description="Configure the height of the TrueType font letters used for teletext.">config.usage.tuxtxt_TTFHeightFactor16</item>
+		<item level="1" text="Teletext CleanAlgo (resolution reset algorithm)" description="Select the method of restoring screen resolution and framebuffer when leaving teletext.">config.usage.tuxtxt_CleanAlgo</item>
+        <item level="1" text="12V output" description="12V output." requires="12V_Output">config.usage.output_12V</item>
 		<item level="2" text="Alternative services tuner priority" description="Configure which tuner type will be preferred, when the same service is available on different types of tuners.">config.usage.alternatives_priority</item>
 		<item level="2" text="Preferred tuner" description="Configure which tuner will be preferred, when more than one tuner is available. If set to 'auto' the system will give priority to the tuner having the lowest number of channels/satellites.">config.usage.frontend_priority</item>
 		<item level="2" tunerlevel="1" text="Preferred tuners, multiple selection allowed" description="In expert mode, configure which tuners will be preferred, when more than one tuner is available.">config.usage.frontend_priority_multiselect</item>
@@ -99,6 +112,7 @@
 		<item level="2" text="Enable FreeSat EPG" description="Use FreeSat EPG information when it is available.">config.epg.freesat</item>
 		<item level="2" text="Enable ViaSat EPG" description="Use ViaSat EPG information when it is available.">config.epg.viasat</item>
 		<item level="2" text="Enable Netmed EPG" description="Use Netmed EPG information when it is available.">config.epg.netmed</item>
+		<item level="2" text="Maximum number of days in EPG" description="Use for load only x days in EPG">config.epg.maxdays</item>
 		<item level="2" text="Maintain old EPG data for" description="Configure for how many minutes finished events should remain visible in the EPG. Useful when you need information about an event which has just finished, or has been delayed.">config.epg.histminutes</item>
 		<item level="2" text="Include EIT in http streams" description="When enabled, EIT data will be included in http streams. This allows a client receiver to show EPG.">config.streaming.stream_eit</item>
 		<item level="2" text="Include AIT in http streams" description="When enabled, AIT data will be included in http streams. This allows a client receiver to use HbbTV.">config.streaming.stream_ait</item>
