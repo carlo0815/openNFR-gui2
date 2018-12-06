@@ -14140,3 +14140,9 @@ msgstr "YouTube TV Starter nicht mehr anzeigen"
 
 msgid "Enable Ntpd when start YoutubeTV"
 msgstr "Aktiviere Ntpd, wenn YouTube TV gestartet wird"
+
+msgid "Maximum number of days in EPG"
+msgstr "Maximale Anzahl von Tagen im EPG"
+
+msgid "Use for load only x days in EPG"
+msgstr "Festlegen der Tage zum Laden des EPG"
