@@ -41,6 +41,30 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.py
 		pass		
 from Screens.Menu import Menu, mdom
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+	config.hdmicec = ConfigSubsection()
+	config.hdmicec.enabled = ConfigYesNo(default = False)
+	config.hdmicec.control_tv_standby = ConfigYesNo(default = True)
+	config.hdmicec.control_tv_wakeup = ConfigYesNo(default = True)
+	config.hdmicec.report_active_source = ConfigYesNo(default = True)
+	config.hdmicec.report_active_menu = ConfigYesNo(default = True)
+	config.hdmicec.handle_tv_standby = ConfigYesNo(default = True)
+	config.hdmicec.handle_tv_wakeup = ConfigYesNo(default = True)
+	config.hdmicec.tv_wakeup_detection = ConfigSelection(
+		choices = {
+		"wakeup": _("Wakeup"),
+		"tvreportphysicaladdress": _("TV physical address report"),
+		"sourcerequest": _("Source request"),
+		"streamrequest": _("Stream request"),
+		"osdnamerequest": _("OSD name request"),
+		"activity": _("Any activity"),
+		},
+		default = "streamrequest")
+	config.hdmicec.fixed_physical_address = ConfigText(default = "0.0.0.0")
+	config.hdmicec.volume_forwarding = ConfigYesNo(default = False)
+	config.hdmicec.control_receiver_wakeup = ConfigYesNo(default = False)
+	config.hdmicec.control_receiver_standby = ConfigYesNo(default = False)
+	config.hdmicec.handle_deepstandby_events = ConfigYesNo(default = False)
+	config.hdmicec.preemphasis = ConfigYesNo(default = False) 	
 	try:
 		from Plugins.SystemPlugins.HdmiCEC.plugin import HdmiCECSetupScreen
 	except:
