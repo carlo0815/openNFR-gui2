@@ -1546,7 +1546,7 @@ class ChannelSelectionBase(Screen):
 			elif pluginsuse == "Mediaportal":
 				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mediaportal;"
 			elif pluginsuse == "IPTVPlayer":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-iptvplayer;"
+                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-e2iplayer;"
                         elif pluginsuse == "Youtube":
                                 cmd += "opkg install --force-overwrite enigma2-plugin-extensions-youtube;"
                         elif pluginsuse == "Kodi":
