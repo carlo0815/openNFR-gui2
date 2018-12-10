@@ -14158,3 +14158,6 @@ msgstr "Videotext CleanAlgo (Algorithmus zum Rücksetzen der Auflösung)"
 
 msgid "Select the method of restoring screen resolution and framebuffer when leaving teletext."
 msgstr "Bestimmt die Methode, wie die Bildschirmauflösung und der Framebuffer beim Verlassen des Videotexts zurückgesetzt werden."
+
+msgid "Use HDMI-preemphasis"
+msgstr "HDMI-Preemphasis benutzen"
