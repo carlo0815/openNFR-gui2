@@ -42,17 +42,24 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.py
 from Screens.Menu import Menu, mdom
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
 	config.hdmicec = ConfigSubsection()
-	config.hdmicec.enabled = ConfigYesNo(default = False)
+	config.hdmicec.enabled = ConfigYesNo(default = False) # query from this value in hdmi_cec.cpp
 	config.hdmicec.control_tv_standby = ConfigYesNo(default = True)
 	config.hdmicec.control_tv_wakeup = ConfigYesNo(default = True)
 	config.hdmicec.report_active_source = ConfigYesNo(default = True)
-	config.hdmicec.report_active_menu = ConfigYesNo(default = True)
-	config.hdmicec.handle_tv_standby = ConfigYesNo(default = True)
-	config.hdmicec.handle_tv_wakeup = ConfigYesNo(default = True)
-	config.hdmicec.tv_wakeup_detection = ConfigSelection(
+	config.hdmicec.report_active_menu = ConfigYesNo(default = True) # query from this value in hdmi_cec.cpp
+	choicelist = [
+		("disabled", _("Disabled")),
+		("standby", _("Standby")),
+		("deepstandby", _("Deep standby")),
+		]
+	config.hdmicec.handle_tv_standby = ConfigSelection(default = "standby", choices = choicelist)
+	config.hdmicec.handle_tv_input = ConfigSelection(default = "disabled", choices = choicelist)
+	config.hdmicec.handle_tv_wakeup = ConfigSelection(
 		choices = {
+		"disabled": _("Disabled"),
 		"wakeup": _("Wakeup"),
 		"tvreportphysicaladdress": _("TV physical address report"),
+		"routingrequest": _("Routing request"),
 		"sourcerequest": _("Source request"),
 		"streamrequest": _("Stream request"),
 		"osdnamerequest": _("OSD name request"),
@@ -64,7 +71,34 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.
 	config.hdmicec.control_receiver_wakeup = ConfigYesNo(default = False)
 	config.hdmicec.control_receiver_standby = ConfigYesNo(default = False)
 	config.hdmicec.handle_deepstandby_events = ConfigYesNo(default = False)
-	config.hdmicec.preemphasis = ConfigYesNo(default = False) 	
+	config.hdmicec.preemphasis = ConfigYesNo(default = False)
+	choicelist = []
+	for i in (10, 50, 100, 150, 250, 500, 750, 1000, 1500, 2000, 3000):
+		choicelist.append(("%d" % i, "%d ms" % i))
+	config.hdmicec.minimum_send_interval = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
+	choicelist = []
+	for i in range(1,4):
+		choicelist.append(("%d" % i, _("%d times") % i))
+	config.hdmicec.messages_repeat = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
+	config.hdmicec.messages_repeat_standby = ConfigYesNo(default = False)
+	choicelist = []
+	for i in (10, 50, 100, 150, 250, 500, 750, 1000):
+		choicelist.append(("%d" % i, "%d ms" % i))
+	config.hdmicec.messages_repeat_slowdown = ConfigSelection(default = "250", choices = [("0", _("None"))] + choicelist)
+	choicelist = []
+	for i in (10,30,60,120,300,600,900,1800,3600):
+		if i/60<1:
+			choicelist.append(("%d" % i, _("%d sec") % i))
+		else:
+			choicelist.append(("%d" % i, _("%d min") % (i/60)))
+	config.hdmicec.handle_tv_delaytime = ConfigSelection(default = "0", choices = [("0", _("None"))] + choicelist)
+	config.hdmicec.deepstandby_waitfortimesync = ConfigYesNo(default = True)
+	config.hdmicec.tv_wakeup_zaptimer = ConfigYesNo(default = True)
+	config.hdmicec.tv_wakeup_zapandrecordtimer = ConfigYesNo(default = True)
+	config.hdmicec.tv_wakeup_wakeuppowertimer = ConfigYesNo(default = True)
+	config.hdmicec.tv_standby_notinputactive = ConfigYesNo(default = True)
+	config.hdmicec.check_tv_state = ConfigYesNo(default = False)
+	config.hdmicec.workaround_activesource = ConfigYesNo(default = False)
 	try:
 		from Plugins.SystemPlugins.HdmiCEC.plugin import HdmiCECSetupScreen
 	except:
