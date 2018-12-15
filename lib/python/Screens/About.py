@@ -50,7 +50,7 @@ class About(Screen):
 			cpuMHz = "   (1,7 GHz)"
 		elif getMachineBuild() in ('alien5','u53'):
 			cpuMHz = "   (2,0 GHz)"
-		elif getMachineBuild() in ('sf5008','et13000','et1x000','hd52','hd51','sf4008','vs1500','h7'):
+		elif getMachineBuild() in ('sf5008','et13000','et1x000','hd52','hd51','sf4008','vs1500','h7','osmio4k'):
                         try:
 				import binascii
 				f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
@@ -152,6 +152,14 @@ class About(Screen):
 				f.close()
 				if bootname: bootname = "   (%s)" %bootname 
 				AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image + bootname + "\n"
+		elif getMachineBuild() in ('osmio4k'):
+			if path.exists('/boot/STARTUP'):
+				f = open('/boot/STARTUP', 'r')
+				f.seek(38)
+				image = f.read(1) 
+				f.close()
+				if bootname: bootname = "   (%s)" %bootname 
+				AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image + bootname + "\n"
 		elif path.exists('/boot/STARTUP'):
 			f = open('/boot/STARTUP', 'r')
 			f.seek(22)
@@ -183,7 +191,8 @@ class About(Screen):
 			fp_version = _("Front Panel:\t\tVersion unknown")
 			AboutText += fp_version + "\n"
 
-		AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
+		if getMachineBuild() not in ('vuduo4k','v8plus','ustym4kpro','hd60','i55plus','osmio4k','h9','h9combo','vuzero4k','sf5008','et13000','et1x000','hd51','hd52','vusolo4k','vuuno4k','vuuno4kse','vuultimo4k','sf4008','dm820','dm7080','dm900','dm920', 'gb7252', 'dags7252', 'vs1500','h7','xc7439','8100s','u5','u5pvr','u52','u53','u51','cc1','sf8008'):
+			AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
 		AboutText += _("Last Upgrade:\t\t%s") % about.getLastUpdateString() + "\n\n" 
 		
 		self["FPVersion"] = StaticText(fp_version)

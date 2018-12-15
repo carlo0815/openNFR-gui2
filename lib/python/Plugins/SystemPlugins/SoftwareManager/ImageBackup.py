@@ -534,7 +534,7 @@ class ImageBackup(Screen):
 		if self.MACHINEBUILD in ("hd51","vs1500","h7","8100s"):
 			self.MTDBOOT = "mmcblk0p1"
 			self.EMMCIMG = "disk.img"
-		elif self.MACHINEBUILD in ("xc7439"):
+		elif self.MACHINEBUILD in ("xc7439","osmio4k"):
 			self.MTDBOOT = "mmcblk1p1"
 			self.EMMCIMG = "emmc.img"
 		elif self.MACHINEBUILD in ("cc1","sf8008","ustym4kpr"):
@@ -656,7 +656,12 @@ class ImageBackup(Screen):
 				        cmdline = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
 			        else:
                                         cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",1)[1].split(" ",1)[0]
-                        else:
+                        elif self.MACHINEBUILD in ("osmio4k"):
+				if self.list[self.selection] == "Recovery":
+					cmdline = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
+				else:
+					cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",1)[1].split(" ",1)[0]
+			else:
 				if self.list[self.selection] == "Recovery":
 					cmdline = self.read_startup("/boot/cmdline.txt").split("=",1)[1].split(" ",1)[0]
 				else:
@@ -891,7 +896,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "Check: kerneldump"')
 		cmdlist.append("sync")
 
-		if ( SystemInfo["HaveMultiBootHD"] or SystemInfo["HaveMultiBootCY"]) and self.list[self.selection] == "Recovery":
+		if ( SystemInfo["HaveMultiBootHD"] or SystemInfo["HaveMultiBootCY"] or SystemInfo["HaveMultiBootOS"]) and self.list[self.selection] == "Recovery":
 			GPT_OFFSET=0
 			GPT_SIZE=1024
 			BOOT_PARTITION_OFFSET = int(GPT_OFFSET) + int(GPT_SIZE)
