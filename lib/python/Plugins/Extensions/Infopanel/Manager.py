@@ -17,6 +17,8 @@ import os
 import Softcam
 import shutil
 from Screens.VirtualKeyBoard import VirtualKeyBoard
+from Components.About import about
+
 class NFRCamManager(Screen):
 	skin = """
   <screen name="NFRCamManager" position="center,center" size="820,410" title="NFR SoftCam Manager">
@@ -142,7 +144,42 @@ class NFRCamManager(Screen):
 		self.listecminfo()
 
 	def listecminfo(self):
-		listecm = ""
+		self.AboutText = ""
+		self.iface = "eth0"
+		eth0 = about.getIfConfig('eth0')
+		if eth0.has_key('addr'):
+			self.AboutText += _("IP:") + eth0['addr'] + "\n"
+			self.iface = 'eth0'
+
+		eth1 = about.getIfConfig('eth1')
+		if eth1.has_key('addr'):
+			self.AboutText += _("IP:") + eth1['addr'] + "\n"
+			self.iface = 'eth1'
+
+		ra0 = about.getIfConfig('ra0')
+		if ra0.has_key('addr'):
+			self.AboutText += _("IP:") + ra0['addr'] + "\n"
+			self.iface = 'ra0'
+
+		wlan0 = about.getIfConfig('wlan0')
+		if wlan0.has_key('addr'):
+			self.AboutText += _("IP:") + wlan0['addr'] + "\n"
+			self.iface = 'wlan0'
+
+		wlan1 = about.getIfConfig('wlan1')
+		if wlan1.has_key('addr'):
+			self.AboutText += _("IP:") + wlan1['addr'] + "\n"
+			self.iface = 'wlan1'
+                self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
+
+
+	def Stage1Complete(self, result, retval, extra_args=None):
+	        result = result
+                if "Link detected: yes"  in result:
+               		self.AboutText1 = "Online"
+               	else:
+                       	self.AboutText1 = "Offline"
+                listecm = ""
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
@@ -152,11 +189,15 @@ class NFRCamManager(Screen):
 					listecm += "\n" + line[linebreak + 1:]
 				else:
 					listecm += line
-			self["status"].setText(listecm)
+			listecm += self.AboutText
+			listecm += self.AboutText1
+                        self["status"].setText(listecm)
 			ecmfiles.close()
 		except:
-			self["status"].setText("")
-
+			listecm += "\n" + self.AboutText
+			listecm += "\n" + self.AboutText1
+                        self["status"].setText(listecm)
+                
 	def startcreatecamlist(self):
 		self.Console.ePopen("ls %s" % config.NFRSoftcam.camdir.value,
 			self.camliststart)
@@ -409,4 +450,4 @@ class ConfigEdit(Screen, ConfigListScreen):
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
-			self["config"].invalidate(self["config"].getCurrent())	
+			self["config"].invalidate(self["config"].getCurrent())	 
