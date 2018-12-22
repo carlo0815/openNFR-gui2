@@ -656,7 +656,7 @@ class ImageBackup(Screen):
 				        cmdline = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
 			        else:
                                         cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",1)[1].split(" ",1)[0]
-                       elif self.MACHINEBUILD in ("osmio4k"):
+			elif self.MACHINEBUILD in ("osmio4k"):
 				if self.list[self.selection] == "Recovery":
 					cmdline = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
 				else:
