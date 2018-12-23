@@ -28,19 +28,19 @@
 		</channel>
 		<channel>
 			<name>Sky Sport HD 7</name>
-			<ref>1:0:19:134:8:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:134:4:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Sport HD 8</name>
-			<ref>1:0:19:13E:9:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:13E:2:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Sport HD 9</name>
-			<ref>1:0:19:148:10:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:148:6:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Sport HD 10</name>
-			<ref>1:0:19:152:A:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:152:10:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Sport HD 11</name>
@@ -114,27 +114,27 @@
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 5</name>
-			<ref>1:0:19:129:B:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:129:9:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 6</name>
-			<ref>1:0:19:133:8:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:133:4:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 7</name>
-			<ref>1:0:19:13D:9:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:13D:2:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 8</name>
-			<ref>1:0:19:147:10:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:147:6:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 9</name>
-			<ref>1:0:19:151:A:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:151:10:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Bundesliga HD 10</name>
-			<ref>1:0:19:101:E:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:101:B:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Sky Sport News HD</name>
@@ -173,19 +173,19 @@
 		</channel>
 		<channel>
 			<name>Eurosport 360 HD 05</name>
-			<ref>1:0:19:136:8:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:136:4:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Eurosport 360 HD 06</name>
-			<ref>1:0:19:140:9:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:140:2:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Eurosport 360 HD 07</name>
-			<ref>1:0:19:14A:10:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:14A:6:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Eurosport 360 HD 08</name>
-			<ref>1:0:19:154:A:85:C00000:0:0:0:</ref>
+			<ref>1:0:19:154:10:85:C00000:0:0:0:</ref>
 		</channel>
 		<channel>
 			<name>Eurosport 360 HD 09</name>
