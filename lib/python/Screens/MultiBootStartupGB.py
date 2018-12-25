@@ -7,21 +7,22 @@ from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
 from Components import Harddisk
-from os import path, listdir, system
+from os import path, listdir, system, makedirs
+import re
 
 class MultiBootStartup(ConfigListScreen, Screen):
 
 	skin = """
-	<screen name="MultiBootStartup" position="center,center" size="500,200"  flags="wfNoBorder" title="MultiBoot STARTUP Selector" backgroundColor="transparent">
-		<eLabel name="b" position="0,0" size="500,200" backgroundColor="#00ffffff" zPosition="-2" />
-		<eLabel name="a" position="1,1" size="498,198" backgroundColor="#00000000" zPosition="-1" />
+	<screen name="MultiBootStartup" position="center,center" size="500,250"  flags="wfNoBorder" title="MultiBoot STARTUP Selector" backgroundColor="transparent">
+		<eLabel name="b" position="0,0" size="500,250" backgroundColor="#00ffffff" zPosition="-2" />
+		<eLabel name="a" position="1,1" size="498,248" backgroundColor="#00000000" zPosition="-1" />
 		<widget source="Title" render="Label" position="10,10" foregroundColor="#00ffffff" size="480,50" halign="center" font="Regular; 35" backgroundColor="#00000000" />
 		<eLabel name="line" position="1,69" size="498,1" backgroundColor="#00ffffff" zPosition="1" />
-		<widget source="config" render="Label" position="10,90" size="480,60" halign="center" font="Regular; 30" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<widget source="key_red" render="Label" position="35,162" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<widget source="key_green" render="Label" position="228,162" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
-		<eLabel position="25,159" size="6,40" backgroundColor="#00e61700" />
-		<eLabel position="216,159" size="6,40" backgroundColor="#0061e500" />
+		<widget source="config" render="Label" position="10,90" size="480,90" halign="center" font="Regular; 30" backgroundColor="#00000000" foregroundColor="#00ffffff" />
+		<widget source="key_red" render="Label" position="35,212" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
+		<widget source="key_green" render="Label" position="228,212" size="170,30" noWrap="1" zPosition="1" valign="center" font="Regular; 20" halign="left" backgroundColor="#00000000" foregroundColor="#00ffffff" />
+		<eLabel position="25,209" size="6,40" backgroundColor="#00e61700" />
+		<eLabel position="216,209" size="6,40" backgroundColor="#0061e500" />
 	</screen>
 	"""
 
@@ -34,6 +35,7 @@ class MultiBootStartup(ConfigListScreen, Screen):
 		self["config"] = StaticText(_("Select Image: STARTUP_1"))
 		self.selection = 0
 		self.list = self.list_files("/boot")
+		self.getImageInformation()
 
 		self.startup()
 
@@ -48,6 +50,26 @@ class MultiBootStartup(ConfigListScreen, Screen):
 		}, -2)
 
 		self.onLayoutFinish.append(self.layoutFinished)
+		
+	def getImageInformation(self):
+		self.friendlylist = []
+		makedirs("/tmp/boot")
+		for name in self.list:
+			device = self.read_startup("/boot/" + name).split("=",1)[1].split(" ",1)[0]
+			system("mount %s /tmp/boot" % device)
+			version = self.searchString("/tmp/boot/etc/image-version", "^version=")
+			creator = self.searchString("/tmp/boot/etc/image-version", "^creator=")
+			build = self.searchString("/tmp/boot/etc/image-version", "^build=")
+			system("umount /tmp/boot && ls /tmp/boot")
+			self.friendlylist.append("%s %s %s" % (creator,version,build))
+		system("rmdir /tmp/boot && ls /tmp")
+
+	def searchString(self, file, search):
+		f = open(file)
+		for line in f:
+			if re.match(search, line):
+				return line.split("=")[1].replace('\n', '')
+		f.close()
 
 	def layoutFinished(self):
 		self.setTitle(self.title)
@@ -57,7 +79,7 @@ class MultiBootStartup(ConfigListScreen, Screen):
 		return SimpleSummary
 
 	def startup(self):
-		self["config"].setText(_("Select Image: %s") %self.list[self.selection])
+		self["config"].setText(_("Select Image: %s %s") % (self.list[self.selection],self.friendlylist[self.selection] ))
 
 	def save(self):
 		print "[MultiBootStartup] select new startup: ", self.list[self.selection]
