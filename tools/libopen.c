@@ -17,7 +17,7 @@ int open64(const char *pathname, int flags, ...)
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -55,7 +55,7 @@ int open(const char *pathname, int flags, ...)
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -93,7 +93,7 @@ FILE *fopen64(const char *pathname, const char *mode)
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -132,7 +132,7 @@ FILE *fopen(const char *pathname, const char *mode)
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -171,7 +171,7 @@ int socket(int domain, int type, int protocol)
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -199,6 +199,45 @@ int socket(int domain, int type, int protocol)
 	return fd;
 }
 
+int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen)
+{
+	typedef int (*FUNC_PTR) (int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+	static FUNC_PTR libc_accept;
+	int fd;
+
+	if (!libc_accept)
+	{
+		void *handle;
+		char *error;
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
+		if (!handle)
+		{
+			fputs(dlerror(), stderr);
+			exit(1);
+		}
+		libc_accept = (FUNC_PTR) dlsym(handle, "accept");
+		if ((error = dlerror()) != NULL) {
+			fprintf(stderr, "%s\n", error);
+			exit(1);
+		}
+	}
+	fd = libc_accept(sockfd, addr, addrlen);
+	if (fd >= 0)
+	{
+		int fd_flags = fcntl(fd, F_GETFD, 0);
+		if (fd_flags >= 0)
+		{
+			fd_flags |= FD_CLOEXEC;
+			fcntl(fd, F_SETFD, fd_flags);
+		}
+#ifdef DEBUG
+		fprintf(stdout, "accept fd %d\n", fd);
+#endif
+	}
+	return fd;
+}
+
+
 int socketpair(int d, int type, int protocol, int sv[2])
 {
 	typedef int (*FUNC_PTR) (int d, int type, int protocol, int sv[2]);
@@ -208,7 +247,7 @@ int socketpair(int d, int type, int protocol, int sv[2])
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
@@ -251,7 +290,7 @@ int pipe(int modus[2])
 	{
 		void *handle;
 		char *error;
-		handle = dlopen("/lib/libc.so.6", RTLD_LAZY);
+		handle = dlopen(LIBC_SO, RTLD_LAZY);
 		if (!handle)
 		{
 			fputs(dlerror(), stderr);
