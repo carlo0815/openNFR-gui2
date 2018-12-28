@@ -1,8 +1,8 @@
 #!/bin/sh
 
-prefix=/usr
-exec_prefix=/usr
-datarootdir=${prefix}/share
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+datarootdir=@datarootdir@
 
 #wetek kodi start
 if [ -e /usr/bin/kodi ]; then
@@ -40,22 +40,15 @@ if [ "$(grep config.misc.SyncTimeUsing /etc/enigma2/settings)" == "config.misc.S
 fi
 
 if [ -e /proc/stb/info/boxtype ]; then
-	stbcheck=`cat /proc/stb/info/boxtype | cut -c1-3`
-	if [ $stbcheck == "cc1" ]; then
-		count=`ps -ef |grep libreader |grep -v "grep" |wc -l`
-		if [ 0 == $count ];then
-			libreader 720P_50
-		fi
-	fi
-	stbcheck=`cat /proc/stb/info/boxtype | cut -c1-6`
-	if [ $stbcheck == "sf8008" ]; then
+	stbcheck=`cat /proc/stb/info/boxtype`
+	if [ $stbcheck == "sf8008" ] || [ $stbcheck == "ustym4kpro" ] || [ $stbcheck == "cc1" ]; then
 		count=`ps -ef |grep libreader |grep -v "grep" |wc -l`
 		if [ 0 == $count ];then
 			libreader 720P_50
 		fi
 	fi
 fi
-if [ -x /usr/bin/showiframe ]; then
+if [ -x @bindir@/showiframe ]; then
 	if [ -e /proc/stb/info/boxtype ]; then
 		stbcheck=`cat /proc/stb/info/boxtype | cut -c1-2`
 		if [ ! $stbcheck == "u5" ]; then
@@ -64,16 +57,16 @@ if [ -x /usr/bin/showiframe ]; then
 	else
 		killall -9 showiframe; sleep 1
 	fi
-	if [ -f /etc/enigma2/backdrop.mvi ]; then
-		/usr/bin/showiframe /etc/enigma2/backdrop.mvi
-	elif [ -f /usr/share/backdrop.mvi ]; then
-		/usr/bin/showiframe /usr/share/backdrop.mvi
+	if [ -f @sysconfdir@/enigma2/backdrop.mvi ]; then
+		@bindir@/showiframe @sysconfdir@/enigma2/backdrop.mvi
+	elif [ -f @datadir@/backdrop.mvi ]; then
+		@bindir@/showiframe @datadir@/backdrop.mvi
 	fi
 fi
 
 # hook to execute scripts always before enigma2 start
-if [ -x /usr/bin/enigma2_pre_start.sh ]; then
-	/usr/bin/enigma2_pre_start.sh
+if [ -x @bindir@/enigma2_pre_start.sh ]; then
+	@bindir@/enigma2_pre_start.sh
 fi
 
 if [ -e /proc/stb/info/hwmodel ]; then
@@ -118,6 +111,13 @@ stbcheck=00
 if [ -e /proc/stb/info/subtype ]; then
    stbcheck=`cat /proc/stb/info/subtype`
 fi
+if [ -e /proc/stb/info/boxtype ] && [ -e /proc/stb/info/chipset ]; then
+   boxtype=`cat /proc/stb/info/boxtype`
+   chipset=`cat /proc/stb/info/chipset`
+   if  [ $boxtype == "et7000" ] && [ $chipset == "bcm73625" ]; then
+       stbcheck=01
+   fi
+fi
 if [ -e /etc/defaultsat.tar.gz ] && [ ! -e /etc/enigma2/lamedb ] && [ ! $stbcheck == "01" ] && [ ! $stbcheck == "1" ]; then
 	tar -xzf /etc/defaultsat.tar.gz -C /etc/enigma2
 fi
@@ -141,13 +141,13 @@ if [ "$(grep config.crash.enabledebug /etc/enigma2/settings)" == "config.crash.e
 	if [ "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" != "" -a -d "$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')" ]; then
 		LOGFOLDER=$(grep config.crash.debug_path= /etc/enigma2/settings | sed 's/config.crash.debug_path=//g')
 	fi
-	LD_PRELOAD=$LIBS /usr/bin/enigma2 --debug-no-color &> ${LOGFOLDER}Enigma2-debug-$(date +%Y%m%d_%H-%M-%S)${RANDOMIZE1970}.log
+	LD_PRELOAD=$LIBS @bindir@/enigma2 --debug-no-color &> ${LOGFOLDER}Enigma2-debug-$(date +%Y%m%d_%H-%M-%S)${RANDOMIZE1970}.log
 else
 	# in case $TERM is "linux" the serial output is activated - discard debug output
 	if [ "$TERM" = linux ]; then
-		LD_PRELOAD=$LIBS /usr/bin/enigma2 2> /dev/null
+		LD_PRELOAD=$LIBS @bindir@/enigma2 2> /dev/null
 	else
-		LD_PRELOAD=$LIBS /usr/bin/enigma2
+		LD_PRELOAD=$LIBS @bindir@/enigma2
 	fi
 fi
 
@@ -167,11 +167,8 @@ if [ "$ret" -ne "1" ]; then
 		if [ $stbcheck == "u5" ]; then
 			killall -9 showiframe; sleep 5
 		fi
-		if [ $stbcheck == "cc" ]; then
-			killall -9 libreader; sleep 5
-		fi
-		stbcheck=`cat /proc/stb/info/boxtype | cut -c1-6`
-		if [ $stbcheck == "sf8008" ]; then
+		stbcheck=`cat /proc/stb/info/boxtype`
+		if [ $stbcheck == "sf8008" ] || [ $stbcheck == "ustym4kpro" ] || [ $stbcheck == "cc1" ] ; then
 			killall -9 libreader; sleep 5
 		fi
 	fi
@@ -204,7 +201,7 @@ case $ret in
 		/sbin/reboot
 		;;
 	42)
-		python /usr/lib/enigma2/python/upgrade.pyo
+		python @libdir@/enigma2/python/upgrade.pyo
 		;;
 	43)
 		init 1
