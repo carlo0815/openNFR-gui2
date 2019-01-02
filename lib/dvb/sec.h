@@ -24,6 +24,7 @@ public:
 		UPDATE_CURRENT_SWITCHPARMS, INVALIDATE_CURRENT_SWITCHPARMS,
 		IF_ROTORPOS_VALID_GOTO,
 		IF_TUNER_LOCKED_GOTO,
+		IF_LOCK_TIMEOUT_GOTO,
 		IF_TONE_GOTO, IF_NOT_TONE_GOTO,
 		START_TUNE_TIMEOUT,
 		SET_ROTOR_MOVING,
@@ -277,6 +278,7 @@ public:
 	int SatCR_idx;
 	int SatCR_format;
 	int SatCR_switch_reliable;
+	int SatCR_RetuneNoPatEntry;
 	int BootUpTime;
 	unsigned int SatCRvco;
 	unsigned int TuningWord;
@@ -315,7 +317,7 @@ public:
 private:
 #ifndef SWIG
 	static eDVBSatelliteEquipmentControl *instance;
-	eDVBSatelliteLNBParameters m_lnbs[512]; // i think its enough
+	eDVBSatelliteLNBParameters m_lnbs[512]; // at the moment we have max 2 FBC Tuners.. a 8 channels... max 32 LNB per channel
 	int m_lnbidx; // current index for set parameters
 	std::multimap<int, eDVBSatelliteSwitchParameters>::iterator m_curSat;
 	eSmartPtrList<eDVBRegisteredFrontend> &m_avail_frontends, &m_avail_simulate_frontends;
@@ -400,6 +402,7 @@ public:
 	PyObject *getFrequencyRangeList(int slot_no, int orbital_position);
 
 	friend class eFBCTunerManager;
+	friend class eRTSPStreamClient;
 
 };
 
