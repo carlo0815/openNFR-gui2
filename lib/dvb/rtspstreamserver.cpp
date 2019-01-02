@@ -1342,4 +1342,3 @@ PyObject *eRTSPStreamServer::getConnectedClients()
 }
 
 eAutoInitPtr<eRTSPStreamServer> init_eRTSPStreamServer(eAutoInitNumbers::service + 1, "RTSP Stream server");
-
