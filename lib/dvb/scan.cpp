@@ -29,9 +29,7 @@
 #include "absdiff.h"
 
 #define SCAN_eDebug(x...) do { if (m_scan_debug) eDebug(x); } while(0)
-#define SCAN_eDebugNoNewLineStart(x...) do { if (m_scan_debug) eDebugNoNewLineStart(x); } while(0)
 #define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
-#define SCAN_eDebugNoNewLineEnd(x...) do { if (m_scan_debug) eDebugNoNewLineEnd(x); } while(0)
 
 DEFINE_REF(eDVBScan);
 
@@ -1568,7 +1566,7 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 	for (ServiceDescriptionConstIterator s(services.begin()); s != services.end(); ++s)
 	{
 		unsigned short service_id = (*s)->getServiceId();
-		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x: ", service_id);
+		SCAN_eDebugNoNewLine("[eDVBScan] SID %04x: ", service_id);
 		bool is_crypted = false;
 
 		std::map<unsigned short, service>::iterator it = m_pmts_to_read.find(service_id);
@@ -1576,13 +1574,13 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 		{
 			if (it->second.scrambled)
 			{
-				SCAN_eDebugNoNewLineEnd("is scrambled!");
+				SCAN_eDebug("is scrambled!");
 				is_crypted = true;
 			}
 			else
-				SCAN_eDebugNoNewLineEnd("is free");
+				SCAN_eDebug("is free");
 		}
-		SCAN_eDebugNoNewLine("\n");
+		SCAN_eDebug("\n");
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
 		{
@@ -1636,13 +1634,13 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 				{
 					CaIdentifierDescriptor &d = (CaIdentifierDescriptor&)**desc;
 					const CaSystemIdList &caids = *d.getCaSystemIds();
-					SCAN_eDebugNoNewLineStart("[eDVBScan] CA");
+					SCAN_eDebug("[eDVBScan] CA");
 					for (CaSystemIdList::const_iterator i(caids.begin()); i != caids.end(); ++i)
 					{
-						SCAN_eDebugNoNewLine(" %04x", *i);
+						SCAN_eDebug(" %04x", *i);
 						service->m_ca.push_front(*i);
 					}
-					SCAN_eDebugNoNewLine("\n");
+					SCAN_eDebug("\n");
 					break;
 				}
 				default:
@@ -1684,18 +1682,18 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 	{
 		unsigned short service_id = (*s)->getServiceId();
 		unsigned short source_id = (*s)->getSourceId();
-		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x, source_id %04x: ", service_id, source_id);
+		SCAN_eDebug("[eDVBScan] SID %04x, source_id %04x: ", service_id, source_id);
 		bool is_crypted = (*s)->isAccessControlled();
 
 		if (is_crypted)
 		{
-			SCAN_eDebugNoNewLine("is scrambled!");
+			SCAN_eDebug("is scrambled!");
 		}
 		else
 		{
-			SCAN_eDebugNoNewLine("is free");
+			SCAN_eDebug("is free");
 		}
-		SCAN_eDebugNoNewLine("\n");
+		SCAN_eDebug("\n");
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
 		{
