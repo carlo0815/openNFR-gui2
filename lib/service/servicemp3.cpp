@@ -23,6 +23,12 @@
 
 #include <sys/time.h>
 
+#if HAVE_ALIEN5
+extern "C" {
+#include <codec.h>
+}
+#endif
+
 #define HTTP_TIMEOUT 10
 
 /*
@@ -594,6 +600,11 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 		m_sourceinfo.containertype = ctMP4;
 		m_sourceinfo.audiotype = atAAC;
 	}
+	else if ( strcasecmp(ext, ".dra") == 0 )
+	{
+		m_sourceinfo.containertype = ctDRA;
+		m_sourceinfo.audiotype = atDRA;
+	}
 	else if ( strcasecmp(ext, ".m3u8") == 0 )
 		m_sourceinfo.is_hls = TRUE;
 	else if ( strcasecmp(ext, ".mp3") == 0 )
@@ -722,6 +733,9 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 			g_object_set(dvb_videosink, "e2-async", FALSE, NULL);
 			g_object_set(m_gst_playbin, "video-sink", dvb_videosink, NULL);
 		}
+#if HAVE_ALIEN5
+		aml_set_mediaplay_source((void *)m_gst_playbin,(int)m_sourceinfo.is_audio);
+#endif
 		/*
 		 * avoid video conversion, let the dvbmediasink handle that using native video flag
 		 * volume control is done by hardware, do not use soft volume flag
@@ -1197,20 +1211,20 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		g_object_get (m_gst_playbin, "source", &source, NULL);
 		if (!source)
 		{
-			eDebug("[eServiceMP3] trickSeek - cannot get source");
+			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source");
 			goto seek_unpause;
 		}
 		factory = gst_element_get_factory(source);
 		g_object_unref(source);
 		if (!factory)
 		{
-			eDebug("[eServiceMP3] trickSeek - cannot get source factory");
+			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source factory");
 			goto seek_unpause;
 		}
 		name = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
 		if (!name)
 		{
-			eDebug("[eServiceMP3] trickSeek - cannot get source name");
+			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source name");
 			goto seek_unpause;
 		}
 		/*
@@ -1237,7 +1251,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		}
 		else
 		{
-			eDebug("[eServiceMP3] trickSeek - source '%s' is not supported", name);
+			eDebugNoNewLineStart("[eServiceMP3] trickSeek - source '%s' is not supported", name);
 		}
 seek_unpause:
 		eDebug(", doing seeking unpause\n");
