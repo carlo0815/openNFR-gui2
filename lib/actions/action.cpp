@@ -79,7 +79,7 @@ void eActionMap::unbindAction(eWidget *widget, int id)
 void eActionMap::unbindAction(const std::string &context, ePyObject function)
 {
 	//eDebug("[eActionMap] unbind function from %s", context.c_str());
-	for (std::multimap<long, eActionBinding>::iterator i(m_bindings.begin()); i != m_bindings.end(); ++i)
+	for (std::multimap<int64_t, eActionBinding>::iterator i(m_bindings.begin()); i != m_bindings.end(); ++i)
 	{
 		if (i->second.m_fnc && (PyObject_Compare(i->second.m_fnc, function) == 0))
 		{
