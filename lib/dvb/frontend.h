@@ -100,6 +100,9 @@ private:
 	bool m_fbc;
 	eDVBFrontend *m_simulate_fe; // only used to set frontend type in dvb.cpp
 	int m_type;
+#if HAVE_ALIEN5
+	int m_looptimeout;
+#endif
 	int m_dvbid;
 	int m_slotid;
 	int m_fd;
@@ -112,6 +115,7 @@ private:
 	bool m_rotor_mode;
 	bool m_need_rotor_workaround;
 	bool m_need_delivery_system_workaround;
+	bool m_blindscan;
 	bool m_multitype;
 	std::map<fe_delivery_system_t, int> m_modelist;
 	std::map<fe_delivery_system_t, bool> m_delsys, m_delsys_whitelist;
@@ -137,6 +141,7 @@ private:
 
 	int m_timeoutCount; // needed for timeout
 	int m_retryCount; // diseqc retry for rotor
+	int m_configRetuneNoPatEntry;
 
 	void feEvent(int);
 	void timeout();
@@ -161,7 +166,7 @@ public:
 	int readInputpower();
 	int getCurrentType(){return m_type;}
 	void overrideType(int type){m_type = type;} //workaraound for dvb api < 5
-	RESULT tune(const iDVBFrontendParameters &where);
+	RESULT tune(const iDVBFrontendParameters &where, bool blindscan = false);
 	RESULT prepare_sat(const eDVBFrontendParametersSatellite &, unsigned int timeout);
 	RESULT prepare_cable(const eDVBFrontendParametersCable &);
 	RESULT prepare_terrestrial(const eDVBFrontendParametersTerrestrial &);
@@ -178,6 +183,9 @@ public:
 	RESULT getData(int num, long &data);
 	RESULT setData(int num, long val);
 	bool changeType(int type);
+	void checkRetune();
+	void retune();
+	void setConfigRetuneNoPatEntry(int value);
 
 	int readFrontendData(int type); // iFrontendInformation_ENUMS
 	void getFrontendStatus(ePtr<iDVBFrontendStatus> &dest);
@@ -238,4 +246,3 @@ public:
 
 
 #endif
-
