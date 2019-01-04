@@ -38,6 +38,8 @@
 
 #include <gst/gst.h>
 
+bool verbose = false;
+
 #ifdef OBJECT_DEBUG
 int object_total_remaining;
 
@@ -225,6 +227,22 @@ int main(int argc, char **argv)
 #endif
 
 	gst_init(&argc, &argv);
+	
+	for (int i = 0; i < argc; i++)
+	{
+		if (!(strcmp(argv[i], "--debug-no-color")) or !(strcmp(argv[i], "--nc")))
+		{
+			logOutputColors = 0;
+		}
+
+		if (!(strcmp(argv[i], "--verbose")))
+		{
+			verbose = true;
+		}
+	}
+
+	m_erroroutput = new eErrorOutput();
+	m_erroroutput->run();	
 
 	// set pythonpath if unset
 	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
