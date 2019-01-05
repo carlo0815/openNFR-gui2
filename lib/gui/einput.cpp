@@ -53,7 +53,7 @@ int eInput::event(int event, void *data, void *data2)
 		if (m_content)
 			m_content->getDisplay(text, cursor);
 
-		eDebug("cursor is %d", cursor);
+		eDebug("[eInput] cursor is %d", cursor);
 		para->setFont(m_font);
 		para->renderString(text.empty()?0:text.c_str(), 0);
 		int glyphs = para->size();
@@ -154,11 +154,11 @@ int eInput::event(int event, void *data, void *data2)
 	}
 	case evtFocusGot:
 	{
-		eDebug("focus got in %p", this);
+		eDebug("[eInput] focus got in %p", this);
 		ePtr<eActionMap> ptr;
 		eActionMap::getInstance(ptr);
-		ptr->bindAction("InputActions", 0, INPUT_ACTIONS, this);
-		ptr->bindAction("AsciiActions", 0, ASCII_ACTIONS, this);
+		ptr->bindAction("InputActions", (int64_t)0, INPUT_ACTIONS, this);
+		ptr->bindAction("AsciiActions", (int64_t)0, ASCII_ACTIONS, this);
 		m_have_focus = 1;
 		eRCInput::getInstance()->setKeyboardMode(eRCInput::kmAscii);
 			// fixme. we should use a style for this.
@@ -168,7 +168,7 @@ int eInput::event(int event, void *data, void *data2)
 	}
 	case evtFocusLost:
 	{
-		eDebug("focus lostin %p", this);
+		eDebug("[eInput] focus lostin %p", this);
 		ePtr<eActionMap> ptr;
 		eActionMap::getInstance(ptr);
 		ptr->unbindAction(this, INPUT_ACTIONS);

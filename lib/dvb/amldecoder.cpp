@@ -177,6 +177,11 @@ RESULT eAMLTSMPEGDecoder::setVideoPID(int vpid, int type)
 #endif
 		}
 		eDebug("%s() vpid=%d, type=%d",__PRETTY_FUNCTION__, vpid, type);
+		
+#if HAVE_ALIEN5
+
+		aml_change_vpid(vpid, m_codec.video_type);
+#endif
 	}
 	return 0;
 }
@@ -200,6 +205,10 @@ RESULT eAMLTSMPEGDecoder::setAudioPID(int apid, int type)
 			break;
 		case aAC3:
 			m_codec.audio_type = AFORMAT_AC3;
+			eDebug("%s() audio type: AC3",__PRETTY_FUNCTION__);
+			break;
+		case aDDP:
+			m_codec.audio_type = AFORMAT_EAC3;
 			eDebug("%s() audio type: AC3",__PRETTY_FUNCTION__);
 			break;
 		case aAAC:
@@ -263,6 +272,7 @@ RESULT eAMLTSMPEGDecoder::setSyncMaster(int who)
 RESULT eAMLTSMPEGDecoder::set()
 {
 	TRACE__
+
 	return 0;
 }
 
@@ -582,3 +592,11 @@ int eAMLTSMPEGDecoder::getVideoAspect()
 
 	return m_aspect == 1 ? 2 : 3;
 }
+int eAMLTSMPEGDecoder::getVideoGamma()
+{
+	//if (m_video)
+	//	return m_video->getGamma();
+	return -1;
+}
+
+

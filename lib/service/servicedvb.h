@@ -33,7 +33,7 @@ private:
 	RESULT lookupService(ePtr<eDVBService> &ptr, const eServiceReference &ref);
 };
 
-class eBouquet;
+struct eBouquet;
 
 class eDVBServiceList: public iListableService, public iMutableServiceList
 {
@@ -329,4 +329,3 @@ public:
 };
 
 #endif
-

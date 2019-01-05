@@ -29,7 +29,9 @@
 #include "absdiff.h"
 
 #define SCAN_eDebug(x...) do { if (m_scan_debug) eDebug(x); } while(0)
+#define SCAN_eDebugNoNewLineStart(x...) do { if (m_scan_debug) eDebugNoNewLineStart(x); } while(0)
 #define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
+#define SCAN_eDebugNoNewLineEnd(x...) do { if (m_scan_debug) eDebugNoNewLineEnd(x); } while(0)
 
 DEFINE_REF(eDVBScan);
 
@@ -1178,9 +1180,9 @@ void eDVBScan::channelDone()
 			if( m_chid_current )
 				tsonid = ( m_chid_current.transport_stream_id.get() << 16 )
 					| m_chid_current.original_network_id.get();
-			service->m_service_name = convertDVBUTF8(sname,-1,tsonid,0);
+			service->m_service_name = strip_non_graph(convertDVBUTF8(sname,-1,tsonid,0));
 			service->genSortName();
-			service->m_provider_name = convertDVBUTF8(pname,-1,tsonid,0);
+			service->m_provider_name = strip_non_graph(convertDVBUTF8(pname,-1,tsonid,0));
 		}
 
 		if (!(m_flags & scanOnlyFree) || !m_pmt_in_progress->second.scrambled) {
@@ -1566,7 +1568,7 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 	for (ServiceDescriptionConstIterator s(services.begin()); s != services.end(); ++s)
 	{
 		unsigned short service_id = (*s)->getServiceId();
-		SCAN_eDebug("[eDVBScan] SID %04x: ", service_id);
+		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x: ", service_id);
 		bool is_crypted = false;
 
 		std::map<unsigned short, service>::iterator it = m_pmts_to_read.find(service_id);
@@ -1574,13 +1576,13 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 		{
 			if (it->second.scrambled)
 			{
-				SCAN_eDebug("is scrambled!");
+				SCAN_eDebugNoNewLineEnd("is scrambled!");
 				is_crypted = true;
 			}
 			else
-				SCAN_eDebug("is free");
+				SCAN_eDebugNoNewLineEnd("is free");
 		}
-		SCAN_eDebug("\n");
+		SCAN_eDebugNoNewLine("\n");
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
 		{
@@ -1623,10 +1625,10 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 
 					ref.setServiceType(servicetype);
 					int tsonid=(sdt.getTransportStreamId() << 16) | sdt.getOriginalNetworkId();
-					service->m_service_name = convertDVBUTF8(d.getServiceName(),-1,tsonid,0);
+					service->m_service_name = strip_non_graph(convertDVBUTF8(d.getServiceName(),-1,tsonid,0));
 					service->genSortName();
 
-					service->m_provider_name = convertDVBUTF8(d.getServiceProviderName(),-1,tsonid,0);
+					service->m_provider_name = strip_non_graph(convertDVBUTF8(d.getServiceProviderName(),-1,tsonid,0));
 					SCAN_eDebug("[eDVBScan]   name '%s', provider_name '%s'", service->m_service_name.c_str(), service->m_provider_name.c_str());
 					break;
 				}
@@ -1634,13 +1636,13 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 				{
 					CaIdentifierDescriptor &d = (CaIdentifierDescriptor&)**desc;
 					const CaSystemIdList &caids = *d.getCaSystemIds();
-					SCAN_eDebug("[eDVBScan] CA");
+					SCAN_eDebugNoNewLineStart("[eDVBScan] CA");
 					for (CaSystemIdList::const_iterator i(caids.begin()); i != caids.end(); ++i)
 					{
-						SCAN_eDebug(" %04x", *i);
+						SCAN_eDebugNoNewLine(" %04x", *i);
 						service->m_ca.push_front(*i);
 					}
-					SCAN_eDebug("\n");
+					SCAN_eDebugNoNewLine("\n");
 					break;
 				}
 				default:
@@ -1682,18 +1684,18 @@ RESULT eDVBScan::processVCT(eDVBNamespace dvbnamespace, const VirtualChannelTabl
 	{
 		unsigned short service_id = (*s)->getServiceId();
 		unsigned short source_id = (*s)->getSourceId();
-		SCAN_eDebug("[eDVBScan] SID %04x, source_id %04x: ", service_id, source_id);
+		SCAN_eDebugNoNewLineStart("[eDVBScan] SID %04x, source_id %04x: ", service_id, source_id);
 		bool is_crypted = (*s)->isAccessControlled();
 
 		if (is_crypted)
 		{
-			SCAN_eDebug("is scrambled!");
+			SCAN_eDebugNoNewLine("is scrambled!");
 		}
 		else
 		{
-			SCAN_eDebug("is free");
+			SCAN_eDebugNoNewLine("is free");
 		}
-		SCAN_eDebug("\n");
+		SCAN_eDebugNoNewLine("\n");
 
 		if (!(m_flags & scanOnlyFree) || !is_crypted)
 		{

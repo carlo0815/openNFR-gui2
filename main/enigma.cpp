@@ -11,6 +11,7 @@
 #include <lib/actions/action.h>
 #include <lib/driver/rc.h>
 #include <lib/base/ioprio.h>
+#include <lib/base/e2avahi.h>
 #include <lib/base/ebase.h>
 #include <lib/base/eenv.h>
 #include <lib/base/eerror.h>
@@ -32,11 +33,15 @@
 #include <lib/python/connections.h>
 #include <lib/python/python.h>
 #include <lib/python/pythonconfig.h>
+#include <lib/service/servicepeer.h>
 
 #include "bsod.h"
 #include "version_info.h"
 
 #include <gst/gst.h>
+
+#include <lib/base/eerroroutput.h>
+ePtr<eErrorOutput> m_erroroutput;
 
 bool verbose = false;
 
@@ -64,12 +69,34 @@ void keyEvent(const eRCKey &key)
 {
 	static eRCKey last(0, 0, 0);
 	static int num_repeat;
+	static int long_press_emulation_pushed = false;
+	static time_t long_press_emulation_start = 0;	
 
 	ePtr<eActionMap> ptr;
 	eActionMap::getInstance(ptr);
 	/*eDebug("key.code : %02x \n", key.code);*/
 
-	if ((key.code == last.code) && (key.producer == last.producer) && key.flags & eRCKey::flagRepeat)
+	int flags = key.flags;
+	int long_press_emulation_key = eConfigManager::getConfigIntValue("config.usage.long_press_emulation_key");
+	if ((long_press_emulation_key > 0) && (key.code == long_press_emulation_key))
+	{
+		long_press_emulation_pushed = true;
+		long_press_emulation_start = time(NULL);
+		last = key;
+		return;
+	}
+
+	if (long_press_emulation_pushed && (time(NULL) - long_press_emulation_start < 10) && (key.producer == last.producer))
+	{
+		// emit make-event first
+		ptr->keyPressed(key.producer->getIdentifier(), key.code, key.flags);
+		// then setup condition for long-event
+		num_repeat = 3;
+		last = key;
+		flags = eRCKey::flagRepeat;
+	}
+
+	if ((key.code == last.code) && (key.producer == last.producer) && flags & eRCKey::flagRepeat)
 		num_repeat++;
 	else
 	{
@@ -89,7 +116,9 @@ void keyEvent(const eRCKey &key)
 		ptr->keyPressed(key.producer->getIdentifier(), 510 /* faked KEY_ASCII */, 0);
 	}
 	else
-		ptr->keyPressed(key.producer->getIdentifier(), key.code, key.flags);
+		ptr->keyPressed(key.producer->getIdentifier(), key.code, flags);
+
+	long_press_emulation_pushed = false;
 }
 
 /************************************************/
@@ -114,6 +143,8 @@ class eMain: public eApplication, public sigc::trackable
 public:
 	eMain()
 	{
+		e2avahi_init(this);
+		init_servicepeer();	
 		init.setRunlevel(eAutoInitNumbers::main);
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
@@ -127,6 +158,8 @@ public:
 	{
 		m_dvbdb->saveServicelist();
 		m_mgr->releaseCachedChannel();
+		done_servicepeer();
+		e2avahi_close();		
 	}
 };
 
@@ -188,14 +221,24 @@ void quitMainloop(int exitCode)
 		if (fd >= 0)
 		{
 			if (ioctl(fd, 10 /*FP_CLEAR_WAKEUP_TIMER*/) < 0)
-				eDebug("FP_CLEAR_WAKEUP_TIMER failed (%m)");
+				eDebug("[quitMainloop] FP_CLEAR_WAKEUP_TIMER failed (%m)");
 			close(fd);
 		}
 		else
-			eDebug("open /dev/dbox/fp0 for wakeup timer clear failed!(%m)");
+			eDebug("[quitMainloop] open /dev/dbox/fp0 for wakeup timer clear failed!(%m)");
 	}
 	exit_code = exitCode;
 	eApp->quit(0);
+}
+
+void pauseInit()
+{
+	eInit::pauseInit();
+}
+
+void resumeInit()
+{
+	eInit::resumeInit();
 }
 
 static void sigterm_handler(int num)
@@ -249,8 +292,6 @@ int main(int argc, char **argv)
 	printf("PYTHONPATH: %s\n", getenv("PYTHONPATH"));
 	printf("DVB_API_VERSION %d DVB_API_VERSION_MINOR %d\n", DVB_API_VERSION, DVB_API_VERSION_MINOR);
 
-	bsodLogInit();
-
 	ePython python;
 	eMain main;
 
@@ -280,7 +321,7 @@ int main(int argc, char **argv)
 
 /*	if (double_buffer)
 	{
-		eDebug(" - double buffering found, enable buffered graphics mode.");
+		eDebug("[MAIN]  - double buffering found, enable buffered graphics mode.");
 		dsk.setCompositionMode(eWidgetDesktop::cmBuffered);
 	} */
 
@@ -299,28 +340,39 @@ int main(int argc, char **argv)
 
 	std::string active_skin = getConfigCurrentSpinner("config.skin.primary_skin");
 
-	eDebug("Loading spinners...");
+	eDebug("[MAIN] Loading spinners...");
 
 	{
-		int i;
+		int i = 0;
+		bool def = false;
+		std::string path = "${sysconfdir}/enigma2/spinner";
 #define MAX_SPINNER 64
 		ePtr<gPixmap> wait[MAX_SPINNER];
-		for (i=0; i<MAX_SPINNER; ++i)
+		while(i < MAX_SPINNER)
 		{
 			char filename[64];
 			std::string rfilename;
-			snprintf(filename, sizeof(filename), "${datadir}/enigma2/%s/wait%d.png", active_skin.c_str(), i + 1);
+			snprintf(filename, sizeof(filename), "%s/wait%d.png", path.c_str(), i + 1);
 			rfilename = eEnv::resolve(filename);
 			loadPNG(wait[i], rfilename.c_str());
 
 			if (!wait[i])
 			{
 				if (!i)
-					eDebug("failed to load %s! (%m)", rfilename.c_str());
+				{
+					if (!def)
+					{
+						def = true;
+						snprintf(filename, sizeof(filename), "${datadir}/enigma2/%s", active_skin.c_str());
+						path = filename;
+						continue;
+					}
+				}
 				else
-					eDebug("found %d spinner!", i);
+					eDebug("[MAIN] found %d spinner!", i);
 				break;
 			}
+			i++;			
 		}
 		if (i)
 			my_dc->setSpinner(eRect(ePoint(25, 25), wait[0]->size()), wait, i);
@@ -332,7 +384,7 @@ int main(int argc, char **argv)
 
 	eRCInput::getInstance()->keyEvent.connect(sigc::ptr_fun(&keyEvent));
 
-	printf("executing main\n");
+	eDebug("[MAIN] executing main\n");
 
 	bsodCatchSignals();
 	catchTermSignal();
@@ -350,7 +402,7 @@ int main(int argc, char **argv)
 
 	if (exit_code == 5) /* python crash */
 	{
-		eDebug("(exit code 5)");
+		eDebug("[MAIN] (exit code 5)");
 		bsodFatal(0);
 	}
 
@@ -363,7 +415,7 @@ int main(int argc, char **argv)
 		p.clear();
 		p.flush();
 	}
-
+	m_erroroutput = NULL;
 	return exit_code;
 }
 

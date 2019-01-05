@@ -34,7 +34,7 @@
 #define eDebugNoSimulateNoNewLineEnd(x...) \
 	do { \
 		if (!m_simulate) \
-			eDebug(x); \
+			eDebugNoNewLineEnd(x); \
 	} while(0)
 
 #define eDebugNoSimulate(x...) \
@@ -46,13 +46,13 @@
 #define eDebugNoSimulateNoNewLineStart(x...) \
 	do { \
 		if (!m_simulate) \
-			eDebug(x); \
+			eDebugNoNewLineStart(x); \
 	} while(0)
 
 #define eDebugNoSimulateNoNewLine(x...) \
 	do { \
 		if (!m_simulate) \
-			eDebug(x); \
+			eDebugNoNewLine(x); \
 	} while(0)
 
 #define eDebugDeliverySystem(x...) \

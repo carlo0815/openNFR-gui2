@@ -81,7 +81,7 @@ typedef struct {
 } mhw_channel_equiv_t;
 #endif
 
-class eventData;
+struct eventData;
 class eServiceReferenceDVB;
 class eDVBServicePMTHandler;
 
@@ -325,8 +325,8 @@ public:
 	};
 	eFixedMessagePump<Message> messages;
 private:
-	friend class channel_data;
-	friend class eventData;
+	friend struct channel_data;
+	friend struct eventData;
 	static eEPGCache *instance;
 
 	typedef std::map<iDVBChannel*, channel_data*> ChannelMap;
@@ -416,13 +416,17 @@ public:
 		SIMILAR_BROADCASTINGS_SEARCH,
 		EXAKT_TITLE_SEARCH,
 		PARTIAL_TITLE_SEARCH,
-		START_TITLE_SEARCH
+		PARTIAL_DESCRIPTION_SEARCH,
+        START_TITLE_SEARCH
 	};
 	enum {
 		CASE_CHECK,
-		NO_CASE_CHECK
+		NO_CASE_CHECK,
+        REGEX_CHECK
 	};
+
 	PyObject *lookupEvent(SWIG_PYOBJECT(ePyObject) list, SWIG_PYOBJECT(ePyObject) convertFunc=(PyObject*)0);
+	const char* casetypestr(int value);
 	PyObject *search(SWIG_PYOBJECT(ePyObject));
 
 	// eServiceEvent are parsed epg events.. it's safe to use them after cache unlock

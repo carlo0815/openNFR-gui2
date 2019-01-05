@@ -473,7 +473,7 @@ void eDBoxLCD::update()
 						fclose(file);
 					}
 				}
-#endif				
+#endif
 				else
 				{
 					write(lcdfd, _buffer, _stride * res.height());

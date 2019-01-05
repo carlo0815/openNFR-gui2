@@ -33,6 +33,7 @@ eServiceFactoryDVD::eServiceFactoryDVD()
 		std::list<std::string> extensions;
 		extensions.push_back("iso");
 		extensions.push_back("img");
+		extensions.push_back("nrg");
 		sc->addServiceFactory(eServiceFactoryDVD::id, this, extensions);
 	}
 	m_service_info = new eStaticServiceDVDInfo();
@@ -623,7 +624,7 @@ RESULT eServiceDVD::getName(std::string &name)
 
 int eServiceDVD::getInfo(int w)
 {
-	eDebugNoNewLine("[eServiceDVD] getInfo: %d", w);
+	eDebugNoNewLineStart("[eServiceDVD] getInfo: %d", w);
 	switch (w)
 	{
 		case sCurrentChapter:

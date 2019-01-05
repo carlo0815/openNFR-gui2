@@ -411,13 +411,13 @@ void eDVBRdsDecoder::gotAncillaryData(const uint8_t *buf, int len)
 					switch (c)
 					{
 						case 0 ... 0x7f: break;
-						case 0x8d: c='\DF'; break;
-						case 0x91: c='\E4'; break;
-						case 0xd1: c='\C4'; break;
-						case 0x97: c='\F6'; break;
-						case 0xd7: c='\D6'; break;
-						case 0x99: c='\FC'; break;
-						case 0xd9: c='\DC'; break;
+						case 0x8d: c='ß'; break;
+						case 0x91: c='ä'; break;
+						case 0xd1: c='Ä'; break;
+						case 0x97: c='ö'; break;
+						case 0xd7: c='Ö'; break;
+						case 0x99: c='ü'; break;
+						case 0xd9: c='Ü'; break;
 						default: c=' '; break;  // convert all unknown to space
 					}
 					message[msgPtr++]=c;

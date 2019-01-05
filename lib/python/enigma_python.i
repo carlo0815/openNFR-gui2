@@ -42,6 +42,7 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/base/eerror.h>
 #include <lib/base/etpm.h>
 #include <lib/base/message.h>
+#include <lib/base/modelinformation.h>
 #include <lib/base/e2avahi.h>
 #include <lib/driver/rc.h>
 #include <lib/driver/rcinput_swig.h>
@@ -159,6 +160,7 @@ typedef long time_t;
 
 %immutable eSocketNotifier::activated;
 %include <lib/base/ebase.h>
+%include <lib/base/modelinformation.h>
 %include <lib/base/smartptr.h>
 %include <lib/service/event.h>
 %include <lib/service/iservice.h>
@@ -444,6 +446,8 @@ extern void runMainloop();
 extern void quitMainloop(int exit_code);
 extern eApplication *getApplication();
 extern int getPrevAsciiCode();
+extern int getBsodCounter();
+extern void resetBsodCounter();
 extern void addFont(const char *filename, const char *alias, int scale_factor, int is_replacement, int renderflags = 0);
 extern const char *getEnigmaVersionString();
 extern const char *getGStreamerVersionString();
@@ -452,10 +456,14 @@ extern void dump_malloc_stats(void);
 extern void setAnimation_current(int a);
 extern void setAnimation_speed(int speed);
 #endif
+extern void pauseInit(void);
+extern void resumeInit(void);
 %}
 
 extern void addFont(const char *filename, const char *alias, int scale_factor, int is_replacement, int renderflags = 0);
 extern int getPrevAsciiCode();
+extern int getBsodCounter();
+extern void resetBsodCounter();
 extern void runMainloop();
 extern void quitMainloop(int exit_code);
 extern eApplication *getApplication();
@@ -466,6 +474,8 @@ extern void dump_malloc_stats(void);
 extern void setAnimation_current(int a);
 extern void setAnimation_speed(int speed);
 #endif
+extern void pauseInit(void);
+extern void resumeInit(void);
 
 %include <lib/python/python_console.i>
 %include <lib/python/python_base.i>

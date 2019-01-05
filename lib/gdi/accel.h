@@ -23,6 +23,7 @@ public:
 	int fill(gUnmanagedSurface *dst, const eRect &area, unsigned long col);
 	int accumulate();
 	int sync();
+
 	int accelAlloc(gUnmanagedSurface* surface);
 	void accelFree(gUnmanagedSurface* surface);
 
