@@ -143,8 +143,6 @@ class eMain: public eApplication, public sigc::trackable
 public:
 	eMain()
 	{
-		e2avahi_init(this);
-		init_servicepeer();	
 		init.setRunlevel(eAutoInitNumbers::main);
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
@@ -158,8 +156,6 @@ public:
 	{
 		m_dvbdb->saveServicelist();
 		m_mgr->releaseCachedChannel();
-		done_servicepeer();
-		e2avahi_close();		
 	}
 };
 
