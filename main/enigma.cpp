@@ -132,10 +132,10 @@ void keyEvent(const eRCKey &key)
 
 class eMain: public eApplication, public sigc::trackable
 {
-	printf("[MAIN] 1\"%s\"\n", m_dvbdb);
-	printf("[MAIN] 2\"%s\"\n", m_mgr);
-	printf("[MAIN] 3\"%s\"\n", m_locale_time_handler);
-	printf("[MAIN] 4\"%s\"\n", m_epgcache);
+	printf("[MAIN] 1\n");
+	printf("[MAIN] 2\n");
+	printf("[MAIN] 3\n");
+	printf("[MAIN] 4\n");
 	eInit init;
 	ePythonConfigQuery config;
 
@@ -148,12 +148,12 @@ public:
 	eMain()
 	{
 		init.setRunlevel(eAutoInitNumbers::main);
-		printf("[MAIN] 5\"%s\"\n", eAutoInitNumbers::main);
-		printf("[MAIN] 6\"%s\"\n", new eDVBDB());
-		printf("[MAIN] 7\"%s\"\n", new eDVBResourceManager());
-		printf("[MAIN] 8\"%s\"\n", new eDVBLocalTimeHandler());
-		printf("[MAIN] 9\"%s\"\n", new eEPGCache());
-		printf("[MAIN] 10\"%s\"\n", setChannelList(m_dvbdb));
+		printf("[MAIN] 5\n");
+		printf("[MAIN] 6\n");
+		printf("[MAIN] 7\n",;
+		printf("[MAIN] 8\n");
+		printf("[MAIN] 9\n");
+		printf("[MAIN] 10\n");
 		
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
@@ -392,25 +392,25 @@ int main(int argc, char **argv)
 	eRCInput::getInstance()->keyEvent.connect(sigc::ptr_fun(&keyEvent));
 
 	eDebug("[MAIN] executing main\n");
-	printf("[MAIN] 11\\n");
+	printf("[MAIN] 11\n");
 	bsodCatchSignals();
-	printf("[MAIN] 12\\n");
+	printf("[MAIN] 12\n");
 	catchTermSignal();
-	printf("[MAIN] 13\\n");
+	printf("[MAIN] 13\n");
 	setIoPrio(IOPRIO_CLASS_BE, 3);
-	printf("[MAIN] 14\\n");
+	printf("[MAIN] 14\n");
 	/* start at full size */
 	eVideoWidget::setFullsize(true);
-	printf("[MAIN] 15\\n");
+	printf("[MAIN] 15\n");
 	//	python.execute("mytest", "__main__");
 	python.execFile(eEnv::resolve("${libdir}/enigma2/python/mytest.py").c_str());
-	printf("[MAIN] 16\\n");
+	printf("[MAIN] 16\n");
 	/* restore both decoders to full size */
 	eVideoWidget::setFullsize(true);
 
 	if (exit_code == 5) /* python crash */
 	{
-		printf("[MAIN] 17\\n");
+		printf("[MAIN] 17\n");
 		eDebug("[MAIN] (exit code 5)");
 		bsodFatal(0);
 	}
@@ -440,7 +440,7 @@ eApplication *getApplication()
 
 void runMainloop()
 {
-	printf("[MAIN] 18\\n");
+	printf("[MAIN] 18\n");
 	catchTermSignal();
 	eApp->runLoop();
 }
