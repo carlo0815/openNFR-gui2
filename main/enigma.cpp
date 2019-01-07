@@ -132,10 +132,6 @@ void keyEvent(const eRCKey &key)
 
 class eMain: public eApplication, public sigc::trackable
 {
-	printf("[MAIN] eins\n");
-	printf("[MAIN] zwei\n");
-	printf("[MAIN] drei\n");
-	printf("[MAIN] vier\n");
 	eInit init;
 	ePythonConfigQuery config;
 
@@ -148,12 +144,6 @@ public:
 	eMain()
 	{
 		init.setRunlevel(eAutoInitNumbers::main);
-		printf("[MAIN] fuenf\n");
-		printf("[MAIN] sechs\n");
-		printf("[MAIN] sieben\n",;
-		printf("[MAIN] acht\n");
-		printf("[MAIN] neun\n");
-		printf("[MAIN] zehn\n");
 		
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
@@ -392,25 +382,18 @@ int main(int argc, char **argv)
 	eRCInput::getInstance()->keyEvent.connect(sigc::ptr_fun(&keyEvent));
 
 	eDebug("[MAIN] executing main\n");
-	printf("[MAIN] elf\n");
 	bsodCatchSignals();
-	printf("[MAIN] zwoelf\n");
 	catchTermSignal();
-	printf("[MAIN] dreizehn\n");
 	setIoPrio(IOPRIO_CLASS_BE, 3);
-	printf("[MAIN] vierzehn\n");
 	/* start at full size */
 	eVideoWidget::setFullsize(true);
-	printf("[MAIN] fuenfzehn\n");
 	//	python.execute("mytest", "__main__");
 	python.execFile(eEnv::resolve("${libdir}/enigma2/python/mytest.py").c_str());
-	printf("[MAIN] sechszehn\n");
 	/* restore both decoders to full size */
 	eVideoWidget::setFullsize(true);
 
 	if (exit_code == 5) /* python crash */
 	{
-		printf("[MAIN] siebzehn\n");
 		eDebug("[MAIN] (exit code 5)");
 		bsodFatal(0);
 	}
@@ -440,7 +423,6 @@ eApplication *getApplication()
 
 void runMainloop()
 {
-	printf("[MAIN] achtzehn\n");
 	catchTermSignal();
 	eApp->runLoop();
 }
