@@ -136,9 +136,13 @@ class eMain: public eApplication, public sigc::trackable
 	ePythonConfigQuery config;
 
 	ePtr<eDVBDB> m_dvbdb;
+	eDebug("m_dvbdb : %02x \n", m_dvbdb);
 	ePtr<eDVBResourceManager> m_mgr;
+	eDebug("m_mgr : %02x \n", m_mgr);
 	ePtr<eDVBLocalTimeHandler> m_locale_time_handler;
+	eDebug("m_locale_time_handler : %02x \n", m_locale_time_handler);
 	ePtr<eEPGCache> m_epgcache;
+	eDebug("m_epgcache : %02x \n", m_epgcache);
 
 public:
 	eMain()
@@ -147,10 +151,15 @@ public:
 		
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
+		eDebug("m_dvbdb : %02x \n", m_dvbdb);
 		m_mgr = new eDVBResourceManager();
-		m_locale_time_handler = new eDVBLocalTimeHandler();
-		m_epgcache = new eEPGCache();
+		eDebug("m_mgr : %02x \n", m_mgr);
+		m_mgr = new eDVBLocalTimeHandler();
+		eDebug("m_mgr : %02x \n", m_mgr);
+		m_epgcache  = new eEPGCache();
+		eDebug("m_epgcache  : %02x \n", m_epgcache );
 		m_mgr->setChannelList(m_dvbdb);
+		eDebug("m_mgr : %02x \n", m_mgr);
 	}
 
 	~eMain()
