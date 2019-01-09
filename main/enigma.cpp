@@ -70,7 +70,7 @@ void keyEvent(const eRCKey &key)
 	static eRCKey last(0, 0, 0);
 	static int num_repeat;
 	static int long_press_emulation_pushed = false;
-	static time_t long_press_emulation_start = 0;	
+	static time_t long_press_emulation_start = 0;
 
 	ePtr<eActionMap> ptr;
 	eActionMap::getInstance(ptr);
@@ -140,17 +140,17 @@ class eMain: public eApplication, public sigc::trackable
 	ePtr<eDVBLocalTimeHandler> m_locale_time_handler;
 	ePtr<eEPGCache> m_epgcache;
 
-
 public:
 	eMain()
 	{
+		e2avahi_init(this);
+		init_servicepeer();
 		init.setRunlevel(eAutoInitNumbers::main);
-		
 		/* TODO: put into init */
 		m_dvbdb = new eDVBDB();
 		m_mgr = new eDVBResourceManager();
-		m_mgr = new eDVBLocalTimeHandler();
-		m_epgcache  = new eEPGCache();
+		m_locale_time_handler = new eDVBLocalTimeHandler();
+		m_epgcache = new eEPGCache();
 		m_mgr->setChannelList(m_dvbdb);
 	}
 
@@ -158,6 +158,8 @@ public:
 	{
 		m_dvbdb->saveServicelist();
 		m_mgr->releaseCachedChannel();
+		done_servicepeer();
+		e2avahi_close();
 	}
 };
 
@@ -268,7 +270,7 @@ int main(int argc, char **argv)
 #endif
 
 	gst_init(&argc, &argv);
-	
+
 	for (int i = 0; i < argc; i++)
 	{
 		if (!(strcmp(argv[i], "--debug-no-color")) or !(strcmp(argv[i], "--nc")))
@@ -283,7 +285,7 @@ int main(int argc, char **argv)
 	}
 
 	m_erroroutput = new eErrorOutput();
-	m_erroroutput->run();	
+	m_erroroutput->run();
 
 	// set pythonpath if unset
 	setenv("PYTHONPATH", eEnv::resolve("${libdir}/enigma2/python").c_str(), 0);
@@ -370,7 +372,7 @@ int main(int argc, char **argv)
 					eDebug("[MAIN] found %d spinner!", i);
 				break;
 			}
-			i++;			
+			i++;
 		}
 		if (i)
 			my_dc->setSpinner(eRect(ePoint(25, 25), wait[0]->size()), wait, i);
@@ -383,13 +385,18 @@ int main(int argc, char **argv)
 	eRCInput::getInstance()->keyEvent.connect(sigc::ptr_fun(&keyEvent));
 
 	eDebug("[MAIN] executing main\n");
+
 	bsodCatchSignals();
 	catchTermSignal();
+
 	setIoPrio(IOPRIO_CLASS_BE, 3);
+
 	/* start at full size */
 	eVideoWidget::setFullsize(true);
+
 	//	python.execute("mytest", "__main__");
 	python.execFile(eEnv::resolve("${libdir}/enigma2/python/mytest.py").c_str());
+
 	/* restore both decoders to full size */
 	eVideoWidget::setFullsize(true);
 
