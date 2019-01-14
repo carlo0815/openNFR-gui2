@@ -278,10 +278,12 @@ class Devices(Screen):
 		self.activityTimer.timeout.get().append(self.populate2)
 		self.populate()
 
-		self["actions"] = ActionMap(["SetupActions", "ColorActions", "TimerEditActions"],
+		self["actions"] = ActionMap(["SetupActions", "ColorActions", "TimerEditActions", "DirectionActions"],
 			{
 				"cancel": self.close,
 				"ok": self.close,
+				"up": self["AboutScrollLabel"].pageUp,
+				"down": self["AboutScrollLabel"].pageDown				
 			})
 			
 	def populate(self):
