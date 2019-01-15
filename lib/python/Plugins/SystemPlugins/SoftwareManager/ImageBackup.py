@@ -745,8 +745,8 @@ class ImageBackup(Screen):
 		if "ubi" in self.ROOTFSTYPE.split():
 			self.MKFS = "/usr/sbin/mkfs.ubifs"
 		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","sf8008s","sf8008t","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
-				self.MKFS = "/bin/tar"
-				self.BZIP2 = "/usr/bin/bzip2"
+		        self.MKFS = "/bin/tar"
+		        self.BZIP2 = "/usr/bin/bzip2"
 		else:
 			self.MKFS = "/usr/sbin/mkfs.jffs2"
 		self.UBINIZE = "/usr/sbin/ubinize"
@@ -771,6 +771,7 @@ class ImageBackup(Screen):
 		self.IMAGEFOLDER1 = self.IMAGEFOLDER.split('/')[0]
 		self.MAINDEST1 = "%s/%s" % (self.DIRECTORY, self.IMAGEFOLDER1)
 		self.EXTRA = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.IMAGEFOLDER)
+		self.EXTRAROOT = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		self.EXTRA1 = "%s/fullbackup_%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE)
 		self.EXTRAOLD = "%s/fullbackup_%s/%s/%s" % (self.DIRECTORY, self.MODEL, self.DATE, self.MODEL)
 
