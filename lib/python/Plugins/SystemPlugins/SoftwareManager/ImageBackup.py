@@ -762,6 +762,7 @@ class ImageBackup(Screen):
 
 	def doFullBackup(self, DIRECTORY):
                 self.DIRECTORY = DIRECTORY
+	        self.TITLE = _("Full back-up on %s") % (self.DIRECTORY)
 	        self.BackupDirectory5 = "%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL)
                 if not path.exists("%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL)):
                         mkdir("%s/fullbackup_%s/"  % (self.DIRECTORY, self.MODEL))
