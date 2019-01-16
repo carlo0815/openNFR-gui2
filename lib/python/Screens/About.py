@@ -360,10 +360,10 @@ class Devices(Screen):
 		
 		self.AboutText += self.list + "\n"
 		self.AboutText += "\n" + _("Network Servers:") + "\n"
-		self.mountinfo = _("none")
+		#self.mountinfo = _("none")
 		self.Console.ePopen("df -mh | grep -v '^Filesystem'", self.Stage1Complete)
-		self.AboutText +=self.mountinfo
-		self["AboutScrollLabel"].setText(self.AboutText)
+		#self.AboutText +=self.mountinfo
+		#self["AboutScrollLabel"].setText(self.AboutText)
 
 	def Stage1Complete(self, result, retval, extra_args=None):
 		result = result.replace('\n                        ', ' ').split('\n')
@@ -377,16 +377,17 @@ class Devices(Screen):
 				mountfree = line[3]
 				if self.mountinfo:
 					self.mountinfo += "\n"
-					self.mountinfo += "%s (%sB, %sB %s)" % (ipaddress, mounttotal, mountfree, _("free"))
+				self.mountinfo += "%s (%sB, %sB %s)" % (ipaddress, mounttotal, mountfree, _("free"))
 		if self.mountinfo:
-			self.mountinfo += "\n"
+                        self.mountinfo += "\n"
 		else:
-			self.mountinfo += (_('none'))
+                        self.mountinfo += (_('none'))
 		try:
 			self.AboutText += self.mountinfo + "\n"
 		except:	
-			pass
-
+                        pass
+                        
+                self["AboutScrollLabel"].setText(self.AboutText) 
 
 
 class SystemMemoryInfo(Screen):
