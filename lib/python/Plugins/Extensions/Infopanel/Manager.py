@@ -78,70 +78,73 @@ class NFRCamManager(Screen):
 		self.Timer.start(1000*4, False)
 
 	def createinfo(self):
-	        for fdelete in glob ('/usr/emu/*.x'):
-			os.remove (fdelete)
+			for fdelete in glob ('/usr/emu/*.x'):
+				os.remove (fdelete)
 			
-	        for fdelete in glob ('/usr/emu/*.usb'):
-			os.remove (fdelete)
+			for fdelete in glob ('/usr/emu/*.usb'):
+				os.remove (fdelete)
 			
-                for fdelete in glob ('/usr/keys/*'):
-                	if os.path.islink(fdelete):
-				os.unlink(fdelete)
-	        if os.path.isfile("/tmp/usbsoftcam"):
-	                fobj = open("/tmp/usbsoftcam")
-	                for line in fobj:
-	                    spath = line.rstrip()
-	                fobj.close()
-	                testfile = spath + "use_softcam"
-	        	if os.path.exists(spath) and os.path.isfile(testfile):         
-		        	epath = spath + "emu/"	
-		        	uemus=[]
-		        	uemus = os.listdir(epath)
-		        	for emu in uemus:  
-		                	emu1 = emu.strip()
-		                	src = epath + emu1
-		                	dst = "/usr/emu/" + emu1 + ".usb"
-			        	os.symlink(src, dst)
-		        	kpath = spath + "keys/"	
-		        	kemus=[]
-		        	kemus = os.listdir(kpath)
-		        	for kemu in kemus:
-		                	kemu1 = kemu.strip()
-		                	src = kpath + kemu1
-		                	dst = "/usr/keys/" + kemu1
-		                	dst1 = dst
-		                	if os.path.isfile(dst):
-		                		self.Console.ePopen("mv %s %s.org" % (dst,dst1))
-		                		sleep(0.50)
-			        	os.symlink(src, dst)                                                                                 			
+			for fdelete in glob ('/usr/keys/*'):
+				if os.path.islink(fdelete):
+					os.unlink(fdelete)
+			if os.path.isfile("/tmp/usbsoftcam"):
+				fobj = open("/tmp/usbsoftcam")
+				for line in fobj:
+					spath = line.rstrip()
+				fobj.close()
+				testfile = spath + "use_softcam"
+				if os.path.exists(spath) and os.path.isfile(testfile):         
+					epath = spath + "emu/"	
+					uemus=[]
+					uemus = os.listdir(epath)
+					for emu in uemus:  
+						emu1 = emu.strip()
+						src = epath + emu1
+						dst = "/usr/emu/" + emu1 + ".usb"
+						os.symlink(src, dst)
+					kpath = spath + "keys/"	
+					kemus=[]
+					kemus = os.listdir(kpath)
+					for kemu in kemus:
+						kemu1 = kemu.strip()
+						src = kpath + kemu1
+						dst = "/usr/keys/" + kemu1
+						dst1 = dst
+						if os.path.isfile(dst):
+							self.Console.ePopen("mv %s %s.org" % (dst,dst1))
+							sleep(0.50)
+						os.symlink(src, dst)                                                                                 			
 	
-		emus=[]
-		for fAdd in glob ('/etc/*.emu'):
-			searchfile = open(fAdd, "r")
-			for line in searchfile:
-				if "binname" in line:
-					emus.append(line[10:])
-			searchfile.close()
+			emus=[]
+			for fAdd in glob ('/etc/*.emu'):
+				searchfile = open(fAdd, "r")
+				for line in searchfile:
+					if "binname" in line:
+						emus.append(line[10:])
+				searchfile.close()
 			
-		for fAdd1 in glob ('/etc/init.d/softcam.*'):
-			searchfile1 = open(fAdd1, "r")
-			for line1 in searchfile1:
-				if 'echo "/usr/bin/' in line1:
-					line2 = line1[15:]
-					line3 = line2.split(" ")
-					line4 = line3[0]
-					emus.append(line4)
-			searchfile1.close()			
+			for fAdd1 in glob ('/etc/init.d/softcam.*'):
+				searchfile1 = open(fAdd1, "r")
+				for line1 in searchfile1:
+					if 'echo "/usr/bin/' in line1:
+						line2 = line1[15:]
+						line3 = line2.split(" ")
+						line4 = line3[0]
+						emus.append(line4)
+				searchfile1.close()			
 	
-		for emu in emus:
-		        emu1 = emu.strip()
-		        src = "/usr/bin/" + emu1
-		        dst = "/usr/emu/" + emu1 + ".x"
-			os.symlink(src, dst)
+			try:
+				for emu in emus:
+					emu1 = emu.strip()
+					src = "/usr/bin/" + emu1
+					dst = "/usr/emu/" + emu1 + ".x"
+					os.symlink(src, dst)
+			except:					
+					print "files exist"					
 	
-	        self.iscam = False
-		self.startcreatecamlist()
-		self.listecminfo()
+			self.iscam = False
+			self.startcreatecamlist()
+			self.listecminfo()
 
 	def listecminfo(self):
 		self.AboutText = ""
@@ -196,7 +199,7 @@ class NFRCamManager(Screen):
 		except:
 			listecm += "\n" + self.AboutText
 			listecm += "\n" + self.AboutText1
-                        self["status"].setText(listecm)
+			self["status"].setText(listecm)
                 
 	def startcreatecamlist(self):
 		self.Console.ePopen("ls %s" % config.NFRSoftcam.camdir.value,
