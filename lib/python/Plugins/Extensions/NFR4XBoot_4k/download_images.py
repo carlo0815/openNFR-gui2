@@ -44,7 +44,7 @@ class NFR4XChooseOnLineImage(Screen):
         returnValue = self.sel[2]
 	if returnValue in ('opennfr', 'openhdf', 'openatv-6.0', 'opendroid'): 	
             from Screens.Setup import Setup
-	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1")), ("6.2", _("6.2"))]
+	    MBImagelist = [("6.0", _("6.0")), ("6.1", _("6.1")), ("6.2", _("6.2")), ("6.3", _("6.3"))]
 	    if returnValue ==  'opennfr':
 	        MBImagelist.append(("5.3", _("5.3")))
 	    elif returnValue ==  'opendroid':
