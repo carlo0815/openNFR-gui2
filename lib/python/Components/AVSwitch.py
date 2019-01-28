@@ -801,6 +801,7 @@ def InitAVSwitch():
 		config.av.hdmihdrtype = ConfigSelection(choices={
 				"auto": _("Auto"),
 				"dolby": _("dolby"),
+				"none": _("sdr"),
 				"hdr10": _("hdr10"),
 				"hlg": _("hlg")},
 				default = "auto")
