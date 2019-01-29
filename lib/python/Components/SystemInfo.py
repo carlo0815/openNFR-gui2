@@ -1,4 +1,4 @@
-from boxbranding import getBoxType, getMachineProcModel, getMachineBuild
+from boxbranding import getBoxType, getMachineProcModel, getMachineBuild, getDisplayType
 from os import path
 
 from enigma import eDVBResourceManager, Misc_Options
@@ -34,6 +34,9 @@ SystemInfo["12V_Output"] = Misc_Options.getInstance().detected_12V_output()
 SystemInfo["ZapMode"] = fileCheck("/proc/stb/video/zapmode") or fileCheck("/proc/stb/video/zapping_mode")
 SystemInfo["NumFrontpanelLEDs"] = countFrontpanelLEDs()
 SystemInfo["FrontpanelDisplay"] = fileExists("/dev/dbox/oled0") or fileExists("/dev/dbox/lcd0")
+SystemInfo["7segment"] = getDisplayType() in ('7segment')
+SystemInfo["ConfigDisplay"] = SystemInfo["FrontpanelDisplay"] and getDisplayType() not in ('7segment')
+SystemInfo["LCDSKINSetup"] = path.exists("/usr/share/enigma2/display") and getDisplayType() not in ('7segment')
 SystemInfo["OledDisplay"] = fileExists("/dev/dbox/oled0") or getBoxType() in ('osminiplus')
 SystemInfo["LcdDisplay"] = fileExists("/dev/dbox/lcd0") or getBoxType() in ('e4hdultra')
 SystemInfo["FBLCDDisplay"] = fileCheck("/proc/stb/fb/sd_detach")
