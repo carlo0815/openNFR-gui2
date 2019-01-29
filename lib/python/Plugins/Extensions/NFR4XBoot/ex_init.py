@@ -1,4 +1,12 @@
 import sys, nfr4xboot
+import os
+import shutil
+for delusb in os.listdir('/media/nfr4xboot/NFR4XBootUpload'):
+    if delusb.split('.')[-1] != 'zip':
+        if os.path.isfile('/media/nfr4xboot/NFR4XBootUpload/' + delusb) is True:
+            os.remove('/media/nfr4xboot/NFR4XBootUpload/' + delusb)
+        else:    
+            shutil.rmtree('/media/nfr4xboot/NFR4XBootUpload/' + delusb)
 if len(sys.argv) < 8:
     pass
 else:
