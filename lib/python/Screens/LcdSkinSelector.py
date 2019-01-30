@@ -113,17 +113,20 @@ class LCDSkinSelector(Screen):
 					self.skinlist.append(skinname)
                                 		
 	def ok(self):
-		skinstest = self["SkinList"].getCurrent()
-		if skinstest.startswith("OE-A_") or skinstest.startswith("OpenNFR_"):
-			skinfile = self["SkinList"].getCurrent() + "/skin_display.xml"
-		else:
-			skinfile = self["SkinList"].getCurrent()
-		print "LCDSkinselector: Selected Skin: ", skinfile
-		config.skin.display_skin.value = skinfile
-		config.skin.display_skin.save()
-		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
-		restartbox.setTitle(_("Restart GUI now?"))
-
+		try:
+			skinstest = self["SkinList"].getCurrent()
+			if skinstest.startswith("OE-A_") or skinstest.startswith("OpenNFR_"):
+				skinfile = self["SkinList"].getCurrent() + "/skin_display.xml"
+			else:
+				skinfile = self["SkinList"].getCurrent()
+			print "LCDSkinselector: Selected Skin: ", skinfile
+			config.skin.display_skin.value = skinfile
+			config.skin.display_skin.save()
+			restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
+			restartbox.setTitle(_("Restart GUI now?"))
+		except:
+			self.close()
+		
 	def loadPreview(self):
 		pngpath = self["SkinList"].getCurrent()
 		print "pngpath:", pngpath
