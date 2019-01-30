@@ -1,6 +1,6 @@
 import os
 from time import time, mktime
-from boxbranding import getBoxType
+from boxbranding import getBoxType, getDisplayType
 from enigma import eDVBDB, eEPGCache, setTunerTypePriorityOrder, setPreferredTuner, setSpinnerOnOff, setEnableTtCachingOnOff, eEnv, Misc_Options, eBackgroundFileEraser, eServiceEvent, eDVBFrontend, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_WRAP
 import enigma
 
@@ -12,7 +12,7 @@ from Components.NimManager import nimmanager
 from Components.ServiceList import refreshServiceList
 from SystemInfo import SystemInfo
 from Tools.HardwareInfo import HardwareInfo
-from boxbranding import getBoxType
+from boxbranding import getBoxType, getDisplayType
 from keyids import KEYIDS
 from sys import maxint
 
