@@ -78,7 +78,7 @@ config.imagemanager.number_to_keep = ConfigNumber(default=0)
 autoImageManagerTimer = None
 HaveGZkernel = True
 
-if getMachineBuild() in ('vuduo4k','v8plus','ustym4kpro','hd60','i55plus','osmio4k','sf8008','sf8008s','cc1','dags72604', 'u51','u52','u53','u54','h9','h9combo','vuzero4k','u5','u5pvr','sf5008','et13000','et1x000',"vuuno4k","vuuno4kse", "vuultimo4k", "vusolo4k", "spark", "spark7162", "hd51", "hd52", "sf4008", "dags7252", "gb7252", "vs1500","h7",'xc7439','8100s'):
+if getMachineBuild() in ('gbmv200','multibox','vuduo4k','v8plus','ustym4kpro','hd60','hd61','i55plus','osmio4k','sf8008','cc1','dags72604', 'u41', 'u51','u52','u53','u54','u55','h9','h9combo','vuzero4k','u5','u5pvr','sf5008','et13000','et1x000',"vuuno4k","vuuno4kse", "vuultimo4k", "vusolo4k", "spark", "spark7162", "hd51", "hd52", "sf4008", "dags7252", "gb7252", "vs1500","h7",'xc7439','8100s'):
 	HaveGZkernel = False
 
 def Freespace(dev):
@@ -540,7 +540,7 @@ class ImageBackup(Screen):
 		elif self.MACHINEBUILD in ("xc7439","osmio4k"):
 			self.MTDBOOT = "mmcblk1p1"
 			self.EMMCIMG = "emmc.img"
-		elif self.MACHINEBUILD in ("cc1","sf8008","sf8008s","sf8008t","ustym4kpr"):
+		elif self.MACHINEBUILD in ("gbmv200","cc1","sf8008","ustym4kpr"):
 			self.MTDBOOT = "none"
 			self.EMMCIMG = "usb_update.bin"
 		elif self.MACHINEBUILD in ("h9combo","v8plus","multibox","hd60","hd61"):
@@ -600,7 +600,7 @@ class ImageBackup(Screen):
 				cmdline = self.read_startup("/boot/STARTUP").split("=",4)[4].split(" ",1)[0]
 			else:
 				cmdline = self.read_startup("/boot/" + self.list[self.selection]).split("=",4)[4].split(" ",1)[0]
-		elif self.MACHINEBUILD in ("cc1","sf8008","sf8008s","sf8008t","ustym4kpro"):
+		elif self.MACHINEBUILD in ("gbmv200","cc1","sf8008","ustym4kpro"):
 			if self.list[self.selection] == "Recovery":
 				cmdline = self.read_startup("/boot/STARTUP").split("=",1)[1].split(" ",1)[0]
 			else:
@@ -794,7 +794,7 @@ class ImageBackup(Screen):
 		self.IMAGEVERSION = self.imageInfo() #strftime("%Y%m%d", localtime(self.START))
 		if "ubi" in self.ROOTFSTYPE.split():
 			self.MKFS = "/usr/sbin/mkfs.ubifs"
-		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","sf8008s","sf8008t","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
+		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("gbmv200","u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
 		    self.MKFS = "/bin/tar"
 		    self.BZIP2 = "/usr/bin/bzip2"
 		else:
@@ -840,7 +840,7 @@ class ImageBackup(Screen):
 		elif SystemInfo["HaveMultiBoot"] and self.list[self.selection] == "Recovery":
 			self.message += _("because of the used filesystem the back-up\n")
 			self.message += _("will take about 30 minutes for this system\n")
-		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","sf8008s","sf8008t","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
+		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("gbmv200","u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
 				self.message += _("because of the used filesystem the back-up\n")
 				self.message += _("will take about 1-4 minutes for this system\n")
 		else:
@@ -864,7 +864,7 @@ class ImageBackup(Screen):
 			cmd1 = "%s --root=/tmp/bi/root --faketime --output=%s/root.jffs2 %s" % (self.MKFS, self.WORKDIR, self.MKUBIFS_ARGS)
 			cmd2 = None
 			cmd3 = None
-		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","sf8008s","sf8008t","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
+		elif "tar.bz2" in self.ROOTFSTYPE.split() or SystemInfo["HaveMultiBoot"] or self.MACHINEBUILD in ("gbmv200","u51","u52","u53","u54","u5","u5pvr","cc1","sf8008","ustym4kpro","v8plus","multibox","h9combo","hd60","hd61"):
 			cmd1 = "%s -cf %s/rootfs.tar -C /tmp/bi/root --exclude ./var/nmbd --exclude ./var/lib/samba/private/msg.sock ." % (self.MKFS, self.WORKDIR)
 			cmd2 = "%s %s/rootfs.tar" % (self.BZIP2, self.WORKDIR)
                         cmd3 = None
@@ -935,7 +935,7 @@ class ImageBackup(Screen):
 			cmdlist.append("dd if=/dev/zero of=%s/rootfs.ext4 seek=1048576 count=0 bs=1024" % (self.WORKDIR))
 			cmdlist.append("mkfs.ext4 -F -i 4096 %s/rootfs.ext4 -d /tmp/bi/root" % (self.WORKDIR))
 
-		if self.MACHINEBUILD  in ("cc1","sf8008","sf8008s","sf8008t","ustym4kpro"):
+		if self.MACHINEBUILD  in ("gbmv200","cc1","sf8008","ustym4kpro"):
 			cmdlist.append('echo " "')
 			cmdlist.append('echo "Create: fastboot dump"')
 			cmdlist.append("dd if=/dev/mmcblk0p1 of=%s/fastboot.bin" % self.WORKDIR)

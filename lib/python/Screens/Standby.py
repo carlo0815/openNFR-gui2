@@ -5,7 +5,7 @@ from Components.AVSwitch import AVSwitch
 from Components.SystemInfo import SystemInfo
 from GlobalActions import globalActionMap
 from enigma import eDVBVolumecontrol, eTimer, eDVBLocalTimeHandler, eServiceReference, pNavigation
-from boxbranding import getMachineBrand, getMachineName, getMachineProcModel, getBoxType, getBrandOEM
+from boxbranding import getMachineBrand, getMachineName, getMachineProcModel, getBoxType, getBrandOEM, getMachineBuild
 from Tools import Notifications
 import Screens.InfoBar
 from os import path
@@ -33,7 +33,7 @@ def setLCDModeMinitTV4k(value):
 class Standby2(Screen):
 	def Power(self):
 		print "leave standby"
-		if (getBrandOEM() in ('fulan','clap','dinobot') or getBoxType() in ('sf8008','sf8008s','sf8008t','ustym4kpro')):
+		if (getBrandOEM() in ('fulan','clap','dinobot') or getMachineBuild() in ('gbmv200','sf8008','ustym4kpro')):
 			try:
 				open("/proc/stb/hdmi/output", "w").write("on")
 			except:
@@ -144,7 +144,7 @@ class Standby2(Screen):
 			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
 
-		if (getBrandOEM() in ('fulan','clap','dinobot') or getBoxType() in ('sf8008','sf8008s','sf8008t','ustym4kpro')):
+		if (getBrandOEM() in ('fulan','clap','dinobot') or getMachineBuild() in ('gbmv200','sf8008','ustym4kpro')):
 			try:
 				open("/proc/stb/hdmi/output", "w").write("off")
 			except:

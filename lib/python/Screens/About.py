@@ -44,7 +44,7 @@ class About(Screen):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
-		elif getMachineBuild() in ('u51','u5','u53','u52','u54','u5pvr','h9','h9combo','cc1','sf8008','sf8008s','sf8008t','hd60','hd61','i55plus','ustym4kpro','v8plus'):
+		elif getMachineBuild() in ('gbmv200','u51','u5','u53','u52','u54','u55','u5pvr','h9','h9combo','cc1','sf8008','hd60','hd61','i55plus','ustym4kpro','v8plus','multibox'):
 			cpuMHz = "   (1,6 GHz)"			
 		elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 			cpuMHz = "   (1,7 GHz)"
@@ -131,7 +131,7 @@ class About(Screen):
 		        bootname = f.readline().split('=')[1]
 		        f.close()
 
-		if getMachineBuild() in ('cc1','sf8008','sf8008s','sf8008t','ustym4kpro'):
+		if getMachineBuild() in ('gbmv200','cc1','sf8008','ustym4kpro'):
 			if path.exists('/boot/STARTUP'):
 				f = open('/boot/STARTUP', 'r')
 				f.seek(5)
@@ -191,7 +191,7 @@ class About(Screen):
 			fp_version = _("Front Panel:\t\tVersion unknown")
 			AboutText += fp_version + "\n"
 
-		if getMachineBuild() not in ('vuduo4k','v8plus','ustym4kpro','hd60','hd61','i55plus','osmio4k','h9','h9combo','vuzero4k','sf5008','et13000','et1x000','hd51','hd52','vusolo4k','vuuno4k','vuuno4kse','vuultimo4k','sf4008','dm820','dm7080','dm900','dm920', 'gb7252', 'dags7252', 'vs1500','h7','xc7439','8100s','u5','u5pvr','u52','u53','u54','u51','cc1','sf8008','sf8008s','sf8008t'):
+			if getMachineBuild() not in ('gbmv200','vuduo4k','v8plus','ustym4kpro','hd60','hd61','i55plus','osmio4k','h9','h9combo','vuzero4k','sf5008','et13000','et1x000','hd51','hd52','vusolo4k','vuuno4k','vuuno4kse','vuultimo4k','sf4008','dm820','dm7080','dm900','dm920', 'gb7252', 'dags7252', 'vs1500','h7','xc7439','8100s','u5','u5pvr','u52','u53','u54','u55','u51','cc1','sf8008'):
 			AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
 		AboutText += _("Last Upgrade:\t\t%s") % about.getLastUpdateString() + "\n\n" 
 		
