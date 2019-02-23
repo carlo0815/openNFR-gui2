@@ -380,7 +380,8 @@ def InitUsageConfig():
 	config.usage.recording_frontend_priority_multiselect = ConfigSelection(default = "-2", choices = rec_nims_multi)
 	config.usage.recording_frontend_priority_strictly    = ConfigSelection(default = "no", choices = priority_strictly_choices)
 	config.usage.recording_frontend_priority_intval      = NoSave(ConfigInteger(default = 0, limits = (-99, maxint)))	
-	config.misc.disable_background_scan = ConfigYesNo(default = False)
+	config.usage.recording_timer_start = ConfigYesNo(default = False)
+        config.misc.disable_background_scan = ConfigYesNo(default = False)
 
 	config.usage.jobtaksextensions = ConfigYesNo(default = True)
 

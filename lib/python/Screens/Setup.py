@@ -243,7 +243,12 @@ class Setup(ConfigListScreen, Screen):
 				if item_rectunerlevel == 1 and not config.usage.recording_frontend_priority.value in ("expert_mode", "experimental_mode"):
 					continue
 				if item_rectunerlevel == 2 and not config.usage.recording_frontend_priority.value == "experimental_mode":
-					continue					
+					continue
+				if item_rectunerlevel == 1 and not config.usage.recording_timer_start.value in ("expert_mode", "experimental_mode"):
+					continue
+				if item_rectunerlevel == 2 and not config.usage.recording_timer_start.value == "experimental_mode":
+					continue                                        
+                                        					
 
 				requires = x.get("requires")
 				if requires and requires.startswith('config.'):

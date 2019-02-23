@@ -157,6 +157,7 @@
 	</setup>
 	<setup key="recording" title="Recording settings">
 		<item level="2" text="Preferred tuner for recordings" description="Configure which tuner for recordings will be preferred, when more than one tuner is available.">config.usage.recording_frontend_priority</item>
+		<item level="2" text="Start behaving for timer recordings" description="Configure Setting how to start the receiver during timer recording.">config.usage.recording_timer_start</item>
 		<item level="2" rectunerlevel="1" text="Preferred tuners for recordings, multiple selection allowed" description="In expert mode, configure which tuners will be preferred for recordings, when more than one tuner is available.">config.usage.recording_frontend_priority_multiselect</item>
 		<item level="2" rectunerlevel="2" text="Experimental: strict limitation to preferred tuners for recordings" description="Configure whether another tuner from the preferred list is allocated for recordings instead of sharing a tuner that is already active receiving the same live TV channel.">config.usage.recording_frontend_priority_strictly</item>
 		<item level="1" text="Recordings always have priority" description="When enabled, a recording is allowed to interrupt live TV, when there are no free tuners.">config.recording.asktozap</item>
