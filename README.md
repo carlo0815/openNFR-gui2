@@ -14,7 +14,7 @@ sudo adduser opennfrbuilder
 
 4 - Switch to user opennfrbuilder
 
-su openatvbuilder
+su opennfrbuilder
 
 5 - Switch to home of opennfrbuilder
 
@@ -24,9 +24,9 @@ cd ~
 
 mkdir -p ~/opennfr
 
-7 - Switch to folder openatv
+7 - Switch to folder opennfr
 
-cd openatv
+cd opennfr
 
 8 - Clone oe-alliance git
 
