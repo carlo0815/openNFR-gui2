@@ -146,7 +146,7 @@ def getChipSetString():
 			return "unavailable"
 
 def getCPUSpeedString():
-	if getMachineBuild() in ('vusolo4k'):
+	if getMachineBuild() in ('dags72604','vusolo4k','vuultimo4k', 'vuzero4k'):
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
