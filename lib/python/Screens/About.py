@@ -131,7 +131,10 @@ class About(Screen):
 		        bootname = f.readline().split('=')[1]
 		        f.close()
 
-		if getMachineBuild() in ('gbmv200','cc1','sf8008','ustym4kpro'):
+		if SystemInfo["HasRootSubdir"]:
+		image = find_rootfssubdir("STARTUP")
+		AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image[-1:] + bootname + "\n"
+		elif getMachineBuild() in ('gbmv200','cc1','sf8008','ustym4kpro','beyonwizv2',"viper4k"):
 			if path.exists('/boot/STARTUP'):
 				f = open('/boot/STARTUP', 'r')
 				f.seek(5)
@@ -261,7 +264,19 @@ class About(Screen):
 	def showTranslationInfo(self):
 		self.session.open(TranslationInfo)
 
+def find_rootfssubdir(file):
+	startup_content = read_startup("/boot/" + file)
+	rootsubdir = startup_content[startup_content.find("rootsubdir=")+11:].split()[0]
+	if rootsubdir.startswith("linuxrootfs"):
+		return rootsubdir
+	return
 
+def read_startup(FILE):
+	file = FILE
+	with open(file, 'r') as myfile:
+		data=myfile.read().replace('\n', '')
+	myfile.close()
+	return data
 
 class Devices(Screen):
 	def __init__(self, session):

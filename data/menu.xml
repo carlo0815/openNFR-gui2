@@ -168,6 +168,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item text="MultiBoot" requires="HaveMultiBootCY" entryID="deep_standby"><screen module="MultiBootStartupCY" screen="MultiBootStartup" /></item>
 			<item text="MultiBoot" requires="HaveMultiBootDS" entryID="deep_standby"><screen module="MultiBootStartupDS" screen="MultiBootStartup" /></item>
 			<item text="MultiBoot" requires="HaveMultiBootOS" entryID="deep_standby"><screen module="MultiBootStartupOS" screen="MultiBootStartup" /></item>
+			<item text="MultiBoot" requires="HaveMultiBootADV" entryID="deep_standby"><screen module="MultiBootStartupADV" screen="MultiBootStartup" /></item>
 			<item level="0" requires="loadcidriver" text="Reboot with CI+ Driver">
 <code>
 from boxbranding import getBoxType
