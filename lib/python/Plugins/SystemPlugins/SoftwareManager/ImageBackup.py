@@ -37,7 +37,7 @@ from Components.Harddisk import harddiskmanager, getProcMounts
 import shutil
 import urllib
 
-VERSION = "Version %s openNFR" % getImageVersion()
+VERSION = _("Version %s %s") %(getImageDistro(), getImageVersion())
 RAMCHEKFAILEDID = 'RamCheckFailedNotification'
 
 hddchoises = []
