@@ -132,8 +132,8 @@ class About(Screen):
 		        f.close()
 
 		if SystemInfo["HasRootSubdir"]:
-		image = find_rootfssubdir("STARTUP")
-		AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image[-1:] + bootname + "\n"
+			image = find_rootfssubdir("STARTUP")
+			AboutText += _("Selected Image:\t\t%s") % "STARTUP_" + image[-1:] + bootname + "\n"
 		elif getMachineBuild() in ('gbmv200','cc1','sf8008','ustym4kpro','beyonwizv2',"viper4k"):
 			if path.exists('/boot/STARTUP'):
 				f = open('/boot/STARTUP', 'r')
@@ -273,9 +273,13 @@ def find_rootfssubdir(file):
 
 def read_startup(FILE):
 	file = FILE
-	with open(file, 'r') as myfile:
-		data=myfile.read().replace('\n', '')
-	myfile.close()
+	try:
+		with open(file, 'r') as myfile:
+			data=myfile.read().replace('\n', '')
+		myfile.close()
+	except IOError:
+		print "[ERROR] failed to open file %s" % file
+		data = " "
 	return data
 
 class Devices(Screen):
