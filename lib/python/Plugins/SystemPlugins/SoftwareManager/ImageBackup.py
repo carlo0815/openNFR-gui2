@@ -905,7 +905,7 @@ class ImageBackup(Screen):
 			else:
 				system("mount /dev/%s %s" %(self.MTDROOTFS, self.backuproot))
 		else:
-			%s" %(self.backuproot))
+			system("mount --bind / %s" %(self.backuproot))
 
 		if "jffs2" in self.ROOTFSTYPE.split():
 			cmd1 = "%s --root=%s --faketime --output=%s/root.jffs2 %s" % (self.MKFS,  self.backuproot, self.WORKDIR, self.MKUBIFS_ARGS)
