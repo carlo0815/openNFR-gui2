@@ -1097,7 +1097,7 @@ class ImageBackup(Screen):
 			cmdlist.append("rm -rf /tmp/vmlinux.bin")
 		cmdlist.append('echo "_________________________________________________"')
 		cmdlist.append('echo "Almost there... "')
-		cmdlist.append('echo "Now building the USB-Image"')
+		cmdlist.append('echo "Now building the Backup Image"')
 
 		system('rm -rf %s' %self.MAINDEST)
 		if not path.exists(self.MAINDEST):
@@ -1170,7 +1170,7 @@ class ImageBackup(Screen):
 			cmdlist.append('cp -f /usr/share/bootargs.bin %s/bootargs.bin' %(self.MAINDESTROOT))
 		elif SystemInfo["HasRootSubdir"]:
 			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/unforce_%s.txt' %(self.MAINDESTROOT, self.MACHINEBUILD))
-			cmdlist.append('7za a -r %s/%s-%s-%s-backup-%s_mmc.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
+			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_mmc.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 
 		cmdlist.append("sync")
 		file_found = True
@@ -1198,7 +1198,10 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "Use FlashLocal in Quickmenu"')
 		elif file_found:
 			cmdlist.append('echo "_________________________________________________\n"')
-			cmdlist.append('echo "' + _("Image created on: %s") %self.MAINDEST + '"')
+			if SystemInfo["HasRootSubdir"]:
+				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_mmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+			else:
+				cmdlist.append('echo "' + _("Image created on: %s") %self.MAINDEST + '"')
 			cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo " "')
 			cmdlist.append('echo "\nPlease wait...almost ready! "')
