@@ -163,6 +163,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item text="Restart GUI" entryID="restart_enigma" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">3</screen></item>
 			<item text="Deep standby" requires="DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="Shutdown" requires="!DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
+			<item text="Recovery Mode" requires="RecoveryMode" entryID="maintenance_mode"> endtext="&gt;&lt;<screen module="Standby" screen="TryQuitMainloop">16</screen></item>
 			<item text="MultiBoot" requires="HaveMultiBootHD" entryID="deep_standby"><screen module="MultiBootStartup" screen="MultiBootStartup" /></item>
 			<item text="MultiBoot" requires="HaveMultiBootGB" entryID="deep_standby"><screen module="MultiBootStartupGB" screen="MultiBootStartup" /></item>
 			<item text="MultiBoot" requires="HaveMultiBootCY" entryID="deep_standby"><screen module="MultiBootStartupCY" screen="MultiBootStartup" /></item>
