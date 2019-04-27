@@ -14161,3 +14161,13 @@ msgstr "Bestimmt die Methode, wie die Bildschirmauflösung und der Framebuffer b
 
 msgid "Use HDMI-preemphasis"
 msgstr "HDMI-Preemphasis benutzen"
+
+
+msgid "Recovery Mode"
+msgstr "Wartungsmodus"
+
+msgid "Your %s %s is rebooting into Recovery Mode"
+msgstr "Ihre %s %s startet in den Wartungsmodus"
+
+msgid "Really reboot into Recovery Mode?"
+msgstr "Wirklich einen Neustart in den Wartungsmodus durchführen?"
