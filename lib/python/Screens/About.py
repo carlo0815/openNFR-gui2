@@ -20,6 +20,23 @@ from Tools.StbHardware import getFPVersion
 from os import path, popen
 from re import search
 
+def find_rootfssubdir(file):
+	startup_content = read_startup("/boot/" + file)
+	rootsubdir = startup_content[startup_content.find("rootsubdir=")+11:].split()[0]
+	if rootsubdir.startswith("linuxrootfs"):
+		return rootsubdir
+	return
+
+def read_startup(FILE):
+	file = FILE
+	try:
+		with open(file, 'r') as myfile:
+			data=myfile.read().replace('\n', '')
+		myfile.close()
+	except IOError:
+		print "[ERROR] failed to open file %s" % file
+		data = " "
+	return data
 
 class About(Screen):
 	def __init__(self, session):
@@ -264,24 +281,6 @@ class About(Screen):
 
 	def showTranslationInfo(self):
 		self.session.open(TranslationInfo)
-
-def find_rootfssubdir(file):
-	startup_content = read_startup("/boot/" + file)
-	rootsubdir = startup_content[startup_content.find("rootsubdir=")+11:].split()[0]
-	if rootsubdir.startswith("linuxrootfs"):
-		return rootsubdir
-	return
-
-def read_startup(FILE):
-	file = FILE
-	try:
-		with open(file, 'r') as myfile:
-			data=myfile.read().replace('\n', '')
-		myfile.close()
-	except IOError:
-		print "[ERROR] failed to open file %s" % file
-		data = " "
-	return data
 
 class Devices(Screen):
 	def __init__(self, session):
