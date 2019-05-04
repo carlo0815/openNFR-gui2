@@ -29,6 +29,7 @@ from Components.Sources.Progress import Progress
 from Components.Button import Button
 from Components.ActionMap import ActionMap
 from Screens.VirtualKeyBoard import VirtualKeyBoard
+from Multibootmgr import MultiBootWizard
 from Screens.Hotkey import HotkeySetup
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
@@ -599,6 +600,9 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.openWithCallback(self.backupfiles_choosen,BackupSelection)
 		elif menu == "flash-local":
 			self.session.open(FlashOnline)
+		elif menu == "multiboot-manager":
+			self.session.open(MultiBootWizard)
+			multiboot-manager
 		elif menu == "MultiQuickButton":
 			self.session.open(MultiQuickButton)
 		elif menu == "MountManager":
@@ -725,6 +729,8 @@ class Infopanel(Screen, InfoBarPiP):
                 #self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
+		if SystemInfo["canMultiBoot"]:
+			self.tlist.append(MenuEntryItem(((InfoEntryComponent ("Multiboot Manager"), _("\nMaintain your multiboot device."), ("multiboot-manager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
