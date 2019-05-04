@@ -205,7 +205,7 @@ class FlashOnline(Screen):
 	def selectionChanged(self):
 		currentSelected = self["list"].l.getCurrentSelection()
 		if "://" in currentSelected[0][1] or currentSelected[0][1] in ["Expander", "Waiter"]:
-			self["key_yellow"].setText(""))
+			self["key_yellow"].setText("")
 		else:
 			self["key_yellow"].setText(_("Delete image"))
 		if currentSelected[0][1] == "Waiter":
@@ -216,7 +216,7 @@ class FlashOnline(Screen):
 				self["description"].setText("")
 			else:
 				self["key_green"].setText(_("Flash Image"))
-+				self["description"].setText(currentSelected[0][1])
+				self["description"].setText(currentSelected[0][1])
 
 	def box(self):
 		box = getBoxType()
@@ -252,7 +252,7 @@ class FlashOnline(Screen):
 
 	def keyLeft(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageUp)
-		self.selectionChanged(
+		self.selectionChanged()
 		
 	def keyRight(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageDown)
@@ -260,7 +260,7 @@ class FlashOnline(Screen):
 
 	def keyUp(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveUp)
-		self.selectionChanged(
+		self.selectionChanged()
 		
 	def keyDown(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveDown)
@@ -271,7 +271,7 @@ class FlashImage(Screen):
 		<widget name="header" position="5,10" size="e-10,50" font="Regular;40" backgroundColor="#54242424"/>
 		<widget name="info" position="5,60" size="e-10,130" font="Regular;24" backgroundColor="#54242424"/>
 		<widget name="progress" position="5,e-39" size="e-10,24" backgroundColor="#54242424"/>
-	</screen>""
+	</screen>"""
 	
 	def __init__(self, session,  imagename, source):
 		Screen.__init__(self, session)
@@ -527,7 +527,7 @@ class FlashImage(Screen):
 			else:
 				self.unzip()
 		else:
-			self.abort())
+			self.abort()
 
 	def downloadProgress(self, current, total):
 		self["progress"].setValue(int(100 * current / total))
@@ -536,7 +536,7 @@ class FlashImage(Screen):
 		self.downloader.stop()
 		self.session.openWithCallback(self.abort, MessageBox, _("Error during downloading image\n%s\n%s") % (self.imagename, reason), type=MessageBox.TYPE_ERROR, simple=True)
 
-		def downloadEnd(self):
+	def downloadEnd(self):
 		self.downloader.stop()
 		self.unzip()
 
