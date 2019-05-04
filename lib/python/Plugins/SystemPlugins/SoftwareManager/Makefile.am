@@ -8,7 +8,8 @@ install_PYTHON =	\
 	BackupRestore.py \
 	ImageBackup.py \
 	ImageWizard.py \
-	SoftwareTools.py
+	SoftwareTools.py \
+	Multibootmgr.py
 
 dist_install_DATA = \
 	imagewizard.xml \
