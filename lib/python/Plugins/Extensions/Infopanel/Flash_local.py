@@ -1,11 +1,11 @@
 from Plugins.Extensions.NFR4XBoot.plugin import *
 from Components.Button import Button
+from Components.config import config
 from Components.Label import Label
 from Components.ActionMap import ActionMap
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
 from Components.Task import Task, Job, job_manager, Condition
 from Components.Sources.StaticText import StaticText
-from Components.ProgressBar import ProgressBar
 from Components.SystemInfo import SystemInfo
 from Components.Input import Input
 from Components.ProgressBar import ProgressBar
@@ -14,26 +14,27 @@ from Screens.ChoiceBox import ChoiceBox
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists
 from skin import parseColor
+from Screens.Screen import Screen
 from Components.Console import Console
 from Tools.BoundFunction import boundFunction
-from Tools.Multiboot import GetImagelist, GetCurrentImage, GetCurrentImageMode, GetCurrentKern, GetCurrentRoot
+from Tools.Multiboot import GetImagelist, GetCurrentImage, GetCurrentImageMode, GetCurrentKern, GetCurrentRoot, GetBoxName
 from enigma import eTimer
 import os, urllib2, shutil, math, time, zipfile, shutil
 
-from boxbranding import getBoxType,  getImageDistro, getMachineName,  getMachineBuild
 
-feedurl = 'http://images.mynonpublic.com/%s' %(getImageDistro())
+from boxbranding import getImageDistro, getMachineBuild
+feedurl = 'https://dev.nachtfalke.biz/nfr/feeds/6.3/'
 imagecat = [3.0,4.0,4.1,4.2,5.0,5.1,5.2,5.3,6.0,6.1,6.2,6.3]
 
 def checkimagefiles(files):
-	return len([x for x in files if 'kernel' in x and '.bin' in x or x in ('zImage', 'uImage', 'root_cfe_auto.bin', 'root_cfe_auto.jffs2', 'oe_rootfs.bin', 'e2jffs2.img', 'rootfs.tar.bz2', 'rootfs.ubi','rootfs.bin')]) == 2
- 
+	return len([x for x in files if 'kernel' in x and '.bin' in x or x in ('zImage', 'uImage', 'root_cfe_auto.bin', 'root_cfe_auto.jffs2', 'oe_kernel.bin', 'oe_rootfs.bin', 'e2jffs2.img', 'rootfs.tar.bz2', 'rootfs.ubi','rootfs.bin')]) == 2
+
 class FlashOnline(Screen):
 	skin = """
 	<screen name="SelectImage" position="center,center" size="550,400">
 		<widget name="list" position="fill" scrollbarMode="showOnDemand"/>
 	</screen>"""
-		
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
@@ -41,7 +42,6 @@ class FlashOnline(Screen):
 		self.imagesList = {}
 		self.setIndex = 0
 		self.expanded = []
-		
 		Screen.setTitle(self, _("Flash On the Fly"))
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText()
@@ -85,11 +85,11 @@ class FlashOnline(Screen):
 					pass
 
 		if not self.imagesList:
-			box = self.box()
+			box = GetBoxName()
 			for version in reversed(sorted(imagecat)):
 				newversion = _("Image Version %s") %version
 				the_page =""
-				url = '%s/%s/index.php?open=%s' % (feedurl,version,box)
+				url = '%simages/current.php?open=%s' % (feedurl,box)
 				try:
 					req = urllib2.Request(url)
 					response = urllib2.urlopen(req)
@@ -202,6 +202,7 @@ class FlashOnline(Screen):
 		else:
 			return
             
+
 	def selectionChanged(self):
 		currentSelected = self["list"].l.getCurrentSelection()
 		if "://" in currentSelected[0][1] or currentSelected[0][1] in ["Expander", "Waiter"]:
@@ -218,42 +219,10 @@ class FlashOnline(Screen):
 				self["key_green"].setText(_("Flash Image"))
 				self["description"].setText(currentSelected[0][1])
 
-	def box(self):
-		box = getBoxType()
-		machinename = getMachineName()
-		if box in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3'):
-			box = "ventonhdx"
-		elif box == 'odinm6':
-			box = getMachineName().lower()
-		elif box == "inihde" and machinename.lower() == "xpeedlx":
-			box = "xpeedlx"
-		elif box in ('xpeedlx1', 'xpeedlx2'):
-			box = "xpeedlx"
-		elif box == "inihde" and machinename.lower() == "hd-1000":
-			box = "sezam-1000hd"
-		elif box == "ventonhdx" and machinename.lower() == "hd-5000":
-			box = "sezam-5000hd"
-		elif box == "ventonhdx" and machinename.lower() == "premium twin":
-			box = "miraclebox-twin"
-		elif box == "xp1000" and machinename.lower() == "sf8 hd":
-			box = "sf8"
-		##Formuler not tested yet
-		elif box == "formuler1" and machinename.lower() == "formuler1":
-			box = "formuler1"
-		elif box == "formuler3" and machinename.lower() == "formuler3":
-			box = "formuler3"
-		elif box.startswith('et') and not box in ('et8000', 'et10000'):
-			box = box[0:3] + 'x00'
-		elif box == 'odinm9':
-			box = 'maram9'
-		elif box == 'bre2ze':
-			box = 'ew7362'	
-		return box
-
 	def keyLeft(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageUp)
 		self.selectionChanged()
-		
+
 	def keyRight(self):
 		self["list"].instance.moveSelection(self["list"].instance.pageDown)
 		self.selectionChanged()
@@ -261,7 +230,7 @@ class FlashOnline(Screen):
 	def keyUp(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveUp)
 		self.selectionChanged()
-		
+
 	def keyDown(self):
 		self["list"].instance.moveSelection(self["list"].instance.moveDown)
 		self.selectionChanged()
@@ -272,7 +241,7 @@ class FlashImage(Screen):
 		<widget name="info" position="5,60" size="e-10,130" font="Regular;24" backgroundColor="#54242424"/>
 		<widget name="progress" position="5,e-39" size="e-10,24" backgroundColor="#54242424"/>
 	</screen>"""
-	
+
 	def __init__(self, session,  imagename, source):
 		Screen.__init__(self, session)
 		self.containerbackup = None
@@ -315,8 +284,6 @@ class FlashImage(Screen):
 		self.getImageList = None
 		choices = []
 		currentimageslot = GetCurrentImage()
-		if SystemInfo["HasSDmmc"]:
-			currentimageslot += 1			#allow for mmc as 1st slot, then SDCard slots
 		for x in range(1, SystemInfo["canMultiBoot"][1] + 1):
 			choices.append(((_("slot%s - %s (current image) with, backup") if x == currentimageslot else _("slot%s - %s, with backup")) % (x, imagedict[x]['imagename']), (x, "with backup")))
 		for x in range(1, SystemInfo["canMultiBoot"][1] + 1):
@@ -383,48 +350,45 @@ class FlashImage(Screen):
 					self.session.openWithCallback(self.abort, MessageBox, _("Unable to create the required directories on the media (e.g. USB stick or Harddisk) - Please verify media and try again!"), type=MessageBox.TYPE_ERROR, simple=True)
 			else:
 				self.session.openWithCallback(self.abort, MessageBox, _("Could not find suitable media - Please remove some downloaded images or insert a media (e.g. USB stick) with sufficiant free space and try again!"), type=MessageBox.TYPE_ERROR, simple=True)
- 		else:
+		else:
 			self.abort()
-			
+
 	def startBackupsettings(self, retval):
 		if retval:
 			from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen
 			self.session.openWithCallback(self.flashPostAction,BackupScreen, runBackup = True)
- 		else:
+		else:
 			self.abort()
 
 	def flashPostAction(self, retval = True):
 		if retval:
- 			title =_("Please select what to do after flashing the image:\n(In addition, if it exists, a local script will be executed as well at /media/hdd/images/config/myrestore.sh)")		
+			title =_("Please select what to do after flashing the image:\n(In addition, if it exists, a local script will be executed as well at /media/hdd/images/config/myrestore.sh)")
 			choices = ((_("Flash and start installation wizard"), "wizard"),
- 			(_("Flash and restore settings and no plugins"), "restoresettingsnoplugin"),
- 			(_("Flash and restore settings and selected plugins (ask user)"), "restoresettings"),
- 			(_("Flash and restore settings and all saved plugins"), "restoresettingsandallplugins"),
- 			(_("Do not flash image"), "abort"))
+			(_("Flash and restore settings and no plugins"), "restoresettingsnoplugin"),
+			(_("Flash and restore settings and selected plugins (ask user)"), "restoresettings"),
+			(_("Flash and restore settings and all saved plugins"), "restoresettingsandallplugins"),
+			(_("Do not flash image"), "abort"))
 			self.session.openWithCallback(self.postFlashActionCallback, ChoiceBox,title=title,list=choices,selection=self.SelectPrevPostFashAction())
- 		else:
+		else:
 			self.abort()
-			
+
 	def SelectPrevPostFashAction(self):
 		index = 0
 		Settings = False
 		AllPlugins = False
 		noPlugins = False
-		
 		if os.path.exists('/media/hdd/images/config/settings'):
 			Settings = True
 		if os.path.exists('/media/hdd/images/config/plugins'):
 			AllPlugins = True
 		if os.path.exists('/media/hdd/images/config/noplugins'):
 			noPlugins = True
-
 		if 	Settings and noPlugins:
 			index = 1
 		elif Settings and not AllPlugins and not noPlugins:
 			index = 2
 		elif Settings and AllPlugins:
 			index = 3
-
 		return index
 
 	def postFlashActionCallback(self, answer):
