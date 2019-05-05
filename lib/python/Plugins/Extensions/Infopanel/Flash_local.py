@@ -89,7 +89,7 @@ class FlashOnline(Screen):
 			for version in reversed(sorted(imagecat)):
 				newversion = _("Image Version %s") %version
 				the_page =""
-				url = '%simages/current.php?open=%s' % (feedurl,box)
+				url = '%simages/%s' % (feedurl,box)
 				try:
 					req = urllib2.Request(url)
 					response = urllib2.urlopen(req)
