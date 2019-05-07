@@ -704,7 +704,7 @@ class ImageBackup(Screen):
 					else:
 						os.system("mount /dev/%s %s" %(self.MTDROOTFS, self.backuproot))
 				else:
-										self.backuproot = "/tmp/bi/RootSubdir/"
+					self.backuproot = "/tmp/bi/RootSubdir/"
 				if not os.path.exists(self.WORKDIR):
 					os.makedirs(self.WORKDIR)
 				if not os.path.exists(self.backuproot):
