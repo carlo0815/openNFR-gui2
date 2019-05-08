@@ -7423,8 +7423,8 @@ msgid "System"
 msgstr "System"
 
 #, python-format
-msgid "System temperature: %s"
-msgstr "Systemtemperatur: %s"
+msgid "System temperature::\t%s"
+msgstr "Systemtemperatur::\t%s"
 
 msgid "Processor temperature:\t%s"
 msgstr "Processor Temperatur:\t%s"
