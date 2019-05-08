@@ -216,16 +216,6 @@ def getHotkeyFunctions():
 		hotkeyFunctions.append((_("Toggle HDMI-In PiP"), "Infobar/HDMIInPiP", "InfoBar"))
 	if SystemInfo["LcdLiveTV"]:
 		hotkeyFunctions.append((_("Toggle LCD LiveTV"), "Infobar/ToggleLCDLiveTV", "InfoBar"))
-	if SystemInfo["HaveMultiBootHD"]:
-		hotkeyFunctions.append((_("MultiBoot Selector"), "Module/Screens.MultiBootStartup/MultiBootStartup", "InfoBar"))
-	if SystemInfo["HaveMultiBootGB"]:
-		hotkeyFunctions.append((_("MultiBoot Selector"), "Module/Screens.MultiBootStartupGB/MultiBootStartup", "InfoBar"))
-	if SystemInfo["HaveMultiBootCY"]:
-		hotkeyFunctions.append((_("MultiBoot Selector"), "Module/Screens.MultiBootStartupCY/MultiBootStartup", "InfoBar"))
-	if SystemInfo["HaveMultiBootDS"]:
-		hotkeyFunctions.append((_("MultiBoot Selector"), "Module/Screens.MultiBootStartupDS/MultiBootStartup", "InfoBar"))
-	if SystemInfo["HaveMultiBootOS"]:
-		hotkeyFunctions.append((_("MultiBoot Selector"), "Module/Screens.MultiBootStartupOS/MultiBootStartup", "InfoBar"))
 	hotkeyFunctions.append((_("Hotkey Setup"), "Module/Screens.ButtonSetup/ButtonSetup", "Setup"))
 	hotkeyFunctions.append((_("Software update"), "Module/Screens.SoftwareUpdate/UpdatePlugin", "Setup"))
 	if getHaveCI() in ('True'):
