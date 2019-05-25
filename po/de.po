@@ -14171,3 +14171,104 @@ msgstr "Ihre %s %s startet in den Wartungsmodus"
 
 msgid "Really reboot into Recovery Mode?"
 msgstr "Wirklich einen Neustart in den Wartungsmodus durchführen?"
+
+msgid "Retrieving image list - Please wait..."
+msgstr "Image-Liste abrufen - Bitte warten Sie ..."
+
+msgid "Retrieving image slots - Please wait..."
+msgstr "Image-Slots abrufen - Bitte warten Sie ..."
+
+
+msgid "Downloaded Images"
+msgstr "Heruntergeladene Images"
+
+msgid ""
+"Do you want to flash image\n"
+"%s"
+msgstr ""
+"Möchten Sie das folgende Image flashen?\n"
+"%s"
+
+msgid "Cannot delete downloaded image"
+msgstr "Das heruntergeladene Image kann nicht gelöscht werden"
+
+msgid "Save settings and EPG data"
+msgstr "Einstellungen und EPG-Daten speichern"
+
+msgid "Upgrade (Backup, Flash & Restore All)"
+msgstr "Flashen und Wiederherstellen der Einstellungen incl. Plugins"
+
+msgid "Clean (Just flash and start clean)"
+msgstr "Flashen und Assistenten für die Grundeinstellung benutzen"
+
+msgid "Backup, flash and restore settings and no plugins"
+msgstr "Flashen und Wiederherstellen der Einstellungen, ohne Plugins"
+
+msgid "Backup, flash and restore settings and selected plugins (ask user)"
+msgstr "Flashen und Wiederherstellen der Einstellungen (mit Plugin-Abfrage)"
+
+msgid "Delete Image"
+msgstr "Image Löschen"
+
+msgid "Use the cursor keys to select an installed image and then Erase button."
+msgstr "Wähle ein installiertes Image aus und danach die Löschen-Taste."
+
+msgid ""
+"Use the cursor keys to select an installed image and then Reboot button."
+msgstr "Wähle ein installiertes Image aus und dann die GRÜN/OK-Taste für den Neustart."
+
+msgid "Use the cursor keys to select an installed image and then Start button."
+msgstr "Wähle ein installiertes Image aus und danach GRÜN/OK um das Fullbackup zu starten."
+
+msgid ""
+"Error during downloading image\n"
+"%s\n"
+"%s"
+msgstr ""
+"Fehler beim Herunterladen vom Image\n"
+"%s\n"
+"%s"
+
+msgid ""
+"Error during unzipping image\n"
+"%s"
+msgstr ""
+"Fehler beim Entpacken vom Image\n"
+"%s"
+
+msgid "Flashing image successful"
+msgstr "Flashen vom Image war erfolgreich"
+
+msgid ""
+"Flashing image was not successful\n"
+"%s"
+msgstr ""
+"Flashen vom Image war nicht erfolgreich\n"
+"%s"
+
+msgid "slot%s - %s (current image)"
+msgstr "Flashplatz%s - %s aktuelles image"
+
+msgid "No, do not flash an image"
+msgstr "Nein, kein image flashen"
+
+msgid "Empty slot"
+msgstr "Flashplatz leer"
+
+msgid "slot%s - %s"
+msgstr "Flashplatz%s - %s"
+
+msgid "slot%s -%s - %s (current image)"
+msgstr "Flashplatz%s -%s - %s (aktuelles image)"
+
+msgid "slot%s -%s- %s "
+msgstr "Flashplatz%s -%s- %s "
+
+msgid "Do you want to reboot now the image in slot %s?"
+msgstr "Möchten Sie jetzt das Image im Flashplatz% s neu starten?"
+
+msgid "Backup to destination: %s"
+msgstr "Backup nach: %s"
+
+msgid "No, do not backup a image"
+msgstr "Nein, kein Backup sichern"
