@@ -103,7 +103,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.
 		from Plugins.SystemPlugins.HdmiCEC.plugin import HdmiCECSetupScreen
 	except:
 		pass
-from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
+from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup#, TimerImageManager, AutoImageManagerTimer
 from enigma import *
 from Screens.PluginBrowser import *
 from Screens.Ipkg import Ipkg

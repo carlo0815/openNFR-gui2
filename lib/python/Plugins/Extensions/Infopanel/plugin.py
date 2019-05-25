@@ -100,7 +100,7 @@ from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 from Plugins.Extensions.Infopanel.SoftwarePanel import SoftwarePanel
 from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, RestoreScreen, BackupSelection, getBackupPath, getBackupFilename
-from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
+from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup#, TimerImageManager, AutoImageManagerTimer
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 #from Plugins.Extensions.Infopanel.ImageManager import VIXImageManager, AutoImageManagerTimer, ImageBackup, ImageManagerDownload, ImageManagerautostart 
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
@@ -576,8 +576,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "backup-image":
 			if DFLASH == True:
 				self.session.open(dFlash)
-			else:
-				self.session.open(TimerImageManager)
+			else:                                  
+				self.session.open(ImageBackup)
+                                #self.session.open(TimerImageManager)
 		elif menu == "backup-settings":
 			self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
 		elif menu == "restore-settings":
