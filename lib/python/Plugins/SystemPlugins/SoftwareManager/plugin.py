@@ -6,7 +6,7 @@ from stat import ST_MTIME
 
 from enigma import eTimer, getDesktop, ePicLoad, eRCInput, getPrevAsciiCode, eEnv
 from twisted.web import client
-#from ImageBackup import ImageManagerautostart
+from ImageBackup import ImageManagerautostart
 
 from Plugins.Plugin import PluginDescriptor
 from Screens.ChoiceBox import ChoiceBox
