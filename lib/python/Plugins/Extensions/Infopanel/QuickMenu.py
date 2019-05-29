@@ -35,7 +35,7 @@ from Screens.HddMount import HddFastRemove
 from Screens.Swap import SwapOverviewScreen
 from Plugins.Extensions.Infopanel.Manager import *
 from Plugins.Extensions.Infopanel.outofflash import MovePlugins_int, MovePlugins
-from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
+from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
 from Plugins.SystemPlugins.SoftwareManager.plugin import UpdatePlugin, SoftwareManagerSetup
 from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, RestoreScreen, BackupSelection, getBackupPath, getBackupFilename
 from Plugins.Extensions.Infopanel.SoftwarePanel import SoftwarePanel
@@ -701,7 +701,7 @@ class QuickMenu(Screen):
 			if DFLASH == True:
 				self.session.open(dFlash)
 			else:
-				self.session.open(ImageBackup)
+				self.session.open(TimerImageManager)
 		elif item[0] == _("Backup Settings"):
 			self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
 		elif item[0] == _("Restore Settings"):
