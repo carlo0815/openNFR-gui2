@@ -1,4 +1,4 @@
-from boxbranding import getMachineBrand, getMachineName
+from boxbranding import getBoxType, getMachineBrand, getMachineName, getBrandOEM
 from cPickle import dump, load
 from os import path as os_path, stat, mkdir, makedirs, listdir, access, remove, W_OK, R_OK, F_OK
 from time import time
@@ -41,7 +41,9 @@ from ImageBackup import ImageBackup
 from BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getBackupFilename, Dream_BackupScreen
 from SoftwareTools import iSoftwareTools
 from Screens.VirtualKeyBoard import VirtualKeyBoard	
-from Components.Label import Label	
+from Components.Label import Label
+boxtype = getBoxType()
+brandoem = getBrandOEM()
 
 config.plugins.configurationbackup = ConfigSubsection()
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
