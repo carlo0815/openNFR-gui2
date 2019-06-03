@@ -14279,12 +14279,6 @@ msgstr "MultiBoot-Wartung"
 msgid "Maintain your multiboot device."
 msgstr "Verwalte deine Multiboot-Partitionen"
 
-msgid "Use the cursor keys to select an installed image and then Erase button."
-msgstr "Wähle ein installiertes Image aus und dann die Löschen Taste drücken."
-
-msgid "Use the cursor keys to select an installed image and then Reboot button."
-msgstr "Wähle ein installiertes Image aus und dann die Neustart-Taste drücken."
-
 msgid "Erase"
 msgstr "Löschen"
 
