@@ -14272,3 +14272,21 @@ msgstr "Backup nach: %s"
 
 msgid "No, do not backup a image"
 msgstr "Nein, kein Backup sichern"
+
+msgid "MultiBoot maintenance"
+msgstr "MultiBoot-Wartung"
+
+msgid "Maintain your multiboot device."
+msgstr "Verwalte deine Multiboot-Partitionen"
+
+msgid "Use the cursor keys to select an installed image and then Erase button."
+msgstr "Wähle ein installiertes Image aus und dann grüne/Löschen Taste."
+
+msgid "Use the cursor keys to select an installed image and then Reboot button."
+msgstr "Wähle ein installiertes Image aus und dann die grüne/OK-Taste für den Neustart."
+
+msgid "Erase"
+msgstr "Löschen"
+
+msgid "Note: slot list does not show current image or empty slots."
+msgstr "Hinweis: Die Liste zeigt das aktuelle Image oder leere Slots nicht an."
