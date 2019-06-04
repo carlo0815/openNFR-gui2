@@ -14284,3 +14284,15 @@ msgstr "Löschen"
 
 msgid "Note: slot list does not show current image or empty slots."
 msgstr "Hinweis: Die Liste zeigt das aktuelle Image oder leere Slots nicht an."
+
+msgid "Expand"
+msgstr "Erweitern"
+
+msgid "Collapse"
+msgstr "Minimieren"
+
+msgid "Delete image"
+msgstr "Image Löschen"
+
+msgid "Flash Image"
+msgstr "Image flashen"
