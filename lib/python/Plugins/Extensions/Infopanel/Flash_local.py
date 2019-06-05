@@ -46,7 +46,7 @@ class FlashOnline(Screen):
 						("slow", _("slow")),
 					], "turbo")
 		Screen.setTitle(self, _("Flash On the Fly"))
-		self["key_red"] = Button("Cancel")
+		self["key_red"] = Button(_("Cancel"))
 		self["key_green"] = Button()
 		self["key_yellow"] = Button()
 		self["key_blue"] = Button()
