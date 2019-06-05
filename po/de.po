@@ -14296,3 +14296,54 @@ msgstr "Image Löschen"
 
 msgid "Flash Image"
 msgstr "Image flashen"
+
+msgid "Next Backup: "
+msgstr "Nächstes Backup: "
+
+msgid "Timer backup"
+msgstr "Timer Backup"
+
+msgid "Max. backup 0=deactivated"
+msgstr "Max. Backups"
+
+msgid "Setup max. backups on storage"
+msgstr "Maximale Anzahl von Backups auf dem Speichermedium"
+
+msgid "Setup max. backups on storage 0=all"
+msgstr "Festlegen der maximalen Anzahl von Backups auf dem Speichermedium 0 = unbegrenzt"
+
+msgid "Backup Location"
+msgstr "Backup Speicherort"
+
+msgid "Location of where image backup should be saved."
+msgstr "Speicherort an dem die Image-Backups abgelegt werden sollen."
+
+msgid "Backup prefix"
+msgstr "Backup Präfix"
+
+msgid "Allows you to tag your image backup to a box. (default is box name/type)"
+msgstr "Erlaubt es den Namen des Image-Backups zu ändern. (Standard ist Boxname/Boxtyp)"
+
+msgid "Schedule Backups"
+msgstr "Plane Backups"
+
+msgid "Allows you schedule your image backups."
+msgstr "Erlaubt es Image-Backups automatisch zu planen."
+
+msgid "Time of Backup to start"
+msgstr "Startzeit des Backups"
+
+msgid "Repeat how often"
+msgstr "Wie oft wiederholen"
+
+msgid "Query before image backup starts"
+msgstr "Vor einer Imagesicherung fragen"
+
+msgid "Set the time of backup to start."
+msgstr "Legt den Zeitpunkt für den Start des Bakups fest"
+
+msgid "Set the repeat interval of backup schedule."
+msgstr "Legt das Wiederholungsintervall für den Sicherungszeitplan fest."
+
+msgid "Query before starting image backup."
+msgstr "Legt fest ob eine Abfrage vor dem Start der Imagesicherung eingeblendet werden soll."
