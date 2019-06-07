@@ -40,7 +40,8 @@ from ImageWizard import ImageWizard
 from ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
 from BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getBackupFilename, Dream_BackupScreen
 from SoftwareTools import iSoftwareTools
-from Screens.VirtualKeyBoard import VirtualKeyBoard	
+from Screens.VirtualKeyBoard import VirtualKeyBoard
+from Plugins.Extensions.Infopanel.Flash_local import FlashOnline	
 from Components.Label import Label
 boxtype = getBoxType()
 brandoem = getBrandOEM()
@@ -296,6 +297,8 @@ class UpdatePluginMenu(Screen):
 					self.session.open(ImageWizard)
 				elif currentEntry == "install-extensions":
 					self.session.open(PluginManager, self.skin_path)
+				elif (currentEntry == "flash-online"):
+					self.session.open(FlashOnline) 					
 				elif (currentEntry == "backup-image"):
 					self.session.open(TimerImageManager) 					
 				elif currentEntry == "system-backup":  
