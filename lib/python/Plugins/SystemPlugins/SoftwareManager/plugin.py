@@ -37,7 +37,7 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_CURRENT_PLUG
 from Tools.LoadPixmap import LoadPixmap
 from Tools.NumericalTextInput import NumericalTextInput
 from ImageWizard import ImageWizard
-from ImageBackup import ImageBackup
+from ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
 from BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getBackupFilename, Dream_BackupScreen
 from SoftwareTools import iSoftwareTools
 from Screens.VirtualKeyBoard import VirtualKeyBoard	
@@ -155,6 +155,7 @@ class UpdatePluginMenu(Screen):
 		self.text = ""
 		self.backupdirs = ' '.join( config.plugins.configurationbackup.backupdirs.value )
 		if self.menu == 0:
+			boxtype = getBoxType()
 			print "building menu entries"
 			self.list.append(("install-extensions", _("Manage extensions"), _("\nManage extensions or plugins for your %s %s") % (getMachineBrand(), getMachineName()) + self.oktext, None))
 			self.list.append(("software-update", _("Software update"), _("\nOnline update of your %s %s software.") % (getMachineBrand(), getMachineName()) + self.oktext, None))
@@ -296,7 +297,7 @@ class UpdatePluginMenu(Screen):
 				elif currentEntry == "install-extensions":
 					self.session.open(PluginManager, self.skin_path)
 				elif (currentEntry == "backup-image"):
-					self.session.open(ImageBackup) 					
+					self.session.open(TimerImageManager) 					
 				elif currentEntry == "system-backup":  
 					self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
 				elif currentEntry == "system-restore":
