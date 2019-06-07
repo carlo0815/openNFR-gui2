@@ -296,10 +296,7 @@ class UpdatePluginMenu(Screen):
 				elif currentEntry == "install-extensions":
 					self.session.open(PluginManager, self.skin_path)
 				elif (currentEntry == "backup-image"):
-					if DFLASH == True:
-						self.session.open(dFlash)
-					else:
-						self.session.open(ImageBackup) 					
+					self.session.open(ImageBackup) 					
 				elif currentEntry == "system-backup":  
 					self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
 				elif currentEntry == "system-restore":
