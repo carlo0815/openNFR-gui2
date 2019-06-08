@@ -518,6 +518,12 @@ class ImageBackup(Screen):
 	def __init__(self, session, *args):
 		Screen.__init__(self, session)
 		self.title = _("Image Backup")
+		try:
+			if Timerstarts == True:
+				print "normal start"
+		except:
+			Timerstarts = False
+			global Timerstarts
 		self["key_red"] = StaticText(_("Cancel"))
 		self["description"] = StaticText(_("Use the cursor keys to select an installed image and then Start button."))
 		self["options"] = StaticText(_(" "))
