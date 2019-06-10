@@ -569,12 +569,12 @@ class ImageBackup(Screen):
 					if imagedict[x]["imagename"] != _("Empty slot"):
                                                 if x == currentimageslot:
 							list.append(ChoiceEntryComponent('',((_("slot%s - %s - %s (current image)")) % (x, imagedict[x]['part'][0:3], imagedict[x]['imagename']), x, False)))
-					self["config"].setList(list)
 			else:           
 				if SystemInfo["canRecovery"]:
 					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
 				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
-                	timerlist =[]
+			self["config"].setList(list)
+			timerlist =[]
                 	timerlist = list
                 	global timerlist
                 	self.start()
