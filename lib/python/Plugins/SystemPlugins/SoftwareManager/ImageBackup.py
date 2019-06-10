@@ -479,8 +479,8 @@ class AutoImageManagerTimer:
 			print "[ImageManager] Running Backup", strftime("%c", localtime(now))
 			Timerstarts = True
 			global Timerstarts
-                        self.session.open(ImageBackup)
-                        #self.ImageBackup = ImageBackup(self.session)
+                        #self.session.open(ImageBackup)
+                        ImageBackup(self.session)
 			#Components.Task.job_manager.AddJob(self.ImageBackup.start())
 			#self.ImageBackup.startit1()
 			
