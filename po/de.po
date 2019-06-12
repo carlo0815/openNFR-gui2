@@ -14347,3 +14347,29 @@ msgstr "Legt das Wiederholungsintervall für den Sicherungszeitplan fest."
 
 msgid "Query before starting image backup."
 msgstr "Legt fest ob eine Abfrage vor dem Start der Imagesicherung eingeblendet werden soll."
+
+msgid "Initial scroll delay"
+msgstr "Verzögerung vor Text-Durchlauf"
+
+msgid "Final scroll delay"
+msgstr "Verzögerung nach Text-Durchlauf"
+
+msgid "Delay in miliseconds before start of scrolling text on display."
+msgstr "Hier lässt sich die Verzögerung (in Millisekunden) vor einem Text-Durchlauf auf dem Display einstellen."
+
+msgid "Delay in miliseconds after finish scrolling text on display."
+msgstr "Hier lässt sich die Verzögerung (in Millisekunden) nach einem Text-Durchlauf auf dem Display einstellen."
+
+msgid "Standart Backup"
+msgstr "Standard Backup"
+
+msgid "Please select a backup destination"
+msgstr "Wähle ein Ziel für die Sicherung aus"
+
+msgid ""
+"Your %s %s is about to run a full image backup, this can take about 6 minutes to complete,\n"
+"do you want to allow this?"
+msgstr ""
+"Deine %s %s ist im Begriff ein vollständiges Image-Backup durchzuführen, dies kann ungefähr 6 Minuten dauern.\n"
+"\n"
+"Jetzt ausführen?"
