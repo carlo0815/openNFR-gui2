@@ -673,8 +673,8 @@ class ImageBackup(Screen):
 				if SystemInfo["canMultiBoot"]:
 					if SystemInfo["HasRootSubdir"]:
 						self.MTDROOTFS = "%s" %(self.getImageList[self.SLOT]['part'])
-						if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
-							self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
+						#if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
+						self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
 					else:
 						try:
 							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
@@ -979,7 +979,10 @@ class ImageBackup(Screen):
 		else:
 			os.system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 		if SystemInfo["canMultiBoot"]:
-			os.system('mv %s/kernel.bin %s/kernel.bin' %(self.WORKDIR, self.MAINDEST))
+		        if SystemInfo["HasRootSubdir"]:
+			        os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))		        
+		        else:
+			        os.system('mv %s/kernel.bin %s/kernel.bin' %(self.WORKDIR, self.MAINDEST))
 		elif self.MTDKERNEL.startswith('mmcblk0'):
 			os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))
 		else:
