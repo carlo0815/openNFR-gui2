@@ -83,7 +83,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 		pass
 
 from Screens.CronTimer import *
-from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config, DefaulSkinchange
+from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config, NfrHD_Config1, DefaulSkinchange
 from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
@@ -640,7 +640,10 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "OpenNFRWizard":
 			self.session.open(OpenNFRWizardSetup)
 		elif menu == "SkinSetup":
-			self.session.open(NfrHD_Config)
+			if config.skin.primary_skin.value == "Multibox/skin.xml":
+                        	self.session.open(NfrHD_Config)
+			else:
+				self.session.open(NfrHD_Config1)
 		elif menu == "ImageUpdateCheck": 
 			self.session.open(OpenNFRWizardupdatecheck)                        	
 		elif menu == "PluginReLoad":
