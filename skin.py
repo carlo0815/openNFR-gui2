@@ -140,6 +140,12 @@ try:
 	print "[openNFR] loading user defined colors for skin", (primary_skin_path + 'skin_user_colors.xml')
 except (SkinError, IOError, AssertionError), err:
 	print "[openNFR] not loading user defined colors for skin"
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_background.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined background for skin", (primary_skin_path + 'skin_user_background.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined background for skin"	
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_header.xml', SCOPE_SKIN)
@@ -170,6 +176,26 @@ try:
 	print "[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml')
 except (SkinError, IOError, AssertionError), err:
 	print "[openNFR] not loading user defined ev file for skin"                	                	
+	
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined sb file for skin"                	                	
+	
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_ul.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined ul file for skin", (primary_skin_path + 'skin_user_ul.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined ul file for skin"
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_clock.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined clock file for skin"                          	                	
 	
 	
 def load_modular_files():
