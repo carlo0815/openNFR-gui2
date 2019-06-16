@@ -78,14 +78,20 @@ class FlashOnline(Screen):
 	def getImagesList(self):
 
 		def getImages(path, files):
-			for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
-				try:
+			self.imagesList[_("Downloaded Images")] = {} 
+                        self.imagesList[_("Fullbackup Images")] = {}
+                        for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
+                                try:
 					if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
-						if "Downloaded Images" not in self.imagesList:
-							self.imagesList["Downloaded Images"] = {}
-						self.imagesList["Downloaded Images"][file] = {'link': file, 'name': file.split(os.sep)[-1]}
+                                                if 'backup' in file.split(os.sep)[-1]:
+                                                        self.imagesList[_("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
+						else:
+                                                        self.imagesList[_("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
+
 				except:
 					pass
+					
+     	
 
 		if not self.imagesList:
 			box = GetBoxName()
@@ -333,6 +339,7 @@ class FlashImage(Screen):
 			title =_("Please select what to do after flashing the image:\n(In addition, if it exists, a local script will be executed as well at /media/hdd/images/config/myrestore.sh)")
 			choices = ((_("Upgrade (Backup, Flash & Restore All)"), "restoresettingsandallplugins"),
 			(_("Clean (Just flash and start clean)"), "wizard"),
+			(_("Flash Backup (Just flash and start clean)"), "wizard"),
 			(_("Backup, flash and restore settings and no plugins"), "restoresettingsnoplugin"),
 			(_("Backup, flash and restore settings and selected plugins (ask user)"), "restoresettings"),
 			(_("Do not flash image"), "abort"))
