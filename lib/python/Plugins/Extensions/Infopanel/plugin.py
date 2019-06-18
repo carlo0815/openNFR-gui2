@@ -35,7 +35,7 @@ from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixm
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
 from __init__ import _
 from enigma import getDesktop
-from Screens.OpenNFR_wizard import OpenNFRWizardSetup, OpenNFRWizardupdatecheck
+from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.InputBox import PinInput
 import string
 from random import Random
@@ -319,9 +319,6 @@ class Infopanel(Screen, InfoBarPiP):
 		Screen.__init__(self, session)
 		self.session = session
 		self.skin = MENU_SKIN
-		global check_update
-		check_update = 0
-		self.onShown.append(self.checkTraficLight)
 		self.onShown.append(self.setWindowTitle)
                 self.service = None
 		self['spaceused'] = ProgressBar()			
@@ -373,37 +370,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
-
-	def checkTraficLight(self):
-                global check_update
-                if config.opennfrupdate.enablecheckupdate.value is True:
-                	if check_update == 0:
-                		check_update = 1
-				currentTimeoutDefault = socket.getdefaulttimeout()
-				socket.setdefaulttimeout(3)
-				try:
-					if os.path.isfile("/tmp/lastrelease.txt"):
-                                		os.system("rm -f /tmp/lastrelease.txt")
-					import urllib
-					urllib.urlretrieve('http://dev.nachtfalke.biz/nfr/feeds/lastrelease.txt', '/tmp/lastrelease.txt')
-                                        d = os.popen("/tmp/lastrelease.txt").read()
-					tmpOnlineStatus = open("/tmp/lastrelease.txt", "r").read()
-                                	tmpFlashStatus = open("/etc/version", "r").read()
-					if int(tmpOnlineStatus) > int(tmpFlashStatus):
-						message = _("new Release avaible")
-						self.session.openWithCallback(self.setWindowTitle(), MessageBox, _("New Releaseimage on Server, read more about it by http://www.nachtfalke.biz/f742-opennfr-images.html"), MessageBox.TYPE_INFO, timeout=5)
-                        		else:
-                        			print "no new Release avaible"                                                                	
-				except:
-					print "no internetconnection to check imageupdates"
-
-				socket.setdefaulttimeout(currentTimeoutDefault)
-                	else:
-                		pass        	
-
-                else:
-                	check_update = 1
-                        self.setWindowTitle()
                 	
 	def isProtected(self):
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.infopanel.value
@@ -644,8 +610,6 @@ class Infopanel(Screen, InfoBarPiP):
                         	self.session.open(NfrHD_Config)
 			else:
 				self.session.open(NfrHD_Config1)
-		elif menu == "ImageUpdateCheck": 
-			self.session.open(OpenNFRWizardupdatecheck)                        	
 		elif menu == "PluginReLoad":
                         if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):    
                             from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
@@ -728,8 +692,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist = []
 		self.oldmlist = []
 		self.oldmlist = self.Mlist
-                self.tlist.append(MenuEntryItem((InfoEntryComponent('ImageUpdateCheck'), _("ImageUpdateCheck"), 'ImageUpdateCheck')))
-                #self.tlist.append(MenuEntryItem((InfoEntryComponent ("SoftwareManager" ), _("Software update"), ("software-update"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("ImageBackup" ), _("Software Backup"), ("backup-image"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("Flash_local" ), _("Flash local online"), ("flash-local"))))
 		if SystemInfo["canMultiBoot"]:
