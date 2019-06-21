@@ -511,12 +511,10 @@ class FlashImage(Screen):
 			self.MTDROOTFS = GetCurrentRoot()
 			if SystemInfo["canMultiBoot"]:
 				if "sd" in self.getImageList[self.multibootslot]['part']:
-				        print "7"
 					self.MTDKERNEL = "%s%s" %(SystemInfo["canMultiBoot"][2], int(self.getImageList[self.multibootslot]['part'][3])-1)
 					self.MTDROOTFS = "%s" %(self.getImageList[self.multibootslot]['part'])
 			if SystemInfo["canMultiBoot"]:
                                 if getMachineBuild() in ("gbmv200","cc1","sf8008","ustym4kpro","beyonwizv2","viper4k"): # issue detect kernel device and rootfs on sda
-					print "9"
                                         print "[FlashImage] detect Kernel:",self.MTDKERNEL
 					print "[FlashImage] detect rootfs:",self.MTDROOTFS
 					command = "/usr/bin/ofgwrite -r%s -k%s %s" % (self.MTDROOTFS, self.MTDKERNEL, imagefiles)
