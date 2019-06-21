@@ -46,8 +46,6 @@ hddchoises = []
 for media in ['/media/%s' % x for x in os.listdir('/media')] + (['/media/net/%s' % x for x in os.listdir('/media/net')] if os.path.isdir('/media/net') else []):
 	if Harddisk.Freespace(media) > 300000:
 		hddchoises.append(media)
-print "hddchoises:", hddchoises		
-
 config.imagemanager = ConfigSubsection()
 defaultprefix = getImageDistro() + '-' + getBoxType()
 config.imagemanager.folderprefix = ConfigText(default=defaultprefix, fixed_size=False)
@@ -213,7 +211,6 @@ class TimerImageManager(Screen):
 				d = path.normpath(p.mountpoint)
 				if p.mountpoint != '/':
 					imparts.append((p.mountpoint, d))
-		print "imparts:", imparts			
 		config.imagemanager.backuplocation.setChoices(imparts)
                 config.imagemanager.backuplocation.save()
 		if config.imagemanager.backuplocation.value.endswith('/'):
@@ -221,8 +218,6 @@ class TimerImageManager(Screen):
 		else:
 			mount = config.imagemanager.backuplocation.value + '/', config.imagemanager.backuplocation.value 
 		hdd = '/media/hdd', '/media/hdd'
-		print "mount:", mount
-		print "choises:", config.imagemanager.backuplocation.choices.choices
 		if mount not in config.imagemanager.backuplocation.choices.choices:
 			if hdd in config.imagemanager.backuplocation.choices.choices:
 				self['myactions'] = ActionMap(['ColorActions', 'OkCancelActions', 'DirectionActions', "MenuActions", "HelpActions"],
