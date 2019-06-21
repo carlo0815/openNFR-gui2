@@ -124,20 +124,27 @@ class NFRCamManager(Screen):
 				searchfile.close()
 			
 			for fAdd1 in glob ('/etc/init.d/softcam.*'):
-				searchfile1 = open(fAdd1, "r")
-				for line1 in searchfile1:
-					if 'echo "/usr/bin/' in line1:
-						line2 = line1[15:]
-						line3 = line2.split(" ")
-						line4 = line3[0]
-						emus.append(line4)
-				searchfile1.close()			
+				if not "None" in fAdd1:
+                                	emus.append(fAdd1)
+                                #searchfile1 = open(fAdd1, "r")
+                                #for line1 in searchfile1:
+					#if 'echo "/usr/bin/' in line1:
+						#line2 = line1[15:]
+						#line3 = line2.split(" ")
+						#line4 = line3[0]
+						#emus.append(line4)
+                                #searchfile1.close()			
 	
 			try:
-				for emu in emus:
-					emu1 = emu.strip()
-					src = "/usr/bin/" + emu1
-					dst = "/usr/emu/" + emu1 + ".x"
+                                for emu in emus:
+                                        emu1 = emu.strip()
+                                        if "/etc/init.d/" in emu1:
+                                        	emu2 = emu1.rsplit('/', 1)
+                                                src = emu1
+                                        	dst = "/usr/emu/" + emu2[1] + ".x"
+                                        else:	
+                                        	src = "/usr/bin/" + emu1
+                                        	dst = "/usr/emu/" + emu1 + ".x"
 					os.symlink(src, dst)
 			except:					
 					print "files exist"					
