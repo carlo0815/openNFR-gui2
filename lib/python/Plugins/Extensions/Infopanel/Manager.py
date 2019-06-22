@@ -114,7 +114,10 @@ class NFRCamManager(Screen):
 							self.Console.ePopen("mv %s %s.org" % (dst,dst1))
 							sleep(0.50)
 						os.symlink(src, dst)                                                                                 			
-	
+			if os.path.islink("/etc/init.d/softcam"):
+				os.system("/etc/init.d/softcam stop")
+                                os.unlink("/etc/init.d/softcam")
+				
 			emus=[]
 			for fAdd in glob ('/etc/*.emu'):
 				searchfile = open(fAdd, "r")
