@@ -18,7 +18,7 @@ boxtype = getBoxType()
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo") and boxtype in ('dm7080','dm820','dm520','dm525','dm900'):
 	import pyo_patcher
 	
-if boxtype in ('dm7080','dm820','dm520','dm525','dm900', 'sf208'):
+if boxtype in ('dm500hd','dm500hdv2','dm520','dm525','dm7020hd','dm7020hdv2','dm7080','dm800','dm8000','dm800se','dm800sev2','dm820','dm900','dm920' ):
 	os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/images/dreambox /usr/share/bootlogo.mvi")	
 
 from traceback import print_exc
