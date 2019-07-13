@@ -17,6 +17,9 @@ enigma.eConsoleAppContainer = eConsoleImpl.eConsoleAppContainer
 boxtype = getBoxType()
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin.pyo") and boxtype in ('dm7080','dm820','dm520','dm525','dm900'):
 	import pyo_patcher
+	
+if boxtype in ('dm7080','dm820','dm520','dm525','dm900', 'sf208'):
+	os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/images/dreambox /usr/share/bootlogo.mvi")	
 
 from traceback import print_exc
 profile("SimpleSummary")
