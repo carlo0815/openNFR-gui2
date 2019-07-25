@@ -39,6 +39,7 @@ class FlashOnline(Screen):
 		self.imagesList = {}
 		self.setIndex = 0
 		self.expanded = []
+		
 		config.plugins.softwaremanager.restoremode = ConfigSelection(
 					[
 						("turbo", _("turbo")),
@@ -78,20 +79,24 @@ class FlashOnline(Screen):
 	def getImagesList(self):
 
 		def getImages(path, files):
-			self.imagesList[_("Downloaded Images")] = {} 
-                        self.imagesList[_("Fullbackup Images")] = {}
+		        try:
+		                print self.imagesList[("Downloaded Images")]
+		        except:
+		                self.imagesList[("Downloaded Images")] = {} 
+		        try:
+                                print self.imagesList[("Fullbackup Images")]
+                        except:        
+                                self.imagesList[("Fullbackup Images")] = {}
                         for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
                                 try:
-					if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
+                                        if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
                                                 if 'backup' in file.split(os.sep)[-1]:
-                                                        self.imagesList[_("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
-						else:
-                                                        self.imagesList[_("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
+                                                        self.imagesList[("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
+                                                else:
+                                                        self.imagesList[("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
 
 				except:
 					pass
-					
-     	
 
 		if not self.imagesList:
 			box = GetBoxName()
