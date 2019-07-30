@@ -14373,3 +14373,36 @@ msgstr ""
 "Deine %s %s ist im Begriff ein vollständiges Image-Backup durchzuführen, dies kann ungefähr 6 Minuten dauern.\n"
 "\n"
 "Jetzt ausführen?"
+
+msgid "Even if TV has another input active?"
+msgstr "Auch wenn der TV einen anderen Eingang aktiviert hat?"
+
+msgid "Even if a 'wakeup' power timer starting?"
+msgstr "Auch wenn ein 'Aufweck' Einschalt-Timer startet?"
+
+msgid "Even if a 'zap and record' recording timer starting?"
+msgstr "Auch wenn ein 'Umschalt und Aufnahme' Timer startet?"
+
+msgid "Even if a 'zap' recording timer starting?"
+msgstr "Auch wenn ein 'Umschalt' Aufnahme Timer startet?"
+
+msgid "Switch off the TV to correct input"
+msgstr "Schalte den TV aus um den Eingang zu korrigieren"
+
+msgid "Handle input from TV"
+msgstr "TV-Eingänge verwalten"
+
+msgid "Time delay until standby or deep standby"
+msgstr "Zeitverzögerung bis zum Standby oder Deep-Standby"
+
+msgid "Put your AV Receiver in standby"
+msgstr "AV Receiver in Standby versetzen"
+
+msgid "Wakeup your AV Receiver from standby"
+msgstr "AV Receiver aus dem Standby aufwecken"
+
+msgid "Repeat the sent standby and wakeup commands"
+msgstr "Sende wiederholende Aufwach- und Standby Kommandos"
+
+msgid "Check power and input state from TV"
+msgstr "Überprüfe den Betriebszustand vom TV"

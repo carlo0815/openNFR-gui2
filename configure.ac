@@ -860,6 +860,8 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/DVDBurn/meta/Makefile
 	lib/python/Plugins/Extensions/DVDPlayer/Makefile
 	lib/python/Plugins/Extensions/DVDPlayer/meta/Makefile
+	lib/python/Plugins/Extensions/FileLoad/Makefile	
+	lib/python/Plugins/Extensions/FileLoad/images/Makefile	
 	lib/python/Plugins/Extensions/Infopanel/Makefile
 	lib/python/Plugins/Extensions/Infopanel/meta/Makefile
 	lib/python/Plugins/Extensions/Infopanel/data/Makefile
