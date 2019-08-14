@@ -43,19 +43,20 @@ try:
 except ImportError:
     from StringIO import StringIO
      
-  
+ 
 print ""
 print '----------------------------------------------------------------------->> '
 try:
-   port = int(sys.argv[1])
+   #port = int(sys.argv[1])
+   port = 8090   
 except Exception, e:
-   print '-------->> Warning: Port is not given, will use deafult port: 8080 '
+   print '-------->> Warning: Port is not given, will use deafult port: 8090 '
    print '-------->> if you want to use other port, please execute: '
    print '-------->> python SimpleHTTPServerWithUpload.py port '
    print "-------->> port is a integer and it's range: 1024 < port < 65535 "
-   port = 8080
+   port = 8090
     
-if not 1024 < port < 65535:  port = 8080
+if not 1024 < port < 65535:  port = 8090
 serveraddr = ('', port)
 print '-------->> Now, listening at port ' + str(port) + ' ...'
 print '-------->> You can visit the URL:   http://localhost:' + str(port)
@@ -110,9 +111,9 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         print r, info, "by: ", self.client_address
         f = StringIO()
         f.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
-        f.write("<html>\n<title>Upload Result Page</title>\n")
+        f.write("<html>\n<title>Delete Result Page</title>\n")
         f.write('<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
-	f.write("<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Upload Result Page</h2>")
+	f.write("<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Delete Result Page</h2>")
 	f.write('<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
 	f.write("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer'])
 	f.write('<ul></td></tr>')
@@ -144,8 +145,11 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not boundary in line:
             return (False, "Content NOT begin with boundary")
         line = self.rfile.readline()
+        line1 = self.rfile.readline()
+        line2 = self.rfile.readline()
         remainbytes -= len(line)
-        fn = re.findall(r'Content-Disposition.*name="file"; filename="(.*)"', line)
+        fx = line.split('"')
+        fn = fx[1]
         if fn == [""]:
             nofile = False
         else:
@@ -153,43 +157,11 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if not fn:
             return (False, "Can't find out file name...")
         path = self.translate_path(self.path)
-        osType = platform.system()
         try:
-            if osType == "Linux":
-                fn = os.path.join(path, fn[0].decode('gbk').encode('utf-8'))
-            else:
-                fn = os.path.join(path, fn[0])
-        except Exception, e:
-            return (False, "?????????,????IE?????????")
-        while os.path.exists(fn):
-            fn += "_"
-        line = self.rfile.readline()
-        remainbytes -= len(line)
-        line = self.rfile.readline()
-        remainbytes -= len(line)
-        try:
-            if nofile == False:
-                return (False, "No file selected! Please select a file and try again.")
-            else:    
-                out = open(fn, 'wb')
-        except IOError:
-            return (False, "Can't create file to write, do you have permission to write?")
-                 
-        preline = self.rfile.readline()
-        remainbytes -= len(preline)
-        while remainbytes > 0:
-            line = self.rfile.readline()
-            remainbytes -= len(line)
-            if boundary in line:
-                preline = preline[0:-1]
-                if preline.endswith('\r'):
-                    preline = preline[0:-1]
-                out.write(preline)
-                out.close()
-                return (True, "File '%s' upload success!" % fn)
-            else:
-                out.write(preline)
-                preline = line
+            os.system("rm %s%s " % (self.path, fn))
+            return (True, "File '%s' delete success!" % fn)
+        except:
+            return (False, "File '%s' delete not success!" % fn)     
         return (False, "Unexpect Ends of data.")
  
     def send_head(self):
@@ -235,7 +207,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
         self.end_headers()
         return f
-        
+ 
     def list_directory(self, path):
         """Helper to produce a directory listing (absent index.html).
  
@@ -244,14 +216,13 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         interface the same as for send_head().
  
         """
-        #http.Request.getRequestHostname = new_getRequestHostname
-        serveradress = re.findall('Host: (.*?)\r\n',str(self.headers))
-        url = serveradress[0].split(':',1)
         try:
             list = os.listdir(path)
         except os.error:
             self.send_error(404, "No permission to list directory")
             return None
+        serveradress = re.findall('Host: (.*?)\r\n',str(self.headers))
+        url = serveradress[0].split(':',1)    
         list.sort(key=lambda a: a.lower())
         f = StringIO()
         displaypath = cgi.escape(urllib.unquote(self.path))
@@ -261,16 +232,8 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         f.write('<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
 	f.write("<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Directory listing</h2>")
         f.write('<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-        f.write('<input name=\"file\" type=\"file\"/>')
-        f.write('<input type=\"submit\" value=\"upload\"/>')
-        f.write("<input type=\"button\" value=\"HomePage\" onClick=\"location='/'\">")
-        f.write("<br><br/><input type=\"button\" value=\"usr/emu\" onClick=\"location='/usr/emu/'\">")
-        f.write("<input type=\"button\" value=\"usr/keys\" onClick=\"location='/usr/keys/'\">")
-        f.write("<input type=\"button\" value=\"etc/init.d\" onClick=\"location='/etc/init.d/'\">")
-        f.write("<input type=\"button\" value=\"/tmp\" onClick=\"location='/tmp/'\">")
-        f.write("<input type=\"button\" value=\"/hdd\" onClick=\"location='/hdd/'\">")
+        f.write("<input type=\"button\" value=\"HomePage\" onClick=\"self.location.href='http://%s:8000'\">" % url[0])        
         f.write("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='../'\"></form>")
-        f.write("<input type=\"button\" value=\"delete\" target=\"_blank\" onClick=\"self.location.href='http://%s:8090'\">" % url[0])        
         f.write('</form>')
         f.write('<ul></td></tr>')
         f.write('<tr><td valign=top bgcolor="#346ca7" height="65%">')
@@ -288,9 +251,9 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 displayname = name
                 # Note: a link to a directory displays with @ and links with /
             filename = os.getcwd() + '/' + displaypath + displayname
-            f.write('<table bgcolor="#346ca7"><tr><td width="60%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td></tr>'
+            f.write('<table bgcolor="#346ca7"><tr><td width="50%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td><td width="10%%"><form ENCTYPE=\"multipart/form-data\" method=\"post\"><input id=\"del\" type=\"submit\" name=\"%s\" value=\"Delete\" ID=\"Delete\" /></form></td></tr>'
                     % (urllib.quote(linkname), colorName,
-                        sizeof_fmt(os.path.getsize(filename)), modification_date(filename)))
+                        sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.quote(linkname)))
         f.write("</table></body></html>")
         f.write("</table></td></tr></table></body></html>")
         length = f.tell()
@@ -382,11 +345,11 @@ def test(HandlerClass = SimpleHTTPRequestHandler,
  
 if __name__ == '__main__':
     os.chdir("/")  
+    srvr = ThreadingServer(serveraddr, SimpleHTTPRequestHandler)
+    srvr.serve_forever()    
     test()
-
     #???
     # srvr = BaseHTTPServer.HTTPServer(serveraddr, SimpleHTTPRequestHandler)
      
     #???
-    srvr = ThreadingServer(serveraddr, SimpleHTTPRequestHandler)
-    srvr.serve_forever()
+
