@@ -378,7 +378,7 @@ class EasySetup(ConfigListScreen, Screen):
         else:
             self.closetest()
             
-    def closetest(self):            
+    def closetest(self, res = None):            
         config.misc.firstrun = ConfigBoolean(default = True)
         if config.easysetup.restart.value == True:
             if config.misc.firstrun.value == False:
