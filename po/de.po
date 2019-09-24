@@ -14407,5 +14407,5 @@ msgstr "Sende wiederholende Aufwach- und Standby Kommandos"
 msgid "Check power and input state from TV"
 msgstr "Überprüfe den Betriebszustand vom TV"
 
-magid "Do you really want to Zap?\n"
+msgid "Do you really want to Zap?\n"
 msgstr "Möchtest du wirklich umschalten?\n"
