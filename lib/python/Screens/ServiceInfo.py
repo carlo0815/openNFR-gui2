@@ -8,6 +8,8 @@ from enigma import eListboxPythonMultiContent, eListbox, gFont, iServiceInformat
 from Tools.Transponder import ConvertToHumanReadable
 from Components.Converter.ChannelNumbers import channelnumbers
 import skin
+import os
+import subprocess
 
 RT_HALIGN_LEFT = 0
 
@@ -164,7 +166,9 @@ class ServiceInfo(Screen):
 				f = open("/proc/stb/video/videomode")
 				videomode = f.read()[:-1].replace('\n','')
 				f.close()
-
+			codenumbers = subprocess.check_output(['dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F "=" "{print $2}" | awk -F "]" "{print $1}" | wc -l'], shell=True)
+			codesystem = subprocess.check_output(["dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '=' '{print $2}' | awk -F ']' '{print $1}'"], shell=True)
+			caidssyst = subprocess.check_output(["dvbsnoop -n 1 -nph 1 | grep CA_system_ID | awk -F '(' '{print $2}' | awk -F ')' '{print $1}'"], shell=True)
 			Labels = ( (_("Name"), name, TYPE_TEXT),
 					(_("Provider"), self.getServiceInfoValue(iServiceInformation.sProvider), TYPE_TEXT),
 					(_("Videoformat"), aspect, TYPE_TEXT),
@@ -172,7 +176,18 @@ class ServiceInfo(Screen):
 					(_("Videosize"), resolution, TYPE_TEXT),
 					(_("Videocodec"), videocodec, TYPE_TEXT),
 					(_("Namespace"), self.getServiceInfoValue(iServiceInformation.sNamespace), TYPE_VALUE_HEX, 8),
-					(_("Service reference"), refstr, TYPE_TEXT))
+					(_("Service reference"), refstr, TYPE_TEXT),
+					(_("Coding Systems"), codenumbers, TYPE_TEXT))
+
+			if codenumbers > 0:
+				i = 0
+				caidssyst1 = caidssyst.splitlines()
+				codesystem1 = codesystem.splitlines()
+				while i < int(codenumbers):
+					caidsystem = caidssyst1[i] + " " + codesystem1[i]
+					i += 1
+					newlabel = ( (_("%s " %i), caidsystem, TYPE_TEXT)) 
+					Labels = Labels + (newlabel,)
 
 			self.fillList(Labels)
 		else:
