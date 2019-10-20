@@ -1,2 +1,2 @@
-installdir = $(pkgdatadir)/display
+installdir = $(pkgdatadir)/display/lcdskins
 dist_install_DATA = *.xml
