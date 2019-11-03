@@ -985,6 +985,7 @@ class InfoBarChannelSelection:
 				"historyNext": (self.historyNext, _("next channel in history")),
 				"openServiceList": (self.openServiceList, _("open servicelist")),
 				"openSatellites": (self.openSatellites, _("open Satellites")),
+				"openBouquetList": (self.openBouquetList, _("open Favorites")),
 				"openFIND": (self.openFIND, _("open find service")),
                                 "showMediaCenter": (self.showMediaCenter, _("open Media Center")),
                               								
@@ -1002,6 +1003,17 @@ class InfoBarChannelSelection:
                 else:
                         self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
+						
+	def openBouquetList(self):
+		if config.usage.tvradiobutton_mode.value == "MovieList":
+			self.showTvChannelList(True)
+			self.showMovies()
+		elif config.usage.tvradiobutton_mode.value == "ChannelList":
+			self.showTvChannelList(True)
+		elif config.usage.tvradiobutton_mode.value == "BouquetList":
+			self.showTvChannelList(True)
+			self.servicelist.showFavourites()
+						
 	def ChannelPlusPressed(self):
 		if config.usage.channelbutton_mode.value == "0":
 			self.zapDown()
