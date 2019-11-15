@@ -158,7 +158,7 @@ def getCPUSpeedString():
 		return "1,7 GHz"
 	elif getMachineBuild() in ('alien5','u53'):
 		return "2,0 GHz"
-	elif getMachineBuild() in ('hd51','hd52','sf4008','vs1500','et1x000','h7','et13000','sf5008','osmio4k'):
+	elif getMachineBuild() in ('hd51','hd52','sf4008','vs1500','et1x000','h7','et13000','sf5008','osmio4k','osmio4kplus'):
 		try:
 			import binascii
 			f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
@@ -188,7 +188,7 @@ def getCPUSpeedString():
 
 
 def getCPUString():
-	if getMachineBuild() in ('osmio4k','dags72604','vuuno4kse','vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'dags7252', 'vs1500', 'et1x000', 'xc7439','h7','8100s','et13000','sf5008'):
+	if getMachineBuild() in ('osmio4k','osmio4kplus','dags72604','vuuno4kse','vuuno4k', 'vuultimo4k','xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'dags7252', 'vs1500', 'et1x000', 'xc7439','h7','8100s','et13000','sf5008'):
 		return "Broadcom"
 	elif getMachineBuild() in ('gbmv200','u41','u51','u52','u53','u54','u55','u56','u5','u5pvr','h9','h9combo','cc1','sf8008','hd60','hd61','i55plus','ustym4kpro','v8plus','multibox'):
 		return "Hisilicon"	
