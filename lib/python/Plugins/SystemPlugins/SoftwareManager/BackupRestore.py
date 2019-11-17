@@ -13,7 +13,7 @@ from Components.Sources.StaticText import StaticText
 from Components.MenuList import MenuList
 from Components.Sources.List import List
 from Components.Button import Button
-from Components.config import getConfigListEntry, configfile, ConfigSelection, ConfigSubsection, ConfigText, ConfigLocations
+from Components.config import getConfigListEntry, configfile, ConfigSelection, ConfigSubsection, ConfigText, ConfigLocations, ConfigEnableDisable, ConfigClock, ConfigInteger
 from Components.config import config
 from Components.ConfigList import ConfigList,ConfigListScreen
 from Components.FileList import MultiFileSelectList
@@ -23,7 +23,7 @@ from enigma import eTimer, eEnv, eConsoleAppContainer
 from Tools.Directories import *
 from os import system, popen, path, makedirs, listdir, access, stat, rename, remove, W_OK, R_OK
 from time import gmtime, strftime, localtime, sleep
-from datetime import date
+from datetime import date, datetime
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageDistro
 import shutil
 
@@ -32,7 +32,10 @@ distro = getImageDistro()
 START = time()
 dt1 = strftime("%Y%m%d_%H%M", localtime(START))
 config.plugins.configurationbackup = ConfigSubsection()
+config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
+config.plugins.configurationbackup.maxbackup = ConfigInteger(default=99, limits=(0, 99))
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
 config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
 dirsbackup = config.plugins.configurationbackup.backuplocation.value + 'channellist_' + dt1
 
@@ -105,6 +108,15 @@ class BackupScreen(Screen, ConfigListScreen):
 		self.setTitle(_("Backup is running..."))
 
 	def doBackup(self):
+	        from glob import glob
+	        import os
+	        config.plugins.configurationbackup.maxbackup = ConfigInteger(default=99, limits=(0, 99))
+                count1 = len(glob(self.backuppath + '/*enigma2settingsbackup.tar.gz'))
+                if count1 >= config.plugins.configurationbackup.maxbackup.value:
+                        files = glob(self.backuppath + "/*enigma2settingsbackup.tar.gz")
+                        files.sort(key=os.path.getmtime, reverse=True)
+                 	for i in range(config.plugins.configurationbackup.maxbackup.value-1, count1):
+                                os.remove(files[i])
 		configfile.save()
 		try:
 			if path.exists(self.backuppath) == False:
@@ -120,7 +132,7 @@ class BackupScreen(Screen, ConfigListScreen):
 			cmd3 = "tar -czvf " + self.fullbackupfilename + " " + self.backupdirs
 			cmd = [cmd1, cmd2, cmd3]
 			if path.exists(self.fullbackupfilename):
-				dt = str(date.fromtimestamp(stat(self.fullbackupfilename).st_ctime))
+				dt = str(datetime.fromtimestamp(stat(self.fullbackupfilename).st_ctime))
 				self.newfilename = self.backuppath + "/" + dt + '-' + self.backupfile
 				if path.exists(self.newfilename):
 					remove(self.newfilename)
