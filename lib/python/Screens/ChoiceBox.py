@@ -131,8 +131,8 @@ class ChoiceBox(Screen):
 			"down": self.down,
 			"left": self.left,
 			"right": self.right,
-			"shiftUp": self.additionalMoveUp,
-			"shiftDown": self.additionalMoveDown,
+			"moveUp": self.additionalMoveUp,
+			"moveDown": self.additionalMoveDown,
 			"menu": self.setDefaultChoiceList,
 			"back": lambda: 0,  # drop through to self["cancelaction"]
 		}, prio=-2)

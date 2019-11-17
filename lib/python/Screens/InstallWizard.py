@@ -11,12 +11,14 @@ import os
 config.misc.installwizard = ConfigSubsection()
 config.misc.installwizard.hasnetwork = ConfigBoolean(default = False)
 config.misc.installwizard.ipkgloaded = ConfigBoolean(default = False)
+config.misc.installwizard.channellistdownloaded = ConfigBoolean(default = False)
 
 
 class InstallWizard(Screen, ConfigListScreen):
 
 	STATE_UPDATE = 0
-	
+	STATE_CHOISE_CHANNELLIST = 1
+
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
                 print "installwizard starts"
@@ -67,6 +69,11 @@ class InstallWizard(Screen, ConfigListScreen):
 					break
 			if is_found is False:
 				self.createMenu()
+		elif self.index == self.STATE_CHOISE_CHANNELLIST:
+			self.enabled = ConfigYesNo(default = True)
+			modes = {"default": _("OpenNFR List"),"scan": _("scan new")}
+			self.channellist_type = ConfigSelection(choices = modes, default = "default")
+			self.createMenu()
 
 	def checkNetworkCB(self, data):
 		if data < 3:
@@ -85,11 +92,8 @@ class InstallWizard(Screen, ConfigListScreen):
 		except:
 			return
 		self.list = []
-		if self.index == self.STATE_UPDATE:
-			if config.misc.installwizard.hasnetwork.value:
-				self.list.append(getConfigListEntry(_("Your internet connection is working (ip: %s)") % (self.ipConfigEntry.getText()), self.enabled))
-			else:
-				self.list.append(getConfigListEntry(_("Your receiver does not have an internet connection"), self.enabled))
+		if self.index == self.STATE_CHOISE_CHANNELLIST:
+			self.list.append(getConfigListEntry(_("Channel list type"), self.channellist_type))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 
@@ -106,12 +110,15 @@ class InstallWizard(Screen, ConfigListScreen):
 		self.createMenu()
 
 	def run(self):
-		if self.index == self.STATE_UPDATE:
-			if config.misc.installwizard.hasnetwork.value:
-				self.session.open(InstallWizardIpkgUpdater, self.index, _('Please wait (updating packages)'), IpkgComponent.CMD_UPDATE)
-						
-
-
+                if self.index == self.STATE_CHOISE_CHANNELLIST and self.enabled.value and self.channellist_type.value == "scan":
+                        os.system("rm /etc/enigma2/*.tv")
+                        os.system("rm /etc/enigma2/*.radio") 
+                        config.misc.installwizard.channellistdownloaded.value = False
+			os.system("tar -xzf /etc/channel.tar.gz -C /etc/enigma2")
+                        eDVBDB.getInstance().reloadServicelist()
+			eDVBDB.getInstance().reloadBouquets()
+		return
+	
 class InstallWizardIpkgUpdater(Screen):
 	def __init__(self, session, index, info, cmd, pkg = None):
 		Screen.__init__(self, session)
@@ -125,12 +132,22 @@ class InstallWizardIpkgUpdater(Screen):
 		self.ipkg = IpkgComponent()
 		self.ipkg.addCallback(self.ipkgCallback)
 
-		self.ipkg.startCmd(cmd, pkg)
+		if self.index == InstallWizard.STATE_CHOISE_CHANNELLIST:
+			self.ipkg.startCmd(cmd, {'package': 'enigma2-plugin-settings-*'})
+		else:
+			self.ipkg.startCmd(cmd, pkg)
 
 	def ipkgCallback(self, event, param):
 		if event == IpkgComponent.EVENT_DONE:
 			if self.index == InstallWizard.STATE_UPDATE:
 				config.misc.installwizard.ipkgloaded.value = True
-
-				self.close()
-				
+			elif self.index == InstallWizard.STATE_CHOISE_CHANNELLIST:
+				if self.state == 0:
+					self.ipkg.startCmd(IpkgComponent.CMD_INSTALL, self.pkg)
+					self.state = 1
+					return
+				else:
+					config.misc.installwizard.channellistdownloaded.value = False
+					eDVBDB.getInstance().reloadBouquets()
+					eDVBDB.getInstance().reloadServicelist()
+			self.close()

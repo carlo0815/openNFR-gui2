@@ -6,7 +6,6 @@ from sys import maxint
 import os
 
 from enigma import eEPGCache, getBestPlayableServiceReference, eServiceReference, eServiceCenter, iRecordableService, quitMainloop, eActionMap
-
 from Components.config import config
 from Components import Harddisk
 from Components.UsageConfig import defaultMoviePath, calcFrontendPriorityIntval
@@ -238,12 +237,6 @@ class RecordTimerEntry(timer.TimerEntry, object):
 	def calculateFilename(self):
 		service_name = self.service_ref.getServiceName()
 		begin_date = strftime("%Y%m%d %H%M", localtime(self.begin))
-
-#		print "begin_date: ", begin_date
-#		print "service_name: ", service_name
-#		print "name:", self.name
-#		print "description: ", self.description
-#
 		filename = begin_date + " - " + service_name
 		if self.name:
 			if config.recording.filename_composition.value == "short":
@@ -322,7 +315,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			if self.backoff > 100:
 				self.backoff = 100
 		self.log(10, "backoff: retry in %d seconds" % self.backoff)
-
+                	
 	def activate(self):
 		next_state = self.state + 1
 		self.log(5, "activating state %d" % next_state)
@@ -416,7 +409,10 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					#wakeup standby
 					Screens.Standby.inStandby.Power()
 				else:
-					self.log(11, "zapping")
+					if config.recording.asktozap1.value == True:
+						Notifications.AddNotificationWithCallback(self.failureCB, MessageBox, _("Do you really want to Zap?\n"), timeout=20)
+                                                return True
+                                        self.log(11, "zapping")
 					NavigationInstance.instance.isMovieplayerActive()
 					from Screens.ChannelSelection import ChannelSelection
 					ChannelSelectionInstance = ChannelSelection.instance
