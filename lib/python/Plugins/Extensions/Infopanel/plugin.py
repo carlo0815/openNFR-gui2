@@ -22,7 +22,7 @@ from Components.FileList import FileList
 from Components.Label import Label
 from Components.ScrollLabel import ScrollLabel
 from Components.Pixmap import Pixmap
-from Components.config import ConfigSubsection, ConfigInteger, ConfigText, getConfigListEntry, ConfigSelection,  ConfigIP, ConfigYesNo, ConfigSequence, ConfigNumber, NoSave, ConfigEnableDisable, configfile
+from Components.config import config, ConfigSubsection, ConfigClock, ConfigOnOff, ConfigInteger, ConfigText, getConfigListEntry, ConfigSelection,  ConfigIP, ConfigYesNo, ConfigSequence, ConfigNumber, NoSave, ConfigEnableDisable, configfile
 from Components.ConfigList import ConfigListScreen, ConfigList
 from Components.Sources.StaticText import StaticText 
 from Components.Sources.Progress import Progress
@@ -39,19 +39,16 @@ from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.InputBox import PinInput
 import string
 from random import Random
-boxtype = getBoxType()
 
 if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
 	DFLASH = True
 else:
 	DFLASH = False
-if boxtype in ('dm500hd','dm500hdv2','dm520','dm525','dm7020hd','dm7020hdv2','dm7080','dm800','dm8000','dm800se','dm800sev2','dm820','dm900','dm920'):
-	os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/images/infopanel /usr/share/bootlogo.mvi")
-
 import os
 import sys
 import re
+import enigma
 font = "Regular;16"
 import ServiceReference
 import time
@@ -79,6 +76,12 @@ config.plugins.infopanel_yellowkeylong.list = ConfigSelection([('0',_("Default (
 config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
 config.plugins.infopanel_frozencheck = ConfigSubsection()
 config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
+config.plugins.configurationbackup = ConfigSubsection()
+config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
+config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
+config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+
 	
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
 	try:
@@ -113,6 +116,11 @@ from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, pa
 from Components.ProgressBar import ProgressBar
 from urllib import urlopen
 import socket
+
+
+# Global variables
+autoStartTimer = None
+# Configuration GUI
 
 # Hide Softcam-Panel Setup when no softcams installed
 if (config.plugins.showinfopanelextensions.value):
@@ -180,6 +188,14 @@ ExitSave = "[Exit] = " +_("Cancel") +"              [Ok] =" +_("Save")
 class ConfigPORT(ConfigSequence):
 	def __init__(self, default):
 		ConfigSequence.__init__(self, seperator = ".", limits = [(1,65535)], default = default)
+		
+def autostart(reason, session=None, **kwargs):
+	"called with reason=1 to during shutdown, with reason=0 at startup?"
+	global autoStartTimer
+        if reason == 0:
+		if session is not None:
+                        if autoStartTimer is None:
+				autoStartTimer = AutoStartTimer(session)		
 
 def main(session, **kwargs):
 		session.open(Infopanel)
@@ -209,38 +225,117 @@ def startcam(reason, **kwargs):
 				Softcam.stopcam(config.NFRSoftcam.actcam.value)
 			except:
 				pass 		
+def doneConfiguring(session, retval):
+	"user has closed configuration, check new values...."
+	global autoStartTimer
+	if autoStartTimer is not None:
+		autoStartTimer.update()
 
-#def camstart(reason, **kwargs):
-#	if config.NFRSoftcam.actcam.value != "none":
-#		if reason == 0: # Enigma start
-#			sleep(2)
-#			try:
-#				if "mgcamd" in config.NFRSoftcam.actcam.value:
-#	                        	os.system("rm /dev/dvb/adapter0/ca1")
-#	                        	os.system("ln -sf 'ca0' '/dev/dvb/adapter0/ca1'") 
-#				cmd = Softcam.getcamcmd(config.NFRSoftcam.actcam.value)
-#				Console().ePopen(cmd)
-#				print "[OpenNFR SoftCam Manager] ", cmd
-#			except:
-#				pass
-#		elif reason == 1: # Enigma stop
-#			try:
-#				Softcam.stopcam(config.NFRSoftcam.actcam.value)
-#			except:
-#				pass 
+##################################
+# Autostart section
+class AutoStartTimer:
+	def __init__(self, session):
+                config.plugins.configurationbackup = ConfigSubsection()
+                config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
+                config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+                config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
+                config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+	       
+		self.session = session
+		self.timer = enigma.eTimer() 
+		self.timer.callback.append(self.onTimer)
+		self.update()
+	def getWakeTime(self):
+		if config.plugins.configurationbackup.enabled.value:
+                        clock = config.plugins.configurationbackup.wakeup.value
+			nowt = time.time()
+			now = time.localtime(nowt)
+			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,
+					clock[0], clock[1], 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
+		else:
+                        return -1
+	def update(self, atLeast = 0):
+                self.timer.stop()
+		wake = self.getWakeTime()
+		now = int(time.time())
+		if wake > 0:
+                        if wake < now + atLeast:
+                                # Tomorrow.
+				wake += 24*3600
+			next = wake - now
+			# it could be that we do not have the correct system time yet,
+			# limit the update interval to 1h, to make sure we try again soon
+			if next > 3600:
+                                next = 3600
+			# also, depending on the value of 'atLeast', next could be negative.
+			# which would stop our time
+			if next <= 0:
+                                next = 60
+			self.timer.startLongTimer(next)
+		else:
+                        wake = -1
+		return wake
+		
+	def onTimer(self):
+                self.timer.stop()
+		now = int(time.time())
+		wake = self.getWakeTime()
+		# If we're close enough, we're okay...
+		atLeast = 0
+		if abs(wake - now) < 60:
+                        self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True) 
+			atLeast = 60
+		self.update(atLeast)
+		
+	def backupDone(self,retval = None):
+		if retval is True:
+			self.session.open(MessageBox, _("Backup done."), MessageBox.TYPE_INFO, timeout = 10)
+		else:
+			self.session.open(MessageBox, _("Backup failed."), MessageBox.TYPE_INFO, timeout = 10)		
+		
+#def backupCommand():
+#	cmd = BACKUP_SCRIPT
+#	if config.plugins.autobackup.autoinstall.value:
+#		cmd += " -a"
+#	cmd += " " + config.plugins.autobackup.where.value
+#	return cmd
+
+#def runBackup():
+#	destination = config.plugins.autobackup.where.value
+#	if destination:
+#		try:
+#			global container  # Need to keep a ref alive...
+#			def appClosed(retval):
+#				global container
+#				print "[AutoBackup] complete, result:", retval
+#				container = None
+#			def dataAvail(data):
+#				print "[AutoBackup]", data.rstrip()
+#			print "[AutoBackup] start daily backup"
+#			cmd = backupCommand()
+#			container = enigma.eConsoleAppContainer()
+#			if container.execute(cmd):
+#				raise Exception, "failed to execute:" + cmd
+#			container.appClosed.append(appClosed)
+#			container.dataAvail.append(dataAvail)
+#		except Exception, e:
+#			print "[AutoBackup] FAIL:", e		
+		
+
 
 def Plugins(**kwargs):
 	return [
 
 	#// show Infopanel in Main Menu
-	PluginDescriptor(name="Info Panel", description="Info panel GUI 22/05/2014", where = PluginDescriptor.WHERE_MENU, fnc = Apanel),
+	PluginDescriptor(name="Info Panel", description="Info panel GUI 01/11/2019", where = PluginDescriptor.WHERE_MENU, fnc = Apanel),
 	#// autostart
 	PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART,	needsRestart=True, fnc=startcam),
+	PluginDescriptor(name="AutoBackup",description = "Automatic settings backup", where = [PluginDescriptor.WHERE_AUTOSTART, PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart),
 	#PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART,PluginDescriptor.WHERE_AUTOSTART],fnc = camstart),
 	#// SwapAutostart
 	#PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART,PluginDescriptor.WHERE_AUTOSTART],fnc = SwapAutostart),
 	#// show Infopanel in EXTENSIONS Menu
-	PluginDescriptor(name="Info Panel", description="Info panel GUI 22/05/2014", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = main) ]
+	PluginDescriptor(name="Info Panel", description="Info panel GUI 01/11/2019", where = PluginDescriptor.WHERE_EXTENSIONSMENU, fnc = main) ]
 
 
 
@@ -551,6 +646,9 @@ class Infopanel(Screen, InfoBarPiP):
                                 self.session.open(TimerImageManager)
 		elif menu == "backup-settings":
 			self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
+		elif menu == "backupauto":
+			import ui
+			self.session.openWithCallback(doneConfiguring, ui.Config)		
 		elif menu == "restore-settings":
 			self.backuppath = getBackupPath()
 			self.backupfile = getBackupFilename()
@@ -703,6 +801,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupFiles" ), _("Choose backup files"), ("backup-files"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("BackupSettings" ), _("Backup Settings"), ("backup-settings"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RestoreSettings" ), _("Restore Settings"), ("restore-settings"))))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent ("AutoBackupSettings" ), _("Auto Backup Settings"), ("backupauto"))))		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
