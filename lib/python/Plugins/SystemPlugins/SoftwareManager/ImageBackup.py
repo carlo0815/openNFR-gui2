@@ -641,14 +641,17 @@ class ImageBackup(Screen):
 					except:
 						self.session.open(MessageBox, _("Cannot create backup directory"), MessageBox.TYPE_ERROR, timeout=10)
 						return
-                                if config.imagemanager.backupmax.value > "0": 
+                                if config.imagemanager.backupmax.value >0: 
                                 	from glob import glob
-                                	count1 = len(glob(self.DIRECTORY + '/opennfr-6.4-' + GetBoxName() + '*'))
-                                	if count1 >= config.imagemanager.backupmax.value:
-						files = glob(self.DIRECTORY + "/opennfr-6.4-" + GetBoxName() + '*')
-						files.sort(key=os.path.getmtime, reverse=True)
+                                	count1 = len(glob(self.DIRECTORY + '/' + getImageDistro() + '-' + getImageVersion() + '-' + GetBoxName() + '-backup*'))
+                                        if count1 >= config.imagemanager.backupmax.value:
+						files = glob(self.DIRECTORY + '/' + getImageDistro() + '-' + getImageVersion() + '-' + GetBoxName() + '-backup*')
+                                                files.sort(key=os.path.getmtime, reverse=True)
 						for i in range(config.imagemanager.backupmax.value-1, count1):
-							os.remove(files[i])
+							if os.path.isfile(files[i]):
+                                                        	os.remove(files[i])
+                                                        else:
+                                                        	print "file %d is dir", i	
                                 self.SLOT = answer[1]
 				self.MODEL = GetBoxName()
 				self.OEM = getBrandOEM()
