@@ -279,7 +279,8 @@ class TimerImageManager(Screen):
 
 	def setupMaxDone(self, test=None):
 		print "set Max Backupt to:", config.imagemanager.backupmax.value
-		pass
+		config.imagemanager.backupmax.save()
+                pass
 		
 	def setupDone(self, test=None):
 		if config.imagemanager.folderprefix.value == '':
@@ -629,6 +630,7 @@ class ImageBackup(Screen):
 		self.selectionChanged()
 
 	def doFullBackup(self, answer):
+                import os
                 if answer is not None:
 			if answer[1]:
 				self.RECOVERY = answer[3]
@@ -639,7 +641,15 @@ class ImageBackup(Screen):
 					except:
 						self.session.open(MessageBox, _("Cannot create backup directory"), MessageBox.TYPE_ERROR, timeout=10)
 						return
-				self.SLOT = answer[1]
+                                if config.imagemanager.backupmax.value > "0": 
+                                	from glob import glob
+                                	count1 = len(glob(self.DIRECTORY + '/opennfr-6.4-' + GetBoxName() + '*'))
+                                	if count1 >= config.imagemanager.backupmax.value:
+						files = glob(self.DIRECTORY + "/opennfr-6.4-" + GetBoxName() + '*')
+						files.sort(key=os.path.getmtime, reverse=True)
+						for i in range(config.imagemanager.backupmax.value-1, count1):
+							os.remove(files[i])
+                                self.SLOT = answer[1]
 				self.MODEL = GetBoxName()
 				self.OEM = getBrandOEM()
 				self.MACHINEBUILD = getMachineBuild()
