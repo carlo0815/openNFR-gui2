@@ -177,6 +177,41 @@ try:
 except (SkinError, IOError, AssertionError), err:
 	print "[openNFR] not loading user defined ev file for skin"                	                	
 	
+try:
+	loadSkin(primary_skin_path + 'skin_user_center.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined center file for skin", (primary_skin_path + 'skin_user_center.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined center file for skin"  
+
+try:
+	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined sb file for skin"  
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_frame.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined frame file for skin", (primary_skin_path + 'skin_user_frame.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined frame file for skin"  
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_lines.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined lines file for skin", (primary_skin_path + 'skin_user_lines.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined lines file for skin"  
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_sbar.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined sbar file for skin", (primary_skin_path + 'skin_user_sbar.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined sbar file for skin"  
+	
+try:
+	loadSkin(primary_skin_path + 'skin_user_wget.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined wget file for skin", (primary_skin_path + 'skin_user_wget.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined wget file for skin"  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
@@ -195,7 +230,25 @@ try:
 	loadSkin(primary_skin_path + 'skin_user_clock.xml', SCOPE_SKIN)
 	print "[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml')
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined clock file for skin"                          	                	
+	print "[openNFR] not loading user defined clock file for skin" 
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_emc.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined emc file for skin", (primary_skin_path + 'skin_user_emc.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined emc file for skin"    
+
+try:
+	loadSkin(primary_skin_path + 'skin_user_volume.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined volume file for skin", (primary_skin_path + 'skin_user_volume.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined volume file for skin"    
+        
+try:
+	loadSkin(primary_skin_path + 'skin_user_movieselection.xml', SCOPE_SKIN)
+	print "[openNFR] loading user defined movieselection file for skin", (primary_skin_path + 'skin_user_movieselection.xml')
+except (SkinError, IOError, AssertionError), err:
+	print "[openNFR] not loading user defined movieselection file for skin"                                             	                	
 	
 	
 def load_modular_files():
