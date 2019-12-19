@@ -1740,7 +1740,7 @@ msgid "Configure for how many minutes finished events should remain visible in t
 msgstr "Stelle eine wie viele Minuten abgelaufene Daten im EPG erhalten bleiben sollen. Es kann hilfreich sein wenn Informationen gerade beendeter Sendungen benötigt oder wenn das Ende einer Sendung sich verzögert."
 
 msgid "Configure how recording filenames are constructed."
-msgstr "Konfigurieren der Zusammensetzung des Dateinamens von Aufnahmen"
+msgstr "Konfigurieren des Dateinamens von Aufnahmen"
 
 msgid "Configure if and how service type icons will be shown."
 msgstr "Konfigurieren ob und wie Sendertyp Icons gezeigt werden."
