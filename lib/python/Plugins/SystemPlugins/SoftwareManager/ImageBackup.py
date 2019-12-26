@@ -681,9 +681,14 @@ class ImageBackup(Screen):
 				if SystemInfo["canMultiBoot"]:
 					if SystemInfo["HasRootSubdir"]:
 						self.MTDROOTFS = "%s" %(self.getImageList[self.SLOT]['part'])
-						#if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
-						self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
-					else:
+						try:
+                                                        if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
+								self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
+                                                        else:
+                                                                self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
+                                                except:
+                                                        self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
+                                        else:
 						try:
 							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
 							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel%s" %self.SLOT)[5:]
