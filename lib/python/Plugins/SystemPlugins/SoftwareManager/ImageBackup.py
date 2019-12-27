@@ -61,18 +61,10 @@ config.imagemanager.nextscheduletime = NoSave(ConfigNumber(default=0))
 config.imagemanager.restoreimage = NoSave(ConfigText(default=getBoxType(), fixed_size=False))
 config.imagemanager.autosettingsbackup = ConfigYesNo(default = True)
 
-#GML - querying is enabled by default - that is what used to happen always
-#
-config.imagemanager.query = ConfigYesNo(default=True)
 
-#GML -  If we do not yet have a record of an image backup, assume it has
-#       never happened.
-#
+config.imagemanager.query = ConfigYesNo(default=True)
 now = int(time())
 config.imagemanager.lastbackup = ConfigNumber(default=0)
-
-#GML - max no. of images to keep.  0 == keep them all
-#
 config.imagemanager.number_to_keep = ConfigNumber(default=0)
 
 autoImageManagerTimer = None
@@ -232,8 +224,6 @@ class TimerImageManager(Screen):
 											  }, -1)
 
 				self.BackupDirectory = '/media/hdd/imagebackups/'
-				#config.imagemanager.backuplocation.value = '/media/hdd'
-				#config.imagemanager.backuplocation.save()
 				self['lab1'].setText(_("The chosen location is /media/hdd"))
 			else:
 				self['myactions'] = ActionMap(['ColorActions', 'OkCancelActions', 'DirectionActions', "MenuActions"],
@@ -313,16 +303,6 @@ class TimerImageManager(Screen):
 		Timerstarts = False
 		global Timerstarts
 		self.session.open(ImageBackup)
-                #backup = None
-		#self.BackupRunning = False
-		#for job in Components.Task.job_manager.getPendingJobs():
-	#		if job.name.startswith(_("Image Manager")):
-	#			backup = job
-	#			self.BackupRunning = True
-	#	if self.BackupRunning and backup:
-	#		self.showJobView(backup)
-	#	else:
-	#		self.keyBackup()
 
 	def keyBackup(self):
 		message = _("Are you ready to create a backup image ?")
@@ -370,14 +350,6 @@ class AutoImageManagerTimer:
 
 	def getBackupTime(self):
 		backupclock = config.imagemanager.scheduletime.value
-#		nowt = time()
-#		now = localtime(nowt)
-#		return int(mktime((now.tm_year, now.tm_mon, now.tm_mday, backupclock[0], backupclock[1], 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
-#GML
-# Work out the time of the *NEXT* backup - which is the configured clock
-# time on the nth relevant day after the last recorded backup day.
-# The last backup time will have been set as 12:00 on the day it
-# happened. All we use is the actual day from that value.
 		if not config.imagemanager.lastbackup.value:
 	                now = int(time())
 	                config.imagemanager.lastbackup.value = now
@@ -402,25 +374,9 @@ class AutoImageManagerTimer:
 		now = int(time())
 		if BackupTime > 0:
 			if BackupTime < now + atLeast:
-#				if config.imagemanager.repeattype.value == "daily":
-#					BackupTime += 24 * 3600
-#					while (int(BackupTime) - 30) < now:
-#						BackupTime += 24 * 3600
-#				elif config.imagemanager.repeattype.value == "weekly":
-#					BackupTime += 7 * 24 * 3600
-#					while (int(BackupTime) - 30) < now:
-#						BackupTime += 7 * 24 * 3600
-#				elif config.imagemanager.repeattype.value == "monthly":
-#					BackupTime += 30 * 24 * 3600
-#					while (int(BackupTime) - 30) < now:
-#						BackupTime += 30 * 24 * 3600
-#			next = BackupTime - now
-#			self.backuptimer.startLongTimer(next)
-# Backup missed - run it 60s from now
 				self.backuptimer.startLongTimer(60)
 				print "[ImageManager] Backup Time overdue - running in 60s"
 			else:
-# Backup in future - set the timer...
 				delay = BackupTime - now
 				self.backuptimer.startLongTimer(delay)
 		else:
@@ -436,7 +392,6 @@ class AutoImageManagerTimer:
 		self.backuptimer.stop()
 		now = int(time())
 		wake = self.getBackupTime()
-		# If we're close enough, we're okay...
 		atLeast = 0
 		if wake - now < 60:
 			print "[ImageManager] Backup onTimer occured at", strftime("%c", localtime(now))
@@ -475,18 +430,7 @@ class AutoImageManagerTimer:
 			print "[ImageManager] Running Backup", strftime("%c", localtime(now))
 			Timerstarts = True
 			global Timerstarts
-                        #self.session.open(ImageBackup)
                         ImageBackup(self.session)
-			#Components.Task.job_manager.AddJob(self.ImageBackup.start())
-			#self.ImageBackup.startit1()
-			
-#GML - Note that fact that the job has been *scheduled*.
-#      We do *not* just note successful completion, as that would
-#      result in a loop on issues such as disk-full.
-#      Also all that we actually want to know is the day, not the time, so
-#      we actually remember midday, which avoids problems around DLST changes
-#      for backups scheduled within an hour of midnight.
-#
 			sched = localtime(time())
 			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, 12, 0, 0, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
 			config.imagemanager.lastbackup.value = sched_t
@@ -601,7 +545,6 @@ class ImageBackup(Screen):
 				if Harddisk.Freespace(media) > 300000:
 					choices.append((_("Backup to destination: %s") % (media),self.currentSelected[0][1], media, self.currentSelected[0][2]))
 			choices.append((_("No, do not backup a image"), False))
-			##### hier backuport abfragen und noch einbauen ob timer oder nicht####
                         if Timerstarts == True:
                                  for z in choices:
                                           if config.imagemanager.backuplocation.value in z:
@@ -683,17 +626,19 @@ class ImageBackup(Screen):
 						self.MTDROOTFS = "%s" %(self.getImageList[self.SLOT]['part'])
 						try:
                                                         if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
-								self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
+								
+                                                                self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
                                                         else:
-                                                                self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
+                                                                print "self.MTDKERNEL:", self.MTDKERNEL
+                                                                #self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
                                                 except:
                                                         self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
                                         else:
 						try:
-							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
+                                                        self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
 							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel%s" %self.SLOT)[5:]
 						except:
-							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs")[5:]
+                                                        self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs")[5:]
 							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel")[5:]
 
 				print "[FULL BACKUP] BOX MACHINEBUILD = >%s<" %self.MACHINEBUILD
@@ -753,7 +698,6 @@ class ImageBackup(Screen):
 				self.message += "_________________________________________________\n"
 				self.message += "'"
 
-				## PREPARING THE BUILDING ENVIRONMENT
 				os.system("rm -rf %s" %self.WORKDIR)
 				self.backuproot = "/tmp/bi/root"
 				if SystemInfo["HasRootSubdir"]:
@@ -904,7 +848,7 @@ class ImageBackup(Screen):
 					ROOTFS_IMAGE_SEEK = int(ROOTFS_PARTITION_OFFSET) * int(BLOCK_SECTOR)
 					cmdlist.append('dd if=/dev/%s of=%s seek=%s ' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK ))
 				if self.EMMCIMG == "emmc.img" and self.RECOVERY:
-					EMMC_IMAGE = "%s/%s"% (self.WORKDIR,self.EMMCIMG)
+                                        EMMC_IMAGE = "%s/%s"% (self.WORKDIR,self.EMMCIMG)
 					BLOCK_SECTOR=2
 					IMAGE_ROOTFS_ALIGNMENT=1024
 					BOOT_PARTITION_SIZE=3072
@@ -950,7 +894,7 @@ class ImageBackup(Screen):
 					ROOTFS_IMAGE_SEEK = int(ROOTFS1_PARTITION_OFFSET) * int(BLOCK_SECTOR)
 					cmdlist.append('dd if=/dev/%s of=%s seek=%s ' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK ))
 				elif self.EMMCIMG == "usb_update.bin" and self.RECOVERY:
-					cmdlist.append('echo "' + _("Create: Recovery Fullbackup %s")% (self.EMMCIMG) + '"')
+                                        cmdlist.append('echo "' + _("Create: Recovery Fullbackup %s")% (self.EMMCIMG) + '"')
 					f = open("%s/emmc_partitions.xml" %self.WORKDIR, "w")
 					f.write('<?xml version="1.0" encoding="GB2312" ?>\n')
 					f.write('<Partition_Info>\n')
@@ -1002,7 +946,7 @@ class ImageBackup(Screen):
 			os.system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
 
 		if self.RECOVERY:
-			if self.EMMCIMG == "usb_update.bin":
+                        if self.EMMCIMG == "usb_update.bin":
 				os.system('mv %s/%s %s/%s' %(self.WORKDIR,self.EMMCIMG, self.MAINDESTROOT,self.EMMCIMG))
 				cmdlist.append('cp -f /usr/share/fastboot.bin %s/fastboot.bin' %(self.MAINDESTROOT))
 				cmdlist.append('cp -f /usr/share/bootargs.bin %s/bootargs.bin' %(self.MAINDESTROOT))
@@ -1058,12 +1002,12 @@ class ImageBackup(Screen):
 			cmdlist.append('cp -f /usr/share/bootargs.bin %s/bootargs.bin' %(self.MAINDESTROOT))
 
 		if SystemInfo["canRecovery"]:
-			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_recovery.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
+                        cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_recovery.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 		elif SystemInfo["HasRootSubdir"]:
-			cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/unforce_%s.txt' %(self.MAINDESTROOT, self.MACHINEBUILD))
+                        cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/unforce_%s.txt' %(self.MAINDESTROOT, self.MACHINEBUILD))
 			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_mmc.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 		else:
-			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_usb.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
+                        cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_usb.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 
 		cmdlist.append("sync")
 		file_found = True
@@ -1081,7 +1025,7 @@ class ImageBackup(Screen):
 			file_found = False
 
 		if SystemInfo["canMultiBoot"] and not self.RECOVERY and not SystemInfo["HasRootSubdir"]:
-			cmdlist.append('echo "_________________________________________________\n"')
+                        cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo "' + _("Multiboot Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			cmdlist.append('echo "_________________________________________________"')
 			cmdlist.append('echo " "')
@@ -1090,13 +1034,13 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "' + _("To restore the image:") + '"')
 			cmdlist.append('echo "' + _("Use OnlineFlash in SoftwareManager") + '"')
 		elif file_found:
-			cmdlist.append('echo "_________________________________________________\n"')
+                        cmdlist.append('echo "_________________________________________________\n"')
 			if SystemInfo["canRecovery"] and self.RECOVERY:
-				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			elif SystemInfo["HasRootSubdir"]:
-				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_mmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_mmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			else:
-				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			cmdlist.append('echo "_________________________________________________"')
 			cmdlist.append('echo " "')
 			cmdlist.append('echo "' + _("Please wait...almost ready! ") + '"')
@@ -1105,7 +1049,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "' + _("Please check the manual of the receiver") + '"')
 			cmdlist.append('echo "' + _("on how to restore the image") + '"')
 		else:
-			cmdlist.append('echo "_________________________________________________\n"')
+                        cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo "' + _("Image creation failed - ") + '"')
 			cmdlist.append('echo "' + _("Probable causes could be") + ':"')
 			cmdlist.append('echo "' + _("     wrong back-up destination ") + '"')
