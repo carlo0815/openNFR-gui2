@@ -615,8 +615,13 @@ class CiSelection(Screen):
 			entryData = self.entryData[idx]
 			action = entryData[0]
 			slot = entryData[1]
-			if action == 0:		#reset
-				eDVBCI_UI.getInstance().setReset(slot)
+                        if action == 0:		#reset
+			        try:
+                                        os.system('rm -f /etc/enigma2/ci_auth_slot_' + str(slot) + '.bin')
+			        except:
+			                print "slotfile not found"
+				print "action1:", action 
+                                eDVBCI_UI.getInstance().setReset(slot)
 			elif action == 1:		#init
 				eDVBCI_UI.getInstance().setInit(slot)
 			elif action == 3:		#fix 
