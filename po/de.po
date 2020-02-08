@@ -13844,3 +13844,6 @@ msgstr "Gewuenschte Funktion auswaehlen und mit 'OK' zuweisen. Um zwischen den L
 
 msgid "Sort list to default and exit?"
 msgstr "Standartliste wiederherstellen und beenden?"
+
+msgid "%s\nPress ok to close"
+msgstr "%s\nDrücke ok zum Schliessen"
