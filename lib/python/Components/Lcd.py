@@ -526,6 +526,12 @@ def InitLcd():
 		def setLEDblinkingtime(configElement):
 			ilcd.setLEDBlinkingTime(configElement.value);
 
+		def setPowerLEDstate(configElement):
+			if fileExists("/proc/stb/power/powerled"):
+				f = open("/proc/stb/power/powerled", "w")
+				f.write(configElement.value)
+				f.close()
+
 		def setPowerLEDstandbystate(configElement):
 			if fileExists("/proc/stb/power/standbyled"):
 				f = open("/proc/stb/power/standbyled", "w")
@@ -535,6 +541,42 @@ def InitLcd():
 		def setPowerLEDdeepstanbystate(configElement):
 			if fileExists("/proc/stb/power/suspendled"):
 				f = open("/proc/stb/power/suspendled", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedPowerColor(configElement):
+			if fileExists("/proc/stb/fp/ledpowercolor"):
+				f = open("/proc/stb/fp/ledpowercolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedStandbyColor(configElement):
+			if fileExists("/proc/stb/fp/ledstandbycolor"):
+				f = open("/proc/stb/fp/ledstandbycolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedSuspendColor(configElement):
+			if fileExists("/proc/stb/fp/ledsuspendledcolor"):
+				f = open("/proc/stb/fp/ledsuspendledcolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7On(configElement):
+			if fileExists("/proc/stb/fp/power4x7on"):
+				f = open("/proc/stb/fp/power4x7on", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7Standby(configElement):
+			if fileExists("/proc/stb/fp/power4x7standby"):
+				f = open("/proc/stb/fp/power4x7standby", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7Suspend(configElement):
+			if fileExists("/proc/stb/fp/power4x7suspend"):
+				f = open("/proc/stb/fp/power4x7suspend", "w")
 				f.write(configElement.value)
 				f.close()
 
@@ -559,12 +601,33 @@ def InitLcd():
 		config.usage.vfd_xcorevfd = ConfigSelection(default = "0", choices = [("0", _("12 character")), ("1", _("8 character"))])
 		config.usage.vfd_xcorevfd.addNotifier(setXcoreVFD)
 
+
+		config.usage.lcd_powerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_powerled.addNotifier(setPowerLEDstate)
+
 		config.usage.lcd_standbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_standbypowerled.addNotifier(setPowerLEDstandbystate)
 
 		config.usage.lcd_deepstandbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_deepstandbypowerled.addNotifier(setPowerLEDdeepstanbystate)
-		
+
+		config.usage.lcd_ledpowercolor = ConfigSelection(default = "1", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledpowercolor.addNotifier(setLedPowerColor)
+
+		config.usage.lcd_ledstandbycolor = ConfigSelection(default = "3", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledstandbycolor.addNotifier(setLedStandbyColor)
+
+		config.usage.lcd_ledsuspendcolor = ConfigSelection(default = "2", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledsuspendcolor.addNotifier(setLedSuspendColor)
+
+		config.usage.lcd_power4x7on = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7on.addNotifier(setPower4x7On)
+
+		config.usage.lcd_power4x7standby = ConfigSelection(default = "off", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7standby.addNotifier(setPower4x7Standby)
+
+		config.usage.lcd_power4x7suspend = ConfigSelection(default = "off", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7suspend.addNotifier(setPower4x7Suspend)
 
 		if getBoxType() in ('dm900', 'dm920', 'e4hdultra', 'protek4k'):
 			standby_default = 4
