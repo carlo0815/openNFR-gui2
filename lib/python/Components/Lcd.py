@@ -323,7 +323,7 @@ def standbyCounterChanged(configElement):
 	config.lcd.ledbrightnessdeepstandby.apply()
 
 def InitLcd():
-	if getBoxType() in ('force4','alien5','viperslim','lunix','lunix4k','purehdse','vipert2c','evoslimse','evoslimt2c','valalinux','tmtwin4k','tmnanom3','mbmicrov2','revo4k','force3uhd','force2nano','evoslim','wetekplay', 'wetekplay2', 'wetekhub', 'ultrabox', 'novaip', 'dm520', 'dm525', 'purehd', 'mutant11', 'xpeedlxpro', 'zgemmai55', 'sf98', 'et7x00mini', 'xpeedlxcs2', 'xpeedlxcc', 'e4hd', 'e4hdhybrid', 'mbmicro', 'beyonwizt2', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'et7100', 'mixosf7', 'mixoslumi', 'gbx1', 'gbx2', 'gbx3', 'gbx3h'):
+	if getBoxType() in ('gbx34k','force4','alien5','viperslim','lunix','lunix4k','purehdse','vipert2c','evoslimse','evoslimt2c','valalinux','tmtwin4k','tmnanom3','mbmicrov2','revo4k','force3uhd','force2nano','evoslim','wetekplay', 'wetekplay2', 'wetekhub', 'ultrabox', 'novaip', 'dm520', 'dm525', 'purehd', 'mutant11', 'xpeedlxpro', 'zgemmai55', 'sf98', 'et7x00mini', 'xpeedlxcs2', 'xpeedlxcc', 'e4hd', 'e4hdhybrid', 'mbmicro', 'beyonwizt2', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'et7100', 'mixosf7', 'mixoslumi', 'gbx1', 'gbx2', 'gbx3', 'gbx3h'):
 		detected = False
 	else:
 		detected = eDBoxLCD.getInstance().detected()
@@ -526,6 +526,12 @@ def InitLcd():
 		def setLEDblinkingtime(configElement):
 			ilcd.setLEDBlinkingTime(configElement.value);
 
+		def setPowerLEDstate(configElement):
+			if fileExists("/proc/stb/power/powerled"):
+				f = open("/proc/stb/power/powerled", "w")
+				f.write(configElement.value)
+				f.close()
+
 		def setPowerLEDstandbystate(configElement):
 			if fileExists("/proc/stb/power/standbyled"):
 				f = open("/proc/stb/power/standbyled", "w")
@@ -535,6 +541,42 @@ def InitLcd():
 		def setPowerLEDdeepstanbystate(configElement):
 			if fileExists("/proc/stb/power/suspendled"):
 				f = open("/proc/stb/power/suspendled", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedPowerColor(configElement):
+			if fileExists("/proc/stb/fp/ledpowercolor"):
+				f = open("/proc/stb/fp/ledpowercolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedStandbyColor(configElement):
+			if fileExists("/proc/stb/fp/ledstandbycolor"):
+				f = open("/proc/stb/fp/ledstandbycolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setLedSuspendColor(configElement):
+			if fileExists("/proc/stb/fp/ledsuspendledcolor"):
+				f = open("/proc/stb/fp/ledsuspendledcolor", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7On(configElement):
+			if fileExists("/proc/stb/fp/power4x7on"):
+				f = open("/proc/stb/fp/power4x7on", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7Standby(configElement):
+			if fileExists("/proc/stb/fp/power4x7standby"):
+				f = open("/proc/stb/fp/power4x7standby", "w")
+				f.write(configElement.value)
+				f.close()
+
+		def setPower4x7Suspend(configElement):
+			if fileExists("/proc/stb/fp/power4x7suspend"):
+				f = open("/proc/stb/fp/power4x7suspend", "w")
 				f.write(configElement.value)
 				f.close()
 
@@ -559,12 +601,33 @@ def InitLcd():
 		config.usage.vfd_xcorevfd = ConfigSelection(default = "0", choices = [("0", _("12 character")), ("1", _("8 character"))])
 		config.usage.vfd_xcorevfd.addNotifier(setXcoreVFD)
 
+
+		config.usage.lcd_powerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_powerled.addNotifier(setPowerLEDstate)
+
 		config.usage.lcd_standbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_standbypowerled.addNotifier(setPowerLEDstandbystate)
 
 		config.usage.lcd_deepstandbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_deepstandbypowerled.addNotifier(setPowerLEDdeepstanbystate)
-		
+
+		config.usage.lcd_ledpowercolor = ConfigSelection(default = "1", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledpowercolor.addNotifier(setLedPowerColor)
+
+		config.usage.lcd_ledstandbycolor = ConfigSelection(default = "3", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledstandbycolor.addNotifier(setLedStandbyColor)
+
+		config.usage.lcd_ledsuspendcolor = ConfigSelection(default = "2", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledsuspendcolor.addNotifier(setLedSuspendColor)
+
+		config.usage.lcd_power4x7on = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7on.addNotifier(setPower4x7On)
+
+		config.usage.lcd_power4x7standby = ConfigSelection(default = "off", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7standby.addNotifier(setPower4x7Standby)
+
+		config.usage.lcd_power4x7suspend = ConfigSelection(default = "off", choices = [("off", _("Off")), ("on", _("On"))])
+		config.usage.lcd_power4x7suspend.addNotifier(setPower4x7Suspend)
 
 		if getBoxType() in ('dm900', 'dm920', 'e4hdultra', 'protek4k'):
 			standby_default = 4
