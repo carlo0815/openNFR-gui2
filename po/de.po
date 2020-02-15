@@ -13847,3 +13847,21 @@ msgstr "Standartliste wiederherstellen und beenden?"
 
 msgid "%s\nPress ok to close"
 msgstr "%s\nDrücke ok zum Schliessen"
+
+msgid "Turn on the power LED"
+msgstr "Power LED einschalten"
+
+msgid "Power LED can be turned on or off here"
+msgstr "Hier kann die Power LED ein oder ausgeschaltet werden"
+
+msgid "Power LED State in Standby"
+msgstr "Power LED Status im Standby"
+
+msgid "Power LED state during standby"
+msgstr "Power LED Status während des Standbys einstellen"
+
+msgid "Power LED State in Deep-Standby"
+msgstr "Power LED Status im Deep-Standby"
+
+msgid "Power LED state during deep-standby"
+msgstr "Power LED Status während des Deep-Standbys einstellen"
