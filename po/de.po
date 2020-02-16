@@ -13865,3 +13865,18 @@ msgstr "Power LED Status im Deep-Standby"
 
 msgid "Power LED state during deep-standby"
 msgstr "Power LED Status während des Deep-Standbys einstellen"
+
+msgid "Show in Standby"
+msgstr "Im Standby anzeigen"
+
+msgid "Backup location"
+msgstr "Sicherungs-Ort"
+
+msgid "Daily automatic backup"
+msgstr "Automatische tÃ¤gliche Sicherung"
+
+msgid "Automatic start time"
+msgstr "Automatische Startzeit"
+
+msgid "Max. saved backup"
+msgstr "Max. Anzahl von Sicherungen"
