@@ -13939,8 +13939,8 @@ msgstr "blaue Taste"
 msgid "Blue Panel Long"
 msgstr "blaue Taste lang"
 
-msgid "green Panel Long"
-msgstr "grüne Taste lang"
+msgid "Green Panel Long"
+msgstr "gruene Taste lang"
 
 msgid "Yellow Panel Long"
 msgstr "gelbe Taste lang"
