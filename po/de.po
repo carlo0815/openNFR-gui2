@@ -13947,3 +13947,35 @@ msgstr "gelbe Taste lang"
 
 msgid "Image/Remote Setup"
 msgstr "Image/Fernbedienung Setup"
+
+# Konfiguration - TV - EPG Einstellungen
+msgid "Setup EPG Multi"
+msgstr "Multi EPG"
+
+msgid "Setup EPG Enhanced"
+msgstr "EPG Enhanced"
+
+msgid "Setup EPG Graphical"
+msgstr "Grafischer EPG"
+
+# Konfiguration - System - A/V Einstellungen
+msgid "Video Setup"
+msgstr "Video Einstellungen"
+
+msgid "Allow unsupported modes"
+msgstr "Erlaube nicht unterstützte Modi"
+
+msgid "This option allows you to use all HDMI Modes"
+msgstr "Bei 'Ja' können alle HDMI-Modi verwenden werden."
+
+msgid "HDMI Colorimetry"
+msgstr "HDMI Farbprofile"
+
+msgid "This option allows you can config the Colorimetry for HDR"
+msgstr "Farbprofile Steuerung im HDR Modus einstellen."
+
+msgid "HDMI HDR Type"
+msgstr "HDMI HDR Mode"
+
+msgid "This option allows you can force the HDR Modes for UHD"
+msgstr "Mit dieser Option können die HDR-Modi für UHD erzwungen werden"
