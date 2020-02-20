@@ -65,6 +65,7 @@ class Config(ConfigListScreen,Screen):
 		Screen.__init__(self, session)
 		cfg = config.plugins.configurationbackup
 		choices=getLocationChoices()
+		self.setTitle(_("AutoBackup Configuration"))		
 		if choices:
 			currentwhere = cfg.backuplocation.value
 			defaultchoice = choices[0][0] 
