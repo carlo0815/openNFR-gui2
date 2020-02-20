@@ -13958,6 +13958,10 @@ msgstr "EPG Enhanced"
 msgid "Setup EPG Graphical"
 msgstr "Grafischer EPG"
 
+# Konfiguration - TV - Common Interface - Common Interface Zuweisung
+msgid "CIselectMainMenu"
+msgstr "CI-Hauptmenü"
+
 # Konfiguration - System - A/V Einstellungen
 msgid "Video Setup"
 msgstr "Video Einstellungen"
