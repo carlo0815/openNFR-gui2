@@ -14024,7 +14024,7 @@ msgid "Configure whether a bold TrueType font is used for teletext."
 msgstr "Bestimmt, ob ein regulärer oder ein fetter Zeichensatz für die Videotext Darstellung verwendet wird."
 
 msgid "Teletext TTFScreenResX (screen X resolution)"
-msgstr "Videotext TTFScreenResX (BildschirmauflÃ¶sung in X)"
+msgstr "Videotext TTFScreenResX (Bildschirmauflösung in X)"
 
 msgid "Configure the screen resolution for teletext (Not all skins support full-HD teletext)."
 msgstr "Bestimmt die Videotext Bildschirmauflösung (nicht alle Skins unterstützen Full-HD Videotext)."
