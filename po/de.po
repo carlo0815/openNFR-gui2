@@ -1073,7 +1073,7 @@ msgid "Auto focus commencing ..."
 msgstr "Autofokus beginnt..."
 
 msgid "Auto language selection"
-msgstr "Automatische Sprachwahl"
+msgstr "Automatische Sprachauswahl"
 
 msgid "Auto scart switching"
 msgstr "Automatische Scart-Umschaltung"
