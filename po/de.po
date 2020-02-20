@@ -13991,3 +13991,22 @@ msgstr "HDMI HDR Mode"
 
 msgid "This option allows you can force the HDR Modes for UHD"
 msgstr "Mit dieser Option können die HDR-Modi für UHD erzwungen werden"
+
+# Konfiguration - System - Extra-Anpassungen
+msgid "Setup Usage"
+msgstr "Einstellungen"
+
+msgid "Expert mode"
+msgstr "Expertenmodus"
+
+msgid "Fixed X11 font (SD)"
+msgstr "Fester X11 Zeichensatz (SD)"
+
+msgid "TrueType font (SD)"
+msgstr "TrueType Zeichensatz (SD)"
+
+msgid "TrueType font (HD)"
+msgstr "TrueType Zeichensatz (HD)"
+
+msgid "TrueType font (full-HD)"
+msgstr "TrueType Zeichensatz (Full-HD)"
