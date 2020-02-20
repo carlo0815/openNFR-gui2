@@ -13962,6 +13962,14 @@ msgstr "Grafischer EPG"
 msgid "CIselectMainMenu"
 msgstr "CI-Hauptmenü"
 
+# Konfiguration - TV - Automatische Sprachwahl
+msgid "Setup Autolanguage"
+msgstr "Einstellungen Sprachenwahl"
+
+# Konfiguration - TV - Senderlisten Einstellungen
+msgid "Setup Channel Selection"
+msgstr "Kanalliste einstellen"
+
 # Konfiguration - System - A/V Einstellungen
 msgid "Video Setup"
 msgstr "Video Einstellungen"
