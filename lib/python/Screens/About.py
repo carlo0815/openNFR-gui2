@@ -41,7 +41,7 @@ def read_startup(FILE):
 class About(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+		self.setTitle(_("About"))
 		OpenNFRVersion = _("OpenNFR %s") % about.getImageVersionString()
 		self["OpenNFRVersion"] = Label(OpenNFRVersion)
 		
