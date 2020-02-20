@@ -1702,7 +1702,7 @@ msgid "Common Interface assignment"
 msgstr "Common Interface Zuweisung"
 
 msgid "Common interface"
-msgstr ""
+msgstr "Common Interface"
 
 msgid "Communication"
 msgstr "Kommunikation"
