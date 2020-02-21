@@ -14076,3 +14076,21 @@ msgstr "Videotext TTFHeightFactor16 (Höhe der TrueType-Zeichen)"
 
 msgid "Configure the height of the TrueType font letters used for teletext."
 msgstr "Bestimmt die Höhe der Zeichen des TrueType-Zeichensatzes für die Videotext Darstellung."
+
+# Konfiguration - System - Benutzeroberfläche
+msgid "OpenNFR Skins Install"
+msgstr "OpenNFR Skins installieren"
+
+# Konfiguration - System - Benutzeroberfläche - Einstellungen ...
+msgid "Setup Userinterface"
+msgstr "Einstellungen Benutzeroberfläche"
+
+msgid "2nd infobar"
+msgstr "2. Infobar"
+
+msgid "2nd Infobar timeout"
+msgstr "2. Infobar-Anzeigedauer"
+
+# Konfiguration - System - Benutzeroberfläche - Skinauswahl
+msgid "Skin Selector"
+msgstr "Skin Auswahl"
