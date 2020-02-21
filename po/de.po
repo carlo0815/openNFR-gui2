@@ -13848,28 +13848,6 @@ msgstr "Standartliste wiederherstellen und beenden?"
 msgid "%s\nPress ok to close"
 msgstr "%s\nDrücke ok zum Schliessen"
 
-# Display (VFD/LCD)
-msgid "Turn on the power LED"
-msgstr "Power LED einschalten"
-
-msgid "Power LED can be turned on or off here"
-msgstr "Hier kann die Power LED ein oder ausgeschaltet werden"
-
-msgid "Power LED State in Standby"
-msgstr "Power LED Status im Standby"
-
-msgid "Power LED state during standby"
-msgstr "Power LED Status während des Standbys einstellen"
-
-msgid "Power LED State in Deep-Standby"
-msgstr "Power LED Status im Deep-Standby"
-
-msgid "Power LED state during deep-standby"
-msgstr "Power LED Status während des Deep-Standbys einstellen"
-
-msgid "Show in Standby"
-msgstr "Im Standby anzeigen"
-
 # Info Panel - Image-Manager - Software Backup
 msgid "slot%s - %s - %s (current image)"
 msgstr "Flashplatz%s - %s- %s (aktuelles Image)"
@@ -14094,3 +14072,45 @@ msgstr "2. Infobar-Anzeigedauer"
 # Konfiguration - System - Benutzeroberfläche - Skinauswahl
 msgid "Skin Selector"
 msgstr "Wähle einen Skin"
+
+# Konfiguration - System - Sprache
+msgid "Setup Language"
+msgstr "Sprache auswählen"
+
+msgid "Delete Language"
+msgstr "Sprachen löschen"
+
+# Konfiguration - System - Netzwerk - Adapter-Einstellungen - IPv6-Einstellungen
+msgid "IPv6Setup"
+msgstr "IPv6-Einstellungen"
+
+msgid "IPv6 support"
+msgstr "IPv6 Unterstützung"
+
+msgid "Enable or disable Ipv6."
+msgstr "aktivieren oder deaktivieren von IPv6"
+
+# Konfiguration - System - Display (VFD/LCD)
+msgid "Setup Display"
+msgstr "Display Einstellungen"
+
+msgid "Turn on the power LED"
+msgstr "Power LED einschalten"
+
+msgid "Power LED can be turned on or off here"
+msgstr "Hier kann die Power LED ein oder ausgeschaltet werden"
+
+msgid "Power LED State in Standby"
+msgstr "Power LED Status im Standby"
+
+msgid "Power LED state during standby"
+msgstr "Power LED Status während des Standbys einstellen"
+
+msgid "Power LED State in Deep-Standby"
+msgstr "Power LED Status im Deep-Standby"
+
+msgid "Power LED state during deep-standby"
+msgstr "Power LED Status während des Deep-Standbys einstellen"
+
+msgid "Show in Standby"
+msgstr "Im Standby anzeigen"
