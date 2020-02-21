@@ -14093,4 +14093,4 @@ msgstr "2. Infobar-Anzeigedauer"
 
 # Konfiguration - System - Benutzeroberfläche - Skinauswahl
 msgid "Skin Selector"
-msgstr "Skin Auswahl"
+msgstr "Wähle einen Skin"
