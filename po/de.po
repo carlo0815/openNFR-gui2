@@ -14090,6 +14090,9 @@ msgstr "IPv6 Unterstützung"
 msgid "Enable or disable Ipv6."
 msgstr "aktivieren oder deaktivieren von IPv6"
 
+msgid "Restore inetd"
+msgstr "inetd herstellen"
+
 # Konfiguration - System - Display (VFD/LCD)
 msgid "Setup Display"
 msgstr "Display Einstellungen"
