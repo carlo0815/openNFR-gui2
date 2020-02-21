@@ -14115,13 +14115,6 @@ msgstr "Power LED Status während des Deep-Standbys einstellen"
 msgid "Show in Standby"
 msgstr "Im Standby anzeigen"
 
-# Konfiguration - System - Sprache
-msgid "Setup Language"
-msgstr "Sprache auswählen"
-
-msgid "Delete Language"
-msgstr "Sprachen löschen"
-
 # Konfiguration - System - Zeit Einstellungen
 msgid "Setup Time"
 msgstr "Zeiteinstellungen"
