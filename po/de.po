@@ -14137,3 +14137,7 @@ msgstr "Tastatur Einstellungen"
 # Konfiguration - Speichergeräte - Festplatten-Standby
 msgid "Setup Harddisk"
 msgstr "Konfiguration der Festplatte"
+
+# Standby / Neustart
+msgid "Multiboot Image Selector"
+msgstr "Multiboot-Auswahl"
