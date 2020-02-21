@@ -14122,23 +14122,6 @@ msgstr "Sprache auswählen"
 msgid "Delete Language"
 msgstr "Sprachen löschen"
 
-# Konfiguration - System - Netzwerk - Adapter-Einstellungen - IPv6-Einstellungen
-msgid "IPv6Setup"
-msgstr "IPv6-Einstellungen"
-
-msgid "IPv6 support"
-msgstr "IPv6 Unterstützung"
-
-msgid "Enable or disable Ipv6."
-msgstr "aktivieren oder deaktivieren von IPv6"
-
-# Konfiguration - System - Display (VFD/LCD)
-msgid "Setup Display"
-msgstr "Display Einstellungen"
-
-msgid "Turn on the power LED"
-msgstr "Power LED einschalten"
-
 # Konfiguration - System - Zeit Einstellungen
 msgid "Setup Time"
 msgstr "Zeiteinstellungen"
