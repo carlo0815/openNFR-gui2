@@ -254,33 +254,8 @@ def NFR4XBootExtractJFFS(source, target, zipdelete):
             os.chdir('enigma2')    
             os.system('mv e2jffs2.img rootfs.bin')
             GETIMAGEFOLDER = '/media/nfr4xboot/NFR4XBootUpload/enigma2'
-        print '[NFR4XBoot] Extracting JFFS2 image and moving extracted image to our target'
-		
+        print '[NFR4XBoot] Extracting JFFS2 image and moving extracted image to our target'		
         rootfs_path = GETIMAGEFOLDER + '/rootfs.bin'  
-        cmd = 'mknod /media/nfr4xboot/mtdblock7 b 31 7'
-        rc = os.system(cmd)
-        cmd = '/sbin/modprobe loop '
-        rc = os.system(cmd)
-        cmd = '/sbin/losetup /dev/loop0 ' + rootfs_path
-        rc = os.system(cmd)               
-        cmd = '/sbin/modprobe mtdblock'
-        rc = os.system(cmd)        
-        cmd = '/sbin/modprobe block2mtd'
-        rc = os.system(cmd)
-        cmd = '/bin/echo "/dev/loop0,128KiB" > /sys/module/block2mtd/parameters/block2mtd'
-        rc = os.system(cmd)
-        cmd = 'modprobe jffs2'
-        rc = os.system(cmd)
-        cmd = '/bin/mount -t jffs2 /media/nfr4xboot/mtdblock7 /media/nfr4xboot/jffs2'
-        rc = os.system(cmd)
-        cmd = 'cp -r -p /media/nfr4xboot/jffs2/* /media/nfr4xboot/NFR4XBootI/' + target
-        rc = os.system(cmd)
-        cmd = '/bin/umount /media/nfr4xboot/jffs2'
-        rc = os.system(cmd)
-        cmd = 'chmod -R +x /media/nfr4xboot/NFR4XBootI/' + target
-        rc = os.system(cmd)
-        cmd = 'rm -rf /media/nfr4xboot/jffs2'
-        rc = os.system(cmd)
-        cmd = 'rm /media/nfr4xboot/mtdblock7'
+        cmd = 'unjffs2' + ' ' + rootfs_path + ' ' + '/media/nfr4xboot/NFR4XBootI/' + target
         rc = os.system(cmd)
     return 1
