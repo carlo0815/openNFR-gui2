@@ -21,7 +21,7 @@ class eServiceFactoryDVB: public iServiceHandler
 public:
 	eServiceFactoryDVB();
 	virtual ~eServiceFactoryDVB();
-	enum { id = eServiceReference::idDVB };
+	enum { id = 0x1 };
 
 		// iServiceHandler
 	RESULT play(const eServiceReference &, ePtr<iPlayableService> &ptr);
@@ -33,7 +33,7 @@ private:
 	RESULT lookupService(ePtr<eDVBService> &ptr, const eServiceReference &ref);
 };
 
-struct eBouquet;
+class eBouquet;
 
 class eDVBServiceList: public iListableService, public iMutableServiceList
 {

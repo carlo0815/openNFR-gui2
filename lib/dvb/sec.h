@@ -24,7 +24,6 @@ public:
 		UPDATE_CURRENT_SWITCHPARMS, INVALIDATE_CURRENT_SWITCHPARMS,
 		IF_ROTORPOS_VALID_GOTO,
 		IF_TUNER_LOCKED_GOTO,
-		IF_LOCK_TIMEOUT_GOTO,
 		IF_TONE_GOTO, IF_NOT_TONE_GOTO,
 		START_TUNE_TIMEOUT,
 		SET_ROTOR_MOVING,
@@ -278,7 +277,6 @@ public:
 	int SatCR_idx;
 	int SatCR_format;
 	int SatCR_switch_reliable;
-	int SatCR_RetuneNoPatEntry;
 	int BootUpTime;
 	unsigned int SatCRvco;
 	unsigned int TuningWord;

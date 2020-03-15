@@ -431,18 +431,15 @@ void gPainter::clear()
 	m_rc->submit(o);
 }
 
-void gPainter::blitScale(gPixmap *pixmap, const eRect &pos, const eRect &clip, int flags, int aflags)
-{
-	blit(pixmap, pos, clip, flags | aflags);
-}
-
 void gPainter::blit(gPixmap *pixmap, ePoint pos, const eRect &clip, int flags)
 {
-	blit(pixmap, eRect(pos, eSize()), clip, flags);
+	blitScale(pixmap, eRect(pos, eSize()), clip, flags, 0);
 }
 
-void gPainter::blit(gPixmap *pixmap, const eRect &pos, const eRect &clip, int flags)
+void gPainter::blitScale(gPixmap *pixmap, const eRect &position, const eRect &clip, int flags, int aflags)
 {
+	flags |= aflags;
+
 	if ( m_dc->islocked() )
 		return;
 	gOpcode o;
@@ -456,7 +453,7 @@ void gPainter::blit(gPixmap *pixmap, const eRect &pos, const eRect &clip, int fl
 	o.parm.blit->pixmap = pixmap;
 	o.parm.blit->clip = clip;
 	o.parm.blit->flags = flags;
-	o.parm.blit->position = pos;
+	o.parm.blit->position = position;
 	m_rc->submit(o);
 }
 
@@ -669,30 +666,6 @@ void gPainter::sendHide(ePoint point, eSize size)
 }
 
 #ifdef USE_LIBVUGLES2
-void gPainter::sendShowItem(long dir, ePoint point, eSize size)
-{
-       if ( m_dc->islocked() )
-               return;
-       gOpcode o;
-       o.opcode=gOpcode::sendShowItem;
-       o.dc = m_dc.grabRef();
-       o.parm.setShowItemInfo = new gOpcode::para::psetShowItemInfo;
-       o.parm.setShowItemInfo->dir = dir;
-       o.parm.setShowItemInfo->point = point;
-       o.parm.setShowItemInfo->size = size;
-       m_rc->submit(o);
-}
-void gPainter::setFlush(bool val)
-{
-       if ( m_dc->islocked() )
-               return;
-       gOpcode o;
-       o.opcode=gOpcode::setFlush;
-       o.dc = m_dc.grabRef();
-       o.parm.setFlush = new gOpcode::para::psetFlush;
-       o.parm.setFlush->enable = val;
-       m_rc->submit(o);
-}
 void gPainter::setView(eSize size)
 {
 	if ( m_dc->islocked() )
@@ -922,10 +895,6 @@ void gDC::exec(const gOpcode *o)
 	case gOpcode::sendHide:
 		break;
 #ifdef USE_LIBVUGLES2
-	case gOpcode::sendShowItem:
-		break;
-	case gOpcode::setFlush:
-		break;
 	case gOpcode::setView:
 		break;
 #endif

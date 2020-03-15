@@ -16,7 +16,7 @@ class eServiceFactoryDVD: public iServiceHandler
 public:
 	eServiceFactoryDVD();
 	virtual ~eServiceFactoryDVD();
-	enum { id = eServiceReference::idServiceDVD };
+	enum { id = 0x1111 };
 
 		// iServiceHandler
 	RESULT play(const eServiceReference &, ePtr<iPlayableService> &ptr);

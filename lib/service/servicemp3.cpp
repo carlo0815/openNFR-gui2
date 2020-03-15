@@ -516,16 +516,14 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	m_prev_decoder_time = -1;
 	m_decoder_time_valid_state = 0;
 	m_errorInfo.missing_codec = "";
-	m_decoder = NULL;
 	m_subs_to_pull_handler_id = m_notify_source_handler_id = m_notify_element_added_handler_id = 0;
 
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceMP3::pushSubtitles);
 	CONNECT(m_pump.recv_msg, eServiceMP3::gstPoll);
 	CONNECT(m_nownext_timer->timeout, eServiceMP3::updateEpgCacheNowNext);
-	m_aspect = m_width = m_height = m_framerate = m_progressive = m_gamma = -1;
+	m_aspect = m_width = m_height = m_framerate = m_progressive = -1;
 
 	m_state = stIdle;
-	m_coverart = false;
 	m_subtitles_paused = false;
 	// eDebug("[eServiceMP3] construct!");
 
@@ -601,11 +599,6 @@ eServiceMP3::eServiceMP3(eServiceReference ref):
 	{
 		m_sourceinfo.containertype = ctMP4;
 		m_sourceinfo.audiotype = atAAC;
-	}
-	else if ( strcasecmp(ext, ".dra") == 0 )
-	{
-		m_sourceinfo.containertype = ctDRA;
-		m_sourceinfo.audiotype = atDRA;
 	}
 	else if ( strcasecmp(ext, ".m3u8") == 0 )
 		m_sourceinfo.is_hls = TRUE;
@@ -849,11 +842,6 @@ eServiceMP3::~eServiceMP3()
 	}
 
 	stop();
-
-	if (m_decoder)
-	{
-		m_decoder = NULL;
-	}
 
 	if (m_stream_tags)
 		gst_tag_list_free(m_stream_tags);
@@ -1218,20 +1206,20 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		g_object_get (m_gst_playbin, "source", &source, NULL);
 		if (!source)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source");
 			goto seek_unpause;
 		}
 		factory = gst_element_get_factory(source);
 		g_object_unref(source);
 		if (!factory)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source factory");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source factory");
 			goto seek_unpause;
 		}
 		name = gst_plugin_feature_get_name(GST_PLUGIN_FEATURE(factory));
 		if (!name)
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - cannot get source name");
+			eDebugNoNewLine("[eServiceMP3] trickSeek - cannot get source name");
 			goto seek_unpause;
 		}
 		/*
@@ -1258,7 +1246,7 @@ RESULT eServiceMP3::trickSeek(gdouble ratio)
 		}
 		else
 		{
-			eDebugNoNewLineStart("[eServiceMP3] trickSeek - source '%s' is not supported", name);
+			eDebugNoNewLine("[eServiceMP3] trickSeek - source '%s' is not supported", name);
 		}
 seek_unpause:
 		eDebug(", doing seeking unpause\n");
@@ -1339,7 +1327,7 @@ RESULT eServiceMP3::seekRelative(int direction, pts_t to)
 		return -1;
 
 	//eDebug("[eServiceMP3]  seekRelative direction %d, pts_t to %" G_GINT64_FORMAT, direction, (gint64)to);
-	pts_t ppos = 0;
+	gint64 ppos = 0;
 #if GST_VERSION_MAJOR >= 1
 	//m_seeking_or_paused = true;
 	if (direction > 0)
@@ -1655,7 +1643,6 @@ int eServiceMP3::getInfo(int w)
 	case sVideoWidth: return m_width;
 	case sFrameRate: return m_framerate;
 	case sProgressive: return m_progressive;
-	case sGamma: return m_gamma;
 	case sAspect: return m_aspect;
 	case sTagTitle:
 	case sTagArtist:
@@ -1732,15 +1719,6 @@ int eServiceMP3::getInfo(int w)
 		tag = "has-crc";
 		break;
 	case sBuffer: return m_bufferInfo.bufferPercent;
-	case sVideoType:
-	{
-		if (!dvb_videosink) return -1;
-		guint64 v = -1;
-		g_signal_emit_by_name(dvb_videosink, "get-video-codec", &v);
-		return (int) v;
-		break;
-	}
-	case sSID: return m_ref.getData(1);
 	default:
 		return resNA;
 	}
@@ -1765,7 +1743,10 @@ std::string eServiceMP3::getInfoString(int w)
 			return "IPTV";
 		case sServiceref:
 		{
-			return m_ref.toString();
+			eServiceReference ref(m_ref);
+			ref.type = eServiceFactoryMP3::id;
+			ref.path.clear();
+			return ref.toString();
 		}
 		default:
 			break;
@@ -2254,15 +2235,6 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 						m_is_live = true;
 					m_event((iPlayableService*)this, evGstreamerPlayStarted);
 					updateEpgCacheNowNext();
-
-					if (!dvb_videosink || m_ref.getData(0) == 2) // show radio pic
-					{
-						bool showRadioBackground = eConfigManager::getConfigBoolValue("config.misc.showradiopic", true);
-						std::string radio_pic = eConfigManager::getConfigValue(showRadioBackground ? "config.misc.radiopic" : "config.misc.blackradiopic");
-						m_decoder = new eTSMPEGDecoder(NULL, 0);
-						m_decoder->showSinglePic(radio_pic.c_str());
-					}
-
 				}	break;
 				case GST_STATE_CHANGE_PAUSED_TO_PLAYING:
 				{
@@ -2372,43 +2344,39 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 				m_stream_tags = result;
 			}
 
-			if (!m_coverart)
+			const GValue *gv_image = gst_tag_list_get_value_index(tags, GST_TAG_IMAGE, 0);
+			if ( gv_image )
 			{
-				const GValue *gv_image = gst_tag_list_get_value_index(tags, GST_TAG_IMAGE, 0);
-				if ( gv_image )
+				GstBuffer *buf_image;
+#if GST_VERSION_MAJOR < 1
+				buf_image = gst_value_get_buffer(gv_image);
+#else
+				GstSample *sample;
+				sample = (GstSample *)g_value_get_boxed(gv_image);
+				buf_image = gst_sample_get_buffer(sample);
+#endif
+				int fd = open("/tmp/.id3coverart", O_CREAT|O_WRONLY|O_TRUNC, 0644);
+				if (fd >= 0)
 				{
-					GstBuffer *buf_image;
+					guint8 *data;
+					gsize size;
 #if GST_VERSION_MAJOR < 1
-					buf_image = gst_value_get_buffer(gv_image);
+					data = GST_BUFFER_DATA(buf_image);
+					size = GST_BUFFER_SIZE(buf_image);
 #else
-					GstSample *sample;
-					sample = (GstSample *)g_value_get_boxed(gv_image);
-					buf_image = gst_sample_get_buffer(sample);
+					GstMapInfo map;
+					gst_buffer_map(buf_image, &map, GST_MAP_READ);
+					data = map.data;
+					size = map.size;
 #endif
-					int fd = open("/tmp/.id3coverart", O_CREAT|O_WRONLY|O_TRUNC, 0644);
-					if (fd >= 0)
-					{
-						guint8 *data;
-						gsize size;
-#if GST_VERSION_MAJOR < 1
-						data = GST_BUFFER_DATA(buf_image);
-						size = GST_BUFFER_SIZE(buf_image);
-#else
-						GstMapInfo map;
-						gst_buffer_map(buf_image, &map, GST_MAP_READ);
-						data = map.data;
-						size = map.size;
-#endif
-						int ret = write(fd, data, size);
+					int ret = write(fd, data, size);
 #if GST_VERSION_MAJOR >= 1
-						gst_buffer_unmap(buf_image, &map);
+					gst_buffer_unmap(buf_image, &map);
 #endif
-						close(fd);
-						m_coverart = true;
-						m_event((iPlayableService*)this, evUser+13);
-						eDebug("[eServiceMP3] /tmp/.id3coverart %d bytes written ", ret);
-					}
+					close(fd);
+					// eDebug("[eServiceMP3] /tmp/.id3coverart %d bytes written ", ret);
 				}
+				m_event((iPlayableService*)this, evUser+13);
 			}
 			gst_tag_list_free(tags);
 			m_event((iPlayableService*)this, evUpdatedInfo);
@@ -2607,12 +2575,6 @@ void eServiceMP3::gstBusCall(GstMessage *msg)
 							gst_structure_get_int (msgstruct, "progressive", &m_progressive);
 							if (strstr(eventname, "Changed"))
 								m_event((iPlayableService*)this, evVideoProgressiveChanged);
-						}
-						else if (!strcmp(eventname, "eventGammaChanged"))
-						{
-							gst_structure_get_int (msgstruct, "gamma", &m_gamma);
-							if (strstr(eventname, "Changed"))
-								m_event((iPlayableService*)this, evVideoGammaChanged);
 						}
 						else if (!strcmp(eventname, "redirect"))
 						{

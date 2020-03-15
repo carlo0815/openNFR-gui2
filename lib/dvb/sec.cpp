@@ -516,9 +516,6 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 			}
 			else
 			{
-				if (!simulate)
-					((eDVBFrontend*)&frontend)->setConfigRetuneNoPatEntry(lnb_param.SatCR_RetuneNoPatEntry);
-
 				long curr_frq;
 				long curr_sym;
 				long curr_lof;
@@ -1212,18 +1209,17 @@ RESULT eDVBSatelliteEquipmentControl::prepare(iDVBFrontend &frontend, const eDVB
 					sec_sequence.push_back( eSecCommand(eSecCommand::IF_TONE_GOTO, compare) );
 					sec_sequence.push_back( eSecCommand(eSecCommand::SET_TONE, tone) );
 					sec_sequence.push_back( eSecCommand(eSecCommand::SLEEP, m_params[DELAY_AFTER_FINAL_CONT_TONE_CHANGE]) );
+					sec_sequence.push_back( eSecCommand(eSecCommand::SET_FRONTEND, 0) );
 
 					cmd.direction=1;  // check for running rotor
 					cmd.deltaA=0;
-					cmd.steps = +4;
+					cmd.steps = +3;
 					cmd.okcount=0;
 					sec_sequence.push_back( eSecCommand(eSecCommand::SET_TIMEOUT, mrt*4) );  // mrt is in seconds... our SLEEP time is 250ms.. so * 4
-					sec_sequence.push_back( eSecCommand(eSecCommand::SET_FRONTEND, 0) );
 					sec_sequence.push_back( eSecCommand(eSecCommand::SLEEP, 250) );  // 250msec delay
 					sec_sequence.push_back( eSecCommand(eSecCommand::IF_TUNER_LOCKED_GOTO, cmd ) );
-					sec_sequence.push_back( eSecCommand(eSecCommand::IF_TIMEOUT_GOTO, +6 ) );
-					sec_sequence.push_back( eSecCommand(eSecCommand::IF_LOCK_TIMEOUT_GOTO, -4) ); /* retune when lock timeout occurred */
-					sec_sequence.push_back( eSecCommand(eSecCommand::GOTO, -4) );  // goto loop start
+					sec_sequence.push_back( eSecCommand(eSecCommand::IF_TIMEOUT_GOTO, +5 ) );
+					sec_sequence.push_back( eSecCommand(eSecCommand::GOTO, -3) );  // goto loop start
 					sec_sequence.push_back( eSecCommand(eSecCommand::UPDATE_CURRENT_ROTORPARAMS) );
 					sec_sequence.push_back( eSecCommand(eSecCommand::SET_ROTOR_STOPPED) );
 					sec_sequence.push_back( eSecCommand(eSecCommand::GOTO, +4) );
@@ -1524,16 +1520,13 @@ RESULT eDVBSatelliteEquipmentControl::setLNBSatCRpositionnumber(int SatCR_positi
 	return 0;
 }
 
-RESULT eDVBSatelliteEquipmentControl::setLNBSatCRTuningAlgo(int value)
+RESULT eDVBSatelliteEquipmentControl::setLNBSatCRTuningAlgo(int SatCR_switch_reliable)
 {
-	eSecDebug("eDVBSatelliteEquipmentControl::setLNBSatCRTuningAlgo(%d)", value);
-	if(!((value >= 0) && (value <= 3)))
+	eSecDebug("eDVBSatelliteEquipmentControl::setLNBSatCRTuningAlgo(%d)", SatCR_switch_reliable);
+	if(!((SatCR_switch_reliable >= 0) && (SatCR_switch_reliable <= 1)))
 		return -EPERM;
 	if ( currentLNBValid() )
-		{
-			m_lnbs[m_lnbidx].SatCR_switch_reliable = value & 0x1;
-			m_lnbs[m_lnbidx].SatCR_RetuneNoPatEntry = (value >> 1) & 0x1;
-		}
+		m_lnbs[m_lnbidx].SatCR_switch_reliable = SatCR_switch_reliable;
 	else
 		return -ENOENT;
 	return 0;

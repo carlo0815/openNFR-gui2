@@ -551,7 +551,6 @@ void eRTSPStreamClient::update_service_list()
 					service->setCacheEntry(eDVBService::cDDPPID, apidtype == eDVBAudio::aDDP ? apid : -1);
 					service->setCacheEntry(eDVBService::cAACHEAPID, apidtype == eDVBAudio::aAACHE ? apid : -1);
 					service->setCacheEntry(eDVBService::cAACAPID, apidtype == eDVBAudio::aAAC ? apid : -1);
-					service->setCacheEntry(eDVBService::cDRAAPID, apidtype == eDVBAudio::aDRA ? apid : -1);
 					if (vpid == -1)
 						continue;
 				}
@@ -1198,22 +1197,22 @@ void eRTSPStreamClient::notifier(int what)
 		}
 		if (tuner_t)
 		{
-			ss << s << "DVBT-" << tuner_t;
+			ss << "DVBT-" << tuner_t << s;
 			s = ",";
 		}
 		if (tuner_c)
 		{
-			ss << s << "DVBC-" << tuner_c;
+			ss << "DVBC-" << tuner_c << s;
 			s = ",";
 		}
 		if (tuner_t2)
 		{
-			ss << s << "DVBT2-" << tuner_t2;
+			ss << "DVBT2-" << tuner_t2 << s;
 			s = ",";
 		}
 		if (tuner_c2)
 		{
-			ss << s << "DVBC2-" << tuner_c2;
+			ss << "DVBC2-" << tuner_c2 << s;
 			s = ",";
 		}
 		if (!s.length())

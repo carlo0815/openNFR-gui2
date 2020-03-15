@@ -50,7 +50,6 @@ is usually caused by not marking PSignals as immutable.
 #include <lib/service/iservice.h>
 #include <lib/service/service.h>
 #include <lib/service/servicedvb.h>
-#include <lib/service/servicefs.h>
 #include <lib/service/servicepeer.h>
 #include <lib/gdi/fb.h>
 #include <lib/gdi/font.h>
@@ -148,7 +147,6 @@ is usually caused by not marking PSignals as immutable.
 typedef long time_t;
 %include "typemaps.i"
 %include "std_string.i"
-%include "stdint.i"
 %include <lib/python/swig.h>
 %include <lib/base/object.h>
 %include <lib/base/eenv.h>
@@ -165,7 +163,6 @@ typedef long time_t;
 %include <lib/base/smartptr.h>
 %include <lib/service/event.h>
 %include <lib/service/iservice.h>
-%include <lib/service/servicefs.h>
 %include <lib/service/service.h>
 %include <lib/base/e2avahi.h>
 %include <lib/service/servicepeer.h>
@@ -448,8 +445,6 @@ extern void runMainloop();
 extern void quitMainloop(int exit_code);
 extern eApplication *getApplication();
 extern int getPrevAsciiCode();
-extern int getBsodCounter();
-extern void resetBsodCounter();
 extern void addFont(const char *filename, const char *alias, int scale_factor, int is_replacement, int renderflags = 0);
 extern const char *getEnigmaVersionString();
 extern const char *getGStreamerVersionString();
@@ -457,16 +452,11 @@ extern void dump_malloc_stats(void);
 #ifndef HAVE_OSDANIMATION
 extern void setAnimation_current(int a);
 extern void setAnimation_speed(int speed);
-extern void setAnimation_current_listbox(int a);
 #endif
-extern void pauseInit(void);
-extern void resumeInit(void);
 %}
 
 extern void addFont(const char *filename, const char *alias, int scale_factor, int is_replacement, int renderflags = 0);
 extern int getPrevAsciiCode();
-extern int getBsodCounter();
-extern void resetBsodCounter();
 extern void runMainloop();
 extern void quitMainloop(int exit_code);
 extern eApplication *getApplication();
@@ -476,10 +466,7 @@ extern void dump_malloc_stats(void);
 #ifndef HAVE_OSDANIMATION
 extern void setAnimation_current(int a);
 extern void setAnimation_speed(int speed);
-extern void setAnimation_current_listbox(int a);
 #endif
-extern void pauseInit(void);
-extern void resumeInit(void);
 
 %include <lib/python/python_console.i>
 %include <lib/python/python_base.i>

@@ -18,7 +18,7 @@ class eServiceFactoryMP3: public iServiceHandler
 public:
 	eServiceFactoryMP3();
 	virtual ~eServiceFactoryMP3();
-	enum { id = eServiceReference::idServiceMP3 };
+	enum { id = 0x1001 };
 
 		// iServiceHandler
 	RESULT play(const eServiceReference &, ePtr<iPlayableService> &ptr);
@@ -117,9 +117,9 @@ public:
 
 typedef struct _GstElement GstElement;
 
-typedef enum { atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC, atWMA, atDRA } audiotype_t;
+typedef enum { atUnknown, atMPEG, atMP3, atAC3, atDTS, atAAC, atPCM, atOGG, atFLAC, atWMA } audiotype_t;
 typedef enum { stUnknown, stPlainText, stSSA, stASS, stSRT, stVOB, stPGS } subtype_t;
-typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ctASF, ctOGG, ctWEBM, ctDRA } containertype_t;
+typedef enum { ctNone, ctMPEGTS, ctMPEGPS, ctMKV, ctAVI, ctMP4, ctVCD, ctCDA, ctASF, ctOGG, ctWEBM } containertype_t;
 
 class eServiceMP3: public iPlayableService, public iPauseableService,
 	public iServiceInformation, public iSeekableService, public iAudioTrackSelection, public iAudioChannelSelection,
@@ -339,7 +339,6 @@ private:
 	int m_state;
 	GstElement *m_gst_playbin;
 	GstTagList *m_stream_tags;
-	bool m_coverart;
 
 	eFixedMessagePump<ePtr<GstMessageContainer> > m_pump;
 
@@ -390,11 +389,10 @@ private:
 
 	RESULT seekToImpl(pts_t to);
 
-	gint m_aspect, m_width, m_height, m_framerate, m_progressive, m_gamma;
+	gint m_aspect, m_width, m_height, m_framerate, m_progressive;
 	std::string m_useragent;
 	std::string m_extra_headers;
 	RESULT trickSeek(gdouble ratio);
-	ePtr<iTSMPEGDecoder> m_decoder; // for showSinglePic when radio
 };
 
 #endif

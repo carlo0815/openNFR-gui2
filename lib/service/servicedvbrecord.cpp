@@ -233,11 +233,10 @@ int eDVBServiceRecord::doPrepare()
 				/*
 				* streams are considered to be descrambled by default;
 				* user can indicate a stream is scrambled, by using servicetype id + 0x100
-				* (or idDVB + idServiceIsScrambled == idDVBScrambled)
 				*/
 				bool config_descramble_client = eConfigManager::getConfigBoolValue("config.streaming.descramble_client", false);
 
-				m_descramble = (m_ref.type == eServiceReference::idDVBScrambled);
+				m_descramble = (m_ref.type == eServiceFactoryDVB::id + 0x100);
 
 				if(config_descramble_client)
 					m_descramble = true;
@@ -374,7 +373,7 @@ int eDVBServiceRecord::doRecord()
 			int timing_pid = -1, timing_stream_type = -1;
 			iDVBTSRecorder::timing_pid_type timing_pid_type = iDVBTSRecorder::none;
 
-			eDebugNoNewLineStart("[eDVBServiceRecord] RECORD: have %zd video stream(s)", program.videoStreams.size());
+			eDebugNoNewLine("[eDVBServiceRecord] RECORD: have %zd video stream(s)", program.videoStreams.size());
 			if (!program.videoStreams.empty())
 			{
 				eDebugNoNewLine(" (");

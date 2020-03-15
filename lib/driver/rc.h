@@ -89,7 +89,7 @@ public:
 	{
 		listeners.remove(dev);
 	}
-	virtual ~eRCDriver();
+	~eRCDriver();
 
 	void enable(int en) { enabled=en; }
 	virtual void setExclusive(bool) { }

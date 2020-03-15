@@ -16,9 +16,9 @@
 
 extern int roundMulti(int value, int m);//round value to multiple of m
 
-class eDVBFrontendParametersSatellite
+
+struct eDVBFrontendParametersSatellite
 {
-public:
 #ifndef SWIG
 	void set(const SatelliteDeliverySystemDescriptor  &);
 	void set(const S2SatelliteDeliverySystemDescriptor  &);
@@ -58,25 +58,16 @@ public:
 	enum {
 		PLS_Root, PLS_Gold, PLS_Combo, PLS_Unknown
 	};
-	enum {
-		No_Stream_Id_Filter = NO_STREAM_ID_FILTER
-	};
-	enum {
-		PLS_Default_Gold_Code, PLS_Default_Root_Code
-	};
-	enum {
-		No_T2MI_PLP_Id = eDVBFrontendParametersSatellite::No_Stream_Id_Filter, T2MI_Default_Pid = 4096
-	};
+
 	bool no_rotor_command_on_tune;
 	int frequency, symbol_rate;
-	int polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code, t2mi_plp_id, t2mi_pid;
+	int polarisation, fec, inversion, orbital_position, system, modulation, rolloff, pilot, is_id, pls_mode, pls_code;
 	int plp_id;
 };
 SWIG_ALLOW_OUTPUT_SIMPLE(eDVBFrontendParametersSatellite);
 
-class eDVBFrontendParametersCable
+struct eDVBFrontendParametersCable
 {
-public:
 #ifndef SWIG
 	void set(const CableDeliverySystemDescriptor  &);
 #endif
@@ -105,9 +96,8 @@ public:
 };
 SWIG_ALLOW_OUTPUT_SIMPLE(eDVBFrontendParametersCable);
 
-class eDVBFrontendParametersTerrestrial
+struct eDVBFrontendParametersTerrestrial
 {
-public:
 #ifndef SWIG
 	void set(const TerrestrialDeliverySystemDescriptor  &);
 	void set(const T2DeliverySystemDescriptor &);
@@ -122,7 +112,7 @@ public:
 	 * (and it's too late to fix this now, we would break backward compatibility)
 	 */
 	enum {
-		FEC_1_2=0, FEC_2_3=1, FEC_3_4=2, FEC_5_6=3, FEC_7_8=4, FEC_Auto=5, FEC_6_7=6, FEC_8_9=7, FEC_3_5=8, FEC_4_5=9
+		FEC_1_2=0, FEC_2_3=1, FEC_3_4=2, FEC_5_6=3, FEC_7_8=4, FEC_Auto=5, FEC_6_7=6, FEC_8_9=7
 	};
 
 	enum {
@@ -162,9 +152,8 @@ public:
 };
 SWIG_ALLOW_OUTPUT_SIMPLE(eDVBFrontendParametersTerrestrial);
 
-class eDVBFrontendParametersATSC
+struct eDVBFrontendParametersATSC
 {
-public:
 	enum {
 		Inversion_Off, Inversion_On, Inversion_Unknown
 	};
@@ -229,8 +218,6 @@ public:
 	int getIsId() const;
 	int getPLSMode() const;
 	int getPLSCode() const;
-	int getT2MIPlpId() const;
-	int getT2MIPid() const;
 	int getBandwidth() const;
 	int getCodeRateLp() const;
 	int getCodeRateHp() const;
@@ -267,8 +254,6 @@ public:
 	int getIsId() const;
 	int getPLSMode() const;
 	int getPLSCode() const;
-	int getT2MIPlpId() const;
-	int getT2MIPid() const;
 };
 
 class eDVBCableTransponderData : public eDVBTransponderData

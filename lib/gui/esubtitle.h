@@ -37,8 +37,8 @@ struct eVobSubtitlePage
 	ePtr<gPixmap> m_pixmap;
 };
 
-struct eDVBTeletextSubtitlePage;
-struct eDVBSubtitlePage;
+class eDVBTeletextSubtitlePage;
+class eDVBSubtitlePage;
 
 class eSubtitleWidget: public eWidget, public iSubtitleUser, public sigc::trackable
 {

@@ -46,7 +46,7 @@ void eDVBPMTParser::processCaDescriptor(program &program, CaDescriptor *descr)
 	pair.databytes.clear();
 	for(std::vector<unsigned char>::const_iterator it = descr->getCaDataBytes()->begin(); it != descr->getCaDataBytes()->end(); ++it)
 	{
-		char t[3];
+		char t[2];
 		sprintf(t, "%02X", *it);
 		pair.databytes += t;
 	}
@@ -230,8 +230,8 @@ int eDVBPMTParser::getProgramInfo(program &program)
 									s.subtitling_type = (*it)->getSubtitlingType();
 									switch(s.subtitling_type)
 									{
-									case 0x10 ... 0x15: // dvb subtitles normal
-									case 0x20 ... 0x25: // dvb subtitles hearing impaired
+									case 0x10 ... 0x13: // dvb subtitles normal
+									case 0x20 ... 0x23: // dvb subtitles hearing impaired
 										break;
 									default:
 										eDebug("[eDVBPMTParser] dvb subtitle %s PID %04x with wrong subtitling type (%02x)... force 0x10!!",
@@ -316,10 +316,6 @@ int eDVBPMTParser::getProgramInfo(program &program)
 									isaudio = 1;
 									audio.type = audioStream::atLPCM;
 									break;
-								case 0x44524131: /*DRA is "DRA1"*/
-									isaudio = 1;
-									audio.type = audioStream::atDRA;
-									break;
 								case 0x56432d31: // == 'VC-1'
 								{
 									const AdditionalIdentificationInfoVector *vec = d->getAdditionalIdentificationInfo();
@@ -350,24 +346,6 @@ int eDVBPMTParser::getProgramInfo(program &program)
 								isvideo = 1;
 								video.type = videoStream::vtMPEG4_Part2;
 								break;
-							case EXTENSION_DESCRIPTOR:
-							{
-								ExtensionDescriptor &d = (ExtensionDescriptor&)*desc;
-								switch (d.getExtensionTag())
-								{
-								case 0x15: /* AC-4 descriptor */
-									if (!isvideo && !isaudio)
-									{
-										isaudio = 1;
-										audio.type = audioStream::atAC4;
-									}
-									break;
-								default:
-									eDebug("[eDVBPMTParser] TODO: Fix parsing for Extension descriptor with tag: %d", d.getExtensionTag());
-									break;
-								}
-								break;
-							}
 							default:
 								break;
 							}
@@ -410,13 +388,6 @@ int eDVBPMTParser::getProgramInfo(program &program)
 						prev_audio->rdsPid = (*es)->getPid();
 						eDebug("[eDVBPMTParser] Rds PID %04x detected ? ! ?", prev_audio->rdsPid);
 					}
-					//HEVC 4K for Topway
-					if (!num_descriptors && streamtype == 0xEA && !isvideo && !isaudio)
-					{
-						isvideo = 1;
-						video.type = videoStream::vtH265_HEVC;
-					}		
-					
 					prev_audio = 0;
 					break;
 				}
@@ -498,7 +469,6 @@ eDVBPMTParser::eStreamData::eStreamData(eDVBPMTParser::program &program)
 	pmtPid = program.pmtPid;
 	textPid = program.textPid;
 	aitPid = program.aitPid;
-	defaultAudioPid = program.defaultAudioStream;
 	adapterId = program.adapterId;
 	demuxId = program.demuxId;
 	serviceId = program.serviceId;
@@ -606,19 +576,6 @@ RESULT eDVBPMTParser::eStreamData::getCaIds(std::vector<int> &caids, std::vector
 		caids.push_back(caIds[i]);
 		ecmpids.push_back(ecmPids[i]);
 		ecmdatabytes.push_back(ecmDataBytes[i]);
-	}
-	return 0;
-}
-
-RESULT eDVBPMTParser::eStreamData::getDefaultAudioPid(int &result) const
-{
-	if (audioStreams.size() > defaultAudioPid)
-	{
-		result = audioStreams[defaultAudioPid];
-	}
-	else
-	{
-		result = -1;
 	}
 	return 0;
 }

@@ -39,7 +39,6 @@ public:
 #ifdef HAVE_OSDANIMATION
 void setAnimation_current(int a);
 void setAnimation_speed(int speed);
-void setAnimation_current_listbox(int a);
 #endif
 
 #endif

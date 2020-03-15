@@ -57,9 +57,8 @@ public:
 	void paint(gPainter &painter, eWindowStyle &style, const ePoint &offset, int selected);
 	void setSeperation(int sep) { m_seperation = sep; }
 	int currentCursorSelectable();
-	void setSlider(int height, int space) { m_slider_height = height; m_slider_space = space; }
 private:
-	int m_seperation, m_slider_height, m_slider_space;
+	int m_seperation;
 };
 
 class eListboxPythonMultiContent: public eListboxPythonStringContent
@@ -103,13 +102,6 @@ private:
 #define BT_SCALE 4
 #define BT_KEEP_ASPECT_RATIO 8
 #define BT_FIXRATIO 8
-#define BT_HALIGN_LEFT 0
-#define BT_HALIGN_CENTER 16
-#define BT_HALIGN_RIGHT 32
-#define BT_VALIGN_TOP 0
-#define BT_VALIGN_CENTER 64
-#define BT_VALIGN_BOTTOM 128
-#define BT_ALIGN_CENTER BT_HALIGN_CENTER | BT_VALIGN_CENTER
 #endif // SWIG
 
 #endif

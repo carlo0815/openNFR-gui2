@@ -171,14 +171,7 @@ int eServiceHDMI::getInfo(int w)
 
 std::string eServiceHDMI::getInfoString(int w)
 {
-	switch (w)
-	{
-	case sServiceref:
-		return m_ref.toString();
-	default:
-		break;
-	}
-	return iServiceInformation::getInfoString(w);
+	return "";
 }
 
 ePtr<iServiceInfoContainer> eServiceHDMI::getInfoObject(int w)
@@ -256,16 +249,7 @@ int eServiceHDMIRecord::doPrepare()
 {
 	if (!m_simulate && m_encoder_fd < 0)
 	{
-		if (eEncoder::getInstance())
-		{
-			int bitrate = eConfigManager::getConfigIntValue("config.hdmirecord.bitrate", 8 * 1024 * 1024);
-			int width = eConfigManager::getConfigIntValue("config.hdmirecord.width", 1280);
-			int height = eConfigManager::getConfigIntValue("config.hdmirecord.height", 720);
-			int framerate = eConfigManager::getConfigIntValue("config.hdmirecord.framerate", 50000);
-			int interlaced = eConfigManager::getConfigIntValue("config.hdmirecord.interlaced", 0);
-			int aspectratio = eConfigManager::getConfigIntValue("config.hdmirecord.aspectratio", 0);
-			m_encoder_fd = eEncoder::getInstance()->allocateEncoder(m_ref.toString(), bitrate, width, height, framerate, interlaced, aspectratio);
-		}
+		if (eEncoder::getInstance()) m_encoder_fd = eEncoder::getInstance()->allocateEncoder(m_ref.toString(), 8 * 1024 * 1024, 1280, 720, 25000, false, 0);
 		if (m_encoder_fd < 0) return -1;
 	}
 	m_state = statePrepared;

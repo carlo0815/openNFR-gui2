@@ -5,9 +5,8 @@
 extern "C" void init_enigma();
 extern "C" void eBaseInit(void);
 extern "C" void eConsoleInit(void);
-extern void quitMainloop(int exitCode);
 extern void bsodFatal(const char *component);
-extern bool bsodRestart();
+extern void quitMainloop(int exitCode);
 
 #define SKIP_PART2
 #include <lib/python/python.h>
@@ -213,8 +212,7 @@ int ePython::call(ePyObject pFunc, ePyObject pArgs)
 			/* immediately show BSOD, so we have the actual error at the bottom */
 		 	bsodFatal(0);
 			/* and make sure we quit (which would also eventually cause a bsod, but with useless termination messages) */
-			if (bsodRestart())
-				quitMainloop(5);
+			quitMainloop(5);
 		}
 	}
 	return res;

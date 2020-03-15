@@ -264,7 +264,7 @@ sync:
 	}
 
 	while (rd < count) {
-		ssize_t ret;
+		size_t ret;
 #ifdef HAVE_LIBUDFREAD
 		if (m_udf_file)
 			ret = udfread_file_read(m_udf_file, tmp, 192);
@@ -290,7 +290,7 @@ sync:
 					ret = ::read(m_fd, tmp+192, 384);
 
 #if 0
-				eDebugNoNewLineStart("[eM2TSFile] m2ts out of sync at pos %lld, real %lld:", offset + m_sync_offset, m_current_offset);
+				eDebugNoNewLine("[eM2TSFile] m2ts out of sync at pos %lld, real %lld:", offset + m_sync_offset, m_current_offset);
 				for (; x < 192; ++x)
 					eDebugNoNewLine(" %02x", tmp[x]);
 				eDebugNoNewLine("\n");
