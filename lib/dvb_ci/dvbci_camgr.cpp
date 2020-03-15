@@ -16,7 +16,7 @@ eDVBCICAManagerSession::~eDVBCICAManagerSession()
 
 int eDVBCICAManagerSession::receivedAPDU(const unsigned char *tag, const void *data, int len)
 {
-	eDebugNoNewLine("[CI CA] SESSION(%d)/CA %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
+	eDebugNoNewLineStart("[CI CA] SESSION(%d)/CA %02x %02x %02x: ", session_nb, tag[0], tag[1],tag[2]);
 	for (int i=0; i<len; i++)
 		eDebugNoNewLine("%02x ", ((const unsigned char*)data)[i]);
 
@@ -25,7 +25,7 @@ int eDVBCICAManagerSession::receivedAPDU(const unsigned char *tag, const void *d
 		switch (tag[2])
 		{
 		case 0x31:
-			eDebugNoNewLine("[CI CA]ca info:");
+			eDebugNoNewLineStart("[CI CA]ca info:");
 			for (int i=0; i<len; i+=2)
 			{
 				eDebugNoNewLine("%04x ", (((const unsigned char*)data)[i]<<8)|(((const unsigned char*)data)[i+1]));

@@ -13,8 +13,6 @@ enigma2_SOURCES = \
 	bsod.cpp \
 	bsod.h \
 	enigma.cpp \
-	xmlgenerator.cpp \
-	xmlgenerator.h \
 	version_info.cpp \
 	version_info.h \
 	version.h
@@ -51,7 +49,7 @@ enigma2_LDADD = \
 	@DVBCSA_LIBS@ \
 	@AVAHI_LIBS@ \
 	@LIBHIACCEL_LIBS@ \
-	-ltuxtxt -ltuxtxt32bpp -lcrypt -lrt -ldl
+	-ltuxtxt -ltuxtxt32bpp -lcrypt -lrt -ldl	
 
 enigma2_LDFLAGS = -Wl,--export-dynamic
 

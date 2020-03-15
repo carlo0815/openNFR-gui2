@@ -5,6 +5,7 @@
 #include <set>
 
 #define TABLE_eDebug(x...) do { if (m_debug) eDebug(x); } while(0)
+#define TABLE_eDebugNoNewLineStart(x...) do { if (m_debug) eDebugNoNewLineStart(x); } while(0)
 #define TABLE_eDebugNoNewLine(x...) do { if (m_debug) eDebugNoNewLine(x); } while(0)
 
 class eGTable: public iObject, public sigc::trackable
@@ -62,7 +63,7 @@ protected:
 		sections[nr] = new Section(data);
 		avail.insert(nr);
 
-		TABLE_eDebugNoNewLine("[eTable] ");
+		TABLE_eDebugNoNewLineStart("[eTable] ");
 		for (unsigned int i = 0; i < max; ++i)
 			if (avail.find(i) != avail.end())
 				TABLE_eDebugNoNewLine("+");
@@ -93,6 +94,7 @@ class eAUGTable: public sigc::trackable
 protected:
 	void slotTableReady(int);
 public:
+	virtual ~eAUGTable(){};
 	sigc::signal1<void, int> tableReady;
 	virtual void getNext(int err)=0;
 };

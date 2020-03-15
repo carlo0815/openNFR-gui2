@@ -225,9 +225,9 @@ void eDVBCISession::receiveData(eDVBCISlot *slot, const unsigned char *ptr, size
 	unsigned char tag = *pkt++;
 	int llen, hlen;
 
-	eDebugNoNewLine("[CI SESS] slot: %p ",slot);
+	eDebugNoNewLineStart("[CI SESS] slot: %p ",slot);
 
-	eDebugNoNewLine("[CI SESS]: ");
+	eDebugNoNewLineStart("[CI SESS]: ");
 
 	for(unsigned int i=0;i<len;i++)
 		eDebugNoNewLine("%02x ",ptr[i]);

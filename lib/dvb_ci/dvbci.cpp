@@ -1292,7 +1292,7 @@ int eDVBCISlot::send(const unsigned char *data, size_t len)
 {
 	int res=0;
 	//int i;
-	//eDebugNoNewLine("< ");
+	//eDebugNoNewLineStart("< ");
 	//for(i=0;i<len;i++)
 	//	eDebugNoNewLine("%02x ",data[i]);
 	//eDebugNoNewLine("\n");
@@ -1353,7 +1353,7 @@ void eDVBCISlot::data(int what)
 		r = ::read(fd, data, 4096);
 		if(r > 0) {
 //			int i;
-//			eDebugNoNewLine("> ");
+//			eDebugNoNewLineStart("> ");
 //			for(i=0;i<r;i++)
 //				eDebugNoNewLine("%02x ",data[i]);
 //			eDebugNoNewLine("\n");

@@ -373,7 +373,8 @@ void eHdmiCEC::hdmiEvent(int what)
 			bool keypressed = false;
 			static unsigned char pressedkey = 0;
 
-			eDebugNoNewLine("[eHdmiCEC] received message");
+			eDebug("[eHdmiCEC] received message");
+			eDebugNoNewLine(" %02X", rxmessage.address);
 			for (int i = 0; i < rxmessage.length; i++)
 			{
 				eDebugNoNewLine(" %02X", rxmessage.data[i]);
@@ -526,7 +527,8 @@ void eHdmiCEC::sendMessage(struct cec_message &message)
 {
 	if (hdmiFd >= 0)
 	{
-		eDebugNoNewLine("[eHdmiCEC] send message");
+		eDebug("[eHdmiCEC] send message");
+		eDebugNoNewLine(" %02X", message.address);
 		for (int i = 0; i < message.length; i++)
 		{
 			eDebugNoNewLine(" %02X", message.data[i]);

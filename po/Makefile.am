@@ -25,11 +25,10 @@ enigma2.pot: enigma2-py.pot enigma2-xml.pot
 	else \
 		$(MSGINIT) -l $@ -o $@ -i $< --no-translator; \
 	fi
+endif
 
 .po.mo:
 	$(MSGFMT) -o $@ $<
-
-endif
 
 BUILT_SOURCES = $(LANGMO)
 CLEANFILES = $(LANGMO) enigma2-py.pot enigma2-xml.pot enigma2.pot
@@ -41,7 +40,6 @@ install-data-local: $(LANGMO)
 		$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/po/$$lang/LC_MESSAGES; \
 		$(INSTALL_DATA) $$lang.po $(DESTDIR)$(pkgdatadir)/po/@PACKAGE_NAME@-$$lang.po; \
 		$(INSTALL_DATA) $$lang.mo $(DESTDIR)$(pkgdatadir)/po/$$lang/LC_MESSAGES/@PACKAGE_NAME@.mo; \
-		$(INSTALL_DATA) $$lang.po $(DESTDIR)$(pkgdatadir)/po/$$lang.po; \
 	done
 
 uninstall-local:

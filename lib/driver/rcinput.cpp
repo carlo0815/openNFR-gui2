@@ -213,6 +213,31 @@ void eRCDeviceInputDev::handleCode(long rccode)
 */
 #endif
 
+#if KEY_F6_TO_KEY_FAVORITES
+	if (ev->code == KEY_F6) {
+		ev->code = KEY_FAVORITES;
+	}
+#endif
+
+#if KEY_HELP_TO_KEY_AUDIO
+	if (ev->code == KEY_HELP) {
+		ev->code = KEY_AUDIO;
+	}
+#endif
+
+
+#if KEY_WWW_TO_KEY_FILE
+	if (ev->code == KEY_WWW) {
+		ev->code = KEY_FILE;
+	}
+#endif
+
+#if KEY_CONTEXT_MENU_TO_KEY_BACK
+	if (ev->code == KEY_CONTEXT_MENU) {
+		ev->code = KEY_BACK;
+	}
+#endif
+
 #if KEY_VIDEO_TO_KEY_ANGLE
 	if (ev->code == KEY_VIDEO) {
 		ev->code = KEY_ANGLE;
@@ -635,6 +660,22 @@ void eRCDeviceInputDev::handleCode(long rccode)
 	{
 		/* HDx , which sends KEY_LIST events. Correct this, so we do not have to place hacks in the keymaps. */
 		ev->code = KEY_PVR;
+	}
+#endif
+
+#if KEY_BOOKMARKS_IS_KEY_DIRECTORY
+	if (ev->code == KEY_BOOKMARKS)
+	{
+		/* Beyonwiz U4 RCU workaround to open pluginbrowser */
+		ev->code = KEY_DIRECTORY;
+	}
+#endif
+
+#if KEY_VIDEO_TO_KEY_BOOKMARKS
+	if (ev->code == KEY_VIDEO)
+	{
+		/* Axas Ultra have two keys open Movie folder , use Media key to open Mediaportal */
+		ev->code = KEY_BOOKMARKS;
 	}
 #endif
 

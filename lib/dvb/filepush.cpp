@@ -30,7 +30,7 @@ eFilePushThread::eFilePushThread(int io_prio_class, int io_prio_level, int block
 	  m_run_state(0)
 {
 	if (m_buffer == NULL)
-		eFatal("[eFilePushThread] Failed to allocate %d bytes", buffersize);
+		eFatal("[eFilePushThread] Failed to allocate %zu bytes", buffersize);
 	CONNECT(m_messagepump.recv_msg, eFilePushThread::recvEvent);
 }
 
@@ -149,7 +149,7 @@ void eFilePushThread::thread()
 
 			if (buf_end == 0)
 			{
-				/* on EOF, try COMMITting once. */
+#ifndef HAVE_ALIEN5				/* on EOF, try COMMITting once. */
 				if (m_send_pvr_commit)
 				{
 					struct pollfd pfd;
@@ -183,7 +183,7 @@ void eFilePushThread::thread()
 						continue;
 					}
 				}
-
+#endif
 				if (m_stop)
 					break;
 
@@ -196,13 +196,21 @@ void eFilePushThread::thread()
 				if (m_stream_mode)
 				{
 					eDebug("[eFilePushThread] reached EOF, but we are in stream mode. delaying 1 second.");
+#if HAVE_ALIEN5
+				usleep(50000);
+#else
 					sleep(1);
+#endif
 					continue;
 				}
 				else if (++eofcount < 10)
 				{
 					eDebug("[eFilePushThread] reached EOF, but the file may grow. delaying 1 second.");
+#if HAVE_ALIEN5
+								usleep(50000);
+#else
 					sleep(1);
+#endif
 					continue;
 				}
 				break;
@@ -235,12 +243,12 @@ void eFilePushThread::thread()
 							usleep(100000);
 #endif
 #if HAVE_ALIEN5
-							usleep(10);
+							usleep(100000);
 #endif
 							continue;
 						}
 #if HAVE_ALIEN5
-						usleep(10);
+						usleep(50000);
 #endif
 						eDebug("[eFilePushThread] write: %m");
 						sendEvent(evtWriteError);

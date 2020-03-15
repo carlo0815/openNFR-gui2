@@ -176,6 +176,8 @@ eDVBResourceManager::eDVBResourceManager()
 		m_boxtype = GIGABLUE;
 	else if (!strncmp(tmp, "gbue4k\n", rd))
 		m_boxtype = GIGABLUE;
+	else if (!strncmp(tmp, "gbx34k\n", rd))
+		m_boxtype = GIGABLUE;
 	else if (!strncmp(tmp, "ebox5000\n", rd))
 		m_boxtype = DM800;
 	else if (!strncmp(tmp, "ebox5100\n", rd))
@@ -1794,7 +1796,11 @@ class eDVBChannelFilePush: public eFilePushThread
 {
 public:
 	eDVBChannelFilePush(int packetsize = 188):
+#if HAVE_ALIEN5
+		eFilePushThread(IOPRIO_CLASS_BE, 0, packetsize, packetsize * 64),
+#else
 		eFilePushThread(IOPRIO_CLASS_BE, 0, packetsize, packetsize * 512),
+#endif
 		m_iframe_search(0),
 		m_iframe_state(0),
 		m_pid(0),

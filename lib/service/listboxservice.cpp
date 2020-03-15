@@ -78,9 +78,9 @@ void eListboxServiceContent::setRoot(const eServiceReference &root, bool justSet
 	ASSERT(m_service_center);
 
 	if (m_service_center->list(m_root, m_lst))
-		eDebug("no list available!");
+		eDebug("[eListboxServiceContent] no list available!");
 	else if (m_lst->getContent(m_list))
-		eDebug("getContent failed");
+		eDebug("[eListboxServiceContent] getContent failed");
 
 	FillFinished();
 }
@@ -312,9 +312,10 @@ void eListboxServiceContent::sort()
 DEFINE_REF(eListboxServiceContent);
 
 eListboxServiceContent::eListboxServiceContent()
-	:m_visual_mode(visModeSimple), m_size(0), m_current_marked(false), m_itemheight(25), m_service_picon_downsize(0),
-	m_servicetype_icon_mode(0), m_crypto_icon_mode(0), m_column_width(0), m_progressbar_height(6), m_progressbar_border_width(2),
-	m_record_indicator_mode(0), m_nonplayable_margins(10), m_items_distances(8), m_hide_number_marker(false)
+	:m_visual_mode(visModeSimple),m_cursor_number(0), m_saved_cursor_number(0), m_size(0), m_current_marked(false),
+	m_itemheight(25), m_hide_number_marker(false), m_service_picon_downsize(0), m_service_picon_ratio(167), m_servicetype_icon_mode(0),
+	m_crypto_icon_mode(0), m_record_indicator_mode(0), m_column_width(0), m_progressbar_height(6), m_progressbar_border_width(2),
+	m_nonplayable_margins(10), m_items_distances(8)
 {
 	memset(m_color_set, 0, sizeof(m_color_set));
 	cursorHome();
@@ -408,26 +409,26 @@ int eListboxServiceContent::setCurrentMarked(bool state)
 			{
 				ePtr<iMutableServiceList> list;
 				if (m_lst->startEdit(list))
-					eDebug("no editable list");
+					eDebug("[eListboxServiceContent] no editable list");
 				else
 				{
 					eServiceReference ref;
 					getCurrent(ref);
 					if(!ref)
-						eDebug("no valid service selected");
+						eDebug("[eListboxServiceContent] no valid service selected");
 					else
 					{
 						int pos = cursorGet();
-						eDebugNoNewLine("move %s to %d ", ref.toString().c_str(), pos);
+						eDebugNoNewLineStart("[eListboxServiceContent] move %s to %d ", ref.toString().c_str(), pos);
 						if (list->moveService(ref, cursorGet()))
-							eDebug("failed");
+							eDebugNoNewLine("failed\n");
 						else
-							eDebug("ok");
+							eDebugNoNewLine("ok\n");
 					}
 				}
 			}
 			else
-				eDebug("no list available!");
+				eDebug("[eListboxServiceContent] no list available!");
 		}
 	}
 
@@ -740,7 +741,9 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 		}
 		if (m_record_indicator_mode == 3 && isRecorded)
 		{
-			if (m_color_set[serviceRecorded])
+			if (m_color_set[serviceRecordingColor])
+				painter.setForegroundColor(m_color[serviceRecordingColor]);
+			else if (m_color_set[serviceRecorded])
 				painter.setForegroundColor(m_color[serviceRecorded]);
 			else
 				painter.setForegroundColor(gRGB(0xb40431));
@@ -782,6 +785,9 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 				{
 					if (service_info)
 						service_info->getName(*m_cursor, text);
+#ifdef USE_LIBVUGLES2
+					painter.setFlush(text == "<n/a>");
+#endif
 					if (!isPlayable)
 					{
 						area.setWidth(area.width() + m_element_position[celServiceEventProgressbar].width() +  m_nonplayable_margins);
@@ -804,18 +810,30 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 						text = evt->getEventName();
 						if (serviceAvail)
 						{
-							if (!selected && m_color_set[eventForeground])
-								painter.setForegroundColor(m_color[eventForeground]);
-							else if (selected && m_color_set[eventForegroundSelected])
-								painter.setForegroundColor(m_color[eventForegroundSelected]);
+							if (!selected)
+							{
+								if (serviceFallback && m_color_set[eventForegroundFallback]) // fallback receiver
+									painter.setForegroundColor(m_color[eventForegroundFallback]);
+								else if(m_color_set[serviceDescriptionColor])
+									painter.setForegroundColor(m_color[serviceDescriptionColor]);
+								else if(m_color_set[eventForeground]) //serviceDescriptionColor
+									painter.setForegroundColor(m_color[eventForeground]);
+								else	//default color (Tulip Tree)
+									painter.setForegroundColor(gRGB(0xe7b53f));
+
+							}
 							else
-								painter.setForegroundColor(gRGB(0xe7b53f));
+							{
+								if (serviceFallback && m_color_set[eventForegroundSelectedFallback])
+									painter.setForegroundColor(m_color[eventForegroundSelectedFallback]);
+								else if(m_color_set[serviceDescriptionColorSelected])
+									painter.setForegroundColor(m_color[serviceDescriptionColorSelected]);
+								else if(m_color_set[eventForeground]) //serviceDescriptionColor
+									painter.setForegroundColor(m_color[eventForegroundSelected]);
+								else	//default color (Tulip Tree)
+									painter.setForegroundColor(gRGB(0xe7b53f));
 
-							if (serviceFallback && !selected && m_color_set[eventForegroundFallback]) // fallback receiver
-								painter.setForegroundColor(m_color[eventForegroundFallback]);
-							else if (serviceFallback && selected && m_color_set[eventForegroundSelectedFallback])
-								painter.setForegroundColor(m_color[eventForegroundSelectedFallback]);
-
+							}
 						}
 						break;
 					}
@@ -863,7 +881,7 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 					tmp.setWidth(((!isPlayable || m_column_width == -1 || (!piconPixmap && !m_column_width)) ? tmp.width() : m_column_width) - xoffs);
 				}
 
-				eTextPara *para = new eTextPara(tmp);
+				ePtr<eTextPara> para = new eTextPara(tmp);
 				para->setFont(m_element_font[e]);
 				para->renderString(text.c_str());
 
@@ -887,7 +905,7 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 							 * bit wider in case the icons are diffently
 							 * shaped, and to add a bit of margin between
 							 * icon and text. */
-							const int iconWidth = (area.height() + m_service_picon_downsize * 2) * 1.67 + m_items_distances;
+							const int iconWidth = (area.height() + m_service_picon_downsize * 2) * (m_service_picon_ratio * 0.01) + m_items_distances;
 							m_element_position[celServiceInfo].setLeft(area.left() + iconWidth);
 							m_element_position[celServiceInfo].setWidth(area.width() - iconWidth);
 							area = m_element_position[celServiceName];
@@ -899,7 +917,7 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 								painter.blitScale(piconPixmap,
 									eRect(area.left(), area.top() - m_service_picon_downsize, iconWidth, area.height() + m_service_picon_downsize * 2),
 									area,
-									gPainter::BT_ALPHABLEND | gPainter::BT_KEEP_ASPECT_RATIO);
+									gPainter::BT_ALPHABLEND | gPainter::BT_KEEP_ASPECT_RATIO | gPainter::BT_HALIGN_CENTER | gPainter::BT_VALIGN_CENTER);
 								painter.clippop();
 							}
 						}
@@ -953,7 +971,7 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 							}
 							int correction = (area.height() - pixmap_size.height()) / 2;
 							area.moveBy(offset);
-							if (service_info->isCrypted())
+							if (service_info && service_info->isCrypted())
 							{
 								if (m_crypto_icon_mode == 2)
 								{
@@ -1023,7 +1041,7 @@ void eListboxServiceContent::paint(gPainter &painter, eWindowStyle &style, const
 					if (e == celFolderPixmap)
 						if (m_element_position[celServiceEventProgressbar].left() == 0)
 							area.setLeft(0);
-						xoffset = pixmap_size.width() + m_items_distances;
+					xoffset = pixmap_size.width() + m_items_distances;
 					area.moveBy(offset);
 					painter.clip(area);
 					painter.blit(pixmap, ePoint(area.left(), offset.y() + correction), area, gPainter::BT_ALPHABLEND);

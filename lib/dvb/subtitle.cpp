@@ -505,7 +505,7 @@ int eDVBSubtitleParser::subtitle_process_segment(uint8_t *segment)
 			object->object_horizontal_position |= *segment++;
 			processed_length += 2;
 
-			object->object_vertical_position  = *segment++ << 8;
+			object->object_vertical_position  = (*segment++ & 0xF) << 8;
 			object->object_vertical_position |= *segment++ ;
 			processed_length += 2;
 
@@ -1041,15 +1041,10 @@ void eDVBSubtitleParser::subtitle_redraw(int page_id)
 						palette[i].r = MAX(MIN(((298 * y            + 460 * cr) / 256), 255), 0);
 						palette[i].g = MAX(MIN(((298 * y -  55 * cb - 137 * cr) / 256), 255), 0);
 						palette[i].b = yellow?0:MAX(MIN(((298 * y + 543 * cb  ) / 256), 255), 0);
-						if (bcktrans)
-						{
-							if (palette[i].r || palette[i].g || palette[i].b)
-								palette[i].a = (entries[i].T) & 0xFF;
-							else
-								palette[i].a = bcktrans;
-						}
-						else
+						if (palette[i].r || palette[i].g || palette[i].b)
 							palette[i].a = (entries[i].T) & 0xFF;
+						else
+							palette[i].a = bcktrans;
 					}
 					else
 					{

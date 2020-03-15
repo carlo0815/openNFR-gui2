@@ -624,7 +624,7 @@ RESULT eServiceDVD::getName(std::string &name)
 
 int eServiceDVD::getInfo(int w)
 {
-	eDebugNoNewLine("[eServiceDVD] getInfo: %d", w);
+	eDebugNoNewLineStart("[eServiceDVD] getInfo: %d", w);
 	switch (w)
 	{
 		case sCurrentChapter:
