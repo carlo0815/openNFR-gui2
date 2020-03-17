@@ -20,6 +20,11 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal/plugin
 if boxtype in ('dm500hd','dm500hdv2','dm520','dm525','dm7020hd','dm7020hdv2','dm7080','dm800','dm8000','dm800se','dm800sev2','dm820','dm900','dm920' ):
 	os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/images/dreambox /usr/share/bootlogo.mvi")		
 from traceback import print_exc
+
+profile("SetupDevices")
+import Components.SetupDevices
+Components.SetupDevices.InitSetupDevices()
+
 profile("SimpleSummary")
 from Screens import InfoBar
 from Screens.SimpleSummary import SimpleSummary
@@ -768,10 +773,6 @@ profile("InputDevice")
 import Components.InputDevice
 Components.InputDevice.InitInputDevices()
 import Components.InputHotplug
-
-profile("SetupDevices")
-import Components.SetupDevices
-Components.SetupDevices.InitSetupDevices()
 
 profile("AVSwitch")
 import Components.AVSwitch
