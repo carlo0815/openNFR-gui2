@@ -15,24 +15,4 @@ if HAVE_OSDANIMATION
 SUBDIRS += AnimationSetup
 endif
 
-if VUSOLO2
-SUBDIRS += CableScan
-endif
-
-if VUSOLO4K
-SUBDIRS += FastZapSupport
-endif
-
-if VUDUO2
-SUBDIRS += CableScan
-endif
-
-if VUUNO
-SUBDIRS += CableScan
-endif
-
-if VUULTIMO
-SUBDIRS += CableScan
-endif
-
 install_PYTHON = __init__.py
