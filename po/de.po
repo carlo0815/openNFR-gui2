@@ -14138,6 +14138,10 @@ msgstr "Tastatur Einstellungen"
 msgid "Setup Harddisk"
 msgstr "Konfiguration der Festplatte"
 
+# Konfiguration - EPGimporter
+msgid "EPG Import Configuration"
+msgstr "EPG Import Einstellungen"
+
 # Standby / Neustart
 msgid "Multiboot Image Selector"
 msgstr "Multiboot-Auswahl"
