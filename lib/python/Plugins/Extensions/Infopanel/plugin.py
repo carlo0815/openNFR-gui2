@@ -709,9 +709,11 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(OpenNFRWizardSetup)
 		elif menu == "SkinSetup":
 			if config.skin.primary_skin.value == "Multibox/skin.xml":
-                        	self.session.open(NfrHD_Config)
+                        	self.Remote_Manager()
 			elif config.skin.primary_skin.value == "Ultimate/skin.xml":				
-                        	self.session.open(NfrHD_Config2)
+                        	self.Remote_Manager()
+			elif config.skin.primary_skin.value == "NFR_Skin/skin.xml":				
+                        	self.Remote_Manager()                            
 			else:
 				self.session.open(NfrHD_Config1)
 		elif menu == "PluginReLoad":
