@@ -187,7 +187,7 @@ msgstr "%d MB"
 msgid "%d Min"
 msgid_plural "%d Mins"
 msgstr[0] "%d Min"
-msgstr[1] "%d Mins"
+msgstr[1] "%d Min"
 
 #. TRANSLATORS: Intermediate scanning result, '%d' channel(s) have been found so far
 #, python-format
