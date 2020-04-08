@@ -14055,6 +14055,9 @@ msgstr "Videotext TTFHeightFactor16 (Höhe der TrueType-Zeichen)"
 msgid "Configure the height of the TrueType font letters used for teletext."
 msgstr "Bestimmt die Höhe der Zeichen des TrueType-Zeichensatzes für die Videotext Darstellung."
 
+msgid "Command execution..."
+msgstr "Befehl wird ausgeführt..."
+
 # Konfiguration - System - Benutzeroberfläche
 msgid "OpenNFR Skins Install"
 msgstr "OpenNFR Skins installieren"
