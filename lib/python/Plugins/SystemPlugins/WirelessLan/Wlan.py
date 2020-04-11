@@ -10,7 +10,7 @@ from pythonwifi.iwlibs import getNICnames, Wireless, Iwfreq, getWNICnames
 from pythonwifi import flags as wififlags
 
 
-list = ["Unencrypted", "WEP", "WPA", "WPA/WPA2", "WPA2"]
+list = ["WPA/WPA2", "WPA2", "WPA", "WEP", "Unencrypted"]
 
 weplist = ["ASCII", "HEX"]
 
