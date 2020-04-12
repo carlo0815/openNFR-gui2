@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getBrandOEM
 from cPickle import dump, load
 from os import path as os_path, stat, mkdir, makedirs, listdir, access, remove, W_OK, R_OK, F_OK
