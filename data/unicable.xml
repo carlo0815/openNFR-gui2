@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<unicable version="20171004">
+<unicable version="20181127">
 <!--
 structur of tree
 unicable (version)
@@ -85,6 +85,12 @@ unicable (version)
 		<manufacturer name="Fuba">
 			<product name="DEK 342" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
 		</manufacturer>
+		<manufacturer name="GigaBlue">
+			<product name="GigaBlue Ultra SCR-LNB" format="EN50607" bootuptime="2500"
+					scr1 ="1210" scr2= "1420" scr3= "1680" scr4= "2040" scr5= "1005" scr6= "1050" scr7= "1095" scr8= "1140"
+					scr9 ="1260" scr10="1305" scr11="1350" scr12="1475" scr13="1520" scr14="1565" scr15="1610" scr16="1725"
+					scr17="1770" scr18="1815" scr19="1860" scr20="1905" scr21="1950" scr22="1995" scr23="2085" scr24="2130"/>
+		</manufacturer>
 		<manufacturer name="G-STAR">
 			<product name="GS-404-L1" scr1="1280" scr2="1382" scr3="1484"/>
 			<product name="GS-406-L1" scr1="1280" scr2="1382" scr3="1484" scr4="1586" scr5="1688" scr6="1790"/>
@@ -127,11 +133,20 @@ unicable (version)
 		<manufacturer name="Kreiling">
 			<product name="KR1440" scr1="1680" scr2="1420" scr3="2040" scr4="1210"/>
 		</manufacturer>
+		<manufacturer name="Maclean">
+			<product name="Unicable II MCTV-785" format="jess"
+					scr1 ="1210" scr2 ="1420" scr3 ="1680" scr4 ="2040" scr5 ="985"  scr6 ="1050" scr7 ="1115" scr8 ="1275"
+					scr9 ="1340" scr10="1485" scr11="1550" scr12="1615" scr13="1745" scr14="1810" scr15="1875" scr16="1940"/>		
+		</manufacturer>
 		<manufacturer name="Megasat">
 			<product name="Unicable II LNB Diavolo" format="EN50607" bootuptime="2500"
 					scr1 ="1210" scr2= "1420" scr3= "1680" scr4= "2040" scr5= "1005" scr6= "1050" scr7= "1095" scr8= "1140"
 					scr9 ="1260" scr10="1305" scr11="1350" scr12="1475" scr13="1520" scr14="1565" scr15="1610" scr16="1725"
 					scr17="1770" scr18="1815" scr19="1860" scr20="1905" scr21="1950" scr22="1995" scr23="2085" scr24="2130"/>
+		</manufacturer>
+		<manufacturer name="Opticum">
+			<product name="Unicable LNB"
+					scr1 ="1210" scr2= "1420" scr3= "1680" scr4= "2040" scr5= "970" scr6= "1030" scr7= "1090" scr8= "1150"/>
 		</manufacturer>
 		<manufacturer name="Radix">
 			<product name="Unicable LNB" scr1="1680" scr2="1420" scr3="2040" scr4="1210"/>
@@ -142,8 +157,14 @@ unicable (version)
 		<manufacturer name="Schwaiger">
 			<product name="SPS6941 531" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
 		</manufacturer>
+        <manufacturer name="TechniSat">
+            <product name="SCR-LNB" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
+        </manufacturer>
 		<manufacturer name="Telestar">
 			<product name="Skywire HC LNB" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
+		</manufacturer>
+		<manufacturer name="Televes">
+			<product name="LNB dCSS UNICABLE II 747322" scr1="1210" scr2="1420" scr3="1680" scr4="2040" scr5="978" scr6="1028" scr7="1072" scr8="1116" scr9="1160" scr10="1271" scr11="1315" scr12="1359" scr13="1484" scr14="1528" scr15="1572" scr16="1616" scr17="2084" scr18="2128" scr19="1816" scr20="1860" scr21="1904" scr22="1948" scr23="1992" scr24="1728"/>
 		</manufacturer>
 		<manufacturer name="Triax">
 			<product name="TSC 001" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
@@ -189,6 +210,10 @@ unicable (version)
 			<product name="SES 86-00" format="EN50494" positions="2" scr1="1280" scr2="1382" scr3="1484" scr4="1586" scr5="1688" scr6="1790"/>
 		</manufacturer>
 		<manufacturer name="DCT Delta">
+			<product name="MSU 401/2-16K (SCR1-4)" scr1="1210" scr2="1420" scr3="1680" scr4="2040"/>
+			<product name="MSU 401/2-16K (SCR5-16/JESS)" format="JESS"
+				scr1="1210" scr2="1420" scr3="1680" scr4="2040" scr5="985" scr6="1050" scr7="1115" scr8="1275"
+				scr9="1340" scr10="1485" scr11="1550" scr12="1615" scr13="1745" scr14="1810" scr15="1875" scr16="1940"/>
 			<product name="SUM518" scr1="1284" scr2="1400" scr3="1516" scr4="1632" scr5="1748" scr6="1864" scr7="1980" scr8="2096" alias1="SCR0" alias2="SCR1" alias3="SCR2" alias4="SCR3" alias5="SCR4" alias6="SCR5" alias7="SCR6" alias8="SCR7"/>
 			<product name="SUM918" positions="2" scr1="1284" scr2="1400" scr3="1516" scr4="1632" scr5="1748" scr6="1864" scr7="1980" scr8="2096"/>
 			<product name="SUM928" positions="2" scr1="1284" scr2="1400" scr3="1516" scr4="1632" scr5="1748" scr6="1864" scr7="1980" scr8="2096"/>
@@ -196,7 +221,7 @@ unicable (version)
 		<manufacturer name="Dura-Sat(Dur-Line)">
 			<product name="Dur-DCR5-1-8(L4/K)" format="JESS" scr1="1280" scr2="1382" scr3="1484" scr4="1586" scr5="1688" scr6="1790" scr7="1892" scr8="1994"/>
 			<product name="DCR 5-2-4" scr1="1280" scr2="1382" scr3="1484" scr4="1586"/>
-			<product name="DPC-32 K" format="EN50607" positions="1" bootuptime="2500"
+			<product name="DPC-32 K" format="EN50607" positions="2" bootuptime="2500"
 					scr1 ="1210" scr2 ="1420" scr3 ="1680" scr4 ="2040" scr5 ="984"  scr6 ="1020" scr7 ="1056" scr8 ="1092"
 					scr9 ="1128" scr10="1164" scr11="1256" scr12="1292" scr13="1328" scr14="1364" scr15="1458" scr16="1494"
 					scr17="1530" scr18="1566" scr19="1602" scr20="1638" scr21="1716" scr22="1752" scr23="1788" scr24="1824"
@@ -206,6 +231,7 @@ unicable (version)
 			<product name="UCP18" scr1="1284" scr2="1400" scr3="1516" scr4="1632" scr5="1748" scr6="1864" scr7="1980" scr8="2096"/>
 			<product name="UCP20" scr1="1210" scr2="1420"/>
 			<product name="UCP30" positions="2" scr1="1210" scr2="1420" scr3="1680"/>
+			<product name="UCP30V2" positions="2" scr1="1284" scr2="1400" scr3="1516"/>
 			<product name="VDU543NT" scr1="1280" scr2="1382" scr3="1484"/>
 			<product name="VDU563NT" scr1="1280" scr2="1382" scr3="1484"/>
 			<product name="VDU583NT" scr1="1280" scr2="1382" scr3="1484"/>
@@ -256,7 +282,10 @@ unicable (version)
 					scr9 ="1128" scr10="1164" scr11="1256" scr12="1292" scr13="1328" scr14="1364" scr15="1458" scr16="1494"
 					scr17="1530" scr18="1566" scr19="1602" scr20="1638" scr21="1716" scr22="1752" scr23="1788" scr24="1824"
 					scr25="1860" scr26="1896" scr27="1932" scr28="1968" scr29="2004" scr30="2076" scr31="2112" scr32="2148"/>
-			<product name="IDLU-UWT110-CUO10-32P" format="JESS" positions="2" bootuptime="2500"
+			<product name="IDLU-UST110-CUO4O-32P" format="EN50607" positions="2" bootuptime="2500"
+					scr1 ="1210" scr2 ="1420" scr3 ="1680" scr4 ="2040" scr5 ="985"  scr6 ="1050" scr7 ="1115" scr8 ="1275"
+					scr9 ="1340" scr10="1485" scr11="1550" scr12="1615" scr13="1745" scr14="1810" scr15="1875" scr16="1940"/>
+			<product name="IDLU-UWT110-CUO10-32P" format="JESS" positions="4" bootuptime="2500"
 					scr1 ="1210" scr2 ="1420" scr3 ="1680" scr4 ="2040" scr5 ="984"  scr6 ="1020" scr7 ="1056" scr8 ="1092"
 					scr9 ="1128" scr10="1164" scr11="1256" scr12="1292" scr13="1328" scr14="1364" scr15="1458" scr16="1494"
 					scr17="1530" scr18="1566" scr19="1602" scr20="1638" scr21="1716" scr22="1752" scr23="1788" scr24="1824"
@@ -301,6 +330,7 @@ unicable (version)
 			<product name="JPS0506-3(A/T)"   format="JESS" scr1="1280" scr2="1382" scr3="1484"/>
 			<product name="JPS0508-3(A/M/T)"   format="JESS" scr1="1280" scr2="1382" scr3="1484"/>
 			<product name="JRS0502-2+4(T)" format="JESS" scr1="1280" scr2="1382"/>
+			<product name="JRS0502-8+4T"   format="JESS" scr1="1375" scr2="1425" scr3="1475" scr4="1525" scr5="1575" scr6="1625" scr7="1675" scr8="1725"/>
 			<product name="old JRS0502-2+4" format="EN50494" scr1="1280" scr2="1382"/>
 			<product name="JRS0504-2"   format="JESS" scr1="1280" scr2="1382"/>
 			<product name="JPS0901-6(A/M/T)"   positions="2" format="JESS" scr1="1280" scr2="1382" scr3="1484" scr4="1586" scr5="1688" scr6="1790"/>
@@ -370,6 +400,22 @@ unicable (version)
 			<product name="EXE 259" format="SCD2" scr1="974"  permpin1="151" scr2="1076" permpin2="052" scr3="1178" permpin3="133" scr4="1280" permpin4="124" scr5="1382" permpin5="205" scr6="1484" permpin6="196" scr7="1586" permpin7="187" scr8="1688" permpin8="178" scr9="1790" permpin9="099"/>
 			<product name="EXE 1512" format="SCD2" scr1="974"  permpin1="151" scr2="1076" permpin2="052" scr3="1178" permpin3="133" scr4="1280" permpin4="124" scr5="1382" permpin5="205" scr6="1484" permpin6="196" scr7="1586" permpin7="187" scr8="1688" permpin8="178" scr9="1790" permpin9="099" scr10="1892" permpin10="232" scr11="1994" permpin11="198" scr12="2096" permpin12="111"/>
 			<product name="EXE 2512" format="SCD2" scr1="974"  permpin1="151" scr2="1076" permpin2="052" scr3="1178" permpin3="133" scr4="1280" permpin4="124" scr5="1382" permpin5="205" scr6="1484" permpin6="196" scr7="1586" permpin7="187" scr8="1688" permpin8="178" scr9="1790" permpin9="099" scr10="1892" permpin10="232" scr11="1994" permpin11="198" scr12="2096" permpin12="111"/>
+			<product name="EXD 1532 1Sat 8UBs " positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178"/>
+			<product name="EXD 1532 1Sat 16UBs" positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140"/>
+			<product name="EXD 1532 1Sat 24UBs" positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140" scr17="1775" permpin17="022" scr18="1825" permpin18="136" scr19="1875" permpin19="227" scr20="1925" permpin20="177" scr21="1975" permpin21="044" scr22="2025" permpin22="123" scr23="2075" permpin23="210" scr24="2125" permpin24="097"/>
+			<product name="EXD 1532 1Sat 30UBs" positions="1" format="SCD2" scr1="970" permpin1="151" scr2="1010" permpin2="052" scr3="1050" permpin3="133" scr4="1090" permpin4="124" scr5="1130" permpin5="205" scr6="1170" permpin6="196" scr7="1210" permpin7="187" scr8="1250" permpin8="178" scr9="1290" permpin9="099" scr10="1330" permpin10="232" scr11="1370" permpin11="198" scr12="1410" permpin12="111" scr13="1450" permpin13="190" scr14="1490" permpin14="002" scr15="1530" permpin15="201" scr16="1570" permpin16="140" scr17="1610" permpin17="022" scr18="1650" permpin18="136" scr19="1690" permpin19="227" scr20="1730" permpin20="177" scr21="1770" permpin21="044" scr22="1810" permpin22="123" scr23="1850" permpin23="210" scr24="1890" permpin24="097" scr25="1930" permpin25="125" scr26="1970" permpin26="206" scr27="2010" permpin27="072" scr28="2050" permpin28="248" scr29="2090" permpin29="192" scr30="2130" permpin30="003"/>
+			<product name="EXD 1532 2Sat 8UBs " positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178"/>
+			<product name="EXD 1532 2Sat 16UBs" positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140"/>
+			<product name="EXD 1532 2Sat 24UBs" positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140" scr17="1775" permpin17="022" scr18="1825" permpin18="136" scr19="1875" permpin19="227" scr20="1925" permpin20="177" scr21="1975" permpin21="044" scr22="2025" permpin22="123" scr23="2075" permpin23="210" scr24="2125" permpin24="097"/>
+			<product name="EXD 1532 2Sat 30UBs" positions="2" format="SCD2" scr1="970" permpin1="151" scr2="1010" permpin2="052" scr3="1050" permpin3="133" scr4="1090" permpin4="124" scr5="1130" permpin5="205" scr6="1170" permpin6="196" scr7="1210" permpin7="187" scr8="1250" permpin8="178" scr9="1290" permpin9="099" scr10="1330" permpin10="232" scr11="1370" permpin11="198" scr12="1410" permpin12="111" scr13="1450" permpin13="190" scr14="1490" permpin14="002" scr15="1530" permpin15="201" scr16="1570" permpin16="140" scr17="1610" permpin17="022" scr18="1650" permpin18="136" scr19="1690" permpin19="227" scr20="1730" permpin20="177" scr21="1770" permpin21="044" scr22="1810" permpin22="123" scr23="1850" permpin23="210" scr24="1890" permpin24="097" scr25="1930" permpin25="125" scr26="1970" permpin26="206" scr27="2010" permpin27="072" scr28="2050" permpin28="248" scr29="2090" permpin29="192" scr30="2130" permpin30="003"/>
+			<product name="EXD 2532 1Sat 8UBs " positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178"/>
+			<product name="EXD 2532 1Sat 16UBs" positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140"/>
+			<product name="EXD 2532 1Sat 24UBs" positions="1" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140" scr17="1775" permpin17="022" scr18="1825" permpin18="136" scr19="1875" permpin19="227" scr20="1925" permpin20="177" scr21="1975" permpin21="044" scr22="2025" permpin22="123" scr23="2075" permpin23="210" scr24="2125" permpin24="097"/>
+			<product name="EXD 2532 1Sat 30UBs" positions="1" format="SCD2" scr1="970" permpin1="151" scr2="1010" permpin2="052" scr3="1050" permpin3="133" scr4="1090" permpin4="124" scr5="1130" permpin5="205" scr6="1170" permpin6="196" scr7="1210" permpin7="187" scr8="1250" permpin8="178" scr9="1290" permpin9="099" scr10="1330" permpin10="232" scr11="1370" permpin11="198" scr12="1410" permpin12="111" scr13="1450" permpin13="190" scr14="1490" permpin14="002" scr15="1530" permpin15="201" scr16="1570" permpin16="140" scr17="1610" permpin17="022" scr18="1650" permpin18="136" scr19="1690" permpin19="227" scr20="1730" permpin20="177" scr21="1770" permpin21="044" scr22="1810" permpin22="123" scr23="1850" permpin23="210" scr24="1890" permpin24="097" scr25="1930" permpin25="125" scr26="1970" permpin26="206" scr27="2010" permpin27="072" scr28="2050" permpin28="248" scr29="2090" permpin29="192" scr30="2130" permpin30="003"/>
+			<product name="EXD 2532 2Sat 8UBs " positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178"/>
+			<product name="EXD 2532 2Sat 16UBs" positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140"/>
+			<product name="EXD 2532 2Sat 24UBs" positions="2" format="SCD2" scr1="975" permpin1="151" scr2="1025" permpin2="052" scr3="1075" permpin3="133" scr4="1125" permpin4="124" scr5="1175" permpin5="205" scr6="1225" permpin6="196" scr7="1275" permpin7="187" scr8="1325" permpin8="178" scr9="1375" permpin9="099" scr10="1425" permpin10="232" scr11="1475" permpin11="198" scr12="1525" permpin12="111" scr13="1575" permpin13="190" scr14="1625" permpin14="002" scr15="1675" permpin15="201" scr16="1725" permpin16="140" scr17="1775" permpin17="022" scr18="1825" permpin18="136" scr19="1875" permpin19="227" scr20="1925" permpin20="177" scr21="1975" permpin21="044" scr22="2025" permpin22="123" scr23="2075" permpin23="210" scr24="2125" permpin24="097"/>
+			<product name="EXD 2532 2Sat 30UBs" positions="2" format="SCD2" scr1="970" permpin1="151" scr2="1010" permpin2="052" scr3="1050" permpin3="133" scr4="1090" permpin4="124" scr5="1130" permpin5="205" scr6="1170" permpin6="196" scr7="1210" permpin7="187" scr8="1250" permpin8="178" scr9="1290" permpin9="099" scr10="1330" permpin10="232" scr11="1370" permpin11="198" scr12="1410" permpin12="111" scr13="1450" permpin13="190" scr14="1490" permpin14="002" scr15="1530" permpin15="201" scr16="1570" permpin16="140" scr17="1610" permpin17="022" scr18="1650" permpin18="136" scr19="1690" permpin19="227" scr20="1730" permpin20="177" scr21="1770" permpin21="044" scr22="1810" permpin22="123" scr23="1850" permpin23="210" scr24="1890" permpin24="097" scr25="1930" permpin25="125" scr26="1970" permpin26="206" scr27="2010" permpin27="072" scr28="2050" permpin28="248" scr29="2090" permpin29="192" scr30="2130" permpin30="003"/>
 		</manufacturer>
 		<manufacturer name="Kreiling">
 			<product name="KR 2-1-2 Uni-D" format="DiSEqC" positions="2" scr1="1400" scr2="1516"/>
@@ -444,6 +490,9 @@ unicable (version)
 			<product name="SCR 9/1x8" positions="2" scr1="1284" scr2="1400" scr3="1516" scr4="1632" scr5="1748" scr6="1864" scr7="1980" scr8="2096"/>
 			<product name="SCR 5/2x4" scr1="1284" scr2="1400" scr3="1516" scr4="1632"/>
 			<product name="SCR 9/2x4" positions="2" scr1="1284" scr2="1400" scr3="1516" scr4="1632"/>
+		</manufacturer>
+		<manufacturer name="Televes">
+			<product name="NevoSwitch dCSS 5x5 714141" scr1="1210" scr2="1420" scr3="1680" scr4="2040" scr5="978" scr6="1028" scr7="1072" scr8="1116" scr9="1160" scr10="1271" scr11="1315" scr12="1359" scr13="1484" scr14="1528" scr15="1572" scr16="1616"/>
 		</manufacturer>
 		<manufacturer name="Triax">
 			<product name="TUM 518" format="EN50494" positions="1" scr1="1076" scr2="1178" scr3="1280" scr4="1382" scr5="1484" scr6="1586" scr7="1688" scr8="1790"/>
