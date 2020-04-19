@@ -14145,10 +14145,17 @@ msgstr "Konfiguration der Festplatte"
 msgid "EPG Import Configuration"
 msgstr "EPG Import Einstellungen"
 
+# NFR4XBoot / Image-installieren
+msgid "Choose they way for installation!"
+msgstr "Wähle eine Möglichkeit zur Installation!"
+
 # Standby / Neustart
 msgid "Multiboot Image Selector"
 msgstr "Multiboot-Auswahl"
 
-# NFR4XBoot / Image-installieren
-msgid "Choose they way for installation!"
-msgstr "Wähle eine Möglichkeit zur Installation!"
+# Second Infobar
+msgid "Current:"
+msgstr "Aktuell:"
+
+msgid "Next:"
+msgstr "Danach:"
