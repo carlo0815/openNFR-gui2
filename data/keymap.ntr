@@ -877,8 +877,8 @@
 				<key id="KEY_NEXTSONG" mapto="next" flags="m" />
 			</device-->
 		</map>
-		<map context="HotkeyActions">
-		<key id="KEY_RED" mapto="red" flags="b"/>
+	<map context="HotkeyActions">
+    <key id="KEY_RED" mapto="red" flags="b"/>
 		<key id="KEY_RED" mapto="red_long" flags="l"/>
 		<key id="KEY_GREEN" mapto="green" flags="b"/>
 		<key id="KEY_GREEN" mapto="green_long" flags="l"/>
@@ -1003,5 +1003,5 @@
 		<key id="KEY_MOUSE" mapto="mouse_long" flags="l"/>
 		<key id="KEY_VOD" mapto="vod" flags="b"/>
 		<key id="KEY_VOD" mapto="vod_long" flags="l"/>
-	</map>		
+  </map>			
 </keymap>
