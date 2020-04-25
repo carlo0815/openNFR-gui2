@@ -26,6 +26,16 @@ from enigma import pNavigation, eDVBFrontend
 # event data		 (ONLY for time adjustments etc.)
 
 wasRecTimerWakeup = False
+InfoBar = False
+
+#//import later (no error message on system start)
+#try:
+#	from Screens.InfoBar import InfoBar
+#except Exception, e:
+#	print "[RecordTimer] import from 'Screens.InfoBar import InfoBar' failed:", e
+#	InfoBar = False
+#//
+
 
 # parses an event, and gives out a (begin, end, name, duration, eit)-tuple.
 # begin and end will be corrected
@@ -330,6 +340,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				return True
 
 			if self.always_zap:
+                Screens.Standby.TVinStandby.skipHdmiCecNow('zapandrecordtimer')
 				if Screens.Standby.inStandby:
 					self.wasInStandby = True
 					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
@@ -340,6 +351,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					Screens.Standby.inStandby.Power()
 					self.log(5, "wakeup and zap to recording service")
 				else:
+                    Screens.Standby.TVinStandby.setTVstate('on')
 					cur_zap_ref = NavigationInstance.instance.getCurrentlyPlayingServiceReference()
 					if cur_zap_ref and not cur_zap_ref.getPath():# we do not zap away if it is no live service
 						Notifications.AddNotification(MessageBox, _("In order to record a timer, the TV was switched to the recording service!\n"), type=MessageBox.TYPE_INFO, timeout=20)
@@ -399,7 +411,8 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				return True
 
 			if self.justplay:
-				if Screens.Standby.inStandby:
+				Screens.Standby.TVinStandby.skipHdmiCecNow('zaptimer')
+                if Screens.Standby.inStandby:
 					self.wasInStandby = True
 					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
 					self.log(11, "wakeup and zap")
@@ -409,7 +422,8 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					#wakeup standby
 					Screens.Standby.inStandby.Power()
 				else:
-					if config.recording.asktozap1.value == True:
+					Screens.Standby.TVinStandby.setTVstate('on')
+                    if config.recording.asktozap1.value == True:
 						Notifications.AddNotificationWithCallback(self.failureCB, MessageBox, _("Do you really want to Zap?\n"), timeout=20)
                                                 return True
                                         self.log(11, "zapping")
@@ -474,19 +488,24 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					self.record_service = None
 
 			NavigationInstance.instance.RecordTimer.saveTimer()
+            
+			box_instandby = Screens.Standby.inStandby
+			tv_instandby = Screens.Standby.TVinStandby.getTVstate('standby')
+            
 			if self.afterEvent == AFTEREVENT.STANDBY or (not wasRecTimerWakeup and self.autostate and self.afterEvent == AFTEREVENT.AUTO) or self.wasInStandby:
 				self.keypress() #this unbinds the keypress detection
-				if not Screens.Standby.inStandby: # not already in standby
+				if not box_instandby and not tv_instandby:# not already in standby
 					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("A finished record timer wants to set your\n%s %s to standby. Do that now?") % (getMachineBrand(), getMachineName()), timeout = 180)
 			elif self.afterEvent == AFTEREVENT.DEEPSTANDBY or (wasRecTimerWakeup and self.afterEvent == AFTEREVENT.AUTO):
 				if (abs(NavigationInstance.instance.RecordTimer.getNextRecordingTime() - time()) <= 900 or abs(NavigationInstance.instance.RecordTimer.getNextZapTime() - time()) <= 900) or NavigationInstance.instance.RecordTimer.getStillRecording():
 					print '[Timer] Recording or Recording due is next 15 mins, not return to deepstandby'
 					return True
 				if not Screens.Standby.inTryQuitMainloop: # not a shutdown messagebox is open
-					if Screens.Standby.inStandby: # in standby
-						quitMainloop(1)
-					else:
+					if not box_instandby and not tv_instandby: # not already in standby
 						Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("A finished record timer wants to shut down\nyour %s %s. Shutdown now?") % (getMachineBrand(), getMachineName()), timeout = 180)
+                        
+					else:
+						quitMainloop(1)
 			return True
 
 	def keypress(self, key=None, flag=1):

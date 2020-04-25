@@ -229,8 +229,11 @@ class PowerTimerEntry(timer.TimerEntry, object):
 
 			elif self.timerType == TIMERTYPE.WAKEUP:
 				if debug: print "self.timerType == TIMERTYPE.WAKEUP:"
+                Screens.Standby.TVinStandby.skipHdmiCecNow('wakeuppowertimer')
 				if Screens.Standby.inStandby:
 					Screens.Standby.inStandby.Power()
+				else:
+					Screens.Standby.TVinStandby.setTVstate('on')                    
 				return True
 
 			elif self.timerType == TIMERTYPE.WAKEUPTOSTANDBY:
@@ -517,8 +520,11 @@ class PowerTimerEntry(timer.TimerEntry, object):
 
 		elif next_state == self.StateEnded:
 			if self.afterEvent == AFTEREVENT.WAKEUP:
+                Screens.Standby.TVinStandby.skipHdmiCecNow('wakeuppowertimer')
 				if Screens.Standby.inStandby:
 					Screens.Standby.inStandby.Power()
+				else:
+					Screens.Standby.TVinStandby.setTVstate('on')                    
 			elif self.afterEvent == AFTEREVENT.STANDBY:
 				if not Screens.Standby.inStandby: # not already in standby
 					callback = self.sendStandbyNotification
