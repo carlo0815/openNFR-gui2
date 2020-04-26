@@ -502,7 +502,7 @@ class ImageBackup(Screen):
 		list = []
 		mode = GetCurrentImageMode() or 0
 		currentimageslot = GetCurrentImage() or 1
-        print "[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict)
+        	print "[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict)
 		##### hier currentimage abfragen und noch einbauen ob timer oder nicht####
                 if Timerstarts == True:
                 	if imagedict:
@@ -524,7 +524,7 @@ class ImageBackup(Screen):
 				for x in sorted(imagedict.keys()):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == 1 and currentimageslot == 1 and SystemInfo["canRecovery"]:
-						list.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
+							list.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
 					list.append(ChoiceEntryComponent('',((_("slot%s - %s (current image)") if x == currentimageslot else _("slot%s - %s")) % (x, imagedict[x]["imagename"]), x, False)))
 			else:
 				if SystemInfo["canRecovery"]:
@@ -971,7 +971,7 @@ class ImageBackup(Screen):
 			f = open("%s/imageversion" %self.MAINDESTROOT, "w")
 			f.write(self.IMAGEVERSION)
 			f.close()
-        else:
+		else:
 			os.system('rm -rf %s' %self.MAINDEST)
 			if not os.path.exists(self.MAINDEST):
 				os.makedirs(self.MAINDEST)
