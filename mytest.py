@@ -462,9 +462,9 @@ class PowerKey:
 						menu_screen.setTitle(_("Standby / restart"))
 						return
 		elif action == "standby":
-            Screens.Standby.TVinStandby.skipHdmiCecNow(False)
+			Screens.Standby.TVinStandby.skipHdmiCecNow(False)
 			self.standby()
-        elif action == "standby_noTVshutdown":
+		elif action == "standby_noTVshutdown":
 			Screens.Standby.TVinStandby.skipHdmiCecNow(True)
 			self.standby()        
 		elif action == "powertimerStandby":

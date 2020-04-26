@@ -340,7 +340,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				return True
 
 			if self.always_zap:
-                Screens.Standby.TVinStandby.skipHdmiCecNow('zapandrecordtimer')
+				Screens.Standby.TVinStandby.skipHdmiCecNow('zapandrecordtimer')
 				if Screens.Standby.inStandby:
 					self.wasInStandby = True
 					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
@@ -351,7 +351,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					Screens.Standby.inStandby.Power()
 					self.log(5, "wakeup and zap to recording service")
 				else:
-                    Screens.Standby.TVinStandby.setTVstate('on')
+					Screens.Standby.TVinStandby.setTVstate('on')
 					cur_zap_ref = NavigationInstance.instance.getCurrentlyPlayingServiceReference()
 					if cur_zap_ref and not cur_zap_ref.getPath():# we do not zap away if it is no live service
 						Notifications.AddNotification(MessageBox, _("In order to record a timer, the TV was switched to the recording service!\n"), type=MessageBox.TYPE_INFO, timeout=20)
@@ -412,7 +412,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 
 			if self.justplay:
 				Screens.Standby.TVinStandby.skipHdmiCecNow('zaptimer')
-                if Screens.Standby.inStandby:
+				if Screens.Standby.inStandby:
 					self.wasInStandby = True
 					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
 					self.log(11, "wakeup and zap")
@@ -423,7 +423,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					Screens.Standby.inStandby.Power()
 				else:
 					Screens.Standby.TVinStandby.setTVstate('on')
-                    if config.recording.asktozap1.value == True:
+					if config.recording.asktozap1.value == True:
 						Notifications.AddNotificationWithCallback(self.failureCB, MessageBox, _("Do you really want to Zap?\n"), timeout=20)
                                                 return True
                                         self.log(11, "zapping")
