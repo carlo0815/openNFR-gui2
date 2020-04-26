@@ -1,4 +1,4 @@
-from os import path
+from os import path, listdir
 from enigma import eDVBResourceManager, Misc_Options
 from Tools.Directories import fileExists, fileCheck, resolveFilename, SCOPE_SKIN, fileHas, pathExists
 from Tools.HardwareInfo import HardwareInfo
@@ -112,8 +112,8 @@ SystemInfo["HaveMultiBootGB"] = fileCheck("/boot/STARTUP") and getMachineBuild()
 SystemInfo["HaveMultiBootCY"] = fileCheck("/boot/STARTUP") and getMachineBuild() in ('8100s')
 SystemInfo["HaveMultiBootOS"] = fileCheck("/boot/STARTUP") and getMachineBuild() in ('osmio4k','osmio4kplus','osmini4k')
 SystemInfo["HaveMultiBootDS"] = fileCheck("/boot/STARTUP") and getMachineBuild() in ('cc1','sf8008','sf8008s','sf8008t','ustym4kpro') and fileCheck("/dev/sda")
-SystemInfo["canMultiBoot"] = getMultibootslots()
 SystemInfo["MBbootdevice"] = getMBbootdevice()
+SystemInfo["canMultiBoot"] = getMultibootslots()
 SystemInfo["canMode12"] = getMachineBuild() in ('hd51','vs1500','h7') and ('brcm_cma=440M@328M brcm_cma=192M@768M', 'brcm_cma=520M@248M brcm_cma=200M@768M')
 SystemInfo["HAScmdline"] = fileCheck("/boot/cmdline.txt")
 SystemInfo["HasHiSi"] = pathExists("/proc/hisi")
