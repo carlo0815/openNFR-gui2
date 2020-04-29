@@ -197,3 +197,4 @@ def Plugins(**kwargs):
 		return PluginDescriptor(name=_("Cable Scan"), description="Scan cable provider channels", where = PluginDescriptor.WHERE_MENU, fnc=CableScanStart)
 	else:
 		return []
+

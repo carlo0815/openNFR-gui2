@@ -137,19 +137,19 @@ class About(Screen):
 		        bootname = f.readline().split('=')[1]
 		        f.close()
 
-	if SystemInfo["canMultiBoot"]:
-		slot = image = GetCurrentImage()
-		bootmode = ""
-        part = "eMMC slot %s" %slot
-		if SystemInfo["canMode12"]:
-			bootmode = "bootmode = %s" %GetCurrentImageMode()
-		if SystemInfo["HasHiSi"] and "sda" in SystemInfo["canMultiBoot"][slot]['device']:
-			if slot > 4:
-				image -=4
-			else:
-				image -=1
-			part = "SDcard slot %s (%s) " %(image, SystemInfo["canMultiBoot"][slot]['device'])
-		AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  " + part + " " + bootmode + "\n"
+	        if SystemInfo["canMultiBoot"]:
+		        slot = image = GetCurrentImage()
+		        bootmode = ""
+                        part = "eMMC slot %s" %slot
+		        if SystemInfo["canMode12"]:
+			        bootmode = "bootmode = %s" %GetCurrentImageMode()
+		        if SystemInfo["HasHiSi"] and "sda" in SystemInfo["canMultiBoot"][slot]['device']:
+			        if slot > 4:
+				        image -=4
+			        else:
+				        image -=1
+			        part = "SDcard slot %s (%s) " %(image, SystemInfo["canMultiBoot"][slot]['device'])
+		        AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  " + part + " " + bootmode + "\n"
 		string = getDriverDate()
 		year = string[0:4]
 		month = string[4:6]

@@ -36,7 +36,7 @@ class FlashOnline(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.selection = 0
-        self.jsonlist = {}
+		self.jsonlist = {}
 		self.imagesList = {}
 		self.setIndex = 0
 		self.expanded = []
@@ -248,7 +248,7 @@ class FlashImage(Screen):
 		self.saveImageList = imagedict
 		self.getImageList = None
 		choices = []
-        HIslot = len(imagedict) + 1
+		HIslot = len(imagedict) + 1
 		currentimageslot = GetCurrentImage()
 		print "[FlashOnline] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict)
 		for x in range(1,HIslot):
@@ -491,7 +491,7 @@ class FlashImage(Screen):
 					return checkimagefiles(files) and path
 		imagefiles = findimagefiles(self.unzippedimage)
 		if imagefiles:
-        	self.ROOTFSSUBDIR = "none"
+        		self.ROOTFSSUBDIR = "none"
 			self.getImageList = self.saveImageList
 			if SystemInfo["canMultiBoot"]:
 				self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.multibootslot]["kernel"].split('/')[2] 
@@ -501,7 +501,7 @@ class FlashImage(Screen):
 			else:
 				self.MTDKERNEL = getMachineMtdKernel()
 				self.MTDROOTFS = getMachineMtdRoot()
-            CMD = "/usr/bin/ofgwrite -r -k '%s'" % imagefiles	#normal non multiboot receiver
+			CMD = "/usr/bin/ofgwrite -r -k '%s'" % imagefiles	#normal non multiboot receiver
 			if SystemInfo["canMultiBoot"]:
 				if (self.ROOTFSSUBDIR) is None:	# receiver with SD card multiboot
 					CMD = "/usr/bin/ofgwrite -r%s -k%s -m0 '%s'" % (self.MTDROOTFS, self.MTDKERNEL, imagefiles)
