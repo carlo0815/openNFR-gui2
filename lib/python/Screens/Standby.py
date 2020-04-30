@@ -173,7 +173,7 @@ class Standby2(Screen):
 		Screen.__init__(self, session)
 		self.skinName = "Standby"
 		self.avswitch = AVSwitch()
-
+                self.oldService = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		print "[Standby] enter standby"
 		SystemInfo["StandbyState"] = True
 
@@ -293,8 +293,8 @@ class Standby2(Screen):
 		if config.servicelist.startupservice_standby.value:
 			self.oldService = eServiceReference(config.servicelist.startupservice_standby.value)
 		else:
-			self.oldService = self.session.nav.getCurrentlyPlayingServiceReference()
-		self.session.nav.stopService()
+			self.prev_running_service = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		self.session.nav.stopService()		
 		
 class Standby(Standby2):
 	def __init__(self, session):
