@@ -1,2 +1,2 @@
-installdir = $(pkgdatadir)/spinner
-dist_install_DATA = *.png
+SUBDIRS = default Kreis NFR
+installdir = $(pkgdatadir)/Spinner
