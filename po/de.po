@@ -13871,6 +13871,10 @@ msgstr "Verwalte deine Images im Multiboot"
 msgid "slot%s - %s "
 msgstr "Flashplatz%s - %s "
 
+# Info Panel - Image-Manager - Dateien zum sichern auswÃ¤hlen
+msgid "reset files to restore"
+msgstr "Standard-Reset"
+
 # Info Panel - Image-Manager
 msgid "Auto Backup Settings"
 msgstr "Auto-Backup Einstellungen"
