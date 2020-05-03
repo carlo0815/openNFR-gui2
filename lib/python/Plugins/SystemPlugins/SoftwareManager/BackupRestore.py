@@ -164,10 +164,12 @@ class BackupSelection(Screen):
 			<ePixmap pixmap="buttons/red.png" position="0,0" size="140,40" alphatest="on" />
 			<ePixmap pixmap="buttons/green.png" position="140,0" size="140,40" alphatest="on" />
 			<ePixmap pixmap="buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/blue.png" position="420,0" size="140,40" alphatest="on" />
 			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
 			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-			<widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand" />
+			<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="blue" transparent="1" />
+                        <widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -175,6 +177,7 @@ class BackupSelection(Screen):
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
 		self["key_yellow"] = StaticText()
+		self["key_blue"] = StaticText(_("reset files to restore"))
 		self["summary_description"] = StaticText("")
 
 		self.selectedFiles = config.plugins.configurationbackup.backupdirs.value
@@ -189,6 +192,7 @@ class BackupSelection(Screen):
 			"red": self.exit,
 			"yellow": self.changeSelectionState,
 			"green": self.saveSelection,
+			"blue": self.blue,
 			"ok": self.okClicked,
 			"left": self.left,
 			"right": self.right,
@@ -207,6 +211,15 @@ class BackupSelection(Screen):
 
 	def setWindowTitle(self):
 		self.setTitle(_("Select files/folders to backup"))
+		
+	def blue(self):
+		self.selectedFiles = [eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname']
+		config.plugins.configurationbackup.backupdirs.setValue(self.selectedFiles)
+		config.plugins.configurationbackup.backupdirs.save()
+		config.plugins.configurationbackup.save()
+		config.save()
+		configfile.save()
+		self.close(None)		
 
 	def selectionChanged(self):
 		current = self["checkList"].getCurrent()[0]
@@ -238,6 +251,7 @@ class BackupSelection(Screen):
 		config.plugins.configurationbackup.backupdirs.save()
 		config.plugins.configurationbackup.save()
 		config.save()
+		configfile.save()
 		self.close(None)
 
 	def exit(self):
