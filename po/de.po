@@ -13858,11 +13858,26 @@ msgstr "Flashplatz%s - %s- %s "
 msgid "will take about 1-15 minutes for this system\n"
 msgstr "zwischen 1-15 Minuten auf diesem System.\n"
 
+msgid "Backup Mode: Flash Online\n"
+msgstr "Backup Modus: Flash Online\n"
+
+msgid "Create:"
+msgstr "Erstelle:"
+
 msgid "Almost there... "
 msgstr "Fast geschafft..."
 
 msgid "Now building the Backup Image"
 msgstr "Backup-Image wird jetzt gebaut"
+
+msgid "Image created on: %s/%s-%s-%s-backup-%s_recovery_emmc.zip"
+msgstr "Image erstellt: %s/%s-%s-%s-backup-%s_recovery_emmc.zip"
+
+msgid "Image created on: %s/%s-%s-%s-backup-%s_usb.zip"
+msgstr "Image erstellt: %s/%s-%s-%s-backup-%s_usb.zip"
+
+msgid "Please wait...almost ready! "
+msgstr "Bitte warten ... fast fertig! "
 
 # Info Panel - Image-Manager - Verwalte deine Multiboot-Partitionen
 msgid "Manage your images in the multiboot"
