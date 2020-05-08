@@ -12505,7 +12505,7 @@ msgid "Installation aborted !"
 msgstr "Installation abgebrochen!"
 
 msgid "To restore the image:"
-msgstr "Image wieder herstellen:"
+msgstr "Um das Image wieder herzustellen, wähle im Menüpunkt 'Infopanel' den Punkt 'Image-Manager' aus."
 
 msgid ""
 "\n"
@@ -13878,6 +13878,15 @@ msgstr "Image erstellt: %s/%s-%s-%s-backup-%s_usb.zip"
 
 msgid "Please wait...almost ready! "
 msgstr "Bitte warten ... fast fertig! "
+
+msgid "Please check the manual of the receiver"
+msgstr " "
+
+msgid "on how to restore the image"
+msgstr " "
+
+msgid "Time required for this process: %s"
+msgstr "Dauer des gesamten Vorgang: %s"
 
 # Info Panel - Image-Manager - Verwalte deine Multiboot-Partitionen
 msgid "Manage your images in the multiboot"
