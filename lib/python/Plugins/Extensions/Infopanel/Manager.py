@@ -16,6 +16,7 @@ from os import path
 import os
 import Softcam
 import shutil
+import urllib
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.About import about
 
@@ -189,7 +190,16 @@ class NFRCamManager(Screen):
 	def Stage1Complete(self, result, retval, extra_args=None):
 	        result = result
                 if "Link detected: yes"  in result:
-               		self.AboutText1 = "Online"
+                	from Screens.NetworkSetup import NetworkOpenvpn
+               		ext_ip = urllib.urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
+               		if isinstance(ext_ip, unicode):
+               			ext_ip = ext_ip.encode('utf8')
+               		print ext_ip
+               		self.AboutText1 = "Online: " + (ext_ip)
+               		if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
+               			self.AboutText2 = "openVPN is running "
+               		else:
+               			self.AboutText2 = "no openVPN found" 
                	else:
                        	self.AboutText1 = "Offline"
                 listecm = ""
@@ -204,11 +214,19 @@ class NFRCamManager(Screen):
 					listecm += line
 			listecm += self.AboutText
 			listecm += self.AboutText1
+			try:
+				listecm += self.AboutText2
+			except:
+				pass
                         self["status"].setText(listecm)
 			ecmfiles.close()
 		except:
 			listecm += "\n" + self.AboutText
 			listecm += "\n" + self.AboutText1
+			try:
+				listecm += "\n" + self.AboutText2
+			except:
+				pass
 			self["status"].setText(listecm)
                 
 	def startcreatecamlist(self):
