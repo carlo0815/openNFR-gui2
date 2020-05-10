@@ -14124,6 +14124,10 @@ msgstr "aktivieren oder deaktivieren von IPv6"
 msgid "Restore inetd"
 msgstr "inetd herstellen"
 
+# Konfiguration - System - Netzwerk - Root Passwort ändern
+msgid "Set Rootpassword"
+msgstr "Root Passwort ändern"
+
 # Konfiguration - System - Display (VFD/LCD)
 msgid "Setup Display"
 msgstr "Display Einstellungen"
@@ -14190,6 +14194,10 @@ msgstr "Wähle eine Möglichkeit zur Installation!"
 # Standby / Neustart
 msgid "Multiboot Image Selector"
 msgstr "Multiboot-Auswahl"
+
+# Quickmenü
+msgid "set your root password"
+msgstr "Root Passwort ändern"
 
 # Second Infobar
 msgid "Current:"
