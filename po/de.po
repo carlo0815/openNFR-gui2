@@ -13848,7 +13848,7 @@ msgstr "Standartliste wiederherstellen und beenden?"
 msgid "%s\nPress ok to close"
 msgstr "%s\nDrücke ok zum Schliessen"
 
-#,Info Panel - Image-Manager - Software Backup
+#,Info Panel-Image-Manager-Software Backup
 msgid "slot%s - %s - %s (current image)"
 msgstr "Flashplatz%s - %s- %s (aktuelles Image)"
 
