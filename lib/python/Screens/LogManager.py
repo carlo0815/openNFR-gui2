@@ -11,7 +11,7 @@ from Components.config import config, configfile
 from Components.FileList import MultiFileSelectList
 from Screens.MessageBox import MessageBox
 from os import path, remove, walk, stat, rmdir
-from time import time
+from time import time, sleep
 from datetime import datetime
 from enigma import eTimer, eBackgroundFileEraser, eLabel, getDesktop, gFont, fontRenderClass
 from Tools.TextBoundary import getTextBoundarySize
@@ -197,7 +197,7 @@ class LogManager(Screen):
 				'red': self.changelogtype,
 				'green': self.showLog,
 				'yellow': self.deletelog,
-				'blue': self.feedcheck,
+				'blue': self.logimport,
 				"left": self.left,
 				"right": self.right,
 				"down": self.down,
@@ -207,7 +207,7 @@ class LogManager(Screen):
 		self["key_red"] = Button(_("Debug Logs"))
 		self["key_green"] = Button(_("View"))
 		self["key_yellow"] = Button(_("Delete"))
-		self["key_blue"] = Button(_("Feedcheck"))
+		self["key_blue"] = Button(_("Import Logs"))
 
 		self.onChangedEntry = [ ]
 		self.sentsingle = ""
@@ -221,7 +221,7 @@ class LogManager(Screen):
 		self.onLayoutFinish.append(self.layoutFinished)
 		if not self.selectionChanged in self["list"].onSelectionChanged:
 			self["list"].onSelectionChanged.append(self.selectionChanged)
-
+			
 	def createSummary(self):
 		from Screens.PluginBrowser import PluginBrowserSummary
 		return PluginBrowserSummary
@@ -283,10 +283,10 @@ class LogManager(Screen):
 			self["key_red"].setText(_("Crash Logs"))
 			self.logtype = 'opkglogs'
 			self.matchingPattern = 'Enigma2'
-		elif self.logtype == 'opkglogs' and path.exists('/home/root/logs/feedcheck.log'):
-			self["key_red"].setText(_("Feed Logs"))
+		elif self.logtype == 'opkglogs':
+			self["key_red"].setText(_(" other Logs"))
 			self.logtype = 'debuglogs'
-			self.matchingPattern = 'feedcheck'			
+			self.matchingPattern = '(feedcheck|openvpn|smbd|messages|dmesg)'
 		else:
 			self["key_red"].setText(_("Debug Logs"))
 			self.logtype = 'crashlogs'
@@ -352,14 +352,44 @@ class LogManager(Screen):
 			self["list"].changeDir(self.defaultDir)
 			self["LogsSize"].update(config.crash.debug_path.value)
 
-	def feedcheck(self):
-		if fileExists("/home/root/logs/feedcheck.log"):
+	def logimport(self):
+		if fileExists("/home/root/logs/feedcheck.log") or fileExists("/home/root/logs/openvpn.log") or fileExists("/var/volatile/log/samba/log.smbd") or fileExists("/var/volatile/log/dmesg") or fileExists("/var/volatile/log/message"):
+			#Feedcheck
 			eConsoleAppContainer().execute("rm -f /home/root/logs/feedcheck.log")
+			sleep(1)
 			eConsoleAppContainer().execute("opkg update > /home/root/logs/feedcheck.log 2>&1")
-			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
+			#openVPN
+			eConsoleAppContainer().execute("rm -f /home/root/logs/openvpn.log")
+			sleep(1)
+			if fileExists("/etc/openvpn/openvpn.log"):
+				eConsoleAppContainer().execute("ln -s /etc/openvpn/openvpn.log /home/root/logs/openvpn.log")
+			#dmesg
+			eConsoleAppContainer().execute("rm -f /home/root/logs/dmesg.log")
+			sleep(1)
+			if fileExists("/var/volatile/log/dmesg"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/dmesg /home/root/logs/dmesg.log")
+			#Messages
+			eConsoleAppContainer().execute("rm -f /home/root/logs/messages.log")
+			sleep(1)
+			if fileExists("/var/volatile/log/messages"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/messages /home/root/logs/messages.log")			
+			#Samba
+			eConsoleAppContainer().execute("rm -f /home/root/logs/smbd.log")
+			sleep(1)
+			if fileExists("/var/volatile/log/samba/log.smbd"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/samba/log.smbd /home/root/logs/smbd.log")
+			self.session.open(MessageBox, _("Logs import done and available"), MessageBox.TYPE_INFO, timeout = 10)
 		else:
-			eConsoleAppContainer().execute("opkg update > /home/root/logs/feedcheck.log 2>&1")
-			self.session.open(MessageBox, _("Feedcheck finished and log available."), MessageBox.TYPE_INFO, timeout = 10)
+			eConsoleAppContainer().execute("opkg update > /home/root/logs/feedcheck.log 2>&1 || sleep 1")
+			if fileExists("/etc/openvpn/openvpn.log"):
+				eConsoleAppContainer().execute("ln -s /etc/openvpn/openvpn.log /home/root/logs/openvpn.log")
+			if fileExists("/var/volatile/log/message"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/messages /home/root/logs/messages.log")
+			if fileExists("/var/volatile/log/dmesg"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/dmesg /home/root/logs/dmesg.log")
+			if fileExists("/var/volatile/log/samba/log.smbd"):
+				eConsoleAppContainer().execute("ln -s /var/volatile/log/samba/log.smbd /home/root/logs/smbd.log")
+			self.session.open(MessageBox, _("Logs import done and available"), MessageBox.TYPE_INFO, timeout = 10)
 			
 """	def sendlog(self, addtionalinfo = None):def sendlog(self, addtionalinfo = None):
 		try:
