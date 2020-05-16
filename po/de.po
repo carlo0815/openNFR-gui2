@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-29 18:35+0100\n"
-"PO-Revision-Date: 2019-10-23 20:57+0200\n"
+"POT-Creation-Date: 2020-05-12 18:35+0100\n"
+"PO-Revision-Date: 2020-05-12 20:57+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -13337,7 +13337,7 @@ msgstr ""
 msgid "Configure the duration in minutes and action, which could be shut down or standby, for the sleeptimer. Select this entry and click OK or green to start/stop the sleeptimer"
 msgstr "Konfiguriere die Dauer in Minuten und Aktion, könnte also herunterfahren oder in den Standby-Modus schalten sein. Eintrag wählen und auf OK oder grün klicken, um den Sleeptimer zu starten/zu stoppen"
 
-# #Easy_Setup
+#,Easy_Setup
 msgid "Enable Fullbackup after Easy-Setup?"
 msgstr "Aktiviere Fullbackup nach dem Easy-Setup?"
 
@@ -13848,7 +13848,7 @@ msgstr "Standartliste wiederherstellen und beenden?"
 msgid "%s\nPress ok to close"
 msgstr "%s\nDrücke ok zum Schliessen"
 
-# Info Panel - Image-Manager - Software Backup
+#,Info Panel-Image-Manager-Software Backup
 msgid "slot%s - %s - %s (current image)"
 msgstr "Flashplatz%s - %s- %s (aktuelles Image)"
 
@@ -13888,22 +13888,22 @@ msgstr " "
 msgid "Time required for this process: %s"
 msgstr "Dauer des gesamten Vorgang: %s"
 
-# Info Panel - Image-Manager - Verwalte deine Multiboot-Partitionen
+#,Info Panel-Image-Manager-Verwalte deine Multiboot-Partitionen
 msgid "Manage your images in the multiboot"
 msgstr "Verwalte deine Images im Multiboot"
 
 msgid "slot%s - %s "
 msgstr "Flashplatz%s - %s "
 
-# Info Panel - Image-Manager - Dateien zum sichern auswählen
+#,Info Panel-Image-Manager-Dateien zum sichern auswählen
 msgid "reset files to restore"
 msgstr "Standard-Reset"
 
-# Info Panel - Image-Manager
+#,Info Panel-Image-Manager
 msgid "Auto Backup Settings"
 msgstr "Auto-Backup Einstellungen"
 
-# Info Panel - Image-Manager - Auto Backup Einstellungen
+#,Info Panel-Image-Manager-Auto Backup Einstellungen
 msgid "AutoBackup Configuration"
 msgstr "Auto-Backup Konfiguration"
 
@@ -13922,11 +13922,11 @@ msgstr "Max. Anzahl von Sicherungen"
 msgid "No backup present"
 msgstr " "
 
-# Info Panel
+#,Info Panel
 msgid "Image/Remote-Setup"
 msgstr "Image/Fernbedienung Setup"
 
-# Info Panel - Image/Fernbedienung-Setup
+#,Info Panel-Image/Fernbedienung-Setup
 msgid "DefaulteSkin-Steps"
 msgstr "Default-Skin"
 
@@ -13954,7 +13954,7 @@ msgstr "gelbe Taste lang"
 msgid "Image/Remote Setup"
 msgstr "Image/Fernbedienung Setup"
 
-# Konfiguration - TV - EPG Einstellungen
+#,Konfiguration-TV-EPG Einstellungen
 msgid "Setup EPG Multi"
 msgstr "Multi EPG"
 
@@ -13964,19 +13964,19 @@ msgstr "EPG Enhanced"
 msgid "Setup EPG Graphical"
 msgstr "Grafischer EPG"
 
-# Konfiguration - TV - Common Interface - Common Interface Zuweisung
+#,Konfiguration-TV-Common Interface-Common Interface Zuweisung
 msgid "CIselectMainMenu"
 msgstr "CI-Hauptmenü"
 
-# Konfiguration - TV - Automatische Sprachwahl
+#,Konfiguration-TV-Automatische Sprachwahl
 msgid "Setup Autolanguage"
 msgstr "Einstellungen Sprachenwahl"
 
-# Konfiguration - TV - Senderlisten Einstellungen
+#,Konfiguration-TV-Senderlisten Einstellungen
 msgid "Setup Channel Selection"
 msgstr "Kanalliste einstellen"
 
-# Konfiguration - System - A/V Einstellungen
+#,Konfiguration-System-A/V Einstellungen
 msgid "Video Setup"
 msgstr "Video Einstellungen"
 
@@ -13998,7 +13998,7 @@ msgstr "HDMI HDR Mode"
 msgid "This option allows you can force the HDR Modes for UHD"
 msgstr "Mit dieser Option können die HDR-Modi für UHD erzwungen werden"
 
-# Konfiguration - System - Extra-Anpassungen
+#,Konfiguration-System-Extra-Anpassungen
 msgid "Setup Usage"
 msgstr "Einstellungen"
 
@@ -14086,11 +14086,11 @@ msgstr "Bestimmt die Höhe der Zeichen des TrueType-Zeichensatzes für die Video
 msgid "Command execution..."
 msgstr "Befehl wird ausgeführt..."
 
-# Konfiguration - System - Benutzeroberfläche
+#,Konfiguration-System-Benutzeroberfläche
 msgid "OpenNFR Skins Install"
 msgstr "OpenNFR Skins installieren"
 
-# Konfiguration - System - Benutzeroberfläche - Einstellungen ...
+#,Konfiguration-System-Benutzeroberfläche-Einstellungen ...
 msgid "Setup Userinterface"
 msgstr "Einstellungen Benutzeroberfläche"
 
@@ -14100,18 +14100,18 @@ msgstr "2. Infobar"
 msgid "2nd Infobar timeout"
 msgstr "2. Infobar-Anzeigedauer"
 
-# Konfiguration - System - Benutzeroberfläche - Skinauswahl
+#,Konfiguration-System-Benutzeroberfläche-Skinauswahl
 msgid "Skin Selector"
 msgstr "Wähle einen Skin"
 
-# Konfiguration - System - Sprache
+#,Konfiguration-System-Sprache
 msgid "Setup Language"
 msgstr "Sprache auswählen"
 
 msgid "Delete Language"
 msgstr "Sprachen löschen"
 
-# Konfiguration - System - Netzwerk - Adapter-Einstellungen - IPv6-Einstellungen
+#,Konfiguration-System-Netzwerk-Adapter-Einstellungen-IPv6-Einstellungen
 msgid "IPv6Setup"
 msgstr "IPv6-Einstellungen"
 
@@ -14124,11 +14124,11 @@ msgstr "aktivieren oder deaktivieren von IPv6"
 msgid "Restore inetd"
 msgstr "inetd herstellen"
 
-# Konfiguration - System - Netzwerk - Root Passwort ändern
+#,Konfiguration-System-Netzwerk-Root Passwort ändern
 msgid "Set Rootpassword"
 msgstr "Root Passwort ändern"
 
-# Konfiguration - System - Display (VFD/LCD)
+#,Konfiguration-System-Display (VFD/LCD)
 msgid "Setup Display"
 msgstr "Display Einstellungen"
 
@@ -14153,15 +14153,15 @@ msgstr "Power LED Status während des Deep-Standbys einstellen"
 msgid "Show in Standby"
 msgstr "Im Standby anzeigen"
 
-# Konfiguration - System - Zeit Einstellungen
+#,Konfiguration-System-Zeit Einstellungen
 msgid "Setup Time"
 msgstr "Zeiteinstellungen"
 
-# Konfiguration - System - Untertitel Einstellungen
+#,Konfiguration-System-Untertitel Einstellungen
 msgid "Setup Subtitle"
 msgstr "Untertitel Einstellungen"
 
-# Konfiguration - System - HDMI CEC
+#,Konfiguration-System-HDMI CEC
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
@@ -14171,35 +14171,35 @@ msgstr "Befehlszeilenfunktion aktivieren"
 msgid "Enable debug log *"
 msgstr "Debug-Log aktivieren"
 
-# Konfiguration - System - Tasten Einstellungen
+#,Konfiguration-System-Tasten Einstellungen
 msgid "Setup Remote"
 msgstr "Fernbedienung Einstellungen"
 
-# Konfiguration - System - Tastatur Einstellungen
+#,Konfiguration-System-Tastatur Einstellungen
 msgid "Setup Keybord"
 msgstr "Tastatur Einstellungen"
 
-# Konfiguration - Speichergeräte - Festplatten-Standby
+#,Konfiguration-Speichergeräte-Festplatten-Standby
 msgid "Setup Harddisk"
 msgstr "Konfiguration der Festplatte"
 
-# Konfiguration - EPGimporter
+#,Konfiguration-EPGimporter
 msgid "EPG Import Configuration"
 msgstr "EPG Import Einstellungen"
 
-# NFR4XBoot / Image-installieren
+#,NFR4XBoot/Image-installieren
 msgid "Choose they way for installation!"
 msgstr "Wähle eine Möglichkeit zur Installation!"
 
-# Standby / Neustart
+#,Standby/Neustart
 msgid "Multiboot Image Selector"
 msgstr "Multiboot-Auswahl"
 
-# Quickmenü
+#,Quickmenü
 msgid "set your root password"
 msgstr "Root Passwort ändern"
 
-# Second Infobar
+#,Second Infobar
 msgid "Current:"
 msgstr "Aktuell:"
 
