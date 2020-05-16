@@ -90,6 +90,12 @@ self.session.open(PluginSkinInstall)
 				<item weight="4" level="0" text="Language" entryID="language_setup"><screen module="LanguageSelection" /></item>
 				<menu weight="5" level="0" text="Network" entryID="network_menu">
 					<id val="network" />
+							<item level="0" text="Set Rootpassword" entryID="opennfrpassword">
+				<code>
+from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
+self.session.open(NFRPasswdScreen)
+				</code>					
+                                </item>
 					<item level="0" text="Device Setup" entryID="device_setup"><screen module="NetworkSetup" screen="NetworkAdapterSelection"/></item>
 					<item level="1" text="Mounts Setup" entryID="netmounts_setup"><screen module="NetworkSetup" screen="NetworkMountsMenu"/></item>
 					<item level="2" text="AFP Setup" entryID="netafp_setup"><screen module="NetworkSetup" screen="NetworkAfp"/></item>
@@ -103,12 +109,6 @@ self.session.open(PluginSkinInstall)
 					<item level="2" text="Samba Setup" entryID="netsmba_setup"><screen module="NetworkSetup" screen="NetworkSamba"/></item>
 					<item level="2" text="Telnet Setup" entryID="nettelnet_setup"><screen module="NetworkSetup" screen="NetworkTelnet"/></item>
 					<item level="2" text="uShare Setup" entryID="netushare_setup"><screen module="NetworkSetup" screen="NetworkuShare"/></item>
-					<item level="2" text="Set Rootpassword" entryID="opennfrpassword">
-				<code>
-from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
-self.session.open(NFRPasswdScreen)
-				</code>					
-                                </item>
 				</menu>
 				<menu weight="5" level="0" text="Display" entryID="display_selection" requires="Display">
 				      <id val="display" />
@@ -126,52 +126,52 @@ from Plugins.SystemPlugins.HdmiCEC.plugin import HdmiCECSetupScreen
 self.session.open(HdmiCECSetupScreen)
 </code>
 </item>
-			<menu weight="9" level="0" text="Fernbedienungstasten-Belegung" entryID="fernbedienungstasten">
-                                <id val="fernbedienungstasten" />
-				<item weight="0" level="0" text="Einstellung der TV- u. Einschalttaste" entryID="remote_setup"><setup id="remotesetup"/></item>
-				<item weight="1" level="0" text="Rote Taste" entryID="Red-Key-Action">
+			<menu weight="9" level="0" text="Assign remote control buttons " entryID="remotesetup">
+                                <id val="remotesetup" />
+				<item weight="0" level="0" text="Setting the TV and. Power button" entryID="remote_setup"><setup id="remotesetup"/></item>
+				<item weight="1" level="0" text="Red button" entryID="Red-Key-Action">
 <code>
 from Plugins.Extensions.Infopanel.plugin import RedPanel
 self.session.open(RedPanel)
 </code>
 </item>
-				<item weight="2" text="Rote taste lang" entryID="Red-Key-Action-Long">
+				<item weight="2" text="Red button long" entryID="Red-Key-Action-Long">
 <code>
 from Plugins.Extensions.Infopanel.plugin import RedPanelLong
 self.session.open(RedPanelLong)
 </code>
 </item>
-			        <item weight="3" level="0" text="Blaue Taste" entryID="Blue-Key-Action">
+			        <item weight="3" level="0" text="Blue button" entryID="Blue-Key-Action">
 <code>
 from Plugins.Extensions.Infopanel.plugin import BluePanel
 self.session.open(BluePanel)
 </code>
 </item>
-	                        <item weight="4" level="0" text="Blaue Taste lang" entryID="Blue-Key-Action-Long">
+	                        <item weight="4" level="0" text="Blue button long" entryID="Blue-Key-Action-Long">
 <code>
 from Plugins.Extensions.Infopanel.plugin import BluePanelLong
 self.session.open(BluePanelLong)
 </code>
 </item>
-	                        <item weight="5" level="0" text="Grüne Taste lang" entryID="Green-Key-Action-Long">
+	                        <item weight="5" level="0" text="Green button long" entryID="Green-Key-Action-Long">
 <code>
 from Plugins.Extensions.Infopanel.plugin import GreenPanelLong
 self.session.open(GreenPanelLong)
 </code>
 </item>
-					<item weight="5" level="6" text="Gelbe Taste lang" entryID="Yellow-Key-Action-Long">
+					<item weight="5" level="6" text="Yellow button long" entryID="Yellow-Key-Action-Long">
 <code>
 from Plugins.Extensions.Infopanel.plugin import YellowPanelLong
 self.session.open(YellowPanelLong)
 </code>
 </item>
-	                        <item weight="7" level="0" text="Weitere Tasten belegen" entryID="HotkeySetup">
+	                        <item weight="7" level="0" text="Assign additional keys" entryID="HotkeySetup">
 <code>
 from Plugins.Extensions.Infopanel.plugin import HotkeySetup
 self.session.open(HotkeySetup)
 </code>
 </item>
-		                <item weight="8" level="0" text="Keymap Auswahl" entryID="Keymapsel">
+		                <item weight="8" level="0" text="Keymap selection" entryID="Keymapsel">
 <code>
 from Plugins.Extensions.Infopanel.plugin import KeymapSel 
 self.session.open(KeymapSel)
