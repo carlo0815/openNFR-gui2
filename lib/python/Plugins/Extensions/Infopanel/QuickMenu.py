@@ -261,6 +261,7 @@ class QuickMenu(Screen):
 ######## Network Menu ##############################
 	def Qnetwork(self):
 		self.sublist = []
+		self.sublist.append(QuickSubMenuEntryComponent("Password",_("set your root password"),_("set or change your root password to protect your box")))
 		self.sublist.append(QuickSubMenuEntryComponent("Network Wizard",_("Configure your Network"),_("Use the Networkwizard to configure your Network. The wizard will help you to setup your network")))
 		if len(self.adapters) > 1: # show only adapter selection if more as 1 adapter is installed
 			self.sublist.append(QuickSubMenuEntryComponent("Network Adapter Selection",_("Select Lan/Wlan"),_("Setup your network interface. If no Wlan stick is used, you only can select Lan")))
@@ -536,6 +537,9 @@ class QuickMenu(Screen):
 ######## Select Network Menu ##############################
 		if item[0] == _("Network Wizard"):
 			self.session.open(NetworkWizard)
+		elif item[0] == _("Password"):
+			from easy_setup import NFRPasswdScreen
+			self.session.open(NFRPasswdScreen)
 		elif item[0] == _("Network Adapter Selection"):
 			self.session.open(NetworkAdapterSelection)
 		elif item[0] == _("Network Interface"):
