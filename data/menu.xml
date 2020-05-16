@@ -128,7 +128,7 @@ self.session.open(HdmiCECSetupScreen)
 </item>
 			<menu weight="9" level="0" text="Assign remote control buttons " entryID="remotesetup">
                                 <id val="remotesetup" />
-				<item weight="0" level="0" text="Setting the TV and Power button" entryID="remote_setup"><setup id="remotesetup"/></item>
+				<item weight="0" level="0" text="Setup the TV and Power button" entryID="remote_setup"><setup id="remotesetup"/></item>
 				<item weight="1" level="0" text="Red button" entryID="Red-Key-Action">
 <code>
 from Plugins.Extensions.Infopanel.plugin import RedPanel
