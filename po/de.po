@@ -12078,7 +12078,7 @@ msgid "Default (Quickmenu)"
 msgstr "Standard (Quickmenü)"
 
 msgid "Multi-Key-Panel"
-msgstr "Tastenbelegungs-Einstellungen"
+msgstr "Tastenbelegung"
 
 msgid "Red long"
 msgstr "Rot lang"
@@ -13837,10 +13837,10 @@ msgid "When enabled, allwas comes Popup to ask for Zap."
 msgstr "Bei aktivieren kommt ein Popup mit nachfrage ob umgeschaltet werden soll."
 
 msgid "Click on your remote on the button you want to change"
-msgstr "Die Taste die geaendert werden soll, auf der Fernbedienung druecken"
+msgstr "Die Taste die geändert werden soll, auf der Fernbedienung drücken"
 
 msgid "Select the desired function and click on 'OK' to assign it. Use 'CH+/-' to toggle between the lists. Select an assigned function and click on 'OK' to de-assign it. Use 'Next/Previous' to change the order of the assigned functions."
-msgstr "Gewuenschte Funktion auswaehlen und mit 'OK' zuweisen. Um zwischen den Listen zu wechseln 'CH+/-' druecken. Wählen sie eine zugewiesene Funktion und mit druecken der 'OK' Taste wird die Funktion abgewaehlt. Mit 'Next/Previous' wird die Reihenfolge der zugewiesenen Funktionen geaendert."
+msgstr "Gewünschte Funktion auswählen und mit 'OK' zuweisen. Um zwischen den Listen zu wechseln 'CH+/-' drücken. Wählen sie eine zugewiesene Funktion und mit drücken der 'OK' Taste wird die Funktion abgewählt. Mit 'Next/Previous' wird die Reihenfolge der zugewiesenen Funktionen geändert."
 
 msgid "Sort list to default and exit?"
 msgstr "Standartliste wiederherstellen und beenden?"
