@@ -14171,9 +14171,9 @@ msgstr "Befehlszeilenfunktion aktivieren"
 msgid "Enable debug log *"
 msgstr "Debug-Log aktivieren"
 
-#,Konfiguration-System-Tasten Einstellungen
-msgid "Setup Remote"
-msgstr "Fernbedienung Einstellungen"
+#,Konfiguration - System
+msgid "Assign remote control buttons "
+msgstr "Fernbedienung"
 
 #,Konfiguration - System - Fernbedienung
 msgid "Setup the Power button"
