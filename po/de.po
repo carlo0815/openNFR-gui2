@@ -14175,6 +14175,31 @@ msgstr "Debug-Log aktivieren"
 msgid "Setup Remote"
 msgstr "Fernbedienung Einstellungen"
 
+#,Konfiguration - System - Fernbedienung
+msgid "Setup the Power button"
+msgstr "Ein/Aus Taste"
+
+msgid "Red button"
+msgstr "rote Taste"
+
+msgid "Red button long"
+msgstr "rote Taste lang"
+
+msgid "Blue button"
+msgstr "blaue Taste"
+
+msgid "Blue button long"
+msgstr "blaue Taste lang"
+
+msgid "Green button long"
+msgstr "grüne Taste lang"
+
+msgid "Assign additional keys"
+msgstr "weitere Tasten belegen"
+
+msgid "Keymap selection"
+msgstr "Keymap Auswahl"
+
 #,Konfiguration-System-Tastatur Einstellungen
 msgid "Setup Keybord"
 msgstr "Tastatur Einstellungen"
