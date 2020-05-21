@@ -4069,7 +4069,7 @@ msgid "Memory positions"
 msgstr "Positionen speichern"
 
 msgid "Menu"
-msgstr "Menu"
+msgstr "Menü"
 
 msgid "Menu config"
 msgstr "Menükonfiguration"
@@ -14353,6 +14353,150 @@ msgstr "Einstellungen für die Benutzeroberfläche"
 
 msgid "Subtitles Settings"
 msgstr "Untertitel Einstellungen"
+
+msgid "EJECTCD long"
+msgstr "EJECTCD lang"
+
+msgid "Radio long"
+msgstr "Radio lang"
+
+msgid "Rec long"
+msgstr "Aufnahme lang"
+
+msgid "Help long"
+msgstr "Hilfe lang"
+
+msgid "Subtitle long"
+msgstr "Untertitel lang"
+
+msgid "List/Fav long"
+msgstr "List/Fav lang"
+
+msgid "PVR long"
+msgstr "PVR lang"
+
+msgid "Favorites"
+msgstr "Favoriten"
+
+msgid "Favorites long"
+msgstr "Favoriten lang"
+
+msgid "File"
+msgstr "Datei"
+
+msgid "File long"
+msgstr "Datei lang"
+
+msgid "OK long"
+msgstr "OK Taste lang"
+
+msgid "Media long"
+msgstr "Media lang"
+
+msgid "Open"
+msgstr "öffnen"
+
+msgid "Open long"
+msgstr "öffnen lang"
+
+msgid "Option"
+msgstr "Option"
+
+msgid "Option long"
+msgstr "Option lang"
+
+msgid "Www"
+msgstr "www"
+
+msgid "Www long"
+msgstr "www lang"
+
+msgid "Directory long"
+msgstr "Verzeichnis lang"
+
+msgid "Back/Recall"
+msgstr "Zurück"
+
+msgid "History long"
+msgstr "History lang"
+
+msgid "Aspect long"
+msgstr "Aspect lang"
+
+msgid "Home long"
+msgstr "Home lang"
+
+msgid "End long"
+msgstr "Ende lang"
+
+msgid "Audio long"
+msgstr "Audio lang"
+
+msgid "Playlist long"
+msgstr "Playliste lang"
+
+msgid "Nextsong"
+msgstr "nächster Titel"
+
+msgid "Nextsong long"
+msgstr "nächster Titel lang"
+
+msgid "Prevsong"
+msgstr "vorheriger Titel"
+
+msgid "Prevsong long"
+msgstr "vorheriger Titel lang"
+
+msgid "Program long"
+msgstr "Program lang"
+
+msgid "Time long"
+msgstr "Zeit lang"
+
+msgid "Homepage long"
+msgstr "Homepage lang"
+
+msgid "Mark/Portal/Playlist long"
+msgstr "Mark/Portal/Playlist lang"
+
+msgid "Sleep long"
+msgstr "Sleep lang"
+
+msgid "HDMIin long"
+msgstr "HDMIin lang"
+
+msgid "Context long"
+msgstr "Context lang"
+
+msgid "SAT long"
+msgstr "SAT lang"
+
+msgid "Prov long"
+msgstr "Prov lang"
+
+msgid "LAN long"
+msgstr "LAN lang"
+
+msgid "PC long"
+msgstr "PC lang"
+
+msgid "F4 long"
+msgstr "F4 lang"
+
+msgid "PIP long"
+msgstr "PIP lang"
+
+msgid "MOUSE"
+msgstr "Maus"
+
+msgid "MOUSE long"
+msgstr "Maus lang"
+
+msgid "VOD long"
+msgstr "VOD lang"
+
+msgid "ZOOM long"
+msgstr "ZOOM lang"
 
 #,Konfiguration-System-Tastatur Einstellungen
 msgid "Setup Keybord"
