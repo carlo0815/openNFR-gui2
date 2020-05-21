@@ -14192,7 +14192,7 @@ msgid "Blue button long"
 msgstr "blaue Taste lang"
 
 msgid "Green button long"
-msgstr "grÃ¼ne Taste lang"
+msgstr "grüne Taste lang"
 
 msgid "Assign additional keys"
 msgstr "weitere Tasten belegen"
