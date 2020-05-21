@@ -14200,6 +14200,160 @@ msgstr "weitere Tasten belegen"
 msgid "Keymap selection"
 msgstr "Keymap Auswahl"
 
+#,Konfiguration - System - Fernbedienung - weitere Tasten belegen
+msgid "Left long"
+msgstr "Links lang"
+
+msgid "Right long"
+msgstr "Rechts lang"
+
+msgid "PageUp"
+msgstr "Seite vor"
+
+msgid "PageUp long"
+msgstr "Seite vor lang"
+
+msgid "PageDown"
+msgstr "Seite zurück"
+
+msgid "PageDown long"
+msgstr "Seite zurück lang"
+
+msgid "Show vertical Program Guide"
+msgstr "Vertikalen EPG anzeigen"
+
+msgid "Show graphical multi EPG"
+msgstr "Grafischen Multi-EPG anzeigen"
+
+msgid "Show eventinfo plugins"
+msgstr "Eventinfo Plugins anzeigen"
+
+msgid "Show single service EPG"
+msgstr "Einfachen EPG anzeigen"
+
+msgid "Show multi channel EPG"
+msgstr "Mehr-Kanal EPG anzeigen"
+
+msgid "Show help"
+msgstr "Hilfe anzeigen"
+
+msgid "Show extension selection"
+msgstr "Erweiterungs-Auswahl anzeigen"
+
+msgid "Zap down"
+msgstr "Kanal +"
+
+msgid "Zap up"
+msgstr "Kanal -"
+
+msgid "Volume down"
+msgstr "Lautstärke -"
+
+msgid "Volume up"
+msgstr "Lautstärke +"
+
+msgid "Show Infobar"
+msgstr "Zeige Infoleiste"
+
+msgid "Show service list"
+msgstr "Zeige Kanalliste"
+
+msgid "Show favourites list"
+msgstr "Zeige Favoritenliste"
+
+msgid "History back"
+msgstr "History zurück"
+
+msgid "History next"
+msgstr "History weiter"
+
+msgid "Show Audioselection"
+msgstr "Audiomenü"
+
+msgid "Enable digital downmix"
+msgstr "Dolby Digital Downmix aktivieren"
+
+msgid "Disable digital downmix"
+msgstr "Dolby Digital Downmix deaktivieren"
+
+msgid "Switch to radio mode"
+msgstr "Wechsel zum Radiomodus "
+
+msgid "Switch to TV mode"
+msgstr "Wechsel in TV-Modus "
+
+msgid "Show servicelist or movies"
+msgstr "Zeige Kanalliste oder Filme"
+
+msgid "Show movies"
+msgstr "Filmliste"
+
+msgid "Instant record"
+msgstr "Sofortaufnahme"
+
+msgid "Start instant recording"
+msgstr "Sofortaufnahme starten"
+
+msgid "Activate timeshift End"
+msgstr "Timeshift beenden"
+
+msgid "Activate timeshift end and pause"
+msgstr "Timeshift beenden und Pause"
+
+msgid "Start teletext"
+msgstr "Videotext"
+
+msgid "Show subservice selection"
+msgstr "Unterkanalmenü"
+
+msgid "Show subtitle selection"
+msgstr "Untertitelmenü"
+
+msgid "Show subtitle quick menu"
+msgstr "Untertitel-Schnellmenü"
+
+msgid "Seekbar"
+msgstr "Suchleiste"
+
+msgid "Show PIP"
+msgstr "Bild im Bild einschalten"
+
+msgid "Swap PIP"
+msgstr "Tausche Bild im Bild"
+
+msgid "Move PIP"
+msgstr "Verschiebe Bild im Bild"
+
+msgid "Toggle PIPzap"
+msgstr "Bild im Bild umschalten"
+
+msgid "Activate HbbTV (Redbutton)"
+msgstr "HbbTV einschalten"
+
+msgid "Hotkey Setup"
+msgstr "Hotkey-Einstellungen"
+
+msgid "Videosetup"
+msgstr "Bild-Einstellungen"
+
+msgid "Network menu"
+msgstr "Netzwerkmenü"
+
+msgid "SkinSelector"
+msgstr "Skinauswahl"
+
+msgid "LCD SkinSelector"
+msgstr "LCD-Skinauswahl"
+
+msgid "Usage Setup"
+msgstr "Bedienung"
+
+msgid "User interface settings"
+msgstr "Einstellungen für die Benutzeroberfläche"
+
+msgid "Subtitles Settings"
+msgstr "Untertitel Einstellungen"
+
 #,Konfiguration-System-Tastatur Einstellungen
 msgid "Setup Keybord"
 msgstr "Tastatur Einstellungen"
