@@ -20,8 +20,8 @@ from Components.ConfigList import ConfigListScreen
 
 from boxbranding import getImageDistro, getMachineBuild, getMachineBrand, getMachineName, getMachineMtdRoot, getMachineMtdKernel
 
-feedserver = 'dev.nachtfalke.biz/nfr/feeds'
-feedurl = 'http://%s/%s/json' %(feedserver, getImageDistro())
+feedurl = 'http://dev.nachtfalke.biz/nfr/feeds'
+imagecat = [6.2,6.3,6.4,6.5,6.6]
 
 def checkimagefiles(files):
 	return len([x for x in files if 'kernel' in x and '.bin' in x or x in ('zImage', 'uImage', 'root_cfe_auto.bin', 'root_cfe_auto.jffs2', 'oe_kernel.bin', 'oe_rootfs.bin', 'e2jffs2.img', 'rootfs.tar.bz2', 'rootfs.ubi','rootfs.bin')]) == 2
@@ -36,7 +36,6 @@ class FlashOnline(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.selection = 0
-		self.jsonlist = {}
 		self.imagesList = {}
 		self.setIndex = 0
 		self.expanded = []
@@ -101,14 +100,37 @@ class FlashOnline(Screen):
 
 		if not self.imagesList:
 			box = GetBoxName()
-			if not self.jsonlist:
+			for version in reversed(sorted(imagecat)):
+				newversion = _("Image Version %s") %version
+				the_page =""
+				url = '%s/%s/images/%s' % (feedurl,version,box)
+                                try:
+					req = urllib2.Request(url)
+					response = urllib2.urlopen(req)
+				except urllib2.URLError as e:
+					print "URL ERROR: %s\n%s" % (e,url)
+					continue
+
 				try:
-					self.jsonlist = dict(json.load(urllib2.urlopen('%s/%s' % (feedurl, box))))
-					#if config.usage.alternative_imagefeed.value:
-					#	self.jsonlist.update(dict(json.load(urllib2.urlopen('%s%s' % (config.usage.alternative_imagefeed.value, box)))))
-				except:
-					pass
-			self.imagesList = dict(self.jsonlist)
+					the_page = response.read()
+				except urllib2.HTTPError as e:
+					print "HTTP download ERROR: %s" % e.code
+					continue
+
+				lines = the_page.split('\n')
+				tt = len(box)
+				countimage = []
+				for line in lines:
+					if line.find('<a href="o') > -1:
+						t = line.find('<a href="o')
+						e = line.find('zip"')
+						countimage.append(line[t+9:e+3])
+				if len(countimage) >= 1:
+					self.imagesList[newversion] = {}
+					for image in countimage:
+						self.imagesList[newversion][image] = {}
+						self.imagesList[newversion][image]["name"] = image
+						self.imagesList[newversion][image]["link"] = '%s/%s/images/%s/%s' % (feedurl,version,box,image)
 
 			for media in ['/media/%s' % x for x in os.listdir('/media')] + (['/media/net/%s' % x for x in os.listdir('/media/net')] if os.path.isdir('/media/net') else []):
 				if not(SystemInfo['HasMMC'] and "/mmc" in media) and os.path.isdir(media):
