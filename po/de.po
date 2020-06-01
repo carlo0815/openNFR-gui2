@@ -14100,6 +14100,10 @@ msgstr "2. Infobar"
 msgid "2nd Infobar timeout"
 msgstr "2. Infobar-Anzeigedauer"
 
+#,Konfiguration - System - Benutzeroberfläche - OSD-Position Einstellungen
+msgid "Set the red angles in the corner from the tv-screen"
+msgstr "Die roten Winkel in die Ecken vom TV-Bildschirm positionieren"
+
 #,Konfiguration-System-Benutzeroberfläche-Skinauswahl
 msgid "Skin Selector"
 msgstr "Wähle einen Skin"
