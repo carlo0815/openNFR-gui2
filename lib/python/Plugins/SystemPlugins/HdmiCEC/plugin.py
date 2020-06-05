@@ -3,10 +3,10 @@ from os import path
 
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
-from Components.config import config, configfile, getConfigListEntry
+from Components.config import config, configfile, getConfigListEntry, ConfigSubsection, ConfigYesNo, ConfigSelection, ConfigText, NoSave
 from Components.Sources.StaticText import StaticText
 from Components.Label import Label
-
+from time import time
 from Tools.Directories import fileExists
 
 if path.exists("/dev/hdmi_cec") or path.exists("/dev/misc/hdmi_cec0"):
@@ -57,7 +57,72 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 			"up": self.keyUp,
 			"down": self.keyDown,
 		}, -2)
-
+		config.hdmicec = ConfigSubsection()
+		config.hdmicec.enabled = ConfigYesNo(default = False) # query from this value in hdmi_cec.cpp
+		config.hdmicec.control_tv_standby = ConfigYesNo(default = True)
+		config.hdmicec.control_tv_wakeup = ConfigYesNo(default = True)
+		config.hdmicec.report_active_source = ConfigYesNo(default = True)
+		config.hdmicec.report_active_menu = ConfigYesNo(default = True) # query from this value in hdmi_cec.cpp
+		choicelist = [
+			("disabled", _("Disabled")),
+			("standby", _("Standby")),
+			("deepstandby", _("Deep standby")),
+			]
+		config.hdmicec.handle_tv_standby = ConfigSelection(default = "standby", choices = choicelist)
+		config.hdmicec.handle_tv_input = ConfigSelection(default = "disabled", choices = choicelist)
+		config.hdmicec.handle_tv_wakeup = ConfigSelection(
+			choices = {
+			"disabled": _("Disabled"),
+			"wakeup": _("Wakeup"),
+			"tvreportphysicaladdress": _("TV physical address report"),
+			"routingrequest": _("Routing request"),
+			"sourcerequest": _("Source request"),
+			"streamrequest": _("Stream request"),
+			"osdnamerequest": _("OSD name request"),
+			"activity": _("Any activity"),
+			},
+			default = "streamrequest")
+		config.hdmicec.fixed_physical_address = ConfigText(default = "0.0.0.0")
+		config.hdmicec.volume_forwarding = ConfigYesNo(default = False)
+		config.hdmicec.control_receiver_wakeup = ConfigYesNo(default = False)
+		config.hdmicec.control_receiver_standby = ConfigYesNo(default = False)
+		config.hdmicec.handle_deepstandby_events = ConfigYesNo(default = True)
+		config.hdmicec.preemphasis = ConfigYesNo(default = False)
+		choicelist = []
+		for i in (10, 50, 100, 150, 250, 500, 750, 1000):
+			choicelist.append(("%d" % i, _("%d ms") % i))
+		config.hdmicec.minimum_send_interval = ConfigSelection(default = "250", choices = [("0", _("Disabled"))] + choicelist)
+		choicelist = []
+		for i in range(1,6):
+			choicelist.append(("%d" % i, _("%d times") % i))
+		config.hdmicec.messages_repeat = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
+		config.hdmicec.messages_repeat_standby = ConfigYesNo(default = False)
+		choicelist = []
+		for i in (500, 1000, 2000, 3000, 4000, 5000):
+			choicelist.append(("%d" % i, _("%d ms") % i))
+		config.hdmicec.messages_repeat_slowdown = ConfigSelection(default = "1000", choices = [("0", _("None"))] + choicelist)
+		choicelist = []
+		for i in (5,10,30,60,120,300,600,900,1800,3600):
+			if i/60<1:
+				choicelist.append(("%d" % i, _("%d sec") % i))
+			else:
+				choicelist.append(("%d" % i, _("%d min") % (i/60)))
+		config.hdmicec.handle_tv_delaytime = ConfigSelection(default = "0", choices = [("0", _("None"))] + choicelist)
+		config.hdmicec.deepstandby_waitfortimesync = ConfigYesNo(default = True)
+		config.hdmicec.tv_wakeup_zaptimer = ConfigYesNo(default = True)
+		config.hdmicec.tv_wakeup_zapandrecordtimer = ConfigYesNo(default = True)
+		config.hdmicec.tv_wakeup_wakeuppowertimer = ConfigYesNo(default = True)
+		config.hdmicec.tv_standby_notinputactive = ConfigYesNo(default = True)
+		config.hdmicec.check_tv_state = ConfigYesNo(default = False)
+		config.hdmicec.workaround_activesource = ConfigYesNo(default = False)
+		choicelist = []
+		for i in (5,10,15,30,45,60):
+			choicelist.append(("%d" % i, _("%d sec") % i))
+		config.hdmicec.workaround_turnbackon = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
+		config.hdmicec.advanced_settings = ConfigYesNo(default = False)
+		config.hdmicec.default_settings = NoSave(ConfigYesNo(default = False))
+		config.hdmicec.debug = ConfigYesNo(default = False)
+		config.hdmicec.commandline = ConfigYesNo(default = False)
 		self.onChangedEntry = [ ]
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
