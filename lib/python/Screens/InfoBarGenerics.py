@@ -2665,7 +2665,7 @@ class InfoBarPiP:
 								f.close()
 						self.session.pipshown = False
 				else:
-					if int(xres) <= 720 or about.getCPUString() == 'BCM7346B2' or about.getCPUString() == 'BCM7425B2' or about.getCPUString() == 'BCM7429B0' or getBoxType() in ('vusolo4k', 'mutant51', 'mutant60', 'sf4008', 'sf5008', 'sf8008', 'sf8008t', 'sf8008s', 'sf8008m', 'ax51', 'ax60', 'ax61', 'gbquad4k', 'gbue4k', 'e4hdultra', 'zgemmah7', 'zgemmah9combo', 'zgemmah9twin', 'zgemmah9s'):
+					if info and int(xres) <= 720 or getMachineBuild() != 'blackbox7405':
 						self.session.pip = self.session.instantiateDialog(PictureInPicture)
 						self.session.pip.setAnimationMode(0)
 						self.session.pip.show()
