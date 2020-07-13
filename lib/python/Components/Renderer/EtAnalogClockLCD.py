@@ -1,8 +1,8 @@
 # original code is from openmips gb Team: [OMaClockLcd] Renderer #
 # Thx to arn354 #
-
+from __future__ import absolute_import
 import math
-from Renderer import Renderer
+from Components.Renderer.Renderer import Renderer
 from skin import parseColor
 from enigma import eCanvas, eSize, gRGB, eRect
 from Components.VariableText import VariableText
@@ -18,9 +18,9 @@ class EtAnalogClockLCD(Renderer):
 		self.bColor = gRGB(0, 0, 0, 255)
 		self.forend = -1
 		self.linewidth = 1
-                self.positionheight = 1
-                self.positionwidth = 1
-                self.linesize = 1
+		self.positionheight = 1
+		self.positionwidth = 1
+		self.linesize = 1
                 
 	GUI_WIDGET = eCanvas
 
@@ -51,9 +51,9 @@ class EtAnalogClockLCD(Renderer):
 		z = (math.pi / 180)
 		x = int(round((r * math.sin((a * z)))))
 		y = int(round((r * math.cos((a * z)))))
-		return ((m + x),(m1 - y))
+		return ((m + x), (m1 - y))
 
-	def hand(self,opt):
+	def hand(self, opt):
 		width = self.positionwidth
 		height = self.positionheight
 		r = (width / 2)
@@ -73,11 +73,11 @@ class EtAnalogClockLCD(Renderer):
 	def line_draw(self, x0, y0, x1, y1):
 		steep = (abs((y1 - y0)) > abs((x1 - x0)))
 		if steep:
-			x0,y0 = y0,x0
-			x1,y1 = y1,x1
+			x0, y0 = y0, x0
+			x1, y1 = y1, x1
 		if (x0 > x1):
-			x0,x1 = x1,x0
-			y0,y1 = y1,y0
+			x0, x1 = x1, x0
+			y0, y1 = y1, y0
 		if (y0 < y1):
 			ystep = 1
 		else:
@@ -86,7 +86,7 @@ class EtAnalogClockLCD(Renderer):
 		deltay = abs((y1 - y0))
 		error = (-deltax / 2)
 		y = y0
-		for x in range(x0, (x1 + 1)):
+		for x in list(range(x0, (x1 + 1))):
 			if steep:
 				self.instance.fillRect(eRect(y, x, self.linewidth, self.linewidth), self.fColor)
 			else:
@@ -102,7 +102,7 @@ class EtAnalogClockLCD(Renderer):
 			sopt = int(opt[0])
 			if len(opt) < 2:
 				opt.append('')
-		except Exception, e:
+		except Exception as e:
 			return
 
 		if (what[0] == self.CHANGED_CLEAR):

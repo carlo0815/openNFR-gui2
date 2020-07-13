@@ -1,11 +1,14 @@
+from __future__ import print_function
+from __future__ import absolute_import
 import os, re, unicodedata
-from Renderer import Renderer
+from Components.Renderer.Renderer import Renderer
 from enigma import ePixmap, ePicLoad
 from Tools.Alternatives import GetWithAlternative
 from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, SCOPE_ACTIVE_SKIN, resolveFilename
 from Components.Harddisk import harddiskmanager
 from ServiceReference import ServiceReference
 from Components.config import config, ConfigBoolean
+import six, sys
 
 searchPaths = []
 lastPiconPath = None
@@ -27,18 +30,18 @@ def onMountpointAdded(mountpoint):
 		if os.path.isdir(path) and path not in searchPaths:
 			for fn in os.listdir(path):
 				if fn.endswith('.png'):
-					print "[Picon] adding path:", path
+					print("[Picon] adding path:", path)
 					searchPaths.append(path)
 					break
-	except Exception, ex:
-		print "[Picon] Failed to investigate %s:" % mountpoint, ex
+	except Exception as ex:
+		print("[Picon] Failed to investigate %s:" % mountpoint, ex)
 
 def onMountpointRemoved(mountpoint):
 	global searchPaths
 	path = os.path.join(mountpoint, 'picon') + '/'
 	try:
 		searchPaths.remove(path)
-		print "[Picon] removed path:", path
+		print("[Picon] removed path:", path)
 	except:
 		pass
 
@@ -88,7 +91,10 @@ def getPiconName(serviceName):
 		pngname = findPicon('_'.join(fields))
 	if not pngname: # picon by channel name
 		name = ServiceReference(serviceName).getServiceName()
-		name = unicodedata.normalize('NFKD', unicode(name, 'utf_8', errors='ignore')).encode('ASCII', 'ignore')
+		if sys.version_info[0] >= 3:
+			name = six.ensure_str(unicodedata.normalize('NFKD', name).encode('ASCII', 'ignore'))
+		else:
+			name = unicodedata.normalize('NFKD', unicode(name, 'utf_8', errors='ignore')).encode('ASCII', 'ignore')
 		name = re.sub('[^a-z0-9]', '', name.replace('&', 'and').replace('+', 'plus').replace('*', 'star').lower())
 		if len(name) > 0:
 			pngname = findPicon(name)
@@ -101,7 +107,7 @@ class Picon(Renderer):
 		Renderer.__init__(self)
 		self.PicLoad = ePicLoad()
 		self.PicLoad.PictureData.get().append(self.updatePicon)
-		self.piconsize = (0,0)
+		self.piconsize = (0, 0)
 		self.pngname = ""
 		self.lastPath = None
 		pngname = findPicon("picon_default")
@@ -130,7 +136,7 @@ class Picon(Renderer):
 		for (attrib, value) in self.skinAttributes:
 			if attrib == "path":
 				self.addPath(value)
-				attribs.remove((attrib,value))
+				attribs.remove((attrib, value))
 			elif attrib == "size":
 				self.piconsize = value
 		self.skinAttributes = attribs

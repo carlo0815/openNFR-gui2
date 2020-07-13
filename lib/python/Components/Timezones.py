@@ -1,7 +1,10 @@
+from __future__ import print_function
+from __future__ import absolute_import
 import xml.etree.cElementTree
 
 from os import environ, unlink, symlink, path
-import time
+import six
+from time import gmtime, localtime, strftime, time
 from Tools.StbHardware import setRTCoffset
 
 class Timezones:
@@ -50,7 +53,7 @@ class Timezones:
 	def getDefaultTimezone(self):
 		# TODO return something more useful - depending on country-settings?
 		t = "(GMT+01:00) Germany: Berlin"
-		for (a,b) in self.timezones:
+		for (a, b) in self.timezones:
 			if a == t:
 				return a
 		return self.timezones[0][0]

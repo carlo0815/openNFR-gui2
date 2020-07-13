@@ -32,6 +32,7 @@ self.session.open(YellowPanel)
 						<id val="epgloadsave_menu" />
 						<item level="0" entryID="saveepgcache" text="Save EPG">
 <code>
+from __future__ import division
 from Components.EpgLoadSave import EpgSaveMsg
 def msgClosed(ret):
 	if ret:
@@ -43,6 +44,7 @@ self.session.openWithCallback(msgClosed, EpgSaveMsg)
 						</item>
 						<item level="0" entryID="loadepgcache" text="Load EPG">
 <code>
+from __future__ import division
 from Components.EpgLoadSave import EpgLoadMsg
 def msgClosed(ret):
 	if ret:
@@ -67,6 +69,7 @@ self.session.openWithCallback(msgClosed, EpgLoadMsg)
 				</menu>
 				<item weight="15" level="1" entryID="autolanguage_setup"><setup id="autolanguagesetup" /></item>
 				<item weight="15" level="0" entryID="channelselection_setup"><setup id="channelselection" /></item>
+				<item weight="10" level="0" entryID="pip_setup" requires="PIPAvailable"><setup id="pipsetup"/></item>
 			</menu>
 			<menu weight="5" level="0" text="System" entryID="system_selection">
 				<id val="system" />
@@ -81,6 +84,7 @@ self.session.openWithCallback(msgClosed, EpgLoadMsg)
 					<item level="0" text="Skin setup" entryID="skin_setup"><screen module="SkinSelector" screen="SkinSelector"/></item>
 					<item weight="15" level="0" text="OpenNFR Skins Install" entryID="opennfrskinsinstall">
 					<code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.PluginWizard import PluginSkinInstall
 self.session.open(PluginSkinInstall)
 					</code>	
@@ -92,6 +96,7 @@ self.session.open(PluginSkinInstall)
 					<id val="network" />
 							<item level="0" text="Set Rootpassword" entryID="opennfrpassword">
 				<code>
+from __future__ import division				
 from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 self.session.open(NFRPasswdScreen)
 				</code>					
@@ -122,6 +127,7 @@ self.session.open(NFRPasswdScreen)
 				<item weight="7" level="2" entryID="subtitle_setup"><setup id="subtitlesetup" /></item>
 				<item weight="8" level="0" text="HDMI CEC" entryID="hdmicec" requires="HDMICEC">
 <code>
+from __future__ import division
 from Plugins.SystemPlugins.HdmiCEC.plugin import HdmiCECSetupScreen
 self.session.open(HdmiCECSetupScreen)
 </code>
@@ -131,48 +137,56 @@ self.session.open(HdmiCECSetupScreen)
 				<item weight="0" level="0" text="Setup the Power button" entryID="remote_setup"><setup id="remotesetup"/></item>
 				<item weight="1" level="0" text="Red button" entryID="Red-Key-Action">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import RedPanel
 self.session.open(RedPanel)
 </code>
 </item>
 				<item weight="2" text="Red button long" entryID="Red-Key-Action-Long">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import RedPanelLong
 self.session.open(RedPanelLong)
 </code>
 </item>
 			        <item weight="3" level="0" text="Blue button" entryID="Blue-Key-Action">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import BluePanel
 self.session.open(BluePanel)
 </code>
 </item>
 	                        <item weight="4" level="0" text="Blue button long" entryID="Blue-Key-Action-Long">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import BluePanelLong
 self.session.open(BluePanelLong)
 </code>
 </item>
 	                        <item weight="5" level="0" text="Green button long" entryID="Green-Key-Action-Long">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import GreenPanelLong
 self.session.open(GreenPanelLong)
 </code>
 </item>
 					<item weight="5" level="6" text="Yellow button long" entryID="Yellow-Key-Action-Long">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import YellowPanelLong
 self.session.open(YellowPanelLong)
 </code>
 </item>
 	                        <item weight="7" level="0" text="Assign additional keys" entryID="HotkeySetup">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import HotkeySetup
 self.session.open(HotkeySetup)
 </code>
 </item>
 		                <item weight="8" level="0" text="Keymap selection" entryID="Keymapsel">
 <code>
+from __future__ import division
 from Plugins.Extensions.Infopanel.plugin import KeymapSel 
 self.session.open(KeymapSel)
 </code>
@@ -192,6 +206,7 @@ self.session.open(KeymapSel)
 			<!--item level="0" text="Startwizard" entryID="startwizzard"><screen module="StartWizard" screen="StartWizard" /></item-->
 			<item weight="15" level="0" text="Factory reset" entryID="factory_reset">
 				<code>
+from __future__ import print_function				
 from Screens.FactoryReset import FactoryReset
 def msgClosed(ret):
 	if ret:
@@ -226,6 +241,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<!--item weight="7" level="0" text="SDroot" entryID="SDswap" requires="HasSDswap"><screen module="SDswap" screen="SDswap">1</screen></item-->
 			<item level="0" requires="loadcidriver" text="Reboot with CI+ Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh cidriver")
@@ -235,6 +251,7 @@ system("reboot")
 			</item>
 			<item level="0" requires="loadcidriver" text="Reboot with Transcoding Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh tcdriver")
@@ -243,6 +260,7 @@ system("reboot")
 			</item>
 			<item level="0" requires="loadci3driver" text="Reboot with CI+ Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ci3driver")
@@ -252,6 +270,7 @@ system("reboot")
 			</item>
 			<item level="0" requires="loadci3driver" text="Reboot with IPTV Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ip3driver")
@@ -260,6 +279,7 @@ system("reboot")
 			</item>
 			<item level="0" requires="loadci4driver" text="Reboot with CI+ Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ci4driver")
@@ -269,6 +289,7 @@ system("reboot")
 			</item>
 			<item level="0" requires="loadci4driver" text="Reboot with IPTV Driver">
 <code>
+from __future__ import division
 from boxbranding import getBoxType
 from os import system, _exit
 system("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/driver.sh ip4driver")

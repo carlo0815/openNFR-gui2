@@ -1,7 +1,8 @@
-from Converter import Converter
+from __future__ import absolute_import, division
+from Components.Converter.Converter import Converter
 from Components.Sources.Clock import Clock
 from time import time as getTime, localtime, strftime
-from Poll import Poll
+from Components.Converter.Poll import Poll
 from enigma import iPlayableService
 from Components.Element import cached, ElementError
 from Components.config import config
@@ -508,7 +509,7 @@ class ServicePosition(Poll, Converter, object):
 		len = self.length
 		if pos is None or len is None or len <= 0:
 			return None
-		return pos * 10000 / len
+		return pos * 10000 // len
 
 	position = property(getPosition)
 	length = property(getLength)

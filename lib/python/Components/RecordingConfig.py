@@ -1,4 +1,5 @@
-from config import ConfigSelectionNumber, ConfigYesNo, ConfigSubsection, ConfigSelection, config
+from __future__ import absolute_import
+from Components.config import ConfigInteger, ConfigSelectionNumber, ConfigYesNo, ConfigSubsection, ConfigSelection, config
 from enigma import pNavigation
 
 def InitRecordingConfig():
@@ -17,7 +18,7 @@ def InitRecordingConfig():
 		("shortwithtime", _("Short filenames with time")),
 		("short", _("Short filenames")),
 		("long", _("Long filenames")) ] )
-	config.recording.offline_decode_delay = ConfigSelectionNumber(min = 1, max = 10000, stepwidth = 10, default = 1000, wraparound = True)
+	config.recording.offline_decode_delay = ConfigInteger(default = 1000, limits=(1, 10000) )
 	config.recording.ecm_data = ConfigSelection(choices = [("normal", _("normal")), ("descrambled+ecm", _("descramble and record ecm")), ("scrambled+ecm", _("don't descramble, record ecm"))], default = "normal")
 	config.recording.include_ait = ConfigYesNo(default = False)
 	config.recording.show_rec_symbol_for_rec_types = ConfigSelection(choices = [("any", _("any recordings")), ("real", _("real recordings")), ("real_streaming", _("real recordings or streaming")), ("real_pseudo", _("real or pseudo recordings"))], default = "real_streaming")

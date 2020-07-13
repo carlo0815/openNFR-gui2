@@ -1,5 +1,6 @@
-from HTMLComponent import HTMLComponent
-from GUIComponent import GUIComponent
+from __future__ import absolute_import
+from Components.HTMLComponent import HTMLComponent
+from Components.GUIComponent import GUIComponent
 from skin import parseFont
 
 from Tools.FuzzyDate import FuzzyTime
@@ -10,6 +11,9 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.TextBoundary import getTextBoundarySize
 from timer import TimerEntry
 from Tools.Directories import resolveFilename, SCOPE_ACTIVE_SKIN
+import six
+ 
+SIGN = '°' if six.PY3 else str('\xc2\xb0')
 
 
 class TimerList(HTMLComponent, GUIComponent, object):
@@ -129,11 +133,11 @@ class TimerList(HTMLComponent, GUIComponent, object):
 		def itemHeight(value):
 			self.itemHeight = int(value)
 		def setServiceNameFont(value):
-			self.serviceNameFont = parseFont(value, ((1,1),(1,1)))
+			self.serviceNameFont = parseFont(value, ((1, 1), (1, 1)))
 		def setEventNameFont(value):
-			self.eventNameFont = parseFont(value, ((1,1),(1,1)))
+			self.eventNameFont = parseFont(value, ((1, 1), (1, 1)))
 		def setFont(value):
-			self.font = parseFont(value, ((1,1),(1,1)))
+			self.font = parseFont(value, ((1, 1), (1, 1)))
 		def rowSplit(value):
 			self.rowSplit = int(value)
 		def iconMargin(value):
@@ -190,7 +194,7 @@ class TimerList(HTMLComponent, GUIComponent, object):
 		refstr = refstr and GetWithAlternative(refstr)
 		if '%3a//' in refstr:
 			return "%s" % _("Stream")
-		op = int(refstr.split(':', 10)[6][:-4] or "0",16)
+		op = int(refstr.split(':', 10)[6][:-4] or "0", 16)
 		if op == 0xeeee:
 			return "%s" % _("DVB-T")
 		if op == 0xffff:
@@ -199,4 +203,4 @@ class TimerList(HTMLComponent, GUIComponent, object):
 		if op > 1800:
 			op = 3600 - op
 			direction = 'W'
-		return ("%d.%d\xc2\xb0%s") % (op // 10, op % 10, direction)
+		return ("%d.%d" + SIGN + "%s") % (op // 10, op % 10, direction)

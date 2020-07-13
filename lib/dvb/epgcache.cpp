@@ -3271,7 +3271,7 @@ unsigned int eEPGCache::getEpgmaxdays()
 
 static const char* getStringFromPython(ePyObject obj)
 {
-	char *result = 0;
+	const char *result = 0;
 	if (PyString_Check(obj))
 	{
 		result = PyString_AS_STRING(obj);
@@ -3298,7 +3298,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 
 	if (PyString_Check(serviceReferences))
 	{
-		char *refstr;
+		const char *refstr;
 		refstr = PyString_AS_STRING(serviceReferences);
 	if (!refstr)
 	{
@@ -3313,7 +3313,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 		for (int i = 0; i < nRefs; ++i)
 		{
 			PyObject* item = PyList_GET_ITEM(serviceReferences, i);
-			char *refstr;
+			const char *refstr;
 			refstr = PyString_AS_STRING(item);
 			if (!refstr)
 			{
@@ -3430,7 +3430,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 	int eventid = -1;
 	const char *argstring=0;
 	char *refstr=0;
-	int argcount=0;
+	ssize_t argcount=0;
 	int querytype=-1;
 	bool needServiceEvent=false;
 	int maxmatches=0;
@@ -3447,8 +3447,11 @@ PyObject *eEPGCache::search(ePyObject arg)
 			{
 #if PY_VERSION_HEX < 0x02060000
 				argcount = PyString_GET_SIZE(obj);
-#else
+				argstring = PyString_AS_STRING(obj);
+#elif PY_VERSION_HEX < 0x03000000
 				argcount = PyString_Size(obj);
+#else
+				argstring = PyUnicode_AsUTF8AndSize(obj, &argcount);
 #endif
 				argstring = PyString_AS_STRING(obj);
 				for (int i=0; i < argcount; ++i)
@@ -3492,7 +3495,7 @@ PyObject *eEPGCache::search(ePyObject arg)
 				ePyObject obj = PyTuple_GET_ITEM(arg, 3);
 				if (PyString_Check(obj))
 				{
-					refstr = PyString_AS_STRING(obj);
+					const char *refstr = PyString_AS_STRING(obj);
 					eServiceReferenceDVB ref(refstr);
 					if (ref.valid())
 					{
@@ -3545,12 +3548,17 @@ PyObject *eEPGCache::search(ePyObject arg)
 				if (PyString_Check(obj))
 				{
 					int casetype = PyLong_AsLong(PyTuple_GET_ITEM(arg, 4));
-					const char *str = PyString_AS_STRING(obj);
 #if PY_VERSION_HEX < 0x02060000
 					int textlen = PyString_GET_SIZE(obj);
+					ssize_t textlen = PyString_GET_SIZE(obj);
+					const char *str = PyString_AS_STRING(obj);
+#elif PY_VERSION_HEX < 0x03000000
+					ssize_t textlen = PyString_Size(obj);
+					const char *str = PyString_AS_STRING(obj);					
 #else
-					int textlen = PyString_Size(obj);
-#endif              
+					ssize_t textlen;
+					const char *str = PyUnicode_AsUTF8AndSize(obj, &textlen);
+#endif            
 					const char *ctype = casetypestr(casetype);
 					switch (querytype)
 					{
@@ -3652,11 +3660,15 @@ PyObject *eEPGCache::search(ePyObject arg)
 				if (PyString_Check(obj))
 				{
 					int casetype = PyLong_AsLong(PyTuple_GET_ITEM(arg, 4));
-					const char *str = PyString_AS_STRING(obj);
 #if PY_VERSION_HEX < 0x02060000
-					int textlen = PyString_GET_SIZE(obj);
+					ssize_t textlen = PyString_GET_SIZE(obj);
+					const char *str = PyString_AS_STRING(obj);
+#elif PY_VERSION_HEX < 0x03000000
+					ssize_t textlen = PyString_Size(obj);
+					const char *str = PyString_AS_STRING(obj);
 #else
-					int textlen = PyString_Size(obj);
+					ssize_t textlen;
+					const char *str = PyUnicode_AsUTF8AndSize(obj, &textlen);
 #endif
 					int lloop=0;
 					const char *ctype = casetypestr(casetype);

@@ -1,10 +1,12 @@
-from config import config, ConfigSlider, ConfigSelection, ConfigSubDict, ConfigYesNo, ConfigEnableDisable, ConfigSubsection, ConfigBoolean, ConfigSelectionNumber, ConfigNothing, NoSave
+from __future__ import print_function
+from __future__ import absolute_import
+from Components.config import config, ConfigSlider, ConfigSelection, ConfigSubDict, ConfigYesNo, ConfigEnableDisable, ConfigSubsection, ConfigBoolean, ConfigSelectionNumber, ConfigNothing, NoSave
 from Components.About import about
 from Tools.CList import CList
 from Tools.HardwareInfo import HardwareInfo
 from enigma import eAVSwitch, eDVBVolumecontrol, getDesktop
 from boxbranding import getBoxType, getMachineBuild, getBrandOEM
-from SystemInfo import SystemInfo
+from Components.SystemInfo import SystemInfo
 import os
 from time import sleep
 
@@ -109,9 +111,9 @@ class AVSwitch:
 	# if modes.has_key("DVI-PC") and not getModeList("DVI-PC"):
 	# 	print "remove DVI-PC because of not existing modes"
 	# 	del modes["DVI-PC"]
-	if modes.has_key("YPbPr") and getBoxType() in ('ax60','ferguson4k','ustym4kpro','mutant60','zgemmai55plus','osmio4k','sf8008','clap4k','force4','alien5', 'osninopro','protek4k','viperslim','axashis4kcombo','axashis4kcomboplus','dinobot4kplus','dinobot4kmini','zgemmah9t','zgemmah9s','zgemmah9splus','vuzero4k','vuuno4kse','anadol4k','mediabox4k','dinobot4kl','dinobot4k','dinobot4kse','lunix','purehdse','lunix34k','sf5008','et13000','zgemmah6','vipert2c','vipercombo','vipercombohdd','e4hdultra','evoslimse','evoslimt2c','beyonwizu4','zgemmah4','osnino','osninoplus','axultra','gbue4k','spycat4kcombo','spycat4k','valalinux','formuler4ip','formuler3ip','tm4ksuper','galaxy4k','zgemmah52splus','zgemmah2splus','zgemmah7','zgemmah32tc','zgemmah52tc','alphatriple','gi11000','spycat4kmini','tmtwin4k','tmnanom3','tiviarmin','vimastec1000','vimastec1500', 'gbquad4k','revo4k','force3uhdplus','force3uhd','force2nano','evoslim','zgemmah5ac', 'zgemmah3ac', 'bre2zet2c', 'dm900', 'dm920', 'wetekplay', 'wetekplay2', 'wetekhub', 'bre2ze4k', 'vuuno4k', 'vuultimo4k', 'sf4008', 'e4hdcombo', 'ultrabox', 'osmega', 'tmnano3t', 'novaip', 'novacombo', 'novatwin', 'dm520', 'dm525', 'megaforce2', 'purehd', 'sf128', 'sf138', 'mutant11', 'xpeedlxpro', 'mbtwinplus', 'mutant51', 'ax51', 'twinboxlcdci5' , 'twinboxlcdci', 'singleboxlcd', 'formuler4', 'formuler4turbo', 'zgemmah5', 'zgemmah52s', 'zgemmai55', 'sf98', 'odinplus', 'zgemmaslc', '9900lx', '9910lx', '9911lx', 'vusolo4k', 'et7x00mini', 'evomini', 'evominiplus', 'zgemmahs', 'zgemmah2s', 'zgemmah2h', 't2cable', 'xpeedlxcs2', 'xpeedlxcc', 'osmini', 'osminiplus', 'gbx1', 'gbx2', 'gbx3', 'gbx3h', 'sf3038', 'spycat', 'bwidowx', 'bwidowx2', 'fegasusx3', 'fegasusx5s', 'fegasusx5t', 'force2', 'force2plus', 'force2plushv', 'optimussos', 'tmnanose', 'tmnanosem2', 'tmnanosem2plus', 'tmnanocombo', 'zgemmash1', 'zgemmash2', 'zgemmas2s', 'zgemmass', 'mago', 'enibox', 'sf108', 'x1plus', 'xcombo', 'mutant1100', 'mutant1200', 'mutant1265', 'mutant1500', 'mutant500c', 'mutant530c', 'et4x00', 'et7500', 'et7000', 'et7100', 'et8500', 'et8500s', 'xp1000mk', 'xp1000max', 'xp1000plus', 'sf8', 'tm2t', 'tmsingle', 'vusolo2', 'tmnano', 'iqonios300hd', 'iqonios300hdv2', 'classm', 'axodin', 'axodinc', 'genius', 'evo', 'galaxym6', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'dm500hdv2', 'dm500hd', 'dm800', 'mixosf7', 'mixoslumi', 'mixosf5mini', 'gi9196lite', 'ixusszero', 'optimussos1', 'enfinity', 'marvel1', 'bre2ze', 'sezam1000hd', 'mbmini', 'atemio5x00', 'xpeedlx1', 'xpeedlx2', 'vusolose', 'gbipbox', 'formuler3', 'optimussos3plus', 'force1plus', 'vuzero', 'vizyonvita') or (about.getModelString() == 'ini-3000'):
+	iif "YPbPr" in modes and getBoxType() in ('ax60','ferguson4k','ustym4kpro','mutant60','zgemmai55plus','osmio4k','sf8008','clap4k','force4','alien5', 'osninopro','protek4k','viperslim','axashis4kcombo','axashis4kcomboplus','dinobot4kplus','dinobot4kmini','zgemmah9t','zgemmah9s','zgemmah9splus','vuzero4k','vuuno4kse','anadol4k','mediabox4k','dinobot4kl','dinobot4k','dinobot4kse','lunix','purehdse','lunix34k','sf5008','et13000','zgemmah6','vipert2c','vipercombo','vipercombohdd','e4hdultra','evoslimse','evoslimt2c','beyonwizu4','zgemmah4','osnino','osninoplus','axultra','gbue4k','spycat4kcombo','spycat4k','valalinux','formuler4ip','formuler3ip','tm4ksuper','galaxy4k','zgemmah52splus','zgemmah2splus','zgemmah7','zgemmah32tc','zgemmah52tc','alphatriple','gi11000','spycat4kmini','tmtwin4k','tmnanom3','tiviarmin','vimastec1000','vimastec1500', 'gbquad4k','revo4k','force3uhdplus','force3uhd','force2nano','evoslim','zgemmah5ac', 'zgemmah3ac', 'bre2zet2c', 'dm900', 'dm920', 'wetekplay', 'wetekplay2', 'wetekhub', 'bre2ze4k', 'vuuno4k', 'vuultimo4k', 'sf4008', 'e4hdcombo', 'ultrabox', 'osmega', 'tmnano3t', 'novaip', 'novacombo', 'novatwin', 'dm520', 'dm525', 'megaforce2', 'purehd', 'sf128', 'sf138', 'mutant11', 'xpeedlxpro', 'mbtwinplus', 'mutant51', 'ax51', 'twinboxlcdci5' , 'twinboxlcdci', 'singleboxlcd', 'formuler4', 'formuler4turbo', 'zgemmah5', 'zgemmah52s', 'zgemmai55', 'sf98', 'odinplus', 'zgemmaslc', '9900lx', '9910lx', '9911lx', 'vusolo4k', 'et7x00mini', 'evomini', 'evominiplus', 'zgemmahs', 'zgemmah2s', 'zgemmah2h', 't2cable', 'xpeedlxcs2', 'xpeedlxcc', 'osmini', 'osminiplus', 'gbx1', 'gbx2', 'gbx3', 'gbx3h', 'sf3038', 'spycat', 'bwidowx', 'bwidowx2', 'fegasusx3', 'fegasusx5s', 'fegasusx5t', 'force2', 'force2plus', 'force2plushv', 'optimussos', 'tmnanose', 'tmnanosem2', 'tmnanosem2plus', 'tmnanocombo', 'zgemmash1', 'zgemmash2', 'zgemmas2s', 'zgemmass', 'mago', 'enibox', 'sf108', 'x1plus', 'xcombo', 'mutant1100', 'mutant1200', 'mutant1265', 'mutant1500', 'mutant500c', 'mutant530c', 'et4x00', 'et7500', 'et7000', 'et7100', 'et8500', 'et8500s', 'xp1000mk', 'xp1000max', 'xp1000plus', 'sf8', 'tm2t', 'tmsingle', 'vusolo2', 'tmnano', 'iqonios300hd', 'iqonios300hdv2', 'classm', 'axodin', 'axodinc', 'genius', 'evo', 'galaxym6', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'dm500hdv2', 'dm500hd', 'dm800', 'mixosf7', 'mixoslumi', 'mixosf5mini', 'gi9196lite', 'ixusszero', 'optimussos1', 'enfinity', 'marvel1', 'bre2ze', 'sezam1000hd', 'mbmini', 'atemio5x00', 'xpeedlx1', 'xpeedlx2', 'vusolose', 'gbipbox', 'formuler3', 'optimussos3plus', 'force1plus', 'vuzero', 'vizyonvita') or (about.getModelString() == 'ini-3000'):
 		del modes["YPbPr"]
-	if modes.has_key("Scart") and getBoxType() in ('osmio4k','force4','alien5','osninopro','protek4k','vuzero4k','vuuno4kse','lunix','purehdse','sf5008','et13000','e4hdultra','beyonwizu4','osnino','axultra','gbue4k','gi11000','spycat4kmini','tmtwin4k','tmnanom3','gbquad4k','revo4k','force3uhd','force2nano','dm900', 'dm920', 'wetekplay', 'wetekplay2', 'wetekhub', 'bre2ze4k', 'vuuno4k', 'vuultimo4k', 'sf4008', 'novaip', 'dm520', 'dm525', 'purehd', 'vusolo4k', 'fusionhdse', 'fusionhd', 'force2', 'force2plus', 'force2plushv', 'optimussos', 'tmnanose', 'tmnanosecombo', 'gbx1', 'gbx2', 'gbx3', 'gbx3h', 'gbultraue', 'gbultraueh', 'zgemmai55', 'mutant1500'):
+	if "Scart" in modes and getBoxType() in ('osmio4k','force4','alien5','osninopro','protek4k','vuzero4k','vuuno4kse','lunix','purehdse','sf5008','et13000','e4hdultra','beyonwizu4','osnino','axultra','gbue4k','gi11000','spycat4kmini','tmtwin4k','tmnanom3','gbquad4k','revo4k','force3uhd','force2nano','dm900', 'dm920', 'wetekplay', 'wetekplay2', 'wetekhub', 'bre2ze4k', 'vuuno4k', 'vuultimo4k', 'sf4008', 'novaip', 'dm520', 'dm525', 'purehd', 'vusolo4k', 'fusionhdse', 'fusionhd', 'force2', 'force2plus', 'force2plushv', 'optimussos', 'tmnanose', 'tmnanosecombo', 'gbx1', 'gbx2', 'gbx3', 'gbx3h', 'gbultraue', 'gbultraueh', 'zgemmai55', 'mutant1500'):
 		del modes["Scart"]
 		
 	if getBoxType() in ('mutant2400'):
@@ -136,7 +138,7 @@ class AVSwitch:
 			modes = f.read()[:-1]
 			f.close()
 		except IOError:
-			print "couldn't read available videomodes."
+			print("[AVSwitch] couldn't read available videomodes.")
 			self.modes_available = [ ]
 			return
 		self.modes_available = modes.split(' ')
@@ -148,7 +150,7 @@ class AVSwitch:
 			f.close()
 			self.modes_preferred = modes.split(' ')
 		except IOError:
-			print "reading preferred modes failed, using all modes"
+			print("reading preferred modes failed, using all modes")
 			self.modes_preferred = self.modes_available
 
 		if self.modes_preferred != self.last_modes_preferred:
@@ -162,7 +164,7 @@ class AVSwitch:
 			if port == "DVI":
 				if hw_type in ('elite', 'premium', 'premium+', 'ultra', "me", "minime"):
 					if mode not in self.modes_preferred and not config.av.edid_override.value:
-						print "no, not preferred"
+						print("no, not preferred")
 						return False
 			if mode not in self.modes_available:
 				return False
@@ -172,7 +174,7 @@ class AVSwitch:
 		return mode in self.widescreen_modes
 
 	def setMode(self, port, mode, rate, force = None):
-		print "[VideoMode] setMode - port: %s, mode: %s, rate: %s" % (port, mode, rate)
+		print("[VideoMode] setMode - port: %s, mode: %s, rate: %s" % (port, mode, rate))
 
 		# config.av.videoport.setValue(port)
 		# we can ignore "port"
@@ -202,7 +204,7 @@ class AVSwitch:
 				f.write(mode_50)
 				f.close()
 			except IOError:
-				print "[AVSwitch] setting videomode failed."
+				print("[AVSwitch] setting videomode failed.")
 
 #		try:
 #			# use 50Hz mode (if available) for booting
@@ -313,26 +315,26 @@ class AVSwitch:
 	def setConfiguredMode(self):
 		port = config.av.videoport.value
 		if port not in config.av.videomode:
-			print "current port not available, not setting videomode"
+			print("current port not available, not setting videomode")
 			return
 
 		mode = config.av.videomode[port].value
 
 		if mode not in config.av.videorate:
-			print "current mode not available, not setting videomode"
+			print("current mode not available, not setting videomode")
 			return
 
 		rate = config.av.videorate[mode].value
 		self.setMode(port, mode, rate)
 
 	def setAspect(self, cfgelement):
-		print "[VideoMode] setting aspect: %s" % cfgelement.value
+		print("[VideoMode] setting aspect: %s" % cfgelement.value)
 		try:
 			f = open("/proc/stb/video/aspect", "w")
 			f.write(cfgelement.value)
 			f.close()
 		except IOError:
-			print "setting aspect failed."
+			print("setting aspect failed.")
 
 	def setWss(self, cfgelement):
 		if not cfgelement.value:
@@ -340,13 +342,13 @@ class AVSwitch:
 		else:
 			wss = "auto"
 		if os.path.exists("/proc/stb/denc/0/wss"):
-			print "[VideoMode] setting wss: %s" % wss
+			print("[VideoMode] setting wss: %s" % wss)
 			f = open("/proc/stb/denc/0/wss", "w")
 			f.write(wss)
 			f.close()
 
 	def setPolicy43(self, cfgelement):
-		print "[VideoMode] setting policy: %s" % cfgelement.value
+		print("[VideoMode] setting policy: %s" % cfgelement.value)
 		arw = "0"
 		try:
 			if about.getChipSetString() in ('meson-6', 'meson-64'):
@@ -359,20 +361,20 @@ class AVSwitch:
 				f.write(cfgelement.value)
 				f.close()
 		except IOError:
-			print "setting policy43 failed."
+			print("setting policy43 failed.")
 
 	def setPolicy169(self, cfgelement):
 		if os.path.exists("/proc/stb/video/policy2"):
-			print "[VideoMode] setting policy2: %s" % cfgelement.value
+			print("[VideoMode] setting policy2: %s" % cfgelement.value)
 			f = open("/proc/stb/video/policy2", "w")
 			f.write(cfgelement.value)
 			f.close()
 
 	def getOutputAspect(self):
-		ret = (16,9)
+		ret = (16, 9)
 		port = config.av.videoport.value
 		if port not in config.av.videomode:
-			print "current port not available in getOutputAspect!!! force 16:9"
+			print("current port not available in getOutputAspect!!! force 16:9")
 		else:
 			mode = config.av.videomode[port].value
 			force_widescreen = self.isWidescreenMode(port, mode)
@@ -384,16 +386,16 @@ class AVSwitch:
 				else:
 					aspect = {"16:9": "16:9", "16:10": "16:10"}[config.av.aspect.value]
 					if aspect == "16:10":
-						ret = (16,10)
+						ret = (16, 10)
 			elif is_auto:
 				try:
 					aspect_str = open("/proc/stb/vmpeg/0/aspect", "r").read()
 					if aspect_str == "1": # 4:3
-						ret = (4,3)
+						ret = (4, 3)
 				except IOError:
 					pass
 			else:  # 4:3
-				ret = (4,3)
+				ret = (4, 3)
 		return ret
 
 	def getFramebufferScale(self):
@@ -429,7 +431,7 @@ def InitAVSwitch():
 		config.av.yuvenabled = ConfigBoolean(default=False)
 	else:
 		config.av.yuvenabled = ConfigBoolean(default=True)
-	config.av.osd_alpha = ConfigSlider(default=255, increment = 5, limits=(20,255)) # Make openATV compatible with some plugins who still use config.av.osd_alpha
+	config.av.osd_alpha = ConfigSlider(default=255, increment = 5, limits=(20, 255)) # Make openNFR compatible with some plugins who still use config.av.osd_alpha
 	colorformat_choices = {"cvbs": _("CVBS"), "rgb": _("RGB"), "svideo": _("S-Video")}
 	# when YUV is not enabled, don't let the user select it
 	if config.av.yuvenabled.value:
@@ -470,7 +472,7 @@ def InitAVSwitch():
 	config.av.autores_30p =  ConfigSelection(choices=choicelist, default="60,30")
 	config.av.autores_unknownres =  ConfigSelection(choices={"next": _("next higher Resolution"), "highest": _("highest Resolution")}, default="next")
 	choicelist = []
-	for i in range(5, 16):
+	for i in list(range(5, 16)):
 		choicelist.append(("%d" % i, ngettext("%d second", "%d seconds", i) % i))
 	config.av.autores_label_timeout = ConfigSelection(default = "5", choices = [("0", _("Not Shown"))] + choicelist)
 	config.av.autores_delay = ConfigSelectionNumber(min = 0, max = 3000, stepwidth = 50, default = 400, wraparound = True)
@@ -627,7 +629,7 @@ def InitAVSwitch():
 		iAVSwitch.setAspectRatio(map[configElement.value])
 
 	iAVSwitch.setInput("ENCODER") # init on startup
-	if (getBoxType() in ('gbquad', 'gbquadplus', 'et5x00', 'ixussone', 'ixusszero', 'axodin', 'axodinc', 'starsatlx', 'galaxym6', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'omtimussos1', 'omtimussos2', 'gb800seplus', 'gb800ueplus', 'gbultrase', 'gbultraue', 'gbultraueh' , 'twinboxlcd' )) or about.getModelString() == 'et6000':
+	if (getBoxType() in ('gbquad', 'gbquadplus', 'et5x00', 'ixussone', 'ixusszero', 'axodin', 'axodinc', 'starsatlx', 'galaxym6', 'geniuse3hd', 'evoe3hd', 'axase3', 'axase3c', 'omtimussos1', 'omtimussos2', 'gb800seplus', 'gb800ueplus', 'gbultrase', 'gbultraue', 'gbultraueh', 'twinboxlcd' )) or about.getModelString() == 'et6000':
 		detected = False
 	else:
 		detected = eAVSwitch.getInstance().haveScartSwitch()
@@ -676,7 +678,7 @@ def InitAVSwitch():
 				f.close()
 			except:
 				pass
-		if getBoxType() in ('vusolo4k','vuuno4k','vuuno4kse','vuultimo4k'):
+		if getBoxType() in ('vusolo4k', 'vuuno4k', 'vuuno4kse', 'vuultimo4k'):
 			config.av.hdmicolorspace = ConfigSelection(choices={
 					"Edid(Auto)": _("Auto"),
 					"Hdmi_Rgb": _("RGB"),
@@ -684,7 +686,7 @@ def InitAVSwitch():
 					"422": _("YCbCr422"),
 					"420": _("YCbCr420")},
 					default = "Edid(Auto)")
-		elif getBoxType() in ('dm900','dm920','vuzero4k'):
+		elif getBoxType() in ('dm900', 'dm920', 'vuzero4k'):
 			config.av.hdmicolorspace = ConfigSelection(choices={
 					"Edid(Auto)": _("Auto"),
 					"Hdmi_Rgb": _("RGB"),
@@ -1138,7 +1140,7 @@ def InitAVSwitch():
 		def setScaler_sharpness(config):
 			myval = int(config.value)
 			try:
-				print "[VideoMode] setting scaler_sharpness to: %0.8X" % myval
+				print("[VideoMode] setting scaler_sharpness to: %0.8X" % myval)
 				f = open("/proc/stb/vmpeg/0/pep_scaler_sharpness", "w")
 				f.write("%0.8X\n" % myval)
 				f.close()
@@ -1146,12 +1148,12 @@ def InitAVSwitch():
 				f.write("1")
 				f.close()
 			except IOError:
-				print "couldn't write pep_scaler_sharpness"
+				print("couldn't write pep_scaler_sharpness")
 
 		if getBoxType() in ('gbquad', 'gbquadplus'):
-			config.av.scaler_sharpness = ConfigSlider(default=5, limits=(0,26))
+			config.av.scaler_sharpness = ConfigSlider(default=5, limits=(0, 26))
 		else:
-			config.av.scaler_sharpness = ConfigSlider(default=13, limits=(0,26))
+			config.av.scaler_sharpness = ConfigSlider(default=13, limits=(0, 26))
 		config.av.scaler_sharpness.addNotifier(setScaler_sharpness)
 	else:
 		config.av.scaler_sharpness = NoSave(ConfigNothing())
@@ -1171,20 +1173,20 @@ class VideomodeHotplug:
 		iAVSwitch.on_hotplug.remove(self.hotplug)
 
 	def hotplug(self, what):
-		print "hotplug detected on port '%s'" % what
+		print("hotplug detected on port '%s'" % what)
 		port = config.av.videoport.value
 		mode = config.av.videomode[port].value
 		rate = config.av.videorate[mode].value
 
 		if not iAVSwitch.isModeAvailable(port, mode, rate):
-			print "mode %s/%s/%s went away!" % (port, mode, rate)
+			print("mode %s/%s/%s went away!" % (port, mode, rate))
 			modelist = iAVSwitch.getModeList(port)
 			if not len(modelist):
-				print "sorry, no other mode is available (unplug?). Doing nothing."
+				print("sorry, no other mode is available (unplug?). Doing nothing.")
 				return
 			mode = modelist[0][0]
 			rate = modelist[0][1]
-			print "setting %s/%s/%s" % (port, mode, rate)
+			print("setting %s/%s/%s" % (port, mode, rate))
 			iAVSwitch.setMode(port, mode, rate)
 
 hotplug = None

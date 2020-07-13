@@ -1,3 +1,4 @@
+from __future__ import print_function
 from enigma import eConsoleAppContainer
 from Tools.BoundFunction import boundFunction
 
@@ -60,7 +61,7 @@ class Console(object):
 
 	def kill(self,name):
 		if name in self.appContainers:
-			print "[Console] killing: ",self.appContainers[name]
+			print("[Console] killing: ",self.appContainers[name])
 			self.appContainers[name].kill()
 
 	def killAll(self):

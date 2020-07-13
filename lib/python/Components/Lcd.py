@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
+from __future__ import division
+from __future__ import print_function
+from __future__ import absolute_import
 from boxbranding import getBoxType, getDisplayType
-from sys import maxint
+from sys import maxsize
 
 from twisted.internet import threads
 from enigma import eDBoxLCD, eTimer, eActionMap
 import os
 import commands
 
-from config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
+from Components.config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import fileExists
 from Screens.Screen import Screen
@@ -85,7 +88,7 @@ class IconCheckPoller:
 
 class LCD:
 	def __init__(self):
-		eActionMap.getInstance().bindAction('', -maxint -1, self.DimUpEvent)
+		eActionMap.getInstance().bindAction('', -maxsize -1, self.DimUpEvent)
 		self.autoDimDownLCDTimer = eTimer()
 		self.autoDimDownLCDTimer.callback.append(self.autoDimDownLCD)
 		self.autoDimUpLCDTimer = eTimer()
@@ -101,7 +104,7 @@ class LCD:
 		eActionMap.getInstance().unbindAction('', self.DimUpEvent)
 
 	def leaveStandby(self):
-		eActionMap.getInstance().bindAction('', -maxint -1, self.DimUpEvent)
+		eActionMap.getInstance().bindAction('', -maxsize -1, self.DimUpEvent)
 
 	def DimUpEvent(self, key, flag):
 		self.autoDimDownLCDTimer.stop()
@@ -131,7 +134,7 @@ class LCD:
 
 	def setBright(self, value):
 		value *= 255
-		value /= 10
+		value //= 10
 		if value > 255:
 			value = 255
 		self.autoDimDownLCDTimer.stop()
@@ -144,7 +147,7 @@ class LCD:
 
 	def setStandbyBright(self, value):
 		value *= 255
-		value /= 10
+		value //= 10
 		if value > 255:
 			value = 255
 		self.autoDimDownLCDTimer.stop()
@@ -158,7 +161,7 @@ class LCD:
 
 	def setDimBright(self, value):
 		value *= 255
-		value /= 10
+		value //= 10
 		if value > 255:
 			value = 255
 		self.dimBrightness = value
@@ -168,7 +171,7 @@ class LCD:
 
 	def setContrast(self, value):
 		value *= 63
-		value /= 20
+		value //= 20
 		if value > 63:
 			value = 63
 		eDBoxLCD.getInstance().setLCDContrast(value)
@@ -189,7 +192,7 @@ class LCD:
 
 	def setMode(self, value):
 		if fileExists("/proc/stb/lcd/show_symbols"):
-			print 'setLCDMode',value
+			print('setLCDMode', value)
 			f = open("/proc/stb/lcd/show_symbols", "w")
 			f.write(value)
 			f.close()
@@ -227,39 +230,39 @@ class LCD:
 
 	def setPower(self, value):
 		if fileExists("/proc/stb/power/vfd"):
-			print 'setLCDPower',value
+			print('setLCDPower', value)
 			f = open("/proc/stb/power/vfd", "w")
 			f.write(value)
 			f.close()
 		elif fileExists("/proc/stb/lcd/vfd"):
-			print 'setLCDPower',value
+			print('setLCDPower', value)
 			f = open("/proc/stb/lcd/vfd", "w")
 			f.write(value)
 			f.close()
 
 	def setShowoutputresolution(self, value):
 		if fileExists("/proc/stb/lcd/show_outputresolution"):
-			print 'setLCDShowoutputresolution',value
+			print('setLCDShowoutputresolution', value)
 			f = open("/proc/stb/lcd/show_outputresolution", "w")
 			f.write(value)
 			f.close()
 
 	def setfblcddisplay(self, value):
-		print 'setfblcddisplay',value
+		print('setfblcddisplay', value)
 		f = open("/proc/stb/fb/sd_detach", "w")
 		f.write(value)
 		f.close()
 
 	def setRepeat(self, value):
 		if fileExists("/proc/stb/lcd/scroll_repeats"):
-			print 'setLCDRepeat',value
+			print('setLCDRepeat', value)
 			f = open("/proc/stb/lcd/scroll_repeats", "w")
 			f.write(value)
 			f.close()
 
 	def setScrollspeed(self, value):
 		if fileExists("/proc/stb/lcd/scroll_delay"):
-			print 'setLCDScrollspeed',value
+			print('setLCDScrollspeed', value)
 			f = open("/proc/stb/lcd/scroll_delay", "w")
 			f.write(str(value))
 			f.close()
@@ -275,7 +278,7 @@ class LCD:
 		
 
 	def setLCDMiniTVMode(self, value):
-		print 'setLCDMiniTVMode',value
+		print('setLCDMiniTVMode', value)
 		if fileExists("/proc/stb/lcd/mode"):
 			f = open('/proc/stb/lcd/mode', "w")
 			f.write(value)
@@ -288,7 +291,7 @@ class LCD:
 			pass
 		
 	def setLCDMiniTVMode4k(self, value):
-		print 'setLCDMiniTVMode4k',value
+		print('setLCDMiniTVMode4k',value)
 		f = open('/proc/stb/lcd/live_enable', "w")
 		f.write(value)
 		f.close()		
@@ -298,12 +301,12 @@ class LCD:
 			f = open('/proc/stb/lcd/live_decoder', "w")
 			f.write(value)
 			f.close()
-			print 'setLCDMiniTVPIPMode',value
+			print('setLCDMiniTVPIPMode', value)
 		except:
 			pass
 
 	def setLCDMiniTVFPS(self, value):
-		print 'setLCDMiniTVFPS',value
+		print('setLCDMiniTVFPS',value)
 		try:
 			f = open('/proc/stb/lcd/fps', "w")
 			f.write("%d \n" % value)
@@ -324,7 +327,7 @@ def standbyCounterChanged(configElement):
 	config.lcd.ledbrightnessdeepstandby.apply()
 
 def InitLcd():
-	if getBoxType() in ('gbx34k','force4','alien5','viperslim','lunix','lunix4k','purehdse','vipert2c','evoslimse','evoslimt2c','valalinux','tmtwin4k','tmnanom3','mbmicrov2','revo4k','force3uhd','force2nano','evoslim','wetekplay', 'wetekplay2', 'wetekhub', 'ultrabox', 'novaip', 'dm520', 'dm525', 'purehd', 'mutant11', 'xpeedlxpro', 'zgemmai55', 'sf98', 'et7x00mini', 'xpeedlxcs2', 'xpeedlxcc', 'e4hd', 'e4hdhybrid', 'mbmicro', 'beyonwizt2', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'et7100', 'mixosf7', 'mixoslumi', 'gbx1', 'gbx2', 'gbx3', 'gbx3h'):
+	if getBoxType() in ('gbx34k', 'force4', 'alien5', 'viperslim', 'lunix', 'lunix4k', 'purehdse', 'vipert2c', 'evoslimse', 'evoslimt2c', 'valalinux', 'tmtwin4k', 'tmnanom3', 'mbmicrov2', 'revo4k', 'force3uhd', 'force2nano', 'evoslim', 'wetekplay', 'wetekplay2', 'wetekhub', 'ultrabox', 'novaip', 'dm520', 'dm525', 'purehd', 'mutant11', 'xpeedlxpro', 'zgemmai55', 'sf98', 'et7x00mini', 'xpeedlxcs2', 'xpeedlxcc', 'e4hd', 'e4hdhybrid', 'mbmicro', 'beyonwizt2', 'amikomini', 'dynaspark', 'amiko8900', 'sognorevolution', 'arguspingulux', 'arguspinguluxmini', 'arguspinguluxplus', 'sparkreloaded', 'sabsolo', 'sparklx', 'gis8120', 'gb800se', 'gb800solo', 'gb800seplus', 'gbultrase', 'gbipbox', 'tmsingle', 'tmnano2super', 'iqonios300hd', 'iqonios300hdv2', 'optimussos1plus', 'optimussos1', 'vusolo', 'et4x00', 'et5x00', 'et6x00', 'et7000', 'et7100', 'mixosf7', 'mixoslumi', 'gbx1', 'gbx2', 'gbx3', 'gbx3h'):
 		detected = False
 	else:
 		detected = eDBoxLCD.getInstance().detected()
@@ -348,7 +351,7 @@ def InitLcd():
 		if can_lcdmodechecking and getBoxType() not in ('vusolo4k', 'e4hdultra'):
 			def setLCDModeMinitTV(configElement):
 				try:
-					print 'setLCDModeMinitTV',configElement.value
+					print('setLCDModeMinitTV', configElement.value)
 					f = open("/proc/stb/lcd/mode", "w")
 					f.write(configElement.value)
 					f.close()
@@ -356,7 +359,7 @@ def InitLcd():
 					pass
 			def setMiniTVFPS(configElement):
 				try:
-					print 'setMiniTVFPS',configElement.value
+					print('setMiniTVFPS', configElement.value)
 					f = open("/proc/stb/lcd/fps", "w")
 					f.write("%d \n" % configElement.value)
 					f.close()
@@ -621,13 +624,13 @@ def InitLcd():
 		config.usage.lcd_deepstandbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_deepstandbypowerled.addNotifier(setPowerLEDdeepstanbystate)
 
-		config.usage.lcd_ledpowercolor = ConfigSelection(default = "1", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledpowercolor = ConfigSelection(default = "1", choices = [("0", _("off")), ("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
 		config.usage.lcd_ledpowercolor.addNotifier(setLedPowerColor)
 
-		config.usage.lcd_ledstandbycolor = ConfigSelection(default = "3", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledstandbycolor = ConfigSelection(default = "3", choices = [("0", _("off")), ("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
 		config.usage.lcd_ledstandbycolor.addNotifier(setLedStandbyColor)
 
-		config.usage.lcd_ledsuspendcolor = ConfigSelection(default = "2", choices = [("0", _("off")),("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
+		config.usage.lcd_ledsuspendcolor = ConfigSelection(default = "2", choices = [("0", _("off")), ("1", _("blue")), ("2", _("red")), ("3", _("violet"))])
 		config.usage.lcd_ledsuspendcolor.addNotifier(setLedSuspendColor)
 
 		config.usage.lcd_power4x7on = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
@@ -818,16 +821,16 @@ def InitLcd():
 			config.lcd.showoutputresolution = ConfigNothing()
 
 		if getBoxType() == 'vuultimo':
-			config.lcd.ledblinkingtime = ConfigSlider(default = 5, increment = 1, limits = (0,15))
+			config.lcd.ledblinkingtime = ConfigSlider(default = 5, increment = 1, limits = (0, 15))
 			config.lcd.ledblinkingtime.addNotifier(setLEDblinkingtime);
-			config.lcd.ledbrightnessdeepstandby = ConfigSlider(default = 1, increment = 1, limits = (0,15))
+			onfig.lcd.ledbrightnessdeepstandby = ConfigSlider(default = 1, increment = 1, limits = (0, 15))
 			config.lcd.ledbrightnessdeepstandby.addNotifier(setLEDnormalstate);
 			config.lcd.ledbrightnessdeepstandby.addNotifier(setLEDdeepstandby);
 			config.lcd.ledbrightnessdeepstandby.apply = lambda : setLEDdeepstandby(config.lcd.ledbrightnessdeepstandby)
-			config.lcd.ledbrightnessstandby = ConfigSlider(default = 1, increment = 1, limits = (0,15))
+			config.lcd.ledbrightnessstandby = ConfigSlider(default = 1, increment = 1, limits = (0, 15))
 			config.lcd.ledbrightnessstandby.addNotifier(setLEDnormalstate);
 			config.lcd.ledbrightnessstandby.apply = lambda : setLEDnormalstate(config.lcd.ledbrightnessstandby)
-			config.lcd.ledbrightness = ConfigSlider(default = 3, increment = 1, limits = (0,15))
+			config.lcd.ledbrightness = ConfigSlider(default = 3, increment = 1, limits = (0, 15))
 			config.lcd.ledbrightness.addNotifier(setLEDnormalstate);
 			config.lcd.ledbrightness.apply = lambda : setLEDnormalstate(config.lcd.ledbrightness)
 			config.lcd.ledbrightness.callNotifiersOnSaveAndCancel = True

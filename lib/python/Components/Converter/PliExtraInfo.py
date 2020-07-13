@@ -1,12 +1,15 @@
 # shamelessly copied from pliExpertInfo (Vali, Mirakels, Littlesat)
-
+from __future__ import absolute_import
 from enigma import iServiceInformation, iPlayableService
 from Components.Converter.Converter import Converter
 from Components.Element import cached
 from Components.config import config
 from Tools.Transponder import ConvertToHumanReadable
 from Tools.GetEcmInfo import GetEcmInfo
-from Poll import Poll
+from Components.Converter.Poll import Poll
+import six
+
+SIGN = '°' if six.PY3 else str('\xc2\xb0')
 from Components.Converter.ChannelNumbers import channelnumbers
 
 # stream type to codec map
@@ -75,8 +78,8 @@ class PliExtraInfo(Poll, Converter, object):
 			("CryptoCaidNagraAvailable",	"N",	False),
 			("CryptoCaidBissAvailable",	"Bi",	False),
 			("CryptoCaidDreAvailable",	"D",	False),
-			("CryptoCaidBulCrypt1Available","B1",	False),
-			("CryptoCaidBulCrypt2Available","B2",	False),
+			("CryptoCaidBulCrypt1Available", "B1",	False),
+			("CryptoCaidBulCrypt2Available", "B2",	False),
 			("CryptoCaidSecaSelected",	"S",	True),
 			("CryptoCaidViaSelected",	"V",	True),
 			("CryptoCaidIrdetoSelected",	"I",	True),
@@ -313,7 +316,7 @@ class PliExtraInfo(Poll, Converter, object):
 				if int(caid_entry[0], 16) <= int(self.current_caid, 16) <= int(caid_entry[1], 16):
 					caid_name = caid_entry[2]
 					break
-			return caid_name + ":%04x:%04x:%04x:%04x" % (int(self.current_caid,16), int(self.current_provid,16), info.getInfo(iServiceInformation.sSID), int(self.current_ecmpid,16))
+			return caid_name + ":%04x:%04x:%04x:%04x" % (int(self.current_caid, 16), int(self.current_provid, 16), info.getInfo(iServiceInformation.sSID), int(self.current_ecmpid, 16))
 		except:
 			pass
 		return ""
@@ -426,18 +429,18 @@ class PliExtraInfo(Poll, Converter, object):
 	def createOrbPos(self, feraw):
 		orbpos = feraw.get("orbital_position")
 		if orbpos > 1800:
-			return str((float(3600 - orbpos)) / 10.0) + "\xc2\xb0 W"
+			return str((float(3600 - orbpos)) / 10.0) + SIGN + "W"
 		elif orbpos > 0:
-			return str((float(orbpos)) / 10.0) + "\xc2\xb0 E"
+			return str((float(orbpos)) / 10.0) + SIGN + "E"
 		return ""
 
-	def createOrbPosOrTunerSystem(self, fedata,feraw):
+	def createOrbPosOrTunerSystem(self, fedata, feraw):
 		orbpos = self.createOrbPos(feraw)
-		if orbpos is not "":
+		if orbpos != "":
 			return orbpos
 		return self.createTunerSystem(fedata)
 
-	def createTransponderName(self,feraw):
+	def createTransponderName(self, feraw):
 		orb_pos = ""
 		orbpos = feraw.get("orbital_position")
 		if orbpos > 1800:
@@ -646,7 +649,7 @@ class PliExtraInfo(Poll, Converter, object):
 				orb_pos = str((float(orbpos)) / 10.0) + "E"
 		return orb_pos
 
-	def createProviderName(self,info):
+	def createProviderName(self, info):
 		return info.getInfoString(iServiceInformation.sProvider)
 
 	@cached
@@ -819,7 +822,7 @@ class PliExtraInfo(Poll, Converter, object):
 			return self.createTunerSystem(fedata)
 
 		if self.type == "OrbitalPositionOrTunerSystem":
-			return self.createOrbPosOrTunerSystem(fedata,feraw)
+			return self.createOrbPosOrTunerSystem(fedata, feraw)
 
 		if self.type == "PIDInfo":
 			return self.createPIDInfo(info)

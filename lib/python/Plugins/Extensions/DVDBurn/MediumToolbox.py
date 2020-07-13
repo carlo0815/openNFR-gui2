@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Sources.StaticText import StaticText
@@ -7,6 +8,7 @@ from Components.ScrollLabel import ScrollLabel
 from Components.Harddisk import harddiskmanager
 from Components.Console import Console
 from Plugins.SystemPlugins.Hotplug.plugin import hotplugNotifier
+import six
 
 class MediumToolbox(Screen):
 	skin = """
@@ -79,6 +81,7 @@ class MediumToolbox(Screen):
 		self.update()
 
 	def mediainfoCB(self, mediuminfo, retval, extra_args):
+		mediuminfo = six.ensure_str(mediuminfo)
 		formatted_capacity = 0
 		read_capacity = 0
 		capacity = 0
@@ -87,38 +90,38 @@ class MediumToolbox(Screen):
 		mediatype = ""
 		for line in mediuminfo.splitlines():
 			if line.find("Mounted Media:") > -1:
-				mediatype = line.rsplit(',',1)[1][1:]
+				mediatype = line.rsplit(',', 1)[1][1:]
 				if mediatype.find("RW") > 0 or mediatype.find("RAM") > 0 or mediatype.find("RE"):
 					self.formattable = True
 				else:
 					self.formattable = False
 			elif line.find("Legacy lead-out at:") > -1:
-				used = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] lead out used =", used
+				used = int(line.rsplit('=', 1)[1]) / 1048576.0
+				print("[dvd+rw-mediainfo] lead out used =", used)
 			elif line.find("formatted:") > -1:
-				formatted_capacity = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] formatted capacity =", formatted_capacity
+				formatted_capacity = int(line.rsplit('=', 1)[1]) / 1048576.0
+				print("[dvd+rw-mediainfo] formatted capacity =", formatted_capacity)
 			elif formatted_capacity == 0 and line.find("READ CAPACITY:") > -1:
-				read_capacity = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] READ CAPACITY =", read_capacity
+				read_capacity = int(line.rsplit('=', 1)[1]) / 1048576.0
+				print("[dvd+rw-mediainfo] READ CAPACITY =", read_capacity)
 		for line in mediuminfo.splitlines():
 			if line.find("Free Blocks:") > -1:
 				try:
-					size = eval(line[14:].replace("KB","*1024"))
+					size = eval(line[14:].replace("KB", "*1024"))
 				except:
 					size = 0
 				if size > 0:
 					capacity = size / 1048576
 					if used:
 						used = capacity-used
-					print "[dvd+rw-mediainfo] free blocks capacity=%d, used=%d" % (capacity, used)
+					print("[dvd+rw-mediainfo] free blocks capacity=%d, used=%d" % (capacity, used))
 			elif line.find("Disc status:") > -1:
 				if line.find("blank") > -1:
-					print "[dvd+rw-mediainfo] Disc status blank capacity=%d, used=0" % (capacity)
+					print("[dvd+rw-mediainfo] Disc status blank capacity=%d, used=0" % (capacity))
 					capacity = used
 					used = 0
 				elif line.find("complete") > -1 and formatted_capacity == 0:
-					print "[dvd+rw-mediainfo] Disc status complete capacity=0, used=%d" % (capacity)
+					print("[dvd+rw-mediainfo] Disc status complete capacity=0, used=%d" % (capacity))
 					used = read_capacity
 					capacity = 1
 				else:
@@ -127,7 +130,7 @@ class MediumToolbox(Screen):
 		if capacity and used > capacity:
 			used = read_capacity or capacity
 			capacity = formatted_capacity or capacity
-		print "capacity", capacity, "used", used, "read_capacity", read_capacity, "formatted_capacity", formatted_capacity
+		print("capacity", capacity, "used", used, "read_capacity", read_capacity, "formatted_capacity", formatted_capacity)
 		self["details"].setText(infotext)
 		if self.formattable:
 			self["key_yellow"].text = _("Format")
@@ -182,7 +185,7 @@ class DVDformatTaskPostcondition(Condition):
 		}[task.error]
 
 class DVDformatTask(Task):
-	ERROR_ALREADYFORMATTED, ERROR_NOTWRITEABLE, ERROR_UNKNOWN = range(3)
+	ERROR_ALREADYFORMATTED, ERROR_NOTWRITEABLE, ERROR_UNKNOWN = list(range(3))
 	def __init__(self, job, extra_args=[]):
 		Task.__init__(self, job, ("RW medium format"))
 		self.toolbox = job.toolbox
@@ -210,9 +213,9 @@ class DVDformatTask(Task):
 			self.error = self.ERROR_NOTWRITEABLE
 
 	def processOutput(self, data):
-		print "[DVDformatTask processOutput]  ", data
+		print("[DVDformatTask processOutput]  ", data)
 		if data.endswith('%'):
-			data= data.replace('\x08','')
+			data= data.replace('\x08', '')
 			self.progress = int(float(data[:-1])*10)
 		else:
 			Task.processOutput(self, data)

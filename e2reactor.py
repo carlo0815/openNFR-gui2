@@ -17,6 +17,7 @@ from twisted.internet import main, posixbase, error
 #from twisted.internet.pollreactor import PollReactor, poller
 
 from enigma import getApplication
+import six
 
 # globals
 reads = {}
@@ -153,7 +154,7 @@ class PollReactor(posixbase.PosixReactorBase):
 				if self.running:
 					self.stop()
 				l = [ ]
-		except select.error, e:
+		except select.error as e:
 			if e[0] == errno.EINTR:
 				return
 			else:
@@ -190,8 +191,8 @@ class PollReactor(posixbase.PosixReactorBase):
 				if not selectable.fileno() == fd:
 					why = error.ConnectionFdescWentAway('Filedescriptor went away')
 					inRead = False
-			except AttributeError, ae:
-				if "'NoneType' object has no attribute 'writeHeaders'" not in ae.message:
+			except AttributeError as ae:
+				if "'NoneType' object has no attribute 'writeHeaders'" not in six.text_type(ae):
 					log.deferr()
 					why = sys.exc_info()[1]
 				else:

@@ -1,8 +1,10 @@
+from __future__ import division
+from __future__ import print_function
 from boxbranding import getMachineBrand, getMachineName
 import xml.etree.cElementTree
 from time import localtime, strftime, ctime, time
 from bisect import insort
-from sys import maxint
+from sys import maxsize
 import os
 
 from enigma import eEPGCache, getBestPlayableServiceReference, eServiceReference, eServiceCenter, iRecordableService, quitMainloop, eActionMap
@@ -18,6 +20,8 @@ import timer
 import NavigationInstance
 from ServiceReference import ServiceReference
 from enigma import pNavigation, eDVBFrontend
+ import subprocess, threading
+import six
 
 # ok, for descriptions etc we have:
 # service reference	 (to get the service name)
@@ -70,13 +74,13 @@ def findSafeRecordPath(dirname):
 	dirname = os.path.realpath(dirname)
 	mountpoint = Harddisk.findMountPoint(dirname)
 	if not os.path.ismount(mountpoint):
-		print '[RecordTimer] media is not mounted:', dirname
+		print('[RecordTimer] media is not mounted:', dirname)
 		return None
 	if not os.path.isdir(dirname):
 		try:
 			os.makedirs(dirname)
-		except Exception, ex:
-			print '[RecordTimer] Failed to create dir "%s":' % dirname, ex
++		except Exception as ex:
++			print('[RecordTimer] Failed to create dir "%s":' % dirname, ex)
 			return None
 	return dirname
 	
@@ -216,7 +220,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 
 	def log(self, code, msg):
 		self.log_entries.append((int(time()), code, msg))
-		print "[TIMER]", msg
+		print("[TIMER]", msg)
 
 	def freespace(self):
 		self.MountPath = None
@@ -237,7 +241,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			return False
 
 		s = os.statvfs(dirname)
-		if (s.f_bavail * s.f_bsize) / 1000000 < 1024:
+		if (s.f_bavail * s.f_bsize) // 1000000 < 1024:
 			self.log(0, "Not enough free space to record")
 			return False
 		else:
@@ -286,7 +290,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 
 			if self.repeated:
 				epgcache = eEPGCache.getInstance()
-				queryTime=self.begin+(self.end-self.begin)/2
+				queryTime=self.begin+(self.end-self.begin)//2
 				evt = epgcache.lookupEventTime(rec_ref, queryTime)
 				if evt:
 					self.description = evt.getShortDescription()
@@ -343,7 +347,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				Screens.Standby.TVinStandby.skipHdmiCecNow('zapandrecordtimer')
 				if Screens.Standby.inStandby:
 					self.wasInStandby = True
-					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
+					eActionMap.getInstance().bindAction('', -sys.maxsize - 1, self.keypress)
 					#set service to zap after standby
 					Screens.Standby.inStandby.prev_running_service = self.service_ref.ref
 					Screens.Standby.inStandby.paused_service = None
@@ -369,9 +373,9 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					# Give the Trashcan a chance to clean up
 					try:
 						Trashcan.instance.cleanIfIdle()
-					except Exception, e:
-						print "[TIMER] Failed to call Trashcan.instance.cleanIfIdle()"
-						print "[TIMER] Error:", e
+					except Exception as e:
+						print("[TIMER] Failed to call Trashcan.instance.cleanIfIdle()")
+						print("[TIMER] Error:", e)
 				# fine. it worked, resources are allocated.
 				self.next_activation = self.begin
 				self.backoff = 0
@@ -400,7 +404,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			if os.path.exists("/tmp/was_rectimer_wakeup") and not wasRecTimerWakeup:
 				wasRecTimerWakeup = int(open("/tmp/was_rectimer_wakeup", "r").read()) and True or False
 				os.remove("/tmp/was_rectimer_wakeup")
-
+				if debug: print("[RECORDTIMER] reset wakeup state")
 			self.autostate = Screens.Standby.inStandby
 
 			# if this timer has been cancelled, just go to "end" state.
@@ -414,7 +418,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				Screens.Standby.TVinStandby.skipHdmiCecNow('zaptimer')
 				if Screens.Standby.inStandby:
 					self.wasInStandby = True
-					eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
+					eActionMap.getInstance().bindAction('', -maxsize - 1, self.keypress)
 					self.log(11, "wakeup and zap")
 					#set service to zap after standby
 					Screens.Standby.inStandby.prev_running_service = self.service_ref.ref
@@ -498,7 +502,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					Notifications.AddNotificationWithCallback(self.sendStandbyNotification, MessageBox, _("A finished record timer wants to set your\n%s %s to standby. Do that now?") % (getMachineBrand(), getMachineName()), timeout = 180)
 			elif self.afterEvent == AFTEREVENT.DEEPSTANDBY or (wasRecTimerWakeup and self.afterEvent == AFTEREVENT.AUTO):
 				if (abs(NavigationInstance.instance.RecordTimer.getNextRecordingTime() - time()) <= 900 or abs(NavigationInstance.instance.RecordTimer.getNextZapTime() - time()) <= 900) or NavigationInstance.instance.RecordTimer.getStillRecording():
-					print '[Timer] Recording or Recording due is next 15 mins, not return to deepstandby'
+					print('[Timer] Recording or Recording due is next 15 mins, not return to deepstandby')
 					return True
 				if not Screens.Standby.inTryQuitMainloop: # not a shutdown messagebox is open
 					if not box_instandby and not tv_instandby: # not already in standby
@@ -626,7 +630,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			return
 		# self.log(16, "record event %d" % event)
 		if event == iRecordableService.evRecordWriteError:
-			print "WRITE ERROR on recording, disk full?"
+			print("WRITE ERROR on recording, disk full?")
 			# show notification. the 'id' will make sure that it will be
 			# displayed only once, even if more timers are failing at the
 			# same time. (which is very likely in case of disk fullness)
@@ -665,12 +669,13 @@ class RecordTimerEntry(timer.TimerEntry, object):
 def createTimer(xml):
 	begin = int(xml.get("begin"))
 	end = int(xml.get("end"))
-	serviceref = ServiceReference(xml.get("serviceref").encode("utf-8"))
-	description = xml.get("description").encode("utf-8")
-	repeated = xml.get("repeated").encode("utf-8")
-	disabled = long(xml.get("disabled") or "0")
-	justplay = long(xml.get("justplay") or "0")
-	always_zap = long(xml.get("always_zap") or "0")
+	serviceref = ServiceReference(six.ensure_str(xml.get("serviceref")))
+	description = six.ensure_str(xml.get("description"))
+	repeated = six.ensure_str(xml.get("repeated"))
+	rename_repeat = int(xml.get("rename_repeat") or "1")
+	disabled = int(xml.get("disabled") or "0")
+	justplay = int(xml.get("justplay") or "0")
+	always_zap = int(xml.get("always_zap") or "0")
 	afterevent = str(xml.get("afterevent") or "nothing")
 	afterevent = {
 		"nothing": AFTEREVENT.NONE,
@@ -680,24 +685,24 @@ def createTimer(xml):
 		}[afterevent]
 	eit = xml.get("eit")
 	if eit and eit != "None":
-		eit = long(eit)
+		eit = int(eit)
 	else:
 		eit = None
 	location = xml.get("location")
 	if location and location != "None":
-		location = location.encode("utf-8")
+		location = six.ensure_str(location)
 	else:
 		location = None
 	tags = xml.get("tags")
 	if tags and tags != "None":
-		tags = tags.encode("utf-8").split(' ')
+		tags = six.ensure_str(tags).split(' ')
 	else:
 		tags = None
 	descramble = int(xml.get("descramble") or "1")
 	record_ecm = int(xml.get("record_ecm") or "0")
 	isAutoTimer = int(xml.get("isAutoTimer") or "0")
 
-	name = xml.get("name").encode("utf-8")
+	name = six.ensure_str(xml.get("name"))
 	#filename = xml.get("filename").encode("utf-8")
 	entry = RecordTimerEntry(serviceref, begin, end, name, description, eit, disabled, justplay, afterevent, dirname = location, tags = tags, descramble = descramble, record_ecm = record_ecm, isAutoTimer = isAutoTimer, always_zap = always_zap)
 	entry.repeated = int(repeated)
@@ -705,7 +710,7 @@ def createTimer(xml):
 	for l in xml.findall("log"):
 		time = int(l.get("time"))
 		code = int(l.get("code"))
-		msg = l.text.strip().encode("utf-8")
+		msg = six.ensure_str(l.text.strip())
 		entry.log_entries.append((time, code, msg))
 
 	return entry
@@ -719,7 +724,7 @@ class RecordTimer(timer.Timer):
 		try:
 			self.loadTimer()
 		except IOError:
-			print "unable to load timers from file!"
+			print("unable to load timers from file!")
 
 	def doActivate(self, w):
 		# when activating a timer which has already passed,
@@ -736,7 +741,7 @@ class RecordTimer(timer.Timer):
 		try:
 			self.timer_list.remove(w)
 		except:
-			print '[RecordTimer]: Remove list failed'
+			print('[RecordTimer]: Remove list failed')
 
 		# did this timer reached the last state?
 		if w.state < RecordTimerEntry.StateEnded:
@@ -781,14 +786,14 @@ class RecordTimer(timer.Timer):
 
 			AddPopup(_("The timer file (timers.xml) is corrupt and could not be loaded."), type = MessageBox.TYPE_ERROR, timeout = 0, id = "TimerLoadFailed")
 
-			print "timers.xml failed to load!"
+			print("timers.xml failed to load!")
 			try:
 				os.rename(self.Filename, self.Filename + "_old")
 			except (IOError, OSError):
-				print "renaming broken timer failed"
+				print("renaming broken timer failed")
 			return
 		except IOError:
-			print "timers.xml not found!"
+			print("timers.xml not found!")
 			return
 
 		root = doc.getroot()
@@ -916,18 +921,18 @@ class RecordTimer(timer.Timer):
 		return False
 
 	def record(self, entry, ignoreTSC=False, dosave=True): # wird von loadTimer mit dosave=False aufgerufen
-		timersanitycheck = TimerSanityCheck(self.timer_list,entry)
+		timersanitycheck = TimerSanityCheck(self.timer_list, entry)
 		if not timersanitycheck.check():
 			if not ignoreTSC:
-				print "timer conflict detected!"
+				print("timer conflict detected!")
 				return timersanitycheck.getSimulTimerList()
 			else:
-				print "ignore timer conflict"
+				print("ignore timer conflict")
 		elif timersanitycheck.doubleCheck():
-			print "ignore double timer"
+			print("ignore double timer")
 			return None
 		entry.timeChanged()
-		print "[Timer] Record " + str(entry)
+		print("[Timer] Record " + str(entry))
 		entry.Timer = self
 		self.addTimerEntry(entry)
 		if dosave:
@@ -998,7 +1003,7 @@ class RecordTimer(timer.Timer):
 						bt = localtime(begin)
 						bday = bt.tm_wday
 						begin2 = 1440 + bt.tm_hour * 60 + bt.tm_min
-						end2 = begin2 + duration / 60
+						end2 = begin2 + duration // 60
 					xbt = localtime(x.begin)
 					xet = localtime(timer_end)
 					offset_day = False
@@ -1008,7 +1013,7 @@ class RecordTimer(timer.Timer):
 						if oday == -1: oday = 6
 						offset_day = x.repeated & (1 << oday)
 					xbegin = 1440 + xbt.tm_hour * 60 + xbt.tm_min
-					xend = xbegin + ((timer_end - x.begin) / 60)
+					xend = xbegin + ((timer_end - x.begin) // 60)
 					if xend < xbegin:
 						xend += 1440
 					if x.repeated & (1 << bday) and checking_time:
@@ -1095,12 +1100,12 @@ class RecordTimer(timer.Timer):
 
 				if time_match:
 					returnValue = (time_match, type, isAutoTimer)
-					if type in (2,7,12): # When full recording do not look further
+					if type in (2, 7, 12): # when full recording do not look further
 						break
 		return returnValue
 
 	def removeEntry(self, entry):
-		print "[Timer] Remove " + str(entry)
+		print("[Timer] Remove " + str(entry))
 
 		# avoid re-enqueuing
 		entry.repeated = False
