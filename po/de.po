@@ -14132,7 +14132,37 @@ msgstr "inetd herstellen"
 msgid "Set Rootpassword"
 msgstr "Root Passwort ändern"
 
-#,Konfiguration-System-Display (VFD/LCD)
+#,Konfiguration - System - Display (VFD/LCD) - Einstellungen
+msgid "Operating LED status while running"
+msgstr "LED-Status im Betrieb"
+
+msgid "With this option you can switch the LED color or deactivate the LED."
+msgstr "Mit dieser Einstellung kann die Farbe der LED geändert oder aber die LED abgeschaltet werden."
+
+msgid "Operating LED status in standby mode"
+msgstr "LED-Status im Standby"
+
+msgid "Operating LED status in deep standby mode"
+msgstr "LED-Status im Deep-Standby"
+
+msgid "Status of the display during operation"
+msgstr "Display-Status im Betrieb"
+
+msgid "With this option you can switch off the display during operation."
+msgstr "Mit dieser Einstellung kann das Display im Betrieb abgeschaltet werden."
+
+msgid "Status of the display in standby mode"
+msgstr "Display-Status im Standby"
+
+msgid "With this option you can switch off the display in Standby Mode."
+msgstr "Mit dieser Einstellung kann das Display im Standby abgeschaltet werden."
+
+msgid "Status of the display in deep standby"
+msgstr "Display-Status im Deep-Standby"
+
+msgid "With this option you can switch off the display in Deep Standby Mode."
+msgstr "Mit dieser Einstellung kann das Display im Deep-Standby abgeschaltet werden."
+
 msgid "Setup Display"
 msgstr "Display Einstellungen"
 
@@ -14157,6 +14187,9 @@ msgstr "Power LED Status während des Deep-Standbys einstellen"
 msgid "Show in Standby"
 msgstr "Im Standby anzeigen"
 
+msgid "This option allows you choose how to display the Time or nothing in Standby"
+msgstr "Mit dieser Displayeinstellung wird ausgewählt, ob im Standby die Zeit oder aber nichts angezeigt werden soll."
+
 #,Konfiguration-System-Zeit Einstellungen
 msgid "Setup Time"
 msgstr "Zeiteinstellungen"
@@ -14168,6 +14201,9 @@ msgstr "Untertitel Einstellungen"
 #,Konfiguration-System-HDMI CEC
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
+
+msgid "Enable command line function"
+msgstr "Befehlszeilenfunktion aktivieren"
 
 msgid "Enable command line function"
 msgstr "Befehlszeilenfunktion aktivieren"
@@ -14521,6 +14557,16 @@ msgstr "Wähle eine Möglichkeit zur Installation!"
 #,Standby/Neustart
 msgid "Multiboot Image Selector"
 msgstr "Multiboot-Auswahl"
+
+#,Standby / Neustart - Ausschalttimer
+msgid "When enabled you can specify a timeframe were the inactivity sleeptimer is ignored. Not the detection is disabled during this timeframe but the inactivity timeout is disabled"
+msgstr "Wenn aktiviert, kann ein Zeitrahmen festgelegt werden, in dem der Inaktivitätstimer nicht aktiv sein soll"
+
+msgid "Specify the start time when the inactivity sleeptimer should be ignored"
+msgstr "Lege den Beginn vom Zeitrahmen fest, in dem der Inaktivitätstimer nicht aktiv ist"
+
+msgid "Specify the end time until the inactivity sleeptimer should be ignored"
+msgstr "Lege das Ende vom Zeitrahmen fest, in dem der Inaktivitätstimer nicht aktiv ist"
 
 #,Quickmenü
 msgid "set your root password"
