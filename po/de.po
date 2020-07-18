@@ -14205,9 +14205,6 @@ msgstr "Erweiterte Einstellungen"
 msgid "Enable command line function"
 msgstr "Befehlszeilenfunktion aktivieren"
 
-msgid "Enable command line function"
-msgstr "Befehlszeilenfunktion aktivieren"
-
 msgid "Enable debug log *"
 msgstr "Debug-Log aktivieren"
 
