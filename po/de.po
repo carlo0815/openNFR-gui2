@@ -14202,8 +14202,8 @@ msgstr "Untertitel Einstellungen"
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
-msgid "Enable command line function"
-msgstr "Befehlszeilenfunktion aktivieren"
+msgid "Load Default Settings"
+msgstr "Standardeinstellungen laden"
 
 msgid "Enable command line function"
 msgstr "Befehlszeilenfunktion aktivieren"
