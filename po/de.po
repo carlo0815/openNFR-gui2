@@ -13855,6 +13855,9 @@ msgstr "Flashplatz%s - %s- %s (aktuelles Image)"
 msgid "slot%s - %s- %s "
 msgstr "Flashplatz%s - %s- %s "
 
+msgid "Back-up Tool for an %s\n"
+msgstr "Back-up Tool für %s\n"
+
 msgid "will take about 1-15 minutes for this system\n"
 msgstr "zwischen 1-15 Minuten auf diesem System.\n"
 
