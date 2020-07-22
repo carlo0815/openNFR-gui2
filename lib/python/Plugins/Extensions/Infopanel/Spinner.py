@@ -9,7 +9,7 @@ class Spinner(GUIComponent):
 		self.len = 0
 		if not Bilder:
 		        Bilder = []
-			for i in range(64):
+			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
 					Bilder.append("/usr/share/enigma2/spinner/wait%d.png"%(i+1))
                 self.SetBilder(Bilder)

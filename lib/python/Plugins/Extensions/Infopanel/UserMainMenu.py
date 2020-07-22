@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config
 from Components.Sources.List import List
@@ -22,7 +23,7 @@ class UserMainMenuConfig(Screen):
         try:
             self['title'] = StaticText(self.title)
         except:
-            print 'self["title"] was not found in skin'
+            print('self["title"] was not found in skin')
 
         self.entrylist = []
         self.addlist = []

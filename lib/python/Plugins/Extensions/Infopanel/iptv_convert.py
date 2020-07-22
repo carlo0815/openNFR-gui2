@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
@@ -31,12 +32,12 @@ class IPTV_glob(Screen):
         file = file
 
     def file_filter(self, name):
-        name_file = name.replace('/','_')
-        name_file = name_file.replace(' ','_')
-        name_file = name_file.replace('\r','')
-        name_file = name_file.replace('\n','')
-        name_file = name_file.replace('(','')
-        name_file = name_file.replace(')','')
+        name_file = name.replace('/', '_')
+        name_file = name_file.replace(' ', '_')
+        name_file = name_file.replace('\r', '')
+        name_file = name_file.replace('\n', '')
+        name_file = name_file.replace('(', '')
+        name_file = name_file.replace(')', '')
         return name_file
 
     def Convert_m3u(self, name, file):
@@ -47,50 +48,50 @@ class IPTV_glob(Screen):
         bouquetname = 'userbouquet.nfr%s.%s' %(name_file.lower(), self.type.lower())
         tmp = ''
         tmplist = []
-        tmplist.append('#NAME IPTV %s (%s)' % (name_file,self.type) + '\n')
+        tmplist.append('#NAME IPTV %s (%s)' % (name_file, self.type) + '\n')
         tmplist.append('#SERVICE 1:64:0:0:0:0:0:0:0:0::%s Channels' % name_file + '\n')
         tmplist.append('#DESCRIPTION --- %s ---' % name_file + '\n')
-        print "[openNFR_M3U_convert] Converting Bouquet %s" % name_file
+        print("[openNFR_M3U_convert] Converting Bouquet %s" % name_file)
         z = open(file, "r")
         l = z.readlines()
         z.close()
         if self.convert:
             l.pop(0) # remove first line
         else:
-            for t in range(1,4): # remove first 3 lines
+            for t in range(1, 4): # remove first 3 lines
                 l.pop(0)
 
         for line in l:
             if line == '':
                 continue
             if line.startswith("#EXTINF:"):
-                line = line.replace('#EXTINF:-1,','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:-1 ,','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:-1','#DESCRIPTION: ')
-                line = line.replace('#EXTINF%3a0,','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:0,','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:-1 tvg-name=','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:-1 tvg-shift=2 ,','#DESCRIPTION: ')
-                line = line.replace('#EXTINF:-1 group-title=','#DESCRIPTION: ')            
-                line = line.replace('#EXTINF:','#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1,', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1 ,', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF%3a0,', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:0,', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1 tvg-name=', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1 tvg-shift=2 ,', '#DESCRIPTION: ')
+                line = line.replace('#EXTINF:-1 group-title=', '#DESCRIPTION: ')            
+                line = line.replace('#EXTINF:', '#DESCRIPTION: ')
                 if 'group-title=' in line:
                     line1 = line.split('group-title=')[1]
                     line = "#DESCRIPTION:  " + line1		
-                line = line.replace('tvg-name=','')
-                line = line.replace('tvg-shift=2 ,','')
-                line = line.replace('tvg-shift=2 tvg-logo=-TV ,','')
-                line = line.replace('tvg-shift=2 tvg-logo=','')
-                line = line.replace(' tvg-id="','')
+                line = line.replace('tvg-name=', '')
+                line = line.replace('tvg-shift=2 ,', '')
+                line = line.replace('tvg-shift=2 tvg-logo=-TV ,', '')
+                line = line.replace('tvg-shift=2 tvg-logo=', '')
+                line = line.replace(' tvg-id="', '')
                 tmp = line
             else:
                 if self.type.upper() == 'TV' and self.convert:
                     line = line.replace(':','%3a')
-                    line = line.replace('|X-Forwarded-For=91.63.136.21','')
-                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmp%3a','rtmp%3a')
-                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmpe%3a','rtmpe%3a')
-                    line = line.replace('rtp%3a//@','#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
-                    line = line.replace('rtp%3a//','#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
-                    line = line.replace('udp%3a//','#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/udp/')                    
+                    line = line.replace('|X-Forwarded-For=91.63.136.21', '')
+                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmp%3a', 'rtmp%3a')
+                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmpe%3a', 'rtmpe%3a')
+                    line = line.replace('rtp%3a//@', '#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
+                    line = line.replace('rtp%3a//', '#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
+                    line = line.replace('udp%3a//', '#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/udp/')                    
                     if line.startswith('rtmp') or line.startswith('rtsp') or line.startswith('mms'):
                         line = '#SERVICE 4097:0:1:0:0:0:0:0:0:0:' + line
                     if not line.startswith("#SERVICE 4097:0:1:0:0:0:0:0:0:0:rt"):
@@ -100,9 +101,9 @@ class IPTV_glob(Screen):
                     tmplist.append(tmp)
                 elif self.type.upper() == 'RADIO' and self.convert:
                     line = line.replace(':','%3a')
-                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmp%3a','rtmp%3a')
-                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmpe%3a','rtmpe%3a')
-                    line = line.replace('rtp%3a//@','#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
+                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmp%3a', 'rtmp%3a')
+                    line = line.replace('rtmp%3a//$OPT%3artmp-raw=rtmpe%3a', 'rtmpe%3a')
+                    line = line.replace('rtp%3a//@', '#SERVICE 1:0:1:1:1:0:820000:0:0:0:http%3a//127.0.0.1%3a4050/rtp/')
                     if line.startswith('rtmp') or line.startswith('rtsp') or line.startswith('mms'):
                         line = '#SERVICE 4097:0:2:0:0:0:0:0:0:0:' + line
                     if not line.startswith("#SERVICE 4097:0:2:0:0:0:0:0:0:0:rt"):
@@ -113,7 +114,7 @@ class IPTV_glob(Screen):
                 elif not self.convert:
                     tmplist.append(line)
                 else:
-                    print"[openNFR_M3U_convert] UNKNOWN TYPE: %s" %self.type
+                    print("[openNFR_M3U_convert] UNKNOWN TYPE: %s" %self.type)
 
 
         # write bouquet file
@@ -136,9 +137,9 @@ class IPTV_glob(Screen):
                 break
 
         if found:
-            print "[openNFR_M3U_convert] Bouquetname exists, do nothing"
+            print("[openNFR_M3U_convert] Bouquetname exists, do nothing")
         else:
-            print "[openNFR_M3U_convert] Bouquetname doesn't exists, adding it"
+            print("[openNFR_M3U_convert] Bouquetname doesn't exists, adding it")
             nline = '#SERVICE: 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "%s" ORDER BY bouquet\n' % bouquetname
             ff.write(nline)
         ff.close            
@@ -242,9 +243,9 @@ class IPTV(Screen):
         url = None
         sel = self["IPTVList"].getCurrent()
         if sel == None:
-            print"[openNFR_M3U_convert] Nothing to select !!"
+            print("[openNFR_M3U_convert] Nothing to select !!")
             return
-        print"[openNFR_M3U_convert] Current selection: %s" % sel
+        print("[openNFR_M3U_convert] Current selection: %s" % sel)
         file = sel     
         self.IPTV_glob = IPTV_glob(sel, file)
         name_file = self.IPTV_glob.file_filter(sel)
@@ -266,7 +267,7 @@ class IPTV(Screen):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
         for line in bouquets:
             if line.find('(') > -1 or line.find(')') > -1:
-                print "[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line
+                print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
             else:
                 ff.write(line)
         ff.close()
@@ -361,7 +362,7 @@ class Iptvdownload(IPTV):
         elif sel == "Schweizer Provider Listen(ungetest)":
             self.session.openWithCallback(self.cancel, Iptvdownloadprovsuisse)             
         else:    
-            print"[openNFR_M3U_convert] Nothing Select use Default"
+            print("[openNFR_M3U_convert] Nothing Select use Default")
             self.session.openWithCallback(self.cancel, Iptvdownloadprov)    
 
     def cancel(self):
@@ -426,16 +427,16 @@ class Iptvdownloadprov(IPTV):
         import commands
         resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
         if 'udpxy' in resultpxy:
-            print "udpxy is installed"
+            print("udpxy is installed")
         else:
             os.system('/usr/bin/opkg install udpxy')            
         self.IPTVInstalled = True
         self.type = "TV"
         sel1 = self["IPTVList"].getCurrent() + ".m3u"
         if sel1 == None:
-            print"[openNFR_M3U_convert] Nothing to select !!"
+            print("[openNFR_M3U_convert] Nothing to select !!")
             return
-        print"[openNFR_M3U_convert] Current selection: %s" % sel1
+        print("[openNFR_M3U_convert] Current selection: %s" % sel1)
         name_file1 = sel1
         import urllib
         urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)        
@@ -456,7 +457,7 @@ class Iptvdownloadprov(IPTV):
         infotext += _('Update Bouquets and Services')
         infotext += _('Press OK or EXIT to go back !')
         
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)		
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)		
 
     def Remove_hooks(self):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'r+')
@@ -466,7 +467,7 @@ class Iptvdownloadprov(IPTV):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
         for line in bouquets:
             if line.find('(') > -1 or line.find(')') > -1:
-                print "[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line
+                print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
             else:
                 ff.write(line)
         ff.close()
@@ -494,7 +495,7 @@ class Iptvdownloadprov(IPTV):
             infotext += _('Press OK or EXIT to go back !')
         
         self.Remove_hooks()
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)
         
 class Iptvdownloadprovsuisse(IPTV):
             
@@ -552,22 +553,22 @@ class Iptvdownloadprovsuisse(IPTV):
         import commands
         resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
         if 'udpxy' in resultpxy:
-            print "udpxy is installed"
+            print("udpxy is installed")
         else:
             os.system('/usr/bin/opkg install udpxy')            
         self.IPTVInstalled = True
         self.type = "TV"
         sel1 = self["IPTVList"].getCurrent() + ".m3u"
         if sel1 == None:
-            print"[openNFR_M3U_convert] Nothing to select !!"
+            print("[openNFR_M3U_convert] Nothing to select !!")
             return
-        print"[openNFR_M3U_convert] Current selection: %s" % sel1
+        print("[openNFR_M3U_convert] Current selection: %s" % sel1)
         name_file1 = sel1
         import urllib
         urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)         
         #cmd = ""
         #cmd += "opkg install --force-overwrite curl;"
-        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
+        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1, name_file1) 
         #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
         #process.wait()
         sel = "/etc/enigma2/" + sel1
@@ -582,7 +583,7 @@ class Iptvdownloadprovsuisse(IPTV):
         infotext += _('Update Bouquets and Services')
         infotext += _('Press OK or EXIT to go back !')
         
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)		
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)		
 
     def Remove_hooks(self):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'r+')
@@ -592,14 +593,14 @@ class Iptvdownloadprovsuisse(IPTV):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
         for line in bouquets:
             if line.find('(') > -1 or line.find(')') > -1:
-                print "[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line
+                print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
             else:
                 ff.write(line)
         ff.close()
        
     def cancel(self):
         if self.IPTVInstalled is True:
-            infobox = self.session.open(MessageBox,_("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
+            infobox = self.session.open(MessageBox, _("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
             infobox.setTitle(_("Info"))
             eDVBDB.getInstance().reloadBouquets()
             eDVBDB.getInstance().reloadServicelist()
@@ -620,7 +621,7 @@ class Iptvdownloadprovsuisse(IPTV):
             infotext += _('Press OK or EXIT to go back !')
         
         self.Remove_hooks()
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)         
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)         
         
 class Iptvdownloadprovaustria(IPTV):
             
@@ -678,22 +679,22 @@ class Iptvdownloadprovaustria(IPTV):
         import commands
         resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
         if 'udpxy' in resultpxy:
-            print "udpxy is installed"
+            print("udpxy is installed")
         else:
             os.system('/usr/bin/opkg install udpxy')            
         self.IPTVInstalled = True
         self.type = "TV"
         sel1 = self["IPTVList"].getCurrent() + ".m3u"
         if sel1 == None:
-            print"[openNFR_M3U_convert] Nothing to select !!"
+            print("[openNFR_M3U_convert] Nothing to select !!")
             return
-        print"[openNFR_M3U_convert] Current selection: %s" % sel1
+        print("[openNFR_M3U_convert] Current selection: %s" % sel1)
         name_file1 = sel1
         import urllib
         urllib.urlretrieve('https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s' %name_file1, '/etc/enigma2/%s' %name_file1)         
         #cmd = ""
         #cmd += "opkg install --force-overwrite curl;"
-        ##cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1,name_file1) 
+        ##cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/carlo0815/ProvLists/master/%s > /dev/null 2>&1;" % (name_file1, name_file1) 
         #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
         #process.wait()
         sel = "/etc/enigma2/" + sel1
@@ -708,7 +709,7 @@ class Iptvdownloadprovaustria(IPTV):
         infotext += _('Update Bouquets and Services')
         infotext += _('Press OK or EXIT to go back !')
         
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)		
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)		
 
     def Remove_hooks(self):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'r+')
@@ -718,7 +719,7 @@ class Iptvdownloadprovaustria(IPTV):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
         for line in bouquets:
             if line.find('(') > -1 or line.find(')') > -1:
-                print "[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line
+                print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
             else:
                 ff.write(line)
         ff.close()
@@ -746,7 +747,7 @@ class Iptvdownloadprovaustria(IPTV):
             infotext += _('Press OK or EXIT to go back !')
         
         self.Remove_hooks()
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)        
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)        
 
 class Iptvdownloadkodi(IPTV):
             
@@ -805,15 +806,15 @@ class Iptvdownloadkodi(IPTV):
         self.type = "TV"
         sel1 = self["IPTVList"].getCurrent() + ".m3u"
         if sel1 == None:
-            print"[openNFR_M3U_convert] Nothing to select !!"
+            print("[openNFR_M3U_convert] Nothing to select !!")
             return
-        print"[openNFR_M3U_convert] Current selection: %s" % sel1
+        print("[openNFR_M3U_convert] Current selection: %s" % sel1)
         name_file1 = sel1
         import urllib
         urllib.urlretrieve('https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s' %name_file1, '/etc/enigma2/%s' %name_file1) 
         #cmd = ""
         #cmd += "opkg install --force-overwrite curl;"
-        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s > /dev/null 2>&1;" % (name_file1,name_file1)        
+        #cmd += "curl --output /etc/enigma2/%s https://raw.githubusercontent.com/jnk22/kodinerds-iptv/master/iptv/clean/%s > /dev/null 2>&1;" % (name_file1, name_file1)        
         #process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)        
         #process.wait()
         sel = "/etc/enigma2/" + sel1
@@ -828,7 +829,7 @@ class Iptvdownloadkodi(IPTV):
         infotext += _('Update Bouquets and Services')
         infotext += _('Press OK or EXIT to go back !')
         
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)		
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)		
 
     def Remove_hooks(self):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'r+')
@@ -838,14 +839,14 @@ class Iptvdownloadkodi(IPTV):
         ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
         for line in bouquets:
             if line.find('(') > -1 or line.find(')') > -1:
-                print "[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line
+                print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
             else:
                 ff.write(line)
         ff.close()
        
     def cancel(self):
         if self.IPTVInstalled is True:
-            infobox = self.session.open(MessageBox,_("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
+            infobox = self.session.open(MessageBox, _("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
             infobox.setTitle(_("Info"))
             eDVBDB.getInstance().reloadBouquets()
             eDVBDB.getInstance().reloadServicelist()
@@ -866,4 +867,4 @@ class Iptvdownloadkodi(IPTV):
             infotext += _('Press OK or EXIT to go back !')
         
         self.Remove_hooks()
-        self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)       
+        self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)       

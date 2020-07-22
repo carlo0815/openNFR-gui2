@@ -7,6 +7,7 @@
 #This means you also have to distribute
 #source code of your modifications.
 
+from __future__ import print_function
 from enigma import eTimer, ePicLoad, getDesktop, loadPic
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigYesNo, NoSave, ConfigNothing, ConfigNumber, configfile, ConfigBoolean
@@ -199,7 +200,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		try:
                 	from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin#
 			self.session.open(MSNWeatherPlugin)
-		except Exception, e:
+		except Exception as e:
 			self.session.open(MessageBox, _("The Weather plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
 		
 	def getInitConfig(self):
@@ -213,7 +214,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		self.default_ev_file = "ev_Original.xml"		
 		self.default_sb_file = "sb_Original.xml"				
 		self.default_ul_file = "ul_Original.xml"
-                self.default_clock_file = "clock_Original.xml"				
+		self.default_clock_file = "clock_Original.xml"				
 		self.color_file = "skin_user_colors.xml"
 		self.background_file = "skin_user_header.xml"
 		self.infobar_file = "skin_user_infobar.xml"
@@ -398,10 +399,10 @@ class NfrHD_Config(Screen, ConfigListScreen):
 				self.setPicture(config.myNfrHD_clock.value)                                								
 		if self["config"].getCurrent() == self.set_myatile:
 			if config.myNfrHD_active.value:
-		        	if cur_skin == "skin_default":
-			        	self["key_yellow"].setText("skin_default Pro")
-				else:
-                                	self["key_yellow"].setText("%s Pro" % cur_skin)
+                if cur_skin == "skin_default":
+                    self["key_yellow"].setText("skin_default Pro")
+                else:
+                    self["key_yellow"].setText("%s Pro" % cur_skin)
 			else:
 				self["key_yellow"].setText("")
 
@@ -449,9 +450,9 @@ class NfrHD_Config(Screen, ConfigListScreen):
 
 	def cancelConfirm(self, result):
 		if result is None or result is False:
-			print "[%s]: Cancel confirmed." % cur_skin
+			print("[%s]: Cancel confirmed." % cur_skin)
 		else:
-			print "[%s]: Cancel confirmed. Config changes will be lost." % cur_skin
+			print("[%s]: Cancel confirmed. Config changes will be lost." % cur_skin)
 			for x in self["config"].list:
 				x[1].cancel()
 			self.close()
@@ -734,10 +735,10 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		return (filename)                 		
 
 	def setPicture(self, f):
-                try:
-                        pic = f.replace(".xml", ".png")
-                except:
-                        pic = "default.png"                        
+		try:
+            pic = f.replace(".xml", ".png")
+		except:
+            pic = "default.png"                        
 		preview = self.skin_base_dir + "preview/preview_" + pic
 		if path.exists(preview):
 			self["Picture"].instance.setPixmapFromFile(preview)
@@ -776,7 +777,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 			elif id_dic.has_key('count'):
 				result_no = int(id_dic['count'])
 				location_list = []
-				for i in range(0, result_no):
+				for i in list(range(0, result_no)):
 					location_list.append(id_dic[i])
 				self.session.openWithCallback(self.select_weather_id_callback, WeatherLocationChoiceList, location_list)
 
@@ -889,7 +890,7 @@ class NfrHD_Config(Screen, ConfigListScreen):
 		self["config"].setCurrentIndex(0)
 
 	def restartGUI(self):
-		restartbox = self.session.openWithCallback(self.restartGUIcb,MessageBox,_("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUIcb,MessageBox, _("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Message"))
 
 	def about(self):
@@ -983,9 +984,9 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 
 	def weather(self):
 		try:
-                	from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin#
+			from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin#
 			self.session.open(MSNWeatherPlugin)
-		except Exception, e:
+		except Exception as e:
 			self.session.open(MessageBox, _("The Weather plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
 
 	def getInitConfig(self):
@@ -1035,7 +1036,7 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 				infobar_choices.append(default_infobar)
 			current_infobar = current_infobar
 		if sib_test == True:
-                        current_sib = self.getCurrentSib() 
+			current_sib = self.getCurrentSib() 
 			sib_choices = self.getPossibleSib()
 			default_sib = ("default")
 			config.myNfrHD_sib = ConfigSelection(default=default_sib, choices = sib_choices)		
@@ -1055,7 +1056,7 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 				ch_se_choices.append(default_ch_se)
 			current_ch_se = current_ch_se			
 		if ev_test == True:
-                        current_ev = self.getCurrentEV() 
+			current_ev = self.getCurrentEV() 
 			ev_choices = self.getPossibleEV()
 			default_ev = ("default")
 			config.myNfrHD_ev = ConfigSelection(default=default_ev, choices = ev_choices)		
@@ -1103,16 +1104,16 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 		if config.myNfrHD_active.value:
-		        if cur_skin == "skin_default":
-			        self["key_yellow"].setText("skin_default Pro")
+			if cur_skin == "skin_default":
+                self["key_yellow"].setText("skin_default Pro")
 			else:
-                                self["key_yellow"].setText("%s Pro" % cur_skin)
+                self["key_yellow"].setText("%s Pro" % cur_skin)
 		else:
 			self["key_yellow"].setText("")
 
 	def changedEntry(self):
 		if color_test == True:
-                	if self["config"].getCurrent() == self.set_color:
+			if self["config"].getCurrent() == self.set_color:
 				self.setPicture(config.myNfrHD_style.value)
 		if font_test == True:		
 			if self["config"].getCurrent() == self.set_font:
@@ -1131,10 +1132,10 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 				self.setPicture(config.myNfrHD_ev.value)				
 		if self["config"].getCurrent() == self.set_myatile:
 			if config.myNfrHD_active.value:
-		        	if cur_skin == "skin_default":
-			        	self["key_yellow"].setText("skin_default Pro")
+				if cur_skin == "skin_default":
+                    self["key_yellow"].setText("skin_default Pro")
 				else:
-                                	self["key_yellow"].setText("%s Pro" % cur_skin)
+                    self["key_yellow"].setText("%s Pro" % cur_skin)
 			else:
 				self["key_yellow"].setText("")
 
@@ -1173,9 +1174,9 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 
 	def cancelConfirm(self, result):
 		if result is None or result is False:
-			print "[%s]: Cancel confirmed." % cur_skin
+			print("[%s]: Cancel confirmed." % cur_skin)
 		else:
-			print "[%s]: Cancel confirmed. Config changes will be lost." % cur_skin
+			print("[%s]: Cancel confirmed. Config changes will be lost." % cur_skin)
 			for x in self["config"].list:
 				x[1].cancel()
 			self.close()
@@ -1412,7 +1413,7 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 			elif id_dic.has_key('count'):
 				result_no = int(id_dic['count'])
 				location_list = []
-				for i in range(0, result_no):
+				for i in list(range(0, result_no)):
 					location_list.append(id_dic[i])
 				self.session.openWithCallback(self.select_weather_id_callback, WeatherLocationChoiceList, location_list)
 
@@ -1504,7 +1505,7 @@ class NfrHD_Config1(Screen, ConfigListScreen):
 		self["config"].setCurrentIndex(0)
 
 	def restartGUI(self):
-		restartbox = self.session.openWithCallback(self.restartGUIcb,MessageBox,_("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUIcb, MessageBox, _("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Message"))
 
 	def about(self):
@@ -1632,9 +1633,9 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 		
 	def weather(self):
 		try:
-                	from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin#
+			from Plugins.Extensions.WeatherPlugin.plugin import MSNWeatherPlugin#
 			self.session.open(MSNWeatherPlugin)
-		except Exception, e:
+		except Exception as e:
 			self.session.open(MessageBox, _("The Weather plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
 
 	def getInitConfig(self):
@@ -1666,9 +1667,9 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 		self.lines_file = "skin_user_lines.xml"
 		self.sbar_file = "skin_user_sbar.xml"
 		self.wget_file = "skin_user_wget.xml"
-                self.emc_file = "skin_user_emc.xml"
-                self.volume_file = "skin_user_volume.xml"
-                self.movsel_file = "skin_user_movieselection.xml"	
+		self.emc_file = "skin_user_emc.xml"
+		self.volume_file = "skin_user_volume.xml"
+		self.movsel_file = "skin_user_movieselection.xml"	
 		
 		if color_test == True:
 			current_color = self.getCurrentColor()
@@ -1925,10 +1926,10 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 				self.setPicture(config.myNfrHD_movsel.value)                                				
 		if self["config"].getCurrent() == self.set_myatile:
 			if config.myNfrHD_active.value:
-		        	if cur_skin == "skin_default":
-			        	self["key_yellow"].setText("skin_default Pro")
+				if cur_skin == "skin_default":
+                    self["key_yellow"].setText("skin_default Pro")
 				else:
-                                	self["key_yellow"].setText("%s Pro" % cur_skin)
+                    self["key_yellow"].setText("%s Pro" % cur_skin)
 			else:
 				self["key_yellow"].setText("")
 
@@ -1991,9 +1992,9 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 
 	def cancelConfirm(self, result):
 		if result is None or result is False:
-			print "[%s]: Cancel confirmed." % cur_skin
+			print("[%s]: Cancel confirmed." % cur_skin)
 		else:
-			print "[%s]: Cancel confirmed. Config changes will be lost." % cur_skin
+			print("[%s]: Cancel confirmed. Config changes will be lost." % cur_skin)
 			for x in self["config"].list:
 				x[1].cancel()
 			self.close()
@@ -2440,10 +2441,10 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 		return (filename)                		
 
 	def setPicture(self, f):
-                try:
-                        pic = f.replace(".xml", ".png")
-                except:
-                        pic = "default.png"                        
+		try:
+            pic = f.replace(".xml", ".png")
+		except:
+            pic = "default.png"                        
 		preview = self.skin_base_dir + "preview/preview_" + pic
 		if path.exists(preview):
 			self["Picture"].instance.setPixmapFromFile(preview)
@@ -2484,7 +2485,7 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 			elif id_dic.has_key('count'):
 				result_no = int(id_dic['count'])
 				location_list = []
-				for i in range(0, result_no):
+				for i in list(range(0, result_no)):
 					location_list.append(id_dic[i])
 				self.session.openWithCallback(self.select_weather_id_callback, WeatherLocationChoiceList, location_list)
 
@@ -2632,7 +2633,7 @@ class NfrHD_Config2(Screen, ConfigListScreen):
 		self["config"].setCurrentIndex(0)
 
 	def restartGUI(self):
-		restartbox = self.session.openWithCallback(self.restartGUIcb,MessageBox,_("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUIcb, MessageBox,_("Restart necessary, restart GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Message"))
 
 	def about(self):
@@ -2694,12 +2695,12 @@ class NfrHDScreens(Screen):
 		if cur_skin == "skin_default":
 			self.title = _("skin_default additional screens")
 		else:
-                        self.title = _("%s additional screens") % cur_skin		
+			self.title = _("%s additional screens") % cur_skin		
 		
 		try:
 			self["title"]=StaticText(self.title)
 		except:
-			print 'self["title"] was not found in skin'
+			print('self["title"] was not found in skin')
 		
 		self["key_red"] = StaticText(_("Exit"))
 		self["key_green"] = StaticText(_("on"))
@@ -2718,9 +2719,9 @@ class NfrHDScreens(Screen):
 		}, -2)
 		
 		if cur_skin == "skin_default":
-		        self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
-                else:
-                	self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
+            self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
+		else:
+            self.skin_base_dir = "/usr/share/enigma2/%s/" % cur_skin
 		self.screen_dir = "allScreens"
 		self.file_dir = "mySkin_off"
 		my_path = resolveFilename(SCOPE_SKIN, "%s/icons/input_info.png" % cur_skin)
@@ -2807,7 +2808,7 @@ class DefaulSkinchange(ConfigListScreen, Screen):
 		Screen.setTitle(self, _("Default Skin Setup") + "...After selection and ok click box reboot!")
 		self.setup_title = _("Default Skin Setup") + "..."
 		config.defaultskinSetup = ConfigSubsection()
-		config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))], default='nothing')
+		config.defaultskinSetup.steps = ConfigSelection([('default Utopia', _("default Utopia")), ('default SmokeR', _("default SmokeR"))],  default='nothing')
 
                 self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()

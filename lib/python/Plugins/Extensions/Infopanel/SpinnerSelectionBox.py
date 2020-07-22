@@ -42,7 +42,7 @@ class SpinnerSelectionBox(Screen):
                	cursel = self.list[0]
 		self.Bilder = []
 		if cursel:
-			for i in range(64):
+			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/Spinner/%s/wait%d.png"%(cursel[0],i+1))):
 					self.Bilder.append("/usr/share/enigma2/Spinner/%s/wait%d.png"%(cursel[0],i+1))
 		self["bild"] = Spinner(self.Bilder);
@@ -77,7 +77,7 @@ class SpinnerSelectionBox(Screen):
 		cursel = self["list"].l.getCurrentSelection()
 		if cursel:
 			self.Bilder = []
-			for i in range(64):
+			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/Spinner/%s/wait%d.png"%(cursel[0],i+1))):
 					self.Bilder.append("/usr/share/enigma2/Spinner/%s/wait%d.png"%(cursel[0],i+1))
 			self["bild"].SetBilder(self.Bilder)

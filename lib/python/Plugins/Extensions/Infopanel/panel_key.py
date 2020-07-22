@@ -43,7 +43,7 @@ class OpenNFRBluePanel:
                         
 		else:
                         from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction,Infopanel)
+                        self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -60,7 +60,7 @@ class OpenNFRBluePanelLong:
 	def showOpenNFRBluePanelLong(self):
 		if config.plugins.infopanel_bluekeylong.list.value == '0':
 			from Plugins.Extensions.Infopanel.plugin import *
-			self.session.openWithCallback(self.callEgAction,Infopanel)
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 		elif config.plugins.infopanel_bluekeylong.list.value == '1':
                         from Screens.InfoBar import InfoBarRedButton
                         InfoBarRedButton.activateRedButton(self)
@@ -97,7 +97,7 @@ class OpenNFRREDPanel:
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
                         from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction,Infopanel)
+                        self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -124,7 +124,7 @@ class OpenNFRREDPanelLong:
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
                         from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction,Infopanel)
+                        self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -151,7 +151,7 @@ class OpenNFRGreenPanelLong:
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
                         from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction,Infopanel)
+                        self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -178,7 +178,7 @@ class OpenNFRYellowPanelLong:
                         self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
                         from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction,Infopanel)
+                        self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):

@@ -125,7 +125,7 @@ class Net_test(Screen):
 			warningtext = "\nhave been CHANGED! Do you want to save it?\n\nWARNING!"
 			warningtext = warningtext + "\n\nThe Editor-Funktions are beta (not full tested) !!!"
 			warningtext = warningtext + "\nThe author are NOT RESPONSIBLE\nfor DATA LOST OR DISORDERS !!!"
-			dei = self.session.openWithCallback(self.SaveFile, MessageBox,_(self.file_name+warningtext), MessageBox.TYPE_YESNO)
+			dei = self.session.openWithCallback(self.SaveFile, MessageBox, _(self.file_name+warningtext), MessageBox.TYPE_YESNO)
 			dei.setTitle(_("iperf Net_test..."))
 		else:
 			self.close()

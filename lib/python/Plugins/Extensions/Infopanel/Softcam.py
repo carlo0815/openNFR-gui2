@@ -1,7 +1,8 @@
+from __future__ import print_function
 from Components.Console import Console
 from os import mkdir, path, remove
 from glob import glob
-from Components.config import config, ConfigSubsection, ConfigInteger, ConfigText, getConfigListEntry, ConfigSelection,  ConfigIP, ConfigYesNo, ConfigSequence, ConfigNumber, NoSave, ConfigEnableDisable, configfile
+from Components.config import config, ConfigSubsection, ConfigInteger, ConfigText, getConfigListEntry, ConfigSelection, ConfigIP, ConfigYesNo, ConfigSequence, ConfigNumber, NoSave, ConfigEnableDisable, configfile
 import os
 config.NFRSoftcam.camdir = ConfigText(default = "/usr/emu", fixed_size=False)
 config.NFRSoftcam.camconfig = ConfigText(default = "/usr/keys", fixed_size=False)
@@ -15,9 +16,9 @@ def getcamcmd(cam):
                 		ldcheck=filename
 		symcheck = "/lib/ld-linux.so.3"
 		if os.path.islink(symcheck):
-			print "Symlink exist to start gbox"
+			print("Symlink exist to start gbox")
 		else:
-			print "Create Symlink to start gbox"
+			print("Create Symlink to start gbox")
 			os.system("ln -sf " + ldcheck + " '/lib/ld-linux.so.3'") 	
 	if getcamscript(camname):
 		return config.NFRSoftcam.camdir.value + "/" + cam + " start"
@@ -65,7 +66,7 @@ def getcamcmd(cam):
 				        return cam_starts
 				else:
                                         
-                                        print "no emustarter found in /etc/init.d please check!"
+                                        print("no emustarter found in /etc/init.d please check!")
                      	                return config.NFRSoftcam.camdir.value + "/" + cam
 			
 	
@@ -128,7 +129,7 @@ def stopcam(cam):
 	else:
 		cmd = "killall -15 " + cam
 	Console().ePopen(cmd)
-	print "[NFR-SoftCam Manager] stopping", cam
+	print("[NFR-SoftCam Manager] stopping", cam)
 	try:
 		remove("/tmp/ecm.info")
 	except:
@@ -142,7 +143,7 @@ def __createdir(list):
 			try:
 				mkdir(dir)
 			except:
-				print "[NFR-SoftCam Manager] Failed to mkdir", dir
+				print("[NFR-SoftCam Manager] Failed to mkdir", dir)
 
 def checkconfigdir():
 	if not path.exists(config.NFRSoftcam.camconfig.value):

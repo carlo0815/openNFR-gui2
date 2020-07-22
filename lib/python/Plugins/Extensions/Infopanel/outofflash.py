@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Harddisk import harddiskmanager
@@ -81,9 +82,9 @@ class MovePlugins_ext(Screen):
 		diskSpace = getVarSpaceKb()
 		percFree = int(diskSpace[0] / diskSpace[1] * 100)
 		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
-		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Plugins to HDD/USB'),
-		 _('Free'),
-		 self.ConvertSize(int(diskSpace[0])),
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Plugins to HDD/USB'), 
+		 _('Free'), 
+		 self.ConvertSize(int(diskSpace[0])), 
 		 percFree))
 		self['spaceused'].setValue(percUsed)		
 		
@@ -112,7 +113,7 @@ class MovePlugins_ext(Screen):
 			self.pluginConfirmed()
 			
 
-		except Exception, ex:
+		except Exception as ex:
 			self.session.open(MessageBox, str(ex), type=MessageBox.TYPE_ERROR, timeout=10)
 
 		if self.curentservice:
@@ -133,11 +134,11 @@ class MovePlugins_ext(Screen):
 				if pluginpoint in item:
 					if "ext2" in item or "ext3" in item or "ext4" in item:
 						extplugs = True
-				        else:
-                                        	extplugs = False
+					else:
+						extplugs = False
 
-		except IOError, ex:
-			print "[Harddisk] Failed to open /proc/mounts", ex
+		except IOError as ex:
+			print("[Harddisk] Failed to open /proc/mounts", ex)
 
 			
 		if extplugs == True:	
@@ -205,8 +206,8 @@ class MovePlugins(Screen):
 		})
 
 	def doIt(self, selection):
-		self.session.openWithCallback(self.close, MovePlugins_ext, selection,
-			 text=_("Do you really want to use selected Device for Plugins?\n"),
+		self.session.openWithCallback(self.close, MovePlugins_ext, selection, 
+			 text=_("Do you really want to use selected Device for Plugins?\n"), 
 			 question=_(""))
 
 	def okbuttonClick(self):
@@ -358,8 +359,8 @@ class MoveVideos_ext(Screen):
 			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
 		        else:
 			        self.hddConfirmed(True)
-		except:
-                	        self.hddConfirmed(True)
+	        except:
+		        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -375,7 +376,7 @@ class MoveVideos_ext(Screen):
 			self.videoConfirmed()
 			
 
-		except Exception, ex:
+		except Exception as ex:
 			self.session.open(MessageBox, str(ex), type=MessageBox.TYPE_ERROR, timeout=10)
 
 		if self.curentservice:
@@ -395,11 +396,11 @@ class MoveVideos_ext(Screen):
 				if videopoint in item:
 					if "ext2" in item or "ext3" in item or "ext4" in item:
 						extvideo = True
-				        else:
-                                        	extvideo = False
+					else:
+						extvideo = False
 
-		except IOError, ex:
-			print "[Harddisk] Failed to open /proc/mounts", ex
+		except IOError as ex:
+			print("[Harddisk] Failed to open /proc/mounts", ex)
 
 			
 		if extvideo == True:	
@@ -433,18 +434,14 @@ class MoveVideos_ext(Screen):
 	        mountpath = videopoint + "/bootvideos"	
 	        if confirmed:
 	                if os.path.islink(VIDEODIR):
-	                        print "1"
 	                        self.close()
 	                else:
-	                        print "2"
                                 shutil.rmtree(VIDEODIR)   	                	
                                 os.symlink(mountpath, VIDEODIR)
 	        else:
                         if os.path.islink(VIDEODIR):
-                                print "3"
                                 self.close()
                         else:
-                                print "4"
                                 shutil.rmtree(mountpath)
                                 shutil.copytree(VIDEODIR, mountpath)
                                 shutil.rmtree(VIDEODIR)   	                	
@@ -623,8 +620,8 @@ class MoveBootlogos_ext(Screen):
 			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
 		        else:
 			        self.hddConfirmed(True)
-		except:
-                	        self.hddConfirmed(True)
+	        except:
+		        self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -640,7 +637,7 @@ class MoveBootlogos_ext(Screen):
 			self.bootlogoConfirmed()
 			
 
-		except Exception, ex:
+		except Exception as ex:
 			self.session.open(MessageBox, str(ex), type=MessageBox.TYPE_ERROR, timeout=10)
 
 		if self.curentservice:
@@ -663,8 +660,8 @@ class MoveBootlogos_ext(Screen):
 					else:
 						extbootlogo = False
 
-		except IOError, ex:
-			print "[Harddisk] Failed to open /proc/mounts", ex
+		except IOError as ex:
+			print("[Harddisk] Failed to open /proc/mounts", ex)
 
 			
 		if extbootlogo == True:	
@@ -876,15 +873,15 @@ class MoveRadiologos_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-	        try:
-		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			        message += '\n' + _("Do you want to continue?")
-			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		        else:
-			        self.hddConfirmed(True)
+		try:
+            if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+                message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+                message += '\n' + _("Do you want to continue?")
+                self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+            else:
+                self.hddConfirmed(True)
 		except:
-                	        self.hddConfirmed(True)
+            self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -900,7 +897,7 @@ class MoveRadiologos_ext(Screen):
 			self.radiologoConfirmed()
 			
 
-		except Exception, ex:
+		except Exception as ex:
 			self.session.open(MessageBox, str(ex), type=MessageBox.TYPE_ERROR, timeout=10)
 
 		if self.curentservice:
@@ -923,8 +920,8 @@ class MoveRadiologos_ext(Screen):
 					else:
 						extradiologo = False
 
-		except IOError, ex:
-			print "[Harddisk] Failed to open /proc/mounts", ex
+		except IOError as ex:
+			print("[Harddisk] Failed to open /proc/mounts", ex)
 
 			
 		if extradiologo == True:	
@@ -1136,15 +1133,15 @@ class MoveSpinner_ext(Screen):
 		self['spaceused'].setValue(percUsed)		
 		
 	def hddQuestion(self, answer=False):
-	        try:
-		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			        message += '\n' + _("Do you want to continue?")
-			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		        else:
-			        self.hddConfirmed(True)
+		try:
+            if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+                message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+                message += '\n' + _("Do you want to continue?")
+                self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+            else:
+                self.hddConfirmed(True)
 		except:
-                	        self.hddConfirmed(True)
+            self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -1160,7 +1157,7 @@ class MoveSpinner_ext(Screen):
 			self.spinnerConfirmed()
 			
 
-		except Exception, ex:
+		except Exception as ex:
 			self.session.open(MessageBox, str(ex), type=MessageBox.TYPE_ERROR, timeout=10)
 
 		if self.curentservice:
@@ -1183,8 +1180,8 @@ class MoveSpinner_ext(Screen):
 					else:
 						extspinner = False
 
-		except IOError, ex:
-			print "[Harddisk] Failed to open /proc/mounts", ex
+		except IOError as ex:
+			print("[Harddisk] Failed to open /proc/mounts", ex)
 
 			
 		if extspinner == True:	

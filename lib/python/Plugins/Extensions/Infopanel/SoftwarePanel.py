@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
@@ -94,8 +95,8 @@ class SoftwarePanel(Screen):
 
 	def UpdatePackageNr(self):
 		self.packages = len(self.list)
-		print self.packages
-		print"packagenr" + str(self.packages)
+		print(self.packages)
+		print("packagenr" + str(self.packages))
 		self["packagenr"].setText(str(self.packages))
 		if self.packages == 0:
 			self['key_green'].hide()
@@ -105,8 +106,8 @@ class SoftwarePanel(Screen):
 			self['key_green_pic'].show()
 
 	def checkTraficLight(self):
-		print"checkTraficLight"
-		from urllib import urlopen
+		print("checkTraficLight")
+		from six.moves.urllib.request import urlopen
 		import socket
 		self['a_red'].hide()
 		self['a_yellow'].hide()
@@ -142,13 +143,13 @@ class SoftwarePanel(Screen):
 			divpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_SKIN, "skin_default/div-h.png"))
 			if status == 'update':
 				statuspng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "SystemPlugins/SoftwareManager/upgrade.png"))
-				self.statuslist.append(( _("Package list update"), '', _("Trying to download a new updatelist. Please wait..." ),'',statuspng, divpng ))
+				self.statuslist.append(( _("Package list update"), '', _("Trying to download a new updatelist. Please wait..." ), '', statuspng, divpng ))
 			elif status == 'error':
 				statuspng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "SystemPlugins/SoftwareManager/remove.png"))
-				self.statuslist.append(( _("Error"), '', _("There was an error downloading the updatelist. Please try again." ),'',statuspng, divpng ))
+				self.statuslist.append(( _("Error"), '', _("There was an error downloading the updatelist. Please try again." ), '', statuspng, divpng ))
 			elif status == 'noupdate':
 				statuspng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_CURRENT_PLUGIN, "SystemPlugins/SoftwareManager/installed.png"))
-				self.statuslist.append(( _("Nothing to upgrade"), '', _("There are no updates available." ),'',statuspng, divpng ))
+				self.statuslist.append(( _("Nothing to upgrade"), '', _("There are no updates available." ), '',statuspng, divpng ))
 
 			self['list'].setList(self.statuslist)
 
@@ -191,7 +192,7 @@ class SoftwarePanel(Screen):
 				try:
 					self.list.append(self.buildEntryComponent(x[0], x[1], x[2], "upgradeable"))
 				except:
-					print "[SOFTWAREPANEL] " + x[0] + " no valid architecture, ignoring !!"
+					print("[SOFTWAREPANEL] " + x[0] + " no valid architecture, ignoring !!")
 #					self.list.append(self.buildEntryComponent(x[0], '', 'no valid architecture, ignoring !!', "installable"))
 #			if len(excludeList) > 0:
 #				for x in excludeList:

@@ -13,7 +13,7 @@ class SpinnerSelector:
 		path = "/usr/share/enigma2/Spinner/"
 		dirs = os.listdir(path)
 		if not dirs:
-			for i in range(64):
+			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
 				        if not os.path.exists("/usr/share/enigma2/Spinner/lastused"):
                                                 os.mkdir("/usr/share/enigma2/Spinner/lastused")
@@ -30,12 +30,12 @@ class SpinnerSelector:
 	def menuCallback(self,choice):
 		if choice is None:
 			return
-		for i in range(64):
+		for i in list(range(64)):
 			if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
 				os.system("rm -f /usr/share/enigma2/spinner/wait%d.png"%(i+1))
 			if (os.path.isfile("/usr/share/enigma2/Spinner/%s/wait%d.png"%(choice,i+1))):
 				shutil.copy("/usr/share/enigma2/Spinner/%s/wait%d.png"%(choice,i+1),  "/usr/share/enigma2/spinner/wait%d.png"%(i+1)) 
-		self.session.openWithCallback(self.restart,MessageBox,_("GUI needs a restart to apply a new spinner.\nDo you want to restart the GUI now ?"), MessageBox.TYPE_YESNO)
+		self.session.openWithCallback(self.restart, MessageBox, _("GUI needs a restart to apply a new spinner.\nDo you want to restart the GUI now ?"), MessageBox.TYPE_YESNO)
 
 	def restart(self, answer):
 		if answer is True:

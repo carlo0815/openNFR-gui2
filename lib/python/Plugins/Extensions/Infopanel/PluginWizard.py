@@ -1,5 +1,5 @@
+from __future__ import print_function
 from boxbranding import getImageVersion
-from urllib import urlopen
 import socket
 import os
 from glob import glob
@@ -113,7 +113,6 @@ class PluginInstall(Screen):
 			return
                 
 		sel = sel[0]
-		print "selection", sel
 		if isinstance(sel, str): # category
 
 			if sel in self.expanded:
@@ -132,22 +131,18 @@ class PluginInstall(Screen):
                                                pluginfiles += "no Plugin select"
                                                self.listplugininfo(pluginfiles)
                                         else:
-                                               print "Setupliste", self.setuplist 
                                                list = self.setuplist
                                                for item in list:
                                                       pluginfiles += item
                  	                              pluginfiles += "\n" 
-                 	                              print "pluginfile1:", pluginfiles
                  	                              self.listplugininfo(pluginfiles)
                                                       self.list = []                                                 
 			        else:
  			                self.setuplist.append("%s" % sel.name)
-     			                print "Setupliste", self.setuplist
                                         list = self.setuplist
                                         for item in list:
                  	                       pluginfiles += item
                  	                       pluginfiles += "\n"
-                 	                       print "pluginfile1:", pluginfiles
                  	                       self.listplugininfo(pluginfiles)
                                                self.list = []    			                
 
@@ -192,7 +187,7 @@ class PluginInstall(Screen):
 			if dest.startswith('/'):
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
-				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
+				extra = '--add-dest %s:%s -d %s' % (dest, dest, dest)
 				Ipkg.opkgAddDestination(dest)
 			else:
 				extra = '-d ' + dest
@@ -204,7 +199,7 @@ class PluginInstall(Screen):
 		if val:
 			if self.type == self.DOWNLOAD:
 				if pluginnames.startswith("enigma2-plugin-picons-"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -217,7 +212,7 @@ class PluginInstall(Screen):
 						self.session.openWithCallback(self.installDestinationCallback, ChoiceBox, title=_("Install picons on"), list=candidates)
 					return
 				elif pluginnames.startswith("enigma2-plugin-display-picon"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -289,8 +284,8 @@ class PluginInstall(Screen):
 		if hasattr(self, 'postInstallCall'):
 			try:
 				self.postInstallCall()
-			except Exception, ex:
-				print "[PluginBrowser] postInstallCall failed:", ex
+			except Exception as ex:
+				print("[PluginBrowser] postInstallCall failed:", ex)
 			self.resetPostInstall()
 		try:
 			os.unlink('/tmp/opkg.conf')
@@ -438,7 +433,7 @@ class IpkgInstaller(Screen):
 
 		self.list = SelectionList()
 		self["list"] = self.list
-		for listindex in range(len(list)):
+		for listindex in list(range(len(list))):
 			self.list.addSelection(list[listindex], list[listindex], listindex, False)
 
 		self["key_red"] = StaticText(_("Close"))
@@ -636,7 +631,7 @@ class PluginDeinstall(Screen):
 			if dest.startswith('/'):
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
-				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
+				extra = '--add-dest %s:%s -d %s' % (dest, dest, dest)
 				Ipkg.opkgAddDestination(dest)
 			else:
 				extra = '-d ' + dest
@@ -648,7 +643,7 @@ class PluginDeinstall(Screen):
 		if val:
 			if self.type == self.DOWNLOAD:
 				if pluginnames.startswith("enigma2-plugin-picons-"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -661,7 +656,7 @@ class PluginDeinstall(Screen):
 						self.session.openWithCallback(self.installDestinationCallback, ChoiceBox, title=_("Install picons on"), list=candidates)
 					return
 				elif pluginnames.startswith("enigma2-plugin-display-picon"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -746,8 +741,8 @@ class PluginDeinstall(Screen):
 		if hasattr(self, 'postInstallCall'):
 			try:
 				self.postInstallCall()
-			except Exception, ex:
-				print "[PluginBrowser] postInstallCall failed:", ex
+			except Exception as ex:
+				print("[PluginBrowser] postInstallCall failed:", ex)
 			self.resetPostInstall()
 		try:
 			os.unlink('/tmp/opkg.conf')
@@ -948,7 +943,6 @@ class PluginSkinInstall(Screen):
 			return
                 
 		sel = sel[0]
-		print "selection", sel
 		if isinstance(sel, str): # category
 
 			if sel in self.expanded:
@@ -967,22 +961,18 @@ class PluginSkinInstall(Screen):
                                                pluginfiles += "no Plugin select"
                                                self.listplugininfo(pluginfiles)
                                         else:
-                                               print "Setupliste", self.setuplist 
                                                list = self.setuplist
                                                for item in list:
                                                       pluginfiles += item
                  	                              pluginfiles += "\n" 
-                 	                              print "pluginfile1:", pluginfiles
                  	                              self.listplugininfo(pluginfiles)
                                                       self.list = []                                                 
 			        else:
  			                self.setuplist.append("%s" % sel.name)
-     			                print "Setupliste", self.setuplist
                                         list = self.setuplist
                                         for item in list:
                  	                       pluginfiles += item
                  	                       pluginfiles += "\n"
-                 	                       print "pluginfile1:", pluginfiles
                  	                       self.listplugininfo(pluginfiles)
                                                self.list = []    			                
 
@@ -1027,7 +1017,7 @@ class PluginSkinInstall(Screen):
 			if dest.startswith('/'):
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
-				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
+				extra = '--add-dest %s:%s -d %s' % (dest, dest, dest)
 				Ipkg.opkgAddDestination(dest)
 			else:
 				extra = '-d ' + dest
@@ -1039,7 +1029,7 @@ class PluginSkinInstall(Screen):
 		if val:
 			if self.type == self.DOWNLOAD:
 				if pluginnames.startswith("enigma2-plugin-picons-"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -1052,7 +1042,7 @@ class PluginSkinInstall(Screen):
 						self.session.openWithCallback(self.installDestinationCallback, ChoiceBox, title=_("Install picons on"), list=candidates)
 					return
 				elif pluginnames.startswith("enigma2-plugin-display-picon"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -1124,8 +1114,8 @@ class PluginSkinInstall(Screen):
 		if hasattr(self, 'postInstallCall'):
 			try:
 				self.postInstallCall()
-			except Exception, ex:
-				print "[PluginBrowser] postInstallCall failed:", ex
+			except Exception as ex:
+				print("[PluginBrowser] postInstallCall failed:", ex)
 			self.resetPostInstall()
 		try:
 			os.unlink('/tmp/opkg.conf')

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from boxbranding import getMachineBrand, getMachineName
 from os import path
 from Screens.MessageBox import MessageBox
@@ -115,7 +116,7 @@ class BootlogoSetupScreen(Screen):
                 for logo in bootlogo:
                         xname = logo.strip(".mvi")
                         if logo == "NFRbootlogo.mvi":
-                               	print "deaultbootlogo found"
+                               	print("deaultbootlogo found")
                         else:   
 			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % xname), _('%s' % xname), '%s' % logo)))
 
@@ -214,7 +215,7 @@ class RadiologoSetupScreen(Screen):
                 for logo in radiologo:
                         yname = logo.strip(".mvi")
                         if logo == "NFRradiologo.mvi":
-                               	print "deaultradiologo found"
+                               	print("deaultradiologo found")
                         else:       	
 			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
 

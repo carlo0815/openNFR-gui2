@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Components.ActionMap import *
 from Components.config import *
 from Components.ConfigList import *
@@ -77,7 +78,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.
 		choicelist.append(("%d" % i, "%d ms" % i))
 	config.hdmicec.minimum_send_interval = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
 	choicelist = []
-	for i in range(1,4):
+	for i in list(range(1, 4)):
 		choicelist.append(("%d" % i, _("%d times") % i))
 	config.hdmicec.messages_repeat = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
 	config.hdmicec.messages_repeat_standby = ConfigYesNo(default = False)
@@ -86,7 +87,7 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.
 		choicelist.append(("%d" % i, "%d ms" % i))
 	config.hdmicec.messages_repeat_slowdown = ConfigSelection(default = "250", choices = [("0", _("None"))] + choicelist)
 	choicelist = []
-	for i in (10,30,60,120,300,600,900,1800,3600):
+	for i in (10, 30, 60, 120, 300, 600, 900, 1800, 3600):
 		if i/60<1:
 			choicelist.append(("%d" % i, _("%d sec") % i))
 		else:
@@ -151,7 +152,7 @@ from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 from Plugins.Extensions.Infopanel.SpinnerSelector import SpinnerSelector
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
-from urllib import urlopen
+from six.moves.urllib.request import urlopen
 import socket
 
 def getVarSpaceKb():
@@ -171,7 +172,7 @@ if config.usage.keymap.value != eEnv.resolve("${datadir}/enigma2/keymap.xml"):
 		setDefaultKeymap()
 
 def setDefaultKeymap():
-	print "[Info-Panel] Set Keymap to Default"
+	print("[Info-Panel] Set Keymap to Default")
 	config.usage.keymap.setValue(eEnv.resolve("${datadir}/enigma2/keymap.xml"))
 	config.save()
 
@@ -283,7 +284,7 @@ class EasySetup(ConfigListScreen, Screen):
     def run5(self):
         self.runed = "5"
         if config.easysetup.Hotkey.value is True:
-            self.session.openWithCallback(self.run6,HotkeySetup)
+            self.session.openWithCallback(self.run6,  HotkeySetup)
         else:
             self.run6()
             
@@ -297,14 +298,14 @@ class EasySetup(ConfigListScreen, Screen):
     def run7(self):
         self.runed = "7"
         if config.easysetup.m3u.value is True:
-            self.session.openWithCallback(self.run8,IPTV)
+            self.session.openWithCallback(self.run8, IPTV)
         else:
             self.run8()
             
     def run8(self):
         self.runed = "8"
         if config.easysetup.menusort.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
-            self.session.openWithCallback(self.run8a,SortableMenu, mdom.getroot())
+            self.session.openWithCallback(self.run8a, SortableMenu, mdom.getroot())
         else:
             self.run9()
             
@@ -314,14 +315,14 @@ class EasySetup(ConfigListScreen, Screen):
     def run9(self):
         self.runed = "9"
         if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
-            self.session.openWithCallback(self.run10,HdmiCECSetupScreen)
+            self.session.openWithCallback(self.run10, HdmiCECSetupScreen)
         else:
             self.run10()
             
     def run10(self):
         self.runed = "10"
         if config.easysetup.password.value is True:
-            self.session.openWithCallback(self.run11,NFRPasswdScreen)
+            self.session.openWithCallback(self.run11, NFRPasswdScreen)
         else:
             self.run11()
             
@@ -337,28 +338,28 @@ class EasySetup(ConfigListScreen, Screen):
         if config.wizardsetup.UserInterfacePositioner.value is True:
             self.Console = Console()
             self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')			
-            self.session.openWithCallback(self.run11b,UserInterfacePositioner)  
+            self.session.openWithCallback(self.run11b, UserInterfacePositioner)  
         else:
             self.run11b()
             
     def run11b(self):
         self.runed = "11b"
         if config.wizardsetup.OpenWebifConfig.value is True:
-            self.session.openWithCallback(self.run11c,OpenWebifConfig)
+            self.session.openWithCallback(self.run11c, OpenWebifConfig)
         else:
             self.run11c()
             
     def run11c(self):
         self.runed = "11c"
         if config.wizardsetup.OpenNFRaddonsWizardSetup.value is True:
-            self.session.openWithCallback(self.run11d,OpenNFRWizardSetup)
+            self.session.openWithCallback(self.run11d, OpenNFRWizardSetup)
         else:
             self.run11d()
             
     def run11d(self):
         self.runed = "11d"
         if config.wizardsetup.ipkinstall.value is True:
-	    self.session.openWithCallback(self.run11e,InfopanelManagerScreen)
+	    self.session.openWithCallback(self.run11e, InfopanelManagerScreen)
         else:
             self.run11e()  
 
@@ -374,7 +375,7 @@ class EasySetup(ConfigListScreen, Screen):
     def run12(self):
         self.runed = "12"
         if config.easysetup.backup.value is True:
-            self.session.openWithCallback(self.closetest,ImageBackup)
+            self.session.openWithCallback(self.closetest, ImageBackup)
         else:
             self.closetest()
             
@@ -386,7 +387,7 @@ class EasySetup(ConfigListScreen, Screen):
 	        config.easysetup.restart.save()
                 quitMainloop(3)            
             else:
-                print "restart after Wizard"
+                print("restart after Wizard")
                 self.close()
 
 	else:
@@ -457,13 +458,13 @@ class KeymapSel(ConfigListScreen, Screen):
 		u80key = eEnv.resolve("${datadir}/enigma2/keymap.u80")
 		
 		self.actkeymap = self.getKeymap(config.usage.keymap.value)
-		keySel = [ ('keymap.xml',_("Default  (keymap.xml)"))]
+		keySel = [ ('keymap.xml', _("Default  (keymap.xml)"))]
 		if os.path.isfile(usrkey):
-			keySel.append(('keymap.usr',_("User  (keymap.usr)")))
+			keySel.append(('keymap.usr', _("User  (keymap.usr)")))
 		if os.path.isfile(ntrkey):
-			keySel.append(('keymap.ntr',_("Neut  (keymap.ntr)")))
+			keySel.append(('keymap.ntr', _("Neut  (keymap.ntr)")))
 		if os.path.isfile(u80key):
-			keySel.append(('keymap.u80',_("UP80  (keymap.u80)")))			
+			keySel.append(('keymap.u80', _("UP80  (keymap.u80)")))			
 		if self.actkeymap == usrkey and not os.path.isfile(usrkey):
 			setDefaultKeymap()
 		if self.actkeymap == ntrkey and not os.path.isfile(ntrkey):
@@ -573,7 +574,7 @@ class NFRPasswdScreen(Screen):
         try:
             self['title'] = StaticText(self.title)
         except:
-            print 'self["title"] was not found in skin'
+            print('self["title"] was not found in skin')
 
         self.user = 'root'
         self.output_line = ''
@@ -619,12 +620,12 @@ class NFRPasswdScreen(Screen):
         self.output_line += data
         if self.output_line.find('password changed.') == -1:
             if self.output_line.endswith('new UNIX password: '):
-                print '1password:%s\n' % self.password
+                print('1password:%s\n' % self.password)
                 self.processOutputLine(self.output_line[:1])
 
     def processOutputLine(self, line):
         if line.find('new UNIX password: '):
-            print '2password:%s\n' % self.password
+            print('2password:%s\n' % self.password)
             self.container.write('%s\n' % self.password)
             self.output_line = ''
 

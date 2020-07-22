@@ -1,4 +1,5 @@
 #from __init__ import _
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
@@ -77,7 +78,7 @@ class Satloader(Screen):
 		self["info"].setText("%s" %(_("Press ok or green button to install satellites.xml")))
 
 	def btnRed(self):
-		print "\n[Satloader] cancel\n"
+		print("\n[Satloader] cancel\n")
 		self.close(None)
 
 	def btnOK(self):
@@ -179,7 +180,7 @@ class SatloaderBouquet(Screen):
 		downloadPage("http://satellites.satloader.net/bouquet.tar.gz", "/tmp/bouquet.tar.gz").addCallback(self.downloadListBouquetCallback).addErrback(self.downloadListError)
 
 	def btnRed(self):
-		print "\n[SatloaderBouquet] cancel\n"
+		print("\n[SatloaderBouquet] cancel\n")
 		self.close(None)
 
 	def btnOK(self):
@@ -229,8 +230,8 @@ class SatloaderBouquet(Screen):
 			if self.list is not None:
 				self["info"].setText("%s" %(_("Press ok button to select bouquet")))
 
-		except Exception, e:
-			print "Error:", e
+		except Exception as e:
+			print("Error:", e)
 			self["info"].setText("%s\n%s" %(_("Parsing failed!"),e))
 
 	def restart(self, ret):
@@ -299,7 +300,7 @@ class SatloaderMultiSat(Screen):
 		downloadPage(self.saturl, "/tmp/multisat.tar.gz").addCallback(self.downloadListMultiSatCallback).addErrback(self.downloadListError)
 
 	def btnRed(self):
-		print "\n[SatloaderMultiSat] cancel\n"
+		print("\n[SatloaderMultiSat] cancel\n")
 		self.close(None)
 
 	def btnOK(self):
@@ -356,8 +357,8 @@ class SatloaderMultiSat(Screen):
 			if self.list is not None:
 				self["info"].setText("%s" %(_("Press ok button to select satellite")))
 
-		except Exception, e:
-			print "Error:", e
+		except Exception as e:
+			print("Error:", e)
 			self["info"].setText("%s\n%s" %(_("Parsing failed!"),e))
 
 	def restart(self, ret):
@@ -432,14 +433,14 @@ class TransponderSelection(Screen):
 				elif m[5] == "3":
 					pol = "R"
 
-				text = "TP: %s   %s %s %s   %s %s" %(str(idx+1).zfill(3),_("Frequency:"), str(m[1]).zfill(8)[:5],str(pol),_("Symbol Rate:"),str(m[3]).zfill(8)[:5])
+				text = "TP: %s   %s %s %s   %s %s" %(str(idx+1).zfill(3),_("Frequency:"), str(m[1]).zfill(8)[:5],str(pol), _("Symbol Rate:"),str(m[3]).zfill(8)[:5])
 				self.list.addSelection(text, line, idx, True)
 				idx += 1
 		f.close()
 		self["info"].setText("%s" %(self.satname))
 
 	def btnRed(self):
-		print "\n[TransponderSelection] cancel\n"
+		print("\n[TransponderSelection] cancel\n")
 		self.close(None)
 
 	def btnOK(self):

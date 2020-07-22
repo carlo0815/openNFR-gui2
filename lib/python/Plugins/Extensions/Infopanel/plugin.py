@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Screens.PluginBrowser import *
 from Screens.Ipkg import Ipkg
@@ -58,24 +59,24 @@ inINFOPanel = None
 config.NFRSoftcam = ConfigSubsection()
 config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
 config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
-config.NFRSoftcam.waittime = ConfigSelection([('0',_("dont wait")),('1',_("1 second")), ('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='15')
+config.NFRSoftcam.waittime = ConfigSelection([('0', _("dont wait")), ('1', _("1 second")), ('5', _("5 seconds")), ('10', _("10 seconds")), ('15', _("15 seconds")), ('20', _("20 seconds")), ('30', _("30 seconds"))], default='15')
 config.VolumeSetup = ConfigSubsection()
-config.VolumeSetup.steps = ConfigSelection([('default',_("default")),('1',_("1")),('2',_("2")), ('3',_("3")),('4',_("4")),('5',_("5"))], default='default')
+config.VolumeSetup.steps = ConfigSelection([('default', _("default")), ('1', _("1")), ('2', _("2")), ('3', _("3")), ('4', _("4")), ('5', _("5"))], default='default')
 config.plugins.infopanel_redkey = ConfigSubsection()
-config.plugins.infopanel_redkey.list = ConfigSelection([('0',_("Default (Softcam Panel)")),('1',_("HBBTV")),('2',_("Quickmenu")),('3',_("Infopanel"))])
+config.plugins.infopanel_redkey.list = ConfigSelection([('0', _("Default (Softcam Panel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
 config.plugins.infopanel_redkeylong = ConfigSubsection()
-config.plugins.infopanel_redkeylong.list = ConfigSelection([('0',_("Default (HBBTV)")),('1',_("Softcam Panel")),('2',_("Quickmenu")),('3',_("Infopanel"))])
+config.plugins.infopanel_redkeylong.list = ConfigSelection([('0', _("Default (HBBTV)")), ('1', _("Softcam Panel")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
 config.plugins.infopanel_bluekey = ConfigSubsection()
-config.plugins.infopanel_bluekey.list = ConfigSelection([('0',_("Default (Quickmenu)")),('1',_("HBBTV")),('2',_("Softcam Panel")),('3',_("Infopanel"))])
+config.plugins.infopanel_bluekey.list = ConfigSelection([('0', _("Default (Quickmenu)")), ('1', _("HBBTV")), ('2', _("Softcam Panel")), ('3', _("Infopanel"))])
 config.plugins.infopanel_bluekeylong = ConfigSubsection()
-config.plugins.infopanel_bluekeylong.list = ConfigSelection([('0',_("Default (Infopanel)")),('1',_("HBBTV")),('2',_("Quickmenu")),('3',_("Softcam Panel"))])
+config.plugins.infopanel_bluekeylong.list = ConfigSelection([('0', _("Default (Infopanel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Softcam Panel"))])
 config.plugins.infopanel_greenkeylong = ConfigSubsection()
-config.plugins.infopanel_greenkeylong.list = ConfigSelection([('0',_("Default (Softcam Panel)")),('1',_("HBBTV")),('2',_("Quickmenu")),('3',_("Infopanel"))])
+config.plugins.infopanel_greenkeylong.list = ConfigSelection([('0', _("Default (Softcam Panel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
 config.plugins.infopanel_yellowkeylong = ConfigSubsection()
-config.plugins.infopanel_yellowkeylong.list = ConfigSelection([('0',_("Default (Softcam Panel)")),('1',_("HBBTV")),('2',_("Quickmenu")),('3',_("Infopanel"))])
+config.plugins.infopanel_yellowkeylong.list = ConfigSelection([('0', _("Default (Softcam Panel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
 config.plugins.showinfopanelextensions = ConfigYesNo(default=False)
 config.plugins.infopanel_frozencheck = ConfigSubsection()
-config.plugins.infopanel_frozencheck.list = ConfigSelection([('0',_("Off")),('1',_("1 min.")), ('5',_("5 min.")),('10',_("10 min.")),('15',_("15 min.")),('30',_("30 min."))])
+config.plugins.infopanel_frozencheck.list = ConfigSelection([('0', _("Off")), ('1', _("1 min.")), ('5', _("5 min.")), ('10', _("10 min.")), ('15', _("15 min.")), ('30', _("30 min."))])
 config.plugins.configurationbackup = ConfigSubsection()
 config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
 config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
@@ -145,7 +146,7 @@ def getVarSpaceKb():
     return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 		
 def setDefaultKeymap():
-	print "[Info-Panel] Set Keymap to Default"
+	print("[Info-Panel] Set Keymap to Default")
 	config.usage.keymap.setValue(eEnv.resolve("${datadir}/enigma2/keymap.xml"))
 	config.save()
 
@@ -172,7 +173,7 @@ def command(comandline, strip=1):
 
 INFO_Panel_Version = 'Info-Panel V2.0 (mod by OpenNFR)'
 boxversion = getBoxType()
-print "[Info-Panel] boxversion: %s"  % (boxversion)
+print("[Info-Panel] boxversion: %s"  % (boxversion))
 panel = open("/tmp/infopanel.ver", "w")
 panel.write(INFO_Panel_Version + '\n')
 panel.write("Boxversion: %s " % (boxversion)+ '\n')
@@ -187,7 +188,7 @@ ExitSave = "[Exit] = " +_("Cancel") +"              [Ok] =" +_("Save")
 
 class ConfigPORT(ConfigSequence):
 	def __init__(self, default):
-		ConfigSequence.__init__(self, seperator = ".", limits = [(1,65535)], default = default)
+		ConfigSequence.__init__(self, seperator = ".", limits = [(1, 65535)], default = default)
 		
 def autostart(reason, session=None, **kwargs):
 	"called with reason=1 to during shutdown, with reason=0 at startup?"
@@ -217,7 +218,7 @@ def startcam(reason, **kwargs):
 	                        	os.system("ln -sf 'ca0' '/dev/dvb/adapter0/ca1'") 
 				cmd = Softcam.getcamcmd(config.NFRSoftcam.actcam.value)
 				Console().ePopen(cmd)
-				print "[OpenNFR SoftCam Manager] ", cmd
+				print("[OpenNFR SoftCam Manager] ", cmd)
 			except:
 				pass
 		elif reason == 1: # Enigma stop
@@ -330,7 +331,7 @@ def Plugins(**kwargs):
 	PluginDescriptor(name="Info Panel", description="Info panel GUI 01/11/2019", where = PluginDescriptor.WHERE_MENU, fnc = Apanel),
 	#// autostart
 	PluginDescriptor(where=PluginDescriptor.WHERE_AUTOSTART,	needsRestart=True, fnc=startcam),
-	PluginDescriptor(name="AutoBackup",description = "Automatic settings backup", where = [PluginDescriptor.WHERE_AUTOSTART, PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart),
+	PluginDescriptor(name="AutoBackup", description = "Automatic settings backup", where = [PluginDescriptor.WHERE_AUTOSTART, PluginDescriptor.WHERE_SESSIONSTART], fnc = autostart),
 	#PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART,PluginDescriptor.WHERE_AUTOSTART],fnc = camstart),
 	#// SwapAutostart
 	#PluginDescriptor(where = [PluginDescriptor.WHERE_SESSIONSTART,PluginDescriptor.WHERE_AUTOSTART],fnc = SwapAutostart),
@@ -429,11 +430,11 @@ class Infopanel(Screen, InfoBarPiP):
 		INFOCONF = 0
 		pluginlist="False"
 		try:
-			print '[INFO-Panel] SHOW'
+			print('[INFO-Panel] SHOW')
 			global inINFOPanel
 			inINFOPanel = self
 		except:
-			print '[INFO-Panel] Error Hide'
+			print('[INFO-Panel] Error Hide')
 #		global servicelist
 		if services is not None:
 			self.servicelist = services
@@ -444,8 +445,8 @@ class Infopanel(Screen, InfoBarPiP):
 		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
 			{
 				"cancel": self.Exit,
-				"upUp": self.up,
-				"downUp": self.down,
+				"up": self.up,
+				"down": self.down,
 				"ok": self.ok,
 			}, 1)
 		
@@ -517,13 +518,11 @@ class Infopanel(Screen, InfoBarPiP):
 
 
 	def up(self):
-		#self["Mlist"].up()
-		pass
-
+		self["Mlist"].up()
+		
 	def down(self):
-		#self["Mlist"].down()
-		pass
-
+		self["Mlist"].down()
+		
 	def left(self):
 		pass
 
@@ -554,11 +553,11 @@ class Infopanel(Screen, InfoBarPiP):
 				self.service = self.session.nav.getCurrentlyPlayingServiceReference()
 				service = self.service.toCompareString()
 				servicename = ServiceReference.ServiceReference(service).getServiceName().replace('\xc2\x87', '').replace('\xc2\x86', '').ljust(16)
-				print '[INFO-Panel] HIDE'
+				print('[INFO-Panel] HIDE')
 				global inINFOPanel
 				inINFOPanel = None
 			except:
-				print '[INFO-Panel] Error Hide'
+				print('[INFO-Panel] Error Hide')
 			self.close()
 		elif menu == 1:
 			self["Mlist"].moveToIndex(0)
@@ -578,7 +577,7 @@ class Infopanel(Screen, InfoBarPiP):
 #		menu = self["Mlist"].getCurrent()
 		global INFOCONF
 		menu = self['Mlist'].l.getCurrentSelection()[0][2]
-		print '[INFO-Panel] MenuItem: ' + menu
+		print('[INFO-Panel] MenuItem: ' + menu)
 		if menu == "Extras":
 			self.Extras()
 		elif menu == "Pluginbrowser":
@@ -645,7 +644,7 @@ class Infopanel(Screen, InfoBarPiP):
 				#self.session.open(ImageBackup)
                                 self.session.open(TimerImageManager)
 		elif menu == "backup-settings":
-			self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True)
+			self.session.openWithCallback(self.backupDone, BackupScreen, runBackup = True)
 		elif menu == "backupauto":
 			import ui
 			self.session.openWithCallback(doneConfiguring, ui.Config)		
@@ -666,7 +665,7 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "spinnermanager":
 			SpinnerSelector(self.session) 			
 		elif menu == "backup-files":
-			self.session.openWithCallback(self.backupfiles_choosen,BackupSelection)
+			self.session.openWithCallback(self.backupfiles_choosen, BackupSelection)
 		elif menu == "flash-local":
 			self.session.open(FlashOnline)
 		elif menu == "multiboot-manager":
@@ -887,13 +886,13 @@ class KeymapSel(ConfigListScreen, Screen):
 		u80key = eEnv.resolve("${datadir}/enigma2/keymap.u80")
 		
 		self.actkeymap = self.getKeymap(config.usage.keymap.value)
-		keySel = [ ('keymap.xml',_("Default  (keymap.xml)"))]
+		keySel = [ ('keymap.xml', _("Default  (keymap.xml)"))]
 		if os.path.isfile(usrkey):
-			keySel.append(('keymap.usr',_("User  (keymap.usr)")))
+			keySel.append(('keymap.usr', _("User  (keymap.usr)")))
 		if os.path.isfile(ntrkey):
-			keySel.append(('keymap.ntr',_("Neut  (keymap.ntr)")))
+			keySel.append(('keymap.ntr', _("Neut  (keymap.ntr)")))
 		if os.path.isfile(u80key):
-			keySel.append(('keymap.u80',_("UP80  (keymap.u80)")))			
+			keySel.append(('keymap.u80', _("UP80  (keymap.u80)")))			
 		if self.actkeymap == usrkey and not os.path.isfile(usrkey):
 			setDefaultKeymap()
 		if self.actkeymap == ntrkey and not os.path.isfile(ntrkey):
@@ -1664,7 +1663,7 @@ class Info(Screen):
 			info1 = self.Do_cmd("cat", "/etc/motd", None)
 			if info1.find('wElc0me') > -1:
 				info1 = info1[info1.find('wElc0me'):len(info1)] + "\n"
-				info1 = info1.replace('|','')
+				info1 = info1.replace('|', '')
 			else:
 				info1 = info1[info1.find('INFO'):len(info1)] + "\n"
 			info2 = self.Do_cmd("cat", "/etc/image-version", None)
@@ -1717,7 +1716,7 @@ class Info(Screen):
 			info0 = self.Do_cmd("cat", "/proc/version", None)
 			info = info0.split('(')
 			info1 = "Name = " + info[0] + "\n"
-			info2 =  "Owner = " + info[1].replace(')','') + "\n"
+			info2 =  "Owner = " + info[1].replace(')', '') + "\n"
 			info3 =  "Mainimage = " + info[2][0:info[2].find(')')] + "\n"
 			info4 = "Date = " + info[3][info[3].find('SMP')+4:len(info[3])]
 			info5 = self.Do_cut(info1 + info2 + info3 + info4)
@@ -1850,7 +1849,7 @@ class NFRPasswdScreen(Screen):
         try:
             self['title'] = StaticText(self.title)
         except:
-            print 'self["title"] was not found in skin'
+            print('self["title"] was not found in skin')
 
         self.user = 'root'
         self.output_line = ''
@@ -1896,12 +1895,12 @@ class NFRPasswdScreen(Screen):
         self.output_line += data
         if self.output_line.find('password changed.') == -1:
             if self.output_line.endswith('new UNIX password: '):
-                print '1password:%s\n' % self.password
+                print('1password:%s\n' % self.password)
                 self.processOutputLine(self.output_line[:1])
 
     def processOutputLine(self, line):
         if line.find('new UNIX password: '):
-            print '2password:%s\n' % self.password
+            print('2password:%s\n' % self.password)
             self.container.write('%s\n' % self.password)
             self.output_line = ''
 

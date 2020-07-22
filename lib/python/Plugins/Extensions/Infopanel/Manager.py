@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry
 from Components.Console import Console
@@ -16,7 +17,7 @@ from os import path
 import os
 import Softcam
 import shutil
-import urllib
+from six.moves.urllib.request import urlopen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.About import about
 
@@ -151,7 +152,7 @@ class NFRCamManager(Screen):
                                         	dst = "/usr/emu/" + emu1 + ".x"
 					os.symlink(src, dst)
 			except:					
-					print "files exist"					
+					print("files exist")					
 	
 			self.iscam = False
 			self.startcreatecamlist()
@@ -191,10 +192,10 @@ class NFRCamManager(Screen):
 	        result = result
                 if "Link detected: yes"  in result:
                 	from Screens.NetworkSetup import NetworkOpenvpn
-               		ext_ip = urllib.urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
+               		ext_ip = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
                		if isinstance(ext_ip, unicode):
                			ext_ip = ext_ip.encode('utf8')
-               		print ext_ip
+               		print(ext_ip)
                		self.AboutText1 = "Online: " + (ext_ip)
                		if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
                			self.AboutText2 = "openVPN is running "
@@ -333,7 +334,7 @@ class NFRCamManager(Screen):
 		if self.iscam:
 			self.camstart = self["list"].getCurrent()[0]
 			if self.camstart != self.actcam:
-				print "[NFR-SoftCam Manager] Start SoftCam"
+				print("[NFR-SoftCam Manager] Start SoftCam")
 				self.camstartcmd = Softcam.getcamcmd(self.camstart)
 				msg = _("Starting %s") % self.camstart
 				self.mbox = self.session.open(MessageBox, msg, MessageBox.TYPE_INFO)
@@ -359,7 +360,7 @@ class NFRCamManager(Screen):
 
 	def restart(self):
 		if self.iscam:
-			print "[NFR-SoftCam Manager] restart SoftCam"
+			print("[NFR-SoftCam Manager] restart SoftCam")
 			self.camstart = self.actcam
 			if self.camstartcmd == "":
 				self.camstartcmd = Softcam.getcamcmd(self.camstart)
@@ -377,7 +378,7 @@ class NFRCamManager(Screen):
 		if service:
 			self.session.nav.stopService()
 		self.Console.ePopen(self.camstartcmd)
-		print "[NFR-SoftCam Manager] ", self.camstartcmd
+		print("[NFR-SoftCam Manager] ", self.camstartcmd)
 		if self.mbox:
 			self.mbox.close()
 		if service:
@@ -473,7 +474,7 @@ class ConfigEdit(Screen, ConfigListScreen):
 			self.close()
 
 	def blue(self):
-        	if self["config"].getCurrent() == getConfigListEntry(_("SoftCam config directory"),config.NFRSoftcam.camconfig):
+        	if self["config"].getCurrent() == getConfigListEntry(_("SoftCam config directory"), config.NFRSoftcam.camconfig):
             		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your KEY Path'), text=self.config.NFRSoftcam.camconfig.value)
         	elif self["config"].getCurrent() == getConfigListEntry(_("SoftCam directory"),config.NFRSoftcam.camdir):
             		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your EMU Path'), text=self.config.NFRSoftcam.camdir.value)

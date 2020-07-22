@@ -237,7 +237,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			list.append(getConfigListEntry(_("Enable EMU Reader:"), config.plugins.OscamSmartcard.EMU, _("INFORMATION: Enable EMU Reader\n\nEnabling this Reader, OscamSmartcard will use Oscam Dmod as running Oscam (instead of regular OScam SVN XXXX).\nOscamSmartcard does NOT provide the required file SoftCam.Key!")))
 
 		ConfigListScreen.__init__(self, list)
-		self["actions"] = ActionMap(["OkCancelActions","DirectionActions", "InputActions", "ColorActions"], {"left": self.keyLeft,"down": self.keyDown,"up": self.keyUp,"right": self.keyRight,"red": self.exit,"yellow": self.reboot, "blue": self.showInfo, "green": self.save,"cancel": self.exit}, -1)
+		self["actions"] = ActionMap(["OkCancelActions","DirectionActions", "InputActions", "ColorActions"], {"left": self.keyLeft, "down": self.keyDown, "up": self.keyUp, "right": self.keyRight, "red": self.exit, "yellow": self.reboot, "blue": self.showInfo, "green": self.save, "cancel": self.exit}, -1)
 		self.onLayoutFinish.append(self.UpdatePicture)
 		if not self.selectionChanged in self["config"].onSelectionChanged:
 			self["config"].onSelectionChanged.append(self.selectionChanged)
@@ -260,7 +260,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 		self.onLayoutFinish.append(self.ShowPicture)
 
 	def ShowPicture(self):
-		self.PicLoad.setPara([self["oscamsmartcardhelperimage"].instance.size().width(),self["oscamsmartcardhelperimage"].instance.size().height(),self.Scale[0],self.Scale[1],0,1,"#20000000"])
+		self.PicLoad.setPara([self["oscamsmartcardhelperimage"].instance.size().width(),self["oscamsmartcardhelperimage"].instance.size().height(),self.Scale[0], self.Scale[1], 0, 1, "#20000000"])
 		self.PicLoad.startDecode(self.GetPicturePath())
 
 	def DecodePicture(self, PicInfo = ""):
@@ -334,7 +334,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			for xx in self.config_lines:
 				xFile.writelines(xx)
 			xFile.close()
-			o = open(self.oscamserver,"w")
+			o = open(self.oscamserver, "w")
 			for line in open(self.oscamserverTMP):
 				o.write(line)
 			o.close()
@@ -358,7 +358,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			for xx in self.config_lines:
 				xFile.writelines(xx)
 			xFile.close()
-			o = open(self.oscamdvbapi,"w")
+			o = open(self.oscamdvbapi, "w")
 			for line in open(self.oscamdvbapiTMP):
 				o.write(line)
 			o.close()
@@ -377,7 +377,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			for xx in self.config_lines:
 				xFile.writelines(xx)
 			xFile.close()
-			o = open(self.oscamuser,"w")
+			o = open(self.oscamuser, "w")
 			for line in open(self.oscamuserTMP):
 				if config.plugins.OscamSmartcard.internalReader0.value == 'I12-Beta':
 					line = line.replace("betatunnel                    = 1833.FFFF:1702", "betatunnel                    = 1835.FFFF:1722,1833.FFFF:1702")
@@ -428,7 +428,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			for xx in self.config_lines:
 				xFile.writelines(xx)
 			xFile.close()
-			o = open(self.oscamconf,"w")
+			o = open(self.oscamconf, "w")
 			for line in open(self.oscamconfTMP):
 				line = line.replace("83", config.plugins.OscamSmartcard.WebifPort.value )
 				o.write(line)
@@ -451,7 +451,7 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			for xx in self.config_lines:
 				xFile.writelines(xx)
 			xFile.close()
-			o = open(self.oscamservices,"w")
+			o = open(self.oscamservices, "w")
 			for line in open(self.oscamservicesTMP):
 				o.write(line)
 			o.close()

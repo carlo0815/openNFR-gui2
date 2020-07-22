@@ -1,6 +1,6 @@
 ##################################
 # Configuration GUI
-
+from __future__ import print_function
 import plugin
 import os
 import enigma
@@ -160,7 +160,7 @@ class Config(ConfigListScreen,Screen):
 
 
 	def appClosed(self, retval):
-		print "[AutoBackup] done:", retval
+		print("[AutoBackup] done:", retval)
 		if retval:
 			txt = _("Failed")
 		else:
@@ -172,6 +172,6 @@ class Config(ConfigListScreen,Screen):
 
 	def dataAvail(self, s):
 		self.data += s
-		print "[AutoBackup]", s.strip()
+		print("[AutoBackup]", s.strip())
 		self.showOutput()
 
