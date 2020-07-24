@@ -13981,7 +13981,7 @@ msgstr "Kanalliste einstellen"
 
 #,Konfiguration-System-A/V Einstellungen
 msgid "Video Setup"
-msgstr "Video Einstellungen"
+msgstr "Bild-Einstellungen"
 
 msgid "Video settings"
 msgstr "Bild-Einstellungen"
