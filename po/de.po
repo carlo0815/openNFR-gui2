@@ -13981,10 +13981,16 @@ msgstr "Kanalliste einstellen"
 
 #,Konfiguration-System-A/V Einstellungen
 msgid "Video Setup"
-msgstr "Video Einstellungen"
+msgstr "Bild-Einstellungen"
+
+msgid "Video settings"
+msgstr "Bild-Einstellungen"
 
 msgid "Allow unsupported modes"
 msgstr "Erlaube nicht unterstützte Modi"
+
+msgid "This option allows you can config the Colorspace from Auto to RGB"
+msgstr "Stelle den Farbraum ein."
 
 msgid "This option allows you to use all HDMI Modes"
 msgstr "Bei 'Ja' können alle HDMI-Modi verwenden werden."
