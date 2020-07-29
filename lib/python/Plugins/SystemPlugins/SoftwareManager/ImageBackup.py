@@ -500,20 +500,20 @@ class ImageBackup(Screen):
 	def ImageList(self, imagedict):
 		self.saveImageList = imagedict
 		list = []
-		mode = GetCurrentImageMode() or 0
+		#mode = GetCurrentImageMode() or 0
 		currentimageslot = GetCurrentImage() or 1
         	print "[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict)
 		##### hier currentimage abfragen und noch einbauen ob timer oder nicht####
                 if Timerstarts == True:
                 	if imagedict:
 				for x in sorted(imagedict.keys()):
-					if imagedict[x]["imagename"] != _("Empty slot"):
-                                                if x == currentimageslot:
-							list.append(ChoiceEntryComponent('',((_("slot%s - %s - %s (current image)")) % (x, imagedict[x]['part'][0:3], imagedict[x]['imagename']), x, False)))
-			else:           
-				if SystemInfo["canRecovery"]:
-					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
-				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
+					if imagedict:
+						if x == 1 and currentimageslot == 1 and SystemInfo["canRecovery"]:
+							list.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
+				else:           
+					if SystemInfo["canRecovery"]:
+						list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
+					list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
 			self["config"].setList(list)
 			timerlist =[]
                 	timerlist = list
@@ -528,9 +528,9 @@ class ImageBackup(Screen):
 					list.append(ChoiceEntryComponent('',((_("slot%s - %s (current image)") if x == currentimageslot else _("slot%s - %s")) % (x, imagedict[x]["imagename"]), x, False)))
 			else:
 				if SystemInfo["canRecovery"]:
-					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
-				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
-               	 	self["config"].setList(list)
+					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"x",True)))
+				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"x",False)))
+			self["config"].setList(list)
 
 	def start(self):
                 if Timerstarts == True:
@@ -621,7 +621,7 @@ class ImageBackup(Screen):
 
 				self.getImageList = self.saveImageList
 				if SystemInfo["canMultiBoot"]:
-					slot = GetCurrentImage()
+					#slot = GetCurrentImage()
 					self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.SLOT]["kernel"].split('/')[2] 
 					self.MTDROOTFS  = SystemInfo["canMultiBoot"][self.SLOT]["device"].split('/')[2]               
 					if SystemInfo["HasRootSubdir"]:
@@ -779,11 +779,11 @@ class ImageBackup(Screen):
 					cmdlist.append("dd if=/dev/mtd4 of=%s/logo.bin" % self.WORKDIR)
 
 				if self.EMMCIMG == "usb_update.bin" and self.RECOVERY:
-					SEEK_CONT = (Harddisk.getFolderSize(self.backuproot)/ 1024) + 100000
+					SEEK_CONT = (Harddisk.getFolderSize(self.backuproot) / 1024) + 10000
 					cmdlist.append('echo "' + _("Create:") + " fastboot dump" + '"')
-					cmdlist.append('cp -f /usr/share/fastboot.bin %s/fastboot.bin' %(self.WORKDIR))
+					cmdlist.append("dd if=/dev/mmcblk0p1 of=%s/fastboot.bin" % self.WORKDIR)
 					cmdlist.append('echo "' + _("Create:") + " bootargs dump" + '"')
-					cmdlist.append('cp -f /usr/share/bootargs.bin %s/bootargs.bin' %(self.WORKDIR))
+					cmdlist.append("dd if=/dev/mmcblk0p2 of=%s/bootargs.bin" % self.WORKDIR)
 					cmdlist.append('echo "' + _("Create:") + " boot dump" + '"')
 					cmdlist.append("dd if=/dev/mmcblk0p3 of=%s/boot.img" % self.WORKDIR)
 					cmdlist.append('echo "' + _("Create:") + " baseparam dump" + '"')
@@ -795,26 +795,13 @@ class ImageBackup(Screen):
 					cmdlist.append('echo "' + _("Create:") + " deviceinfo dump" + '"')
 					cmdlist.append("dd if=/dev/mmcblk0p7 of=%s/deviceinfo.bin" % self.WORKDIR)
 					cmdlist.append('echo "' + _("Create:") + " apploader dump" + '"')
-					cmdlist.append('cp -f /usr/share/apploader.bin %s/apploader.bin' %(self.WORKDIR))
+					cmdlist.append("dd if=/dev/mmcblk0p8 of=%s/apploader.bin" % self.WORKDIR)
 					cmdlist.append('echo "' + _("Create:") + " rootfs dump" + '"')
-					cmdlist.append("dd if=/dev/zero of=%s/rootfs.ext4 seek=%s count=60 bs=1024" % (self.WORKDIR, SEEK_CONT))
-					cmdlist.append("mkfs.ext4 -F -i 4096 %s/rootfs.ext4" % (self.WORKDIR))
-					cmdlist.append("mkdir -p %s/userdata" % self.WORKDIR)
-					cmdlist.append("mount %s/rootfs.ext4 %s/userdata" %(self.WORKDIR,self.WORKDIR))
-					cmdlist.append("mkdir -p %s/userdata/linuxrootfs1" % self.WORKDIR)
-					cmdlist.append("mkdir -p %s/userdata/linuxrootfs2" % self.WORKDIR)
-					cmdlist.append("mkdir -p %s/userdata/linuxrootfs3" % self.WORKDIR)
-					cmdlist.append("mkdir -p %s/userdata/linuxrootfs4" % self.WORKDIR)
-					cmdlist.append("rsync -aAX %s/ %s/userdata/linuxrootfs1/" % (self.backuproot,self.WORKDIR))
-					cmdlist.append("umount %s/userdata" %(self.WORKDIR))
+					cmdlist.append("dd if=/dev/zero of=%s/rootfs.ext4 seek=%s count=0 bs=1024" % (self.WORKDIR, SEEK_CONT))
+					cmdlist.append("mkfs.ext4 -F -i 4096 %s/rootfs.ext4 -d %s" % (self.WORKDIR,self.backuproot))
 
 				cmdlist.append('echo "' + _("Create:") + " kerneldump" + '"')
-				if SystemInfo["canMultiBoot"]:
-					if SystemInfo["HasRootSubdir"]:
-						cmdlist.append("dd if=/dev/%s of=%s/%s" % (self.MTDKERNEL ,self.WORKDIR, self.KERNELBIN))
-					else:
-						cmdlist.append("dd if=/dev/%s of=%s/kernel.bin" % (self.MTDKERNEL ,self.WORKDIR))
-				elif self.MTDKERNEL.startswith('mmcblk0'):
+				if SystemInfo["canMultiBoot"] or self.MTDKERNEL.startswith('mmcblk0'):
 					cmdlist.append("dd if=/dev/%s of=%s/%s" % (self.MTDKERNEL ,self.WORKDIR, self.KERNELBIN))
 				else:
 					cmdlist.append("nanddump -a -f %s/vmlinux.gz /dev/%s" % (self.WORKDIR, self.MTDKERNEL))
@@ -924,11 +911,8 @@ class ImageBackup(Screen):
 					f.write('<Part Sel="1" PartitionName="logo" FlashType="emmc" FileSystem="none" Start="10M" Length="4M" SelectFile="logo.img"/>\n')
 					f.write('<Part Sel="1" PartitionName="deviceinfo" FlashType="emmc" FileSystem="none" Start="14M" Length="4M" SelectFile="deviceinfo.bin"/>\n')
 					f.write('<Part Sel="1" PartitionName="loader" FlashType="emmc" FileSystem="none" Start="26M" Length="32M" SelectFile="apploader.bin"/>\n')
-					f.write('<Part Sel="1" PartitionName="linuxkernel1" FlashType="emmc" FileSystem="none" Start="66M" Length="16M" SelectFile="kernel.bin"/>\n')
-					if self.MACHINEBUILD in ("sf8008m"):
-						f.write('<Part Sel="1" PartitionName="userdata" FlashType="emmc" FileSystem="ext3/4" Start="130M" Length="3580M" SelectFile="rootfs.ext4"/>\n')
-					else:
-						f.write('<Part Sel="1" PartitionName="userdata" FlashType="emmc" FileSystem="ext3/4" Start="130M" Length="7000M" SelectFile="rootfs.ext4"/>\n')
+					f.write('<Part Sel="1" PartitionName="kernel" FlashType="emmc" FileSystem="none" Start="66M" Length="32M" SelectFile="kernel.bin"/>\n')
+					f.write('<Part Sel="1" PartitionName="rootfs" FlashType="emmc" FileSystem="ext3/4" Start="98M" Length="7000M" SelectFile="rootfs.ext4"/>\n')
 					f.write('</Partition_Info>\n')
 					f.close()
 					cmdlist.append('mkupdate -s 00000003-00000001-01010101 -f %s/emmc_partitions.xml -d %s/%s' % (self.WORKDIR,self.WORKDIR,self.EMMCIMG))
@@ -1084,7 +1068,9 @@ class ImageBackup(Screen):
 		elif file_found:
                         cmdlist.append('echo "_________________________________________________\n"')
 			if SystemInfo["canRecovery"] and self.RECOVERY:
-                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery_emmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+			elif SystemInfo["HasRootSubdir"]:
+				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_mmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			else:
                                 cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			cmdlist.append('echo "_________________________________________________"')
