@@ -14214,6 +14214,9 @@ msgstr "Untertitel Einstellungen"
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
 
+msgid "Ignore unexpectedly wakeup and stay in standby"
+msgstr "Unerwartetes Aufwachen ignorieren und im Standby bleiben"
+
 msgid "Load Default Settings"
 msgstr "Standardeinstellungen laden"
 
