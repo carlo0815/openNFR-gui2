@@ -13616,6 +13616,9 @@ msgstr "Flashen und Wiederherstellen der Einstellungen incl. Plugins"
 msgid "Clean (Just flash and start clean)"
 msgstr "Flashen und Assistenten für die Grundeinstellung benutzen"
 
+msgid "Flash Backup (Just flash and start clean)"
+msgstr "Flashe das Backup und starte es"
+
 msgid "Backup, flash and restore settings and no plugins"
 msgstr "Flashen und Wiederherstellen der Einstellungen, ohne Plugins"
 
