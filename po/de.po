@@ -13616,6 +13616,9 @@ msgstr "Flashen und Wiederherstellen der Einstellungen incl. Plugins"
 msgid "Clean (Just flash and start clean)"
 msgstr "Flashen und Assistenten für die Grundeinstellung benutzen"
 
+msgid "Flash Backup (Just flash and start clean)"
+msgstr "Flashe das Backup und starte es"
+
 msgid "Backup, flash and restore settings and no plugins"
 msgstr "Flashen und Wiederherstellen der Einstellungen, ohne Plugins"
 
@@ -14210,6 +14213,9 @@ msgstr "Untertitel Einstellungen"
 #,Konfiguration-System-HDMI CEC
 msgid "Advanced Settings"
 msgstr "Erweiterte Einstellungen"
+
+msgid "Ignore unexpectedly wakeup and stay in standby"
+msgstr "Unerwartetes Aufwachen ignorieren und im Standby bleiben"
 
 msgid "Load Default Settings"
 msgstr "Standardeinstellungen laden"
