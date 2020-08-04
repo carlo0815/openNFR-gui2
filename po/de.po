@@ -14184,6 +14184,12 @@ msgstr "Power LED einschalten"
 msgid "Power LED can be turned on or off here"
 msgstr "Hier kann die Power LED ein oder ausgeschaltet werden"
 
+msgid "Turn on the control LED."
+msgstr "blaue Kontroll-LED einschalten"
+
+msgid "Control LED can be turned on or off here."
+msgstr "Hier kann die blaue Kontroll-LED ein- oder ausgeschaltet werden"
+
 msgid "Power LED State in Standby"
 msgstr "Power LED Status im Standby"
 
