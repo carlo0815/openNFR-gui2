@@ -713,7 +713,7 @@ class Infopanel(Screen, InfoBarPiP):
 			elif config.skin.primary_skin.value == "Ultimate/skin.xml":				
                         	self.Remote_Manager()
 			elif config.skin.primary_skin.value == "NFR_Skin/skin.xml":				
-                        	self.Remote_Manager()                            
+                        	self.Remote_Manager()
 			else:
 				self.session.open(NfrHD_Config1)
 		elif menu == "PluginReLoad":
