@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.VolumeBar import VolumeBar
 
@@ -10,5 +11,5 @@ class Volume(Screen):
 		self["Volume"] = self.volumeBar
 
 	def setValue(self, vol):
-		print "setValue", vol
+		print("setValue", vol)
 		self.volumeBar.setValue(vol)

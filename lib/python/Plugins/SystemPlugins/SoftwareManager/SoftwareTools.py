@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 from time import time
 from boxbranding import getImageVersion
-
+import six
 from enigma import eConsoleAppContainer
 
 from Components.Console import Console
@@ -51,7 +51,7 @@ class SoftwareTools(PackageInfoHandler):
 			self.NotifierCallback = callback
 		iNetwork.checkNetworkState(self.checkNetworkCB)
 
-	def checkNetworkCB(self,data):
+	def checkNetworkCB(self, data):
 		if data is not None:
 			if data <= 2:
 				self.NetworkConnectionAvailable = True
@@ -124,6 +124,7 @@ class SoftwareTools(PackageInfoHandler):
 	def IpkgListAvailableCB(self, result, retval, extra_args = None):
 		(callback) = extra_args or None
 		if result:
+			result = six.ensure_str(result)
 			if self.list_updating:
 				self.available_packetlist = []
 				for x in result.splitlines():
@@ -162,6 +163,7 @@ class SoftwareTools(PackageInfoHandler):
 	def InstallMetaPackageCB(self, result, retval = None, extra_args = None):
 		(callback) = extra_args or None
 		if result:
+			result = six.ensure_str(result)
 			self.fillPackagesIndexList()
 			if callback is None:
 				self.startIpkgListInstalled()
@@ -188,6 +190,7 @@ class SoftwareTools(PackageInfoHandler):
 	def IpkgListInstalledCB(self, result, retval, extra_args = None):
 		(callback) = extra_args or None
 		if result:
+			result = six.ensure_str(result)
 			self.installed_packetlist = {}
 			for x in result.splitlines():
 				tokens = x.split(' - ')
@@ -201,7 +204,7 @@ class SoftwareTools(PackageInfoHandler):
 					self.packagesIndexlist.remove(package)
 			for package in self.packagesIndexlist[:]:
 				attributes = package[0]["attributes"]
-				if attributes.has_key("packagetype"):
+				if "packagetype" in attributes:
 					if attributes["packagetype"] == "internal":
 						self.packagesIndexlist.remove(package)
 			if callback is None:
@@ -225,7 +228,7 @@ class SoftwareTools(PackageInfoHandler):
 			packagename = attributes["packagename"]
 			for x in self.available_packetlist:
 				if x[0] == packagename:
-					if self.installed_packetlist.has_key(packagename):
+					if packagename in self.installed_packetlist:
 						if self.installed_packetlist[packagename] != x[1]:
 							self.available_updates +=1
 							self.available_updatelist.append([packagename])
@@ -262,15 +265,15 @@ class SoftwareTools(PackageInfoHandler):
 		self.ipkg.stop()
 		if self.Console is not None:
 			if len(self.Console.appContainers):
-				for name in self.Console.appContainers.keys():
+				for name in list(self.Console.appContainers.keys()):
 					self.Console.kill(name)
 		if self.UpdateConsole is not None:
 			if len(self.UpdateConsole.appContainers):
-				for name in self.UpdateConsole.appContainers.keys():
+				for name in list(self.UpdateConsole.appContainers.keys()):
 					self.UpdateConsole.kill(name)
 
 	def verifyPrerequisites(self, prerequisites):
-		if prerequisites.has_key("hardware"):
+		if "hardware" in prerequisites:
 			hardware_found = False
 			for hardware in prerequisites["hardware"]:
 				if hardware == self.hardware_info.device_name:

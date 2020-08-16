@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from time import localtime, mktime, time, strftime
 from datetime import datetime
 
 from enigma import eEPGCache
 
 from Screens.Screen import Screen
-import ChannelSelection
+import Screens.ChannelSelection
 from ServiceReference import ServiceReference
 from Components.config import config, ConfigSelection, ConfigText, ConfigSubList, ConfigDateTime, ConfigClock, ConfigYesNo, getConfigListEntry
 from Components.ActionMap import NumberActionMap
@@ -24,6 +25,7 @@ from Screens.MessageBox import MessageBox
 from Screens.Setup import SetupSummary
 from RecordTimer import AFTEREVENT
 from Screens.VirtualKeyBoard import VirtualKeyBoard
+import six
 
 class TimerEntry(Screen, ConfigListScreen):
 	def __init__(self, session, timer):
@@ -132,9 +134,14 @@ class TimerEntry(Screen, ConfigListScreen):
 			shutdownString = _("shut down")
 		self.timerentry_afterevent = ConfigSelection(choices = [("nothing", _("do nothing")), ("standby", _("go to standby")), ("deepstandby", shutdownString), ("auto", _("auto"))], default = afterevent)
 		self.timerentry_recordingtype = ConfigSelection(choices = [("normal", _("normal")), ("descrambled+ecm", _("descramble and record ecm")), ("scrambled+ecm", _("don't descramble, record ecm"))], default = recordingtype)
-		self.timerentry_type = ConfigSelection(choices = [("once",_("once")), ("repeated", _("repeated"))], default = type)
-		self.timerentry_name = ConfigText(default = self.timer.name.replace('\xc2\x86', '').replace('\xc2\x87', '').encode("utf-8"), visible_width = 50, fixed_size = False)
-		self.timerentry_description = ConfigText(default = self.timer.description, visible_width = 50, fixed_size = False)
+		self.timerentry_type = ConfigSelection(choices = [("once", _("once")), ("repeated", _("repeated"))], default = type)
+		# FIME Do we need these 2 lines?
+		if six.PY3:
+			self.timerentry_name = ConfigText(default = self.timer.name.replace('\x86', '').replace('\x87', ''), visible_width = 50, fixed_size = False)
+			self.timerentry_description_replaced = self.timer.description.replace('\x8a', ' ')
+		else:
+			self.timerentry_name = ConfigText(default = self.timer.name.replace('\xc2\x86', '').replace('\xc2\x87', '').encode("utf-8"), visible_width = 50, fixed_size = False)
+			self.timerentry_description_replaced = self.timer.description.replace('\xc2\x8a', ' ').encode("utf-8")
 		self.timerentry_tags = self.timer.tags[:]
 		self.timerentry_tagsset = ConfigSelection(choices = [not self.timerentry_tags and "None" or " ".join(self.timerentry_tags)])
 
@@ -153,7 +160,7 @@ class TimerEntry(Screen, ConfigListScreen):
 
 		self.timerentry_repeatedbegindate = ConfigDateTime(default = self.timer.repeatedbegindate, formatstring = _("%d.%B %Y"), increment = 86400)
 
-		self.timerentry_weekday = ConfigSelection(default = weekday_table[weekday], choices = [("mon",_("Monday")), ("tue", _("Tuesday")), ("wed",_("Wednesday")), ("thu", _("Thursday")), ("fri", _("Friday")), ("sat", _("Saturday")), ("sun", _("Sunday"))])
+		self.timerentry_weekday = ConfigSelection(default = weekday_table[weekday], choices = [("mon", _("Monday")), ("tue", _("Tuesday")), ("wed", _("Wednesday")), ("thu", _("Thursday")), ("fri", _("Friday")), ("sat", _("Saturday")), ("sun", _("Sunday"))])
 
 		self.timerentry_day = ConfigSubList()
 		for x in (0, 1, 2, 3, 4, 5, 6):
@@ -426,7 +433,7 @@ class TimerEntry(Screen, ConfigListScreen):
 					ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 					parent = self.timer.service_ref.ref
 					selection = 0
-					for x in range(n):
+					for x in list(range(n)):
 						i = event.getLinkageService(parent, x)
 						if i.toString() == ref.toString():
 							selection = x

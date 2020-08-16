@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Label import Label
@@ -11,6 +12,7 @@ from Screens.MessageBox import MessageBox
 from Screens.PowerTimerEntry import TimerEntry, TimerLog
 from Tools.BoundFunction import boundFunction
 from Tools.FuzzyDate import FuzzyTime
+from functools import cmp_to_key
 from time import time
 from timer import TimerEntry as RealTimerEntry
 
@@ -83,7 +85,7 @@ class PowerTimerEditList(Screen):
 		if cur:
 			t = cur
 			if t.disabled:
-				print "try to ENABLE timer"
+				print("try to ENABLE timer")
 				t.enable()
 			else:
 				if t.isRunning():
@@ -199,7 +201,7 @@ class PowerTimerEditList(Screen):
 		list.extend([(timer, False) for timer in self.session.nav.PowerTimer.timer_list])
 		list.extend([(timer, True) for timer in self.session.nav.PowerTimer.processed_timers])
 		if config.usage.timerlist_finished_timer_position.index: #end of list
-			list.sort(cmp = eol_compare)
+			list.sort(key=cmp_to_key(eol_compare))
 		else:
 			list.sort(key = lambda x: x[0].begin)
 
@@ -266,7 +268,7 @@ class PowerTimerEditList(Screen):
 			self.fillTimerList()
 			self.updateState()
 		else:
-			print "PowerTimeredit aborted"
+			print("PowerTimeredit aborted")
 
 	def finishedAdd(self, answer):
 		if answer[0]:
@@ -275,7 +277,7 @@ class PowerTimerEditList(Screen):
 			self.fillTimerList()
 			self.updateState()
 		else:
-			print "Timeredit aborted"
+			print("Timeredit aborted")
 
 	def finishSanityCorrection(self, answer):
 		self.finishedAdd(answer)

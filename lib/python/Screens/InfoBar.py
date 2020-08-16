@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 from Tools.Profile import profile
 from Tools.BoundFunction import boundFunction
 from enigma import eServiceReference
@@ -246,8 +248,8 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			from Plugins.Extensions.MediaPlayer.plugin import MediaPlayer
 			self.session.open(MediaPlayer)
 			no_plugin = False
-		except Exception, e:
-			self.session.open(MessageBox, _("The MediaPlayer plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+		except Exception as e:
+			self.session.open(MessageBox, _("The MediaPlayer plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO, timeout = 10 )
 			
 	def showPluginBrowser(self):
 		from Screens.PluginBrowser import PluginBrowser
@@ -274,16 +276,16 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 			from Plugins.Extensions.HbbTV.plugin import OperaBrowser
 			self.session.open(OperaBrowser)
 			no_plugin = False
-		except Exception, e:
-			self.session.open(MessageBox, _("The WebBrowser plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+		except Exception as e:
+			self.session.open(MessageBox, _("The WebBrowser plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO, timeout = 10 )
 
 	def showFormat(self):
 		try:
 			from Screens.VideoMode import VideoSetup
 			self.session.open(VideoSetup)
 			no_plugin = False
-		except Exception, e:
-			self.session.open(MessageBox, _("The VideoMode plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+		except Exception as e:
+			self.session.open(MessageBox, _("The VideoMode plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO, timeout = 10 )
 			
 			
 class MoviePlayer(InfoBarBase, InfoBarShowHide,
@@ -426,8 +428,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 						# Moved to trash, okay
 						self.close()
 						return
-					except Exception, e:
-						print "[InfoBar] Failed to move to .Trash folder:", e
+					except Exception as e:
+						print("[InfoBar] Failed to move to .Trash folder:", e)
 						msg = _("Cannot move to trash can") + "\n" + str(e) + "\n"
 				info = serviceHandler.info(ref)
 				name = info and info.getName(ref) or _("this recording")
@@ -451,8 +453,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		elif answer == "restart":
 			self.doSeek(0)
 			self.setSeekState(self.SEEK_STATE_PLAY)
-		elif answer in ("playlist","playlistquit","loop"):
-			( next_service, item , length ) = self.getPlaylistServiceInfo(self.cur_service)
+		elif answer in ("playlist", "playlistquit", "loop"):
+			( next_service, item, length ) = self.getPlaylistServiceInfo(self.cur_service)
 			if next_service is not None:
 				if config.usage.next_movie_msg.value:
 					self.displayPlayedName(next_service, item, length)
@@ -460,11 +462,11 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 				self.cur_service = next_service
 			else:
 				if answer == "playlist":
-					self.leavePlayerConfirmed([True,"movielist"])
+					self.leavePlayerConfirmed([True, "movielist"])
 				elif answer == "loop" and length > 0:
-					self.leavePlayerConfirmed([True,"loop"])
+					self.leavePlayerConfirmed([True, "loop"])
 				else:
-					self.leavePlayerConfirmed([True,"quit"])
+					self.leavePlayerConfirmed([True, "quit"])
 		elif answer in "repeatcurrent":
 			if config.usage.next_movie_msg.value:
 				(item, length) = self.getPlaylistServiceInfo(self.cur_service)
@@ -602,7 +604,7 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 				self.session.nav.playService(ref)
 
 	def getPlaylistServiceInfo(self, service):
-		from MovieSelection import playlist
+		from Screens.MovieSelection import playlist
 		for i, item in enumerate(playlist):
 			if item == service:
 				if config.usage.on_movie_eof.value == "repeatcurrent":
@@ -615,8 +617,8 @@ class MoviePlayer(InfoBarBase, InfoBarShowHide,
 		return None, 0, 0
 
 	def displayPlayedName(self, ref, index, n):
-		from Tools import Notifications
-		Notifications.AddPopup(text = _("%s/%s: %s") % (index, n, self.ref2HumanName(ref)), type = MessageBox.TYPE_INFO, timeout = 5)
+		import Tools.Notifications
+		Tools.Notifications.AddPopup(text = _("%s/%s: %s") % (index, n, self.ref2HumanName(ref)), type = MessageBox.TYPE_INFO, timeout = 5)
 
 	def ref2HumanName(self, ref):
 		return enigma.eServiceCenter.getInstance().info(ref).getName(ref) 

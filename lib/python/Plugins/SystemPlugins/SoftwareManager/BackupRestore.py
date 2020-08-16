@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 from os import path, makedirs, listdir, stat, rename, remove, removedirs
 from datetime import date
 from time import time, strftime, localtime
@@ -15,7 +17,7 @@ from Components.Sources.List import List
 from Components.Button import Button
 from Components.config import getConfigListEntry, configfile, ConfigSelection, ConfigSubsection, ConfigText, ConfigLocations, ConfigEnableDisable, ConfigClock, ConfigInteger
 from Components.config import config
-from Components.ConfigList import ConfigList,ConfigListScreen
+from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.FileList import MultiFileSelectList
 from Components.Network import iNetwork
 from Plugins.Plugin import PluginDescriptor
@@ -25,6 +27,8 @@ from os import system, popen, path, makedirs, listdir, access, stat, rename, rem
 from time import gmtime, strftime, localtime, sleep
 from datetime import date, datetime
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageDistro
+from . import ShellCompatibleFunctions
+import six
 import shutil
 
 boxtype = getBoxType()
@@ -136,16 +140,16 @@ class BackupScreen(Screen, ConfigListScreen):
 				self.newfilename = self.backuppath + "/" + dt + '-' + self.backupfile
 				if path.exists(self.newfilename):
 					remove(self.newfilename)
-				rename(self.fullbackupfilename,self.newfilename)
+				rename(self.fullbackupfilename, self.newfilename)
 			if self.finished_cb:
-				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = cmd,finishedCallback = self.backupFinishedCB,closeOnSuccess = True)
+				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
 			else:
-				self.session.open(Console, title = _("Backup is running..."), cmdlist = cmd,finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
+				self.session.open(Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
 		except OSError:
 			if self.finished_cb:
 				self.session.openWithCallback(self.finished_cb, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
 			else:
-				self.session.openWithCallback(self.backupErrorCB,MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
+				self.session.openWithCallback(self.backupErrorCB, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
 
 	def backupFinishedCB(self,retval = None):
 		self.close(True)
@@ -370,7 +374,7 @@ class RestoreMenu(Screen):
 	def startDelete(self, ret = False):
 		if ret == True:
 			self.exe = True
-			print "removing:",self.val
+			print("removing:",self.val)
 			if path.exists(self.val) == True:
 				remove(self.val)
 			self.exe = False
@@ -420,7 +424,7 @@ class RestoreScreen(Screen, ConfigListScreen):
 			restorecmdlist += ["echo 0 > /proc/stb/vmpeg/0/dst_height", "echo 0 > /proc/stb/vmpeg/0/dst_left", "echo 0 > /proc/stb/vmpeg/0/dst_top", "echo 0 > /proc/stb/vmpeg/0/dst_width"]
 		else:
 			restorecmdlist = ["tar -xzvf " + self.fullbackupfilename + " -C /"]
-		print"[SOFTWARE MANAGER] Restore Settings !!!!"
+		print("[SOFTWARE MANAGER] Restore Settings !!!!")
 
 		self.session.open(Console, title = _("Restoring..."), cmdlist = restorecmdlist, finishedCallback = self.restoreFinishedCB)
 
@@ -458,7 +462,7 @@ class RestoreScreen(Screen, ConfigListScreen):
 
 	def rebootSYS(self, ret = None):
 		try:
-			f = open("/tmp/rebootSYS.sh","w")
+			f = open("/tmp/rebootSYS.sh", "w")
 			f.write("#!/bin/bash\n\nkillall -9 enigma2\nreboot\n")
 			f.close()
 			self.session.open(Console, title = _("Your %s %s will Reboot...")% (getMachineBrand(), getMachineName()), cmdlist = ["chmod +x /tmp/rebootSYS.sh", "/tmp/rebootSYS.sh"])
@@ -468,7 +472,7 @@ class RestoreScreen(Screen, ConfigListScreen):
 	def restoreMetrixSkin(self, ret = None):
 		try:
 			from Plugins.Extensions.MyMetrixLite.MainSettingsView import MainSettingsView
-			print"Restoring MyMetrixLite..."
+			print("Restoring MyMetrixLite...")
 			MainSettingsView(None,True)
 		except:
 			pass
@@ -496,7 +500,7 @@ class RestartNetwork(Screen):
 		self.setTitle(_("Restart Network Adapter"))
 
 	def restartLan(self):
-		print"[SOFTWARE MANAGER] Restart Network"
+		print("[SOFTWARE MANAGER] Restart Network")
 		iNetwork.restartNetwork(self.restartLanDataAvail)
 		
 	def restartLanDataAvail(self, data):
@@ -529,14 +533,15 @@ class installedPlugins(Screen):
 		self.doUpdate()
 
 	def doUpdate(self):
-		print"[SOFTWARE MANAGER] update package list"
+		print("[SOFTWARE MANAGER] update package list")
 		self.container.execute("ipkg update")
 
 	def doList(self):
-		print"[SOFTWARE MANAGER] read installed package list"
+		print("[SOFTWARE MANAGER] read installed package list")
 		self.container.execute("ipkg list-installed | egrep 'enigma2-plugin-|task-base|packagegroup-base'")
 
 	def dataAvail(self, strData):
+		strData = six.ensure_str(strData)
 		if self.type == self.LIST:
 			strData = self.remainingdata + strData
 			lines = strData.split('\n')
@@ -568,7 +573,7 @@ class installedPlugins(Screen):
 		self.Menulist = []
 		for x in self.PluginList:
 			if x not in self.pluginsInstalled:
-				self.Menulist.append(SettingsEntry(x , True))
+				self.Menulist.append(SettingsEntry(x, True))
 		if len(self.Menulist) == 0:
 			self.close()
 		else:
@@ -594,7 +599,7 @@ class RestorePlugins(Screen):
 		self.index = 0
 		self.list = menulist
 		for r in menulist:
-			print "[SOFTWARE MANAGER] Plugin to restore: %s" % r[0]
+			print("[SOFTWARE MANAGER] Plugin to restore: %s" % r[0])
 		self.container = eConsoleAppContainer()
 		self["menu"] = List(list())
 		self["menu"].onSelectionChanged.append(self.selectionChanged)
@@ -650,7 +655,7 @@ class RestorePlugins(Screen):
 		item = self["menu"].getCurrent()[0]
 		state = self["menu"].getCurrent()[2]
 		if state:
-			self.list[index] = SettingsEntry(item , False)
+			self.list[index] = SettingsEntry(item, False)
 		else:
 			self.list[index] = SettingsEntry(item, True)
 

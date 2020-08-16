@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
@@ -9,7 +10,7 @@ from Components.Harddisk import harddiskmanager
 from GlobalActions import globalActionMap
 from enigma import eDVBVolumecontrol, eTimer, eDVBLocalTimeHandler, eServiceReference, pNavigation
 from boxbranding import getMachineBrand, getMachineName, getMachineProcModel, getBoxType, getBrandOEM, getMachineBuild
-from Tools import Notifications
+import Tools.Notifications
 from time import localtime, time
 import Screens.InfoBar
 from os import path
@@ -35,7 +36,7 @@ class TVstate: #load in Navigation
 	def __init__(self):
 		global TVinStandby
 		if TVinStandby is not None:
-			print "[Standby] only one TVstate instance is allowed!"
+			print("[Standby] only one TVstate instance is allowed!")
 		TVinStandby = self
 
 		try:
@@ -46,7 +47,7 @@ class TVstate: #load in Navigation
 			self.hdmicec_ok = False
 
 		if not self.hdmicec_ok:
-			print '[Standby] HDMI-CEC is not enabled or unavailable !!!'
+			print('[Standby] HDMI-CEC is not enabled or unavailable !!!')
 
 	def skipHdmiCecNow(self, value):
 		if self.hdmicec_ok:
@@ -102,7 +103,7 @@ def setLCDModeMinitTV(value):
 		
 def setLCDModeMinitTV4k(value):
 	try:
-		print "value:", value 
+		print("value:", value)
                 f = open("/proc/stb/lcd/live_enable", "w")
 		f.write("value")
 		f.close()
@@ -111,8 +112,8 @@ def setLCDModeMinitTV4k(value):
 
 class Standby2(Screen):
 	def Power(self):
-		print "leave standby"
-		if (getBrandOEM() in ('fulan','clap','dinobot') or getMachineBuild() in ('gbmv200','sf8008','sf8008m','ustym4kpro')):
+		print("leave standby")
+		if (getBrandOEM() in ('fulan', 'clap', 'dinobot') or getMachineBuild() in ('gbmv200', 'sf8008', 'ustym4kpro')):
 			try:
 				open("/proc/stb/hdmi/output", "w").write("on")
 			except:
@@ -142,25 +143,25 @@ class Standby2(Screen):
 	def Power_long(self):
 		if (config.usage.on_short_powerpress.value == "standby_noTVshutdown"):
 			self.TVoff()
-			self.ignoreKeyBreakTimer.start(250,1)
+			self.ignoreKeyBreakTimer.start(250, 1)
 
 	def Power_repeat(self):
 		if (config.usage.on_short_powerpress.value == "standby_noTVshutdown") and self.ignoreKeyBreakTimer.isActive():
-			self.ignoreKeyBreakTimer.start(250,1)
+			self.ignoreKeyBreakTimer.start(250, 1)
 
 	def Power_break(self):
 		if (config.usage.on_short_powerpress.value == "standby_noTVshutdown") and not self.ignoreKeyBreakTimer.isActive():
 			self.Power()
 
 	def TVoff(self):
-		print "[Standby] TVoff"
+		print("[Standby] TVoff")
 		TVinStandby.skipHdmiCecNow(False)
 		TVinStandby.setTVstate('standby')
 
 	def setMute(self):
 		if eDVBVolumecontrol.getInstance().isMuted():
 			self.wasMuted = 1
-			print "mute already active"
+			print("mute already active")
 		else:
 			self.wasMuted = 0
 			eDVBVolumecontrol.getInstance().volumeToggleMute()
@@ -173,8 +174,8 @@ class Standby2(Screen):
 		Screen.__init__(self, session)
 		self.skinName = "Standby"
 		self.avswitch = AVSwitch()
-		self.oldService = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-		print "[Standby] enter standby"
+                self.oldService = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		print("[Standby] enter standby")
 		SystemInfo["StandbyState"] = True
 
 		if os.path.exists("/usr/script/StandbyEnter.sh"):
@@ -240,14 +241,14 @@ class Standby2(Screen):
 			self.avswitch.setInput("AUX")
 			
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
-		print "goto deep2"
+		print("goto deep2")
 		if gotoShutdownTime:
-		        print "goto deep3"
+		        print("goto deep3")
 			self.standbyTimeoutTimer = eTimer()
 			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
 
-		if (getBrandOEM() in ('fulan','clap','dinobot') or getMachineBuild() in ('gbmv200','sf8008','sf8008m','ustym4kpro')):
+		if (getBrandOEM() in ('fulan', 'clap', 'dinobot') or getMachineBuild() in ('gbmv200', 'sf8008', 'ustym4kpro')):
 			try:
 				open("/proc/stb/hdmi/output", "w").write("off")
 			except:
@@ -315,7 +316,7 @@ class Standby(Standby2):
 			self.onClose.append(self.doStandby)
 
 	def doStandby(self):
-			Notifications.AddNotification(Screens.Standby.Standby2)
+			Tools.Notifications.AddNotification(Screens.Standby.Standby2)
 
 class StandbySummary(Screen):
 	skin = """
@@ -440,13 +441,13 @@ class TryQuitMainloop(MessageBox):
 			if self.retval == QUIT_SHUTDOWN:
 				config.misc.DeepStandby.value = True
 			self.session.nav.stopService()
-			self.quitScreen = self.session.instantiateDialog(QuitMainloopScreen,retvalue=self.retval)
+			self.quitScreen = self.session.instantiateDialog(QuitMainloopScreen, retvalue=self.retval)
 			self.quitScreen.show()
-			print "[Standby] quitMainloop #1"
+			print("[Standby] quitMainloop #1")
 			quitMainloopCode = self.retval
 			if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 				# set LCDminiTV off / fix a deep-standby-crash on some boxes / gb4k 
-				print "[Standby] LCDminiTV off"
+				print("[Standby] LCDminiTV off")
 				setLCDModeMinitTV("0")
 			if getBoxType() == "vusolo4k":  #workaround for white display flash
 				open("/proc/stb/fp/oled_brightness", "w").write("0")

@@ -1,7 +1,11 @@
+from __future__ import print_function
 from boxbranding import getBoxType, getMachineBrand, getMachineName
 from os import path as os_path, system, remove, unlink, rename, chmod, access, X_OK
 from shutil import move
 import time
+import six
+
+from enigma import eTimer, eConsoleAppContainer
 import os
 import fnmatch
 from enigma import eTimer
@@ -20,6 +24,8 @@ from Components.Sources.Boolean import Boolean
 from Components.Sources.List import List
 from Components.SystemInfo import SystemInfo
 from Components.Label import Label, MultiColorLabel
+from Components.Input import Input
+from Screens.InputBox import InputBox
 from Components.ScrollLabel import ScrollLabel
 from Components.Pixmap import Pixmap, MultiPixmap
 from Components.MenuList import MenuList
@@ -35,14 +41,18 @@ from Plugins.Extensions.Infopanel.Softcamedit import vEditor, cEditor
 from Plugins.Extensions.Infopanel.nfsedit import NFS_EDIT
 from os import path, listdir
 import commands
-
+from random import Random
+import string
+import os
+import glob
+import sys
 
 if float(getVersionString()) >= 4.0:
 	basegroup = "packagegroup-base"
 else:
 	basegroup = "task-base"
 
-class NetworkAdapterSelection(Screen,HelpableScreen):
+class NetworkAdapterSelection(Screen, HelpableScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
@@ -79,13 +89,13 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 			"yellow": (self.setDefaultInterface, [_("Set interface as default Interface"),_("* Only available if more than one interface is active.")] ),
 			})
 
-		self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
+		self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getAdapterList()]
 
 		if not self.adapters:
-			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getConfiguredAdapters()]
+			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getConfiguredAdapters()]
 
 		if len(self.adapters) == 0:
-			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getInstalledAdapters()]
+			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getInstalledAdapters()]
 
 		self.onChangedEntry = [ ]
 		self.list = []
@@ -113,7 +123,7 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 		for cb in self.onChangedEntry:
 			cb(name, desc)
 
-	def buildInterfaceList(self,iface,name,default,active ):
+	def buildInterfaceList(self, iface, name, default, active ):
 		divpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "div-h.png"))
 		defaultpng = None
 		activepng = None
@@ -121,29 +131,29 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 		interfacepng = None
 
 		if not iNetwork.isWirelessInterface(iface):
-			if active is True:
+			if active == True:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wired-active.png"))
-			elif active is False:
+			elif active == False:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wired-inactive.png"))
 			else:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wired.png"))
 		elif iNetwork.isWirelessInterface(iface):
-			if active is True:
+			if active == True:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wireless-active.png"))
-			elif active is False:
+			elif active == False:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wireless-inactive.png"))
 			else:
 				interfacepng = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/network_wireless.png"))
 
 		num_configured_if = len(iNetwork.getConfiguredAdapters())
 		if num_configured_if >= 2:
-			if default is True:
+			if default == True:
 				defaultpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/button_blue.png"))
-			elif default is False:
+			elif default == False:
 				defaultpng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "buttons/button_blue_off.png"))
-		if active is True:
+		if active == True:
 			activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_on.png"))
-		elif active is False:
+		elif active == False:
 			activepng = LoadPixmap(cached=True, path=resolveFilename(SCOPE_ACTIVE_SKIN, "icons/lock_error.png"))
 
 		description = iNetwork.getFriendlyAdapterDescription(iface)
@@ -167,7 +177,7 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 			unlink("/etc/default_gw")
 
 		if os_path.exists("/etc/default_gw"):
-			fp = file('/etc/default_gw', 'r')
+			fp = open('/etc/default_gw', 'r')
 			result = fp.read()
 			fp.close()
 			default_gw = result
@@ -177,7 +187,7 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 				default_int = True
 			else:
 				default_int = False
-			if iNetwork.getAdapterAttribute(x[1], 'up') is True:
+			if iNetwork.getAdapterAttribute(x[1], 'up') == True:
 				active_int = True
 			else:
 				active_int = False
@@ -207,7 +217,7 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 
 	def okbuttonClick(self):
 		selection = self["list"].getCurrent()
-		if selection is not None:
+		if selection != None:
 			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetupConfiguration, selection[0])
 
 	def AdapterSetupClosed(self, *ret):
@@ -226,15 +236,15 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 		self.restartLanRef = self.session.openWithCallback(self.restartfinishedCB, MessageBox, _("Please wait while we configure your network..."), type = MessageBox.TYPE_INFO, enable_input = False)
 
 	def restartLanDataAvail(self, data):
-		if data is True:
+		if data == True:
 			iNetwork.getInterfaces(self.getInterfacesDataAvail)
 
 	def getInterfacesDataAvail(self, data):
-		if data is True:
+		if data == True:
 			self.restartLanRef.close(True)
 
 	def restartfinishedCB(self, data):
-		if data is True:
+		if data == True:
 			self.updateList()
 			self.session.open(MessageBox, _("Finished configuring your network"), type = MessageBox.TYPE_INFO, timeout = 10, default = False)
 
@@ -243,10 +253,10 @@ class NetworkAdapterSelection(Screen,HelpableScreen):
 			try:
 				from Plugins.SystemPlugins.NetworkWizard.NetworkWizard import NetworkWizard
 			except ImportError:
-				self.session.open(MessageBox, _("The network wizard extension is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+				self.session.open(MessageBox, _("The network wizard extension is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO, timeout = 10 )
 			else:
 				selection = self["list"].getCurrent()
-				if selection is not None:
+				if selection != None:
 					self.session.openWithCallback(self.AdapterSetupClosed, NetworkWizard, selection[0])
 
 
@@ -256,7 +266,7 @@ class NameserverSetup(Screen, ConfigListScreen, HelpableScreen):
 		HelpableScreen.__init__(self)
 		Screen.setTitle(self, _("Nameserver settings"))
 		self.backupNameserverList = iNetwork.getNameserverList()[:]
-		print "backup-list:", self.backupNameserverList
+		print("backup-list:", self.backupNameserverList)
 
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
@@ -316,7 +326,7 @@ class NameserverSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def cancel(self):
 		iNetwork.clearNameservers()
-		print "backup-list:", self.backupNameserverList
+		print("backup-list:", self.backupNameserverList)
 		for nameserver in self.backupNameserverList:
 			iNetwork.addNameserver(nameserver)
 		self.close()
@@ -327,7 +337,7 @@ class NameserverSetup(Screen, ConfigListScreen, HelpableScreen):
 		self.createSetup()
 
 	def remove(self):
-		print "currentIndex:", self["config"].getCurrentIndex()
+		print("currentIndex:", self["config"].getCurrentIndex())
 		index = self["config"].getCurrentIndex()
 		if index < len(self.nameservers):
 			iNetwork.removeNameserver(self.nameservers[index])
@@ -396,15 +406,15 @@ class NetworkMacSetup(Screen, ConfigListScreen, HelpableScreen):
 		self.restartLanRef = self.session.openWithCallback(self.restartfinishedCB, MessageBox, _("Please wait while we configure your network..."), type = MessageBox.TYPE_INFO, enable_input = False)
 
 	def restartLanDataAvail(self, data):
-		if data is True:
+		if data == True:
 			iNetwork.getInterfaces(self.getInterfacesDataAvail)
 
 	def getInterfacesDataAvail(self, data):
-		if data is True:
+		if data == True:
 			self.restartLanRef.close(True)
 
 	def restartfinishedCB(self, data):
-		if data is True:
+		if data == True:
 			self.session.openWithCallback(self.close, MessageBox, _("Finished configuring your network"), type = MessageBox.TYPE_INFO, timeout = 10, default = False)
 
 class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
@@ -447,7 +457,7 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 		}, -2)
 
 		self.list = []
-		ConfigListScreen.__init__(self, self.list,session = self.session)
+		ConfigListScreen.__init__(self, self.list, session = self.session)
 		self.createSetup()
 		self.onLayoutFinish.append(self.layoutFinished)
 		self.onClose.append(self.cleanup)
@@ -480,14 +490,14 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 	def layoutFinished(self):
 		self["DNS1"].setText(self.primaryDNS.getText())
 		self["DNS2"].setText(self.secondaryDNS.getText())
-		if self.ipConfigEntry.getText() is not None:
+		if self.ipConfigEntry.getText() != None:
 			if self.ipConfigEntry.getText() == "0.0.0.0":
 				self["IP"].setText(_("N/A"))
 			else:
 				self["IP"].setText(self.ipConfigEntry.getText())
 		else:
 			self["IP"].setText(_("N/A"))
-		if self.netmaskConfigEntry.getText() is not None:
+		if self.netmaskConfigEntry.getText() != None:
 			if self.netmaskConfigEntry.getText() == "0.0.0.0":
 				self["Mask"].setText(_("N/A"))
 			else:
@@ -550,15 +560,15 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 
 		self.activateInterfaceEntry = NoSave(ConfigYesNo(default=iNetwork.getAdapterAttribute(self.iface, "up") or False))
 		self.dhcpConfigEntry = NoSave(ConfigYesNo(default=iNetwork.getAdapterAttribute(self.iface, "dhcp") or False))
-		self.ipConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "ip")) or [0,0,0,0])
-		self.netmaskConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "netmask") or [255,0,0,0]))
+		self.ipConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "ip")) or [0, 0, 0, 0])
+		self.netmaskConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "netmask") or [255, 0, 0, 0]))
 		if iNetwork.getAdapterAttribute(self.iface, "gateway"):
 			self.dhcpdefault = True
 		else:
 			self.dhcpdefault = False
 		self.hasGatewayConfigEntry = NoSave(ConfigYesNo(default=self.dhcpdefault or False))
-		self.gatewayConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "gateway") or [0,0,0,0]))
-		nameserver = (iNetwork.getNameserverList() + [[0,0,0,0]] * 2)[0:2]
+		self.gatewayConfigEntry = NoSave(ConfigIP(default=iNetwork.getAdapterAttribute(self.iface, "gateway") or [0, 0, 0, 0]))
+		nameserver = (iNetwork.getNameserverList() + [[0, 0, 0, 0]] * 2)[0:2]
 		self.primaryDNS = NoSave(ConfigIP(default=nameserver[0]))
 		self.secondaryDNS = NoSave(ConfigIP(default=nameserver[1]))
 
@@ -587,10 +597,10 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 			self.configStrings = None
 			for p in plugins.getPlugins(PluginDescriptor.WHERE_NETWORKSETUP):
 				callFnc = p.__call__["ifaceSupported"](self.iface)
-				if callFnc is not None:
-					if p.__call__.has_key("WlanPluginEntry"): # internally used only for WLAN Plugin
+				if callFnc != None:
+					if "WlanPluginEntry" in p.__call__: # internally used only for WLAN Plugin
 						self.extended = callFnc
-						if p.__call__.has_key("configStrings"):
+						if "configStrings" in p.__call__:
 							self.configStrings = p.__call__["configStrings"]
 
 						self.hiddenSSID = getConfigListEntry(_("Hidden network"), config.plugins.wlan.hiddenessid)
@@ -657,7 +667,7 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 			self.keyCancel()
 
 	def secondIfaceFoundCB(self, data):
-		if data is False:
+		if data == False:
 			self.applyConfig(True)
 		else:
 			configuredInterfaces = iNetwork.getConfiguredAdapters()
@@ -665,10 +675,10 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 				if interface == self.iface:
 					continue
 				iNetwork.setAdapterAttribute(interface, "up", False)
-			iNetwork.deactivateInterface(configuredInterfaces,self.deactivateSecondInterfaceCB)
+			iNetwork.deactivateInterface(configuredInterfaces, self.deactivateSecondInterfaceCB)
 
 	def deactivateSecondInterfaceCB(self, data):
-		if data is True:
+		if data == True:
 			self.applyConfig(True)
 
 	def applyConfig(self, ret = False):
@@ -683,58 +693,58 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 			else:
 				iNetwork.removeAdapterAttribute(self.iface, "gateway")
 
-			if self.extended is not None and self.configStrings is not None:
+			if self.extended != None and self.configStrings != None:
 				iNetwork.setAdapterAttribute(self.iface, "configStrings", self.configStrings(self.iface))
 				self.ws.writeConfig(self.iface)
 
-			if self.activateInterfaceEntry.value is False:
+			if self.activateInterfaceEntry.value == False:
 				iNetwork.deactivateInterface(self.iface,self.deactivateInterfaceCB)
 				iNetwork.writeNetworkConfig()
 				self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait for activation of your network configuration..."), type = MessageBox.TYPE_INFO, enable_input = False)
 			else:
-				if self.oldInterfaceState is False:
-					iNetwork.activateInterface(self.iface,self.deactivateInterfaceCB)
+				if self.oldInterfaceState == False:
+					iNetwork.activateInterface(self.iface, self.deactivateInterfaceCB)
 				else:
-					iNetwork.deactivateInterface(self.iface,self.activateInterfaceCB)
+					iNetwork.deactivateInterface(self.iface, self.activateInterfaceCB)
 				iNetwork.writeNetworkConfig()
 				self.applyConfigRef = self.session.openWithCallback(self.applyConfigfinishedCB, MessageBox, _("Please wait for activation of your network configuration..."), type = MessageBox.TYPE_INFO, enable_input = False)
 		else:
 			self.keyCancel()
 
 	def deactivateInterfaceCB(self, data):
-		if data is True:
+		if data == True:
 			self.applyConfigDataAvail(True)
 
 	def activateInterfaceCB(self, data):
-		if data is True:
-			iNetwork.activateInterface(self.iface,self.applyConfigDataAvail)
+		if data == True:
+			iNetwork.activateInterface(self.iface, self.applyConfigDataAvail)
 
 	def applyConfigDataAvail(self, data):
-		if data is True:
+		if data == True:
 			iNetwork.getInterfaces(self.getInterfacesDataAvail)
 
 	def getInterfacesDataAvail(self, data):
-		if data is True:
+		if data == True:
 			self.applyConfigRef.close(True)
 
-	def applyConfigfinishedCB(self,data):
-		if data is True:
+	def applyConfigfinishedCB(self, data):
+		if data == True:
 			if self.finished_cb:
 				self.session.openWithCallback(lambda x : self.finished_cb(), MessageBox, _("Your network configuration has been activated."), type = MessageBox.TYPE_INFO, timeout = 10)
 			else:
 				self.session.openWithCallback(self.ConfigfinishedCB, MessageBox, _("Your network configuration has been activated."), type = MessageBox.TYPE_INFO, timeout = 10)
 
-	def ConfigfinishedCB(self,data):
-		if data is not None:
-			if data is True:
+	def ConfigfinishedCB(self, data):
+		if data != None:
+			if data == True:
 				self.close('ok')
 
 	def keyCancelConfirm(self, result):
 		if not result:
 			return
 		config.network.wol.setValue(self.wolstartvalue)	
-		if self.oldInterfaceState is False:
-			iNetwork.deactivateInterface(self.iface,self.keyCancelCB)
+		if self.oldInterfaceState == False:
+			iNetwork.deactivateInterface(self.iface, self.keyCancelCB)
 		else:
 			self.close('cancel')
 
@@ -745,9 +755,9 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 		else:
 			self.close('cancel')
 
-	def keyCancelCB(self,data):
-		if data is not None:
-			if data is True:
+	def keyCancelCB(self, data):
+		if data != None:
+			if data == True:
 				self.close('cancel')
 
 	def runAsync(self, finished_cb):
@@ -756,7 +766,7 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 
 	def NameserverSetupClosed(self, *ret):
 		iNetwork.loadNameserverConfig()
-		nameserver = (iNetwork.getNameserverList() + [[0,0,0,0]] * 2)[0:2]
+		nameserver = (iNetwork.getNameserverList() + [[0, 0, 0, 0]] * 2)[0:2]
 		self.primaryDNS = NoSave(ConfigIP(default=nameserver[0]))
 		self.secondaryDNS = NoSave(ConfigIP(default=nameserver[1]))
 		self.createSetup()
@@ -768,15 +778,15 @@ class AdapterSetup(Screen, ConfigListScreen, HelpableScreen):
 	def hideInputHelp(self):
 		current = self["config"].getCurrent()
 		if current == self.wlanSSID:
-			if current[1].help_window.instance is not None:
+			if current[1].help_window.instance != None:
 				current[1].help_window.instance.hide()
-		elif current == self.encryptionKey and config.plugins.wlan.encryption.value is not "Unencrypted":
-			if current[1].help_window.instance is not None:
+		elif current == self.encryptionKey and config.plugins.wlan.encryption.value != "Unencrypted":
+			if current[1].help_window.instance != None:
 				current[1].help_window.instance.hide()
 
 
 class AdapterSetupConfiguration(Screen, HelpableScreen):
-	def __init__(self, session,iface):
+	def __init__(self, session, iface):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
 		Screen.setTitle(self, _("Network Setup"))
@@ -819,7 +829,7 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			"red": (self.close, _("exit networkadapter setup menu")),
 			})
 
-		self["actions"] = NumberActionMap(["WizardActions","ShortcutActions"],
+		self["actions"] = NumberActionMap(["WizardActions", "ShortcutActions"],
 		{
 			"ok": self.ok,
 			"back": self.close,
@@ -837,21 +847,21 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 		self.selectionChanged()
 
 
-	def queryWirelessDevice(self,iface):
+	def queryWirelessDevice(self, iface):
 		try:
-			from pythonwifi.iwlibs import Wireless
+			from wifi.scan import Cell
 			import errno
 		except ImportError:
 			return False
 		else:
 			try:
-				ifobj = Wireless(iface) # a Wireless NIC Object
-				wlanresponse = ifobj.getAPaddr()
-			except IOError, (error_no, error_str):
+				wlanresponse = list(Cell.all(iface))
+			except IOError as xxx_todo_changeme:
+				(error_no, error_str) = xxx_todo_changeme.args
 				if error_no in (errno.EOPNOTSUPP, errno.ENODEV, errno.EPERM):
 					return False
 				else:
-					print "error: ",error_no,error_str
+					print("error: ", error_no, error_str)
 					return True
 			else:
 				return True
@@ -863,16 +873,16 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 				try:
 					from Plugins.SystemPlugins.WirelessLan.plugin import WlanScan
 				except ImportError:
-					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
+					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO, timeout = 10 )
 				else:
 					if self.queryWirelessDevice(self.iface):
-						self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup,self.iface)
+						self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface)
 					else:
 						self.showErrorMessage()	# Display Wlan not available Message
 			else:
-				self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup,self.iface)
+				self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface)
 		if self["menulist"].getCurrent()[1] == 'test':
-			self.session.open(NetworkAdapterTest,self.iface)
+			self.session.open(NetworkAdapterTest, self.iface)
 		if self["menulist"].getCurrent()[1] == 'dns':
 			self.session.open(NameserverSetup)
 		if self["menulist"].getCurrent()[1] == 'mac':
@@ -881,7 +891,7 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			try:
 				from Plugins.SystemPlugins.WirelessLan.plugin import WlanScan
 			except ImportError:
-				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
+				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO, timeout = 10 )
 			else:
 				if self.queryWirelessDevice(self.iface):
 					self.session.openWithCallback(self.WlanScanClosed, WlanScan, self.iface)
@@ -891,10 +901,10 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			try:
 				from Plugins.SystemPlugins.WirelessLan.plugin import WlanStatus
 			except ImportError:
-				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
+				self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO, timeout = 10 )
 			else:
 				if self.queryWirelessDevice(self.iface):
-					self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
+					self.session.openWithCallback(self.WlanStatusClosed, WlanStatus, self.iface)
 				else:
 					self.showErrorMessage()	# Display Wlan not available Message
 		if self["menulist"].getCurrent()[1] == 'lanrestart':
@@ -965,9 +975,9 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 				self["statuspic"].setPixmapNum(1)
 				self["statuspic"].show()
 			else:
-				iStatus.getDataForInterface(self.iface,self.getInfoCB)
+				iStatus.getDataForInterface(self.iface, self.getInfoCB)
 		else:
-			iNetwork.getLinkState(self.iface,self.dataAvail)
+			iNetwork.getLinkState(self.iface, self.dataAvail)
 
 	def doNothing(self):
 		pass
@@ -979,42 +989,42 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 		self.extendedSetup = None
 		for p in plugins.getPlugins(PluginDescriptor.WHERE_NETWORKSETUP):
 			callFnc = p.__call__["ifaceSupported"](self.iface)
-			if callFnc is not None:
+			if callFnc != None:
 				self.extended = callFnc
-				if p.__call__.has_key("WlanPluginEntry"): # internally used only for WLAN Plugin
+				if "WlanPluginEntry" in p.__call__: # internally used only for WLAN Plugin
 					menu.append((_("Scan wireless networks"), "scanwlan"))
 					if iNetwork.getAdapterAttribute(self.iface, "up"):
 						menu.append((_("Show WLAN status"), "wlanstatus"))
 				else:
-					if p.__call__.has_key("menuEntryName"):
+					if "menuEntryName" in p.__call__:
 						menuEntryName = p.__call__["menuEntryName"](self.iface)
 					else:
 						menuEntryName = _('Extended setup...')
-					if p.__call__.has_key("menuEntryDescription"):
+					if "menuEntryDescription" in p.__call__:
 						menuEntryDescription = p.__call__["menuEntryDescription"](self.iface)
 					else:
 						menuEntryDescription = _('Extended network setup plugin...')
-					self.extendedSetup = ('extendedSetup',menuEntryDescription, self.extended)
-					menu.append((menuEntryName,self.extendedSetup))
+					self.extendedSetup = ('extendedSetup', menuEntryDescription, self.extended)
+					menu.append((menuEntryName, self.extendedSetup))
 
 		if os_path.exists(resolveFilename(SCOPE_PLUGINS, "SystemPlugins/NetworkWizard/networkwizard.xml")):
 			menu.append((_("Network wizard"), "openwizard"))
-		kernel_ver = about.getKernelVersionString()
-		if kernel_ver <= "3.5.0":
+		# CHECK WHICH BOXES NOW SUPPORT MAC-CHANGE VIA GUI
+		if getBoxType() not in ('DUMMY',) and self.iface == 'eth0':
 			menu.append((_("Network MAC settings"), "mac"))
 
 		return menu
 
 	def AdapterSetupClosed(self, *ret):
-		if ret is not None and len(ret):
-			if ret[0] == 'ok' and (iNetwork.isWirelessInterface(self.iface) and iNetwork.getAdapterAttribute(self.iface, "up") is True):
+		if ret != None and len(ret):
+			if ret[0] == 'ok' and (iNetwork.isWirelessInterface(self.iface) and iNetwork.getAdapterAttribute(self.iface, "up") == True):
 				try:
 					from Plugins.SystemPlugins.WirelessLan.plugin import WlanStatus
 				except ImportError:
-					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO,timeout = 10 )
+					self.session.open(MessageBox, self.missingwlanplugintxt, type = MessageBox.TYPE_INFO, timeout = 10 )
 				else:
 					if self.queryWirelessDevice(self.iface):
-						self.session.openWithCallback(self.WlanStatusClosed, WlanStatus,self.iface)
+						self.session.openWithCallback(self.WlanStatusClosed, WlanStatus, self.iface)
 					else:
 						self.showErrorMessage()	# Display Wlan not available Message
 			else:
@@ -1023,14 +1033,14 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			self.updateStatusbar()
 
 	def WlanStatusClosed(self, *ret):
-		if ret is not None and len(ret):
+		if ret != None and len(ret):
 			from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
 			iStatus.stopWlanConsole()
 			self.updateStatusbar()
 
 	def WlanScanClosed(self,*ret):
-		if ret[0] is not None:
-			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface,ret[0])
+		if ret[0] != None:
+			self.session.openWithCallback(self.AdapterSetupClosed, AdapterSetup, self.iface, ret[0])
 		else:
 			from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
 			iStatus.stopWlanConsole()
@@ -1042,19 +1052,20 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			self.restartLanRef = self.session.openWithCallback(self.restartfinishedCB, MessageBox, _("Please wait while your network is restarting..."), type = MessageBox.TYPE_INFO, enable_input = False)
 
 	def restartLanDataAvail(self, data):
-		if data is True:
+		if data == True:
 			iNetwork.getInterfaces(self.getInterfacesDataAvail)
 
 	def getInterfacesDataAvail(self, data):
-		if data is True:
+		if data == True:
 			self.restartLanRef.close(True)
 
-	def restartfinishedCB(self,data):
-		if data is True:
+	def restartfinishedCB(self, data):
+		if data == True:
 			self.updateStatusbar()
 			self.session.open(MessageBox, _("Finished restarting your network"), type = MessageBox.TYPE_INFO, timeout = 10, default = False)
 
-	def dataAvail(self,data):
+	def dataAvail(self, data):
+		data = six.ensure_str(data)
 		self.LinkState = None
 		for line in data.splitlines():
 			line = line.strip()
@@ -1070,7 +1081,7 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 			self["statuspic"].show()
 
 	def showErrorMessage(self):
-		self.session.open(MessageBox, self.errortext, type = MessageBox.TYPE_INFO,timeout = 10 )
+		self.session.open(MessageBox, self.errortext, type = MessageBox.TYPE_INFO, timeout = 10 )
 
 	def cleanup(self):
 		iNetwork.stopLinkStateConsole()
@@ -1084,11 +1095,11 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 		else:
 			iStatus.stopWlanConsole()
 
-	def getInfoCB(self,data,status):
+	def getInfoCB(self, data, status):
 		self.LinkState = None
-		if data is not None:
-			if data is True:
-				if status is not None:
+		if data != None:
+			if data == True:
+				if status != None:
 					if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] == False:
 						self.LinkState = False
 						self["statuspic"].setPixmapNum(1)
@@ -1097,9 +1108,9 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 						self.LinkState = True
 						iNetwork.checkNetworkState(self.checkNetworkCB)
 
-	def checkNetworkCB(self,data):
-		if iNetwork.getAdapterAttribute(self.iface, "up") is True:
-			if self.LinkState is True:
+	def checkNetworkCB(self, data):
+		if iNetwork.getAdapterAttribute(self.iface, "up") == True:
+			if self.LinkState == True:
 				if data <= 2:
 					self["statuspic"].setPixmapNum(0)
 				else:
@@ -1114,7 +1125,7 @@ class AdapterSetupConfiguration(Screen, HelpableScreen):
 
 
 class NetworkAdapterTest(Screen):
-	def __init__(self, session,iface):
+	def __init__(self, session, iface):
 		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Network Test"))
 		self.iface = iface
@@ -1123,7 +1134,7 @@ class NetworkAdapterTest(Screen):
 		self.onClose.append(self.cleanup)
 		self.onHide.append(self.cleanup)
 
-		self["updown_actions"] = NumberActionMap(["WizardActions","ShortcutActions"],
+		self["updown_actions"] = NumberActionMap(["WizardActions", "ShortcutActions"],
 		{
 			"ok": self.KeyOK,
 			"blue": self.KeyOK,
@@ -1132,12 +1143,12 @@ class NetworkAdapterTest(Screen):
 
 		}, -2)
 
-		self["shortcuts"] = ActionMap(["ShortcutActions","WizardActions"],
+		self["shortcuts"] = ActionMap(["ShortcutActions", "WizardActions"],
 		{
 			"red": self.cancel,
 			"back": self.cancel,
 		}, -2)
-		self["infoshortcuts"] = ActionMap(["ShortcutActions","WizardActions"],
+		self["infoshortcuts"] = ActionMap(["ShortcutActions", "WizardActions"],
 		{
 			"red": self.closeInfo,
 			"back": self.closeInfo,
@@ -1167,7 +1178,7 @@ class NetworkAdapterTest(Screen):
 		self.nextStepTimer.callback.append(self.nextStepTimerFire)
 
 	def cancel(self):
-		if self.oldInterfaceState is False:
+		if self.oldInterfaceState == False:
 			iNetwork.setAdapterAttribute(self.iface, "up", self.oldInterfaceState)
 			iNetwork.deactivateInterface(self.iface)
 		self.close()
@@ -1188,7 +1199,7 @@ class NetworkAdapterTest(Screen):
 		self.steptimer = False
 		self.runTest()
 
-	def updownhandler(self,direction):
+	def updownhandler(self, direction):
 		if direction == 'up':
 			if self.activebutton >=2:
 				self.activebutton -= 1
@@ -1202,7 +1213,7 @@ class NetworkAdapterTest(Screen):
 				self.activebutton = 1
 			self.setActiveButton(self.activebutton)
 
-	def setActiveButton(self,button):
+	def setActiveButton(self, button):
 		if button == 1:
 			self["EditSettingsButton"].setPixmapNum(0)
 			self["EditSettings_Text"].setForegroundColorNum(0)
@@ -1286,7 +1297,7 @@ class NetworkAdapterTest(Screen):
 
 	def doStep4(self):
 		self["Dhcptext"].setForegroundColorNum(1)
-		if iNetwork.getAdapterAttribute(self.iface, 'dhcp') is True:
+		if iNetwork.getAdapterAttribute(self.iface, 'dhcp') == True:
 			self["Dhcp"].setForegroundColorNum(2)
 			self["Dhcp"].setText(_("enabled"))
 			self["DhcpInfo_Check"].setPixmapNum(0)
@@ -1371,7 +1382,7 @@ class NetworkAdapterTest(Screen):
 			self["InfoText"].show()
 			self["key_red"].setText(_("Back"))
 		if self.activebutton == 6: # Edit Settings
-			self.session.open(AdapterSetup,self.iface)
+			self.session.open(AdapterSetup, self.iface)
 
 	def KeyYellow(self):
 		self.nextstep = 0
@@ -1442,7 +1453,7 @@ class NetworkAdapterTest(Screen):
 		self["InfoTextBorder"] = Pixmap()
 		self["InfoText"] = Label()
 
-	def getLinkState(self,iface):
+	def getLinkState(self, iface):
 		if iface in iNetwork.wlan_interfaces:
 			try:
 				from Plugins.SystemPlugins.WirelessLan.Wlan import iStatus
@@ -1452,11 +1463,11 @@ class NetworkAdapterTest(Screen):
 				self["NetworkInfo_Check"].setPixmapNum(1)
 				self["NetworkInfo_Check"].show()
 			else:
-				iStatus.getDataForInterface(self.iface,self.getInfoCB)
+				iStatus.getDataForInterface(self.iface, self.getInfoCB)
 		else:
-			iNetwork.getLinkState(iface,self.LinkStatedataAvail)
+			iNetwork.getLinkState(iface, self.LinkStatedataAvail)
 
-	def LinkStatedataAvail(self,data):
+	def LinkStatedataAvail(self, data):
 		for item in data.splitlines():
 			if "Link detected:" in item:
 				if "yes" in item:
@@ -1472,7 +1483,7 @@ class NetworkAdapterTest(Screen):
 			self["Network"].setText(_("unknown"))
 		self["NetworkInfo_Check"].show()
 
-	def NetworkStatedataAvail(self,data):
+	def NetworkStatedataAvail(self, data):
 		if data <= 2:
 			self["IP"].setForegroundColorNum(2)
 			self["IP"].setText(_("confirmed"))
@@ -1486,7 +1497,7 @@ class NetworkAdapterTest(Screen):
 		self.steptimer = True
 		self.nextStepTimer.start(300)
 
-	def DNSLookupdataAvail(self,data):
+	def DNSLookupdataAvail(self, data):
 		if data <= 2:
 			self["DNS"].setForegroundColorNum(2)
 			self["DNS"].setText(_("confirmed"))
@@ -1509,10 +1520,10 @@ class NetworkAdapterTest(Screen):
 		self["updown_actions"].setEnabled(True)
 		self.activebutton = 6
 
-	def getInfoCB(self,data,status):
-		if data is not None:
-			if data is True:
-				if status is not None:
+	def getInfoCB(self, data, status):
+		if data != None:
+			if data == True:
+				if status != None:
 					if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] == False:
 						self["Network"].setForegroundColorNum(1)
 						self["Network"].setText(_("disconnected"))
@@ -1534,7 +1545,7 @@ class NetworkAdapterTest(Screen):
 		else:
 			iStatus.stopWlanConsole()
 
-class NetworkMountsMenu(Screen,HelpableScreen):
+class NetworkMountsMenu(Screen, HelpableScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		HelpableScreen.__init__(self)
@@ -1565,7 +1576,7 @@ class NetworkMountsMenu(Screen,HelpableScreen):
 			"red": (self.close, _("exit networkadapter setup menu")),
 			})
 
-		self["actions"] = NumberActionMap(["WizardActions","ShortcutActions"],
+		self["actions"] = NumberActionMap(["WizardActions", "ShortcutActions"],
 		{
 			"ok": self.ok,
 			"back": self.close,
@@ -1620,18 +1631,18 @@ class NetworkMountsMenu(Screen,HelpableScreen):
 		self.extendedSetup = None
 		for p in plugins.getPlugins(PluginDescriptor.WHERE_NETWORKMOUNTS):
 			callFnc = p.__call__["ifaceSupported"](self)
-			if callFnc is not None:
+			if callFnc != None:
 				self.extended = callFnc
-				if p.__call__.has_key("menuEntryName"):
+				if "menuEntryName" in p.__call__:
 					menuEntryName = p.__call__["menuEntryName"](self)
 				else:
 					menuEntryName = _('Extended Setup...')
-				if p.__call__.has_key("menuEntryDescription"):
+				if "menuEntryDescription" in p.__call__:
 					menuEntryDescription = p.__call__["menuEntryDescription"](self)
 				else:
 					menuEntryDescription = _('Extended Networksetup Plugin...')
-				self.extendedSetup = ('extendedSetup',menuEntryDescription, self.extended)
-				menu.append((menuEntryName,self.extendedSetup))
+				self.extendedSetup = ('extendedSetup', menuEntryDescription, self.extended)
+				menu.append((menuEntryName, self.extendedSetup))
 		return menu
 
 class NetworkAfp(Screen):
@@ -1662,10 +1673,11 @@ class NetworkAfp(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -1674,12 +1686,13 @@ class NetworkAfp(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		else:
-			self.session.openWithCallback(self.InstallPackage,MessageBox,_('Your %s %s will be restarted after the installation of service\nReady to install %s ?') % (getMachineBrand(), getMachineName(), self.service_name), MessageBox.TYPE_YESNO)
+			self.session.openWithCallback(self.InstallPackage, MessageBox, _('Your %s %s will be restarted after the installation of service\nReady to install %s ?') % (getMachineBrand(), getMachineName(), self.service_name), MessageBox.TYPE_YESNO)
 
 	def InstallPackage(self, val):
 		if val:
@@ -1693,7 +1706,7 @@ class NetworkAfp(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -1704,8 +1717,9 @@ class NetworkAfp(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
-			restartbox = self.session.openWithCallback(self.RemovePackage,MessageBox,_('Your %s %s will be restarted after the removal of service\nDo you want to remove now ?') % (getMachineBrand(), getMachineName()), MessageBox.TYPE_YESNO)
+			restartbox = self.session.openWithCallback(self.RemovePackage, MessageBox, _('Your %s %s will be restarted after the removal of service\nDo you want to remove now ?') % (getMachineBrand(), getMachineName()), MessageBox.TYPE_YESNO)
 			restartbox.setTitle(_('Ready to remove %s ?') % self.service_name)
 		else:
 			self.updateService()
@@ -1715,7 +1729,7 @@ class NetworkAfp(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -1795,26 +1809,28 @@ class NetworkSABnzbd(Screen):
 		self.my_sabnzbd_active = False
 		self.my_sabnzbd_run = False
 		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SABnzbStartStop, 'yellow': self.activateSABnzbd})
-		self.service_name = 'sabnzbd'
+		self.service_name = ("sabnzbd3" if sys.version_info[0] >= 3 else "sabnzbd")
 		self.checkSABnzbdService()
 
 	def checkSABnzbdService(self):
-		print 'INSTALL CHECK STARTED',self.service_name
+		print('INSTALL CHECK STARTED', self.service_name)
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
-		print 'INSTALL CHECK FINISHED',str
+		str = six.ensure_str(str)
+		print('INSTALL CHECK FINISHED', str)
 		if not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
 			self.CheckConsole.ePopen(cmd1, self.checkNetworkStateFinished)
 		else:
-			print 'INSTALL ALREADY INSTALLED'
+			print('INSTALL ALREADY INSTALLED')
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if (float(getVersionString()) < 3.0 and result.find('mipsel/Packages.gz, wget returned 1') != -1) or (float(getVersionString()) >= 3.0 and result.find('mips32el/Packages.gz, wget returned 1') != -1):
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif result.find('bad address') != -1:
@@ -1834,7 +1850,7 @@ class NetworkSABnzbd(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -1847,6 +1863,7 @@ class NetworkSABnzbd(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 		else:
@@ -1857,7 +1874,7 @@ class NetworkSABnzbd(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -1938,7 +1955,7 @@ class NetworkFtp(Screen):
 		self.Console = Console()
 		self.my_ftp_active = False
 		self.my_ftp_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'green': self.FtpStartStop, 'yellow': 			self.activateFtp})
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'green': self.FtpStartStop, 'yellow': self.activateFtp})
 		self.Console = Console()
 		self.onLayoutFinish.append(self.updateService)
 
@@ -1959,21 +1976,23 @@ class NetworkFtp(Screen):
 
 	def activateFtp(self):
 		commands = []
-		if fileExists('/etc/rc2.d/S20vsftpd'):
+		if len(glob.glob('/etc/rc2.d/S*0vsftpd')):
+		#if fileExists('/etc/rc2.d/S20vsftpd'):
 			commands.append('update-rc.d -f vsftpd remove')
 		else:
 			commands.append('update-rc.d -f vsftpd defaults')
 		self.Console.eBatch(commands, self.StartStopCallback, debug=True)
 
 	def updateService(self):
-		import process		
-		p = process.ProcessList()		
+		import process
+		p = process.ProcessList()
 		ftp_process = str(p.named('vsftpd')).strip('[]')
 		self['labrun'].hide()
 		self['labstop'].hide()
 		self['labactive'].setText(_("Disabled"))
 		self.my_ftp_active = False
-		if fileExists('/etc/rc2.d/S20vsftpd'):
+		if len(glob.glob('/etc/rc2.d/S*0vsftpd')):
+		#if fileExists('/etc/rc2.d/S20vsftpd'):
 			self['labactive'].setText(_("Enabled"))
 			self['labactive'].show()
 			self.my_ftp_active = True
@@ -1998,6 +2017,7 @@ class NetworkFtp(Screen):
 
 		for cb in self.onChangedEntry:
 			cb(title, status_summary, autostartstatus_summary)
+
 class NetworkNfs(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -2029,10 +2049,11 @@ class NetworkNfs(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -2041,12 +2062,13 @@ class NetworkNfs(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		else:
-			self.session.openWithCallback(self.InstallPackage,MessageBox,_('Your %s %s will be restarted after the installation of service\nReady to install %s ?')  % (getMachineBrand(), getMachineName(), self.service_name), MessageBox.TYPE_YESNO)
+			self.session.openWithCallback(self.InstallPackage, MessageBox, _('Your %s %s will be restarted after the installation of service\nReady to install %s ?')  % (getMachineBrand(), getMachineName(), self.service_name), MessageBox.TYPE_YESNO)
 
 	def InstallPackage(self, val):
 		if val:
@@ -2060,7 +2082,7 @@ class NetworkNfs(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -2071,8 +2093,9 @@ class NetworkNfs(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
-			restartbox = self.session.openWithCallback(self.RemovePackage,MessageBox,_('Your %s %s will be restarted after the removal of service\nDo you want to remove now ?') % (getMachineBrand(), getMachineName()), MessageBox.TYPE_YESNO)
+			restartbox = self.session.openWithCallback(self.RemovePackage, MessageBox, _('Your %s %s will be restarted after the removal of service\nDo you want to remove now ?') % (getMachineBrand(), getMachineName()), MessageBox.TYPE_YESNO)
 			restartbox.setTitle(_('Ready to remove %s ?') % self.service_name)
 		else:
 			self.updateService()
@@ -2082,7 +2105,7 @@ class NetworkNfs(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -2108,10 +2131,10 @@ class NetworkNfs(Screen):
 		self.updateService()
 
 	def Nfsset(self):
-		if fileExists('/etc/rc2.d/S20nfsserver'):
+		if fileExists('/etc/rc2.d/S11nfsserver') or fileExists('/etc/rc2.d/S13nfsserver') or fileExists('/etc/rc2.d/S20nfsserver'):
 			self.Console.ePopen('update-rc.d -f nfsserver remove', self.StartStopCallback)
 		else:
-			self.Console.ePopen('update-rc.d -f nfsserver defaults', self.StartStopCallback)
+			self.Console.ePopen('update-rc.d -f nfsserver defaults 13', self.StartStopCallback)
 
 	def updateService(self):
 		import process
@@ -2122,7 +2145,7 @@ class NetworkNfs(Screen):
 		self['labactive'].setText(_("Disabled"))
 		self.my_nfs_active = False
 		self.my_nfs_run = False
-		if fileExists('/etc/rc2.d/S20nfsserver'):
+		if fileExists('/etc/rc2.d/S13nfsserver'):
 			self['labactive'].setText(_("Enabled"))
 			self['labactive'].show()
 			self.my_nfs_active = True
@@ -2171,10 +2194,11 @@ class NetworkOpenvpn(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -2183,6 +2207,7 @@ class NetworkOpenvpn(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -2202,7 +2227,7 @@ class NetworkOpenvpn(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -2215,6 +2240,7 @@ class NetworkOpenvpn(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 		else:
@@ -2225,7 +2251,7 @@ class NetworkOpenvpn(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -2335,18 +2361,19 @@ class NetworkSamba(Screen):
 		self['key_menu'] = Label(_("Samba Config Edit"))
 		self.Console = Console()
 		self.my_Samba_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions', 'MenuActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
-		self.packagegroup = basegroup + '-smbfs'
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'yellow': self.activateSamba, 'blue': self.Sambashowlog})
+		self.service_name = basegroup + '-smbfs-server'
 		self.onLayoutFinish.append(self.InstallCheck)
 
 	def InstallCheck(self):
-		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.packagegroup, self.checkNetworkState)
+		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -2355,6 +2382,7 @@ class NetworkSamba(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -2379,7 +2407,7 @@ class NetworkSamba(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -2393,6 +2421,7 @@ class NetworkSamba(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.packagegroup, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.packagegroup, MessageBox.TYPE_YESNO)
 		else:
@@ -2403,7 +2432,7 @@ class NetworkSamba(Screen):
 			self.doRemove(self.removeComplete, self.packagegroup)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -2519,8 +2548,8 @@ class NetworkTelnet(Screen):
 			if self.my_telnet_run:
 				commands.append('/etc/init.d/telnetd.busybox stop')
 			else:
-				commands.append('/etc/init.d/telnetd.busybox start')
-		self.Console.eBatch(commands, self.StartStopCallback, debug=True)
+				commands.append('/bin/su -l -c "/etc/init.d/telnetd.busybox start"')
+			self.Console.eBatch(commands, self.StartStopCallback, debug=True)
 
 	def StartStopCallback(self, result = None, retval = None, extra_args = None):
 		time.sleep(3)
@@ -2605,10 +2634,11 @@ class NetworkInadyn(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -2617,6 +2647,7 @@ class NetworkInadyn(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -2636,7 +2667,7 @@ class NetworkInadyn(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -2649,6 +2680,7 @@ class NetworkInadyn(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 		else:
@@ -2659,7 +2691,7 @@ class NetworkInadyn(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -2842,7 +2874,7 @@ class NetworkInadynSetup(Screen, ConfigListScreen):
 		sel = self['config'].getCurrent()
 		if sel:
 			if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
-				if self["config"].getCurrent()[1].help_window.instance is not None:
+				if self["config"].getCurrent()[1].help_window.instance != None:
 					self["config"].getCurrent()[1].help_window.hide()
 			self.vkvar = sel[0]
 			if self.vkvar == _("Username") + ':' or self.vkvar == _("Password") + ':' or self.vkvar == _("Alias") + ':' or self.vkvar == _("System") + ':':
@@ -2850,7 +2882,7 @@ class NetworkInadynSetup(Screen, ConfigListScreen):
 				self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
-		if callback is not None and len(callback):
+		if callback != None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
 			self["config"].invalidate(self["config"].getCurrent())
 
@@ -2954,10 +2986,11 @@ class NetworkuShare(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -2966,6 +2999,7 @@ class NetworkuShare(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -2985,7 +3019,7 @@ class NetworkuShare(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -2998,6 +3032,7 @@ class NetworkuShare(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 		else:
@@ -3008,7 +3043,7 @@ class NetworkuShare(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -3166,7 +3201,7 @@ class NetworkuShareSetup(Screen, ConfigListScreen):
 
 	def updateList(self, ret=None):
 		self.list = []
-		self.ushare_user = NoSave(ConfigText(default=getBoxType(),fixed_size=False))
+		self.ushare_user = NoSave(ConfigText(default=getBoxType(), fixed_size=False))
 		self.ushare_iface = NoSave(ConfigText(fixed_size=False))
 		self.ushare_port = NoSave(ConfigNumber())
 		self.ushare_telnetport = NoSave(ConfigNumber())
@@ -3236,7 +3271,7 @@ class NetworkuShareSetup(Screen, ConfigListScreen):
 		sel = self['config'].getCurrent()
 		if sel:
 			if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
-				if self["config"].getCurrent()[1].help_window.instance is not None:
+				if self["config"].getCurrent()[1].help_window.instance != None:
 					self["config"].getCurrent()[1].help_window.hide()
 			self.vkvar = sel[0]
 			if self.vkvar == _("uShare Name") + ":" or self.vkvar == _("Share Folder's") + ":":
@@ -3244,7 +3279,7 @@ class NetworkuShareSetup(Screen, ConfigListScreen):
 				self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
-		if callback is not None and len(callback):
+		if callback != None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
 			self["config"].invalidate(self["config"].getCurrent())
 
@@ -3299,7 +3334,11 @@ class NetworkuShareSetup(Screen, ConfigListScreen):
 		self.close()
 
 	def selectfolders(self):
-		self.session.openWithCallback(self.updateList,uShareSelection)
+		try:
+			self["config"].getCurrent()[1].help_window.hide()
+		except:
+			pass
+		self.session.openWithCallback(self.updateList, uShareSelection)
 
 class uShareSelection(Screen):
 	def __init__(self, session):
@@ -3318,7 +3357,7 @@ class uShareSelection(Screen):
 					self.mediafolders = line
 		self.selectedFiles = [str(n) for n in self.mediafolders.split(', ')]
 		defaultDir = '/media/'
-		self.filelist = MultiFileSelectList(self.selectedFiles, defaultDir,showFiles = False )
+		self.filelist = MultiFileSelectList(self.selectedFiles, defaultDir, showFiles = False )
 		self["checkList"] = self.filelist
 
 		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ShortcutActions"],
@@ -3344,7 +3383,7 @@ class uShareSelection(Screen):
 
 	def selectionChanged(self):
 		current = self["checkList"].getCurrent()[0]
-		if current[2] is True:
+		if current[2] == True:
 			self["key_yellow"].setText(_("Deselect"))
 		else:
 			self["key_yellow"].setText(_("Select"))
@@ -3442,10 +3481,11 @@ class NetworkMiniDLNA(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def checkNetworkState(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if 'Collected errors' in str:
 			self.session.openWithCallback(self.close, MessageBox, _("A background update check is in progress, please wait a few minutes and try again."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif not str:
-			self.feedscheck = self.session.open(MessageBox,_('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
+			self.feedscheck = self.session.open(MessageBox, _('Please wait whilst feeds state is checked.'), MessageBox.TYPE_INFO, enable_input = False)
 			self.feedscheck.setTitle(_('Checking Feeds'))
 			cmd1 = "opkg update"
 			self.CheckConsole = Console()
@@ -3454,6 +3494,7 @@ class NetworkMiniDLNA(Screen):
 			self.updateService()
 
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -3473,7 +3514,7 @@ class NetworkMiniDLNA(Screen):
 		self.close()
 
 	def doInstall(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Installing Service'))
 		self.Console.ePopen('/usr/bin/opkg install ' + pkgname, callback)
 
@@ -3486,6 +3527,7 @@ class NetworkMiniDLNA(Screen):
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.RemovedataAvail)
 
 	def RemovedataAvail(self, str, retval, extra_args):
+		str = six.ensure_str(str)
 		if str:
 			self.session.openWithCallback(self.RemovePackage, MessageBox, _('Ready to remove %s ?') % self.service_name, MessageBox.TYPE_YESNO)
 		else:
@@ -3496,7 +3538,7 @@ class NetworkMiniDLNA(Screen):
 			self.doRemove(self.removeComplete, self.service_name)
 
 	def doRemove(self, callback, pkgname):
-		self.message = self.session.open(MessageBox,_("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
+		self.message = self.session.open(MessageBox, _("please wait..."), MessageBox.TYPE_INFO, enable_input = False)
 		self.message.setTitle(_('Removing Service'))
 		self.Console.ePopen('/usr/bin/opkg remove ' + pkgname + ' --force-remove --autoremove', callback)
 
@@ -3643,7 +3685,7 @@ class NetworkMiniDLNASetup(Screen, ConfigListScreen):
 
 	def updateList(self, ret=None):
 		self.list = []
-		self.minidlna_name = NoSave(ConfigText(default=getBoxType(),fixed_size=False))
+		self.minidlna_name = NoSave(ConfigText(default=getBoxType(), fixed_size=False))
 		self.minidlna_iface = NoSave(ConfigText(fixed_size=False))
 		self.minidlna_port = NoSave(ConfigNumber())
 		self.minidlna_serialno = NoSave(ConfigNumber())
@@ -3705,7 +3747,7 @@ class NetworkMiniDLNASetup(Screen, ConfigListScreen):
 		sel = self['config'].getCurrent()
 		if sel:
 			if isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
-				if self["config"].getCurrent()[1].help_window.instance is not None:
+				if self["config"].getCurrent()[1].help_window.instance != None:
 					self["config"].getCurrent()[1].help_window.hide()
 			self.vkvar = sel[0]
 			if self.vkvar == _("Name") + ":" or self.vkvar == _("Share Folder's") + ":":
@@ -3713,7 +3755,7 @@ class NetworkMiniDLNASetup(Screen, ConfigListScreen):
 				self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
 
 	def VirtualKeyBoardCallback(self, callback = None):
-		if callback is not None and len(callback):
+		if callback != None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
 			self["config"].invalidate(self["config"].getCurrent())
 
@@ -3762,7 +3804,11 @@ class NetworkMiniDLNASetup(Screen, ConfigListScreen):
 		self.close()
 
 	def selectfolders(self):
-		self.session.openWithCallback(self.updateList,MiniDLNASelection)
+		try:
+			self["config"].getCurrent()[1].help_window.hide()
+		except:
+			pass
+		self.session.openWithCallback(self.updateList, MiniDLNASelection)
 
 class MiniDLNASelection(Screen):
 	def __init__(self, session):
@@ -3782,7 +3828,7 @@ class MiniDLNASelection(Screen):
 					self.mediafolders = line
 		self.selectedFiles = [str(n) for n in self.mediafolders.split(', ')]
 		defaultDir = '/media/'
-		self.filelist = MultiFileSelectList(self.selectedFiles, defaultDir,showFiles = False )
+		self.filelist = MultiFileSelectList(self.selectedFiles, defaultDir, showFiles = False )
 		self["checkList"] = self.filelist
 
 		self["actions"] = ActionMap(["DirectionActions", "OkCancelActions", "ShortcutActions"],
@@ -3808,7 +3854,7 @@ class MiniDLNASelection(Screen):
 
 	def selectionChanged(self):
 		current = self["checkList"].getCurrent()[0]
-		if current[2] is True:
+		if current[2] == True:
 			self["key_yellow"].setText(_("Deselect"))
 		else:
 			self["key_yellow"].setText(_("Select"))
@@ -4072,3 +4118,125 @@ class NetworkServicesSummary(Screen):
 		self["title"].text = title
 		self["status_summary"].text = status_summary
 		self["autostartstatus_summary"].text = autostartstatus_summary
+
+class NetworkPassword(ConfigListScreen, Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.skinName = "NetworkPassword"
+		self.onChangedEntry = []
+		self.list = []
+		ConfigListScreen.__init__(self, self.list, session=self.session, on_change=self.selectionChanged)
+		Screen.setTitle(self, _("Password Setup"))
+
+		self["key_red"] = StaticText(_("Exit"))
+		self["key_green"] = StaticText(_("Save"))
+		self["key_yellow"] = StaticText(_("Random password"))
+		self["key_blue"] = StaticText("")
+
+		self["actions"] = ActionMap(["SetupActions", "ColorActions", "VirtualKeyboardActions"], {
+			"red": self.close,
+			"cancel": self.close,
+			"green": self.SetPasswd,
+			"save": self.SetPasswd,
+			"yellow": self.newRandom,
+			'showVirtualKeyboard': self.KeyText
+			})
+
+		self["description"] = Label()
+		self['footnote'] = Label()
+		self["VKeyIcon"] = Boolean(False)
+		self["HelpWindow"] = Pixmap()
+		self["HelpWindow"].hide()
+
+		self.user="root"
+		self.output_line = ""
+
+		self.updateList()
+		if self.selectionChanged not in self["config"].onSelectionChanged:
+			self["config"].onSelectionChanged.append(self.selectionChanged)
+		self.selectionChanged()
+
+	def selectionChanged(self):
+		item = self["config"].getCurrent()
+		self["description"].setText(item[2])
+
+	def newRandom(self):
+		self.password.value = self.GeneratePassword()
+		self["config"].invalidateCurrent()
+	
+	def updateList(self):
+		self.password = NoSave(ConfigPassword(default=""))
+		instructions = _("You must set a root password in order to be able to use network services,"
+						" such as FTP, telnet or ssh.")
+		self.list.append(getConfigListEntry(_('New password'), self.password, instructions))
+		self['config'].list = self.list
+		self['config'].l.setList(self.list)
+
+	def GeneratePassword(self): 
+		passwdChars = string.letters + string.digits
+		passwdLength = 10
+		return ''.join(Random().sample(passwdChars, passwdLength)) 
+
+	def SetPasswd(self):
+		self.hideHelpWindow()
+		password = self.password.value
+		if not password:
+			self.session.openWithCallback(self.showHelpWindow, MessageBox, _("The password can not be blank."), MessageBox.TYPE_ERROR)
+			return
+		#print "[NetworkPassword] Changing the password for %s to %s" % (self.user,self.password) 
+		self.container = eConsoleAppContainer()
+		self.container.appClosed.append(self.runFinished)
+		self.container.dataAvail.append(self.dataAvail)
+		retval = self.container.execute("echo -e '%s\n%s' | (passwd %s)"  % (password, password, self.user))
+		if retval:
+			message=_("Unable to change password")
+			self.session.openWithCallback(self.showHelpWindow, MessageBox, message, MessageBox.TYPE_ERROR)
+		else:
+			message=_("Password changed")
+			self.session.open(MessageBox, message, MessageBox.TYPE_INFO, timeout=5)
+			self.close()
+
+	def showHelpWindow(self, ret=None):
+		if self['config'].getCurrent() and isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
+			if self["config"].getCurrent()[1].help_window.instance != None:
+				self["config"].getCurrent()[1].help_window.show()
+
+	def hideHelpWindow(self):
+		if self['config'].getCurrent() and isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
+			if self["config"].getCurrent()[1].help_window.instance != None:
+				self["config"].getCurrent()[1].help_window.hide()
+
+	def KeyText(self):
+		if self['config'].getCurrent() and isinstance(self["config"].getCurrent()[1], ConfigText) or isinstance(self["config"].getCurrent()[1], ConfigPassword):
+			if self["config"].getCurrent()[1].help_window.instance != None:
+				self["config"].getCurrent()[1].help_window.hide()
+			from Screens.VirtualKeyBoard import VirtualKeyBoard
+			self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
+
+	def VirtualKeyBoardCallback(self, callback = None):
+		if callback != None and len(callback):
+			self["config"].getCurrent()[1].setValue(callback)
+			self["config"].invalidate(self["config"].getCurrent())
+		self.showHelpWindow()
+
+
+	def dataAvail(self, data):
+		data = six.ensure_str(data)
+		self.output_line += data
+		while True:
+			i = self.output_line.find('\n')
+			if i == -1:
+				break
+			self.processOutputLine(self.output_line[:i+1])
+			self.output_line = self.output_line[i+1:]
+
+	def processOutputLine(self, line):
+		if line.find('password: '):
+			self.container.write("%s\n" % self.password.value)
+
+	def runFinished(self, retval):
+		del self.container.dataAvail[:]
+		del self.container.appClosed[:]
+		del self.container
+		self.close()
+

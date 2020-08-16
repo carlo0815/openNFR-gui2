@@ -1,8 +1,9 @@
+from __future__ import absolute_import, division
 from time import localtime, time, strftime, mktime
 
 from enigma import eServiceReference, eTimer, eServiceCenter, ePoint
 
-from Screen import Screen
+from Screens.Screen import Screen
 from Screens.HelpMenu import HelpableScreen
 from Components.About import about
 from Components.ActionMap import HelpableActionMap, HelpableNumberActionMap
@@ -20,9 +21,9 @@ from Screens.ChoiceBox import ChoiceBox
 from Screens.MessageBox import MessageBox
 from Screens.PictureInPicture import PictureInPicture
 from Screens.Setup import Setup
-from TimeDateInput import TimeDateInput
+from Screens.TimeDateInput import TimeDateInput
 from RecordTimer import RecordTimerEntry, parseEvent, AFTEREVENT
-from TimerEntry import TimerEntry, InstantRecordTimerEntry
+from Screens.TimerEntry import TimerEntry, InstantRecordTimerEntry
 from ServiceReference import ServiceReference
 from Tools.HardwareInfo import HardwareInfo
 
@@ -78,6 +79,7 @@ class EPGSelection(Screen, HelpableScreen):
 		self.eventviewDialog = None
 		self.eventviewWasShown = False
 		self.currch = None
+        self.currbo = eServiceReference()
 		self.session.pipshown = False
 		self.cureventindex = None
 		if plugin_PiPServiceRelation_installed:
@@ -245,14 +247,14 @@ class EPGSelection(Screen, HelpableScreen):
 			self.bouquetlist_active = False
 			self['bouquetlist'] = EPGBouquetList(graphic=graphic)
 			self['bouquetlist'].hide()
-			self['timeline_text'] = TimelineText(type=self.type,graphic=graphic)
+			self['timeline_text'] = TimelineText(type=self.type, graphic=graphic)
 			self['Event'] = Event()
 			self['primetime'] = Label(_('PRIMETIME'))
 			self['change_bouquet'] = Label(_('CHANGE BOUQUET'))
 			self['jump'] = Label(_('JUMP 24 HOURS'))
 			self['page'] = Label(_('PAGE UP/DOWN'))
 			self.time_lines = []
-			for x in range(0, MAX_TIMELINES):
+			for x in list(range(0, MAX_TIMELINES)):
 				pm = Pixmap()
 				self.time_lines.append(pm)
 				self['timeline%d' % x] = pm
@@ -449,21 +451,59 @@ class EPGSelection(Screen, HelpableScreen):
 		return services
 
 	def LayoutFinish(self):
-		self['lab1'].show()
-		self.createTimer.start(800)
+		self.BouquetRoot = False
+		self.navserviceref = self.session.nav.getCurrentlyPlayingServiceOrGroup()    
+		self.createTimer = eTimer()
+        self.createTimer.start(800)
+		self['lab1'].show()        
+        self.onCreate(True)
 
-	def onCreate(self):
+	def onCreate(self, firstrun=False):
 		if not HardwareInfo().is_nextgen():
 			self.createTimer.stop()
-		serviceref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
-		title = None
-		self['list'].recalcEntrySize()
 		self.BouquetRoot = False
+		title = None        
+		currbo = None
+		waspipActive = False
+		navactserviceref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		if self.Oldpipshown:
+			from Screens.InfoBarGenerics import InfoBarPiP
+			if InfoBarPiP.pipWindowActive:
+				serviceref = self.session.pip.getCurrentService()
+				currbo = self.session.pip.getCurrentBouquetPiP()
+				waspipActive = True
+			else:
+				serviceref = navactserviceref
+				if firstrun:
+					try:
+						if self.session.pip.getCurrentBouquetMain() is not None:
+							currbo = self.session.pip.getCurrentBouquetMain()
+					except:
+						currbo = self.StartBouquet
+				else:
+					currbo = self.getCurrentBouquet()
+				waspipActive = False
+		else:
+			serviceref = navactserviceref
+			try:
+				if firstrun:
+					currbo = self.StartBouquet
+				else:
+					currbo = self.getCurrentBouquet()
+			except:
+				currbo = None
+			waspipActive = False
+		self['list'].recalcEntrySize()
+
 		if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
+			if currbo is not None:
+				self.StartBouquet = currbo
 			if self.StartBouquet.toString().startswith('1:7:0'):
 				self.BouquetRoot = True
 			self.services = self.getBouquetServices(self.StartBouquet)
 			self['list'].fillGraphEPG(self.services, self.ask_time)
+            if waspipActive:
+				self.zapFunc(serviceref, bouquet = self.StartBouquet, preview = True)
 			self['list'].moveToService(serviceref)
 			self['list'].setCurrentlyPlaying(serviceref)
 			self['bouquetlist'].recalcEntrySize()
@@ -480,6 +520,8 @@ class EPGSelection(Screen, HelpableScreen):
 				self['list'].setShowServiceMode(config.epgselection.infobar_servicetitle_mode.value)
 				self.moveTimeLines()
 		elif self.type == EPG_TYPE_MULTI:
+			if currbo is not None:
+				self.StartBouquet = currbo
 			self['bouquetlist'].recalcEntrySize()
 			self['bouquetlist'].fillBouquetList(self.bouquets)
 			self['bouquetlist'].moveToService(self.StartBouquet)
@@ -489,16 +531,28 @@ class EPGSelection(Screen, HelpableScreen):
 			self['list'].setCurrentlyPlaying(serviceref)
 			self.setTitle(self['bouquetlist'].getCurrentBouquet())
 		elif self.type == EPG_TYPE_SINGLE or self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
-			if self.type == EPG_TYPE_SINGLE:
-				service = self.currentService
-			elif self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
-				service = ServiceReference(self.servicelist.getCurrentSelection())
-				title = ServiceReference(self.servicelist.getRoot()).getServiceName()
-			self['Service'].newService(service.ref)
-			if title:
-				title = title + ' - ' + service.getServiceName()
-			else: 
-				title = service.getServiceName()
+			if waspipActive:
+				if self.type == EPG_TYPE_SINGLE:
+					service = serviceref
+				elif self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
+					if firstrun:
+						self.session.nav.playService(serviceref, checkParentalControl=False, adjust=False)
+					service = ServiceReference(self.servicelist.getCurrentSelection())
+					title = ServiceReference(self.servicelist.getRoot()).getServiceName()
+			else:
+				if self.type == EPG_TYPE_SINGLE:
+					service = self.currentService
+				elif self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
+					service = ServiceReference(self.servicelist.getCurrentSelection())
+					title = ServiceReference(self.servicelist.getRoot()).getServiceName()
+			try:
+				self['Service'].newService(service.ref)
+				if title:
+					title = title + ' - ' + service.getServiceName()
+				else: 
+					title = service.getServiceName()
+			except:
+				return
 			self.setTitle(title)
 			self['list'].fillSingleEPG(service)
 			self['list'].sortSingleEPG(int(config.epgselection.sort.value))
@@ -513,6 +567,8 @@ class EPGSelection(Screen, HelpableScreen):
 			self.moveTimeLines()
 		elif self.type == EPG_TYPE_MULTI:
 			self['list'].fillMultiEPG(self.services, self.ask_time)
+			for i in list(range(curr)):
+ 				self['list'].updateMultiEPG(1)            
 		elif self.type == EPG_TYPE_SINGLE or self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
 			try:
 				if self.type == EPG_TYPE_SINGLE:
@@ -599,7 +655,7 @@ class EPGSelection(Screen, HelpableScreen):
 	def getCurrentBouquet(self):
 		if self.BouquetRoot:
 			return self.StartBouquet
-		elif self.has_key('bouquetlist'):
+		elif 'bouquetlist' in self:
 			cur = self["bouquetlist"].l.getCurrentSelection()
 			return cur and cur[1]
 		else:
@@ -619,6 +675,8 @@ class EPGSelection(Screen, HelpableScreen):
 			self.moveTimeLines(True)
 		elif self.type == EPG_TYPE_MULTI:
 			self['list'].fillMultiEPG(self.services, self.ask_time)
+		if waspipActive:
+			self.zapFunc(serviceref, bouquet = self.StartBouquet, preview = True)            
 		self['list'].instance.moveSelectionTo(0)
 		self.setTitle(self['bouquetlist'].getCurrentBouquet())
 		self.BouquetlistHide(False)
@@ -644,20 +702,26 @@ class EPGSelection(Screen, HelpableScreen):
 			self.moveBouquetDown()
 			self.BouquetOK()
 		elif (self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR) and config.usage.multibouquet.value:
-			self.CurrBouquet = self.servicelist.getCurrentSelection()
-			self.CurrService = self.servicelist.getRoot()
-			self.servicelist.nextBouquet()
-			self.onCreate()
+			from Screens.InfoBarGenerics import InfoBarPiP
+			if not self.Oldpipshown and not InfoBarPiP.pipWindowActive:
+				if self.type != EPG_TYPE_ENHANCED:
+					self.CurrBouquet = self.servicelist.getCurrentSelection()
+					self.CurrService = self.servicelist.getRoot()
+					self.servicelist.nextBouquet()
+					self.onCreate()
 
 	def prevBouquet(self):
 		if self.type == EPG_TYPE_MULTI or self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
 			self.moveBouquetUp()
 			self.BouquetOK()
 		elif (self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR) and config.usage.multibouquet.value:
-			self.CurrBouquet = self.servicelist.getCurrentSelection()
-			self.CurrService = self.servicelist.getRoot()
-			self.servicelist.prevBouquet()
-			self.onCreate()
+			from Screens.InfoBarGenerics import InfoBarPiP
+			if not self.Oldpipshown and not InfoBarPiP.pipWindowActive:
+				if self.type != EPG_TYPE_ENHANCED:
+					self.CurrBouquet = self.servicelist.getCurrentSelection()
+					self.CurrService = self.servicelist.getRoot()
+					self.servicelist.prevBouquet()
+					self.onCreate()
 
 	def nextService(self):
 		if self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
@@ -670,7 +734,10 @@ class EPGSelection(Screen, HelpableScreen):
 					prev = prev.toString()
 					while True:
 						if config.usage.quickzap_bouquet_change.value and self.servicelist.atEnd():
-							self.servicelist.nextBouquet()
+							from Screens.InfoBarGenerics import InfoBarPiP
+							if not self.Oldpipshown and not InfoBarPiP.pipWindowActive:
+								if self.type != EPG_TYPE_ENHANCED:
+									self.servicelist.nextBouquet()
 						else:
 							self.servicelist.moveDown()
 						cur = self.servicelist.getCurrentSelection()
@@ -701,7 +768,10 @@ class EPGSelection(Screen, HelpableScreen):
 					while True:
 						if config.usage.quickzap_bouquet_change.value:
 							if self.servicelist.atBegin():
-								self.servicelist.prevBouquet()
+								from Screens.InfoBarGenerics import InfoBarPiP
+								if not self.Oldpipshown and not InfoBarPiP.pipWindowActive:
+									if self.type != EPG_TYPE_ENHANCED:
+										self.servicelist.prevBouquet()
 						self.servicelist.moveUp()
 						cur = self.servicelist.getCurrentSelection()
 						if not cur or (not (cur.flags & 64)) or cur.toString() == prev:
@@ -758,7 +828,7 @@ class EPGSelection(Screen, HelpableScreen):
 		if event is not None and not self.eventviewDialog and not eventviewopen:
 			if self.type != EPG_TYPE_SIMILAR:
 				if self.type == EPG_TYPE_INFOBARGRAPH:
-					self.eventviewDialog = self.session.instantiateDialog(EventViewSimple,event, service, skin='InfoBarEventView')
+					self.eventviewDialog = self.session.instantiateDialog(EventViewSimple, event, service, skin='InfoBarEventView')
 					self.eventviewDialog.show()
 				else:
 					self.session.open(EventViewEPGSelect, event, service, callback=self.eventViewCallback, similarEPGCB=self.openSimilarList)
@@ -770,12 +840,12 @@ class EPGSelection(Screen, HelpableScreen):
 			if self.type != EPG_TYPE_SIMILAR:
 				if self.type == EPG_TYPE_INFOBAR or self.type == EPG_TYPE_INFOBARGRAPH:
 					self.eventviewDialog.hide()
-					self.eventviewDialog = self.session.instantiateDialog(EventViewSimple,event, service, skin='InfoBarEventView')
+					self.eventviewDialog = self.session.instantiateDialog(EventViewSimple, event, service, skin='InfoBarEventView')
 					self.eventviewDialog.show()
 
 	def redButtonPressed(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
@@ -804,14 +874,14 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def redButtonPressedLong(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			self.sortEpg()
 
 	def greenButtonPressed(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
@@ -840,14 +910,14 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def greenButtonPressedLong(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			self.showTimerList()
 
 	def yellowButtonPressed(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
@@ -876,7 +946,7 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def blueButtonPressed(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
@@ -905,7 +975,7 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def blueButtonPressedLong(self):
 		self.closeEventViewDialog()
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			self.showAutoTimerList()
@@ -1016,7 +1086,7 @@ class EPGSelection(Screen, HelpableScreen):
 		self.session.open(TimerEditList)
 
 	def showMovieSelection(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBar.instance.showMovies()
 
 	def showAutoTimerList(self):
@@ -1122,13 +1192,13 @@ class EPGSelection(Screen, HelpableScreen):
 			self.showChoiceBoxDialog()
 
 	def recButtonPressed(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			self.RecordTimerQuestion()
 
 	def recButtonPressedLong(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			self.doZapTimer()
@@ -1148,7 +1218,7 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def showChoiceBoxDialog(self):
 		self['okactions'].setEnabled(False)
-		if self.has_key('epgcursoractions'):
+		if 'epgcursoractions' in self:
 			self['epgcursoractions'].setEnabled(False)
 		self['colouractions'].setEnabled(False)
 		self['recordingactions'].setEnabled(False)
@@ -1156,7 +1226,7 @@ class EPGSelection(Screen, HelpableScreen):
 		self["dialogactions"].setEnabled(True)
 		self.ChoiceBoxDialog['actions'].execBegin()
 		self.ChoiceBoxDialog.show()
-		if self.has_key('input_actions'):
+		if 'input_actions' in self:
 			self['input_actions'].setEnabled(False)
 
 	def closeChoiceBoxDialog(self):
@@ -1165,12 +1235,12 @@ class EPGSelection(Screen, HelpableScreen):
 			self.ChoiceBoxDialog['actions'].execEnd()
 			self.session.deleteDialog(self.ChoiceBoxDialog)
 		self['okactions'].setEnabled(True)
-		if self.has_key('epgcursoractions'):
+		if 'epgcursoractions' in self:
 			self['epgcursoractions'].setEnabled(True)
 		self['colouractions'].setEnabled(True)
 		self['recordingactions'].setEnabled(True)
 		self['epgactions'].setEnabled(True)
-		if self.has_key('input_actions'):
+		if 'input_actions' in self:
 			self['input_actions'].setEnabled(True)
 
 	def doRecordTimer(self):
@@ -1227,7 +1297,7 @@ class EPGSelection(Screen, HelpableScreen):
 		self.finishedAdd(answer)
 
 	def OK(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.zapnumberstarted:
@@ -1237,9 +1307,11 @@ class EPGSelection(Screen, HelpableScreen):
 					self.zapTo()
 				if config.epgselection.graph_ok.value == 'Zap + Exit' or config.epgselection.enhanced_ok.value == 'Zap + Exit' or config.epgselection.infobar_ok.value == 'Zap + Exit' or config.epgselection.multi_ok.value == 'Zap + Exit':
 					self.zap()
+		if self.Oldpipshown:
+			self.session.pipshown = True                    
 
 	def OKLong(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			if self.zapnumberstarted:
@@ -1249,12 +1321,14 @@ class EPGSelection(Screen, HelpableScreen):
 					self.zapTo()
 				if config.epgselection.graph_oklong.value == 'Zap + Exit' or config.epgselection.enhanced_oklong.value == 'Zap + Exit' or config.epgselection.infobar_oklong.value == 'Zap + Exit' or config.epgselection.multi_oklong.value == 'Zap + Exit':
 					self.zap()
-
+		if self.Oldpipshown:
+			self.session.pipshown = True
+            
 	def epgButtonPressed(self):
 		self.OpenSingleEPG()
 
 	def Info(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if not InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH and config.epgselection.graph_info.value == 'Channel Info':
@@ -1265,7 +1339,7 @@ class EPGSelection(Screen, HelpableScreen):
 				self.infoKeyPressed()
 
 	def InfoLong(self):
-		from InfoBar import InfoBar
+		from Screens.InfoBar import InfoBar
 		InfoBarInstance = InfoBar.instance
 		if InfoBarInstance.LongButtonPressed:
 			if self.type == EPG_TYPE_GRAPH and config.epgselection.graph_infolong.value == 'Channel Info':
@@ -1392,8 +1466,11 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def closeScreen(self):
 		if self.type == EPG_TYPE_SINGLE:
+        	self.checkpipOld()
 			self.close()
 			return # stop and do not continue.
+		if self.type == EPG_TYPE_ENHANCED:
+			self.session.nav.playService(self.navserviceref, checkParentalControl=False, adjust=False)            
 		if self.session.nav.getCurrentlyPlayingServiceOrGroup() and self.StartRef and self.session.nav.getCurrentlyPlayingServiceOrGroup().toString() != self.StartRef.toString():
 			if self.zapFunc and self.StartRef and self.StartBouquet:
 				if ((self.type == EPG_TYPE_GRAPH and config.epgselection.graph_preview_mode.value) or 
@@ -1402,36 +1479,37 @@ class EPGSelection(Screen, HelpableScreen):
 					(self.type == EPG_TYPE_ENHANCED and config.epgselection.enhanced_preview_mode.value)):
 					if '0:0:0:0:0:0:0:0:0' not in self.StartRef.toString():
 						self.zapFunc(None, zapback = True)
+						self.session.nav.playService(self.navserviceref, checkParentalControl=False, adjust=False)
+						if hasattr(self.session, "pipshown") and self.session.pipshown:
+							from Screens.InfoBarGenerics import InfoBarPiP
+							if InfoBarPiP.pipWindowActive:
+								self.zapFunc(self.session.pip.getCurrentService(), bouquet = self.session.pip.getCurrentBouquetPiP(), zaptolist=True)
+							else:
+								self.zapFunc(self.navserviceref, bouquet = self.StartBouquet, zaptolist=True)
+						else:
+							self.zapFunc(self.navserviceref, bouquet = self.StartBouquet, zaptolist=True)                        
 				elif '0:0:0:0:0:0:0:0:0' in self.StartRef.toString():
 					self.session.nav.playService(self.StartRef)
 				else:
 					self.zapFunc(None, False)
+		self.checkpipOld()
+		self.closeEventViewDialog()
+		self.close(True)
+		
+	def checkpipOld(self):                    
 		if self.session.pipshown:
 			self.session.pipshown = False
 			del self.session.pip
-		self.closeEventViewDialog()
-		self.close(True)
-
-	def zap(self):
-		if self.zapFunc:
-			self.zapSelectedService()
-			self.closeEventViewDialog()
-			self.close(True)
-		else:
-			self.closeEventViewDialog()
-			self.close()
 
 	def zapSelectedService(self, prev=False):
 		currservice = self.session.nav.getCurrentlyPlayingServiceReference() and str(self.session.nav.getCurrentlyPlayingServiceReference().toString()) or None
-		if self.session.pipshown:
-			self.prevch = self.session.pip.getCurrentService() and str(self.session.pip.getCurrentService().toString()) or None
-		else:
-			self.prevch = self.session.nav.getCurrentlyPlayingServiceReference() and str(self.session.nav.getCurrentlyPlayingServiceReference().toString()) or None
+		self.prevch = currservice
 		lst = self["list"]
 		count = lst.getCurrentChangeCount()
 		if count == 0:
 			ref = lst.getCurrent()[1]
 			if ref is not None:
+                self.selch = ref.ref
 				if (self.type == EPG_TYPE_INFOBAR or self.type == EPG_TYPE_INFOBARGRAPH) and config.epgselection.infobar_preview_mode.value == '2':
 					if not prev:
 						if self.session.pipshown:
@@ -1458,9 +1536,33 @@ class EPGSelection(Screen, HelpableScreen):
 						self.session.pip.playService(service)
 						self.currch = self.session.pip.getCurrentService() and str(self.session.pip.getCurrentService().toString())
 				else:
-					self.zapFunc(ref.ref, bouquet = self.getCurrentBouquet(), preview = prev)
+					self.currbo = self.getCurrentBouquet()
+					self.zapFunc(self.selch, bouquet = self.currbo, preview = prev)
 					self.currch = self.session.nav.getCurrentlyPlayingServiceReference() and str(self.session.nav.getCurrentlyPlayingServiceReference().toString())
 				self['list'].setCurrentlyPlaying(self.session.nav.getCurrentlyPlayingServiceOrGroup())
+                
+	def zap(self):
+		if self.session.nav.getCurrentlyPlayingServiceOrGroup() and '0:0:0:0:0:0:0:0:0' in self.session.nav.getCurrentlyPlayingServiceOrGroup().toString():
+			return
+		if self.zapFunc:
+			self.zapSelectedService()
+			if self.Oldpipshown:
+				from Screens.InfoBarGenerics import InfoBarPiP
+				if InfoBarPiP.pipWindowActive:
+					if hasattr(self.session, "pip"):
+						if not self.selch:
+							self.selch = self.prevch
+						self.session.pip.playService(self.selch, self.currbo)
+						self.session.nav.playService(self.navserviceref, checkParentalControl=False, adjust=False)
+						self.zapFunc(self.selch, bouquet = self.currbo, zaptolist=True)
+				else:
+					self.session.pip.setCurrentBouquetMain(self.currbo)
+					self.zapFunc(self.selch, bouquet = self.currbo, zaptolist=True)
+			self.closeEventViewDialog()
+			self.close(True)
+		else:
+			self.closeEventViewDialog()
+			self.close()                
 
 	def zapTo(self):
 		if self.session.nav.getCurrentlyPlayingServiceOrGroup() and '0:0:0:0:0:0:0:0:0' in self.session.nav.getCurrentlyPlayingServiceOrGroup().toString():
@@ -1471,9 +1573,26 @@ class EPGSelection(Screen, HelpableScreen):
 			self.refreshTimer.start(2000)
 		if not self.currch or self.currch == self.prevch:
 			if self.zapFunc:
-				self.zapFunc(None, False)
-				self.closeEventViewDialog()
-				self.close('close')
+				from Screens.InfoBarGenerics import InfoBarPiP
+				if self.Oldpipshown:
+					if InfoBarPiP.pipWindowActive:
+						if hasattr(self.session, "pip"):
+							self.session.pip.playService(eServiceReference(self.currch),self.currbo)
+							self.session.nav.playService(self.navserviceref, checkParentalControl=False, adjust=False)
+							self.closeEventViewDialog()
+							self.close('close')
+						else:
+							self.closeEventViewDialog()
+							self.close()
+					else:
+						self.session.pip.setCurrentBouquetMain(self.currbo)
+						self.zapFunc(eServiceReference(self.currch), bouquet = self.currbo, zaptolist=True)
+						self.closeEventViewDialog()
+						self.close('close')
+				else:
+					self.zapFunc(None, False)
+					self.closeEventViewDialog()
+					self.close('close')
 			else:
 				self.closeEventViewDialog()
 				self.close()

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
@@ -79,11 +80,11 @@ class SkinSelectorBase:
 			skinfile = self["SkinList"].getCurrent()
 			skinfile = os.path.join(skinfile, self.SKINXML)
 
-		print "Skinselector: Selected Skin: "+self.root+skinfile
+		print("Skinselector: Selected Skin: "+self.root+skinfile)
 		self.config.value = skinfile
 		self.config.save()
 		configfile.save()
-		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to restart the GUI now?"), MessageBox.TYPE_YESNO)
+		restartbox = self.session.openWithCallback(self.restartGUI, MessageBox, _("GUI needs a restart to apply a new skin\nDo you want to restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
 
 	def up(self):
@@ -103,7 +104,7 @@ class SkinSelectorBase:
 		self.loadPreview()
 
 	def info(self):
-		aboutbox = self.session.open(MessageBox,_("Enigma2 skin selector"), MessageBox.TYPE_INFO)
+		aboutbox = self.session.open(MessageBox, _("Enigma2 skin selector"), MessageBox.TYPE_INFO)
 		aboutbox.setTitle(_("About..."))
 
 	def loadPreview(self):

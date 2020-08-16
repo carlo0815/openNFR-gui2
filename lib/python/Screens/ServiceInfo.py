@@ -1,4 +1,6 @@
-from Components.HTMLComponent import HTMLComponent
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 from Components.GUIComponent import GUIComponent
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
@@ -62,7 +64,7 @@ class ServiceInfoList(HTMLComponent, GUIComponent):
 		self.ItemHeight = 25
 
 	def applySkin(self, desktop, screen):
-		if self.skinAttributes is not None:
+		if self.skinAttributes != None:
 			attribs = [ ]
 			for (attrib, value) in self.skinAttributes:
 				if attrib == "font":
@@ -122,7 +124,7 @@ class ServiceInfo(Screen):
 			self["key_yellow"] = self["yellow"] = Label(_("Multiplex"))
 			self["key_blue"] = self["blue"] = Label(_("Tuner status"))
 			service = session.nav.getCurrentService()
-			if service is not None:
+			if service != None:
 				self.info = service.info()
 				self.feinfo = service.frontendInfo()
 			else:

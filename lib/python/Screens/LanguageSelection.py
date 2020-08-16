@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap
@@ -60,8 +61,8 @@ class LanguageSelection(Screen):
 		}, -1)
 		
 	def updateCache(self):
-		print"updateCache"
-		self["languages"].setList([('update cache','Updating cache, please wait...',None)])
+		print("updateCache")
+		self["languages"].setList([('update cache', 'Updating cache, please wait...', None)])
 		self.updateTimer = eTimer()
 		self.updateTimer.callback.append(self.startupdateCache)
 		self.updateTimer.start(100)
@@ -103,7 +104,7 @@ class LanguageSelection(Screen):
 
 	def delLang(self):
 		self.curlang = self["languages"].getCurrent()[0]
-		print self["languages"].getCurrent()
+		print(self["languages"].getCurrent())
 		self.session.openWithCallback(self.delLangCB, MessageBox, _("Do you want to delete %s language?") %(self["languages"].getCurrent()[1]), default = False)
 
 	def delLangCB(self, anwser):
@@ -113,7 +114,7 @@ class LanguageSelection(Screen):
 			self.updateList()
 			self.selectActiveLanguage()
 	def run(self, justlocal = False):
-		print "updating language..."
+		print("updating language...")
 		lang = self["languages"].getCurrent()[0]
 
 		if lang == 'update cache':
@@ -139,7 +140,7 @@ class LanguageSelection(Screen):
 		language.activateLanguage(lang)
 		config.misc.languageselected.setValue(0)
 		config.misc.languageselected.save()
-		print "ok"
+		print("ok")
 
 	def updateList(self):
 		languageList = language.getLanguageList()

@@ -1,3 +1,4 @@
+from __future__ import print_function, division
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
 from Components.ActionMap import ActionMap, NumberActionMap
@@ -7,6 +8,7 @@ from Components.ChoiceList import ChoiceEntryComponent, ChoiceList
 from Components.Sources.StaticText import StaticText
 from Components.Pixmap import Pixmap
 import enigma
+from six.moves import zip
 
 config.misc.pluginlist = ConfigSubsection()
 config.misc.pluginlist.eventinfo_order = ConfigText(default="")
@@ -58,7 +60,7 @@ class ChoiceBox(Screen):
 							labeltext += '\n'
 						labeltext = labeltext + temptext[count-1]
 						count += 1
-						print '[Choicebox] count', count
+						print('[Choicebox] count', count)
 					self["text"].setText(labeltext)
 				else:
 					self["text"] = Label(title)
@@ -202,11 +204,11 @@ class ChoiceBox(Screen):
 		self.instance.resize(enigma.eSize(*wsize))
 
 		# center window
-		self.instance.move(enigma.ePoint((desktop_w-wsizex)/2, (desktop_h-wsizey)/2))
+		self.instance.move(enigma.ePoint((desktop_w-wsizex)//2, (desktop_h-wsizey)//2))
 
 	def left(self):
 		if len(self["list"].list) > 0:
-			while 1:
+			while True:
 				self["list"].instance.moveSelection(self["list"].instance.pageUp)
 				self.updateSummary(self["list"].l.getCurrentSelectionIndex())
 				if self["list"].l.getCurrentSelection()[0][0] != "--" or self["list"].l.getCurrentSelectionIndex() == 0:
@@ -214,7 +216,7 @@ class ChoiceBox(Screen):
 
 	def right(self):
 		if len(self["list"].list) > 0:
-			while 1:
+			while True:
 				self["list"].instance.moveSelection(self["list"].instance.pageDown)
 				self.updateSummary(self["list"].l.getCurrentSelectionIndex())
 				if self["list"].l.getCurrentSelection()[0][0] != "--" or self["list"].l.getCurrentSelectionIndex() == 0:
@@ -222,7 +224,7 @@ class ChoiceBox(Screen):
 
 	def up(self):
 		if len(self["list"].list) > 0:
-			while 1:
+			while True:
 				self["list"].instance.moveSelection(self["list"].instance.moveUp)
 				self.updateSummary(self["list"].l.getCurrentSelectionIndex())
 				if self["list"].l.getCurrentSelection()[0][0] != "--" or self["list"].l.getCurrentSelectionIndex() == 0:
@@ -230,7 +232,7 @@ class ChoiceBox(Screen):
 
 	def down(self):
 		if len(self["list"].list) > 0:
-			while 1:
+			while True:
 				self["list"].instance.moveSelection(self["list"].instance.moveDown)
 				self.updateSummary(self["list"].l.getCurrentSelectionIndex())
 				if self["list"].l.getCurrentSelection()[0][0] != "--" or self["list"].l.getCurrentSelectionIndex() == len(self["list"].list) - 1:

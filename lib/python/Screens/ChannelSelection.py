@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 #from Screens.InfoBar import MoviePlayer
+from __future__ import print_function
+from __future__ import absolute_import
 from boxbranding import getMachineBuild, getMachineBrand, getMachineName
 import os
 from Tools.Profile import profile
+from Tools.Directories import pathExists, SCOPE_SKIN_IMAGE, SCOPE_ACTIVE_SKIN, resolveFilename
 from Components.Label import Label
-from Screen import Screen
+from Screens.Screen import Screen
 from Tools.Directories import fileExists, resolveFilename, SCOPE_PLUGINS
 from Screens.Console import Console
 from enigma import eConsoleAppContainer, eDVBDB, eEnv
@@ -25,7 +28,7 @@ from Components.UsageConfig import preferredTimerPath
 from Components.Renderer.Picon import getPiconName
 from Screens.TimerEdit import TimerSanityConflict
 profile("ChannelSelection.py 1")
-from EpgSelection import EPGSelection
+from Screens.EpgSelection import EPGSelection
 from enigma import eActionMap, eServiceReference, eEPGCache, eServiceCenter, eRCInput, eTimer, ePoint, eDVBDB, iPlayableService, iServiceInformation, getPrevAsciiCode, eEnv, loadPNG
 from Components.config import config, configfile, ConfigSubsection, ConfigText, ConfigYesNo
 from Tools.NumericalTextInput import NumericalTextInput
@@ -41,7 +44,7 @@ from Components.Input import Input
 profile("ChannelSelection.py 3")
 from Components.ChoiceList import ChoiceList, ChoiceEntryComponent
 from RecordTimer import RecordTimerEntry, AFTEREVENT
-from TimerEntry import TimerEntry, InstantRecordTimerEntry
+from Screens.TimerEntry import TimerEntry, InstantRecordTimerEntry
 
 from Screens.InputBox import InputBox, PinInput
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -53,11 +56,12 @@ from Screens.PictureInPicture import PictureInPicture
 from Screens.RdsDisplay import RassInteractive
 from ServiceReference import ServiceReference
 from Tools.BoundFunction import boundFunction
-from Tools import Notifications
+import Tools.Notifications
 from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
 import os
 from time import localtime, time
+import six
 from os import remove
 try:
 	from Plugins.SystemPlugins.PiPServiceRelation.plugin import getRelationDict
@@ -69,6 +73,8 @@ profile("ChannelSelection.py after imports")
 
 FLAG_SERVICE_NEW_FOUND = 64
 FLAG_IS_DEDICATED_3D = 128 #define in lib/dvb/idvb.h as dxNewFound = 64 and dxIsDedicated3D = 128
+
+SIGN = '°' if six.PY3 else str('\xc2\xb0')
 
 class BouquetSelector(Screen):
 	def __init__(self, session, bouquets, selectedFunc, enableWrapAround=True):
@@ -111,7 +117,7 @@ class EpgBouquetSelector(BouquetSelector):
 		self.bouquets=bouquets
 
 	def okbuttonClick(self):
-		self.selectedFunc(self.getCurrent(),self.bouquets)
+		self.selectedFunc(self.getCurrent(), self.bouquets)
 
 
 class SilentBouquetSelector:
@@ -404,7 +410,7 @@ class ChannelContextMenu(Screen):
 			for file in os.listdir("/etc/enigma2/"):
 				if file.startswith("userbouquet") and file.endswith(".del"):
 					file = "/etc/enigma2/" + file
-					print "permantly remove file ", file
+					print("permantly remove file ", file)
 					os.remove(file)
 			self.close()
 
@@ -412,7 +418,7 @@ class ChannelContextMenu(Screen):
 		for file in os.listdir("/etc/enigma2/"):
 			if file.startswith("userbouquet") and file.endswith(".del"):
 				file = "/etc/enigma2/" + file
-				print "restore file ", file[:-4]
+				print("restore file ", file[:-4])
 				os.rename(file, file[:-4])
 		eDVBDBInstance = eDVBDB.getInstance()
 		eDVBDBInstance.setLoadUnlinkedUserbouquets(True)
@@ -550,7 +556,7 @@ class ChannelContextMenu(Screen):
 #				self.session.pipshown = False
 				del self.session.pip
 				if SystemInfo["LCDMiniTVPiP"] and int(config.lcd.modepip.value) >= 1:
-					print '[LCDMiniTV] disable PIP'
+					print('[LCDMiniTV] disable PIP')
 					f = open("/proc/stb/lcd/mode", "w")
 					f.write(config.lcd.minitvmode.value)
 					f.close()
@@ -565,7 +571,7 @@ class ChannelContextMenu(Screen):
 					self.session.pip.servicePath = self.csel.getCurrentServicePath()
 					self.session.pip.servicePath[1] = currentBouquet
 					if SystemInfo["LCDMiniTVPiP"] and int(config.lcd.modepip.value) >= 1:
-						print '[LCDMiniTV] enable PIP'
+						print('[LCDMiniTV] enable PIP')
 						f = open("/proc/stb/lcd/mode", "w")
 						f.write(config.lcd.minitvpipmode.value)
 						f.close()
@@ -583,13 +589,13 @@ class ChannelContextMenu(Screen):
 					self.session.pipshown = False
 					del self.session.pip
 					if SystemInfo["LCDMiniTV"] and int(config.lcd.modepip.value) >= 1:
-						print '[LCDMiniTV] disable PIP'
+						print('[LCDMiniTV] disable PIP')
 						f = open("/proc/stb/lcd/mode", "w")
 						f.write(config.lcd.minitvmode.value)
 						f.close()
 					self.session.openWithCallback(self.close, MessageBox, _("Could not open Picture in Picture"), MessageBox.TYPE_ERROR)
 		else:
-			self.session.open(MessageBox, _("Your %s %s does not support PiP HD") % (getMachineBrand(), getMachineName()), type = MessageBox.TYPE_INFO,timeout = 5 )
+			self.session.open(MessageBox, _("Your %s %s does not support PiP HD") % (getMachineBrand(), getMachineName()), type = MessageBox.TYPE_INFO, timeout = 5 )
 
 
 	def addServiceToBouquetSelected(self):
@@ -768,7 +774,7 @@ class ChannelSelectionEPG:
 			{
 				"ShortRecord": (self.RecordTimerQuestion, _("Add a record timer")),
 				'LongRecord': (self.doZapTimer, _('Add a zap timer for next event'))
-			},-1)
+			}, -1)
 		self['dialogactions'] = ActionMap(['WizardActions'],
 			{
 				'back': self.closeChoiceBoxDialog,
@@ -1111,7 +1117,7 @@ class ChannelSelectionEdit:
 				if mutableAlternatives:
 					mutableAlternatives.setListName(name)
 					if mutableAlternatives.addService(cur_service.ref):
-						print "add", cur_service.ref.toString(), "to new alternatives failed"
+						print("add", cur_service.ref.toString(), "to new alternatives failed")
 					mutableAlternatives.flushChanges()
 					self.servicelist.addService(new_ref.ref, True)
 					self.servicelist.removeCurrent()
@@ -1122,11 +1128,11 @@ class ChannelSelectionEdit:
 					if self.startServiceRef and cur_service.ref == self.startServiceRef:
 						self.startServiceRef = new_ref.ref
 				else:
-					print "get mutable list for new created alternatives failed"
+					print("get mutable list for new created alternatives failed")
 			else:
-				print "add", str, "to", cur_root.getServiceName(), "failed"
+				print("add", str, "to", cur_root.getServiceName(), "failed")
 		else:
-			print "bouquetlist is not editable"
+			print("bouquetlist is not editable")
 
 	def addBouquet(self, bName, services):
 		serviceHandler = eServiceCenter.getInstance()
@@ -1148,10 +1154,10 @@ class ChannelSelectionEdit:
 					if services is not None:
 						for service in services:
 							if mutableBouquet.addService(service):
-								print "add", service.toString(), "to new bouquet failed"
+								print("add", service.toString(), "to new bouquet failed")
 					mutableBouquet.flushChanges()
 				else:
-					print "get mutable list for new created bouquet failed"
+					print("get mutable list for new created bouquet failed")
 				# do some voodoo to check if current_root is equal to bouquet_root
 				cur_root = self.getRoot()
 				str1 = cur_root and cur_root.toString()
@@ -1161,9 +1167,9 @@ class ChannelSelectionEdit:
 					self.servicelist.addService(new_bouquet_ref)
 					self.servicelist.resetRoot()
 			else:
-				print "add", str, "to bouquets failed"
+				print("add", str, "to bouquets failed")
 		else:
-			print "bouquetlist is not editable"
+			print("bouquetlist is not editable")
 
 	def copyCurrentToBouquetList(self):
 		provider = ServiceReference(self.getCurrentSelection())
@@ -1189,11 +1195,11 @@ class ChannelSelectionEdit:
 					if self.startServiceRef and cur_service.ref == self.startServiceRef:
 						self.startServiceRef = first_in_alternative
 				else:
-					print "couldn't add first alternative service to current root"
+					print("couldn't add first alternative service to current root")
 			else:
-				print "couldn't edit current root!!"
+				print("couldn't edit current root!!")
 		else:
-			print "remove empty alternative list !!"
+			print("remove empty alternative list !!")
 		self.removeBouquet()
 		if not end:
 			self.servicelist.moveUp()
@@ -1235,7 +1241,7 @@ class ChannelSelectionEdit:
 				direction = _("W")
 			else:
 				direction = _("E")
-			messageText = _("Are you sure to remove all %d.%d%s%s services?") % (unsigned_orbpos/10, unsigned_orbpos%10, "\xc2\xb0", direction)
+			messageText = _("Are you sure to remove all %d.%d%s%s services?") % (unsigned_orbpos/10, unsigned_orbpos%10, SIGN, direction)
 		self.session.openWithCallback(self.removeSatelliteServicesCallback, MessageBox, messageText)
 
 	def removeSatelliteServicesCallback(self, answer):
@@ -1514,6 +1520,8 @@ class ChannelSelectionBase(Screen):
 				"nextMarker": self.nextMarker,
 				"prevMarker": self.prevMarker,
 				"gotAsciiCode": self.keyAsciiCode,
+				"keyUp": self.moveUp,
+				"keyDown": self.moveDown,                
 				"1": self.keyNumberGlobal,
 				"2": self.keyNumberGlobal,
 				"3": self.keyNumberGlobal,
@@ -1726,6 +1734,62 @@ class ChannelSelectionBase(Screen):
 			self.numericalTextInput.setUseableChars(u'abcdefghijklmnopqrstuvwxyz1234567890')
 		else:
 			self.numericalTextInput.setUseableChars(u'1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+		if hasattr(self.session, "pipshown") and self.session.pipshown:
+			self.setZapToServiceinList()
+			from Screens.InfoBarGenerics import InfoBarPiP
+			if InfoBarPiP.pipWindowActive:
+				currboPiP = self.session.pip.getCurrentBouquetPiP()
+				currboMain = self.session.pip.getCurrentBouquetMain()
+				currnavref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+				self.startRoot = currboMain
+				self.startServiceRef = currnavref
+				temp_title = self.myBouquetName(currboPiP)
+				title = _(' (PiP)')
+				if temp_title is not None:
+					title += temp_title
+			else:
+				currboMain = self.session.pip.getCurrentBouquetMain()
+				currnavref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+				self.startRoot = currboMain
+				self.startServiceRef = currnavref
+				temp_title = self.myBouquetName(currboMain)
+				if self.mode == MODE_TV:
+					title = _(' (TV)')
+					if temp_title is not None:
+						title += temp_title
+				else:
+					title = _(' (Radio)')
+					if temp_title is not None:
+						title += temp_title			
+		else:
+			currboMain = self.getRoot()
+			currnavref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+			self.startRoot = currboMain
+			self.startServiceRef = currnavref
+			temp_title = self.myBouquetName(currboMain)
+			if self.mode == MODE_TV:
+				title = _(' (TV)')
+				if temp_title is not None:
+					title += temp_title
+			else:
+				title = _(' (Radio)')
+				if temp_title is not None:
+					title += temp_title
+		self.setTitle(title)
+		
+	def myBouquetName(self, bouquet=None):
+		try:
+			if bouquet is None:
+				return None
+			if not bouquet.valid():
+				return None
+			if bouquet.flags & eServiceReference.isDirectory and not bouquet.flags & eServiceReference.isInvisible:
+				serviceHandler = eServiceCenter.getInstance()
+				info = serviceHandler.info(bouquet)
+				if info:
+					return info.getName(bouquet)
+		except:
+			return None            
 
 	def getBouquetNumOffset(self, bouquet):
 		if not config.usage.multibouquet.value:
@@ -1796,6 +1860,12 @@ class ChannelSelectionBase(Screen):
 		self.servicelist.setRoot(root, justSet)
 		self.rootChanged = True
 		self.buildTitleString()
+
+	def setMyRoot(self, root=None):
+		if root is not None:
+			self.servicelist.setRoot(self.getBouquetModeRoot(), justSet=False)
+			self.servicelist.setRoot(root, justSet=False)
+			self.buildTitleString()
 
 	def removeModeStr(self, str):
 		if self.mode == MODE_TV:
@@ -2157,8 +2227,8 @@ class ChannelSelectionBase(Screen):
 		self.selectionNumber = ""
 
 	def keyAsciiCode(self):
-		unichar = unichr(getPrevAsciiCode())
-		charstr = unichar.encode('utf-8')
+		unichar = six.unichr(getPrevAsciiCode())
+		charstr = six.ensure_str(unichar)
 		if len(charstr) == 1:
 			self.servicelist.moveToChar(charstr[0])
 
@@ -2273,7 +2343,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		ChannelSelectionEPG.__init__(self)
 		SelectionEventInfo.__init__(self)
 		if config.usage.servicelist_mode.value == 'simple':
-			self.skinName = ["SlimChannelSelection","SimpleChannelSelection","ChannelSelection"]
+			self.skinName = ["SlimChannelSelection", "SimpleChannelSelection", "ChannelSelection"]
 		else:
 			self.skinName = "ChannelSelection"
 		self["actions"] = ActionMap(["OkCancelActions", "TvRadioActions"],
@@ -2292,7 +2362,11 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				iPlayableService.evEnd: self.__evServiceEnd
 			})
 
-		assert ChannelSelection.instance is None, "class InfoBar is a singleton class and just one instance of this class is allowed!"
+		try:
+			if ChannelSelection.instance:
+				raise AssertionError("class InfoBar is a singleton class and just one instance of this class is allowed!")
+		except:
+			pass
 		ChannelSelection.instance = self
 		self.startServiceRef = None
 		self.history_tv = []
@@ -2424,8 +2498,18 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				self.zap(enable_pipzap = doClose, preview_zap = not doClose)
 				self.asciiOff()
 				if doClose:
-					if self.dopipzap:
-						self.zapBack()
+					if hasattr(self.session, "pipshown") and self.session.pipshown:
+						currentBouquet = self.getRoot()
+						from Screens.InfoBarGenerics import InfoBarPiP
+						if InfoBarPiP.pipWindowActive:
+							if hasattr(self.session, "pip"):
+								self.session.pip.setCurrentBouquetPiP(currentBouquet)
+							self.zapBack()
+							self.setZapToServiceinList()
+						else:
+							if hasattr(self.session, "pip"):
+								self.session.pip.setCurrentBouquetMain(currentBouquet)
+								self.setZapToServiceinList()
 					self.startServiceRef = None
 					self.startRoot = None
 					self.correctChannelNumber()
@@ -2496,7 +2580,8 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			if ref is None or ref != nref:
 				nref = self.session.pip.resolveAlternatePipService(nref)
 				if nref and (not checkParentalControl or Components.ParentalControl.parentalControl.isServicePlayable(nref, boundFunction(self.zap, enable_pipzap=True, checkParentalControl=False))):
-					self.session.pip.playService(nref)
+					currentBouquet = self.getRoot()
+					self.session.pip.playService(nref,currentBouquet)
 					self.__evServiceStart()
 					self.showPipzapMessage()
 				else:
@@ -2531,13 +2616,18 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 					self.mainScreenRoot = self.getRoot()
 				self.revertMode = None
 			else:
-				Notifications.RemovePopup("Parental control")
+				Tools.Notifications.RemovePopup("Parental control")
 				self.setCurrentSelection(nref)
 		else:
 			self.setStartRoot(self.curRoot)
 			self.setCurrentSelection(self.session.nav.getCurrentlyPlayingServiceOrGroup())
 		if not preview_zap:
 			self.hide()
+            
+	def zapToServiceinList(self, service=None, bouquet=None):
+		if service is not None and bouquet is not None:
+			self.enterUserbouquet(bouquet, save_root=False)
+			self.setCurrentSelection(service)
 
 	def newServicePlayed(self):
 		ret = self.new_service_played
@@ -2608,7 +2698,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 
 	def historyClear(self):
 		if self and self.servicelist:
-			for i in range(0, len(self.history)-1):
+			for i in list(range(0, len(self.history)-1)):
 				del self.history[0]
 			self.history_pos = len(self.history)-1
 			return True
@@ -2744,27 +2834,39 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		self.protectContextMenu = True
 		self.close(None)
 
+	def setZapToServiceinList(self):
+		if hasattr(self.session, "pipshown") and self.session.pipshown:
+			from Screens.InfoBarGenerics import InfoBarPiP
+			if InfoBarPiP.pipWindowActive:
+				currbo = self.session.pip.getCurrentBouquetPiP()
+				currservice = self.session.pip.getCurrentService()
+				self.zapToServiceinList(currservice, currbo)
+			else:
+				currbo = self.session.pip.getCurrentBouquetMain()
+				currservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+				self.zapToServiceinList(currservice, currbo)
+
 	def zapBack(self):
 		currentPlayedRef = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		if self.startServiceRef and (currentPlayedRef is None or currentPlayedRef != self.startServiceRef):
 			self.setStartRoot(self.startRoot)
 			self.new_service_played = True
 			self.session.nav.playService(self.startServiceRef)
-			self.saveChannel(self.startServiceRef)
+			if not self.dopipzap:
+				self.saveChannel(self.startServiceRef)
 		else:
 			self.restoreMode()			
 		self.setStartRoot(self.startRoot)	
+
+		if self.dopipzap:
+			currboPiP = self.session.pip.getCurrentBouquetPiP()
+			currpipref = self.session.pip.getCurrentService()
+			self.zapToServiceinList(currpipref, currboPiP)
+		else:
+			self.zapToServiceinList(self.startServiceRef, self.startRoot)
 		self.startServiceRef = None
 		self.startRoot = None
-		if self.dopipzap:
-			# This unfortunately won't work with subservices
-			self.setCurrentSelection(self.session.pip.getCurrentService())
-		else:
-			lastservice = eServiceReference(self.lastservice.value)
-			if lastservice.valid() and self.getCurrentSelection() == lastservice:
-				pass	# keep current selection
-			else:
-				self.setCurrentSelection(currentPlayedRef)
+ 
 
 	def setStartRoot(self, root):
 		if root:
@@ -2831,13 +2933,62 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			if tmp_ref and pip_ref and tmp_ref.getChannelNum() != pip_ref.getChannelNum():
 				self.session.pip.currentService = tmp_ref
 			self.setCurrentSelection(tmp_ref)
-		self.revertMode = None			
+		self.revertMode = None		
+        
+	def FavoritTV(self):
+		selpos = 0
+		mark = 0
+		favoritlist = [ ]
+		services = []
+		if self.mode == MODE_TV:
+			try:
+				serviceHandler = eServiceCenter.getInstance()
+				bouquet_rootstr = '%s FROM BOUQUET "userbouquet.favourites.tv" ORDER BY bouquet'% service_types_tv
+				bouquet_root = eServiceReference(bouquet_rootstr)
+				servicelist = eServiceCenter.getInstance().list(bouquet_root)
+				if not servicelist is None:
+					while True:
+						service = servicelist.getNext()
+						if not service.valid():
+							break
+						if service.flags & (eServiceReference.isDirectory | eServiceReference.isMarker):
+							continue
+						service_name = serviceHandler.info(service).getName(service)	
+						favoritlist.append((service_name, service))
+					flen = len(favoritlist)
+					if flen < 1: return
+			except Exception:
+				return
+			self.session.openWithCallback(self.favoritMenuClosed, FavoritTVSelector, favoritlist, selpos, mark, invert_items=False, redirect_buttons=True, wrap_around=True)
 
+	def favoritMenuClosed(self, retval):
+		if not retval:
+			return
+		else:
+			self.session.nav.playService(retval)
+			self.servicelist.setCurrent(retval, adjust=False)
+			self.saveChannel(retval)
+			if self.servicePath is not None:
+				tmp = self.servicePath[:]
+				tmp.append(retval)
+				self.history.append(tmp)
+				hlen = len(self.history)
+				x = 0
+				while x < hlen - 1:
+					if self.history[x][-1] == retval:
+						del self.history[x]
+						hlen -= 1
+					else:
+						x += 1
+				if hlen > HISTORYSIZE:
+					del self.history[0]
+					hlen -= 1
+				self.history_pos = hlen - 1
 
 class PiPZapSelection(ChannelSelection):
 	def __init__(self, session):
 		ChannelSelection.__init__(self, session)
-		self.skinName = ["SlimChannelSelection","SimpleChannelSelection","ChannelSelection"]
+		self.skinName = ["SlimChannelSelection", "SimpleChannelSelection", "ChannelSelection"]
 
 		self.startservice = None
 		self.pipzapfailed = None
@@ -2893,7 +3044,7 @@ class PiPZapSelection(ChannelSelection):
 					self.saveChannel(ref)
 					self.setCurrentSelection(ref)
 					if SystemInfo["LCDMiniTVPiP"] and int(config.lcd.minitvpipmode.value) >= 1:
-						print '[LCDMiniTV] enable PIP'
+						print('[LCDMiniTV] enable PIP')
 						f = open("/proc/stb/lcd/mode", "w")
 						f.write(config.lcd.minitvpipmode.value)
 						f.close()
@@ -2912,7 +3063,7 @@ class PiPZapSelection(ChannelSelection):
 					self.session.pipshown = False
 					del self.session.pip
 					if SystemInfo["LCDMiniTVPiP"] and int(config.lcd.minitvpipmode.value) >= 1:
-							print '[LCDMiniTV] disable PIP'
+							print('[LCDMiniTV] disable PIP')
 							f = open("/proc/stb/lcd/mode", "w")
 							f.write(config.lcd.minitvmode.value)
 							f.close()
@@ -2925,11 +3076,12 @@ class PiPZapSelection(ChannelSelection):
 			self.session.pipshown = False
 			del self.session.pip
 			if SystemInfo["LCDMiniTVPiP"] and int(config.lcd.minitvpipmode.value) >= 1:
-					print '[LCDMiniTV] disable PIP'
+					print('[LCDMiniTV] disable PIP')
 					f = open("/proc/stb/lcd/mode", "w")
 					f.write(config.lcd.minitvmode.value)
 					f.close()
 		self.correctChannelNumber()
+        self.setZapToServiceinList()
 		self.close(None)
 
 
@@ -2976,7 +3128,7 @@ class ChannelSelectionRadio(ChannelSelectionBase, ChannelSelectionEdit, ChannelS
 		self["RdsActions"] = HelpableActionMap(self, "InfobarRdsActions",
 		{
 			"startRassInteractive": (self.startRassInteractive, _("View Rass interactive..."))
-		},-1)
+		}, -1)
 		self["RdsActions"].setEnabled(False)
 		infobar.rds_display.onRassInteractivePossibilityChanged.append(self.RassInteractivePossibilityChanged)
 		self.onClose.append(self.__onClose)
@@ -3198,12 +3350,24 @@ class HistoryZapSelector(Screen):
 							prefix = "+"
 						local_begin = localtime(begin)
 						local_end = localtime(end)
-						durationTime = _("%02d.%02d - %02d.%02d (%s%d min)") % (local_begin[3],local_begin[4],local_end[3],local_end[4],prefix, remaining)
+						remaining_string = self.hour_min(remaining)
+						durationTime = _("%02d.%02d - %02d.%02d (%s%s)") % (local_begin[3],local_begin[4],local_end[3],local_end[4],prefix,remaining_string)
 
 			png = ""
 			picon = getPiconName(str(ServiceReference(x[1])))
 			if picon != "":
 				png = loadPNG(picon)
+			else:
+				tmp = resolveFilename(SCOPE_ACTIVE_SKIN, "picon_default.png")
+				if pathExists(tmp):
+					pngname = tmp
+				else:
+					pngname = resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/picon_default.png")
+				if pngname != "":
+					try:
+						png = loadPNG(pngname)
+					except Exception:
+						pass
 			if self.invertItems:
 				self.list.insert(0, (x[1], cnt == mark_item and "»" or "", x[0], eventName, descriptionName, durationTime, png))
 			else:
@@ -3242,3 +3406,139 @@ class HistoryZapSelector(Screen):
 
 	def cancelClick(self):
 		self.close(None)
+
+	def hour_min(self, mins):
+		if not isinstance(mins, int):
+			return _("%d min") % (0)
+		if mins <= 0:
+			return _("%d min") % (0)
+		vhour, vmins = mins // 60, mins % 60
+		if vhour and vmins:
+			return _("%d hour %d min") % (vhour,vmins)
+		elif vhour and not vmins:
+			return _("%d hour") % (vhour)
+		else:
+			return _("%d min") % (vmins)
+			
+class FavoritTVSelector(Screen):
+	def __init__(self, session, items=None, sel_item=0, mark_item=0, invert_items=False, redirect_buttons=False, wrap_around=True):
+		if not items: items = []
+		Screen.__init__(self, session)
+		self.redirectButton = redirect_buttons
+		self.invertItems = invert_items
+		if self.invertItems:
+			self.currentPos = len(items) - sel_item - 1
+		else:
+			self.currentPos = sel_item
+		self["actions"] = ActionMap(["OkCancelActions", "InfobarCueSheetActions"],
+			{
+				"ok": self.okbuttonClick,
+				"cancel": self.cancelClick,
+				"jumpPreviousMark": self.prev,
+				"jumpNextMark": self.next,
+				"toggleMark": self.okbuttonClick,
+			})
+		self.setTitle(_("Favorit TV..."))
+		self.list = []
+		cnt = 0
+		serviceHandler = eServiceCenter.getInstance()
+		for x in items:
+
+			info = serviceHandler.info(x[-1])
+			if info:
+				serviceName = info.getName(x[-1])
+				if serviceName is None:
+					serviceName = ""
+				eventName = ""
+				descriptionName = ""
+				durationTime = ""
+				event = info.getEvent(x[-1])
+				if event:
+					eventName = event.getEventName()
+					if eventName is None:
+						eventName = ""
+					else:
+						eventName = eventName.replace('(18+)', '').replace('18+', '').replace('(16+)', '').replace('16+', '').replace('(12+)', '').replace('12+', '').replace('(7+)', '').replace('7+', '').replace('(6+)', '').replace('6+', '').replace('(0+)', '').replace('0+', '')	
+					descriptionName = event.getShortDescription()
+					if descriptionName is None or descriptionName == "":
+						descriptionName = event.getExtendedDescription()
+						if descriptionName is None:
+							descriptionName = ""
+					begin = event.getBeginTime()
+					if begin is not None:
+						end = begin + event.getDuration()
+						remaining = (end - int(time())) / 60
+						prefix = ""
+						if remaining > 0:
+							prefix = "+"
+						local_begin = localtime(begin)
+						local_end = localtime(end)
+						remaining_string = self.hour_min(remaining)
+						durationTime = _("%02d.%02d - %02d.%02d (%s%s)") % (local_begin[3],local_begin[4],local_end[3],local_end[4],prefix,remaining_string)
+
+			png = ""
+			picon = getPiconName(str(ServiceReference(x[1])))
+			if picon != "":
+				png = loadPNG(picon)
+			else:
+				tmp = resolveFilename(SCOPE_ACTIVE_SKIN, "picon_default.png")
+				if pathExists(tmp):
+					pngname = tmp
+				else:
+					pngname = resolveFilename(SCOPE_SKIN_IMAGE, "skin_default/picon_default.png")
+				if pngname != "":
+					try:
+						png = loadPNG(pngname)
+					except Exception:
+						pass                
+			if self.invertItems:
+				self.list.insert(0, (x[1], cnt == mark_item and "»" or "", x[0], eventName, descriptionName, durationTime, png))
+			else:
+				self.list.append((x[1], cnt == mark_item and "»" or "", x[0], eventName, descriptionName, durationTime, png))
+			cnt += 1
+		self["menu"] = List(self.list, enableWrapAround=wrap_around)
+		self.onShown.append(self.__onShown)
+
+	def __onShown(self):
+		self["menu"].index = self.currentPos
+
+	def prev(self):
+		if self.redirectButton:
+			self.down()
+		else:
+			self.up()
+
+	def next(self):
+		if self.redirectButton:
+			self.up()
+		else:
+			self.down()
+
+	def up(self):
+		self["menu"].selectPrevious()
+
+	def down(self):
+		self["menu"].selectNext()
+
+	def getCurrent(self):
+		cur = self["menu"].current
+		return cur and cur[0]
+
+	def okbuttonClick(self):
+		self.close(self.getCurrent())
+
+	def cancelClick(self):
+		self.close(None)
+
+	def hour_min(self, mins):
+		if not isinstance(mins, int):
+			return _("%d min") % (0)
+		if mins <= 0:
+			return _("%d min") % (0)
+		vhour, vmins = mins // 60, mins % 60
+		if vhour and vmins:
+			return _("%d hour %d min") % (vhour,vmins)
+		elif vhour and not vmins:
+			return _("%d hour") % (vhour)
+		else:
+			return _("%d min") % (vmins)

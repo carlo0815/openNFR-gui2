@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import division
 import Screens.InfoBar
 from enigma import eServiceReference, eTimer
 
@@ -52,8 +54,8 @@ class ServiceScan(Screen):
 				from Plugins.SystemPlugins.LCNScanner.plugin import LCNBuildHelper
 				lcn = LCNBuildHelper()
 				lcn.buildAfterScan()
-			except Exception, e:
-				print e
+			except Exception as e:
+				print(e)
 
 			if self.currentInfobar.__class__.__name__ == "InfoBar":
 				selectedService = self["servicelist"].getCurrentSelection()
@@ -111,7 +113,7 @@ class ServiceScan(Screen):
 		self["transponder"] = Label()
 
 		self["pass"] = Label("")
-		self["servicelist"] = FIFOList()
+		self["servicelist"] = FIFOList(len=10)
 		self["FrontendInfo"] = FrontendInfo()
 		self["key_red"] = Label(_("Cancel"))
 		self["key_green"] = Label(_("OK"))
@@ -139,7 +141,7 @@ class ServiceScan(Screen):
 				self.session.summary.updateService(selectedService[0])
 
 	def doServiceScan(self):
-		self["servicelist"].len = self["servicelist"].instance.size().height() / self["servicelist"].l.getItemSize().height()
+		self["servicelist"].len = self["servicelist"].instance.size().height() // self["servicelist"].l.getItemSize().height()
 		self["scan"] = CScan(self["scan_progress"], self["scan_state"], self["servicelist"], self["pass"], self.scanList, self["network"], self["transponder"], self["FrontendInfo"], self.session.summary)
 		self.scanTimer.start(250)
 

@@ -47,7 +47,7 @@ class UserMainMenuSetup(Screen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.Console = Console()
-		self["actions"] = ActionMap(["SetupActions","OkCancelActions"],
+		self["actions"] = ActionMap(["SetupActions", "OkCancelActions"],
 		{
 			"ok": self.keyOK,
 			"cancel": self.close,

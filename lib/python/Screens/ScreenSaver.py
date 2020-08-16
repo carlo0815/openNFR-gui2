@@ -35,8 +35,8 @@ class Screensaver(Screen):
 		self.maxx = self.instance.size().width() - picturesize[0]
 		self.maxy = self.instance.size().height() - picturesize[1]
 		import random
-		self.posx = random.randint(1,self.maxx)
-		self.posy = random.randint(1,self.maxy)
+		self.posx = random.randint(1, self.maxx)
+		self.posy = random.randint(1, self.maxy)
 		self.movex = self.movey = 1
 		self["picture"].instance.move(ePoint(self.posx, self.posy))
 

@@ -1,6 +1,9 @@
+from __future__ import division
+from __future__ import print_function
 from Tools.Profile import profile
 profile("LOAD:ElementTree")
 import xml.etree.cElementTree
+import six
 import os
 from os import path, remove, listdir
 
@@ -28,7 +31,7 @@ fonts = {
 parameters = {}
 
 def dump(x, i=0):
-	print " " * i + str(x)
+	print(" " * i + str(x))
 	try:
 		for n in x.childNodes:
 			dump(n, i + 1)
@@ -129,126 +132,126 @@ try:
 	name = skin_user_skinname()
 	if name is not None:
 		addSkin(name, SCOPE_CONFIG)
-		print "addSkin:", addSkin
+		print("addSkin:", addSkin)
 	else:
 		addSkin('skin_user.xml', SCOPE_CONFIG)
 except (SkinError, IOError, AssertionError), err:
-	print "not loading user skin: ", err
+	print("not loading user skin: ", err)
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_colors.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined colors for skin", (primary_skin_path + 'skin_user_colors.xml')
+	print("[openNFR] loading user defined colors for skin", (primary_skin_path + 'skin_user_colors.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined colors for skin"
+	print("[openNFR] not loading user defined colors for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_background.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined background for skin", (primary_skin_path + 'skin_user_background.xml')
+	print("[openNFR] loading user defined background for skin", (primary_skin_path + 'skin_user_background.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined background for skin"	
+	print("[openNFR] not loading user defined background for skin")	
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_header.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml')
+	print("[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined header file for skin"
+	print("[openNFR] not loading user defined header file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_infobar.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined infobar file for skin", (primary_skin_path + 'skin_user_infobar.xml')
+	print("[openNFR] loading user defined infobar file for skin", (primary_skin_path + 'skin_user_infobar.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined infobar file for skin"	
+	print("[openNFR] not loading user defined infobar file for skin")	
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_sib.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined sib file for skin", (primary_skin_path + 'skin_user_sib.xml')
+	print("[openNFR] loading user defined sib file for skin", (primary_skin_path + 'skin_user_sib.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined sib file for skin"
+	print("[openNFR] not loading user defined sib file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_ch_se.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined ch_se file for skin", (primary_skin_path + 'skin_user_ch_se.xml')
+	print("[openNFR] loading user defined ch_se file for skin", (primary_skin_path + 'skin_user_ch_se.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined ch_se file for skin"
+	print("[openNFR] not loading user defined ch_se file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_ev.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml')
+	print("[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined ev file for skin"                	                	
+	print("[openNFR] not loading user defined ev file for skin")                	                	
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_center.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined center file for skin", (primary_skin_path + 'skin_user_center.xml')
+	print("[openNFR] loading user defined center file for skin", (primary_skin_path + 'skin_user_center.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined center file for skin"  
+	print("[openNFR] not loading user defined center file for skin")  
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml')
+	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined sb file for skin"  
+	print("[openNFR] not loading user defined sb file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_frame.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined frame file for skin", (primary_skin_path + 'skin_user_frame.xml')
+	print("[openNFR] loading user defined frame file for skin", (primary_skin_path + 'skin_user_frame.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined frame file for skin"  
+	print("[openNFR] not loading user defined frame file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_lines.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined lines file for skin", (primary_skin_path + 'skin_user_lines.xml')
+	print("[openNFR] loading user defined lines file for skin", (primary_skin_path + 'skin_user_lines.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined lines file for skin"  
+	print("[openNFR] not loading user defined lines file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sbar.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined sbar file for skin", (primary_skin_path + 'skin_user_sbar.xml')
+	print("[openNFR] loading user defined sbar file for skin", (primary_skin_path + 'skin_user_sbar.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined sbar file for skin"  
+	print("[openNFR] not loading user defined sbar file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_wget.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined wget file for skin", (primary_skin_path + 'skin_user_wget.xml')
+	print("[openNFR] loading user defined wget file for skin", (primary_skin_path + 'skin_user_wget.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined wget file for skin"  
+	print("[openNFR] not loading user defined wget file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml')
+	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined sb file for skin"                	                	
+	print("[openNFR] not loading user defined sb file for skin")               	                	
 	
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_ul.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined ul file for skin", (primary_skin_path + 'skin_user_ul.xml')
+	print("[openNFR] loading user defined ul file for skin", (primary_skin_path + 'skin_user_ul.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined ul file for skin"
+	print("[openNFR] not loading user defined ul file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_clock.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml')
+	print("[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined clock file for skin" 
+	print("[openNFR] not loading user defined clock file for skin") 
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_emc.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined emc file for skin", (primary_skin_path + 'skin_user_emc.xml')
+	print("[openNFR] loading user defined emc file for skin", (primary_skin_path + 'skin_user_emc.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined emc file for skin"    
+	print("[openNFR] not loading user defined emc file for skin")    
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_volume.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined volume file for skin", (primary_skin_path + 'skin_user_volume.xml')
+	print("[openNFR] loading user defined volume file for skin", (primary_skin_path + 'skin_user_volume.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined volume file for skin"    
+	print("[openNFR] not loading user defined volume file for skin")    
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_movieselection.xml', SCOPE_SKIN)
-	print "[openNFR] loading user defined movieselection file for skin", (primary_skin_path + 'skin_user_movieselection.xml')
+	print("[openNFR] loading user defined movieselection file for skin", (primary_skin_path + 'skin_user_movieselection.xml'))
 except (SkinError, IOError, AssertionError), err:
-	print "[openNFR] not loading user defined movieselection file for skin"                                             	                	
+	print("[openNFR] not loading user defined movieselection file for skin")                                             	                	
 	
 	
 def load_modular_files():
@@ -257,9 +260,9 @@ def load_modular_files():
 		for f in modular_files:
 			try:
 				loadSkin(primary_skin_path + f, SCOPE_SKIN)
-				print "[openNFR] loading modular skin file : ", (primary_skin_path + f)
+				print("[openNFR] loading modular skin file : ", (primary_skin_path + f))
 			except (SkinError, IOError, AssertionError), err:
-				print "[openNFR] failed to load modular skin file : ", err
+				print("[openNFR] failed to load modular skin file : ", err)
 load_modular_files()
 	
 try:
@@ -273,8 +276,8 @@ try:
 			config.skin.primary_skin.save()
 
 except (SkinError, IOError, AssertionError), err:
-	print "SKIN ERROR:", err
-	print "defaulting to standard skin..."
+	print("SKIN ERROR:", err)
+	print("defaulting to standard skin...")
 	config.skin.primary_skin.value = 'skin.xml'
 	loadSkin('skin.xml')
 	
@@ -285,19 +288,19 @@ addSkin('skin_second_infobar.xml')
 display_skin_id = 1
 try:
 	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008', 'formuler1'):
-                print "addskin", addSkin(os.path.join('', config.skin.display_skin.value)) 
+                print("addskin", addSkin(os.path.join('', config.skin.display_skin.value))) 
                 if not addSkin(os.path.join('display', config.skin.display_skin.value)):
 		        raise DisplaySkinError, "display skin not found"	
 	else:
-                print "addskin", addSkin(os.path.join('display', config.skin.display_skin.value)) 
+                print("addskin", addSkin(os.path.join('display', config.skin.display_skin.value))) 
                 if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
 		        raise DisplaySkinError, "display skin not found"
-except Exception, err:
-	print "SKIN ERROR:", err
+except Exception as err:
+	print("SKIN ERROR:", err)
 	skin = DEFAULT_DISPLAY_SKIN
 	if config.skin.display_skin.value == skin:
                 skin = 'skin_display.xml'
-	print "defaulting to standard display skin...", skin
+	print("defaulting to standard display skin...", skin)
 	config.skin.display_skin.value = skin
 	skin = os.path.join('display/lcdskins', skin)
 	addSkin(skin)
@@ -308,12 +311,12 @@ addSkin('skin_subtitles.xml')
 try:
 	if not addSkin(config.skin.primary_skin.value):
 		raise SkinError, "primary skin not found"
-except Exception, err:
-	print "SKIN ERROR:", err
+except Exception as err:
+	print("SKIN ERROR:", err)
 	skin = DEFAULT_SKIN
 	if config.skin.primary_skin.value == skin:
 		skin = 'skin.xml'
-	print "defaulting to standard skin...", skin
+	print("defaulting to standard skin...", skin)
 	config.skin.primary_skin.value = skin
 	addSkin(skin)
 	del skin
@@ -324,7 +327,7 @@ profile("LoadSkinDefaultDone")
 def parseCoordinate(s, e, size=0, font=None):
 	s = s.strip()
 	if s == "center":
-		val = (e - size)/2
+		val = (e - size) // 2
 	elif s == '*':
 		return None
 	else:
@@ -338,7 +341,7 @@ def parseCoordinate(s, e, size=0, font=None):
 			val = 0
 		if s:
 			if s[-1] is '%':
-				val += e * int(s[:-1]) / 100
+				val += e * int(s[:-1]) // 100
 			elif s[-1] is 'w':
 				val += fonts[font][3] * int(s[:-1])
 			elif s[-1] is 'h':
@@ -377,7 +380,7 @@ def parsePosition(s, scale, object = None, desktop = None, size = None):
 		parentsize = getParentSize(object, desktop)
 	xval = parseCoordinate(x, parentsize.width(), size and size.width())
 	yval = parseCoordinate(y, parentsize.height(), size and size.height())
-	return ePoint(xval * scale[0][0] / scale[0][1], yval * scale[1][0] / scale[1][1])
+	return ePoint(xval * scale[0][0] / scale[0][1], yval * scale[1][0] // scale[1][1])
 
 def parseSize(s, scale, object = None, desktop = None):
 	x, y = s.split(',')
@@ -386,7 +389,7 @@ def parseSize(s, scale, object = None, desktop = None):
 		parentsize = getParentSize(object, desktop)
 	xval = parseCoordinate(x, parentsize.width())
 	yval = parseCoordinate(y, parentsize.height())
-	return eSize(xval * scale[0][0] / scale[0][1], yval * scale[1][0] / scale[1][1])
+	return eSize(xval * scale[0][0] / scale[0][1], yval * scale[1][0] // scale[1][1])
 
 def parseFont(s, scale):
 	try:
@@ -395,7 +398,7 @@ def parseFont(s, scale):
 		size = f[1]
 	except:
 		name, size = s.split(';')
-	return gFont(name, int(size) * scale[0][0] / scale[0][1])
+	return gFont(name, int(size) * scale[0][0] // scale[0][1])
 
 def parseColor(s):
 	if s[0] != '#':
@@ -424,18 +427,18 @@ def collectAttributes(skinAttributes, node, context, skin_path_prefix=None, igno
 			# Similar situation for a scrollbar in a listbox; when the scrollbar setting is applied after
 			# the size, a scrollbar will not be shown until the selection moves for the first time
 			if attrib == 'size':
-				size = value.encode("utf-8")
+				size = six.ensure_str(value)
 			elif attrib == 'position':
-				pos = value.encode("utf-8")
+				pos = six.ensure_str(value)
 			elif attrib == 'font':
-				font = value.encode("utf-8")
+				font = six.ensure_str(value)
 				skinAttributes.append((attrib, font))
 			else:
-				skinAttributes.append((attrib, value.encode("utf-8")))
-	if pos is not None:
+				skinAttributes.append((attrib, six.ensure_str(value)))
+	if pos != None:
 		pos, size = context.parse(pos, size, font)
 		skinAttributes.append(('position', pos))
-	if size is not None:
+	if size != None:
 		skinAttributes.append(('size', size))
 
 def morphRcImagePath(value):
@@ -466,19 +469,19 @@ class AttributeParser:
 		try:
 			getattr(self, attrib)(value)
 		except AttributeError:
-			print "[Skin] Attribute not implemented:", attrib, "value:", value
-		except SkinError, ex:
-			print "[Skin] Error:", ex
+			print("[Skin] Attribute not implemented:", attrib, "value:", value)
+		except SkinError as ex:
+			print("[Skin] Error:", ex)
 	def applyAll(self, attrs):
 		for attrib, value in attrs:
 			try:
 				getattr(self, attrib)(value)
 			except AttributeError:
-				print "[Skin] Attribute not implemented:", attrib, "value:", value
-			except SkinError, ex:
-				print "[Skin] Error:", ex
+				print("[Skin] Attribute not implemented:", attrib, "value:", value)
+			except SkinError as ex:
+				print "[Skin] Error:", ex)
 			except:
-				print "[Skin] Error:", attrib
+				print("[Skin] Error:", attrib)
 	def conditional(self, value):
 		pass
 	def position(self, value):
@@ -546,7 +549,7 @@ class AttributeParser:
 					"orRightToLeft": (self.guiObject.orHorizontal, True),
 				}[value])
 		except KeyError:
-			print "oprientation must be either orVertical or orHorizontal!, not %s. Please contact the skin's author!" % value
+			print("oprientation must be either orVertical or orHorizontal!, not %s. Please contact the skin's author!" % value)
 	def valign(self, value):
 		try:
 			self.guiObject.setVAlign(
@@ -555,7 +558,7 @@ class AttributeParser:
 					"bottom": self.guiObject.alignBottom
 				}[value])
 		except KeyError:
-			print "valign must be either top, center or bottom!, not %s. Please contact the skin's author!" % value
+			print("valign must be either top, center or bottom!, not %s. Please contact the skin's author!" % value)
 	def halign(self, value):
 		try:
 			self.guiObject.setHAlign(
@@ -565,10 +568,10 @@ class AttributeParser:
 					"block": self.guiObject.alignBlock
 				}[value])
 		except KeyError:
-			print "halign must be either left, center, right or block!, not %s. Please contact the skin's author!" % value
+			print("halign must be either left, center, right or block!, not %s. Please contact the skin's author!" % value)
 	def textOffset(self, value):
 		x, y = value.split(',')
-		self.guiObject.setTextOffset(ePoint(int(x) * self.scale[0][0] / self.scale[0][1], int(y) * self.scale[1][0] / self.scale[1][1]))
+		self.guiObject.setTextOffset(ePoint(int(x) * self.scaleTuple[0][0] // self.scaleTuple[0][1], int(y) * self.scaleTuple[1][0] // self.scaleTuple[1][1]))
 	def flags(self, value):
 		flags = value.split(',')
 		for f in flags:
@@ -682,7 +685,7 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 			if not fileExists(skinfile):
 				skinfile = resolveFilename(SCOPE_SKIN_IMAGE, filename, path_prefix=path_prefix)
 			if fileExists(skinfile):
-				print "[SKIN] loading include:", skinfile
+				print("[SKIN] loading include:", skinfile)
 				loadSkin(skinfile)
 
 	for c in skin.findall("colors"):
@@ -707,9 +710,9 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 					if isinstance(font, list) and len(font) == 2:
 						parameters[name] = (str(font[0]), int(font[1]))
 				else:
-					parameters[name] = map(int, value.split(","))
-			except Exception, ex:
-			 	print "[SKIN] bad parameter", ex
+					parameters[name] = list(map(int, value.split(",")))
+			except Exception as ex:
+			 	print("[SKIN] bad parameter", ex)
 
 	for c in skin.findall("fonts"):
 		for font in c.findall("font"):
@@ -746,8 +749,8 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 				width = int(get("width", size))
 				global fonts
 				fonts[name] = (font, size, height, width)
-			except Exception, ex:
-				print "[SKIN] bad font alias", ex
+			except Exception as ex:
+				print("[SKIN] bad font alias", ex)
 
 
 	for c in skin.findall("subtitles"):
@@ -1026,7 +1029,7 @@ def readSkin(screen, skin, names, desktop):
 	# try uncompiled embedded skin
 	if myscreen is None and getattr(screen, "skin", None):
 		skin = screen.skin
-		print "[SKIN] Parsing embedded skin", name
+		print("[SKIN] Parsing embedded skin", name)
 		if isinstance(skin, tuple):
 			for s in skin:
 				candidate = xml.etree.cElementTree.fromstring(s)
@@ -1036,13 +1039,13 @@ def readSkin(screen, skin, names, desktop):
 						myscreen = candidate
 						break
 			else:
-				print "[SKIN] Hey, no suitable screen!"
+				print("[SKIN] Hey, no suitable screen!")
 		else:
 			myscreen = xml.etree.cElementTree.fromstring(skin)
 		if myscreen:
 			screen.parsedSkin = myscreen
 	if myscreen is None:
-		print "[SKIN] No skin to read..."
+		print("[SKIN] No skin to read...")
 		myscreen = screen.parsedSkin = xml.etree.cElementTree.fromstring("<screen></screen>")
 
 	screen.skinAttributes = [ ]
@@ -1073,7 +1076,7 @@ def readSkin(screen, skin, names, desktop):
 		wname = get_attr('name')
 		wsource = get_attr('source')
 		if wname is None and wsource is None:
-			print "widget has no name and no source!"
+			print("widget has no name and no source!")
 			return
 		if wname:
 			#print "Widget name=", wname
@@ -1105,10 +1108,10 @@ def readSkin(screen, skin, names, desktop):
 				source = scr.get(path[0])
 				if isinstance(source, ObsoleteSource):
 					# however, if we found an "obsolete source", issue warning, and resolve the real source.
-					print "WARNING: SKIN '%s' USES OBSOLETE SOURCE '%s', USE '%s' INSTEAD!" % (name, wsource, source.new_source)
-					print "OBSOLETE SOURCE WILL BE REMOVED %s, PLEASE UPDATE!" % source.removal_date
+					print("WARNING: SKIN '%s' USES OBSOLETE SOURCE '%s', USE '%s' INSTEAD!" % (name, wsource, source.new_source))
+					print("OBSOLETE SOURCE WILL BE REMOVED %s, PLEASE UPDATE!" % source.removal_date)
 					if source.description:
-						print source.description
+						print(source.description)
 					wsource = source.new_source
 				else:
 					# otherwise, use that source.
@@ -1151,7 +1154,7 @@ def readSkin(screen, skin, names, desktop):
 			codeText = widget.text.strip()
 			widgetType = widget.attrib.get('type')
 			code = compile(codeText, "skin applet", "exec")
-		except Exception, ex:
+		except Exception as ex:
 			raise SkinError("applet failed to compile: " + str(ex))
 		if widgetType == "onLayoutFinish":
 			screen.onLayoutFinish.append(code)
@@ -1180,8 +1183,8 @@ def readSkin(screen, skin, names, desktop):
 			p = processors.get(w.tag, process_none)
 			try:
 				p(w, context)
-			except SkinError, e:
-				print "[Skin] SKIN ERROR in screen '%s' widget '%s':" % (name, w.tag), e
+			except SkinError as e:
+				print("[Skin] SKIN ERROR in screen '%s' widget '%s':" % (name, w.tag), e)
 
 	def process_panel(widget, context):
 		n = widget.attrib.get('name')
@@ -1189,7 +1192,7 @@ def readSkin(screen, skin, names, desktop):
 			try:
 				s = dom_screens[n]
 			except KeyError:
-				print "[SKIN] Unable to find screen '%s' referred in screen '%s'" % (n, name)
+				print("[SKIN] Unable to find screen '%s' referred in screen '%s'" % (n, name))
 			else:
 				process_screen(s[0], context)
 		layout = widget.attrib.get('layout')
@@ -1199,7 +1202,7 @@ def readSkin(screen, skin, names, desktop):
 			cc = SkinContext
 		try:
 			c = cc(context, widget.attrib.get('position'), widget.attrib.get('size'), widget.attrib.get('font'))
-		except Exception, ex:
+		except Exception as ex:
 			raise SkinError("Failed to create skincontext (%s,%s,%s) in %s: %s" % (widget.attrib.get('position'), widget.attrib.get('size'), widget.attrib.get('font'), context, ex) )
 		process_screen(widget, c)
 
@@ -1216,8 +1219,8 @@ def readSkin(screen, skin, names, desktop):
 		context.x = 0 # reset offsets, all components are relative to screen
 		context.y = 0 # coordinates.
 		process_screen(myscreen, context)
-	except Exception, e:
-		print "[Skin] SKIN ERROR in %s:" % name, e
+	except Exception as e:
+		print("[Skin] SKIN ERROR in %s:" % name, e)
 
 	from Components.GUIComponent import GUIComponent
 	nonvisited_components = [x for x in set(screen.keys()) - visited_components if isinstance(x, GUIComponent)]

@@ -11,6 +11,7 @@ from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_SKIN
 from Plugins.Plugin import PluginDescriptor
 from Components.Label import Label
+import six
 
 import xml.etree.cElementTree
 
@@ -33,7 +34,7 @@ class MenuUpdater:
 		self.updatedMenuItems[id].remove([text, pos, module, screen, weight])
 
 	def updatedMenuAvailable(self, id):
-		return self.updatedMenuItems.has_key(id)
+		return id in self.updatedMenuItems
 
 	def getUpdatedMenu(self, id):
 		return self.updatedMenuItems[id]
@@ -53,7 +54,7 @@ class Menu(Screen, ProtectedScreen):
 			selection[1]()
 
 	def execText(self, text):
-		exec text
+		exec(text)
 
 	def runScreen(self, arg):
 		# arg[0] is the module (as string)
@@ -63,7 +64,7 @@ class Menu(Screen, ProtectedScreen):
 		#        stuff which is just imported)
 		# FIXME. somehow
 		if arg[0] != "":
-			exec "from " + arg[0] + " import *"
+			exec("from " + arg[0] + " import *")
 
 		self.openDialog(*eval(arg[1]))
 
@@ -89,7 +90,7 @@ class Menu(Screen, ProtectedScreen):
 					return
 			elif not SystemInfo.get(requires, False):
 				return
-		MenuTitle = _(node.get("text", "??").encode("UTF-8"))
+		MenuTitle = _(six.ensure_str(node.get("text", "??")))
 		entryID = node.get("entryID", "undefined")
 		weight = node.get("weight", 50)
 		x = node.get("flushConfigOnClose")
@@ -119,7 +120,7 @@ class Menu(Screen, ProtectedScreen):
 		configCondition = node.get("configcondition")
 		if configCondition and not eval(configCondition + ".value"):
 			return
-		item_text = node.get("text", "").encode("UTF-8")
+		item_text = six.ensure_str(node.get("text", ""))
 		entryID = node.get("entryID", "undefined")
 		weight = node.get("weight", 50)
 		for x in node:
@@ -238,8 +239,8 @@ class Menu(Screen, ProtectedScreen):
 		if config.plugins.infopanel_usermenus is not None and menuID == "mainmenu":
 			plugin_list = []
 			id_list = []
-			for l in plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU ,PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_EVENTINFO]):
-				l.id = (l.name.lower()).replace(' ','_')
+			for l in plugins.getPlugins([PluginDescriptor.WHERE_PLUGINMENU, PluginDescriptor.WHERE_EXTENSIONSMENU, PluginDescriptor.WHERE_EVENTINFO]):
+				l.id = (l.name.lower()).replace(' ', '_')
 				if l.id not in id_list:
 					id_list.append(l.id)
 					plugin_list.append((l.name, boundFunction(l.__call__, session), l.id, 200))
@@ -275,10 +276,10 @@ class Menu(Screen, ProtectedScreen):
 				"9": self.keyNumberGlobal
 			})
 
-		a = parent.get("title", "").encode("UTF-8") or None
+		a = six.ensure_str(parent.get("title", "")) or None
 		a = a and _(a)
 		if a is None:
-			a = _(parent.get("text", "").encode("UTF-8"))
+			a = _(six.ensure_str(parent.get("text", "")))
 		self["title"] = StaticText(a)
 		Screen.setTitle(self, a)
 		self.menu_title = a

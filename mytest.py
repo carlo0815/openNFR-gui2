@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys, os
 from time import time
 if os.path.isfile("/usr/lib/enigma2/python/enigma.zip"):
@@ -87,11 +88,11 @@ def useSyncUsingChanged(configelement):
 		Console = Console()
 		Console.ePopen('/usr/bin/dvbdate')	
 	if config.misc.SyncTimeUsing.value == "0":
-		print "[Time By]: Transponder"
+		print("[Time By]: Transponder")
 		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(True)
 		enigma.eEPGCache.getInstance().timeUpdated()
 	else:
-		print "[Time By]: NTP"
+		print("[Time By]: NTP")
 		enigma.eDVBLocalTimeHandler.getInstance().setUseDVBTime(False)
 		enigma.eEPGCache.getInstance().timeUpdated()
 config.misc.SyncTimeUsing.addNotifier(useSyncUsingChanged)
@@ -99,11 +100,11 @@ config.misc.SyncTimeUsing.addNotifier(useSyncUsingChanged)
 def NTPserverChanged(configelement):
 	if config.misc.NTPserver.value == "pool.ntp.org":
 		return
-	print "[NTPDATE] save /etc/default/ntpdate"
+	print("[NTPDATE] save /etc/default/ntpdate")
 	f = open("/etc/default/ntpdate", "w")
 	f.write('NTPSERVERS="' + config.misc.NTPserver.value + '"')
 	f.close()
-	os.chmod("/etc/default/ntpdate", 0755)
+	os.chmod("/etc/default/ntpdate", 0o755)
 	from Components.Console import Console
 	Console = Console()
 	Console.ePopen('/usr/bin/ntpdate-sync')
@@ -111,6 +112,9 @@ config.misc.NTPserver.addNotifier(NTPserverChanged, immediate_feedback = True)
 
 profile("Twisted")
 try:
+	import twisted.python.runtime
+	twisted.python.runtime.platform.supportsThreads = lambda: True
+
 	import e2reactor
 	e2reactor.install()
 
@@ -119,7 +123,7 @@ try:
 	def runReactor():
 		reactor.run(installSignalHandlers=False)
 except ImportError:
-	print "twisted not available"
+	print("twisted not available")
 	def runReactor():
 		enigma.runMainloop()
 
@@ -145,13 +149,13 @@ def dump(dir, p = ""):
 			dump(val, p + "(dict)/" + entry)
 	if hasattr(dir, "__dict__"):
 		for name, value in dir.__dict__.items():
-			if not had.has_key(str(value)):
+			if str(value) not in had:
 				had[str(value)] = 1
 				dump(value, p + "/" + str(name))
 			else:
-				print p + "/" + str(name) + ":" + str(dir.__class__) + "(cycle)"
+				print(p + "/" + str(name) + ":" + str(dir.__class__) + "(cycle)")
 	else:
-		print p + ":" + str(dir)
+		print(p + ":" + str(dir))
 
 # + ":" + str(dir.__class__)
 
@@ -212,7 +216,7 @@ class Session:
 			try:
 				p(reason=0, session=self)
 			except:
-				print "Plugin raised exception at WHERE_SESSIONSTART"
+				print("Plugin raised exception at WHERE_SESSIONSTART")
 				import traceback
 				traceback.print_exc()
 
@@ -267,7 +271,7 @@ class Session:
 			return screen(self, *arguments, **kwargs)
 		except:
 			errstr = "Screen %s(%s, %s): %s" % (str(screen), str(arguments), str(kwargs), exc_info()[0])
-			print errstr
+			print(errstr)
 			print_exc(file=stdout)
 			enigma.quitMainloop(5)
 
@@ -298,11 +302,11 @@ class Session:
 		try:
 			dlg = self.create(screen, arguments, **kwargs)
 		except:
-			print 'EXCEPTION IN DIALOG INIT CODE, ABORTING:'
-			print '-'*60
+			print('EXCEPTION IN DIALOG INIT CODE, ABORTING:')
+			print('-'*60)
 			print_exc(file=stdout)
 			enigma.quitMainloop(5)
-			print '-'*60
+			print('-'*60)
 
 		if dlg is None:
 			return
@@ -356,7 +360,7 @@ class Session:
 
 	def close(self, screen, *retval):
 		if not self.in_exec:
-			print "close after exec!"
+			print("close after exec!")
 			return
 
 		# be sure that the close is for the right dialog!
@@ -421,21 +425,21 @@ class PowerKey:
 				f.close()
 				wasRecTimerWakeup = int(file) and True or False
 			if self.session.nav.RecordTimer.isRecTimerWakeup() or wasRecTimerWakeup or self.session.nav.RecordTimer.isRecording():
-				print "PowerOff (timer wakewup) - Recording in progress or a timer about to activate, entering standby!"
+				print("PowerOff (timer wakewup) - Recording in progress or a timer about to activate, entering standby!")
 				lastrecordEnd = 0
 				for timer in self.session.nav.RecordTimer.timer_list:
 					if lastrecordEnd == 0 or lastrecordEnd >= timer.begin:
-						print "Set after-event for recording %s to DEEP-STANDBY." % timer.name
+						print("Set after-event for recording %s to DEEP-STANDBY." % timer.name)
 						timer.afterEvent = 2
 						if timer.end > lastrecordEnd:
 							lastrecordEnd = timer.end + 900
 				from Screens.MessageBox import MessageBox
-				self.session.openWithCallback(self.gotoStandby,MessageBox,_("PowerOff while Recording in progress!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, timeout = 10)
+				self.session.openWithCallback(self.gotoStandby, MessageBox, _("Recording(s) are in progress or coming up in few seconds!\nEntering standby, after recording the box will shutdown."), type = MessageBox.TYPE_INFO, close_on_any_key = True, timeout = 10)
 			else:
-				print "PowerOff - Now!"
+				print("PowerOff - Now!")
 				self.session.open(Screens.Standby.TryQuitMainloop, 1)
 		elif not Screens.Standby.inTryQuitMainloop and self.session.current_dialog and self.session.current_dialog.ALLOW_SUSPEND:
-			print "PowerOff - Now!"
+			print("PowerOff - Now!")
 			self.session.open(Screens.Standby.TryQuitMainloop, 1)
 
 	def powerlong(self):
@@ -450,7 +454,7 @@ class PowerKey:
 		if action == "shutdown":
 			self.shutdown()
 		elif action == "show_menu":
-			print "Show shutdown Menu"
+			print("Show shutdown Menu")
 			root = mdom.getroot()
 			for x in root.findall("menu"):
 				y = x.find("id")
@@ -526,9 +530,9 @@ class PowerKey:
 					self.session.openWithCallback(self.timergotostdby,MessageBox,_("Entering standby, after recording the box will go to shutdown or stay in Standby (Automatic or shutdown Choise in recordsconfigs)"), type = MessageBox.TYPE_INFO, timeout = 10)
 
                 	else:
-                		print "normal Start"		
+                		print("normal Start")	
         	except:
-                	print "was_timer_wakeup not exist"	
+                	print("was_timer_wakeup not exist")	
 
 	def timergotostdby(self, ret):
 		self.session.open(Screens.Standby.Standby)
@@ -620,7 +624,7 @@ def runScreenTest():
 	
 	screensToRun.append((100, InfoBar.InfoBar))
 	screensToRun.sort()
-	print screensToRun
+	print(screensToRun)
 
 	enigma.ePythonConfigQuery.setQueryFunc(configfile.getResolvedKey)
 
@@ -628,12 +632,12 @@ def runScreenTest():
 		config.easysetup = ConfigSubsection()
 		config.easysetup.restart = ConfigBoolean(default = False)
 		if config.easysetup.restart.value == True:
-			print "restart after Wizard2"
+			print("restart after Wizard2")
 			config.easysetup.restart.setValue(False)
 			config.easysetup.restart.save()
 			enigma.quitMainloop(3)
 		if result:
-			print "[mytest.py] quitMainloop #3"
+			print("[mytest.py] quitMainloop #3")
 			enigma.quitMainloop(*result)
 			return
 
@@ -652,8 +656,7 @@ def runScreenTest():
 	profile("Init:PowerKey")
 	power = PowerKey(session)
         power.timerstdby()        
-	if boxtype in ('alien5','osninopro','osnino','osninoplus','alphatriple','spycat4kmini','tmtwin4k','mbmicrov2','revo4k','force3uhd','wetekplay', 'wetekplay2', 'wetekhub', 'dm7020hd', 'dm7020hdv2', 'osminiplus', 'osmega', 'sf3038', 'spycat', 'e4hd', 'e4hdhybrid', 'mbmicro', 'et7500', 'mixosf5', 'mixosf7', 'mixoslumi', 'gi9196m', 'maram9', 'ixussone', 'ixusszero', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', 'sezam1000hd', 'mbmini', 'atemio5x00', 'beyonwizt3', '9910lx', '9911lx', '9920lx') or getBrandOEM() in ('fulan') or getMachineBuild() in ('u41', 'dags7362','dags73625','dags5','ustym4kpro','sf8008','sf8008m','cc1','gbmv200'):
-		profile("VFDSYMBOLS")
+	if boxtype in ('alien5', 'osninopro', 'osnino', 'osninoplus', 'alphatriple', 'spycat4kmini', 'tmtwin4k', 'mbmicrov2', 'revo4k', 'force3uhd', 'wetekplay', 'wetekplay2', 'wetekhub', 'dm7020hd', 'dm7020hdv2', 'osminiplus', 'osmega', 'sf3038', 'spycat', 'e4hd', 'e4hdhybrid', 'mbmicro', 'et7500', 'mixosf5', 'mixosf7', 'mixoslumi', 'gi9196m', 'maram9', 'ixussone', 'ixusszero', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', 'sezam1000hd', 'mbmini', 'atemio5x00', 'beyonwizt3', '9910lx', '9911lx', '9920lx') or getBrandOEM() in ('fulan') or getMachineBuild() in ('u41', 'dags7362', 'dags73625', 'dags5', 'ustym4kpro', 'beyonwizv2', 'viper4k', 'sf8008', 'sf8008m', 'cc1', 'gbmv200'):		profile("VFDSYMBOLS")
 		import Components.VfdSymbols
 		Components.VfdSymbols.SymbolsCheck(session)
 		
@@ -676,12 +679,12 @@ def runScreenTest():
 		f.write('-E2-')
 		f.close()
 
-	print "lastshutdown=%s		(True = last shutdown was OK)" % config.usage.shutdownOK.value
-	print "NOK shutdown action=%s" % config.usage.shutdownNOK_action.value
-	print "bootup action=%s" % config.usage.boot_action.value
+	print("lastshutdown=%s		(True = last shutdown was OK)" % config.usage.shutdownOK.value)
+	print("NOK shutdown action=%s" % config.usage.shutdownNOK_action.value)
+	print("bootup action=%s" % config.usage.boot_action.value)
 	
         if not config.usage.shutdownOK.value and not config.usage.shutdownNOK_action.value == 'normal' or not config.usage.boot_action.value == 'normal':
-		print "last shutdown = %s" % config.usage.shutdownOK.value
+		print("last shutdown = %s" % config.usage.shutdownOK.value)
 		import Screens.PowerLost
 		Screens.PowerLost.PowerLost(session)
 
@@ -691,11 +694,11 @@ def runScreenTest():
 		configfile.save()
 	
 	# kill showiframe if it is running (sh4 hack...)
-	if getMachineBuild() in ('spark' , 'spark7162'):
+	if getMachineBuild() in ('spark', 'spark7162'):
 		os.system("killall -9 showiframe")
 	
 	runReactor()
-	print "[mytest.py] normal shutdown"
+	print("[mytest.py] normal shutdown")
 	
 	config.misc.startCounter.save()
 	config.usage.shutdownOK.setValue(True)
@@ -705,7 +708,7 @@ def runScreenTest():
 	#get currentTime
 	nowTime = time()
 	if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb') or getMachineProcModel().startswith('ini'):
-		print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
+		print("dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime)))
 		setRTCtime(nowTime)
 		
 	wakeupList = [
@@ -731,10 +734,10 @@ def runScreenTest():
 		#if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb'):
 		#	print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 		#	setRTCtime(nowTime)
-		print "set wakeup time to", strftime("%Y/%m/%d %H:%M", localtime(wptime))
+		print("set wakeup time to", strftime("%Y/%m/%d %H:%M", localtime(wptime)))
 		setFPWakeuptime(wptime)
 		recordTimerWakeupAuto = startTime[1] == 0 and startTime[2]
-		print 'recordTimerWakeupAuto',recordTimerWakeupAuto
+		print('recordTimerWakeupAuto',recordTimerWakeupAuto)
 	config.misc.isNextRecordTimerAfterEventActionAuto.value = recordTimerWakeupAuto
 	config.misc.isNextRecordTimerAfterEventActionAuto.save()
 
@@ -752,10 +755,10 @@ def runScreenTest():
 		#if not config.misc.SyncTimeUsing.value == "0" or getBoxType().startswith('gb'):
 		#	print "dvb time sync disabled... so set RTC now to current linux time!", strftime("%Y/%m/%d %H:%M", localtime(nowTime))
 		#	setRTCtime(nowTime)
-		print "set wakeup time to", strftime("%Y/%m/%d %H:%M", localtime(wptime+60))
+		print("set wakeup time to", strftime("%Y/%m/%d %H:%M", localtime(wptime+60)))
 		setFPWakeuptime(wptime)
 		PowerTimerWakeupAuto = startTime[1] == 3 and startTime[2]
-		print 'PowerTimerWakeupAuto',PowerTimerWakeupAuto
+		print('PowerTimerWakeupAuto',PowerTimerWakeupAuto)
 	config.misc.isNextPowerTimerAfterEventActionAuto.value = PowerTimerWakeupAuto
 	config.misc.isNextPowerTimerAfterEventActionAuto.save()
 
@@ -828,21 +831,21 @@ if boxtype in ('uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', '
 			f.write('0')
 			f.close()
 	except:
-		print "Error disable enable_clock for ini5000 boxes"
+		print("Error disable enable_clock for ini5000 boxes")
 
 if boxtype in ('dm7080', 'dm820', 'dm900', 'gb7252'):
-	f=open("/proc/stb/hdmi-rx/0/hdmi_rx_monitor","r")
+	f=open("/proc/stb/hdmi-rx/0/hdmi_rx_monitor", "r")
 	check=f.read()
 	f.close()
 	if check.startswith("on"):
-		f=open("/proc/stb/hdmi-rx/0/hdmi_rx_monitor","w")
+		f=open("/proc/stb/hdmi-rx/0/hdmi_rx_monitor", "w")
 		f.write("off")
 		f.close()
-	f=open("/proc/stb/audio/hdmi_rx_monitor","r")
+	f=open("/proc/stb/audio/hdmi_rx_monitor", "r")
 	check=f.read()
 	f.close()
 	if check.startswith("on"):
-		f=open("/proc/stb/audio/hdmi_rx_monitor","w")
+		f=open("/proc/stb/audio/hdmi_rx_monitor", "w")
 		f.write("off")
 		f.close()
 
@@ -879,9 +882,9 @@ try:
 
 	Components.ParentalControl.parentalControl.save()
 except:
-	print 'EXCEPTION IN PYTHON STARTUP CODE:'
-	print '-'*60
+	print('EXCEPTION IN PYTHON STARTUP CODE:')
+	print('-'*60)
 	print_exc(file=stdout)
 	enigma.quitMainloop(5)
-	print '-'*60
+	print('-'*60)
 

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.Sources.List import List
 from Components.Sources.StaticText import StaticText
@@ -513,7 +514,7 @@ class System_MainMenu(Screen):
 		self.close()    
 
 def sessionMainM(session, reason, **kwargs):
-        print "EasyMenu Load"
+        print("EasyMenu Load")
 
 
 def Plugins(**kwargs):

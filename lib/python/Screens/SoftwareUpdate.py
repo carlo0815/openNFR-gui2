@@ -1,7 +1,8 @@
 from boxbranding import getImageVersion, getImageBuild, getMachineBrand, getMachineName, getBoxType
 from os import rename, path, remove
 from gettext import dgettext
-import urllib
+from six.moves import urllib
+import six
 from Tools.BoundFunction import boundFunction
 from enigma import eTimer, eDVBDB
 from Screens.InputBox import PinInput
@@ -82,7 +83,8 @@ class UpdatePlugin(Screen):
 		self.CheckConsole = Console()
 		self.CheckConsole.ePopen(cmd1, self.checkNetworkStateFinished)
 
-	def checkNetworkStateFinished(self, result, retval,extra_args=None):
+	def checkNetworkStateFinished(self, result, retval, extra_args=None):
+		result = six.ensure_str(result)
 		if 'bad address' in result:
 			self.session.openWithCallback(self.close, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
@@ -126,7 +128,7 @@ class UpdatePlugin(Screen):
 		if event == IpkgComponent.EVENT_DOWNLOAD:
 			self.status.setText(_("Downloading"))
 		elif event == IpkgComponent.EVENT_UPGRADE:
-			if self.sliderPackages.has_key(param):
+			if param in self.sliderPackages:
 				self.slider.setValue(self.sliderPackages[param])
 			self.package.setText(param)
 			self.status.setText(_("Upgrading") + ": %s/%s" % (self.packages, self.total_packages))
@@ -231,7 +233,7 @@ class UpdatePlugin(Screen):
 	                fobj_in.close()
 	                fobj_out.close()
                         os.system("mv /etc/image-version_new /etc/image-version") 
-			self.session.open(TryQuitMainloop,retvalue=42)
+			self.session.open(TryQuitMainloop, retvalue=42)
 			self.close()
 		elif answer[1] == "channels":
 			self.channellist_only = 1

@@ -7,8 +7,12 @@ class EnigmaOutput:
 		self.isTraceback = False
 
 	def write(self, data):
-		if isinstance(data, unicode):
-			data = data.encode("UTF-8")
+		if sys.version_info[0] >= 3:
+			if isinstance(data, bytes):
+				data = data.encode(encoding="UTF-8", errors="ignore")
+		else:
+			if isinstance(data, unicode):
+				data = data.encode(encoding="UTF-8", errors="ignore")
 		self.buf += data
 		if '\n' in data:
 			if not self.isTraceback and 'Traceback (most recent call last):\n' == self.buf:

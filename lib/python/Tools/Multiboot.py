@@ -1,3 +1,4 @@
+from __future__ import print_function
 import glob
 import shutil
 import subprocess
@@ -5,7 +6,7 @@ import subprocess
 from os import mkdir, path, rmdir, rename, remove, stat
 
 from boxbranding import getMachineBuild, getMachineMtdRoot, getBoxType, getMachineName
-from Components.Console1 import Console
+from Components.Console import Console
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import pathExists
 
@@ -18,7 +19,7 @@ def getMBbootdevice():
 		if path.exists(device):
 			Console().ePopen("mount %s %s" % (device, Imagemount))
 			if path.isfile(path.join(Imagemount, "STARTUP")):
-				print '[Multiboot] Startupdevice found:', device
+				print('[Multiboot] Startupdevice found:', device)
 				return device
 			Console().ePopen("umount %s" % Imagemount)
 	if not path.ismount(Imagemount):
@@ -36,7 +37,7 @@ def getMultibootslots():
 		for file in glob.glob(path.join(Imagemount, "STARTUP_*")):
 			if "STARTUP_RECOVERY" in file:
 				SystemInfo["RecoveryMode"] = True
-				print "[multiboot] [getMultibootslots] RecoveryMode is set to:%s" % SystemInfo["RecoveryMode"]
+				print("[multiboot] [getMultibootslots] RecoveryMode is set to:%s" % SystemInfo["RecoveryMode"])
 			slotnumber = file.rsplit("_", 3 if "BOXMODE" in file else 1)[1]
 			if slotnumber.isdigit() and slotnumber not in bootslots:
 				slot = {}
@@ -55,14 +56,14 @@ def getMultibootslots():
 								slot["kernel"] = "%sp%s" % (device.split("p")[0], int(device.split("p")[1]) - 1)
 							if "rootsubdir" in line:
 								SystemInfo["HasRootSubdir"] = True
-								print "[multiboot] [getMultibootslots] HasRootSubdir is set to:%s" % SystemInfo["HasRootSubdir"]
+								print("[multiboot] [getMultibootslots] HasRootSubdir is set to:%s" % SystemInfo["HasRootSubdir"])
 								slot["rootsubdir"] = getparam(line, "rootsubdir")
 								slot["kernel"] = getparam(line, "kernel")
 
 						break
 				if slot:
 					bootslots[int(slotnumber)] = slot
-		print "[multiboot1] getMultibootslots bootslots = %s" %bootslots
+		print("[multiboot1] getMultibootslots bootslots = %s" %bootslots)
 		Console().ePopen("umount %s" % Imagemount)
 		if not path.ismount(Imagemount):
 			rmdir(Imagemount)
@@ -75,7 +76,7 @@ def GetCurrentImage():
 			return int(slot[0])
 		else:
 			device = getparam(open("/sys/firmware/devicetree/base/chosen/bootargs", "r").read(), "root")
-			for slot in SystemInfo["canMultiBoot"].keys():
+			for slot in list(SystemInfo["canMultiBoot"].keys()):
 				if SystemInfo["canMultiBoot"][slot]["device"] == device:
 					return slot
 def GetCurrentKern():
@@ -135,7 +136,7 @@ class GetImagelist():
 
 	def __init__(self, callback):
 		if SystemInfo["canMultiBoot"]:
-			self.slots = sorted(SystemInfo["canMultiBoot"].keys())
+			self.slots = sorted(list(SystemInfo["canMultiBoot"].keys()))
 			self.callback = callback
 			self.imagelist = {}
 			if not path.isdir(Imagemount):
@@ -250,12 +251,12 @@ class boxbranding_reader:  # Many thanks to Huevos for creating this reader - we
 	def readBrandingFile(self):  # Reads boxbranding.so and updates self.output
 		output = eval(subprocess.check_output(["python", path.join(self.tmp_path, self.helper_file)]))
 		if output:
-			for att in self.output.keys():
+			for att in list(self.output.keys()):
 				self.output[att] = output[att]
 
 	def addBrandingMethods(self):  # This creates reader.getBoxType(), reader.getImageDevBuild(), etc
 		loc = {}
-		for att in self.output.keys():
+		for att in list(self.output.keys()):
 			exec("def %s(self): return self.output[\"%s\"]" % (att, att), None, loc)
 		for name, value in loc.items():
 			setattr(boxbranding_reader, name, value)
@@ -288,7 +289,7 @@ class boxbranding_reader:  # Many thanks to Huevos for creating this reader - we
 		out.append("\t}")
 		out.append("except Exception:")
 		out.append("\t\toutput = None")
-		out.append("print output")
+		out.append("print(output)")
 		out.append("")
 		return "\n".join(out)
 

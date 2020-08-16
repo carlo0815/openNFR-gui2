@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import division
 from enigma import eDVBDB, eDVBResourceManager, getLinkedSlotID, isFBCLink
 from Screens.Screen import Screen
 from Components.SystemInfo import SystemInfo
@@ -22,6 +24,7 @@ from boxbranding import getBoxType
 from time import mktime, localtime
 from datetime import datetime
 from os import path
+import six
 
 from  Tools.BugHunting import printCallSequence
 
@@ -198,7 +201,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				self.nimConfig.dvbs.configMode.setChoices(choices, default = "simple")
 
 	def createSetup(self):
-		print "Creating setup"
+		print("Creating setup")
 		self.list = [ ]
 
 		self.multiType = None
@@ -280,7 +283,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 				self.list.append(getConfigListEntry(_("Tuner"), nimConfig.connectedTo))
 			elif nimConfig.configMode.value == "loopthrough":
 				choices = []
-				print "connectable to:", nimmanager.canConnectTo(self.slotid)
+				print("connectable to:", nimmanager.canConnectTo(self.slotid))
 				connectable = nimmanager.canConnectTo(self.slotid)
 				for id in connectable:
 					choices.append((str(id), nimmanager.getNimDescription(id)))
@@ -299,7 +302,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					self.fillListWithAdvancedSatEntrys(nimConfig.advanced.sat[int(current_config_sats)])
 				else:
 					cur_orb_pos = nimConfig.advanced.sats.orbital_position
-					satlist = nimConfig.advanced.sat.keys()
+					satlist = list(nimConfig.advanced.sat.keys())
 					if cur_orb_pos is not None:
 						if cur_orb_pos not in satlist:
 							cur_orb_pos = satlist[0]
@@ -520,9 +523,9 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					self.list.append(getConfigListEntry(_("LNB/Switch Bootup time [ms]"), currLnb.bootuptimeuser))
 				elif currLnb.unicable.value == "unicable_matrix":
 					nimmanager.sec.reconstructUnicableDate(currLnb.unicableMatrixManufacturer, currLnb.unicableMatrix, currLnb)
-					manufacturer_name = currLnb.unicableMatrixManufacturer.value.decode('utf-8')
+					manufacturer_name = six.ensure_text(currLnb.unicableMatrixManufacturer.value)
 					manufacturer = currLnb.unicableMatrix[manufacturer_name]
-					product_name = manufacturer.product.value.decode('utf-8')
+					product_name = six.ensure_text(manufacturer.product.value)
 					self.advancedManufacturer = getConfigListEntry(_("Manufacturer"), currLnb.unicableMatrixManufacturer)
 					self.list.append(self.advancedManufacturer)
 					if product_name in manufacturer.scr:
@@ -534,9 +537,9 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 						self.list.append(getConfigListEntry(_("Frequency"), manufacturer.vco[product_name][manufacturer.scr[product_name].index]))
 				elif currLnb.unicable.value == "unicable_lnb":
 					nimmanager.sec.reconstructUnicableDate(currLnb.unicableLnbManufacturer, currLnb.unicableLnb, currLnb)
-					manufacturer_name = currLnb.unicableLnbManufacturer.value.decode('utf-8')
+					manufacturer_name = six.ensure_text(currLnb.unicableLnbManufacturer.value)
 					manufacturer = currLnb.unicableLnb[manufacturer_name]
-					product_name = manufacturer.product.value.decode('utf-8')
+					product_name = six.ensure_text(manufacturer.product.value)
 					self.advancedManufacturer = getConfigListEntry(_("Manufacturer"), currLnb.unicableLnbManufacturer)
 					self.list.append(self.advancedManufacturer)
 					if product_name in manufacturer.scr:
@@ -644,7 +647,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		self.list.append(self.configMode)
 		self.advancedSatsEntry = getConfigListEntry(_("Satellite"), self.nimConfig.dvbs.advanced.sats)
 		self.list.append(self.advancedSatsEntry)
-		for x in self.nimConfig.dvbs.advanced.sat.keys():
+		for x in list(self.nimConfig.dvbs.advanced.sat.keys()):
 			Sat = self.nimConfig.dvbs.advanced.sat[x]
 			self.fillListWithAdvancedSatEntrys(Sat)
 		self["config"].list = self.list
@@ -671,7 +674,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		self.slot_dest_list = []
 		def checkRecursiveConnect(slot_id):
 			if slot_id in self.slot_dest_list:
-				print slot_id
+				print(slot_id)
 				return False
 			self.slot_dest_list.append(slot_id)
 			slot_config = nimmanager.nim_slots[slot_id].config.dvbs
@@ -734,10 +737,10 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 	def keySave(self):
 		if self.nim.canBeCompatible("DVB-S"):
 			if not self.unicableconnection():
-				self.session.open(MessageBox, _("The unicable connection setting is wrong.\n Maybe recursive connection of tuners."),MessageBox.TYPE_ERROR,timeout=10)
+				self.session.open(MessageBox, _("The unicable connection setting is wrong.\n Maybe recursive connection of tuners."), MessageBox.TYPE_ERROR, timeout=10)
 				return
 			if not self.checkLoopthrough():
-				self.session.open(MessageBox, _("The loopthrough setting is wrong."),MessageBox.TYPE_ERROR,timeout=10)
+				self.session.open(MessageBox, _("The loopthrough setting is wrong."), MessageBox.TYPE_ERROR, timeout=10)
 				return
 
 		old_configured_sats = nimmanager.getConfiguredSats()
@@ -774,7 +777,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 					h = _("W")
 				else:
 					h = _("E")
-				sat_name = ("%d.%d" + h) % (orbpos / 10, orbpos % 10)
+				sat_name = ("%d.%d" + h) % (orbpos // 10, orbpos % 10)
 
 			if confirmed[1] == "yes" or confirmed[1] == "no":
 				# TRANSLATORS: The satellite with name '%s' is no longer used after a configuration change. The user is asked whether or not the satellite should be deleted.
@@ -1045,7 +1048,7 @@ class NimSelection(Screen):
 						text = _("Enabled") + ":" + text[:-1]
 					else:
 						text = _("nothing connected")
-					text = _("Switchable tuner types:") + "(" + ','.join(x.getMultiTypeList().values()) + ")" + "\n" + text
+					text = _("Switchable tuner types:") + "(" + ','.join(list(x.getMultiTypeList().values())) + ")" + "\n" + text
 				elif x.isCompatible("DVB-S"):
 					nimConfig = nimmanager.getNimConfig(x.slot).dvbs
 					text = nimConfig.configMode.value
@@ -1175,7 +1178,7 @@ class SelectSatsEntryScreen(Screen):
 			menu = [(_("Reverse list"), "2"), (_("Standard list"), "1")]
 			connected_sat = [x[0][1] for x in lst if x[0][3]]
 			if len(connected_sat) > 0:
-				menu.insert(0,(_("Connected satellites"), "3"))
+				menu.insert(0, (_("Connected satellites"), "3"))
 			def sortAction(choice):
 				if choice:
 					reverse_flag = False

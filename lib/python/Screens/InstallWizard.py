@@ -31,7 +31,7 @@ class InstallWizard(Screen, ConfigListScreen):
 			config.misc.installwizard.ipkgloaded.value = False
 			modes = {0: " "}
 			self.enabled = ConfigSelection(choices = modes, default = 0)
-			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
+			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getAdapterList()]
 			is_found = False
 			if os.path.isfile("/tmp/netwizardselection"):
 			        f = open('/tmp/netwizardselection', 'r')
@@ -71,7 +71,7 @@ class InstallWizard(Screen, ConfigListScreen):
 				self.createMenu()
 		elif self.index == self.STATE_CHOISE_CHANNELLIST:
 			self.enabled = ConfigYesNo(default = True)
-			modes = {"default": _("OpenNFR List"),"scan": _("scan new")}
+			modes = {"default": _("OpenNFR List"), "scan": _("scan new")}
 			self.channellist_type = ConfigSelection(choices = modes, default = "default")
 			self.createMenu()
 

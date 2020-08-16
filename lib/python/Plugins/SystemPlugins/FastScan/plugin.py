@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 from os import path as os_path, walk as os_walk, unlink as os_unlink
 import operator
 from Plugins.Plugin import PluginDescriptor
@@ -371,7 +372,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                         self.session.openWithCallback(self.bouqmake, ServiceScan, [{"transponders": tlist, "feid": int(self.scan_nims.value), "flags": 0, "networkid": 0}])
                 except:
                         #self.session.open(MessageBox, _("xml File missing, please check it."), MessageBox.TYPE_ERROR)
-                        print "xml File missing, please check it."
+                        print("xml File missing, please check it.")
 									
 	def bouqmake(self, session):
 		prov = self.scan_provider.value.lower()
@@ -433,7 +434,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                         				os.remove(newbouq_unsortlist)
                         			for zz in ret1:
                         				if newbouq3 in zz:
-                        					print "no Service add"
+                        					print("no Service add")
                                				else:
                                        				rety.append(zz)
                         			rety[1:1] = [newbouq1]
@@ -449,7 +450,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                 				#eDVBDB.getInstance().reloadBouquets()                         	
                         			self.keyCancel()
                 		except:
-                        		print 'My error, value:no xml found'
+                        		print('My error, value:no xml found')
                         eDVBDB.getInstance().reloadBouquets()         
 #####new
 		elif prov in ('freesat_czech_republic', 'freesat_hungary', 'freesat_moldavia', 'freesat_slovenske'):
@@ -507,7 +508,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                         			os.remove(newbouq_unsortlist)
                         		for zz in ret:
                         			if newbouq3 in zz:
-                        				print "no Service add"
+                        				print("no Service add")
                                			else:
                                        			rety.append(zz)
                         		rety[1:1] = [newbouq1]
@@ -524,7 +525,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                 			eDVBDB.getInstance().reloadBouquets()                         	
                         		self.keyCancel()
                 	except:
-                        	print 'My error, value:no xml found' 
+                        	print('My error, value:no xml found') 
                        		#self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)                         		
 ###new end
 
@@ -583,7 +584,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                         			os.remove(newbouq_unsortlist)
                         		for zz in ret:
                         			if newbouq3 in zz:
-                        				print "no Service add"
+                        				print("no Service add")
                                			else:
                                        			rety.append(zz)
                         		rety[1:1] = [newbouq1]
@@ -599,7 +600,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                 			eDVBDB.getInstance().reloadBouquets()                         	
                         		self.keyCancel()
                 	except:
-                        	print 'My error, value:no xml found' 
+                        	print('My error, value:no xml found') 
                        		#self.session.open(MessageBox, _("Chanel-txt File missing, please check it."), MessageBox.TYPE_ERROR)
 	
         
@@ -657,7 +658,7 @@ class FastScanScreen(ConfigListScreen, Screen):
                   else:
                         config.usage.alternative_number_mode.value = False
                         config.usage.alternative_number_mode.save()			
-		  config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)`
+		  config.misc.fastscan.last_configuration.value = `repr((self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value))`
 		  config.misc.fastscan.save()
 		  self.startScan()
 
@@ -716,7 +717,7 @@ def FastScanMain(session, **kwargs):
 		if nimList:
 			session.open(FastScanScreen, nimList)
 		else:
-			print "No suitable sat tuner found!"
+			print("No suitable sat tuner found!")
                         #session.open(MessageBox, _("No suitable sat tuner found!"), MessageBox.TYPE_ERROR)
 
 def FastScanStart(menuid, **kwargs):

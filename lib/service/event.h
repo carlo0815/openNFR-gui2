@@ -82,7 +82,7 @@ class eServiceEvent: public iObject
 	time_t m_begin;
 	int m_duration;
 	int m_event_id;
-	std::string m_event_name, m_short_description, m_extended_description, m_extra_event_data, m_epg_source;
+	std::string m_event_name, m_short_description, m_extended_description, m_extra_event_data, m_epg_source, m_extended_description_items;
 	static std::string m_language, m_language_alternative;
 	// .. additional info
 public:
@@ -105,13 +105,30 @@ public:
 	std::string getEPGSource() const { return m_epg_source; }
 	std::string getBeginTimeString() const;
 	SWIG_VOID(RESULT) getComponentData(ePtr<eComponentData> &SWIG_OUTPUT, int tagnum) const;
-	PyObject *getComponentData() const;
+	// Naming to parallel getGenreDataList & getParentalDataList
+	PyObject *getComponentDataList() const;
+	PyObject *getComponentData() const
+	{
+		return getComponentDataList();
+	}
 	int getNumOfLinkageServices() const { return m_linkage_services.size(); }
 	SWIG_VOID(RESULT) getLinkageService(eServiceReference &SWIG_OUTPUT, eServiceReference &parent, int num) const;
 	SWIG_VOID(RESULT) getGenreData(ePtr<eGenreData> &SWIG_OUTPUT) const;
-	PyObject *getGenreData() const;
+	PyObject *getGenreDataList() const;
+	// Deprecated, doesn't differentiate from
+	// getGenreData(ePtr<eGenreData> &SWIG_OUTPUT) in Python
+	PyObject *getGenreData() const
+	{
+		return getGenreDataList();
+	}
 	SWIG_VOID(RESULT) getParentalData(ePtr<eParentalData> &SWIG_OUTPUT) const;
-	PyObject *getParentalData() const;
+	PyObject *getParentalDataList() const;
+	// Deprecated, doesn't differentiate from
+	// getGenreData(ePtr<eGenreData> &SWIG_OUTPUT) in Python
+	PyObject *getParentalData() const
+	{
+		return getParentalDataList();
+	}
 };
 SWIG_TEMPLATE_TYPEDEF(ePtr<eServiceEvent>, eServiceEvent);
 SWIG_EXTEND(ePtr<eServiceEvent>,

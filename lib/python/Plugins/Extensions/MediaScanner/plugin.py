@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Plugins.Plugin import PluginDescriptor
 from Components.Scanner import scanDevice
 from Screens.InfoBar import InfoBar
@@ -8,7 +9,7 @@ import os
 global fpath
 
 def execute(option):
-	print "execute", option
+	print("execute", option)
 	if option is None:
 		return
 
@@ -21,7 +22,7 @@ def mountpoint_choosen(option):
 
 	from Screens.ChoiceBox import ChoiceBox
 
-	print "scanning", option
+	print("scanning", option)
 	(description, mountpoint, session) = option
 	res = scanDevice(mountpoint)
 
@@ -32,7 +33,7 @@ def mountpoint_choosen(option):
 		if os.access(mountpoint, os.F_OK|os.R_OK):
 			session.open(MessageBox, _("No displayable files on this medium found!"), MessageBox.TYPE_ERROR, simple = True, timeout = 5)
 		else:
-			print "ignore", mountpoint, "because its not accessible"
+			print("ignore", mountpoint, "because its not accessible")
 		return
 
 	session.openWithCallback(execute, ChoiceBox,
@@ -65,14 +66,14 @@ def partitionListChanged(action, device):
 	if InfoBar.instance:
 		if InfoBar.instance.execing:
 			if action == 'add' and device.is_hotplug:
-				print "mountpoint", device.mountpoint
-				print "description", device.description
-				print "force_mounted", device.force_mounted
+				print("mountpoint", device.mountpoint)
+				print("description", device.description)
+				print("force_mounted", device.force_mounted)
 				mountpoint_choosen((device.description, device.mountpoint, global_session))
 		else:
-			print "main infobar is not execing... so we ignore hotplug event!"
+			print("main infobar is not execing... so we ignore hotplug event!")
 	else:
-			print "hotplug event.. but no infobar"
+			print("hotplug event.. but no infobar")
 
 def sessionstart(reason, session):
 	global global_session
@@ -131,7 +132,7 @@ def InstallChannelList(answer):
 def Softcamlist_open(list, session, **kwargs):
 	if not list:
 		# sanity
-		print "nothing found"
+		print("nothing found")
 		return
 	f = list[0]
 	path = os.path.split(f.path)[0]
@@ -161,22 +162,22 @@ def InstallSoftCamConfigFiles(list, session, **kwargs):
 		path += '/'
 	print path
 	if f.mimetype == "application/cccam":
-		print "Coping CCcam.cfg"
+		print("Coping CCcam.cfg")
 		cmd = "cp -a " + path + "CCcam.cfg /usr/keys/CCcam.cfg"
 	elif f.mimetype == "application/mgnewcamd":  
-		print "Coping newcamd.list" 
+		print("Coping newcamd.list")
 		cmd = "cp -a " + path + "newcamd.list /usr/keys/newcamd.list"
 	elif f.mimetype == "application/mgcccamd":
-		print "Coping cccamd.list"  
+		print("Coping cccamd.list")  
 		cmd = "cp -a " + path + "cccamd.list /usr/keys/cccamd.list"
 	elif f.mimetype == "application/mgcamd":
-		print "Coping mg_cfg"  
+		print("Coping mg_cfg")  
 		cmd = "cp -a " + path + "mg_cfg /usr/keys/mg_cfg"
 	elif f.mimetype == "application/oscam":
-		print "Coping oscam.conf"  
+		print("Coping oscam.conf")  
 		cmd = "cp -a " + path + "oscam.* /usr/keys/"
 	elif f.mimetype == "application/wicardd":
-		print "Coping wicardd.conf"  
+		print("Coping wicardd.conf")  
 		cmd = "cp -a " + path + "wicardd.conf /usr/keys/config/wicardd.conf"
 		
 	os.system(cmd)

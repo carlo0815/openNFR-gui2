@@ -82,18 +82,16 @@ bool eServiceEvent::loadLanguage(Event *evt, const std::string &lang, int tsidon
 						m_short_description = "";
 					}
 					m_extended_description += convertDVBUTF8(eed->getText(), table, tsidonid);
+					const ExtendedEventList *itemlist = eed->getItems();
+					for (ExtendedEventConstIterator it = itemlist->begin(); it != itemlist->end(); ++it)
+					{
+						m_extended_description_items += '\n';
+						m_extended_description_items += convertDVBUTF8((*it)->getItemDescription(), table, tsidonid);
+						m_extended_description_items += ": ";
+						m_extended_description_items += convertDVBUTF8((*it)->getItem(), table, tsidonid);
+					}
 					retval=1;
 				}
-#if 0
-				const ExtendedEventList *itemlist = eed->getItems();
-				for (ExtendedEventConstIterator it = itemlist->begin(); it != itemlist->end(); ++it)
-				{
-					m_extended_description += '\n';
-					m_extended_description += convertDVBUTF8((*it)->getItemDescription());
-					m_extended_description += ' ';
-					m_extended_description += convertDVBUTF8((*it)->getItem());
-				}
-#endif
 				break;
 			}
 			default:
@@ -171,6 +169,14 @@ bool eServiceEvent::loadLanguage(Event *evt, const std::string &lang, int tsidon
 	}
 	if ( m_extended_description.find(m_short_description) == 0 )
 		m_short_description="";
+
+	if ( ! m_extended_description_items.empty() )
+	{
+		m_extended_description += '\n';
+		m_extended_description += m_extended_description_items;
+		m_extended_description_items = "";
+	}
+
 	return retval;
 }
 
@@ -202,9 +208,9 @@ RESULT eServiceEvent::parseFrom(ATSCEvent *evt)
 
 RESULT eServiceEvent::parseFrom(const ExtendedTextTableSection *sct)
 {
-	m_short_description = sct->getMessage(m_language);
-	if (m_short_description.empty()) m_short_description = sct->getMessage(m_language_alternative);
-	if (m_short_description.empty()) m_short_description = sct->getMessage("");
+	m_short_description = convertDVBUTF8(sct->getMessage(m_language));
+	if (m_short_description.empty()) m_short_description = convertDVBUTF8(sct->getMessage(m_language_alternative));
+	if (m_short_description.empty()) m_short_description = convertDVBUTF8(sct->getMessage(""));
 	return 0;
 }
 
@@ -252,7 +258,7 @@ RESULT eServiceEvent::getGenreData(ePtr<eGenreData> &dest) const
 	return -1;
 }
 
-PyObject *eServiceEvent::getGenreData() const
+PyObject *eServiceEvent::getGenreDataList() const
 {
 	ePyObject ret = PyList_New(m_genres.size());
 	int cnt=0;
@@ -280,7 +286,7 @@ RESULT eServiceEvent::getParentalData(ePtr<eParentalData> &dest) const
 	return -1;
 }
 
-PyObject *eServiceEvent::getParentalData() const
+PyObject *eServiceEvent::getParentalDataList() const
 {
 	ePyObject ret = PyList_New(m_ratings.size());
 	int cnt = 0;
@@ -310,7 +316,7 @@ RESULT eServiceEvent::getComponentData(ePtr<eComponentData> &dest, int tagnum) c
 	return -1;
 }
 
-PyObject *eServiceEvent::getComponentData() const
+PyObject *eServiceEvent::getComponentDataList() const
 {
 	ePyObject ret = PyList_New(m_component_data.size());
 	int cnt = 0;

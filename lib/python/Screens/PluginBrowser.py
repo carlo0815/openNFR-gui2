@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 from Screens.ParentalControlSetup import ProtectedScreen
 from boxbranding import getImageVersion
 from urllib import urlopen
@@ -6,6 +8,7 @@ import os
 
 from enigma import eConsoleAppContainer, eDVBDB
 from Screens.InputBox import PinInput
+import six
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.PluginComponent import plugins
@@ -250,7 +253,7 @@ class PluginBrowser(Screen, ProtectedScreen):
 			try:
 				from Plugins.SystemPlugins.SoftwareManager.plugin import PluginManager
 			except ImportError:
-				self.session.open(MessageBox, _("The software management extension is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+				self.session.open(MessageBox, _("The software management extension is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO, timeout = 10 )
 			else:
 				self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginManager)
 
@@ -353,7 +356,7 @@ class PluginDownloadBrowser(Screen):
 			if dest.startswith('/'):
 				# Custom install path, add it to the list too
 				dest = os.path.normpath(dest)
-				extra = '--add-dest %s:%s -d %s' % (dest,dest,dest)
+				extra = '--add-dest %s:%s -d %s' % (dest, dest, dest)
 				Ipkg.opkgAddDestination(dest)
 			else:
 				extra = '-d ' + dest
@@ -365,7 +368,7 @@ class PluginDownloadBrowser(Screen):
 		if val:
 			if self.type == self.DOWNLOAD:
 				if self["list"].l.getCurrentSelection()[0].name.startswith("picons-"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -378,7 +381,7 @@ class PluginDownloadBrowser(Screen):
 						self.session.openWithCallback(self.installDestinationCallback, ChoiceBox, title=_("Install picons on"), list=candidates)
 					return
 				elif self["list"].l.getCurrentSelection()[0].name.startswith("display-picon"):
-					supported_filesystems = frozenset(('vfat','ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
+					supported_filesystems = frozenset(('vfat', 'ext4', 'ext3', 'ext2', 'reiser', 'reiser4', 'jffs2', 'ubifs', 'rootfs'))
 					candidates = []
 					import Components.Harddisk
 					mounts = Components.Harddisk.getProcMounts()
@@ -477,8 +480,8 @@ class PluginDownloadBrowser(Screen):
 		if hasattr(self, 'postInstallCall'):
 			try:
 				self.postInstallCall()
-			except Exception, ex:
-				print "[PluginBrowser] postInstallCall failed:", ex
+			except Exception as ex:
+				print("[PluginBrowser] postInstallCall failed:", ex)
 			self.resetPostInstall()
 		try:
 			os.unlink('/tmp/opkg.conf')
@@ -532,6 +535,7 @@ class PluginDownloadBrowser(Screen):
 					self["text"].setText(_("Sorry feeds are down for maintenance"))
 
 	def dataAvail(self, str):
+		str = six.ensure_str(str)
 		if self.type == self.DOWNLOAD and ('wget returned 1' or 'wget returned 255' or '404 Not Found') in str:
 			self.run = 3
 			return
@@ -577,7 +581,7 @@ class PluginDownloadBrowser(Screen):
 			self.pluginlist.sort()
 
 	def updateList(self):
-		list = []
+		_list = []
 		expandableIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/expandable-plugins.png"))
 		expandedIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/expanded-plugins.png"))
 		verticallineIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/verticalline-plugins.png"))
@@ -587,20 +591,20 @@ class PluginDownloadBrowser(Screen):
 			split = x[3].split('-', 1)
 			if len(split) < 2:
 				continue
-			if not self.plugins.has_key(split[0]):
+			if split[0] not in self.plugins:
 				self.plugins[split[0]] = []
 
 			self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))
 
-		temp = self.plugins.keys()
+		temp = list(self.plugins.keys())
 		if config.usage.sort_pluginlist.value:
 			temp.sort()
 		for x in temp:
 			if x in self.expanded:
-				list.append(PluginCategoryComponent(x, expandedIcon, self.listWidth))
-				list.extend([PluginDownloadComponent(plugin[0], plugin[1], plugin[2], self.listWidth) for plugin in self.plugins[x]])
+				_list.append(PluginCategoryComponent(x, expandedIcon, self.listWidth))
+				_list.extend([PluginDownloadComponent(plugin[0], plugin[1], plugin[2], self.listWidth) for plugin in self.plugins[x]])
 			else:
-				list.append(PluginCategoryComponent(x, expandableIcon, self.listWidth))
-		self.list = list
-		self["list"].l.setList(list)
+				_list.append(PluginCategoryComponent(x, expandableIcon, self.listWidth))
+			self.list = _list
++			self["list"].l.setList(_list)
 		self["text"] = Label(_("Downloading plugin information complete.")) 

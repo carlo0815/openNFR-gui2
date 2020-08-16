@@ -1,4 +1,6 @@
-from Screen import Screen
+from __future__ import print_function
+from __future__ import absolute_import
+from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Button import Button
 from Components.Sources.StaticText import StaticText
@@ -20,6 +22,9 @@ from Tools.StbHardware import getFPVersion
 from Tools.Multiboot import GetCurrentImage, GetCurrentImageMode 
 from os import path, popen
 from re import search
+import six
+
+SIGN = '°' if six.PY3 else str('\xc2\xb0')
 
 
 class About(Screen):
@@ -42,21 +47,21 @@ class About(Screen):
 			AboutText += _("Chipset:\t\tBCM%s") % about.getChipSetString() + "\n"
 
 		cpuMHz = ""
-		if getMachineBuild() in ('u41','u42','u43'):
+		if getMachineBuild() in ('u41', 'u42', 'u43'):
 			cpuMHz = _("   (1.0 GHz)")
-		elif getMachineBuild() in ('dags72604','vusolo4k','vuultimo4k','vuzero4k','gb72604'):
+		elif getMachineBuild() in ('dags72604', 'vusolo4k', 'vuultimo4k', 'vuzero4k', 'gb72604'):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
-		elif getMachineBuild() in ('gbmv200','u51','u5','u53','u52','u54','u55','u56','u5pvr','h9','h9combo','cc1','sf8008','sf8008m','hd60','hd61','i55plus','ustym4kpro','v8plus','multibox'):
+		elif getMachineBuild() in ('gbmv200', 'u51', 'u5', 'u53', 'u52', 'u54', 'u55', 'u56', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
 			cpuMHz = "   (1,6 GHz)"			
-		elif getMachineBuild() in ('vuuno4k','vuultimo4k', 'gb7252', 'dags7252', '8100s'):
+		elif getMachineBuild() in ('vuuno4k', 'vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 			cpuMHz = "   (1,7 GHz)"
-		elif getMachineBuild() in ('alien5','u53'):
+		elif getMachineBuild() in ('alien5', 'u53'):
 			cpuMHz = "   (2,0 GHz)"
-		elif getMachineBuild() in ('vuduo4k',):
+		elif getMachineBuild() in ('vuduo4k'):
 			cpuMHz = _("   (2.1 GHz)")
-		elif getMachineBuild() in ('sf5008','et13000','et1x000','hd52','hd51','sf4008','vs1500','h7','osmio4k','osmio4kplus','osmini4k'):
+		elif getMachineBuild() in ('sf5008', 'et13000', 'et1x000', 'hd52', 'hd51', 'sf4008', 'vs1500', 'h7', 'osmio4k', 'osmio4kplus', 'osmini4k'):
                         try:
 				import binascii
 				f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
@@ -97,8 +102,7 @@ class About(Screen):
 			tempinfo = f.read()
 			f.close()
 		if tempinfo and int(tempinfo.replace('\n', '')) > 0:
-			mark = str('\xc2\xb0')
-			AboutText += _("System temperature:\t%s") % tempinfo.replace('\n', '') + mark + "C\n"
+			AboutText += _("System temperature:\t%s") % tempinfo.replace('\n', '').replace(' ', '') + SIGN + "C\n"
 
 		tempinfo = ""
 		if path.exists('/proc/stb/fp/temp_sensor_avs'):
@@ -128,8 +132,7 @@ class About(Screen):
 			except:
 				tempinfo = ""
 		if tempinfo and int(tempinfo.replace('\n', '')) > 0:
-			mark = str('\xc2\xb0')
-			AboutText += _("Processor temperature:\t%s") % tempinfo.replace('\n', '').replace(' ','') + mark + "C\n"
+			AboutText += _("Processor temperature:\t%s") % tempinfo.replace('\n', '').replace(' ', '') + SIGN + "C\n"
                 imagestarted = ""
 		bootname = ''
 	        if path.exists('/boot/bootname'):
@@ -142,14 +145,14 @@ class About(Screen):
 		        bootmode = ""
                         part = "eMMC slot %s" %slot
 		        if SystemInfo["canMode12"]:
-			        bootmode = "bootmode = %s" %GetCurrentImageMode()
+			        bootmode = " bootmode = %s" %GetCurrentImageMode()
 		        if SystemInfo["HasHiSi"] and "sda" in SystemInfo["canMultiBoot"][slot]['device']:
 			        if slot > 4:
 				        image -=4
 			        else:
 				        image -=1
 			        part = "SDcard slot %s (%s) " %(image, SystemInfo["canMultiBoot"][slot]['device'])
-		        AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  " + part + " " + bootmode + "\n"
+		        AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  (" + part + bootmode + ")\n"
 		string = getDriverDate()
 		year = string[0:4]
 		month = string[4:6]
@@ -174,7 +177,7 @@ class About(Screen):
 			fp_version = _("Front Panel:\t\tVersion unknown")
 			AboutText += fp_version + "\n"
 
-		if getMachineBuild() not in ('gbmv200','vuduo4k','v8plus','ustym4kpro','hd60','hd61','i55plus','osmio4k','osmio4kplus','h9','h9combo','vuzero4k','sf5008','et13000','et1x000','hd51','hd52','vusolo4k','vuuno4k','vuuno4kse','vuultimo4k','sf4008','dm820','dm7080','dm900','dm920', 'gb7252', 'dags7252', 'vs1500','h7','xc7439','8100s','u41','u42','u43','u5','u5pvr','u52','u53','u54','u55','u56','u51','cc1','sf8008m','sf8008'):
+		if getMachineBuild() not in ('gbmv200', 'vuduo4k', 'v8plus', 'ustym4kpro', 'hd60', 'hd61', 'i55plus', 'osmio4k', 'osmio4kplus', 'h9', 'h9combo', 'vuzero4k', 'sf5008', 'et13000', 'et1x000', 'hd51', 'hd52', 'vusolo4k', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'sf4008', 'dm820', 'dm7080', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500', 'h7', 'xc7439', '8100s', 'u41', 'u42', 'u43', 'u5', 'u5pvr', 'u52', 'u53', 'u54', 'u55', 'u56', 'u51', 'cc1', 'sf8008'):
 			AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
 		AboutText += _("Last Upgrade:\t\t%s") % about.getLastUpdateString() + "\n\n" 
 		
@@ -280,7 +283,7 @@ class Devices(Screen):
 		self.AboutText += "\n" + _("Detected NIMs:") + "\n"
 
 		nims = nimmanager.nimList()
-		for count in range(len(nims)):
+		for count in list(range(len(nims))):
 			if count < 4:
 				self["Tuner" + str(count)] = StaticText(nims[count])
 			else:
@@ -347,6 +350,7 @@ class Devices(Screen):
 		#self["AboutScrollLabel"].setText(self.AboutText)
 
 	def Stage1Complete(self, result, retval, extra_args=None):
+		result = six.ensure_str(result)
 		result = result.replace('\n                        ', ' ').split('\n')
 		self.mountinfo = ""
 		for line in result:
@@ -389,11 +393,11 @@ class SystemMemoryInfo(Screen):
 										"ok": self.close,
 									})
 									
-		out_lines = file("/proc/meminfo").readlines()
+		out_lines = open("/proc/meminfo").readlines()
 		self.AboutText = _("RAM") + '\n\n'
 		RamTotal = "-"
 		RamFree = "-"
-		for lidx in range(len(out_lines) - 1):
+		for lidx in list(range(len(out_lines) - 1)):
 			tstLine = out_lines[lidx].split()
 			if "MemTotal:" in tstLine:
 				MemTotal = out_lines[lidx].split()
@@ -418,6 +422,7 @@ class SystemMemoryInfo(Screen):
 		self.Console.ePopen("df -mh / | grep -v '^Filesystem'", self.Stage1Complete)
 
 	def Stage1Complete(self, result, retval, extra_args=None):
+		result = six.ensure_str(result)
 		flash = str(result).replace('\n', '')
 		flash = flash.split()
 		RamTotal = flash[1]
@@ -450,12 +455,20 @@ class SystemNetworkInfo(Screen):
 		self["LabelSignal"] = StaticText()
 		self["LabelBitrate"] = StaticText()
 		self["LabelEnc"] = StaticText()
+		self["LabelChannel"] = StaticText(_('Channel:'))
+		self["LabelEncType"] = StaticText(_('Encryption Type:'))
+		self["LabelFrequency"] = StaticText(_('Frequency:'))
+		self["LabelFrequencyNorm"] = StaticText(_('Frequency Norm:'))        
 		self["BSSID"] = StaticText()
 		self["ESSID"] = StaticText()
 		self["quality"] = StaticText()
 		self["signal"] = StaticText()
 		self["bitrate"] = StaticText()
 		self["enc"] = StaticText()
+		self["channel"] = StaticText()
+		self["encryption_type"] = StaticText()
+		self["frequency"] = StaticText()
+		self["frequency_norm"] = StaticText()
 
 		self["IFtext"] = StaticText()
 		self["IF"] = StaticText()
@@ -493,47 +506,47 @@ class SystemNetworkInfo(Screen):
 		self.AboutText = ""
 		self.iface = "eth0"
 		eth0 = about.getIfConfig('eth0')
-		if eth0.has_key('addr'):
+		if 'addr' in eth0:
 			self.AboutText += _("IP:") + "\t" + eth0['addr'] + "\n"
-			if eth0.has_key('netmask'):
+			if 'netmask' in eth0:
 				self.AboutText += _("Netmask:") + "\t" + eth0['netmask'] + "\n"
-			if eth0.has_key('hwaddr'):
+			if 'hwaddr' in eth0:
 				self.AboutText += _("MAC:") + "\t" + eth0['hwaddr'] + "\n"
 			self.iface = 'eth0'
 
 		eth1 = about.getIfConfig('eth1')
-		if eth1.has_key('addr'):
+		if 'addr' in eth1:
 			self.AboutText += _("IP:") + "\t" + eth1['addr'] + "\n"
-			if eth1.has_key('netmask'):
+			if 'netmask' in eth1:
 				self.AboutText += _("Netmask:") + "\t" + eth1['netmask'] + "\n"
-			if eth1.has_key('hwaddr'):
+			if 'hwaddr' in eth1:
 				self.AboutText += _("MAC:") + "\t" + eth1['hwaddr'] + "\n"
 			self.iface = 'eth1'
 
 		ra0 = about.getIfConfig('ra0')
 		if ra0.has_key('addr'):
 			self.AboutText += _("IP:") + "\t" + ra0['addr'] + "\n"
-			if ra0.has_key('netmask'):
+			if 'netmask' in ra0:
 				self.AboutText += _("Netmask:") + "\t" + ra0['netmask'] + "\n"
-			if ra0.has_key('hwaddr'):
+			if 'hwaddr' in ra0:
 				self.AboutText += _("MAC:") + "\t" + ra0['hwaddr'] + "\n"
 			self.iface = 'ra0'
 
 		wlan0 = about.getIfConfig('wlan0')
-		if wlan0.has_key('addr'):
+		if 'addr' in wlan0:
 			self.AboutText += _("IP:") + "\t" + wlan0['addr'] + "\n"
-			if wlan0.has_key('netmask'):
+			if 'netmask' in wlan0:
 				self.AboutText += _("Netmask:") + "\t" + wlan0['netmask'] + "\n"
-			if wlan0.has_key('hwaddr'):
+			if 'hwaddr' in wlan0:
 				self.AboutText += _("MAC:") + "\t" + wlan0['hwaddr'] + "\n"
 			self.iface = 'wlan0'
 
 		wlan1 = about.getIfConfig('wlan1')
-		if wlan1.has_key('addr'):
+		if 'addr' in wlan1:
 			self.AboutText += _("IP:") + "\t" + wlan1['addr'] + "\n"
-			if wlan1.has_key('netmask'):
+			if 'netmask' in wlan1:
 				self.AboutText += _("Netmask:") + "\t" + wlan1['netmask'] + "\n"
-			if wlan1.has_key('hwaddr'):
+			if 'hwaddr' in wlan1:
 				self.AboutText += _("MAC:") + "\t" + wlan1['hwaddr'] + "\n"
 			self.iface = 'wlan1'
 
@@ -541,7 +554,7 @@ class SystemNetworkInfo(Screen):
 		self.AboutText += "\n" + _("Bytes received:") + "\t" + rx_bytes + "\n"
 		self.AboutText += _("Bytes sent:") + "\t" + tx_bytes + "\n"
 
-		hostname = file('/proc/sys/kernel/hostname').read()
+		hostname = open('/proc/sys/kernel/hostname').read()
 		self.AboutText += "\n" + _("Hostname:") + "\t" + hostname + "\n"
 		self["AboutScrollLabel"] = ScrollLabel(self.AboutText)
 
@@ -569,25 +582,37 @@ class SystemNetworkInfo(Screen):
 							essid = _("No Connection")
 						else:
 							accesspoint = status[self.iface]["accesspoint"]
-						if self.has_key("BSSID"):
-							self.AboutText += _('Accesspoint:') + '\t' + accesspoint + '\n'
-						if self.has_key("ESSID"):
-							self.AboutText += _('SSID:') + '\t' + essid + '\n'
+						if "BSSID" in self:
+							self.AboutText += '{:<35}'.format(_('Accesspoint:')) + '\t' + accesspoint + '\n'
+						if "ESSID" in self:
+							self.AboutText += '{:<35}'.format(_('SSID:')) + '\t' + essid + '\n'
 
 						quality = status[self.iface]["quality"]
-						if self.has_key("quality"):
-							self.AboutText += _('Link Quality:') + '\t' + quality + '\n'
+						if "quality" in self:
+							self.AboutText += '{:<35}'.format(_('Link Quality:')) + '\t' + quality + '\n'
+
+						channel = str(status[self.iface]["channel"])
+						if "channel" in self:
+							self.AboutText += '{:<35}'.format(_('Channel:')) + '\t' + channel + '\n'
+
+						frequency = status[self.iface]["frequency"]
+						if "frequency" in self:
+							self.AboutText += '{:<35}'.format(_('Frequency:')) + '\t' + frequency + '\n'
+
+						frequency_norm = status[self.iface]["frequency_norm"]
+						if frequency_norm is not None:
+							self.AboutText += '{:<35}'.format(_('Frequency Norm:')) + '\t' + frequency_norm + '\n'
 
 						if status[self.iface]["bitrate"] == '0':
 							bitrate = _("Unsupported")
 						else:
-							bitrate = str(status[self.iface]["bitrate"]) + " Mb/s"
-						if self.has_key("bitrate"):
-							self.AboutText += _('Bitrate:') + '\t' + bitrate + '\n'
+							bitrate = str(status[self.iface]["bitrate"])
+						if "bitrate" in self:
+							self.AboutText += '{:<35}'.format(_('Bitrate:')) + '\t' + bitrate + '\n'
 
-						signal = status[self.iface]["signal"]
-						if self.has_key("signal"):
-							self.AboutText += _('Signal Strength:') + '\t' + signal + '\n'
+						signal = str(status[self.iface]["signal"]) + " dBm"
+						if "signal" in self:
+							self.AboutText += '{:<35}'.format(_('Signal Strength:')) + '\t' + signal + '\n'
 
 						if status[self.iface]["encryption"] == "off":
 							if accesspoint == "Not-Associated":
@@ -596,8 +621,12 @@ class SystemNetworkInfo(Screen):
 								encryption = _("Unsupported")
 						else:
 							encryption = _("Enabled")
-						if self.has_key("enc"):
-							self.AboutText += _('Encryption:') + '\t' + encryption + '\n'
+						if "enc" in self:
+							self.AboutText += '{:<35}'.format(_('Encryption:')) + '\t' + encryption + '\n'
+
+						encryption_type = status[self.iface]["encryption_type"]
+						if "encryption_type" in self:
+							self.AboutText += '{:<35}'.format(_('Encryption Type:')) + '\t' + encryption_type + '\n'
 
 						if status[self.iface]["essid"] == "off" or status[self.iface]["accesspoint"] == "Not-Associated" or status[self.iface]["accesspoint"] is False:
 							self.LinkState = False
@@ -626,6 +655,7 @@ class SystemNetworkInfo(Screen):
 			iNetwork.getLinkState(self.iface, self.dataAvail)
 
 	def dataAvail(self, data):
+		data = six.ensure_str(data)
 		self.LinkState = None
 		for line in data.splitlines():
 			line = line.strip()
@@ -749,7 +779,7 @@ class TranslationInfo(Screen):
 				continue
 			(type, value) = l
 			infomap[type] = value
-		print infomap
+		print(infomap)
 
 		self["TranslationInfo"] = StaticText(info)
 

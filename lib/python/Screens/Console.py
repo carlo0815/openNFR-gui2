@@ -1,8 +1,10 @@
+from __future__ import print_function
 from enigma import eConsoleAppContainer
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.ScrollLabel import ScrollLabel
 from Components.Sources.StaticText import StaticText
+import six
 
 class Console(Screen):
 
@@ -51,7 +53,7 @@ class Console(Screen):
 	def startRun(self):
 		self["text"].setText(_("Execution progress:") + "\n\n")
 		self["summary_description"].setText(_("Execution progress:"))
-		print "[Console] executing in run", self.run, " the command:", self.cmdlist[self.run]
+		print("[Console] executing in run", self.run, " the command:", self.cmdlist[self.run])
 		if self.doExec(self.cmdlist[self.run]): #start of container application failed...
 			self.runFinished(-1) # so we must call runFinished manual
 

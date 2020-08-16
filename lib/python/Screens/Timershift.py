@@ -11,6 +11,7 @@ from Tools.Directories import fileExists
 from Components.Sources.Boolean import Boolean
 from Components.Sources.StaticText import StaticText
 from Components.SystemInfo import SystemInfo
+import six
 
 
 class SetupSummary(Screen):
@@ -34,15 +35,15 @@ class SetupSummary(Screen):
 	def selectionChanged(self):
 		self["SetupEntry"].text = self.parent.getCurrentEntry()
 		self["SetupValue"].text = self.parent.getCurrentValue()
-		if hasattr(self.parent,"getCurrentDescription"):
+		if hasattr(self.parent, "getCurrentDescription"):
 			self.parent["description"].text = self.parent.getCurrentDescription()
-		if self.parent.has_key('footnote'):
-			if self.parent.getCurrentEntry().endswith('*'):
+		if 'footnote' in self.parent:
+			if six.ensure_str(self.parent.getCurrentEntry()).endswith('*'):
 				self.parent['footnote'].text = (_("* = Restart Required"))
 			else:
 				self.parent['footnote'].text = (_(" "))
 
-class TimeshiftSettings(Screen,ConfigListScreen):
+class TimeshiftSettings(Screen, ConfigListScreen):
 	def removeNotifier(self):
 		if config.usage.setup_level.notifiers:
 			config.usage.setup_level.notifiers.remove(self.levelChanged)
@@ -58,7 +59,7 @@ class TimeshiftSettings(Screen,ConfigListScreen):
 			if x.get("key") != self.setup:
 				continue
 			self.addItems(list, x)
-			self.setup_title = x.get("title", "").encode("UTF-8")
+			self.setup_title = six.ensure_str(x.get("title", ""))
 			self.seperation = int(x.get('separation', '0'))
 
 	def __init__(self, session):
@@ -342,8 +343,8 @@ class TimeshiftSettings(Screen,ConfigListScreen):
 				if requires and not SystemInfo.get(requires, False):
 					continue
 
-				item_text = _(x.get("text", "??").encode("UTF-8"))
-				item_description = _(x.get("description", " ").encode("UTF-8"))
+				item_text = _(six.ensure_str(x.get("text", "??")))
+				item_description = _(six.ensure_str(x.get("description", " ")))
 				b = eval(x.text or "")
 				if b == "":
 					continue

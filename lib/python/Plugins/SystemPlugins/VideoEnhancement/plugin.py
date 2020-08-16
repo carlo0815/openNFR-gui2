@@ -1,3 +1,5 @@
+from __future__ import print_function
+from __future__ import absolute_import
 from os import path as os_path
 
 from Plugins.Plugin import PluginDescriptor
@@ -10,7 +12,7 @@ from Components.Sources.Boolean import Boolean
 from Components.Sources.StaticText import StaticText
 from Screens.Screen import Screen
 from Screens.MessageBox import MessageBox
-import VideoEnhancement
+from . import VideoEnhancement
 
 
 class VideoEnhancementSetup(Screen, ConfigListScreen):
@@ -18,12 +20,14 @@ class VideoEnhancementSetup(Screen, ConfigListScreen):
 		Screen.__init__(self, session)
 		self.session = session
 		self.onChangedEntry = [ ]
+		self.skinName = ["VideoEnhancementSetup"]
 		self.setup_title = _("Video enhancement setup")
 		self["HelpWindow"] = Pixmap()
 		self["HelpWindow"].hide()
 		self["VKeyIcon"] = Boolean(False)
 		self['footnote'] = Label()
 		self["description"] = Label(_(""))
+		self["introduction"] = StaticText()
 
 		self.list = [ ]
 		self.xtdlist = [ ]
@@ -96,7 +100,7 @@ class VideoEnhancementSetup(Screen, ConfigListScreen):
 		self.digital_contour_removalEntry = addToConfigList(_("Digital contour removal"), config.pep.digital_contour_removal, _("This option sets the surpression of false digital contours, that are the result of a limited number of discrete values."), add_to_xtdlist)
 		self.dynamic_contrastEntry = addToConfigList(_("Dynamic contrast"), config.pep.dynamic_contrast, _("This option allows to set the level of dynamic contrast of the picture."), add_to_xtdlist)
 		self.hueEntry = addToConfigList(_("Hue"), config.pep.hue, _("This option sets the picture hue."))
-		self.mosquito_noise_reductionEntry = addToConfigList(_("Mosquito noise reduction"), config.pep.mosquito_noise_reduction, _("This option set the level of surpression of musquito noise (Musquito Noise is random aliasing as a result of strong compression). Obviously this goes at the cost of picture details."), add_to_xtdlist)
+		self.mosquito_noise_reductionEntry = addToConfigList(_("Mosquito noise reduction"), config.pep.mosquito_noise_reduction, _("This option set the level of suppression of mosquito noise (Mosquito Noise is random aliasing as a result of strong compression). Obviously this goes at the cost of picture details."), add_to_xtdlist)
 		self.scaler_sharpnessEntry = addToConfigList(_("Scaler sharpness"), config.av.scaler_sharpness, _("This option sets the scaler sharpness, used when stretching picture from 4:3 to 16:9."))
 		self.scaler_vertical_dejaggingEntry = addToConfigList(_("Scaler vertical dejagging"), config.pep.scaler_vertical_dejagging, _("This option allows you enable the vertical scaler dejagging."))
 		self.smoothEntry = addToConfigList(_("Smooth"), config.pep.smooth, _("This option allows you enable smoothing filter to control the dithering process."))
@@ -157,7 +161,7 @@ class VideoEnhancementSetup(Screen, ConfigListScreen):
 
 	def confirm(self, confirmed):
 		if not confirmed:
-			print "not confirmed"
+			print("not confirmed")
 		else:
 			if self.splitEntry is not None:
 				config.pep.split.setValue('off')
@@ -180,7 +184,7 @@ class VideoEnhancementSetup(Screen, ConfigListScreen):
 
 	def keyYellowConfirm(self, confirmed):
 		if not confirmed:
-			print "not confirmed"
+			print("not confirmed")
 		else:
 			if self.contrastEntry is not None:
 				config.pep.contrast.setValue(self.oldContrast)
@@ -223,7 +227,7 @@ class VideoEnhancementSetup(Screen, ConfigListScreen):
 
 	def keyBlueConfirm(self, confirmed):
 		if not confirmed:
-			print "not confirmed"
+			print("not confirmed")
 		else:
 			if self.contrastEntry is not None:
 				config.pep.contrast.setValue(128)
@@ -327,12 +331,12 @@ class VideoEnhancementPreview(Screen, ConfigListScreen):
 
 	def createSetup(self):
 		self.list = [ ]
-		if self.maxValue == 256:
+		if self.maxValue == 255:
 			self.configStepsEntry = getConfigListEntry(_("Change step size"), config.pep.configsteps)
 
 		if self.configEntry is not None:
 			self.list = self.configEntry
-		if self.maxValue == 256:
+		if self.maxValue == 255:
 			self.list.append(self.configStepsEntry)
 
 		self["config"].list = self.list
@@ -346,12 +350,12 @@ class VideoEnhancementPreview(Screen, ConfigListScreen):
 		self["introduction"].setText(_("Current value: ") + self.getCurrentValue())
 		try:
 			max_avail=self["config"].getCurrent()[1].max
-			if max_avail == 256:
+			if max_avail == 255:
 				self.isStepSlider = True
 			else:
 				self.isStepSlider = False
 		except AttributeError:
-			print "no max value"
+			print("no max value")
 
 	def keyLeft(self):
 		if self.isStepSlider is True:
@@ -403,9 +407,9 @@ def videoEnhancementSetupMain(session, **kwargs):
 	session.open(VideoEnhancementSetup)
 
 def startSetup(menuid):
-	if menuid != "system":
+	if menuid != "video_menu":
 		return [ ]
-	return [(_("Video Enhancement Settings") , videoEnhancementSetupMain, "videoenhancement_setup", None)]
+	return [(_("Extended settings"), videoEnhancementSetupMain, "videoenhancement_setup", 5)]
 
 def Plugins(**kwargs):
 	list = []
