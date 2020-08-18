@@ -1173,6 +1173,9 @@ eAutoInitPtr<eServiceFactoryDVD> init_eServiceFactoryDVD(eAutoInitNumbers::servi
 
 PyMODINIT_FUNC
 initservicedvd(void)
-{
+#if PY_MAJOR_VERSION >= 3
+	PyModule_Create(&servicedvd_moduledef);
+#else
 	Py_InitModule("servicedvd", NULL);
+#endif
 }
