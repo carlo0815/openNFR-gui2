@@ -821,6 +821,9 @@ AC_CONFIG_FILES([Makefile
 	data/Spinner/default/Makefile
 	data/Spinner/Kreis/Makefile
 	data/Spinner/NFR/Makefile
+	data/spinner/default/Makefile
+	data/spinner/Kreis/Makefile
+	data/spinner/NFR/Makefile
 	data/vfd128/Makefile
 	data/vfd128/lcdskins/Makefile
 	data/vfd140/Makefile
