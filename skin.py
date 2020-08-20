@@ -290,11 +290,11 @@ try:
 	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008', 'formuler1'):
 		print("addskin", addSkin(os.path.join('', config.skin.display_skin.value))) 
 		if not addSkin(os.path.join('display', config.skin.display_skin.value)):
-			raise DisplaySkinError, "display skin not found"	
+			raise DisplaySkinError("display skin not found")
 	else:
 		print("addskin", addSkin(os.path.join('display', config.skin.display_skin.value))) 
 		if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
-		        raise DisplaySkinError, "display skin not found"
+		        raise DisplaySkinError("display skin not found")
 except Exception as err:
 	print("SKIN ERROR:", err)
 	skin = DEFAULT_DISPLAY_SKIN
