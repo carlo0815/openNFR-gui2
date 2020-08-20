@@ -131,7 +131,7 @@ class ExtendedServiceInfo(Converter, object):
 		if feinfo is not None:
 			frontendData = feinfo and feinfo.getAll(True)
 			if frontendData is not None:
-				if frontendData.has_key("tuner_type"):
+				if "tuner_type" in frontendData:
 					if frontendData["tuner_type"] == "DVB-S":
 						orbital = int(frontendData["orbital_position"])
 		

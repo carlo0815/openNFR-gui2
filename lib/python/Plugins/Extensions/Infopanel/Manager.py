@@ -162,27 +162,27 @@ class NFRCamManager(Screen):
 		self.AboutText = ""
 		self.iface = "eth0"
 		eth0 = about.getIfConfig('eth0')
-		if eth0.has_key('addr'):
+		if 'addr' in eth0:
 			self.AboutText += _("IP:") + eth0['addr'] + "\n"
 			self.iface = 'eth0'
 
 		eth1 = about.getIfConfig('eth1')
-		if eth1.has_key('addr'):
+		if 'addr' in eth1:
 			self.AboutText += _("IP:") + eth1['addr'] + "\n"
 			self.iface = 'eth1'
 
 		ra0 = about.getIfConfig('ra0')
-		if ra0.has_key('addr'):
+		if 'addr' in ra0:
 			self.AboutText += _("IP:") + ra0['addr'] + "\n"
 			self.iface = 'ra0'
 
 		wlan0 = about.getIfConfig('wlan0')
-		if wlan0.has_key('addr'):
+		if 'addr' in wlan0:
 			self.AboutText += _("IP:") + wlan0['addr'] + "\n"
 			self.iface = 'wlan0'
 
 		wlan1 = about.getIfConfig('wlan1')
-		if wlan1.has_key('addr'):
+		if 'addr' in wlan1:
 			self.AboutText += _("IP:") + wlan1['addr'] + "\n"
 			self.iface = 'wlan1'
                 self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)

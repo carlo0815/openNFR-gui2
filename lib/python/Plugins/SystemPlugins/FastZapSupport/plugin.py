@@ -193,19 +193,19 @@ class FastZapSupport:
 						continue
 
 					if nimConfig.diseqcA.orbital_position != 3601: # 3601: nothing connected
-						if not self.diseqc_position.has_key(nimConfig.diseqcA.orbital_position):
+						if not nimConfig.diseqcA.orbital_position in self.diseqc_position:
 							self.diseqc_position[nimConfig.diseqcA.orbital_position] = {"pos" : "AA", "lofth" : 11700000}
 
 					if nimConfig.diseqcB.orbital_position != 3601:
-						if not self.diseqc_position.has_key(nimConfig.diseqcB.orbital_position):
+						if not nimConfig.diseqcB.orbital_position in self.diseqc_position:
 							self.diseqc_position[nimConfig.diseqcB.orbital_position] = {"pos" : "AB", "lofth" : 11700000}
 
 					if nimConfig.diseqcC.orbital_position != 3601:
-						if not self.diseqc_position.has_key(nimConfig.diseqcC.orbital_position):
+						if not nimConfig.diseqcC.orbital_position in self.diseqc_position:
 							self.diseqc_position[nimConfig.diseqcC.orbital_position] = {"pos" : "BA", "lofth" : 11700000}
 
 					if nimConfig.diseqcD.orbital_position != 3601:
-						if not self.diseqc_position.has_key(nimConfig.diseqcD.orbital_position):
+						if not nimConfig.diseqcD.orbital_position in self.diseqc_position:
 							self.diseqc_position[nimConfig.diseqcD.orbital_position] = {"pos" : "BB", "lofth": 11700000}
 
 				elif nimConfig.configMode.value == "advanced":
@@ -251,7 +251,7 @@ class FastZapSupport:
 		tone = "low"
 		lofth = 11700000
 
-		if self.diseqc_position.has_key(orbital_position):
+		if orbital_position  in self.diseqc_position:
 			lofth = self.diseqc_position[orbital_position]["lofth"]
 
 		if frequency > lofth:
@@ -260,7 +260,7 @@ class FastZapSupport:
 		return tone
 
 	def getPosition(self, orbital_position):
-		if self.diseqc_position.has_key(orbital_position):
+		if orbital_position  in self.diseqc_position:
 			return self.diseqc_position[orbital_position]["pos"]
 
 		return None
@@ -408,7 +408,7 @@ class FastZapSupport:
 				self.procData[c] = procData[c]
 
 def FastZapSupportInit(reason, **kwargs):
-	if kwargs.has_key("session"):
+	if "session" in kwargs:
 		session = kwargs["session"]
 		global fast_zap_support
 		fast_zap_support = FastZapSupport(session)

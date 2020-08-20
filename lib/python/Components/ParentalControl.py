@@ -103,7 +103,7 @@ class ParentalControl:
 			rating = event and event.getParentalData()
 			age = rating and rating.getRating()
 			age = age and age <= 15 and age + 3 or 0
-		return (age and age >= int(config.ParentalControl.age.value)) or service and self.blacklist.has_key(service)
+		return (age and age >= int(config.ParentalControl.age.value)) or service and service in self.blacklist
 
 	def isServicePlayable(self, ref, callback, session=None):
 		self.session = session
@@ -132,7 +132,7 @@ class ParentalControl:
 				eDVBDB.getInstance().addFlag(eServiceReference(service), 2)
 
 	def unProtectService(self, service):
-		if self.blacklist.has_key(service):
+		if service in self.blacklist:
 			self.serviceMethodWrapper(service, self.removeServiceFromList, self.blacklist)
 
 	def getProtectionLevel(self, service):

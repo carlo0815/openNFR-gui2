@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.FindServiceControlListe import FindServiceControlEntryComponent, FindServiceControlListe 
@@ -69,12 +70,12 @@ class FindService(Screen):
 				if key < 'a' or key > 'z':
 					key = chr(SPECIAL_CHAR)
 				#key = str(key)
-				if not self.servicesList.has_key(key):
+				if not key in self.servicesList:
 					self.servicesList[key] = []
 				self.servicesList[key].append(s)
 			
 	def chooseLetter(self):
-		print "choose letter"
+		print("choose letter")
 		mylist = []
 		for x in self.servicesList.keys():
 			if x == chr(SPECIAL_CHAR):
@@ -88,7 +89,7 @@ class FindService(Screen):
 
 	def letterChosen(self, result):
 		if result is not None:
-			print "result:", result
+			print("result:", result)
 			self.currentLetter = result[1]
 			self.list = [FindServiceControlEntryComponent(x[0], x[1]) for x in self.servicesList[result[1]]]
 			

@@ -394,7 +394,7 @@ class PluginInstall(Screen):
 			split = x[3].split('-', 1)
 			if len(split) < 2:
 				continue
-			if not self.plugins.has_key(split[0]):
+			if not split[0] in self.plugins:
 				self.plugins[split[0]] = []
 
 			self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))
@@ -851,7 +851,7 @@ class PluginDeinstall(Screen):
 			split = x[3].split('-', 1)
 			if len(split) < 2:
 				continue
-			if not self.plugins.has_key(split[0]):
+			if not split[0] in self.plugins:
 				self.plugins[split[0]] = []
 
 			self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))
@@ -1224,7 +1224,7 @@ class PluginSkinInstall(Screen):
 			split = x[3].split('-', 1)
 			if len(split) < 2:
 				continue
-			if not self.plugins.has_key(split[0]):
+			if not split[0] in self.plugins:
 				self.plugins[split[0]] = []
 
 			self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))

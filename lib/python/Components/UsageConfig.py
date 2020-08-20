@@ -8,7 +8,7 @@ import enigma
 
 from Components.About import about
 from Components.Harddisk import harddiskmanager
-from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, ConfigFloat, ConfigDictionarySet, ConfigDirectory
+from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, ConfigFloat, ConfigDirectory
 from Tools.Directories import resolveFilename, SCOPE_HDD, SCOPE_TIMESHIFT, SCOPE_AUTORECORD, SCOPE_SYSETC, defaultRecordingLocation, fileExists
 from Components.NimManager import nimmanager
 from Components.ServiceList import refreshServiceList
@@ -21,8 +21,8 @@ from sys import maxsize
 def InitUsageConfig():
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)
-        config.NFRTelnet = ConfigSubsection()
-        config.NFRTelnet.command = ConfigText(visible_width = 200)
+	config.NFRTelnet = ConfigSubsection()
+	config.NFRTelnet.command = ConfigText(visible_width = 200)
 	config.NFRSoftcam = ConfigSubsection()
 	config.NFRSoftcam.actcam = ConfigText(visible_width = 200)
 	config.NFRSoftcam.actCam2 = ConfigText(visible_width = 200)
@@ -385,7 +385,7 @@ def InitUsageConfig():
 	config.usage.recording_frontend_priority_strictly    = ConfigSelection(default = "no", choices = priority_strictly_choices)
 	config.usage.recording_frontend_priority_intval      = NoSave(ConfigInteger(default = 0, limits = (-99, maxsize)))	
 	config.usage.recording_timer_start = ConfigYesNo(default = False)
-        config.misc.disable_background_scan = ConfigYesNo(default = False)
+	config.misc.disable_background_scan = ConfigYesNo(default = False)
 
 	config.usage.jobtaksextensions = ConfigYesNo(default = True)
 
@@ -515,14 +515,14 @@ def InitUsageConfig():
 	config.lcd = ConfigSubsection()	
 	if getBoxType() in ('e4hdultra'):
 		config.lcd.modeminitv4k = ConfigSelection(default = "disable", choices = [
-        		("disable", _("normal")),
+			("disable", _("normal")),
 			("enable", _("MiniTV"))])
 	else:
 		config.lcd.modeminitv4k = ConfigSelection(default = "0", choices = [
-        		("disable", _("normal")),
+			("disable", _("normal")),
 			("enable", _("MiniTV"))])
 	config.lcd.modepip = ConfigSelection(default = "0", choices = [
-        	("0", _("off")),
+		("0", _("off")),
 		("1", _("on"))])
 		
 			
@@ -852,7 +852,7 @@ def InitUsageConfig():
 	config.subtitles.subtitle_fontsize  = ConfigSelection(choices = ["%d" % x for x in list(range(16, 101)) if not x % 2], default = "40")
 
 	subtitle_delay_choicelist = []
-	for i in list(range(-900000, 1845000, 45000)=:
+	for i in list(range(-900000, 1845000, 45000)):
 		if i == 0:
 			subtitle_delay_choicelist.append(("0", _("No delay")))
 		else:
@@ -900,7 +900,7 @@ def InitUsageConfig():
 		("eus baq", _("Basque")),
 		("bul", _("Bulgarian")),
 		("hrv", _("Croatian")),
-        ("twn hkn", _("Traditional Chinese")),
+	("twn hkn", _("Traditional Chinese")),
 		("ces cze", _("Czech")),
 		("dan", _("Danish")),
 		("dut ndl Dutch", _("Dutch")),
@@ -1103,7 +1103,7 @@ def InitUsageConfig():
 	config.epgselection.graph_blue = ConfigSelection(default='autotimer', choices=epg_colorkeys)
 
 	if not os.path.exists('/usr/emu/'):
-		os.mkdir('/usr/emu/',0755)
+		os.mkdir('/usr/emu/',0o755)
 	softcams = os.listdir('/usr/emu/')
 	config.oscaminfo = ConfigSubsection()
 	config.oscaminfo.showInExtensions = ConfigYesNo(default=False)
@@ -1117,7 +1117,7 @@ def InitUsageConfig():
 	SystemInfo["OScamInstalled"] = False
 	if getBoxType() in ('gbquad4k', 'gbue4k', 'gbquadplus', 'gb800ueplus', 'gb800seplus', 'gbultraue', 'gb7362', 'twinboxlcd', '7210s', 'vusolo4k', 'vuultimo4k', 'e4hd', 'e4hdultra', 'singleboxlcd', 'sf208', 'sf228'):
 	        SystemInfo["ClockDisplay"] = True
-        else:
+	else:
 	        SystemInfo["ClockDisplay"] = False 
 	config.cccaminfo = ConfigSubsection()
 	config.cccaminfo.showInExtensions = ConfigYesNo(default=False)
@@ -1211,64 +1211,64 @@ def patchTuxtxtConfFile(dummyConfigElement):
 	print("[tuxtxt] patching tuxtxt2.conf")
 	if config.usage.tuxtxt_font_and_res.value == "X11_SD":
 		tuxtxt2 = [["UseTTF", 0],
-		           ["TTFBold", 1],
-		           ["TTFScreenResX", 720],
-		           ["StartX", 50],
-		           ["EndX", 670],
-		           ["StartY", 30],
-		           ["EndY", 555],
-		           ["TTFShiftY", 0],
-		           ["TTFShiftX", 0],
-		           ["TTFWidthFactor16", 26],
-		           ["TTFHeightFactor16", 14]]
+			["TTFBold", 1],
+			["TTFScreenResX", 720],
+			["StartX", 50],
+			["EndX", 670],
+			["StartY", 30],
+			["EndY", 555],
+			["TTFShiftY", 0],
+			["TTFShiftX", 0],
+			["TTFWidthFactor16", 26],
+			["TTFHeightFactor16", 14]]
 	elif config.usage.tuxtxt_font_and_res.value == "TTF_SD":
 		tuxtxt2 = [["UseTTF", 1],
-		           ["TTFBold", 1],
-		           ["TTFScreenResX", 720],
-		           ["StartX", 50],
-		           ["EndX", 670],
-		           ["StartY", 30],
-		           ["EndY", 555],
-		           ["TTFShiftY", 2],
-		           ["TTFShiftX", 0],
-		           ["TTFWidthFactor16", 29],
-		           ["TTFHeightFactor16", 14]]
+			["TTFBold", 1],
+			["TTFScreenResX", 720],
+			["StartX", 50],
+			["EndX", 670],
+			["StartY", 30],
+			["EndY", 555],
+			["TTFShiftY", 2],
+			["TTFShiftX", 0],
+			["TTFWidthFactor16", 29],
+			["TTFHeightFactor16", 14]]
 	elif config.usage.tuxtxt_font_and_res.value == "TTF_HD":
 		tuxtxt2 = [["UseTTF", 1],
-		           ["TTFBold", 0],
-		           ["TTFScreenResX", 1280],
-		           ["StartX", 80],
-		           ["EndX", 1200],
-		           ["StartY", 35],
-		           ["EndY", 685],
-		           ["TTFShiftY", -3],
-		           ["TTFShiftX", 0],
-		           ["TTFWidthFactor16", 26],
-		           ["TTFHeightFactor16", 14]]
+			["TTFBold", 0],
+			["TTFScreenResX", 1280],
+			["StartX", 80],
+			["EndX", 1200],
+			["StartY", 35],
+			["EndY", 685],
+			["TTFShiftY", -3],
+			["TTFShiftX", 0],
+			["TTFWidthFactor16", 26],
+			["TTFHeightFactor16", 14]]
 	elif config.usage.tuxtxt_font_and_res.value == "TTF_FHD":
 		tuxtxt2 = [["UseTTF", 1],
-		           ["TTFBold", 0],
-		           ["TTFScreenResX", 1920],
-		           ["StartX", 140],
-		           ["EndX", 1780],
-		           ["StartY", 52],
-		           ["EndY", 1027],
-		           ["TTFShiftY", -6],
-		           ["TTFShiftX", 0],
-		           ["TTFWidthFactor16", 26],
-		           ["TTFHeightFactor16", 14]]
+			["TTFBold", 0],
+			["TTFScreenResX", 1920],
+			["StartX", 140],
+			["EndX", 1780],
+			["StartY", 52],
+			["EndY", 1027],
+			["TTFShiftY", -6],
+			["TTFShiftX", 0],
+			["TTFWidthFactor16", 26],
+			["TTFHeightFactor16", 14]]
 	elif config.usage.tuxtxt_font_and_res.value == "expert_mode":
 		tuxtxt2 = [["UseTTF",            int(config.usage.tuxtxt_UseTTF.value)],
-		           ["TTFBold",           int(config.usage.tuxtxt_TTFBold.value)],
-		           ["TTFScreenResX",     int(config.usage.tuxtxt_TTFScreenResX.value)],
-		           ["StartX",            config.usage.tuxtxt_StartX.value],
-		           ["EndX",              config.usage.tuxtxt_EndX.value],
-		           ["StartY",            config.usage.tuxtxt_StartY.value],
-		           ["EndY",              config.usage.tuxtxt_EndY.value],
-		           ["TTFShiftY",         int(config.usage.tuxtxt_TTFShiftY.value)],
-		           ["TTFShiftX",         int(config.usage.tuxtxt_TTFShiftX.value)],
-		           ["TTFWidthFactor16",  config.usage.tuxtxt_TTFWidthFactor16.value],
-		           ["TTFHeightFactor16", config.usage.tuxtxt_TTFHeightFactor16.value]]
+			["TTFBold",           int(config.usage.tuxtxt_TTFBold.value)],
+			["TTFScreenResX",     int(config.usage.tuxtxt_TTFScreenResX.value)],
+			["StartX",            config.usage.tuxtxt_StartX.value],
+			["EndX",              config.usage.tuxtxt_EndX.value],
+			["StartY",            config.usage.tuxtxt_StartY.value],
+			["EndY",              config.usage.tuxtxt_EndY.value],
+			["TTFShiftY",         int(config.usage.tuxtxt_TTFShiftY.value)],
+			["TTFShiftX",         int(config.usage.tuxtxt_TTFShiftX.value)],
+			["TTFWidthFactor16",  config.usage.tuxtxt_TTFWidthFactor16.value],
+			["TTFHeightFactor16", config.usage.tuxtxt_TTFHeightFactor16.value]]
 	tuxtxt2.append(    ["CleanAlgo",         config.usage.tuxtxt_CleanAlgo.value] )
 
 	TUXTXT_CFG_FILE = "/etc/tuxtxt/tuxtxt2.conf"

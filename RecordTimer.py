@@ -20,7 +20,7 @@ import timer
 import NavigationInstance
 from ServiceReference import ServiceReference
 from enigma import pNavigation, eDVBFrontend
- import subprocess, threading
+import subprocess, threading
 import six
 
 # ok, for descriptions etc we have:
@@ -79,8 +79,8 @@ def findSafeRecordPath(dirname):
 	if not os.path.isdir(dirname):
 		try:
 			os.makedirs(dirname)
-+		except Exception as ex:
-+			print('[RecordTimer] Failed to create dir "%s":' % dirname, ex)
+		except Exception as ex:
+			print('[RecordTimer] Failed to create dir "%s":' % dirname, ex)
 			return None
 	return dirname
 	
@@ -134,23 +134,23 @@ class RecordTimerEntry(timer.TimerEntry, object):
 	@staticmethod
 	def staticGotRecordEvent(recservice, event):
 		if event == iRecordableService.evEnd:
-			print "RecordTimer.staticGotRecordEvent(iRecordableService.evEnd)"
+			print ("RecordTimer.staticGotRecordEvent(iRecordableService.evEnd)")
 			if not checkForRecordings():
-				print "No recordings busy of sceduled within 6 minutes so shutdown"
+				print ("No recordings busy of sceduled within 6 minutes so shutdown")
 				RecordTimerEntry.shutdown() # immediate shutdown
 		elif event == iRecordableService.evStart:
-			print "RecordTimer.staticGotRecordEvent(iRecordableService.evStart)"
+			print ("RecordTimer.staticGotRecordEvent(iRecordableService.evStart")
 
 	@staticmethod
 	def stopTryQuitMainloop():
-		print "RecordTimer.stopTryQuitMainloop"
+		print ("RecordTimer.stopTryQuitMainloop")
 		NavigationInstance.instance.record_event.remove(RecordTimerEntry.staticGotRecordEvent)
 		RecordTimerEntry.receiveRecordEvents = False
 
 	@staticmethod
 	def TryQuitMainloop():
 		if not RecordTimerEntry.receiveRecordEvents and Screens.Standby.inStandby:
-			print "RecordTimer.TryQuitMainloop"
+			print ("RecordTimer.TryQuitMainloop")
 			NavigationInstance.instance.record_event.append(RecordTimerEntry.staticGotRecordEvent)
 			RecordTimerEntry.receiveRecordEvents = True
 			# send fake event.. to check if another recordings are running or
@@ -329,7 +329,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			if self.backoff > 100:
 				self.backoff = 100
 		self.log(10, "backoff: retry in %d seconds" % self.backoff)
-                	
+
 	def activate(self):
 		next_state = self.state + 1
 		self.log(5, "activating state %d" % next_state)
@@ -429,8 +429,8 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					Screens.Standby.TVinStandby.setTVstate('on')
 					if config.recording.asktozap1.value == True:
 						Notifications.AddNotificationWithCallback(self.failureCB, MessageBox, _("Do you really want to Zap?\n"), timeout=20)
-                                                return True
-                                        self.log(11, "zapping")
+						return True
+					self.log(11, "zapping")
 					NavigationInstance.instance.isMovieplayerActive()
 					from Screens.ChannelSelection import ChannelSelection
 					ChannelSelectionInstance = ChannelSelection.instance
@@ -492,10 +492,10 @@ class RecordTimerEntry(timer.TimerEntry, object):
 					self.record_service = None
 
 			NavigationInstance.instance.RecordTimer.saveTimer()
-            
+
 			box_instandby = Screens.Standby.inStandby
 			tv_instandby = Screens.Standby.TVinStandby.getTVstate('standby')
-            
+
 			if self.afterEvent == AFTEREVENT.STANDBY or (not wasRecTimerWakeup and self.autostate and self.afterEvent == AFTEREVENT.AUTO) or self.wasInStandby:
 				self.keypress() #this unbinds the keypress detection
 				if not box_instandby and not tv_instandby:# not already in standby
@@ -507,7 +507,7 @@ class RecordTimerEntry(timer.TimerEntry, object):
 				if not Screens.Standby.inTryQuitMainloop: # not a shutdown messagebox is open
 					if not box_instandby and not tv_instandby: # not already in standby
 						Notifications.AddNotificationWithCallback(self.sendTryQuitMainloopNotification, MessageBox, _("A finished record timer wants to shut down\nyour %s %s. Shutdown now?") % (getMachineBrand(), getMachineName()), timeout = 180)
-                        
+
 					else:
 						quitMainloop(1)
 			return True
