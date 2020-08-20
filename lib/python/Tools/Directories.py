@@ -186,7 +186,7 @@ def resolveFilename(scope, base = "", path_prefix = None):
 			try:
 				os.mkdir(path)
 			except OSError:
-				print "resolveFilename: Couldn't create %s" % path
+				print ("resolveFilename: Couldn't create %s" % path)
 				return None
 
 	fallbackPath = fallbackPaths.get(scope)
@@ -415,7 +415,7 @@ def moveFiles(fileList):
 			for item in fileList:
 				os.rename(item[0], item[1])
 				movedList.append(item)
-		except OSError, e:
+		except OSError as e:
 			if e.errno == 18:
 				print("[Directories] cannot rename across devices, trying slow move")
 				import Tools.CopyFiles
