@@ -125,12 +125,12 @@ class InfoBar(InfoBarBase, InfoBarShowHide,
 		self.mainMenu()
 
 	def _volUp(self):
-		print "_volUp"
+		print ("_volUp")
 		from Components.VolumeControl import VolumeControl
 		VolumeControl.instance.volUp()
 
 	def _volDown(self):
-		print "_volDown"
+		print ("_volDown")
 		from Components.VolumeControl import VolumeControl
 		VolumeControl.instance.volDown()
 
