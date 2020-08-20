@@ -37,7 +37,7 @@ def RemovePopup(id):
 	print("RemovePopup, id =", id)
 	for x in notifications:
 		if x[4] and x[4] == id:
-			print "(found in notifications)"
+			print ("(found in notifications)")
 			notifications.remove(x)
 
 	for x in current_notifications:
