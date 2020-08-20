@@ -178,7 +178,7 @@ class Network:
 							self.ifaces[currif]["netmask"] = list(map(int, split[1].split('.')))
 				if "gateway" in self.ifaces[currif]:
 					ifaces[currif]["gateway"] = map(int, split[1].split('.'))
-					if self.ifaces[currif].has_key("gateway"):
+					if "gateway" in self.ifaces[currif]:
 						if self.ifaces[currif]["gateway"] != ifaces[currif]["gateway"] and ifaces[currif]["dhcp"] == False:
 							self.ifaces[currif]["gateway"] = list(map(int, split[1].split('.')))
 				if split[0] == "pre-up":
