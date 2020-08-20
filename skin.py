@@ -135,122 +135,122 @@ try:
 		print("addSkin:", addSkin)
 	else:
 		addSkin('skin_user.xml', SCOPE_CONFIG)
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("not loading user skin: ", err)
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_colors.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined colors for skin", (primary_skin_path + 'skin_user_colors.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined colors for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_background.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined background for skin", (primary_skin_path + 'skin_user_background.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined background for skin")	
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_header.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined header file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_infobar.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined infobar file for skin", (primary_skin_path + 'skin_user_infobar.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined infobar file for skin")	
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_sib.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sib file for skin", (primary_skin_path + 'skin_user_sib.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined sib file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_ch_se.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined ch_se file for skin", (primary_skin_path + 'skin_user_ch_se.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined ch_se file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_ev.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined ev file for skin")                	                	
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_center.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined center file for skin", (primary_skin_path + 'skin_user_center.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined center file for skin")  
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined sb file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_frame.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined frame file for skin", (primary_skin_path + 'skin_user_frame.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined frame file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_lines.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined lines file for skin", (primary_skin_path + 'skin_user_lines.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined lines file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sbar.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sbar file for skin", (primary_skin_path + 'skin_user_sbar.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined sbar file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_wget.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined wget file for skin", (primary_skin_path + 'skin_user_wget.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined wget file for skin")  
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined sb file for skin")               	                	
 	
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_ul.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined ul file for skin", (primary_skin_path + 'skin_user_ul.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined ul file for skin")
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_clock.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined clock file for skin") 
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_emc.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined emc file for skin", (primary_skin_path + 'skin_user_emc.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined emc file for skin")    
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_volume.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined volume file for skin", (primary_skin_path + 'skin_user_volume.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined volume file for skin")    
         
 try:
 	loadSkin(primary_skin_path + 'skin_user_movieselection.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined movieselection file for skin", (primary_skin_path + 'skin_user_movieselection.xml'))
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined movieselection file for skin")                                             	                	
 	
 	
@@ -261,7 +261,7 @@ def load_modular_files():
 			try:
 				loadSkin(primary_skin_path + f, SCOPE_SKIN)
 				print("[openNFR] loading modular skin file : ", (primary_skin_path + f))
-			except (SkinError, IOError, AssertionError), err:
+			except (SkinError, IOError, AssertionError) as err:
 				print("[openNFR] failed to load modular skin file : ", err)
 load_modular_files()
 	
@@ -275,7 +275,7 @@ try:
 				config.skin.primary_skin.value = default_skin
 			config.skin.primary_skin.save()
 
-except (SkinError, IOError, AssertionError), err:
+except (SkinError, IOError, AssertionError) as err:
 	print("SKIN ERROR:", err)
 	print("defaulting to standard skin...")
 	config.skin.primary_skin.value = 'skin.xml'
@@ -288,18 +288,18 @@ addSkin('skin_second_infobar.xml')
 display_skin_id = 1
 try:
 	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008', 'formuler1'):
-                print("addskin", addSkin(os.path.join('', config.skin.display_skin.value))) 
-                if not addSkin(os.path.join('display', config.skin.display_skin.value)):
-		        raise DisplaySkinError, "display skin not found"	
+		print("addskin", addSkin(os.path.join('', config.skin.display_skin.value))) 
+		if not addSkin(os.path.join('display', config.skin.display_skin.value)):
+			raise DisplaySkinError, "display skin not found"	
 	else:
-                print("addskin", addSkin(os.path.join('display', config.skin.display_skin.value))) 
-                if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
+		print("addskin", addSkin(os.path.join('display', config.skin.display_skin.value))) 
+		if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
 		        raise DisplaySkinError, "display skin not found"
 except Exception as err:
 	print("SKIN ERROR:", err)
 	skin = DEFAULT_DISPLAY_SKIN
 	if config.skin.display_skin.value == skin:
-                skin = 'skin_display.xml'
+		skin = 'skin_display.xml'
 	print("defaulting to standard display skin...", skin)
 	config.skin.display_skin.value = skin
 	skin = os.path.join('display/lcdskins', skin)
@@ -479,7 +479,7 @@ class AttributeParser:
 			except AttributeError:
 				print("[Skin] Attribute not implemented:", attrib, "value:", value)
 			except SkinError as ex:
-				print "[Skin] Error:", ex)
+				print ("[Skin] Error:", ex)
 			except:
 				print("[Skin] Error:", attrib)
 	def conditional(self, value):
@@ -579,7 +579,7 @@ class AttributeParser:
 				fv = eWindow.__dict__[f]
 				self.guiObject.setFlag(fv)
 			except KeyError:
-				print "illegal flag %s!" % f
+				print ("illegal flag %s!" % f)
 	def backgroundColor(self, value):
 		self.guiObject.setBackgroundColor(parseColor(value))
 	def backgroundColorSelected(self, value):
@@ -998,17 +998,17 @@ class SkinContextStack(SkinContext):
 
 def readSkin(screen, skin, names, desktop):
 	#try:
-        	#if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
+		#if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
 			#print "skinselection allready selected"
 		#else:
 		        #from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
-              		#DefaulSkinchange.__init__(self, session)
-              		#os.system('reboot')	
-        #except:
-                #from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
-              	#DefaulSkinchange.__init__(self, session)
-              	#os.system('reboot')        
-        if not isinstance(names, list):
+			#DefaulSkinchange.__init__(self, session)
+			#os.system('reboot')	
+	#except:
+		#from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
+		#DefaulSkinchange.__init__(self, session)
+		#os.system('reboot')        
+	if not isinstance(names, list):
 		names = [names]
 
 	# try all skins, first existing one have priority
