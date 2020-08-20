@@ -13,7 +13,7 @@ class Console(object):
 		if not extra_args: extra_args = []
 		name = cmd
 		i = 0
-		while self.appContainers.has_key(name):
+		while name in self.appContainers:
 			name = cmd +'_'+ str(i)
 			i += 1
 #		print "[ePopen] command:", cmd
