@@ -1,9 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
 import os
-from __future__ import print_function
-from __future__ import absolute_import
-import os
 import time
 from Tools.CList import CList
 from Components.SystemInfo import SystemInfo
