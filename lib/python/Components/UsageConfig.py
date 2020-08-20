@@ -8,7 +8,7 @@ import enigma
 
 from Components.About import about
 from Components.Harddisk import harddiskmanager
-from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, ConfigFloat, ConfigDictionarySet, ConfigDirectory
+from Components.config import ConfigSubsection, ConfigYesNo, config, ConfigSelection, ConfigText, ConfigNumber, ConfigSet, ConfigLocations, NoSave, ConfigClock, ConfigInteger, ConfigBoolean, ConfigPassword, ConfigIP, ConfigSlider, ConfigSelectionNumber, ConfigFloat, ConfigDirectory
 from Tools.Directories import resolveFilename, SCOPE_HDD, SCOPE_TIMESHIFT, SCOPE_AUTORECORD, SCOPE_SYSETC, defaultRecordingLocation, fileExists
 from Components.NimManager import nimmanager
 from Components.ServiceList import refreshServiceList
@@ -852,7 +852,7 @@ def InitUsageConfig():
 	config.subtitles.subtitle_fontsize  = ConfigSelection(choices = ["%d" % x for x in list(range(16, 101)) if not x % 2], default = "40")
 
 	subtitle_delay_choicelist = []
-	for i in list(range(-900000, 1845000, 45000)=:
+	for i in list(range(-900000, 1845000, 45000)):
 		if i == 0:
 			subtitle_delay_choicelist.append(("0", _("No delay")))
 		else:
@@ -1103,7 +1103,7 @@ def InitUsageConfig():
 	config.epgselection.graph_blue = ConfigSelection(default='autotimer', choices=epg_colorkeys)
 
 	if not os.path.exists('/usr/emu/'):
-		os.mkdir('/usr/emu/',0755)
+		os.mkdir('/usr/emu/',0o755)
 	softcams = os.listdir('/usr/emu/')
 	config.oscaminfo = ConfigSubsection()
 	config.oscaminfo.showInExtensions = ConfigYesNo(default=False)
