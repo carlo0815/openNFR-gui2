@@ -1,6 +1,9 @@
 from __future__ import print_function
 from __future__ import absolute_import
 import os
+from __future__ import print_function
+from __future__ import absolute_import
+import os
 import time
 from Tools.CList import CList
 from Components.SystemInfo import SystemInfo
@@ -412,8 +415,8 @@ class Harddisk:
 						# Linux version 3.2 supports bigalloc and -C option, use 256k blocks
 						task.args += ["-C", "262144"]
 						big_o_options.append("bigalloc")
-				except Exception, ex:
-					print "Failed to detect Linux version:", ex
+				except Exception as ex:
+					print ("Failed to detect Linux version:", ex)
 		else:
 			task.setTool("mkfs.ext3")
 		if size > 250000:
