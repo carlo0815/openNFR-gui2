@@ -333,7 +333,7 @@ class Wizard(Screen):
 				nextStep = self["list"].current[1]
 				if "listevaluation" in self.wizard[currStep]:
 					exec("self." + self.wizard[self.currStep]["listevaluation"] + "('" + nextStep + "')")
-				elif (self.wizard[currStep].has_key("configelement")):
+				elif "configelement" in self.wizard[currStep]:
 					configelement = self.wizard[currStep]["configelement"]
 					element = eval(configelement)
 					element.value = self["list"].current[1]
@@ -577,7 +577,7 @@ class Wizard(Screen):
 						#self.wizard[self.currStep]["evaluatedlist"].append(entry)
 						self.list.append(entry)
 					#del self.wizard[self.currStep]["dynamiclist"]
-				if (self.wizard[self.currStep].has_key("configelement")):
+				if "configelement" in self.wizard[self.currStep]:
 					configelement = self.wizard[self.currStep]["configelement"]
 					print "configelement:", configelement
 					element = eval(configelement)

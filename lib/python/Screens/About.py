@@ -524,7 +524,7 @@ class SystemNetworkInfo(Screen):
 			self.iface = 'eth1'
 
 		ra0 = about.getIfConfig('ra0')
-		if ra0.has_key('addr'):
+		if 'addr' in ra0:
 			self.AboutText += _("IP:") + "\t" + ra0['addr'] + "\n"
 			if 'netmask' in ra0:
 				self.AboutText += _("Netmask:") + "\t" + ra0['netmask'] + "\n"
