@@ -208,7 +208,7 @@ class Task(object):
 		self.processOutput(data)
 
 	def processOutput(self, data):
-        data = six.ensure_str(data)
+		data = six.ensure_str(data)
 		self.output_line += data
 		while True:
 			i = self.output_line.find('\n')
@@ -493,7 +493,7 @@ class ToolExistsPrecondition(Condition):
 			self.realpath = task.cmd
 			path = os.environ.get('PATH', '').split(os.pathsep)
 			path.append(task.cwd + '/')
-            # FIXME PY3 map,filter
+		# FIXME PY3 map,filter
 			absolutes = filter(lambda file: os.access(file, os.X_OK), map(lambda directory, file = task.cmd: os.path.join(directory, file), path))
 			if absolutes:
 				self.realpath = absolutes[0]
