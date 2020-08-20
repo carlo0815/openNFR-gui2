@@ -521,18 +521,18 @@ class PowerKey:
 		
 	def timerstdby(self):
 		try:
-        		f = open("/tmp/was_timer_wakeup.txt", "r")
+			f = open("/tmp/was_timer_wakeup.txt", "r")
 			file = f.read()
 			f.close()
 			if config.usage.recording_timer_start.value == True:
-                		if file == "True":
+				if file == "True":
 					from Screens.MessageBox import MessageBox
 					self.session.openWithCallback(self.timergotostdby,MessageBox,_("Entering standby, after recording the box will go to shutdown or stay in Standby (Automatic or shutdown Choise in recordsconfigs)"), type = MessageBox.TYPE_INFO, timeout = 10)
 
-                	else:
-                		print("normal Start")	
-        	except:
-                	print("was_timer_wakeup not exist")	
+			else:
+				print("normal Start")	
+		except:
+			print("was_timer_wakeup not exist")	
 
 	def timergotostdby(self, ret):
 		self.session.open(Screens.Standby.Standby)
@@ -655,10 +655,10 @@ def runScreenTest():
 	vol = VolumeControl(session)
 	profile("Init:PowerKey")
 	power = PowerKey(session)
-        power.timerstdby()        
+	power.timerstdby()        
 	if boxtype in ('alien5', 'osninopro', 'osnino', 'osninoplus', 'alphatriple', 'spycat4kmini', 'tmtwin4k', 'mbmicrov2', 'revo4k', 'force3uhd', 'wetekplay', 'wetekplay2', 'wetekhub', 'dm7020hd', 'dm7020hdv2', 'osminiplus', 'osmega', 'sf3038', 'spycat', 'e4hd', 'e4hdhybrid', 'mbmicro', 'et7500', 'mixosf5', 'mixosf7', 'mixoslumi', 'gi9196m', 'maram9', 'ixussone', 'ixusszero', 'uniboxhd1', 'uniboxhd2', 'uniboxhd3', 'sezam5000hd', 'mbtwin', 'sezam1000hd', 'mbmini', 'atemio5x00', 'beyonwizt3', '9910lx', '9911lx', '9920lx') or getBrandOEM() in ('fulan') or getMachineBuild() in ('u41', 'dags7362', 'dags73625', 'dags5', 'ustym4kpro', 'beyonwizv2', 'viper4k', 'sf8008', 'sf8008m', 'cc1', 'gbmv200'):		profile("VFDSYMBOLS")
-		import Components.VfdSymbols
-		Components.VfdSymbols.SymbolsCheck(session)
+	import Components.VfdSymbols
+	Components.VfdSymbols.SymbolsCheck(session)
 		
 	# we need session.scart to access it from within menu.xml
 	session.scart = AutoScartControl(session)
@@ -670,7 +670,7 @@ def runScreenTest():
 	profile("Init:AutoVideoMode")
 	import Screens.VideoMode
 	Screens.VideoMode.autostart(session)
-                
+
 	profile("RunReactor")
 	profile_final()
 
@@ -683,7 +683,7 @@ def runScreenTest():
 	print("NOK shutdown action=%s" % config.usage.shutdownNOK_action.value)
 	print("bootup action=%s" % config.usage.boot_action.value)
 	
-        if not config.usage.shutdownOK.value and not config.usage.shutdownNOK_action.value == 'normal' or not config.usage.boot_action.value == 'normal':
+	if not config.usage.shutdownOK.value and not config.usage.shutdownNOK_action.value == 'normal' or not config.usage.boot_action.value == 'normal':
 		print("last shutdown = %s" % config.usage.shutdownOK.value)
 		import Screens.PowerLost
 		Screens.PowerLost.PowerLost(session)
@@ -887,4 +887,3 @@ except:
 	print_exc(file=stdout)
 	enigma.quitMainloop(5)
 	print('-'*60)
-
