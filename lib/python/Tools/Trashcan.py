@@ -171,7 +171,7 @@ class CleanTrashTask(Components.Task.PythonTask):
 								candidates.append((st.st_ctime, fn, st.st_size))
 								size += st.st_size
 						except Exception as e:
-+							print("[Trashcan] Failed to stat %s:"% name, e)
+							print("[Trashcan] Failed to stat %s:"% name, e)
 					# Remove empty directories if possible
 					for name in dirs:
 						try:
