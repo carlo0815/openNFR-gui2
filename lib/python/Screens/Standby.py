@@ -104,7 +104,7 @@ def setLCDModeMinitTV(value):
 def setLCDModeMinitTV4k(value):
 	try:
 		print("value:", value)
-                f = open("/proc/stb/lcd/live_enable", "w")
+		f = open("/proc/stb/lcd/live_enable", "w")
 		f.write("value")
 		f.close()
 	except:
@@ -125,7 +125,7 @@ class Standby2(Screen):
 		self.leaveMute()
 		self.session.nav.playService(self.oldService)
 		# set LCDminiTV
-                 
+
 		if SystemInfo["Display"] and SystemInfo["LCDMiniTV"]:
 			setLCDModeMinitTV(config.lcd.modeminitv.value)
 		elif SystemInfo["Display"] and SystemInfo["LCDMiniTV4k"]:
@@ -174,7 +174,7 @@ class Standby2(Screen):
 		Screen.__init__(self, session)
 		self.skinName = "Standby"
 		self.avswitch = AVSwitch()
-                self.oldService = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		self.oldService = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		print("[Standby] enter standby")
 		SystemInfo["StandbyState"] = True
 
@@ -243,7 +243,7 @@ class Standby2(Screen):
 		gotoShutdownTime = int(config.usage.standby_to_shutdown_timer.value)
 		print("goto deep2")
 		if gotoShutdownTime:
-		        print("goto deep3")
+			print("goto deep3")
 			self.standbyTimeoutTimer = eTimer()
 			self.standbyTimeoutTimer.callback.append(self.standbyTimeout)
 			self.standbyTimeoutTimer.startLongTimer(gotoShutdownTime)
@@ -273,7 +273,7 @@ class Standby2(Screen):
 				self.session.nav.playService(self.prev_running_service)
 		self.session.screen["Standby"].boolean = False
 		globalActionMap.setEnabled(True)
-		print "goto deep1"
+		print ("goto deep1")
 		Notifications.RemovePopup(id = "RecordTimerQuitMainloop")
 
 	def __onFirstExecBegin(self):
@@ -286,7 +286,7 @@ class Standby2(Screen):
 		return StandbySummary
 		
 	def standbyTimeout(self):
-	        print "goto deep3"
+		print ("goto deep3")
 		from RecordTimer import RecordTimerEntry
 		RecordTimerEntry.TryQuitMainloop()
 		
