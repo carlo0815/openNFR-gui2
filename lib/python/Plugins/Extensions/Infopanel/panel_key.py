@@ -5,11 +5,9 @@ from Components.Button import Button
 from Components.Label import Label
 from Components.Pixmap import Pixmap
 from Components.ActionMap import NumberActionMap, ActionMap
-from Components.config import *
 from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Tools.Directories import fileExists
-from Components.PluginList import *
 from Components.Sources.List import List
 from Plugins.Plugin import PluginDescriptor
 from Components.PluginComponent import plugins
@@ -34,16 +32,15 @@ class OpenNFRBluePanel:
 			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		elif config.plugins.infopanel_bluekey.list.value == '1':
-                        from Screens.InfoBar import InfoBarRedButton
-                        InfoBarRedButton.activateRedButton(self)			
+			from Screens.InfoBar import InfoBarRedButton
+			InfoBarRedButton.activateRedButton(self)			
 		elif config.plugins.infopanel_bluekey.list.value == '2':
-						from Plugins.Extensions.Infopanel.Manager import *
-						from Plugins.Extensions.Infopanel.Softcam import *
-						self.session.openWithCallback(self.callEgAction, NFRCamManager)
-                        
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
+			self.session.openWithCallback(self.callEgAction, NFRCamManager)
+
 		else:
-                        from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction, Infopanel)
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -59,23 +56,22 @@ class OpenNFRBluePanelLong:
 
 	def showOpenNFRBluePanelLong(self):
 		if config.plugins.infopanel_bluekeylong.list.value == '0':
-			from Plugins.Extensions.Infopanel.plugin import *
+			import plugin
 			self.session.openWithCallback(self.callEgAction, Infopanel)
 		elif config.plugins.infopanel_bluekeylong.list.value == '1':
-                        from Screens.InfoBar import InfoBarRedButton
-                        InfoBarRedButton.activateRedButton(self)
+			from Screens.InfoBar import InfoBarRedButton
+			InfoBarRedButton.activateRedButton(self)
 		elif config.plugins.infopanel_bluekeylong.list.value == '2':
-                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
-                        from Plugins.Extensions.Infopanel.Manager import *
-			from Plugins.Extensions.Infopanel.Softcam import *
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
 
 	def callEgAction(self, *args):
 		if len(args):
 			(actionmap, context, action) = args
-			actionmap.action(context, action)			
+			actionmap.action(context, action)
 			
 class OpenNFRREDPanel:
 	def __init__(self):
@@ -86,18 +82,17 @@ class OpenNFRREDPanel:
 
 	def showOpenNFRRedPanel(self):
 		if config.plugins.infopanel_redkey.list.value == '0':
-			from Plugins.Extensions.Infopanel.Manager import *
-			from Plugins.Extensions.Infopanel.Softcam import *
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
 		elif config.plugins.infopanel_redkey.list.value == '1':
-                        from Screens.InfoBar import InfoBarRedButton
-                        InfoBarRedButton.activateRedButton(self)
+			from Screens.InfoBar import InfoBarRedButton
+			InfoBarRedButton.activateRedButton(self)
 		elif config.plugins.infopanel_redkey.list.value == '2':
-                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
-                        from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction, Infopanel)
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -116,15 +111,14 @@ class OpenNFRREDPanelLong:
 			from Screens.InfoBar import InfoBarRedButton
 			InfoBarRedButton.activateRedButton(self)	
 		elif config.plugins.infopanel_redkeylong.list.value == '1':
-			            from Plugins.Extensions.Infopanel.Manager import *
-			            from Plugins.Extensions.Infopanel.Softcam import *
-			            self.session.openWithCallback(self.callEgAction, NFRCamManager)		
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
+			self.session.openWithCallback(self.callEgAction, NFRCamManager)
 		elif config.plugins.infopanel_redkeylong.list.value == '2':
-                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
-                        from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction, Infopanel)
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -140,18 +134,17 @@ class OpenNFRGreenPanelLong:
 
 	def showOpenNFRGreenPanelLong(self):
 		if config.plugins.infopanel_greenkeylong.list.value == '0':
-			from Plugins.Extensions.Infopanel.Manager import *
-			from Plugins.Extensions.Infopanel.Softcam import *
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
 		elif config.plugins.infopanel_greenkeylong.list.value == '1':
-                        from Screens.InfoBar import InfoBarRedButton
-                        InfoBarRedButton.activateRedButton(self)
+			from Screens.InfoBar import InfoBarRedButton
+			InfoBarRedButton.activateRedButton(self)
 		elif config.plugins.infopanel_greenkeylong.list.value == '2':
-                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
-                        from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction, Infopanel)
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
@@ -167,18 +160,17 @@ class OpenNFRYellowPanelLong:
 
 	def showOpenNFRYellowPanelLong(self):
 		if config.plugins.infopanel_yellowkeylong.list.value == '0':
-			from Plugins.Extensions.Infopanel.Manager import *
-			from Plugins.Extensions.Infopanel.Softcam import *
+			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
 		elif config.plugins.infopanel_yellowkeylong.list.value == '1':
-                        from Screens.InfoBar import InfoBarRedButton
-                        InfoBarRedButton.activateRedButton(self)
+			from Screens.InfoBar import InfoBarRedButton
+			InfoBarRedButton.activateRedButton(self)
 		elif config.plugins.infopanel_yellowkeylong.list.value == '2':
-                        from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
-                        self.session.openWithCallback(self.callEgAction, QuickMenu)
+			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
+			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:
-                        from Plugins.Extensions.Infopanel.plugin import *
-                        self.session.openWithCallback(self.callEgAction, Infopanel)
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
+			self.session.openWithCallback(self.callEgAction, Infopanel)
 
 	def callEgAction(self, *args):
 		if len(args):
