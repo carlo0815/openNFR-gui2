@@ -598,18 +598,18 @@ class InfoBarHotkey():
 						return
 			elif selected[0] == "Infobar":
 				if hasattr(self, selected[1]):
-					exec "self." + ".".join(selected[1:]) + "()"
+					exec ("self." + ".".join(selected[1:]) + "()")
 				else:
 					return 0
 			elif selected[0] == "Module":
 				try:
-					exec "from " + selected[1] + " import *"
-					exec "self.session.open(" + ",".join(selected[2:]) + ")"
+					exec ("from " + selected[1] + " import *")
+					exec ("self.session.open(" + ",".join(selected[2:]) + ")")
 				except:
-					print "[Hotkey] error during executing module %s, screen %s" % (selected[1], selected[2])
+					print ("[Hotkey] error during executing module %s, screen %s" % (selected[1], selected[2]))
 			elif selected[0] == "Setup":
-				exec "from Screens.Setup import *"
-				exec "self.session.open(Setup, \"" + selected[1] + "\")"
+				exec ("from Screens.Setup import *")
+				exec ("self.session.open(Setup, \"" + selected[1] + "\")")
 			elif selected[0].startswith("Zap"):
 				if selected[0] == "ZapPanic":
 					self.servicelist.history = []
@@ -637,7 +637,7 @@ class InfoBarHotkey():
 					self.session.open(Execute, selected[1] + " shellscript", None, command)
 				else:
 					from Screens.Console import Console
-					exec "self.session.open(Console,_(selected[1]),[command])"
+					exec ("self.session.open(Console,_(selected[1]),[command])")
 			elif selected[0] == "EMC":
 				try:
 					from Plugins.Extensions.EnhancedMovieCenter.plugin import showMoviesNew
@@ -674,4 +674,3 @@ class InfoBarHotkey():
 
 	def ToggleLCDLiveTV(self):
 		config.lcd.showTv.value = not config.lcd.showTv.value
-
