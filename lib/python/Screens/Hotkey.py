@@ -141,7 +141,7 @@ def gethotkeysKeys():
 config.misc.hotkey = ConfigSubsection()
 config.misc.hotkey.additional_keys = ConfigYesNo(default=True)
 for x in gethotkeysKeys():
-	exec "config.misc.hotkey." + x[1] + " = ConfigText(default='" + x[2] + "')"
+	exec("config.misc.hotkey." + x[1] + " = ConfigText(default='" + x[2] + "')")
 
 def getHotkeyFunctions():
 	hotkeyFunctions = []
