@@ -72,7 +72,7 @@ class PiPSetup(Screen):
 		}, -1)
 
 	def go(self):
-    	self.pip.savePiPSettings()
+		self.pip.savePiPSettings()
 		self.close()
 
 	def cancel(self):
