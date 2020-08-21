@@ -852,7 +852,7 @@ class InfoBarTimeshift:
 						timeshift_saveerror1 = ""
 						timeshift_saveerror2 = _("Not enough free Diskspace!\n\nFilesize: %sMB\nFree Space: %sMB\nPath: %s" % (filesize, freespace, config.usage.autorecord_path.value))
 
-				except Exception as errormsg::
+				except Exception as errormsg:
 					timeshift_saved = False
 					timeshift_saveerror2 = errormsg
 
