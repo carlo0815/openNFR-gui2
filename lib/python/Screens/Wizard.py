@@ -579,12 +579,12 @@ class Wizard(Screen):
 					#del self.wizard[self.currStep]["dynamiclist"]
 				if "configelement" in self.wizard[self.currStep]:
 					configelement = self.wizard[self.currStep]["configelement"]
-					print "configelement:", configelement
+					print ("configelement:", configelement)
 					element = eval(configelement)
 					
 					if isinstance(element, ConfigSelection):
 						for choice in element.choices.choices:
-							print "choice:", choice
+							print ("choice:", choice)
 							if configelement == "config.timezone.val":
 								self.list.append((choice, choice))
 							else:
