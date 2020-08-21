@@ -24,7 +24,7 @@ config.misc.skindefaultwizardenabled = ConfigBoolean(default = True)
 class StartWizard(WizardLanguage, Rc):
 	def __init__(self, session, silent = True, showSteps = False, neededTag = None):
 		self.xmlfile = ["startwizard.xml"]
-                WizardLanguage.__init__(self, session, showSteps = False)
+		WizardLanguage.__init__(self, session, showSteps = False)
 		Rc.__init__(self)
 		self["wizard"] = Pixmap()
 		Screen.setTitle(self, _("Welcome..."))
@@ -34,14 +34,12 @@ class StartWizard(WizardLanguage, Rc):
 		if getBoxType() == 'dm8000':
 			config.misc.rcused.setValue(0)
 		else:
-                        config.misc.rcused.setValue(1)
-		config.misc.rcused.save()
-		
-		config.misc.firstrun.setValue(0)
-		config.misc.firstrun.save()
-		configfile.save()
+			config.misc.rcused.setValue(1)
+			config.misc.rcused.save()
+			config.misc.firstrun.setValue(0)
+			config.misc.firstrun.save()
+			configfile.save()
 wizardManager.registerWizard(DefaulSkinchange, config.misc.skindefaultwizardenabled.value, priority = 0)
 wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 1)
 wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
-
