@@ -591,7 +591,7 @@ class InfoBarShowHide(InfoBarScreenSaver):
 		if self.secondInfoBarScreen:
 			self.secondInfoBarScreen.hide()
 		self.resetAlpha()
-                for x in self.onShowHideNotifiers:
+		for x in self.onShowHideNotifiers:
 			x(False)
 			
 	def resetAlpha(self):
@@ -1007,21 +1007,21 @@ class InfoBarChannelSelection:
 				"openSatellites": (self.openSatellites, _("open Satellites")),
 				"openBouquetList": (self.openBouquetList, _("open Favorites")),
 				"openFIND": (self.openFIND, _("open find service")),
-                                "showMediaCenter": (self.showMediaCenter, _("open Media Center")),
-                              								
+				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
+
 				
 			})
 
-        def openFIND(self):
-                from Components.FindService import FindService
-                self.session.open(FindService)
+	def openFIND(self):
+		from Components.FindService import FindService
+		self.session.open(FindService)
 
-        def showMediaCenter(self):
-                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
-                        from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
-                        self.session.open(DMC_MainMenu)
-                else:
-                        self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+	def showMediaCenter(self):
+		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+			from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
+			self.session.open(DMC_MainMenu)
+		else:
+			self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 						
 	def openBouquetList(self):
@@ -1120,7 +1120,7 @@ class InfoBarChannelSelection:
 							self.servicelist.prevBouquet()
 					self.servicelist.moveUp()
 					cur = self.servicelist.getCurrentSelection()
-                    currbo_new = self.servicelist.getRoot()
+			currbo_new = self.servicelist.getRoot()
 					if cur:
 						if self.servicelist.dopipzap:
 							isPlayable = self.session.pip.isPlayableForPipService(cur)
@@ -1173,12 +1173,12 @@ class InfoBarMenu:
 			})
 		self.session.infobar = None
 
-        def mainMenu2(self):
-                if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
-                        from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
-                        self.session.open(MM_MainMenu)
-                else:
-                        self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+	def mainMenu2(self):
+		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
+			from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
+			self.session.open(MM_MainMenu)
+		else:
+			self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 
 	def mainMenu(self):
@@ -1995,7 +1995,7 @@ class InfoBarSeek:
 					# print "FAST FORWARD not possible: resolved to PLAY"
 			elif self.seekstate[2]:
 				if not pauseable.setSlowMotion(self.seekstate[2]):
-					print "resolved to SLOW MOTION"
+					print ("resolved to SLOW MOTION")
 					pass
 					# print "resolved to SLOW MOTION"
 				else:
@@ -2771,7 +2771,7 @@ class InfoBarPiP:
 	def swapPiP(self):
 		swapservice = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		pipref = self.session.pip.getCurrentService()
-        currboMain = self.session.pip.getCurrentBouquetMain()
+		currboMain = self.session.pip.getCurrentBouquetMain()
 		currboPiP = self.session.pip.getCurrentBouquetPiP()
 		if swapservice and pipref and pipref.toString() != swapservice.toString():
 			currentServicePath = self.servicelist.getCurrentServicePath()
@@ -2781,10 +2781,10 @@ class InfoBarPiP:
 				currentBouquet = self.servicelist and self.servicelist.getRoot()            
 			self.servicelist.setCurrentServicePath(self.session.pip.servicePath, doZap=False)
 			self.session.pip.playService(swapservice,currentBouquet)
-            self.session.pip.setCurrentBouquetMain(currboPiP)
+			self.session.pip.setCurrentBouquetMain(currboPiP)
 			self.session.nav.playService(pipref, checkParentalControl=False, adjust=False)
 			self.session.pip.servicePath = currentServicePath
-            self.zapToServiceinList(pipref, currboPiP)
+			self.zapToServiceinList(pipref, currboPiP)
 			#if self.servicelist.dopipzap:
 				# This unfortunately won't work with subservices
 			#	self.servicelist.setCurrentSelection(self.session.pip.getCurrentService())
