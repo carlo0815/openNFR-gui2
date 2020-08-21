@@ -51,7 +51,7 @@ class PictureInPicture(Screen):
 	def __init__(self, session):
 		global pip_config_initialized
 		Screen.__init__(self, session)
-        self.skinName = "MyPip"
+		self.skinName = "MyPip"
 		self["video"] = VideoWindow()
 		self.pipActive = session.instantiateDialog(PictureInPictureZapping)
 		self.dishpipActive = session.instantiateDialog(Dishpip)
@@ -115,7 +115,7 @@ class PictureInPicture(Screen):
 					config.av.pip_noadspip.value[3] = config.av.pip.value[3]
 					config.av.pip_noadspip.save()
 					configfile.save()
-                    
+
 	def move(self, x, y):
 		config.av.pip.value[0] = x
 		config.av.pip.value[1] = y
