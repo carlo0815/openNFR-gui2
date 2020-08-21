@@ -79,7 +79,7 @@ class EPGSelection(Screen, HelpableScreen):
 		self.eventviewDialog = None
 		self.eventviewWasShown = False
 		self.currch = None
-        self.currbo = eServiceReference()
+		self.currbo = eServiceReference()
 		self.session.pipshown = False
 		self.cureventindex = None
 		if plugin_PiPServiceRelation_installed:
@@ -454,9 +454,9 @@ class EPGSelection(Screen, HelpableScreen):
 		self.BouquetRoot = False
 		self.navserviceref = self.session.nav.getCurrentlyPlayingServiceOrGroup()    
 		self.createTimer = eTimer()
-        self.createTimer.start(800)
+		self.createTimer.start(800)
 		self['lab1'].show()        
-        self.onCreate(True)
+		self.onCreate(True)
 
 	def onCreate(self, firstrun=False):
 		if not HardwareInfo().is_nextgen():
@@ -502,8 +502,8 @@ class EPGSelection(Screen, HelpableScreen):
 				self.BouquetRoot = True
 			self.services = self.getBouquetServices(self.StartBouquet)
 			self['list'].fillGraphEPG(self.services, self.ask_time)
-            if waspipActive:
-				self.zapFunc(serviceref, bouquet = self.StartBouquet, preview = True)
+		if waspipActive:
+			self.zapFunc(serviceref, bouquet = self.StartBouquet, preview = True)
 			self['list'].moveToService(serviceref)
 			self['list'].setCurrentlyPlaying(serviceref)
 			self['bouquetlist'].recalcEntrySize()
@@ -522,14 +522,14 @@ class EPGSelection(Screen, HelpableScreen):
 		elif self.type == EPG_TYPE_MULTI:
 			if currbo is not None:
 				self.StartBouquet = currbo
-			self['bouquetlist'].recalcEntrySize()
-			self['bouquetlist'].fillBouquetList(self.bouquets)
-			self['bouquetlist'].moveToService(self.StartBouquet)
-			self['bouquetlist'].fillBouquetList(self.bouquets)
-			self.services = self.getBouquetServices(self.StartBouquet)
-			self['list'].fillMultiEPG(self.services, self.ask_time)
-			self['list'].setCurrentlyPlaying(serviceref)
-			self.setTitle(self['bouquetlist'].getCurrentBouquet())
+				self['bouquetlist'].recalcEntrySize()
+				self['bouquetlist'].fillBouquetList(self.bouquets)
+				self['bouquetlist'].moveToService(self.StartBouquet)
+				self['bouquetlist'].fillBouquetList(self.bouquets)
+				self.services = self.getBouquetServices(self.StartBouquet)
+				self['list'].fillMultiEPG(self.services, self.ask_time)
+				self['list'].setCurrentlyPlaying(serviceref)
+				self.setTitle(self['bouquetlist'].getCurrentBouquet())
 		elif self.type == EPG_TYPE_SINGLE or self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_INFOBAR:
 			if waspipActive:
 				if self.type == EPG_TYPE_SINGLE:
@@ -1323,7 +1323,7 @@ class EPGSelection(Screen, HelpableScreen):
 					self.zap()
 		if self.Oldpipshown:
 			self.session.pipshown = True
-            
+
 	def epgButtonPressed(self):
 		self.OpenSingleEPG()
 
@@ -1466,7 +1466,7 @@ class EPGSelection(Screen, HelpableScreen):
 
 	def closeScreen(self):
 		if self.type == EPG_TYPE_SINGLE:
-        	self.checkpipOld()
+			self.checkpipOld()
 			self.close()
 			return # stop and do not continue.
 		if self.type == EPG_TYPE_ENHANCED:
@@ -1509,7 +1509,7 @@ class EPGSelection(Screen, HelpableScreen):
 		if count == 0:
 			ref = lst.getCurrent()[1]
 			if ref is not None:
-                self.selch = ref.ref
+				self.selch = ref.ref
 				if (self.type == EPG_TYPE_INFOBAR or self.type == EPG_TYPE_INFOBARGRAPH) and config.epgselection.infobar_preview_mode.value == '2':
 					if not prev:
 						if self.session.pipshown:
@@ -1540,7 +1540,7 @@ class EPGSelection(Screen, HelpableScreen):
 					self.zapFunc(self.selch, bouquet = self.currbo, preview = prev)
 					self.currch = self.session.nav.getCurrentlyPlayingServiceReference() and str(self.session.nav.getCurrentlyPlayingServiceReference().toString())
 				self['list'].setCurrentlyPlaying(self.session.nav.getCurrentlyPlayingServiceOrGroup())
-                
+
 	def zap(self):
 		if self.session.nav.getCurrentlyPlayingServiceOrGroup() and '0:0:0:0:0:0:0:0:0' in self.session.nav.getCurrentlyPlayingServiceOrGroup().toString():
 			return
