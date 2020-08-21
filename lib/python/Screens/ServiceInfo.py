@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from Components.GUIComponent import GUIComponent
+from Components.HTMLComponent import HTMLComponent
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
