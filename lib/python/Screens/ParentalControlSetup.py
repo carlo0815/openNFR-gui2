@@ -1,4 +1,4 @@
-from Screens import Screen
+from Screens.Screen import Screen
 from Components.ConfigList import ConfigListScreen
 from Components.ActionMap import NumberActionMap
 from Components.config import config, getConfigListEntry, ConfigNothing, NoSave, ConfigPIN, configfile
