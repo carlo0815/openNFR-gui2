@@ -1120,7 +1120,7 @@ class InfoBarChannelSelection:
 							self.servicelist.prevBouquet()
 					self.servicelist.moveUp()
 					cur = self.servicelist.getCurrentSelection()
-			currbo_new = self.servicelist.getRoot()
+					currbo_new = self.servicelist.getRoot()
 					if cur:
 						if self.servicelist.dopipzap:
 							isPlayable = self.session.pip.isPlayableForPipService(cur)
@@ -2002,7 +2002,7 @@ class InfoBarSeek:
 					self.seekstate = self.SEEK_STATE_PAUSE
 					# print "SLOW MOTION not possible: resolved to PAUSE"
 			else:
- 				print("resolved to PLAY")
+				print("resolved to PLAY")
 				self.activityTimer.start(200, False)
 				pauseable.unpause()
 
@@ -2657,7 +2657,7 @@ class InfoBarPiP:
 				self.addExtension((self.getMoveName, self.movePiP, self.pipShown), "green")
 
 		self.lastPiPServiceTimeoutTimer = eTimer()
-                self.lastPiPServiceTimeoutTimer.callback.append(self.clearLastPiPService)
+		self.lastPiPServiceTimeoutTimer.callback.append(self.clearLastPiPService)
 
 	def pipShown(self):
 		return self.session.pipshown
@@ -2695,7 +2695,7 @@ class InfoBarPiP:
 				self.session.pip.servicePath = currentServicePath
 
 	def showPiP(self):
-	        if not self.LongButtonPressed:
+		if not self.LongButtonPressed:
 			try:
 				service = self.session.nav.getCurrentService()
 				info = service and service.info()
@@ -2727,7 +2727,7 @@ class InfoBarPiP:
 						newservice = self.session.nav.getCurrentlyPlayingServiceReference() or self.servicelist.servicelist.getCurrent()
 						if self.session.pip.playService(newservice):
 							self.session.pipshown = True
-                            InfoBarPiP.pipWindowActive = False
+							InfoBarPiP.pipWindowActive = False
 							self.session.pip.servicePath = self.servicelist.getCurrentServicePath()
 							if SystemInfo["LCDMiniTV"]:
 								if config.lcd.modepip.value >= "1":
@@ -4095,5 +4095,5 @@ class InfoBarOpenOnTopHelper:
 			else:
 				self.session.open(session, option)
 		except Exception as e:
-			print("[openInfoBarSession] Exception:", 
+			print("[openInfoBarSession] Exception:", e)
 #########################################################################################
