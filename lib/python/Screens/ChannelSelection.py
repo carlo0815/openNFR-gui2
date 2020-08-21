@@ -80,7 +80,7 @@ class BouquetSelector(Screen):
 	def __init__(self, session, bouquets, selectedFunc, enableWrapAround=True):
 		#import ChannelSelection
 		#reload(ChannelSelection)
-                Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Choose Bouquet"))
 
 		self.selectedFunc=selectedFunc
@@ -836,7 +836,7 @@ class ChannelSelectionEPG:
 			choice(self)
 
 	def showChoiceBoxDialog(self):
-		print 'showChoiceBoxDialog'
+		print ('showChoiceBoxDialog')
 		self['actions'].setEnabled(False)
 		self['recordingactions'].setEnabled(False)
 		self['ChannelSelectEPGActions'].setEnabled(False)
@@ -846,7 +846,7 @@ class ChannelSelectionEPG:
 		self.ChoiceBoxDialog.show()
 
 	def closeChoiceBoxDialog(self):
-		print 'closeChoiceBoxDialog'
+		print ('closeChoiceBoxDialog')
 		self['dialogactions'].execEnd()
 		if self.ChoiceBoxDialog:
 			self.ChoiceBoxDialog['actions'].execEnd()
@@ -1206,7 +1206,7 @@ class ChannelSelectionEdit:
 
 	def removeBouquet(self):
 		refstr = self.getCurrentSelection().toString()
-		print "removeBouquet", refstr
+		print ("removeBouquet", refstr)
 		pos = refstr.find('FROM BOUQUET "')
 		filename = None
 		if pos != -1:
@@ -1219,7 +1219,7 @@ class ChannelSelectionEdit:
 			if filename is not None:
 				remove(filename)
 		except OSError:
-			print "error during remove of", filename
+			print ("error during remove of", filename)
 
 	def removeSatelliteService(self):
 		current = self.getCurrentSelection()
@@ -1543,58 +1543,56 @@ class ChannelSelectionBase(Screen):
 		elif pluginselect == "two":
 		        pluginsuse = config.usage.show_plugins1_in_servicelist.value
 		elif pluginselect == "three":
-		        pluginsuse = config.usage.show_plugins2_in_servicelist.value
-                else:
-                        print "nothing select"                        		        
-                
-                if ret:
+			pluginsuse = config.usage.show_plugins2_in_servicelist.value
+		else:
+			print ("nothing select")
+
+		if ret:
 			cmd = ""
-                        if pluginsuse == "BMC":
+			if pluginsuse == "BMC":
 				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-bmediacenter;"
 			elif pluginsuse == "Mediaportal":
 				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mediaportal;"
 			elif pluginsuse == "IPTVPlayer":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-e2iplayer;"
-                        elif pluginsuse == "Youtube":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-youtube;"
-                        elif pluginsuse == "Kodi":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-kodi;"
-                                cmd += "opkg install --force-overwrite stb-kodi-vusolo4k;"
-                        elif pluginsuse == "MP3Browser":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mp3browser;"
-                        elif pluginsuse == "TSMedia":
-                                cmd += "opkg install --force-overwrite enigma2-plugin-extensions-tsmedia;"
-                        elif pluginsuse == "WebradioFS":
-                        	cmd += "opkg install --force-overwrite enigma2-plugin-extensions-webradiofs;"
-                        elif pluginsuse == "MovieBrowser":
-                        	cmd += "opkg install --force-overwrite enigma2-plugin-extensions-moviebrowser;"									
-                        else:
-                                print "nothing select!"
-                                
-                        self.session.open(Console, title = _("Please wait configuring OpenNFR Image"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)        
-                else: 
-                        print "answer is no!"
-                        
-                                                       
-                        
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-e2iplayer;"
+			elif pluginsuse == "Youtube":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-youtube;"
+			elif pluginsuse == "Kodi":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-kodi;"
+				cmd += "opkg install --force-overwrite stb-kodi-vusolo4k;"
+			elif pluginsuse == "MP3Browser":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-mp3browser;"
+			elif pluginsuse == "TSMedia":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-tsmedia;"
+			elif pluginsuse == "WebradioFS":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-webradiofs;"
+			elif pluginsuse == "MovieBrowser":
+				cmd += "opkg install --force-overwrite enigma2-plugin-extensions-moviebrowser;"								
+			else:
+				print ("nothing select!")
+
+			self.session.open(Console, title = _("Please wait configuring OpenNFR Image"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)
+		else: 
+			print ("answer is no!")
+
 	def reloadPlugin(self):
-        	plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
+		plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 		#self.close()
-                
+
 	def pluginsone(self):                
-                global pluginselect
-                pluginselect = "one"
-                self.pluginsused()
-                
+		global pluginselect
+		pluginselect = "one"
+		self.pluginsused()
+
 	def pluginstwo(self):                
-                global pluginselect
-                pluginselect = "two"
-                self.pluginsused()  
-                
+		global pluginselect
+		pluginselect = "two"
+		self.pluginsused()  
+
 	def pluginsthree(self):                
-                global pluginselect
-                pluginselect = "three"
-                self.pluginsused()                                                        
+		global pluginselect
+		pluginselect = "three"
+		self.pluginsused()                                                        
 
 	def pluginsused(self):
 		if config.servicelist.startupservice.value and config.servicelist.startuproot.value:
@@ -1606,107 +1604,107 @@ class ChannelSelectionBase(Screen):
 				config.radio.lastservice.value = config.servicelist.startupservice.value
 				config.radio.lastroot.value = config.servicelist.startuproot.value
 		self.lastservice = config.tv.lastservice
-                if pluginselect == "one":
-		        pluginsuse = config.usage.show_plugins_in_servicelist.value
+		if pluginselect == "one":
+			pluginsuse = config.usage.show_plugins_in_servicelist.value
 		elif pluginselect == "two":
-		        pluginsuse = config.usage.show_plugins1_in_servicelist.value
+			pluginsuse = config.usage.show_plugins1_in_servicelist.value
 		elif pluginselect == "three":
-		        pluginsuse = config.usage.show_plugins2_in_servicelist.value
-                else:
-                        print "nothing select"    
-                        	
+			pluginsuse = config.usage.show_plugins2_in_servicelist.value
+		else:
+			print ("nothing select")
+
 		if pluginsuse == "Playlist":
 		        self.showMovies()
 		elif pluginsuse == "BMC":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
 				from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
 				self.session.open(DMC_MainMenu)
-                        else:
-                                #self.session.open(MessageBox, _("The BMediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The BMediaCenter plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				#self.session.open(MessageBox, _("The BMediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The BMediaCenter plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "Mediaportal":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MediaPortal"):
 				try:
 					from Plugins.Extensions.MediaPortal.plugin import MPmain as MediaPortal
 					MediaPortal(self.session)
 					no_plugin = False
-				except Exception, e:
-					self.session.open(MessageBox, _("The MediaPortal plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MediaPortal plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+				except Exception as e:
+					self.session.open(MessageBox, _("The MediaPortal plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MediaPortal plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "IPTVPlayer":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/IPTVPlayer"):
 				try:
 					from Plugins.Extensions.IPTVPlayer.plugin import runMain as IPTVPlayer
 					IPTVPlayer(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The IPTVPlayer plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The IPTVPlayer plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
-    		elif pluginsuse == "Youtube":
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The IPTVPlayer plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+		elif pluginsuse == "Youtube":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/YouTube/plugin.pyo"):
 				try:
-                                        from Plugins.Extensions.YouTube.plugin import main as Youtube
+					from Plugins.Extensions.YouTube.plugin import main as Youtube
 					Youtube(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The Youtube plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Youtube plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
- 		elif pluginsuse == "Kodi":
+			else:
+					self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Youtube plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+		elif pluginsuse == "Kodi":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/Kodi/plugin.pyo"):
 				try:
 					from Plugins.Extensions.Kodi.plugin import startLauncher as Kodi
 					Kodi(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The Kodi plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Kodi plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The Kodi plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "MP3Browser":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MP3Browser/plugin.pyo"):
 				try:
 					from Plugins.Extensions.MP3Browser.plugin import main as MP3Browser
 					MP3Browser(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The MP3Browser plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MP3Browser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MP3Browser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "TSMedia":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/plugin.pyo"):
 				try:
 					from Plugins.Extensions.TSmedia.plugin import main as TSMedia
 					TSMedia(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The TSmedia plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-                        else:
-                                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The TSmedia plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The TSmedia plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "WebradioFS":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/webradioFS/plugin.pyo"):
 				try:
 					from Plugins.Extensions.webradioFS.plugin import main as WebradioFS
 					WebradioFS(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The WebradioFS plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-		        else:
-		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The WebradioFS plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The WebradioFS plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 		elif pluginsuse == "MovieBrowser":
 			if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MovieBrowser/plugin.pyo"):
 				try:
 					from Plugins.Extensions.MovieBrowser.plugin import main as MovieBrowser
 					MovieBrowser(self.session)
 					no_plugin = False
-				except Exception, e:
+				except Exception as e:
 					self.session.open(MessageBox, _("The MovieBrowser plugin is not work!\nPlease reinstall it."), type = MessageBox.TYPE_INFO,timeout = 10 )		
-		        else:
-		                self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MovieBrowser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
+			else:
+				self.session.openWithCallback(self.MsgBoxClosed, MessageBox, _("The MovieBrowser plugin is not installed!\nInstall now?"), MessageBox.TYPE_YESNO, timeout = 60, default = True)
 
 		else:
-			print "nothing select"
+			print ("nothing select")
 
 	def showMovies(self, defaultRef=None):
 		self.lastservice1 = self.session.nav.getCurrentlyPlayingServiceOrGroup()
@@ -1726,7 +1724,7 @@ class ChannelSelectionBase(Screen):
 				
 	def openMoviePlayer(self, ref):
 		from Screens.InfoBar import MoviePlayer
-                self.session.open(MoviePlayer, ref, slist=self.servicelist, lastservice=self.session.nav.getCurrentlyPlayingServiceOrGroup())
+		self.session.open(MoviePlayer, ref, slist=self.servicelist, lastservice=self.session.nav.getCurrentlyPlayingServiceOrGroup())
 				
 			
 	def applyKeyMap(self):
@@ -1789,7 +1787,7 @@ class ChannelSelectionBase(Screen):
 				if info:
 					return info.getName(bouquet)
 		except:
-			return None            
+			return None
 
 	def getBouquetNumOffset(self, bouquet):
 		if not config.usage.multibouquet.value:
@@ -2338,7 +2336,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 	instance = None
 
 	def __init__(self, session):
-                ChannelSelectionBase.__init__(self, session)
+		ChannelSelectionBase.__init__(self, session)
 		ChannelSelectionEdit.__init__(self)
 		ChannelSelectionEPG.__init__(self)
 		SelectionEventInfo.__init__(self)
@@ -2623,7 +2621,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 			self.setCurrentSelection(self.session.nav.getCurrentlyPlayingServiceOrGroup())
 		if not preview_zap:
 			self.hide()
-            
+
 	def zapToServiceinList(self, service=None, bouquet=None):
 		if service is not None and bouquet is not None:
 			self.enterUserbouquet(bouquet, save_root=False)
@@ -2782,7 +2780,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 		else:
 			refstr = ''
 		if refstr != self.lastservice.value:
-                       	self.lastservice.value = refstr
+			self.lastservice.value = refstr
 			self.lastservice.save()
 
 	def setCurrentServicePath(self, path, doZap=True):
@@ -2821,12 +2819,12 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				# This unfortunately won't work with subservices
 				self.setCurrentSelection(self.session.pip.getCurrentService())
 			else:
-                                lastservice = eServiceReference(self.lastservice.value)
+				lastservice = eServiceReference(self.lastservice.value)
 				if lastservice.valid() and self.getCurrentSelection() != lastservice:
 					self.setCurrentSelection(lastservice)
 		self.asciiOff()
 		if config.servicelist.zap_preview.value:
-                	config.usage.servicelistpreview_mode.setValue(False)		
+			config.usage.servicelistpreview_mode.setValue(False)		
 		if config.usage.servicelistpreview_mode.value:
 			self.zapBack()
 		self.correctChannelNumber()
@@ -2934,7 +2932,7 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				self.session.pip.currentService = tmp_ref
 			self.setCurrentSelection(tmp_ref)
 		self.revertMode = None		
-        
+
 	def FavoritTV(self):
 		selpos = 0
 		mark = 0
@@ -3081,14 +3079,14 @@ class PiPZapSelection(ChannelSelection):
 					f.write(config.lcd.minitvmode.value)
 					f.close()
 		self.correctChannelNumber()
-        self.setZapToServiceinList()
+		self.setZapToServiceinList()
 		self.close(None)
 
 
 class RadioInfoBar(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		Screen.setTitle(self, _("Radio Channel Selection"))		
+		Screen.setTitle(self, _("Radio Channel Selection"))
 		self['RdsDecoder'] = RdsDecoder(self.session.nav)
 
 
