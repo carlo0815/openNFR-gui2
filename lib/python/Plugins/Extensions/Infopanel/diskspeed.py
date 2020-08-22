@@ -33,122 +33,122 @@ global percUsed
 
 
 class Disk_Speed(Screen):
-    def __init__(self, session):
-        self.skin = Disk_Speed_Skin
-        Screen.__init__(self, session)
-        self.list = []
-        self['config'] = MenuList(self.list)
-        self['key_red'] = Label(_('Cancel'))
-        self['key_green'] = Label(_('Start Test'))
-        self['key_blue'] = Label(_('Devices Panel'))
-        self['label1'] = Label(_('Welcome to Device Speed Test.'))
-        self['label2'] = Label(_('Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to test the Speed:'))
-        self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
-         'green': self.start_test,
-         'ok': self.start_test,         
-         'back': self.close,
-         'blue': self.devpanel})
-        self.updateList()
+	def __init__(self, session):
+		self.skin = Disk_Speed_Skin
+		Screen.__init__(self, session)
+		self.list = []
+		self['config'] = MenuList(self.list)
+		self['key_red'] = Label(_('Cancel'))
+		self['key_green'] = Label(_('Start Test'))
+		self['key_blue'] = Label(_('Devices Panel'))
+		self['label1'] = Label(_('Welcome to Device Speed Test.'))
+		self['label2'] = Label(_('Here is the list of mounted devices in Your STB\n\nPlease choose a device where You would like to test the Speed:'))
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
+			'green': self.start_test,
+			'ok': self.start_test,         
+			'back': self.close,
+			'blue': self.devpanel})
+		self.updateList()
 
-    def updateList(self):
-        if fileExists('/tmp/writebufferhdd'):
-           os.system("rm /tmp/writebufferhdd")      
-        myusb, myhdd = ('', '')
-        myoptions = []
-        if fileExists('/proc/mounts'):
-            fileExists('/proc/mounts')
-            f = open('/proc/mounts', 'r')
-            for line in f.readlines():
-                if line.find('/media/usb') != -1:
-                    myusb = '/media/usb'
-                    continue
-                if line.find('/media/hdd') != -1:
-                    myhdd = '/media/hdd'
-                    continue
+	def updateList(self):
+		if fileExists('/tmp/writebufferhdd'):
+			os.system("rm /tmp/writebufferhdd")
+			myusb, myhdd = ('', '')
+			myoptions = []
+		if fileExists('/proc/mounts'):
+			fileExists('/proc/mounts')
+			f = open('/proc/mounts', 'r')
+			for line in f.readlines():
+				if line.find('/media/usb') != -1:
+					myusb = '/media/usb'
+					continue
+		if line.find('/media/hdd') != -1:
+			myhdd = '/media/hdd'
+			continue
 
-            f.close()
-        else:
-            self['label2'].setText(_('Sorry it seems that there are not Linux formatted devices mounted on your STB. To install NFR4XBoot you need a Linux formatted part1 device. Click on the blue button to open NFR Devices Panel'))
-            fileExists('/proc/mounts')
-        if myusb:
-            self.list.append(myusb)
-        else:
-            myusb
-        if myhdd:
-            myhdd
-            self.list.append(myhdd)
-        else:
-            myhdd
-        self['config'].setList(self.list)
+			f.close()
+		else:
+			self['label2'].setText(_('Sorry it seems that there are not Linux formatted devices mounted on your STB. To install NFR4XBoot you need a Linux formatted part1 device. Click on the blue button to open NFR Devices Panel'))
+			fileExists('/proc/mounts')
+		if myusb:
+			self.list.append(myusb)
+		else:
+			myusb
+		if myhdd:
+			myhdd
+			self.list.append(myhdd)
+		else:
+			myhdd
+			self['config'].setList(self.list)
 
-    def devpanel(self):
-        try:
-            from Screens.HddSetup import HddSetup
-            self.session.open(HddSetup)
-        except:
-            self.session.open(MessageBox, _('You are not running NFR Image. You must mount devices Your self.'), MessageBox.TYPE_INFO)
+	def devpanel(self):
+		try:
+			from Screens.HddSetup import HddSetup
+			self.session.open(HddSetup)
+		except:
+			self.session.open(MessageBox, _('You are not running NFR Image. You must mount devices Your self.'), MessageBox.TYPE_INFO)
 
-    def myclose(self):
-        self.close()
+	def myclose(self):
+		self.close()
 
-    def start_test(self):
-        check = False
-        self.mysel = self['config'].getCurrent()
-        global mysel
-        mysel = self.mysel
-        if fileExists('/proc/mounts'):
-            fileExists('/proc/mounts')
-            f = open('/proc/mounts', 'r')
-            for line in f.readlines():
-                if line.find(self.mysel) != -1:
-                    check = True
-                    continue
-            f.close()
-        else:
-            fileExists('/proc/mounts')
-        if check == False:
-            self.session.open(MessageBox, _('Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to test the Speed!'), MessageBox.TYPE_INFO)
-        else:
-           self.install2()
+	def start_test(self):
+		check = False
+		self.mysel = self['config'].getCurrent()
+		global mysel
+		mysel = self.mysel
+		if fileExists('/proc/mounts'):
+			fileExists('/proc/mounts')
+			f = open('/proc/mounts', 'r')
+			for line in f.readlines():
+				if line.find(self.mysel) != -1:
+					check = True
+					continue
+					f.close()
+				else:
+					fileExists('/proc/mounts')
+		if check == False:
+			self.session.open(MessageBox, _('Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to test the Speed!'), MessageBox.TYPE_INFO)
+		else:
+			self.install2()
 
-    def install2(self):
-        os.system("echo 3 >/proc/sys/vm/drop_caches")
-        os.popen("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel)
-        f = open('/tmp/writebufferhdd', 'r')
-        for line in f.readlines():
-            if "MB/s" in line:
-                    model = line.split(' ')[6]
-		    speed = re.findall("[-+]?\d+[\.]?\d*", model)
-        f.close()
-        label1 = Label(_('Your Disk-Speed is:%s') %model)
-        percUsed = int(float(speed[0]) / 1.6) 
-        if float(speed[0]) <= 1.5:
-            label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
-        elif float(speed[0]) > 1.5 and float(speed[0]) <= 10:
-            label2 = Label(_('With this Speed you can Record 1 HD Channel!\n'))
-        elif float(speed[0]) > 10 and float(speed[0]) <= 15:
-            label2 = Label(_('With this Speed you can Record 2 HD Channel!\n'))
-        else:
-            label2 = Label(_('With this Speed you can Record more then 2 HD Channel!\n'))
-        os.system("rm %s/blank2" % mysel)
-        self.session.open(Disk_Test, percUsed, label1, label2)
-        os.system("rm /tmp/writebufferhdd")
-            
+	def install2(self):
+		os.system("echo 3 >/proc/sys/vm/drop_caches")
+		os.popen("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel)
+		f = open('/tmp/writebufferhdd', 'r')
+		for line in f.readlines():
+		if "MB/s" in line:
+			model = line.split(' ')[6]
+			speed = re.findall("[-+]?\d+[\.]?\d*", model)
+			f.close()
+			label1 = Label(_('Your Disk-Speed is:%s') %model)
+			percUsed = int(float(speed[0]) / 1.6) 
+		if float(speed[0]) <= 1.5:
+			label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
+		elif float(speed[0]) > 1.5 and float(speed[0]) <= 10:
+			label2 = Label(_('With this Speed you can Record 1 HD Channel!\n'))
+		elif float(speed[0]) > 10 and float(speed[0]) <= 15:
+			label2 = Label(_('With this Speed you can Record 2 HD Channel!\n'))
+		else:
+			label2 = Label(_('With this Speed you can Record more then 2 HD Channel!\n'))
+			os.system("rm %s/blank2" % mysel)
+			self.session.open(Disk_Test, percUsed, label1, label2)
+			os.system("rm /tmp/writebufferhdd")
+
 class Disk_Test(Screen):
-    def __init__(self, session, percUsed, label1, label2):
-        Screen.__init__(self, session)
-        global percUsed1
-        percUsed1 = percUsed
-        label1 = label1
-        label2 = label2        
-        self.skin = Disk_Speed1_Skin
-        self.onShown.append(self.setWindowTitle)
-        self['label1'] = label1        
-        self['label2'] = label2         
-        self['key_red'] = Label(_('Exit'))
-        self['spaceused'] = ProgressBar()        
-        self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
-         'back': self.close})
-        
-    def setWindowTitle(self):	        
-        self['spaceused'].setValue(percUsed1)
+	def __init__(self, session, percUsed, label1, label2):
+		Screen.__init__(self, session)
+		global percUsed1
+		percUsed1 = percUsed
+		label1 = label1
+		label2 = label2        
+		self.skin = Disk_Speed1_Skin
+		self.onShown.append(self.setWindowTitle)
+		self['label1'] = label1        
+		self['label2'] = label2         
+		self['key_red'] = Label(_('Exit'))
+		self['spaceused'] = ProgressBar()        
+		elif['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
+			'back': self.close})
+
+	def setWindowTitle(self):	        
+		self['spaceused'].setValue(percUsed1)
