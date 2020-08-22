@@ -41,78 +41,78 @@ else:
 	HDSkn = False
 	
 cEditor = """<screen name="cEditor" position="40,90" size="1180,590" title="File-Explorer">
-                          <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
-                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
-                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
-                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
-                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
-                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                          <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
-                          </screen>"""
-               
+			<widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
+			<ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+			<ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+			<ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+			<ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+			<widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
+		</screen>"""
+
 class vEditor(Screen):
 	global HDSkn
 	if HDSkn:
 		if (getDesktop(0).size().width()) > 1030:
-                        skin = """
-			  <screen name="vEditor" position="40,90" size="1180,590" title="File-Explorer">
-                          <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
-                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
-                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
-                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
-                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
-                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                          <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
-                          </screen>"""
+			skin = """
+			<screen name="vEditor" position="40,90" size="1180,590" title="File-Explorer">
+				<widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
+				<ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+				<ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+				<ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+				<ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+				<widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 21" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+				<widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+				<widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+				widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+				<eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
+			</screen>"""
 		else:
 			skin = """
 			<screen position="center,77" size="900,450" title="File-Explorer">
 				<widget name="filedata" position="2,0" size="896,450" itemHeight="25"/>
-			        <ePixmap pixmap="skin_default/buttons/key_red.png" position="60,250" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
-			        <widget name="key_red" position="60,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-			        <widget name="key_green" position="250,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-			        <widget name="key_yellow" position="440,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-			        <widget name="key_blue" position="640,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<ePixmap pixmap="skin_default/buttons/key_red.png" position="60,250" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
+				<widget name="key_red" position="60,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<widget name="key_green" position="250,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<widget name="key_yellow" position="440,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<widget name="key_blue" position="640,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 
 			</screen>"""
 	else:
 		skin = """
 		<screen position="center,77" size="620,450" title="File-Explorer">
 			<widget name="filedata" position="0,0" size="620,450" itemHeight="25"/>
-			        <ePixmap pixmap="skin_default/buttons/key_red.png" position="60,200" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
-			        <ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
-			        <widget name="key_red" position="60,200" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="yellow" />
-			        <widget name="key_green" position="200,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-			        <widget name="key_yellow" position="400,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
-			        <widget name="key_blue" position="600,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<ePixmap pixmap="skin_default/buttons/key_red.png" position="60,200" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_green.png" position="250,250" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_yellow.png" position="440,250" zPosition="0" size="140,40" alphatest="on" />
+				<ePixmap pixmap="skin_default/buttons/key_blue.png" position="640,250" zPosition="0" size="140,40" alphatest="blend" />
+				<widget name="key_red" position="60,200" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="yellow" />
+				<widget name="key_green" position="200,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<widget name="key_yellow" position="400,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
+				<widget name="key_blue" position="600,250" size="140,40" zPosition="-1" valign="center" halign="center" font="Regular;20" transparent="1" backgroundColor="blue" />
 
 		</screen>"""
 
 class cEditor(Screen):
 	skin = """
 	<screen name="cEditor" position="40,90" size="1180,590" title="File-Explorer">
-                          <widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
-                          <ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
-                          <ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
-                          <ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
-                          <ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
-                          <widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                          <widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                          <eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
-                          </screen>"""
+			<widget name="filedata" position="5,7" size="1170,527" itemHeight="25" />
+			<ePixmap position="6,559" size="35,27" pixmap="skin_default/buttons/key_red.png" alphatest="blend" />
+			<ePixmap position="332,559" size="35,27" pixmap="skin_default/buttons/key_green.png" alphatest="blend" />
+			<ePixmap position="658,559" size="35,27" pixmap="skin_default/buttons/key_yellow.png" alphatest="blend" />
+			<ePixmap position="984,559" size="35,27" pixmap="skin_default/buttons/key_blue.png" alphatest="blend" />
+			<widget source="key_red" render="Label" position="41,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget source="key_green" render="Label" position="368,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget source="key_yellow" render="Label" position="695,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget source="key_blue" render="Label" position="1022,562" zPosition="2" size="214,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<eLabel name="new eLabel" position="6,553" size="1170,2" backgroundColor="blue" foregroundColor="blue" />
+	</screen>"""
 	def __init__(self, session, file):
 		from Components.Sources.StaticText import StaticText
 		
@@ -123,18 +123,18 @@ class cEditor(Screen):
 		self.list = []
 		self["key_red"] = StaticText(_("Cancel"))
 		self["key_green"] = StaticText(_("Save"))
-		self["key_yellow"] = StaticText(_("NewLine"))	
-		self["key_blue"] = StaticText(_("DeleteLine"))                	
+		self["key_yellow"] = StaticText(_("NewLine"))
+		self["key_blue"] = StaticText(_("DeleteLine"))
 		self["filedata"] = MenuList(self.list)
 		self["actions"] = ActionMap(["WizardActions", "ColorActions"],
 
 		{
-		    "ok": self.editLine,
-                    "back": self.exitEditor,
-		    "yellow": self.yellow,  
-		    "blue": self.blue,                                       
-		    "green": self.green,
-		    "red": self.close,
+			"ok": self.editLine,
+			"back": self.exitEditor,
+			"yellow": self.yellow,  
+			"blue": self.blue, 
+			"green": self.green,
+			"red": self.close,
 
 		}, -1)
 		self.selLine = None
@@ -143,7 +143,7 @@ class cEditor(Screen):
 		self.GetFileData(file)
 		
 	def green(self):
-        	self.SaveFile(True)		
+		self.SaveFile(True)
 		
 	def exitEditor(self):
 		if self.isChanged:
@@ -175,15 +175,15 @@ class cEditor(Screen):
 		
 	def blue(self):
 		self.selLine = self["filedata"].getSelectionIndex()
-                i = int(self.selLine) 
-                li = i - 1
-                lr = i + 2		
-                #for x in self.list[li:lr]:
-                #         self.isChanged = True
-                del self.list[i]
+		i = int(self.selLine) 
+		li = i - 1
+		lr = i + 2
+		#for x in self.list[li:lr]:
+		#         self.isChanged = True
+		del self.list[i]
 		self.selLine = None
 		self.session.open(MessageBox, _("Select Line is deleted!"), MessageBox.TYPE_INFO, timeout=3)
-		#self.SaveFile(True)		
+		#self.SaveFile(True)
 
 	def editLine(self):
 		try:
@@ -197,9 +197,9 @@ class cEditor(Screen):
 
 
 	def callbackEditLine(self, newline):
-                i = int(self.selLine) 
-                li = i - 1
-                lr = i + 2
+		i = int(self.selLine) 
+		li = i - 1
+		lr = i + 2
 		if newline is not None:
 			for x in self.list[li:lr]:
 				if x == self.oldLine:
@@ -231,4 +231,3 @@ class vInputBox(InputBox):
 	skin = sknew
 	def __init__(self, session, title = "", windowTitle = _("Input"), useableChars = None, **kwargs):
 		InputBox.__init__(self, session, title, windowTitle, useableChars, **kwargs)
-                		
