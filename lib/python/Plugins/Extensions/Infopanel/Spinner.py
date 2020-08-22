@@ -8,11 +8,11 @@ class Spinner(GUIComponent):
 		GUIComponent.__init__(self)
 		self.len = 0
 		if not Bilder:
-		        Bilder = []
+			Bilder = []
 			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
 					Bilder.append("/usr/share/enigma2/spinner/wait%d.png"%(i+1))
-                self.SetBilder(Bilder)
+		self.SetBilder(Bilder)
 		self.timer = eTimer()
 		self.timer.callback.append(self.Invalidate)
 		self.timer.start(100)
