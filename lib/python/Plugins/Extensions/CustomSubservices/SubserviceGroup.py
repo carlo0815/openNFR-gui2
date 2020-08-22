@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Subservice import Subservice
+from Plugins.Extensions.CustomSubservices.Subservice import Subservice
 
 class SubserviceGroup(object):
 	__name = ""
@@ -33,4 +33,3 @@ class SubserviceGroup(object):
 
 	def clearSubservices(self):
 		del self.__subservices[:]
-
