@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from Plugins.Extensions.CustomSubservices.Subservice import Subservice
+from .Subservice import Subservice
 
 class SubserviceGroup(object):
 	__name = ""
