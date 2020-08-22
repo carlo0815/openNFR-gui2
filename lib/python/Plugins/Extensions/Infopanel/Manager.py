@@ -23,14 +23,14 @@ from Components.About import about
 
 class NFRCamManager(Screen):
 	skin = """
-  <screen name="NFRCamManager" position="center,center" size="820,410" title="NFR SoftCam Manager">
-    <eLabel position="4,-1" size="800,2" backgroundColor="black" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-red-on.png" position="2,368" size="200,40" alphatest="blend" zPosition="-1" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-green-on.png" position="208,368" size="200,40" alphatest="blend" zPosition="-1" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-yellow-on.png" position="412,368" size="200,40" alphatest="blend" zPosition="-1" />
-    <ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-blue-on.png" position="615,368" size="200,40" alphatest="blend" zPosition="-1" />
-    <widget source="list" render="Listbox" position="5,10" size="442,300" scrollbarMode="showOnDemand" transparent="1">
-      <convert type="TemplatedMultiContent">
+	<screen name="NFRCamManager" position="center,center" size="820,410" title="NFR SoftCam Manager">
+		<eLabel position="4,-1" size="800,2" backgroundColor="black" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-red-on.png" position="2,368" size="200,40" alphatest="blend" zPosition="-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-green-on.png" position="208,368" size="200,40" alphatest="blend" zPosition="-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-yellow-on.png" position="412,368" size="200,40" alphatest="blend" zPosition="-1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/big-blue-on.png" position="615,368" size="200,40" alphatest="blend" zPosition="-1" />
+		<widget source="list" render="Listbox" position="5,10" size="442,300" scrollbarMode="showOnDemand" transparent="1">
+		<convert type="TemplatedMultiContent">
 		{"template": [
 			MultiContentEntryPixmapAlphaTest(pos = (0, 0), size = (100, 50), png = 1), 
 			MultiContentEntryText(pos = (120, 10), size = (275, 40), font=0, \
@@ -42,15 +42,15 @@ class NFRCamManager(Screen):
 	"itemHeight": 50
 	}
 	</convert>
-    </widget>
-    <eLabel halign="center" position="512,10" size="210,35" font="Regular;20" text="Ecm info" transparent="1" />
-    <widget name="status" position="460,47" size="320,260" font="Regular;16" halign="center" noWrap="1" transparent="1" />
-    <widget name="key_red" position="2,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
-    <widget name="key_green" position="208,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
-    <widget name="key_yellow" position="412,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
-    <widget name="key_blue" position="615,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
-  </screen>
-  """
+	</widget>
+	<eLabel halign="center" position="512,10" size="210,35" font="Regular;20" text="Ecm info" transparent="1" />
+	<widget name="status" position="460,47" size="320,260" font="Regular;16" halign="center" noWrap="1" transparent="1" />
+	<widget name="key_red" position="2,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<widget name="key_green" position="208,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<widget name="key_yellow" position="412,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
+	<widget name="key_blue" position="615,368" zPosition="2" size="200,40" valign="center" halign="center" font="Regular;22" transparent="1" />
+	</screen>
+	"""
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -115,10 +115,10 @@ class NFRCamManager(Screen):
 						if os.path.isfile(dst):
 							self.Console.ePopen("mv %s %s.org" % (dst,dst1))
 							sleep(0.50)
-						os.symlink(src, dst)                                                                                 			
+						os.symlink(src, dst)
 			if os.path.islink("/etc/init.d/softcam"):
 				os.system("/etc/init.d/softcam stop")
-                                os.unlink("/etc/init.d/softcam")
+				os.unlink("/etc/init.d/softcam")
 				
 			emus=[]
 			for fAdd in glob ('/etc/*.emu'):
@@ -130,29 +130,29 @@ class NFRCamManager(Screen):
 			
 			for fAdd1 in glob ('/etc/init.d/softcam.*'):
 				if not "None" in fAdd1:
-                                	emus.append(fAdd1)
-                                #searchfile1 = open(fAdd1, "r")
-                                #for line1 in searchfile1:
+					emus.append(fAdd1)
+				#searchfile1 = open(fAdd1, "r")
+				#for line1 in searchfile1:
 					#if 'echo "/usr/bin/' in line1:
 						#line2 = line1[15:]
 						#line3 = line2.split(" ")
 						#line4 = line3[0]
 						#emus.append(line4)
-                                #searchfile1.close()			
+				#searchfile1.close()
 	
 			try:
-                                for emu in emus:
-                                        emu1 = emu.strip()
-                                        if "/etc/init.d/" in emu1:
-                                        	emu2 = emu1.rsplit('/', 1)
-                                                src = emu1
-                                        	dst = "/usr/emu/" + emu2[1] + ".x"
-                                        else:	
-                                        	src = "/usr/bin/" + emu1
-                                        	dst = "/usr/emu/" + emu1 + ".x"
+				for emu in emus:
+					emu1 = emu.strip()
+					if "/etc/init.d/" in emu1:
+						emu2 = emu1.rsplit('/', 1)
+						src = emu1
+						dst = "/usr/emu/" + emu2[1] + ".x"
+					else:	
+						src = "/usr/bin/" + emu1
+						dst = "/usr/emu/" + emu1 + ".x"
 					os.symlink(src, dst)
-			except:					
-					print("files exist")					
+			except:
+					print("files exist")
 	
 			self.iscam = False
 			self.startcreatecamlist()
@@ -185,25 +185,25 @@ class NFRCamManager(Screen):
 		if 'addr' in wlan1:
 			self.AboutText += _("IP:") + wlan1['addr'] + "\n"
 			self.iface = 'wlan1'
-                self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
+		self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
 
 
 	def Stage1Complete(self, result, retval, extra_args=None):
-	        result = result
-                if "Link detected: yes"  in result:
-                	from Screens.NetworkSetup import NetworkOpenvpn
-               		ext_ip = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
-               		if isinstance(ext_ip, unicode):
-               			ext_ip = ext_ip.encode('utf8')
-               		print(ext_ip)
-               		self.AboutText1 = "Online: " + (ext_ip)
-               		if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
-               			self.AboutText2 = "openVPN is running "
-               		else:
-               			self.AboutText2 = "no openVPN found" 
-               	else:
-                       	self.AboutText1 = "Offline"
-                listecm = ""
+		result = result
+		if "Link detected: yes"  in result:
+			from Screens.NetworkSetup import NetworkOpenvpn
+			ext_ip = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
+			if isinstance(ext_ip, unicode):
+				ext_ip = ext_ip.encode('utf8')
+				print(ext_ip)
+				self.AboutText1 = "Online: " + (ext_ip)
+			if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
+				self.AboutText2 = "openVPN is running "
+			else:
+				self.AboutText2 = "no openVPN found" 
+			else:
+				self.AboutText1 = "Offline"
+				listecm = ""
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
@@ -219,17 +219,17 @@ class NFRCamManager(Screen):
 				listecm += self.AboutText2
 			except:
 				pass
-                        self["status"].setText(listecm)
-			ecmfiles.close()
-		except:
-			listecm += "\n" + self.AboutText
-			listecm += "\n" + self.AboutText1
+				self["status"].setText(listecm)
+				ecmfiles.close()
+			except:
+				listecm += "\n" + self.AboutText
+				listecm += "\n" + self.AboutText1
 			try:
 				listecm += "\n" + self.AboutText2
 			except:
 				pass
-			self["status"].setText(listecm)
-                
+				self["status"].setText(listecm)
+
 	def startcreatecamlist(self):
 		self.Console.ePopen("ls %s" % config.NFRSoftcam.camdir.value,
 			self.camliststart)
@@ -273,10 +273,10 @@ class NFRCamManager(Screen):
 			self.createcamlist()
 
 	def createcamlist(self):
-	        f = open("/etc/emulist", "w")
+		f = open("/etc/emulist", "w")
 		name = self.softcamlist	
-                f.write("\n".join(map(lambda x: str(x), name)))		
-		f.close()                	
+		f.write("\n".join(map(lambda x: str(x), name)))
+		f.close()
 		self.list = []
 		try:
 			test = self.actcam
@@ -291,7 +291,7 @@ class NFRCamManager(Screen):
 		for line in self.softcamlist:
 			if line != self.actcam:
 				self.list.append((line, softpng, self.checkcam(line)))
-      		self["list"].setList(self.list)
+		self["list"].setList(self.list)
 
 	def checkcam (self, cam):
 		cam = cam.lower()
@@ -429,7 +429,7 @@ class ConfigEdit(Screen, ConfigListScreen):
 				"red": self.cancel,
 				"ok": self.ok,
 				"green": self.ok,
-				"blue": self.blue,				
+				"blue": self.blue,
 			}, -2)
 
 	def createsetup(self):
@@ -474,12 +474,12 @@ class ConfigEdit(Screen, ConfigListScreen):
 			self.close()
 
 	def blue(self):
-        	if self["config"].getCurrent() == getConfigListEntry(_("SoftCam config directory"), config.NFRSoftcam.camconfig):
-            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your KEY Path'), text=self.config.NFRSoftcam.camconfig.value)
-        	elif self["config"].getCurrent() == getConfigListEntry(_("SoftCam directory"),config.NFRSoftcam.camdir):
-            		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your EMU Path'), text=self.config.NFRSoftcam.camdir.value)
+		if self["config"].getCurrent() == getConfigListEntry(_("SoftCam config directory"), config.NFRSoftcam.camconfig):
+			self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your KEY Path'), text=self.config.NFRSoftcam.camconfig.value)
+		elif self["config"].getCurrent() == getConfigListEntry(_("SoftCam directory"),config.NFRSoftcam.camdir):
+			self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit your EMU Path'), text=self.config.NFRSoftcam.camdir.value)
 				
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
-			self["config"].invalidate(self["config"].getCurrent())	 
+			self["config"].invalidate(self["config"].getCurrent())
