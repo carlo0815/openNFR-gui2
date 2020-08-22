@@ -121,7 +121,7 @@ class Network:
 # 					print tuple(iface['ip'])
 					fp.write("	address %d.%d.%d.%d\n" % tuple(iface['ip']))
 					fp.write("	netmask %d.%d.%d.%d\n" % tuple(iface['netmask']))
-					if 'gateway' iface:
+					if 'gateway' in iface:
 						fp.write("	gateway %d.%d.%d.%d\n" % tuple(iface['gateway']))
 			if "configStrings" in iface:
 				fp.write(iface["configStrings"])
@@ -435,7 +435,7 @@ class Network:
 
 	def getLinkStateFinished(self, result, retval, extra_args):
 		(callback) = extra_args
-        result = six.ensure_str(result)
+		result = six.ensure_str(result)
 
 		if self.LinkConsole is not None:
 			if len(self.LinkConsole.appContainers) == 0:
