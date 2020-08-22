@@ -148,6 +148,49 @@ def updateresumePointCache():
 resumePointCache = loadResumePoints()
 resumePointCacheLast = int(time())
 
+subservice_groupslist = None
+def reload_subservice_groupslist(force=False):
+	global subservice_groupslist
+	if subservice_groupslist is None or force:
+		try:
+			groupedservices = "/etc/enigma2/groupedservices"
+			if not os.path.isfile(groupedservices):
+				groupedservices = "/usr/share/enigma2/groupedservices"
+			subservice_groupslist = [list(g) for k, g in itertools.groupby([line.split('#')[0].strip() for line in open(groupedservices).readlines()], lambda x:not x) if not k]
+		except:
+			subservice_groupslist = []
+reload_subservice_groupslist()
+
+def getPossibleSubservicesForCurrentChannel(current_service):
+	if current_service and subservice_groupslist:
+		ref_in_subservices_group = [x for x in subservice_groupslist if current_service in x]
+		if ref_in_subservices_group:
+			return ref_in_subservices_group[0]
+	return []
+
+def getActiveSubservicesForCurrentChannel(current_service):
+	if current_service:
+		possibleSubservices = getPossibleSubservicesForCurrentChannel(current_service)
+		activeSubservices = []
+		epgCache = eEPGCache.getInstance()
+		idx = 0
+		for subservice in possibleSubservices:
+			events = epgCache.lookupEvent(['BDTS', (subservice, 0, -1)])
+			if events and len(events) == 1:
+				event = events[0]
+				title = event[2]
+				if title and "Sendepause" not in title:
+					starttime = datetime.datetime.fromtimestamp(event[0]).strftime('%H:%M')
+					endtime = datetime.datetime.fromtimestamp(event[0] + event[1]).strftime('%H:%M')
+					current_show_name = title + " " + str(starttime) + "-" + str(endtime)
+					activeSubservices.append((current_show_name, subservice))
+		return activeSubservices
+
+def hasActiveSubservicesForCurrentChannel(current_service):
+	activeSubservices = getActiveSubservicesForCurrentChannel(current_service)
+	return bool(activeSubservices and len(activeSubservices) > 1)
+
+
 class InfoBarDish:
 	def __init__(self):
 		self.dishDialog = self.session.instantiateDialog(Dish)
