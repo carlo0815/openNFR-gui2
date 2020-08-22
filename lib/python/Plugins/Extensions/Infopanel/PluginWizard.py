@@ -32,16 +32,16 @@ from Components.ProgressBar import ProgressBar
 language.addCallback(plugins.reloadPlugins)
 
 def getVarSpaceKb():
-    try:
-        s = statvfs('/')
-    except OSError:
-        return (0, 0)
+	try:
+		s = statvfs('/')
+	except OSError:
+		return (0, 0)
 
-    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 
 class PluginInstall(Screen):
 	skin = """
-               <screen name="PluginInstall" position="80,160" size="1100,450" title="Installiere Plugins">
+		<screen name="PluginInstall" position="80,160" size="1100,450" title="Installiere Plugins">
 				<widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
 				<widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
 				<eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Installierenden Plugins" zPosition="3" halign="center" />
@@ -54,14 +54,14 @@ class PluginInstall(Screen):
 				<eLabel name="spaceused" text="% Flash Used..." position="45,414" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="201,415" size="894,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
 			</screen>"""
-		  
+		
 	DOWNLOAD = 0
 	PLUGIN_PREFIX = 'enigma2-plugin-'
 	lastDownloadDate = None
 
 	def __init__(self, session, type = 0, needupdate = True):
 		Screen.__init__(self, session)
-                global pluginfiles
+		global pluginfiles
 		self.type = type
 		self.needupdate = needupdate
 		self.container = eConsoleAppContainer()
@@ -69,7 +69,7 @@ class PluginInstall(Screen):
 		self.container.dataAvail.append(self.dataAvail)
 		self.onLayoutFinish.append(self.startRun)
 		self.onShown.append(self.setWindowTitle)
-                self.setuplist = []
+		self.setuplist = []
 
 		self.list = []
 		self["list"] = PluginList(self.list)
@@ -82,9 +82,9 @@ class PluginInstall(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
-		self['spaceused'] = ProgressBar()		
-                self["status"] = ScrollLabel()
-		self['key_green']  = Label(_('Install'))	
+		self['spaceused'] = ProgressBar()
+		self["status"] = ScrollLabel()
+		self['key_green']  = Label(_('Install'))
 		self['key_blue']  = Label(_('Exit'))
 		
 		if self.type == self.DOWNLOAD:
@@ -111,53 +111,53 @@ class PluginInstall(Screen):
 		sel = self["list"].l.getCurrentSelection()
 		if sel is None:
 			return
-                
+
 		sel = sel[0]
 		if isinstance(sel, str): # category
 
 			if sel in self.expanded:
-			        
+
 				self.expanded.remove(sel)
 			else:
 				self.expanded.append(sel)
 			self.updateList()
 			
 		else:
-		        pluginfiles = ""
+			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
 			        if sel.name in self.setuplist:
-                                        self.setuplist.remove("%s" % sel.name)
-                                        if not self.setuplist:
-                                               pluginfiles += "no Plugin select"
-                                               self.listplugininfo(pluginfiles)
-                                        else:
-                                               list = self.setuplist
-                                               for item in list:
-                                                      pluginfiles += item
-                 	                              pluginfiles += "\n" 
-                 	                              self.listplugininfo(pluginfiles)
-                                                      self.list = []                                                 
-			        else:
- 			                self.setuplist.append("%s" % sel.name)
-                                        list = self.setuplist
-                                        for item in list:
-                 	                       pluginfiles += item
-                 	                       pluginfiles += "\n"
-                 	                       self.listplugininfo(pluginfiles)
-                                               self.list = []    			                
+					self.setuplist.remove("%s" % sel.name)
+					if not self.setuplist:
+						pluginfiles += "no Plugin select"
+						self.listplugininfo(pluginfiles)
+					else:
+						list = self.setuplist
+						for item in list:
+							pluginfiles += item
+							pluginfiles += "\n" 
+							self.listplugininfo(pluginfiles)
+							self.list = []
+				else:
+					self.setuplist.append("%s" % sel.name)
+					list = self.setuplist
+					for item in list:
+						pluginfiles += item
+						pluginfiles += "\n"
+						self.listplugininfo(pluginfiles)
+						self.list = []
 
 	def install(self):
-	        PLUGIN_PREFIX = 'enigma2-plugin-'
+		PLUGIN_PREFIX = 'enigma2-plugin-'
 		cmdList = []
 		for item in self.setuplist:
 			cmdList.append((IpkgComponent.CMD_INSTALL, { "package": PLUGIN_PREFIX + item }))
 		self.session.open(Ipkg_1, cmdList = cmdList)
-                
+
 
 	def listplugininfo(self, pluginfiles):
 		try:
-		        pluginfiles.split("/n")	
-		        self["status"].setText(pluginfiles)                                
+			pluginfiles.split("/n")	
+			self["status"].setText(pluginfiles)
 		except:
 			self["status"].setText("")
 
@@ -236,10 +236,10 @@ class PluginInstall(Screen):
 					self.runSettingsInstall()
 
 	def doInstall(self, callback, pkgname):
-	        if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)	        
-	        else: 
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		else: 
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
@@ -460,7 +460,7 @@ class IpkgInstaller(Screen):
 
 class PluginDeinstall(Screen):
 	skin = """
-               <screen name="PluginDeinstall" position="80,160" size="1100,450" title="Deinstalliere Plugins">
+		<screen name="PluginDeinstall" position="80,160" size="1100,450" title="Deinstalliere Plugins">
 				<widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
 				<widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
 				<eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Deinstallierenden Plugins" zPosition="3" halign="center" />
@@ -473,15 +473,15 @@ class PluginDeinstall(Screen):
 				<eLabel name="spaceused" text="% Flash Used..." position="45,414" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="201,415" size="894,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
 			</screen>"""
-               
-	REMOVE = 1		  
+
+	REMOVE = 1
 	DOWNLOAD = 0
 	PLUGIN_PREFIX = 'enigma2-plugin-'
 	lastDownloadDate = None
 
 	def __init__(self, session, type = 1, needupdate = True):
 		Screen.__init__(self, session)
-                global pluginfiles
+		global pluginfiles
 		self.type = type
 		self.needupdate = needupdate
 		self.container = eConsoleAppContainer()
@@ -489,7 +489,7 @@ class PluginDeinstall(Screen):
 		self.container.dataAvail.append(self.dataAvail)
 		self.onLayoutFinish.append(self.startRun)
 		self.onShown.append(self.setWindowTitle)
-                self.setuplist = []
+		self.setuplist = []
 
 		self.list = []
 		self["list"] = PluginList(self.list)
@@ -502,9 +502,9 @@ class PluginDeinstall(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
-		self['spaceused'] = ProgressBar()		
-                self["status"] = ScrollLabel()
-		self['key_green']  = Label(_('Deinstall'))	
+		self['spaceused'] = ProgressBar()
+		self["status"] = ScrollLabel()
+		self['key_green']  = Label(_('Deinstall'))
 		self['key_blue']  = Label(_('Exit'))
 		
 		if self.type == self.DOWNLOAD:
@@ -532,66 +532,65 @@ class PluginDeinstall(Screen):
 		sel = self["list"].l.getCurrentSelection()
 		if sel is None:
 			return
-                
+
 		sel = sel[0]
 		if isinstance(sel, str): # category
 
 			if sel in self.expanded:
-			        
+
 				self.expanded.remove(sel)
 			else:
 				self.expanded.append(sel)
 			self.updateList()
 			
 		else:
-		        pluginfiles = ""
+			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
-			        if sel.name in self.setuplist:
-                                        self.setuplist.remove("%s" % sel.name)
-                                        if not self.setuplist:
-                                               pluginfiles += "no Plugin select"
-                                               self.listplugininfo(pluginfiles)
-                                        else:
-                                               list = self.setuplist
-                                               for item in list:
-                                                      pluginfiles += item
-                 	                              pluginfiles += "\n" 
-                 	                              self.listplugininfo(pluginfiles)
-                                                      self.list = []                                                 
-			        else:
- 			                self.setuplist.append("%s" % sel.name)
-                                        list = self.setuplist
-                                        for item in list:
-                 	                       pluginfiles += item
-                 	                       pluginfiles += "\n"
-                 	                       self.listplugininfo(pluginfiles)
-                                               self.list = []    
-                                               
-                       	elif self.type == self.REMOVE:
-			        if sel.name in self.setuplist:
-                                        self.setuplist.remove("%s" % sel.name)
-                                        if not self.setuplist:
-                                               pluginfiles += "no Plugin select"
-                                               self.listplugininfo(pluginfiles)
-                                        else:
-                                               list = self.setuplist
-                                               for item in list:
-                                                      pluginfiles += item
-                 	                              pluginfiles += "\n" 
-                 	                              self.listplugininfo(pluginfiles)
-                                                      self.list = []                                                 
-			        else:
- 			                self.setuplist.append("%s" % sel.name)
-                                        list = self.setuplist
-                                        for item in list:
-                 	                       pluginfiles += item
-                 	                       pluginfiles += "\n"
-                 	                       self.listplugininfo(pluginfiles)
-                                               self.list = []                         
-                                               			                
+			 	if sel.name in self.setuplist:
+					self.setuplist.remove("%s" % sel.name)
+					if not self.setuplist:
+						pluginfiles += "no Plugin select"
+						self.listplugininfo(pluginfiles)
+					else:
+						list = self.setuplist
+						for item in list:
+							pluginfiles += item
+							pluginfiles += "\n" 
+							self.listplugininfo(pluginfiles)
+							self.list = []
+				else:
+					self.setuplist.append("%s" % sel.name)
+					list = self.setuplist
+					for item in list:
+						pluginfiles += item
+						pluginfiles += "\n"
+						self.listplugininfo(pluginfiles)
+						self.list = []
+
+			elif self.type == self.REMOVE:
+				if sel.name in self.setuplist:
+					self.setuplist.remove("%s" % sel.name)
+					if not self.setuplist:
+						pluginfiles += "no Plugin select"
+						self.listplugininfo(pluginfiles)
+					else:
+						list = self.setuplist
+						for item in list:
+							pluginfiles += item
+							pluginfiles += "\n" 
+							self.listplugininfo(pluginfiles)
+							self.list = []
+							self.setuplist.append("%s" % sel.name)
+							list = self.setuplist
+							for item in list:
+								pluginfiles += item
+								pluginfiles += "\n"
+								self.listplugininfo(pluginfiles)
+								self.list = []
+
 
 	def install(self):
-	        PLUGIN_PREFIX = 'enigma2-plugin-'
+		PLUGIN_PREFIX = 'enigma2-plugin-'
 		cmdList = []
 		for item in self.setuplist:
 			cmdList.append((IpkgComponent.CMD_REMOVE, { "package": PLUGIN_PREFIX + item }))
@@ -600,8 +599,8 @@ class PluginDeinstall(Screen):
 		
 	def listplugininfo(self, pluginfiles):
 		try:
-		        pluginfiles.split("/n")	
-		        self["status"].setText(pluginfiles)                                
+			pluginfiles.split("/n")	
+			self["status"].setText(pluginfiles)
 		except:
 			self["status"].setText("")
 
@@ -735,7 +734,7 @@ class PluginDeinstall(Screen):
 			self.container.execute(self.ipkg + " update")
 		elif self.type == self.REMOVE:
 			self.run = 1
-			self.startIpkgListInstalled()			
+			self.startIpkgListInstalled()
 
 	def installFinished(self):
 		if hasattr(self, 'postInstallCall'):
@@ -871,7 +870,7 @@ class PluginDeinstall(Screen):
 			
 class PluginSkinInstall(Screen):
 	skin = """
-               <screen name="PluginInstall" position="80,160" size="1100,450" title="Installiere OpenNFRSkins">
+		<screen name="PluginInstall" position="80,160" size="1100,450" title="Installiere OpenNFRSkins">
 				<widget name="list" position="5,0" size="560,300" itemHeight="49" foregroundColor="white" backgroundColor="black" transparent="1" scrollbarMode="showOnDemand" zPosition="2" enableWrapAround="1" />
 				<widget name="status" position="580,43" size="518,300" font="Regular;16" halign="center" noWrap="1" transparent="1" />
 				<eLabel name="" position="580,6" size="517,30" font="Regular; 22" text="Liste der zu Installierenden Plugins" zPosition="3" halign="center" />
@@ -884,14 +883,14 @@ class PluginSkinInstall(Screen):
 				<eLabel name="spaceused" text="% Flash Used..." position="45,414" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="201,415" size="894,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
 			</screen>"""
-		  
+
 	DOWNLOAD = 0
 	PLUGIN_PREFIX = 'enigma2-plugin-opennfrskins-'
 	lastDownloadDate = None
 
 	def __init__(self, session, type = 0, needupdate = True):
 		Screen.__init__(self, session)
-                global pluginfiles
+		global pluginfiles
 		self.type = type
 		self.needupdate = needupdate
 		self.container = eConsoleAppContainer()
@@ -899,7 +898,7 @@ class PluginSkinInstall(Screen):
 		self.container.dataAvail.append(self.dataAvail)
 		self.onLayoutFinish.append(self.startRun)
 		self.onShown.append(self.setWindowTitle)
-                self.setuplist = []
+		self.setuplist = []
 
 		self.list = []
 		self["list"] = PluginList(self.list)
@@ -912,9 +911,9 @@ class PluginSkinInstall(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
-		self['spaceused'] = ProgressBar()		
-                self["status"] = ScrollLabel()
-		self['key_green']  = Label(_('Install'))	
+		self['spaceused'] = ProgressBar()
+		self["status"] = ScrollLabel()
+		self['key_green']  = Label(_('Install'))
 		self['key_blue']  = Label(_('Exit'))
 		
 		if self.type == self.DOWNLOAD:
@@ -941,7 +940,7 @@ class PluginSkinInstall(Screen):
 		sel = self["list"].l.getCurrentSelection()
 		if sel is None:
 			return
-                
+
 		sel = sel[0]
 		if isinstance(sel, str): # category
 
@@ -953,41 +952,41 @@ class PluginSkinInstall(Screen):
 			self.updateList()
 			
 		else:
-		        pluginfiles = ""
+			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
 			        if sel.name in self.setuplist:
-                                        self.setuplist.remove("%s" % sel.name)
-                                        if not self.setuplist:
-                                               pluginfiles += "no Plugin select"
-                                               self.listplugininfo(pluginfiles)
-                                        else:
-                                               list = self.setuplist
-                                               for item in list:
-                                                      pluginfiles += item
-                 	                              pluginfiles += "\n" 
-                 	                              self.listplugininfo(pluginfiles)
-                                                      self.list = []                                                 
-			        else:
- 			                self.setuplist.append("%s" % sel.name)
-                                        list = self.setuplist
-                                        for item in list:
-                 	                       pluginfiles += item
-                 	                       pluginfiles += "\n"
-                 	                       self.listplugininfo(pluginfiles)
-                                               self.list = []    			                
+					self.setuplist.remove("%s" % sel.name)
+					if not self.setuplist:
+						pluginfiles += "no Plugin select"
+						self.listplugininfo(pluginfiles)
+					else:
+						list = self.setuplist
+						for item in list:
+							pluginfiles += item
+							pluginfiles += "\n" 
+							self.listplugininfo(pluginfiles)
+							self.list = []
+				else:
+					self.setuplist.append("%s" % sel.name)
+					list = self.setuplist
+					for item in list:
+						pluginfiles += item
+						pluginfiles += "\n"
+						self.listplugininfo(pluginfiles)
+						self.list = []
 
 	def install(self):
-	        PLUGIN_PREFIX = 'enigma2-plugin-'
+		PLUGIN_PREFIX = 'enigma2-plugin-'
 		cmdList = []
 		for item in self.setuplist:
 			cmdList.append((IpkgComponent.CMD_INSTALL, { "package": PLUGIN_PREFIX + item }))
 		self.session.open(Ipkg_1, cmdList = cmdList)
-                
+
 
 	def listplugininfo(self, pluginfiles):
 		try:
-		        pluginfiles.split("/n")	
-		        self["status"].setText(pluginfiles)                                
+			pluginfiles.split("/n")	
+			self["status"].setText(pluginfiles)
 		except:
 			self["status"].setText("")
 
@@ -1066,10 +1065,10 @@ class PluginSkinInstall(Screen):
 					self.runSettingsInstall()
 
 	def doInstall(self, callback, pkgname):
-	        if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)	        
-	        else: 
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)	
+		else:
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
