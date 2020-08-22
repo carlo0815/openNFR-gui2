@@ -13,7 +13,7 @@ import six
 hotplugNotifier = []
 
 def processHotplugData(self, v):
-        self.Console = Console()
+	self.Console = Console()
 	print("hotplug:", v)
 	action = v.get("ACTION")
 	device = v.get("DEVPATH")
@@ -25,28 +25,28 @@ def processHotplugData(self, v):
 	if action == "add":
 		error, blacklisted, removable, is_cdrom, partitions, medium_found = harddiskmanager.addHotplugPartition(dev, physdevpath)
 	elif action == "remove":
-	        usbmount = harddiskmanager.getMountpoint(dev)
-	        if os.path.isfile("/tmp/usbsoftcam"):
-	                fobj = open("/tmp/usbsoftcam")
-	                for line in fobj:
-	                    spath = line.rstrip()
-	                fobj.close()
-	        	if spath == usbmount:
-                        	self.actcam = config.NFRSoftcam.actcam.value
-                        	if ".usb" in self.actcam:
-                        		self.Console.ePopen("killall %s" % self.actcam)
-                        	for fdelete in glob ('/usr/emu/*.usb'):
+		usbmount = harddiskmanager.getMountpoint(dev)
+		if os.path.isfile("/tmp/usbsoftcam"):
+			fobj = open("/tmp/usbsoftcam")
+			for line in fobj:
+	 			spath = line.rstrip()
+			fobj.close()
+			if spath == usbmount:
+				self.actcam = config.NFRSoftcam.actcam.value
+				if ".usb" in self.actcam:
+					self.Console.ePopen("killall %s" % self.actcam)
+				for fdelete in glob ('/usr/emu/*.usb'):
 					os.remove (fdelete)
-                		for fdelete in glob ('/usr/keys/*'):
-                			if os.path.islink(fdelete):
+				for fdelete in glob ('/usr/keys/*'):
+					if os.path.islink(fdelete):
 						os.unlink(fdelete)
-				sleep(1.00)		
-                        	harddiskmanager.removeHotplugPartition(dev)
-                        	self.Console.ePopen("umount %s" % usbmount)		
+				sleep(1.00)
+				harddiskmanager.removeHotplugPartition(dev)
+				self.Console.ePopen("umount %s" % usbmount)
 			else:
-                        	harddiskmanager.removeHotplugPartition(dev)
+				harddiskmanager.removeHotplugPartition(dev)
 		else:
-                       	harddiskmanager.removeHotplugPartition(dev)                        	
+			harddiskmanager.removeHotplugPartition(dev)
 	elif media_state is not None:
 		if media_state == '1':
 			harddiskmanager.removeHotplugPartition(dev)
