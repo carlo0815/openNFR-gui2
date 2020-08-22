@@ -16,12 +16,12 @@ from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, pa
 from Components.ProgressBar import ProgressBar
 
 def getVarSpaceKb():
-    try:
-        s = statvfs('/')
-    except OSError:
-        return (0, 0)
+	try:
+		s = statvfs('/')
+	except OSError:
+		return (0, 0)
 
-    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 
 
 class MovePlugins_ext(Screen):
@@ -42,8 +42,8 @@ class MovePlugins_ext(Screen):
 			</screen>"""	
   
 	def __init__(self, session, hdd, text, question):
-	        from Components.Sources.StaticText import StaticText
-	        self.skin = MovePlugins_ext.skin	
+		from Components.Sources.StaticText import StaticText
+		self.skin = MovePlugins_ext.skin
 		Screen.__init__(self, session)
 		global pluginpoint
 		pluginpoint = hdd.findMount()
@@ -51,10 +51,10 @@ class MovePlugins_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Extensions outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()		
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
 		self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
+		self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.hddQuestion,
@@ -63,7 +63,7 @@ class MovePlugins_ext(Screen):
 		self["shortcuts"] = ActionMap(["ShortcutActions"],
 		{
 			"red": self.close,
-			"green": self.hddQuestion			
+			"green": self.hddQuestion
 		})
 
 	def ConvertSize(self, size):
@@ -86,18 +86,18 @@ class MovePlugins_ext(Screen):
 		 _('Free'), 
 		 self.ConvertSize(int(diskSpace[0])), 
 		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		self['spaceused'].setValue(percUsed)
 		
 	def hddQuestion(self, answer=False):
-	        try:
-		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			        message += '\n' + _("Do you want to continue?")
-			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		        else:
-			        self.hddConfirmed(True)
+		try:
+			if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+				message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+				message += '\n' + _("Do you want to continue?")
+				self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+			else:
+				self.hddConfirmed(True)
 		except:
-                	        self.hddConfirmed(True) 
+				self.hddConfirmed(True) 
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -121,9 +121,9 @@ class MovePlugins_ext(Screen):
 		self.close()
 
 	def pluginConfirmed(self):
-	        PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
-	        oldplug = "/usr/lib/enigma2/python/Extensionsold"
-	        mountpath = pluginpoint + "/Extensions"	
+		PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
+		oldplug = "/usr/lib/enigma2/python/Extensionsold"
+		mountpath = pluginpoint + "/Extensions"	
 		try:
 			mounts = open("/proc/mounts", 'r')
 			result = []
@@ -142,55 +142,55 @@ class MovePlugins_ext(Screen):
 
 			
 		if extplugs == True:	
-	        	if os.path.exists("%s" % PLUGINDIR) == True:
-	        		if os.path.exists("%s" % mountpath) == True:
-	                		message = _("On Device is a folder Extensions, do you want to use this?")
-	                		self.session.openWithCallback(self.pluginConfirmed_Ext, MessageBox, message)
-                        	else: 
-	                		shutil.copytree(PLUGINDIR, mountpath)
-                        	        if os.path.islink(PLUGINDIR) and  os.path.exists("%s" % mountpath) == True:
-                                                message = _("Plugins already moved to %s!" % mountpath)
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        elif os.path.islink(PLUGINDIR) and  os.path.exists("%s" % mountpath) == False: 
-                                                message = _("Something wrong in Image! Please check all again.")
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        else:                                                             
-                               			os.rename(PLUGINDIR, oldplug)        
-                                		os.symlink(mountpath, PLUGINDIR)
-                                		message = _("Plugins moved to %s ready!" % mountpath)
-                                		self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                	else:
-                        	message = _("Something wrong in Image! Please check all again.")
-	                	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
-                else:
-                       	message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
-	               	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
+			if os.path.exists("%s" % PLUGINDIR) == True:
+				if os.path.exists("%s" % mountpath) == True:
+					message = _("On Device is a folder Extensions, do you want to use this?")
+					self.session.openWithCallback(self.pluginConfirmed_Ext, MessageBox, message)
+				else: 
+					shutil.copytree(PLUGINDIR, mountpath)
+					if os.path.islink(PLUGINDIR) and  os.path.exists("%s" % mountpath) == True:
+						message = _("Plugins already moved to %s!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					elif os.path.islink(PLUGINDIR) and  os.path.exists("%s" % mountpath) == False: 
+						message = _("Something wrong in Image! Please check all again.")
+						elf.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					else:
+						os.rename(PLUGINDIR, oldplug)        
+						os.symlink(mountpath, PLUGINDIR)
+						message = _("Plugins moved to %s ready!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+			else:
+				message = _("Something wrong in Image! Please check all again.")
+				self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
+		else:
+			message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
 
 
 	def pluginConfirmed_Ext(self, confirmed):
-	        PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
-	        oldplug = "/usr/lib/enigma2/python/Extensionsold"
-	        mountpath = pluginpoint + "/Extensions"	
-	        if confirmed:
-	                if os.path.islink(PLUGINDIR):
-	                        self.close()
-	                else:
-                                os.rename(PLUGINDIR, oldplug)   	                	
-                                os.symlink(mountpath, PLUGINDIR)
-	        else:
-                        if os.path.islink(PLUGINDIR):
-                                self.close()
-                        else:
-                                shutil.rmtree(mountpath)
-                                shutil.copytree(PLUGINDIR, mountpath)
-                                os.rename(PLUGINDIR, oldplug)   	                	
-                                os.symlink(mountpath, PLUGINDIR)       	
-  
-	        self.close()
-                
+		PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
+		oldplug = "/usr/lib/enigma2/python/Extensionsold"
+		mountpath = pluginpoint + "/Extensions"	
+		if confirmed:
+			if os.path.islink(PLUGINDIR):
+				self.close()
+			else:
+				os.rename(PLUGINDIR, oldplug)
+				os.symlink(mountpath, PLUGINDIR)
+		else:
+			if os.path.islink(PLUGINDIR):
+				self.close()
+			else:
+				shutil.rmtree(mountpath)
+				shutil.copytree(PLUGINDIR, mountpath)
+				os.rename(PLUGINDIR, oldplug)
+				os.symlink(mountpath, PLUGINDIR)
+
+		self.close()
+
 class MovePlugins(Screen):
 	def __init__(self, session):
-	        Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Plugins out of flash"))
 		self.skinName = "HarddiskSelection" # For derived classes
 		if harddiskmanager.HDDCount() == 0:
@@ -231,40 +231,40 @@ class MovePlugins_int(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session):
-	        from Components.Sources.StaticText import StaticText
-	        self.skin = MovePlugins_int.skin
+		from Components.Sources.StaticText import StaticText
+		self.skin = MovePlugins_int.skin
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Plugins back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Plugins back to flash?"))
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()				
-                self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
-                self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Ok"))
+		self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
 
-                {
-                "ok": self.doIt,
-                "back": self.close,
-                "green": self.doIt,
-                "red": self.close,
+		{
+			"ok": self.doIt,
+			"back": self.close,
+			"green": self.doIt,
+			"red": self.close,
 
-                }, -1)
+		}, -1)
 
 	def doIt(self):
-	        oldplug = "/usr/lib/enigma2/python/Extensionsold"        
-                PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
-                if os.path.islink(PLUGINDIR):
-                        message = _("Plugins moved back to flash ready!")
-                        os.unlink(PLUGINDIR)
-                        os.rename(oldplug, PLUGINDIR)
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                        message = _("Plugins already back in flash!")
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                         
+		oldplug = "/usr/lib/enigma2/python/Extensionsold"        
+		PLUGINDIR = "/usr/lib/enigma2/python/Plugins/Extensions"
+		if os.path.islink(PLUGINDIR):
+			message = _("Plugins moved back to flash ready!")
+			os.unlink(PLUGINDIR)
+			os.rename(oldplug, PLUGINDIR)
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			message = _("Plugins already back in flash!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+
  	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
@@ -303,10 +303,10 @@ class MoveVideos_ext(Screen):
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
 			</screen>"""	
-  
+
 	def __init__(self, session, hdd, text, question):
-	        from Components.Sources.StaticText import StaticText
-	        self.skin = MoveVideos_ext.skin	
+		from Components.Sources.StaticText import StaticText
+		self.skin = MoveVideos_ext.skin	
 		Screen.__init__(self, session)
 		global videopoint
 		videopoint = hdd.findMount()
@@ -314,10 +314,10 @@ class MoveVideos_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Extensions outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()		
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
 		self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
+		self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.hddQuestion,
@@ -326,7 +326,7 @@ class MoveVideos_ext(Screen):
 		self["shortcuts"] = ActionMap(["ShortcutActions"],
 		{
 			"red": self.close,
-			"green": self.hddQuestion			
+			"green": self.hddQuestion
 		})
 
 	def ConvertSize(self, size):
@@ -349,18 +349,18 @@ class MoveVideos_ext(Screen):
 		 _('Free'),
 		 self.ConvertSize(int(diskSpace[0])),
 		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		self['spaceused'].setValue(percUsed)
 		
 	def hddQuestion(self, answer=False):
-	        try:
-		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			        message += '\n' + _("Do you want to continue?")
-			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		        else:
-			        self.hddConfirmed(True)
-	        except:
-		        self.hddConfirmed(True)
+		try:
+			if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+				message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+				message += '\n' + _("Do you want to continue?")
+				self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+			else:
+				self.hddConfirmed(True)
+		except:
+			self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -384,8 +384,8 @@ class MoveVideos_ext(Screen):
 		self.close()
 
 	def videoConfirmed(self):
-	        VIDEODIR = "/usr/share/enigma2/bootvideos"
-	        mountpath = videopoint + "/bootvideos"	
+		VIDEODIR = "/usr/share/enigma2/bootvideos"
+		mountpath = videopoint + "/bootvideos"
 		try:
 			mounts = open("/proc/mounts", 'r')
 			result = []
@@ -404,54 +404,54 @@ class MoveVideos_ext(Screen):
 
 			
 		if extvideo == True:	
-	        	if os.path.exists("%s" % VIDEODIR) == True:
-	        		if os.path.exists("%s" % mountpath) == True:
-	                		message = _("On Device is a folder bootvideos, do you want to use this? Attention if you answer with yes Bootvideos from flash will be deleted!")
-	                		self.session.openWithCallback(self.videoConfirmed_Ext, MessageBox, message)
-                        	else: 
-	                		shutil.copytree(VIDEODIR, mountpath)
-                        	        if os.path.islink(VIDEODIR) and  os.path.exists("%s" % mountpath) == True:
-                                                message = _("Bootvideos already moved to %s!" % mountpath)
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        elif os.path.islink(VIDEODIR) and  os.path.exists("%s" % mountpath) == False: 
-                                                message = _("Something wrong in Image! Please check all again.")
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        else:                                                             
-                               			shutil.rmtree(VIDEODIR)        
-                                		os.symlink(mountpath, VIDEODIR)
-                                		message = _("Bootvideos moved to %s ready!" % mountpath)
-                                		self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                	else:
-                        	message = _("Something wrong in Image! Please check all again.")
-	                	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
-                else:
-                       	message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
-	               	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
+			if os.path.exists("%s" % VIDEODIR) == True:
+				if os.path.exists("%s" % mountpath) == True:
+					message = _("On Device is a folder bootvideos, do you want to use this? Attention if you answer with yes Bootvideos from flash will be deleted!")
+					self.session.openWithCallback(self.videoConfirmed_Ext, MessageBox, message)
+			 	else: 
+					shutil.copytree(VIDEODIR, mountpath)
+					if os.path.islink(VIDEODIR) and  os.path.exists("%s" % mountpath) == True:
+						message = _("Bootvideos already moved to %s!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					elif os.path.islink(VIDEODIR) and  os.path.exists("%s" % mountpath) == False: 
+						message = _("Something wrong in Image! Please check all again.")
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					else:
+						shutil.rmtree(VIDEODIR)
+						os.symlink(mountpath, VIDEODIR)
+						message = _("Bootvideos moved to %s ready!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+			else:
+				message = _("Something wrong in Image! Please check all again.")
+				self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
+		else:
+			message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
 
 
 	def videoConfirmed_Ext(self, confirmed):
-	        VIDEODIR = "/usr/share/enigma2/bootvideos"
-	        mountpath = videopoint + "/bootvideos"	
-	        if confirmed:
-	                if os.path.islink(VIDEODIR):
-	                        self.close()
-	                else:
-                                shutil.rmtree(VIDEODIR)   	                	
-                                os.symlink(mountpath, VIDEODIR)
-	        else:
-                        if os.path.islink(VIDEODIR):
-                                self.close()
-                        else:
-                                shutil.rmtree(mountpath)
-                                shutil.copytree(VIDEODIR, mountpath)
-                                shutil.rmtree(VIDEODIR)   	                	
-                                os.symlink(mountpath, VIDEODIR)       	
-  
-	        self.close()
-                
+		VIDEODIR = "/usr/share/enigma2/bootvideos"
+		mountpath = videopoint + "/bootvideos"	
+		if confirmed:
+			if os.path.islink(VIDEODIR):
+				self.close()
+			else:
+				shutil.rmtree(VIDEODIR)
+				os.symlink(mountpath, VIDEODIR)
+		else:
+			if os.path.islink(VIDEODIR):
+				self.close()
+			else:
+				shutil.rmtree(mountpath)
+				shutil.copytree(VIDEODIR, mountpath)
+				shutil.rmtree(VIDEODIR)
+				os.symlink(mountpath, VIDEODIR)
+
+		self.close()
+
 class MoveVideos(Screen):
 	def __init__(self, session):
-	        Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Bootvideos out of flash"))
 		self.skinName = "HarddiskSelection" # For derived classes
 		if harddiskmanager.HDDCount() == 0:
@@ -492,40 +492,40 @@ class MoveVideos_int(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session):
-	        from Components.Sources.StaticText import StaticText
-	        self.skin = MoveVideos_int.skin
+		from Components.Sources.StaticText import StaticText
+		self.skin = MoveVideos_int.skin
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Bootvideos back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Bootvideos back to flash?"))
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()				
-                self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
-                self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Ok"))
+		self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
 
-                {
-                "ok": self.doIt,
-                "back": self.close,
-                "green": self.doIt,
-                "red": self.close,
+		{
+			"ok": self.doIt,
+			"back": self.close,
+			"green": self.doIt,
+			"red": self.close,
 
-                }, -1)
+		}, -1)
 
 	def doIt(self):
-                VIDEODIR = "/usr/share/enigma2/bootvideos"
-                if os.path.islink(VIDEODIR):
-                        message = _("Bootvideos moved back to flash ready!")
-                        os.unlink(VIDEODIR)
-                        os.mkdir(VIDEODIR)
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                        message = _("Bootvideos already back in flash!")
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                         
- 	def ConvertSize(self, size):
+		VIDEODIR = "/usr/share/enigma2/bootvideos"
+		if os.path.islink(VIDEODIR):
+			message = _("Bootvideos moved back to flash ready!")
+			os.unlink(VIDEODIR)
+			os.mkdir(VIDEODIR)
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			message = _("Bootvideos already back in flash!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+
+	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
 			Size = '%0.2f TB' % (size / 1073741824.0)
@@ -545,7 +545,7 @@ class MoveVideos_int(Screen):
 		 _('Free'),
 		 self.ConvertSize(int(diskSpace[0])),
 		 percFree))
-		self['spaceused'].setValue(percUsed)			
+		self['spaceused'].setValue(percUsed)
 
 		
 class MoveBootlogos_ext(Screen):
@@ -563,11 +563,11 @@ class MoveBootlogos_ext(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session, hdd, text, question):
 		from Components.Sources.StaticText import StaticText
-		self.skin = MoveBootlogos_ext.skin	
+		self.skin = MoveBootlogos_ext.skin
 		Screen.__init__(self, session)
 		global bootlogopoint
 		bootlogopoint = hdd.findMount()
@@ -575,10 +575,10 @@ class MoveBootlogos_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Extensions outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()		
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
 		self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
+		self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.hddQuestion,
@@ -587,7 +587,7 @@ class MoveBootlogos_ext(Screen):
 		self["shortcuts"] = ActionMap(["ShortcutActions"],
 		{
 			"red": self.close,
-			"green": self.hddQuestion			
+			"green": self.hddQuestion
 		})
 
 	def ConvertSize(self, size):
@@ -610,18 +610,18 @@ class MoveBootlogos_ext(Screen):
 		 _('Free'),
 		 self.ConvertSize(int(diskSpace[0])),
 		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		self['spaceused'].setValue(percUsed)
 		
 	def hddQuestion(self, answer=False):
-	        try:
-		        if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			        message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			        message += '\n' + _("Do you want to continue?")
-			        self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		        else:
-			        self.hddConfirmed(True)
-	        except:
-		        self.hddConfirmed(True)
+		try:
+			if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+				message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+				message += '\n' + _("Do you want to continue?")
+				self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+			else:
+				self.hddConfirmed(True)
+		except:
+			self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -645,8 +645,8 @@ class MoveBootlogos_ext(Screen):
 		self.close()
 
 	def bootlogoConfirmed(self):
-	        BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
-	        mountpath = bootlogopoint + "/bootlogos"	
+		BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
+		mountpath = bootlogopoint + "/bootlogos"
 		try:
 			mounts = open("/proc/mounts", 'r')
 			result = []
@@ -665,54 +665,54 @@ class MoveBootlogos_ext(Screen):
 
 			
 		if extbootlogo == True:	
-	        	if os.path.exists("%s" % BOOTLOGODIR) == True:
-	        		if os.path.exists("%s" % mountpath) == True:
-	                		message = _("On Device is a folder bootLOGOS, do you want to use this? Attention if you answer with yes Bootlogos from flash will be deleted!")
-	                		self.session.openWithCallback(self.bootlogoConfirmed_Ext, MessageBox, message)
-                        	else: 
-	                		shutil.copytree(BOOTLOGODIR, mountpath)
-                        	        if os.path.islink(BOOTLOGODIR) and  os.path.exists("%s" % mountpath) == True:
-                                                message = _("Bootlogos already moved to %s!" % mountpath)
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        elif os.path.islink(BOOTLOGODIR) and  os.path.exists("%s" % mountpath) == False: 
-                                                message = _("Something wrong in Image! Please check all again.")
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        else:                                                             
-                               			shutil.rmtree(BOOTLOGODIR)        
-                                		os.symlink(mountpath, BOOTLOGODIR)
-                                		message = _("Bootlogos moved to %s ready!" % mountpath)
-                                		self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                	else:
-                        	message = _("Something wrong in Image! Please check all again.")
-	                	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
-                else:
-                       	message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
-	               	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
+			if os.path.exists("%s" % BOOTLOGODIR) == True:
+				if os.path.exists("%s" % mountpath) == True:
+					message = _("On Device is a folder bootLOGOS, do you want to use this? Attention if you answer with yes Bootlogos from flash will be deleted!")
+					self.session.openWithCallback(self.bootlogoConfirmed_Ext, MessageBox, message)
+				else: 
+					shutil.copytree(BOOTLOGODIR, mountpath)
+					if os.path.islink(BOOTLOGODIR) and  os.path.exists("%s" % mountpath) == True:
+						message = _("Bootlogos already moved to %s!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					elif os.path.islink(BOOTLOGODIR) and  os.path.exists("%s" % mountpath) == False: 
+						message = _("Something wrong in Image! Please check all again.")
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					else:
+						shutil.rmtree(BOOTLOGODIR)        
+						os.symlink(mountpath, BOOTLOGODIR)
+						message = _("Bootlogos moved to %s ready!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+			else:
+				message = _("Something wrong in Image! Please check all again.")
+				self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
+		else:
+			message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
 
 
 	def bootlogoConfirmed_Ext(self, confirmed):
-	        BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
-	        mountpath = bootlogopoint + "/bootlogos"
-	        if confirmed:
-	                if os.path.islink(BOOTLOGODIR):
-	                        self.close()
-	                else:
-                                shutil.rmtree(BOOTLOGODIR)   	                	
-                                os.symlink(mountpath, BOOTLOGODIR)
-	        else:
-                        if os.path.islink(BOOTLOGODIR):
-                                self.close()
-                        else:
-                                shutil.rmtree(mountpath)
-                                shutil.copytree(BOOTLOGODIR, mountpath)
-                                shutil.rmtree(BOOTLOGODIR)   	                	
-                                os.symlink(mountpath, BOOTLOGODIR)       	
-  
-	        self.close()
-                
+		BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
+		mountpath = bootlogopoint + "/bootlogos"
+		if confirmed:
+			if os.path.islink(BOOTLOGODIR):
+				self.close()
+			else:
+				shutil.rmtree(BOOTLOGODIR)
+				os.symlink(mountpath, BOOTLOGODIR)
+		else:
+			if os.path.islink(BOOTLOGODIR):
+				self.close()
+			else:
+				shutil.rmtree(mountpath)
+				shutil.copytree(BOOTLOGODIR, mountpath)
+				shutil.rmtree(BOOTLOGODIR)
+				os.symlink(mountpath, BOOTLOGODIR)
+
+		self.close()
+
 class MoveBootlogos(Screen):
 	def __init__(self, session):
-	        Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Bootlogos out of flash"))
 		self.skinName = "HarddiskSelection" # For derived classes
 		if harddiskmanager.HDDCount() == 0:
@@ -753,40 +753,40 @@ class MoveBootlogos_int(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session):
 		from Components.Sources.StaticText import StaticText
 		self.skin = MoveBootlogos_int.skin
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Bootlogos back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Bootlogos back to flash?"))
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()				
-                self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
-                self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Ok"))
+		self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
 
-                {
-                "ok": self.doIt,
-                "back": self.close,
-                "green": self.doIt,
-                "red": self.close,
+		{
+			"ok": self.doIt,
+			"back": self.close,
+			"green": self.doIt,
+			"red": self.close,
 
-                }, -1)
+		}, -1)
 
 	def doIt(self):
-                BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
-                if os.path.islink(BOOTLOGODIR):
-                        message = _("Bootlogos moved back to flash ready!")
-                        os.unlink(BOOTLOGODIR)
-                        os.mkdir(BOOTLOGODIR)
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                        message = _("Bootlogos already back in flash!")
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                         
- 	def ConvertSize(self, size):
+		BOOTLOGODIR = "/usr/share/enigma2/bootlogos"
+		if os.path.islink(BOOTLOGODIR):
+			message = _("Bootlogos moved back to flash ready!")
+			os.unlink(BOOTLOGODIR)
+			os.mkdir(BOOTLOGODIR)
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			message = _("Bootlogos already back in flash!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+
+	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
 			Size = '%0.2f TB' % (size / 1073741824.0)
@@ -824,7 +824,7 @@ class MoveRadiologos_ext(Screen):
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
 			</screen>"""	
-  
+
 	def __init__(self, session, hdd, text, question):
 		from Components.Sources.StaticText import StaticText
 		self.skin = MoveRadiologos_ext.skin	
@@ -835,10 +835,10 @@ class MoveRadiologos_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Extensions outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()		
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
 		self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
+		self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.hddQuestion,
@@ -847,7 +847,7 @@ class MoveRadiologos_ext(Screen):
 		self["shortcuts"] = ActionMap(["ShortcutActions"],
 		{
 			"red": self.close,
-			"green": self.hddQuestion			
+			"green": self.hddQuestio
 		})
 
 	def ConvertSize(self, size):
@@ -870,18 +870,18 @@ class MoveRadiologos_ext(Screen):
 		 _('Free'),
 		 self.ConvertSize(int(diskSpace[0])),
 		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		self['spaceused'].setValue(percUsed)
 		
 	def hddQuestion(self, answer=False):
 		try:
-            if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-                message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-                message += '\n' + _("Do you want to continue?")
-                self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-            else:
-                self.hddConfirmed(True)
+		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			message += '\n' + _("Do you want to continue?")
+			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		else:
+			self.hddConfirmed(True)
 		except:
-            self.hddConfirmed(True)
+			self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -905,8 +905,8 @@ class MoveRadiologos_ext(Screen):
 		self.close()
 
 	def radiologoConfirmed(self):
-	        RADIOLOGODIR = "/usr/share/enigma2/radiologos"
-	        mountpath = radiologopoint + "/radiologos"	
+		RADIOLOGODIR = "/usr/share/enigma2/radiologos"
+		mountpath = radiologopoint + "/radiologos"
 		try:
 			mounts = open("/proc/mounts", 'r')
 			result = []
@@ -925,54 +925,54 @@ class MoveRadiologos_ext(Screen):
 
 			
 		if extradiologo == True:	
-	        	if os.path.exists("%s" % RADIOLOGODIR) == True:
-	        		if os.path.exists("%s" % mountpath) == True:
-	                		message = _("On Device is a folder radiologos, do you want to use this? Attention if you answer with yes Radiologos from flash will be deleted!")
-	                		self.session.openWithCallback(self.radiologoConfirmed_Ext, MessageBox, message)
-                        	else: 
-	                		shutil.copytree(RADIOLOGODIR, mountpath)
-                        	        if os.path.islink(RADIOLOGODIR) and  os.path.exists("%s" % mountpath) == True:
-                                                message = _("Radiologos already moved to %s!" % mountpath)
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        elif os.path.islink(RADIOLOGODIR) and  os.path.exists("%s" % mountpath) == False: 
-                                                message = _("Something wrong in Image! Please check all again.")
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        else:                                                             
-                               			shutil.rmtree(RADIOLOGODIR)        
-                                		os.symlink(mountpath, RADIOLOGODIR)
-                                		message = _("Radiologos moved to %s ready!" % mountpath)
-                                		self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                	else:
-                        	message = _("Something wrong in Image! Please check all again.")
-	                	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
-                else:
-                       	message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
-	               	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
+			if os.path.exists("%s" % RADIOLOGODIR) == True:
+				if os.path.exists("%s" % mountpath) == True:
+					message = _("On Device is a folder radiologos, do you want to use this? Attention if you answer with yes Radiologos from flash will be deleted!")
+					self.session.openWithCallback(self.radiologoConfirmed_Ext, MessageBox, message)
+				else: 
+					shutil.copytree(RADIOLOGODIR, mountpath)
+					if os.path.islink(RADIOLOGODIR) and  os.path.exists("%s" % mountpath) == True:
+						message = _("Radiologos already moved to %s!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					elif os.path.islink(RADIOLOGODIR) and  os.path.exists("%s" % mountpath) == False: 
+						message = _("Something wrong in Image! Please check all again.")
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					else:
+						shutil.rmtree(RADIOLOGODIR)        
+						os.symlink(mountpath, RADIOLOGODIR)
+						message = _("Radiologos moved to %s ready!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+			else:
+				message = _("Something wrong in Image! Please check all again.")
+				self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
+		else:
+			message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
 
 
 	def radiologoConfirmed_Ext(self, confirmed):
-	        RADIOLOGODIR = "/usr/share/enigma2/radiologos"
-	        mountpath = radiologopoint + "/radiologos"
-	        if confirmed:
-	                if os.path.islink(RADIOLOGODIR):
-	                        self.close()
-	                else:
-                                shutil.rmtree(RADIOLOGODIR)   	                	
-                                os.symlink(mountpath, RADIOLOGODIR)
-	        else:
-                        if os.path.islink(RADIOLOGODIR):
-                                self.close()
-                        else:
-                                shutil.rmtree(mountpath)
-                                shutil.copytree(RADIOLOGODIR, mountpath)
-                                shutil.rmtree(RADIOLOGODIR)   	                	
-                                os.symlink(mountpath, RADIOLOGODIR)       	
-  
-	        self.close()
-                
+		RADIOLOGODIR = "/usr/share/enigma2/radiologos"
+		mountpath = radiologopoint + "/radiologos"
+		if confirmed:
+			if os.path.islink(RADIOLOGODIR):
+				self.close()
+			else:
+				shutil.rmtree(RADIOLOGODIR)
+				os.symlink(mountpath, RADIOLOGODIR)
+		else:
+			if os.path.islink(RADIOLOGODIR):
+				self.close()
+			else:
+				shutil.rmtree(mountpath)
+				shutil.copytree(RADIOLOGODIR, mountpath)
+				shutil.rmtree(RADIOLOGODIR)
+				os.symlink(mountpath, RADIOLOGODIR)
+
+		self.close()
+
 class MoveRadiologos(Screen):
 	def __init__(self, session):
-	        Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Radiologos out of flash"))
 		self.skinName = "HarddiskSelection" # For derived classes
 		if harddiskmanager.HDDCount() == 0:
@@ -1021,32 +1021,32 @@ class MoveRadiologos_int(Screen):
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Radiologos back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Radiologos back to flash?"))
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()				
-                self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
-                self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Ok"))
+		self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
 
-                {
-                "ok": self.doIt,
-                "back": self.close,
-                "green": self.doIt,
-                "red": self.close,
+		{
+			"ok": self.doIt,
+			"back": self.close,
+			"green": self.doIt,
+			"red": self.close,
 
-                }, -1)
+		}, -1)
 
 	def doIt(self):
-                RADIOLOGODIR = "/usr/share/enigma2/radiologos"
-                if os.path.islink(RADIOLOGODIR):
-                        message = _("Radiologos moved back to flash ready!")
-                        os.unlink(RADIOLOGODIR)
-                        os.mkdir(RADIOLOGODIR)
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                        message = _("Radiologos already back in flash!")
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                         
- 	def ConvertSize(self, size):
+		RADIOLOGODIR = "/usr/share/enigma2/radiologos"
+		if os.path.islink(RADIOLOGODIR):
+			message = _("Radiologos moved back to flash ready!")
+			os.unlink(RADIOLOGODIR)
+			os.mkdir(RADIOLOGODIR)
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			message = _("Radiologos already back in flash!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+
+	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
 			Size = '%0.2f TB' % (size / 1073741824.0)
@@ -1063,9 +1063,9 @@ class MoveRadiologos_int(Screen):
 		percFree = int(diskSpace[0] / diskSpace[1] * 100)
 		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
 		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Radiologos back to Flash'),
-		 _('Free'),
-		 self.ConvertSize(int(diskSpace[0])),
-		 percFree))
+		_('Free'),
+		self.ConvertSize(int(diskSpace[0])),
+		percFree))
 		self['spaceused'].setValue(percUsed)	
 
 class MoveSpinner_ext(Screen):
@@ -1083,11 +1083,11 @@ class MoveSpinner_ext(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session, hdd, text, question):
 		from Components.Sources.StaticText import StaticText
-		self.skin = MoveSpinner_ext.skin	
+		self.skin = MoveSpinner_ext.skin
 		Screen.__init__(self, session)
 		global spinnerpoint
 		spinnerpoint = hdd.findMount()
@@ -1095,10 +1095,10 @@ class MoveSpinner_ext(Screen):
 		self.curentservice = None
 		self["config"] = Label(_("Spinner outsource to: ") + hdd.findMount())
 		self["introduction"] = Label(text)
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()		
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
 		self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
+		self["key_green"] = StaticText(_("Ok"))
 		self["actions"] = ActionMap(["OkCancelActions"],
 		{
 			"ok": self.hddQuestion,
@@ -1107,7 +1107,7 @@ class MoveSpinner_ext(Screen):
 		self["shortcuts"] = ActionMap(["ShortcutActions"],
 		{
 			"red": self.close,
-			"green": self.hddQuestion			
+			"green": self.hddQuestion
 		})
 
 	def ConvertSize(self, size):
@@ -1127,21 +1127,21 @@ class MoveSpinner_ext(Screen):
 		percFree = int(diskSpace[0] / diskSpace[1] * 100)
 		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
 		self.setTitle('%s - %s: %s (%d%%)' % (_('Move Spinner to HDD/USB'),
-		 _('Free'),
-		 self.ConvertSize(int(diskSpace[0])),
-		 percFree))
-		self['spaceused'].setValue(percUsed)		
+		_('Free'),
+		self.ConvertSize(int(diskSpace[0])),
+		percFree))
+		self['spaceused'].setValue(percUsed)
 		
 	def hddQuestion(self, answer=False):
 		try:
-            if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-                message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-                message += '\n' + _("Do you want to continue?")
-                self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-            else:
-                self.hddConfirmed(True)
+		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+			message += '\n' + _("Do you want to continue?")
+			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+		else:
+			self.hddConfirmed(True)
 		except:
-            self.hddConfirmed(True)
+			self.hddConfirmed(True)
 
 	def stopTimeshift(self, confirmed):
 		if confirmed:
@@ -1165,8 +1165,8 @@ class MoveSpinner_ext(Screen):
 		self.close()
 
 	def spinnerConfirmed(self):
-	        SPINNERDIR = "/usr/share/enigma2/Spinner"
-	        mountpath = spinnerpoint + "/Spinner"	
+		SPINNERDIR = "/usr/share/enigma2/Spinner"
+		mountpath = spinnerpoint + "/Spinner"
 		try:
 			mounts = open("/proc/mounts", 'r')
 			result = []
@@ -1185,54 +1185,54 @@ class MoveSpinner_ext(Screen):
 
 			
 		if extspinner == True:	
-	        	if os.path.exists("%s" % SPINNERDIR) == True:
-	        		if os.path.exists("%s" % mountpath) == True:
-	                		message = _("On Device is a folder Spinner, do you want to use this? Attention if you answer with yes Spinner from flash will be deleted!")
-	                		self.session.openWithCallback(self.spinnerConfirmed_Ext, MessageBox, message)
-                        	else: 
-	                		shutil.copytree(SPINNERDIR, mountpath)
-                        	        if os.path.islink(SPINNERDIR) and  os.path.exists("%s" % mountpath) == True:
-                                                message = _("Spinner already moved to %s!" % mountpath)
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        elif os.path.islink(SPINNERDIR) and  os.path.exists("%s" % mountpath) == False: 
-                                                message = _("Something wrong in Image! Please check all again.")
-                                                self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                                        else:                                                             
-                               			shutil.rmtree(SPINNERDIR)        
-                                		os.symlink(mountpath, SPINNERDIR)
-                                		message = _("Spinner moved to %s ready!" % mountpath)
-                                		self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                	else:
-                        	message = _("Something wrong in Image! Please check all again.")
-	                	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
-                else:
-                       	message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
-	               	self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)                 
+			if os.path.exists("%s" % SPINNERDIR) == True:
+				if os.path.exists("%s" % mountpath) == True:
+					message = _("On Device is a folder Spinner, do you want to use this? Attention if you answer with yes Spinner from flash will be deleted!")
+					self.session.openWithCallback(self.spinnerConfirmed_Ext, MessageBox, message)
+				else: 
+					shutil.copytree(SPINNERDIR, mountpath)
+					if os.path.islink(SPINNERDIR) and  os.path.exists("%s" % mountpath) == True:
+						message = _("Spinner already moved to %s!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					elif os.path.islink(SPINNERDIR) and  os.path.exists("%s" % mountpath) == False: 
+						message = _("Something wrong in Image! Please check all again.")
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+					else:
+						shutil.rmtree(SPINNERDIR)        
+						os.symlink(mountpath, SPINNERDIR)
+						message = _("Spinner moved to %s ready!" % mountpath)
+						self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+			else:
+				message = _("Something wrong in Image! Please check all again.")
+				self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5) 
+		else:
+			message = _("Selected Device not in EXT2(3/4)-Format, needed for working!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
 
 
 	def spinnerConfirmed_Ext(self, confirmed):
-	        SPINNERDIR = "/usr/share/enigma2/Spinner"
-	        mountpath = spinnerpoint + "/Spinner"
-	        if confirmed:
-	                if os.path.islink(SPINNERDIR):
-	                        self.close()
-	                else:
-                                shutil.rmtree(SPINNERDIR)   	                	
-                                os.symlink(mountpath, SPINNERDIR)
-	        else:
-                        if os.path.islink(SPINNERDIR):
-                                self.close()
-                        else:
-                                shutil.rmtree(mountpath)
-                                shutil.copytree(SPINNERDIR, mountpath)
-                                shutil.rmtree(SPINNERDIR)   	                	
-                                os.symlink(mountpath, SPINNERDIR)       	
-  
-	        self.close()
-                
+		SPINNERDIR = "/usr/share/enigma2/Spinner"
+		mountpath = spinnerpoint + "/Spinner"
+		if confirmed:
+			if os.path.islink(SPINNERDIR):
+				self.close()
+			else:
+				shutil.rmtree(SPINNERDIR)
+				os.symlink(mountpath, SPINNERDIR)
+		else:
+			if os.path.islink(SPINNERDIR):
+				self.close()
+			else:
+				shutil.rmtree(mountpath)
+				shutil.copytree(SPINNERDIR, mountpath)
+				shutil.rmtree(SPINNERDIR)
+				os.symlink(mountpath, SPINNERDIR)
+
+		self.close()
+
 class MoveSpinner(Screen):
 	def __init__(self, session):
-	        Screen.__init__(self, session)
+		Screen.__init__(self, session)
 		Screen.setTitle(self, _("Spinner out of flash"))
 		self.skinName = "HarddiskSelection" # For derived classes
 		if harddiskmanager.HDDCount() == 0:
@@ -1273,40 +1273,40 @@ class MoveSpinner_int(Screen):
 				<widget name="introduction" position="116,350" size="600,118" font="Regular;26" transparent="1" foregroundColor="cyan1" alphatest="blend" zPosition="2" />
 				<eLabel name="spaceused" text="% Flash Used..." position="164,549" size="150,20" font="Regular;19" halign="left" foregroundColor="white" backgroundColor="black" transparent="1" zPosition="5" />
 				<widget name="spaceused" position="329,548" size="380,20" foregroundColor="white" backgroundColor="blue" zPosition="3" />
-			</screen>"""	
-  
+			</screen>"""
+
 	def __init__(self, session):
 		from Components.Sources.StaticText import StaticText
 		self.skin = MoveSpinner_int.skin
 		Screen.__init__(self, session)
 		self["config"] = Label(_("Move Spinner back to flash?"))
 		self["introduction"] = Label(_("Do you really want move Spinner back to flash?"))
-		self.onShown.append(self.setWindowTitle)		
-		self['spaceused'] = ProgressBar()				
-                self["key_red"] = StaticText(_("Cancel"))
-                self["key_green"] = StaticText(_("Ok"))
-                self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
+		self.onShown.append(self.setWindowTitle)
+		self['spaceused'] = ProgressBar()
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("Ok"))
+		self["actions"] = ActionMap(["WizardActions", "ColorActions", "EPGSelectActions"],
 
-                {
-                "ok": self.doIt,
-                "back": self.close,
-                "green": self.doIt,
-                "red": self.close,
+		{
+			"ok": self.doIt,
+			"back": self.close,
+			"green": self.doIt,
+			"red": self.close,
 
-                }, -1)
+		}, -1)
 
 	def doIt(self):
-                SPINNERDIR = "/usr/share/enigma2/Spinner"
-                if os.path.islink(SPINNERDIR):
-                        message = _("Spinner moved back to flash ready!")
-                        os.unlink(SPINNERDIR)
-                        os.mkdir(SPINNERDIR)
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                else:
-                        message = _("Spinner already back in flash!")
-                        self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
-                         
- 	def ConvertSize(self, size):
+		SPINNERDIR = "/usr/share/enigma2/Spinner"
+		if os.path.islink(SPINNERDIR):
+			message = _("Spinner moved back to flash ready!")
+			os.unlink(SPINNERDIR)
+			os.mkdir(SPINNERDIR)
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+		else:
+			message = _("Spinner already back in flash!")
+			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
+
+	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
 			Size = '%0.2f TB' % (size / 1073741824.0)
