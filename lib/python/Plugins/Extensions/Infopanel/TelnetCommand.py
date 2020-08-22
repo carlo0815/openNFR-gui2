@@ -55,9 +55,9 @@ class TelnetCommand(Screen, ConfigListScreen):
 		self["key_blue"] = Label(_("Use VirtualKeyboard"))
 		self.VirtualKeyBoard = VirtualKeyBoard 	
 		global NFRTelnet_command
-                global NFRTelnet_execute
-                NFRTelnet_command = ConfigText(visible_width = 200, fixed_size=False)
-                NFRTelnet_execute = ConfigYesNo(default = False) 
+		global NFRTelnet_execute
+		NFRTelnet_command = ConfigText(visible_width = 200, fixed_size=False)
+		NFRTelnet_execute = ConfigYesNo(default = False) 
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session=session)
 		self.createsetup()
@@ -67,7 +67,7 @@ class TelnetCommand(Screen, ConfigListScreen):
 				"red": self.cancel,
 				"ok": self.ok,
 				"green": self.ok,
-				"blue": self.blue, 				
+				"blue": self.blue,
 			}, -2)
 
 	def createsetup(self):
@@ -75,7 +75,7 @@ class TelnetCommand(Screen, ConfigListScreen):
 		self.list.append(getConfigListEntry(_("Telnet Command: "),
 			NFRTelnet_command))
 		self.list.append(getConfigListEntry(_("Execute Command: "),
-			NFRTelnet_execute))			
+			NFRTelnet_execute))
 		self["config"].list = self.list
 		self["config"].l.setList(self.list)
 		self.config = config
@@ -84,13 +84,12 @@ class TelnetCommand(Screen, ConfigListScreen):
 		if NFRTelnet_execute.value == True:
 			NFRTelnet_command.value
 			target = NFRTelnet_command.value
-                	self.session.open(Console, title=_("Telnet Command."), cmdlist = [target], closeOnSuccess = False)
-                else:
-                        self.session.open(MessageBox, _('Your Choice is no Command execute!'), type=MessageBox.TYPE_INFO, timeout=10)
+			self.session.open(Console, title=_("Telnet Command."), cmdlist = [target], closeOnSuccess = False)
+		else:
+			self.session.open(MessageBox, _('Your Choice is no Command execute!'), type=MessageBox.TYPE_INFO, timeout=10)
 
 	def cancel(self):
-	        self.close()
-	        
+		self.close()
 
 	def blue(self):
 		self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Insert your Command!'), text=NFRTelnet_command.value)
