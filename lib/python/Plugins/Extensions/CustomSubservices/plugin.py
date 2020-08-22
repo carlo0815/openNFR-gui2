@@ -15,9 +15,9 @@ from enigma import iServiceInformation, eEPGCache, eServiceCenter, eServiceRefer
 
 import xml.dom.minidom
 import datetime
-from Plugins.Extensions.CustomSubservices.Subservice import Subservice
-from Plugins.Extensions.CustomSubservices.SubserviceGroup import SubserviceGroup
-from Plugins.Extensions.CustomSubservices.SubservicesQuickzapXML import SubservicesQuickzapXML
+from .Subservice import Subservice
+from .SubserviceGroup import SubserviceGroup
+from .SubservicesQuickzapXML import SubservicesQuickzapXML
 
 
 XML_PATH = "/etc/enigma2/subservices.xml"
