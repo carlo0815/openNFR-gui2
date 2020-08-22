@@ -147,10 +147,9 @@ def Softcamlist_open(list, session, **kwargs):
 def InstallSoftcamList(answer):
 	if answer:
 		f = open("/tmp/usbsoftcam", "w")
-		name = spath	
-                f.write(name)	
+		name = spath
+		f.write(name)
 		f.close() 
-                                  
 
 def InstallSoftCamConfigFiles(list, session, **kwargs):
 	if not list:
@@ -280,20 +279,20 @@ def filescan(**kwargs):
 		]
 
 def Plugins(**kwargs):
-    screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:
-	    return [
-		    PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScannerFHD.png',fnc=main),
-    #		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
-		    PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
-		    PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
-		    PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
-		    ]
+	screenwidth = getDesktop(0).size().width()
+	if screenwidth and screenwidth == 1920:
+		return [
+			PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScannerFHD.png',fnc=main),
+	#		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
+			PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+			PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
+			PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
+			]
     else:
 	    return [
 		    PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScanner.png',fnc=main),
-    #		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
-		    PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
-		    PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
-		    PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
-		    ]	
+	#		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
+			PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+			PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
+			PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
+			]
