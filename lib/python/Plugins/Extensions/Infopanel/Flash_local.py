@@ -82,21 +82,21 @@ class FlashOnline(Screen):
 	def getImagesList(self):
 
 		def getImages(path, files):
-		        try:
-		                print(self.imagesList[("Downloaded Images")])
-		        except:
-		                self.imagesList[("Downloaded Images")] = {} 
-		        try:
-                                print(self.imagesList[("Fullbackup Images")])
-                        except:        
-                                self.imagesList[("Fullbackup Images")] = {}
-                        for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
-                                try:
-                                        if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
-                                                if 'backup' in file.split(os.sep)[-1]:
-                                                        self.imagesList[("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
-                                                else:
-                                                        self.imagesList[("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
+			try:
+				print(self.imagesList[("Downloaded Images")])
+			except:
+				self.imagesList[("Downloaded Images")] = {} 
+			try:
+				print(self.imagesList[("Fullbackup Images")])
+			except:
+				self.imagesList[("Fullbackup Images")] = {}
+			for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
+				try:
+					if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
+						if 'backup' in file.split(os.sep)[-1]:
+							self.imagesList[("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
+						else:
+							self.imagesList[("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
 
 				except:
 					pass
@@ -107,7 +107,7 @@ class FlashOnline(Screen):
 				newversion = _("Image Version %s") %version
 				the_page =""
 				url = '%s/%s/images/%s' % (feedurl, version,box)
-                                try:
+				try:
 					req = Request(url)
 					response = urlopen(req)
 				except urllib.error.URLError as e:
@@ -508,7 +508,7 @@ class FlashImage(Screen):
 			self.session.openWithCallback(self.abort, MessageBox, _("Error during unzipping image\n%s") % self.imagename, type=MessageBox.TYPE_ERROR, simple=True)
 
 	def flashimage(self):
-	        os.system('rm /sbin/init;ln -sfn /sbin/init.sysvinit /sbin/init')
+		os.system('rm /sbin/init;ln -sfn /sbin/init.sysvinit /sbin/init')
 		self["header"].setText(_("Flashing Image"))
 		def findimagefiles(path):
 			for path, subdirs, files in os.walk(path):
@@ -516,7 +516,7 @@ class FlashImage(Screen):
 					return checkimagefiles(files) and path
 		imagefiles = findimagefiles(self.unzippedimage)
 		if imagefiles:
-        		self.ROOTFSSUBDIR = "none"
+			self.ROOTFSSUBDIR = "none"
 			self.getImageList = self.saveImageList
 			if SystemInfo["canMultiBoot"]:
 				self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.multibootslot]["kernel"].split('/')[2] 
@@ -533,13 +533,13 @@ class FlashImage(Screen):
 				else:
 					CMD = "/usr/bin/ofgwrite -r -k -m%s '%s'" % (self.multibootslot, imagefiles)
 			fbClass.getInstance().lock()
-                        self.containerofgwrite = Console()
+			self.containerofgwrite = Console()
 			self.containerofgwrite.ePopen(CMD, self.FlashimageDone)
 		else:
-                        self.session.openWithCallback(self.abort, MessageBox, _("Image to install is invalid\n%s") % self.imagename, type=MessageBox.TYPE_ERROR, simple=True)
+			self.session.openWithCallback(self.abort, MessageBox, _("Image to install is invalid\n%s") % self.imagename, type=MessageBox.TYPE_ERROR, simple=True)
 
 	def FlashimageDone(self, data, retval, extra_args):
-                fbClass.getInstance().unlock()
+		fbClass.getInstance().unlock()
 		self.containerofgwrite = None
 		if retval == 0:
 			self["header"].setText(_("Flashing image successful"))
