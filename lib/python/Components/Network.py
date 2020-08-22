@@ -176,7 +176,7 @@ class Network:
 					if "netmask" in self.ifaces[currif]:
 						if self.ifaces[currif]["netmask"] != ifaces[currif]["netmask"] and ifaces[currif]["dhcp"] == False:
 							self.ifaces[currif]["netmask"] = list(map(int, split[1].split('.')))
-				if "gateway" in self.ifaces[currif]:
+				if split[0] == "gateway":
 					ifaces[currif]["gateway"] = map(int, split[1].split('.'))
 					if "gateway" in self.ifaces[currif]:
 						if self.ifaces[currif]["gateway"] != ifaces[currif]["gateway"] and ifaces[currif]["dhcp"] == False:
