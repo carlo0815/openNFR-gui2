@@ -30,16 +30,16 @@ class SpinnerSelectionBox(Screen):
 		<widget source="session.VideoPicture" render="Pig" position="837,95" size="375,214" backgroundColor="transparent" zPosition="1" />
  		<ePixmap pixmap="skin_default/buttons/red.png" position="70,670" size="30,30" alphatest="blend" />
 		<ePixmap pixmap="skin_default/buttons/green.png" position="360,670" size="30,30" alphatest="blend" />
-                <widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+		<widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 		<widget source="key_green" render="Label" position="395,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-                </screen>"""
+		</screen>"""
 	def __init__(self, session, title = "", list = []):
 		Screen.__init__(self, session)
 
 		self["text"] = Label(title)
 		self.list = list #[]
 		self.summarylist = [] 
-               	cursel = self.list[0]
+		cursel = self.list[0]
 		self.Bilder = []
 		if cursel:
 			for i in list(range(64)):
@@ -51,14 +51,14 @@ class SpinnerSelectionBox(Screen):
 		self["summary_list"] = StaticText()
 		self.updateSummary()
 		self["key_red"] = StaticText(_("Exit"))
-		self["key_green"] = StaticText(_("Save"))		
+		self["key_green"] = StaticText(_("Save"))
 		self["actions"] = NumberActionMap(["WizardActions", "DirectionActions", "ColorActions"], 
 		{
 			"ok": self.go,
 			"back": self.cancel,
 			"up": self.up,
 			"down": self.down,
-			"red": self.cancel,                                				
+			"red": self.cancel,
 			"green": self.go,
 		}, -1)
 		
@@ -70,7 +70,7 @@ class SpinnerSelectionBox(Screen):
 		self.session.openWithCallback(self.Key_ex, MoveSpinner_int)
 		
 	def Key_ex(self, arg):
-                self.cancel()			
+		self.cancel()
 
 
 	def Changed(self):
