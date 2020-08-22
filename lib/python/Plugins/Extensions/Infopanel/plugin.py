@@ -163,13 +163,13 @@ def command(comandline, strip=1):
 	else:
 		for line in file:
 			text = text + line
-		if text[-1:] != '\n': text = text + "\n"
-			file.close()
+	if text[-1:] != '\n': text = text + "\n"
+		file.close()
 		# if one or last line then remove linefeed
-		if text[-1:] == '\n': text = text[:-1]
-			comandline = text
-			os.system("rm /tmp/command.txt")
-		return comandline
+	if text[-1:] == '\n': text = text[:-1]
+		comandline = text
+		os.system("rm /tmp/command.txt")
+	return comandline
 
 INFO_Panel_Version = 'Info-Panel V2.0 (mod by OpenNFR)'
 boxversion = getBoxType()
