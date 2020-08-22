@@ -290,10 +290,10 @@ def InitUsageConfig():
 		elif i > 0:
 			choicelist.append(("%d" % i, _("Standby in ") + m))
                         	
-	config.usage.inactivity_timer = ConfigSelection(default = "0", choices = choicelist)
-	config.usage.inactivity_timer_blocktime = ConfigYesNo(default = True)
-	config.usage.inactivity_timer_blocktime_begin = ConfigClock(default = mktime((0, 0, 0, 6, 0, 0, 0, 0, 0)))
-	config.usage.inactivity_timer_blocktime_end = ConfigClock(default = mktime((0, 0, 0, 23, 0, 0, 0, 0, 0)))		
+	#config.usage.inactivity_timer = ConfigSelection(default = "0", choices = choicelist)
+	#config.usage.inactivity_timer_blocktime = ConfigYesNo(default = True)
+	#config.usage.inactivity_timer_blocktime_begin = ConfigClock(default = mktime((0, 0, 0, 6, 0, 0, 0, 0, 0)))
+	#config.usage.inactivity_timer_blocktime_end = ConfigClock(default = mktime((0, 0, 0, 23, 0, 0, 0, 0, 0)))		
 		
 	choicelist = []
 	for i in range(-7200, 7201, 900):
