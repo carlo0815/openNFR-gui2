@@ -24,48 +24,45 @@ config.radiologo = ConfigSubsection()
 config.radiologo.booting = ConfigText(default = "NFRradiologo.mvi")
 
 class PanelList(MenuList):
-        if (getDesktop(0).size().width() == 1920):
-	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 92, enableWrapAround = True):
-		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		        self.l.setFont(0, gFont("Regular", font0))
-		        self.l.setFont(1, gFont("Regular", font1))
-		        self.l.setItemHeight(itemHeight)
+	if (getDesktop(0).size().width() == 1920):
+		def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 92, enableWrapAround = True):
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", font0))
+			self.l.setFont(1, gFont("Regular", font1))
+			self.l.setItemHeight(itemHeight)
 	else:
-                def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 92, enableWrapAround = True):	        
-		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-                        self.l.setFont(0, gFont("Regular", font0))
-		        self.l.setFont(1, gFont("Regular", font1))
-		        self.l.setItemHeight(itemHeight)
-		        
+		def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 92, enableWrapAround = True):
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", font0))
+			self.l.setFont(1, gFont("Regular", font1))
+			self.l.setItemHeight(itemHeight)
+
 def MenuEntryItem(entry):
-        if (getDesktop(0).size().width() == 1920):
-	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
-	   res.append(MultiContentEntryText(pos=(210, 30), size=(690, 80), font=0, text=entry[1]))  # menupunkt
-	   return res
+	if (getDesktop(0).size().width() == 1920):
+		res = [entry]
+		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
+		res.append(MultiContentEntryText(pos=(210, 30), size=(690, 80), font=0, text=entry[1]))  # menupunkt
+		return res
 	else:
-	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
-       	   res.append(MultiContentEntryText(pos=(210, 30), size=(440, 80), font=0, text=entry[1]))  # menupunkt
-	   return res
-	   
+		res = [entry]
+		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(200, 80), png=entry[0]))  # png vorn
+		res.append(MultiContentEntryText(pos=(210, 30), size=(440, 80), font=0, text=entry[1]))  # menupunkt
+		return res
 
 def InfoEntryComponent(file):
 	png = LoadPixmap("/usr/share/enigma2/bootlogos/" + file + ".png")
 	if png == None:
 		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default_logo.png")
+		res = (png)
+		return res
 
-	res = (png)
-	return res
-                        	   
 def InfoEntryComponent1(file):
 	png = LoadPixmap("/usr/share/enigma2/radiologos/" + file + ".png")
 	if png == None:
 		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default_logo.png")
+		res = (png)
+		return res
 
-	res = (png)
-	return res
-        		           
 class BootlogoSetupScreen(Screen):
 	skin = """<screen name="BootlogoSetupScreen" position="center,center" size="950,520" title="BootlogoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
@@ -82,12 +79,12 @@ class BootlogoSetupScreen(Screen):
 				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
-               </screen>"""	
+		</screen>"""	
 	def __init__(self, session):
 		Screen.__init__(self, session)
-                self.session = session
+		self.session = session
 		Screen.setTitle(self, _("BootlogoSetupScreen"))
-                self.Console = Console()
+		self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktbootlogo = config.bootlogo.booting.value
 		self["label1"] = Label(_("now Using Bootlogo: %s") % aktbootlogo)
@@ -97,28 +94,28 @@ class BootlogoSetupScreen(Screen):
 		ulogo=[]
 		ulogo = os.listdir(vpath)
 		bootlogo = []
-                for xlogo in ulogo:
-                       	if xlogo.endswith(".mvi"):
-                       	       	bootlogo.append(xlogo)
- 
-		self.list = []
-		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
+		for xlogo in ulogo:
+			if xlogo.endswith(".mvi"):
+				bootlogo.append(xlogo)
+
+				self.list = []
+				self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
 			{
 				"cancel": self.Exit,
 				"exit": self.Exit,
-				"red": self.Exit,                                				
+				"red": self.Exit,
 				"ok": self.ok,
 				"green": self.ok,
 			}, 1)
 			
-                self.Mlist = []
+		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('NFRbootlogo'), _("NFRbootlogo"), 'defaultbootlogo')))
-                for logo in bootlogo:
-                        xname = logo.strip(".mvi")
-                        if logo == "NFRbootlogo.mvi":
-                               	print("deaultbootlogo found")
-                        else:   
-			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % xname), _('%s' % xname), '%s' % logo)))
+		for logo in bootlogo:
+			xname = logo.strip(".mvi")
+			if logo == "NFRbootlogo.mvi":
+				print("deaultbootlogo found")
+			else:
+				self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % xname), _('%s' % xname), '%s' % logo)))
 
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1920):
@@ -132,7 +129,7 @@ class BootlogoSetupScreen(Screen):
 		self.session.open(MoveBootlogos)
 		
 	def KeyBlue(self):
-		self.session.open(MoveBootlogos_int)			
+		self.session.open(MoveBootlogos_int)
 
 
 	def setWindowTitle(self):
@@ -156,7 +153,7 @@ class BootlogoSetupScreen(Screen):
  
 
 	def ok(self):
-        	menu = self['Mlist'].getCurrent()[2]
+		menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
 		os.system("rm /usr/share/bootlogo.mvi")
 		os.system("cp /usr/share/enigma2/bootlogos/%s.mvi /usr/share/bootlogo.mvi" %menu1)
@@ -181,7 +178,7 @@ class RadiologoSetupScreen(Screen):
 				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
-                </screen>"""	
+		</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
@@ -192,32 +189,32 @@ class RadiologoSetupScreen(Screen):
 		self["label1"] = Label(_("now Using Radiologo: %s") % aktradiologo)
 		self["key_red"] = StaticText(_("Exit"))
 		self["key_green"] = StaticText(_("Save"))
-		vpath = "/usr/share/enigma2/radiologos/"	
+		vpath = "/usr/share/enigma2/radiologos/"
 		uradio=[]
 		uradio = os.listdir(vpath)
 		radiologo = []
-                for xradio in uradio:
-                       	if xradio.endswith(".mvi"):
-                       	       	radiologo.append(xradio)
+		for xradio in uradio:
+		if xradio.endswith(".mvi"):
+			radiologo.append(xradio)
  
 		self.list = []
 		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
 			{
 				"cancel": self.Exit,
 				"exit": self.Exit,
-				"red": self.Exit,                                				
+				"red": self.Exit,
 				"ok": self.ok,
 				"green": self.ok,
 			}, 1)
 			
-                self.Mlist = []
+		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent1('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
-                for logo in radiologo:
-                        yname = logo.strip(".mvi")
-                        if logo == "NFRradiologo.mvi":
-                               	print("deaultradiologo found")
-                        else:       	
-			       	self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
+		for logo in radiologo:
+			yname = logo.strip(".mvi")
+			if logo == "NFRradiologo.mvi":
+				print("deaultradiologo found")
+			else:
+				self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
 
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1920):
@@ -225,13 +222,13 @@ class RadiologoSetupScreen(Screen):
 		else:
 		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
-		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 		
+		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 
 	def KeyYellow(self):
 		self.session.open(MoveRadiologos)
 		
 	def KeyBlue(self):
-		self.session.open(MoveRadiologos_int)		
+		self.session.open(MoveRadiologos_int)
 
 	def setWindowTitle(self):
 		self.setTitle('%s' % (_('Radiologo Setup')))
@@ -239,11 +236,11 @@ class RadiologoSetupScreen(Screen):
 	
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
-		        menuv = self['Mlist'].getCurrent()[2]
-		        menuv1 = list(menuv)[7]
-		        if menuv1 == "Default Radiologo":
-			        menuv1 = "NFRradiologo.mvi"
-			selection = self['Mlist'].l.getCurrentSelection()[0]
+			menuv = self['Mlist'].getCurrent()[2]
+			menuv1 = list(menuv)[7]
+			if menuv1 == "Default Radiologo":
+				menuv1 = "NFRradiologo.mvi"
+				selection = self['Mlist'].l.getCurrentSelection()[0]
 			if (selection[0] is not None):
 				return selection[0]
 
@@ -258,10 +255,10 @@ class RadiologoSetupScreen(Screen):
 		menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
 		if menu1 == "Default Radiologo":
-			menu1 = "NFRradiologo.mvi"        	
-		os.system("rm /usr/share/enigma2/radio.mvi")
-		os.system("cp /usr/share/enigma2/radiologos/%s.mvi /usr/share/enigma2/radio.mvi" %menu1)
-                config.radiologo.booting.value = menu1
-		config.radiologo.booting.save()	
-		configfile.save()
-		self.close() 
+			menu1 = "NFRradiologo.mvi"
+			os.system("rm /usr/share/enigma2/radio.mvi")
+			os.system("cp /usr/share/enigma2/radiologos/%s.mvi /usr/share/enigma2/radio.mvi" %menu1)
+			config.radiologo.booting.value = menu1
+			config.radiologo.booting.save()	
+			configfile.save()
+			self.close() 
