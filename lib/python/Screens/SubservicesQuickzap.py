@@ -12,9 +12,9 @@ from Components.Timeshift import InfoBarTimeshift
 from enigma import eTimer
 
 class SubservicesQuickzap(InfoBarBase, InfoBarShowHide, InfoBarMenu,
-						  InfoBarInstantRecord, InfoBarSeek, InfoBarTimeshift,
-						  InfoBarTimeshiftState, InfoBarExtensions, InfoBarSubtitleSupport,
-						  InfoBarAudioSelection, Screen):
+							InfoBarInstantRecord, InfoBarSeek, InfoBarTimeshift,
+							InfoBarTimeshiftState, InfoBarExtensions, InfoBarSubtitleSupport,
+							InfoBarAudioSelection, Screen):
 
 	def __init__(self, session, subservices):
 		Screen.__init__(self, session)
@@ -93,7 +93,7 @@ class SubservicesQuickzap(InfoBarBase, InfoBarShowHide, InfoBarMenu,
 				return x
 
 	def keyNumberGlobal(self, number):
-		print number, "pressed"
+		print (number, "pressed")
 		self.updateSubservices()
 		if number == 0:
 			self.playSubservice(self.lastservice)
@@ -115,7 +115,7 @@ class SubservicesQuickzap(InfoBarBase, InfoBarShowHide, InfoBarMenu,
 		self.session.openWithCallback(self.subserviceSelected, ChoiceBox, title=_("Please select a subservice..."), list = tlist, selection = self.currentlyPlayingSubservice, keys = keys)
 
 	def subserviceSelected(self, service):
-		print "playing subservice number", service
+		print ("playing subservice number", service)
 		if service is not None:
 			self.playSubservice(service[1])
 
