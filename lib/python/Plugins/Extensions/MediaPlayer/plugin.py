@@ -51,10 +51,10 @@ class ExMoviePlayer(MoviePlayer):
 			self.close()
 			
 	def up(self):
-		print "Up"
+		print ("Up")
 	
 	def down(self):
-		print "Down"
+		print ("Down")
 			
 class MyPlayList(PlayList):
 	def __init__(self):
@@ -893,47 +893,47 @@ class MediaPlayer(Screen, InfoBarBase, InfoBarSeek, InfoBarScreenSaver, InfoBarA
 			needsInfoUpdate = False
 			currref = self.playlist.getServiceRefList()[self.playlist.getCurrentIndex()]
 			if self.session.nav.getCurrentlyPlayingServiceReference() is None or currref != self.session.nav.getCurrentlyPlayingServiceReference():
-			      idx = self.playlist.getCurrentIndex()
-			      currref = self.playlist.getServiceRefList()[idx]
-			      text = self.getIdentifier(currref)
-			      ext = os.path.splitext(text)[1].lower()
-			      if ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
-				    movie = self.playlist.getServiceRefList()[self.playlist.getCurrentIndex()]
-				    self.session.openWithCallback(self.stopEntry, ExMoviePlayer, movie)				
-			      else:
-				    self.session.nav.playService(self.playlist.getServiceRefList()[self.playlist.getCurrentIndex()])
-				    info = eServiceCenter.getInstance().info(currref)
-				    description = info and info.getInfoString(currref, iServiceInformation.sDescription) or ""
-				    self["title"].setText(description)
-				    # display just playing musik on LCD
-				    idx = self.playlist.getCurrentIndex()
-				    currref = self.playlist.getServiceRefList()[idx]
-				    text = self.getIdentifier(currref)
-				    ext = os.path.splitext(text)[1].lower()
-				    text = ">"+text
-				    # FIXME: the information if the service contains video (and we should hide our window) should com from the service instead 
-				    if ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
-					    self.hide()
-				    else:
-					    needsInfoUpdate = True
-				    self.summaries.setText(text, 1)
+				idx = self.playlist.getCurrentIndex()
+				currref = self.playlist.getServiceRefList()[idx]
+				text = self.getIdentifier(currref)
+				ext = os.path.splitext(text)[1].lower()
+				if ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
+					movie = self.playlist.getServiceRefList()[self.playlist.getCurrentIndex()]
+					self.session.openWithCallback(self.stopEntry, ExMoviePlayer, movie)				
+				else:
+					self.session.nav.playService(self.playlist.getServiceRefList()[self.playlist.getCurrentIndex()])
+					info = eServiceCenter.getInstance().info(currref)
+					description = info and info.getInfoString(currref, iServiceInformation.sDescription) or ""
+					self["title"].setText(description)
+					# display just playing musik on LCD
+					idx = self.playlist.getCurrentIndex()
+					currref = self.playlist.getServiceRefList()[idx]
+					text = self.getIdentifier(currref)
+					ext = os.path.splitext(text)[1].lower()
+					text = ">"+text
+					# FIXME: the information if the service contains video (and we should hide our window) should com from the service instead 
+					if ext not in AUDIO_EXTENSIONS and not self.isAudioCD:
+						self.hide()
+					else:
+						needsInfoUpdate = True
+					self.summaries.setText(text, 1)
 
-				    # get the next two entries
-				    idx += 1
-				    if idx < len(self.playlist):
-					    currref = self.playlist.getServiceRefList()[idx]
-					    text = self.getIdentifier(currref)
-					    self.summaries.setText(text, 3)
-				    else:
-					    self.summaries.setText(" ", 3)
+					# get the next two entries
+					idx += 1
+					if idx < len(self.playlist):
+						currref = self.playlist.getServiceRefList()[idx]
+						text = self.getIdentifier(currref)
+						self.summaries.setText(text, 3)
+					else:
+						self.summaries.setText(" ", 3)
 
-				    idx += 1
-				    if idx < len(self.playlist):
-					    currref = self.playlist.getServiceRefList()[idx]
-					    text = self.getIdentifier(currref)
-					    self.summaries.setText(text, 4)
-				    else:
-					    self.summaries.setText(" ", 4)
+					idx += 1
+					if idx < len(self.playlist):
+						currref = self.playlist.getServiceRefList()[idx]
+						text = self.getIdentifier(currref)
+						self.summaries.setText(text, 4)
+					else:
+						self.summaries.setText(" ", 4)
 			else:
 				idx = self.playlist.getCurrentIndex()
 				currref = self.playlist.getServiceRefList()[idx]
@@ -1127,15 +1127,14 @@ def filescan(**kwargs):
 
 from Plugins.Plugin import PluginDescriptor
 def Plugins(**kwargs):
-    screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:
-        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayerFHD.png', fnc=main),
+	screenwidth = getDesktop(0).size().width()
+	if screenwidth and screenwidth == 1920:
+		return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayerFHD.png', fnc=main),
 		PluginDescriptor(name = _("Media Player"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
 		PluginDescriptor(name = _("Media Player"), description = _("Play back media files"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc = menu)
-        ]
-    else:
-        return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayer.png', fnc=main),
-        	PluginDescriptor(name = _("Media Player"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
+	]
+	else:
+		return [PluginDescriptor(name='MediaPlayer', description=_('Play back media files'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaPlayer.png', fnc=main),
+		PluginDescriptor(name = _("Media Player"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
 		PluginDescriptor(name = _("Media Player"), description = _("Play back media files"), where = PluginDescriptor.WHERE_MENU, needsRestart = False, fnc = menu)
 	]
-
