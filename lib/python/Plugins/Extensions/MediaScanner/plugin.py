@@ -288,9 +288,9 @@ def Plugins(**kwargs):
 			PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
 			PluginDescriptor(where = PluginDescriptor.WHERE_AUTOSTART, needsRestart = True, fnc = autostart)
 			]
-    else:
-	    return [
-		    PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScanner.png',fnc=main),
+	else:
+		return [
+			PluginDescriptor(name="Media scanner", description=_("Scan files..."), where = PluginDescriptor.WHERE_PLUGINMENU, needsRestart = True, icon='MediaScanner.png',fnc=main),
 	#		PluginDescriptor(where = PluginDescriptor.WHERE_MENU, fnc=menuHook),
 			PluginDescriptor(name=_("Media scanner"), where = PluginDescriptor.WHERE_FILESCAN, needsRestart = False, fnc = filescan),
 			PluginDescriptor(where = PluginDescriptor.WHERE_SESSIONSTART, needsRestart = True, fnc = sessionstart),
