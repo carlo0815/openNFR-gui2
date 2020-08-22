@@ -138,8 +138,8 @@ class BootlogoSetupScreen(Screen):
 	
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
-		        menuv = self['Mlist'].getCurrent()[2]
-		        menuv1 = list(menuv)[7]
+			menuv = self['Mlist'].getCurrent()[2]
+			menuv1 = list(menuv)[7]
 			selection = self['Mlist'].l.getCurrentSelection()[0]
 			if (selection[0] is not None):
 				return selection[0]
@@ -194,35 +194,35 @@ class RadiologoSetupScreen(Screen):
 		uradio = os.listdir(vpath)
 		radiologo = []
 		for xradio in uradio:
-		if xradio.endswith(".mvi"):
-			radiologo.append(xradio)
+			if xradio.endswith(".mvi"):
+				radiologo.append(xradio)
  
-		self.list = []
-		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
-			{
-				"cancel": self.Exit,
-				"exit": self.Exit,
-				"red": self.Exit,
-				"ok": self.ok,
-				"green": self.ok,
-			}, 1)
+				self.list = []
+				self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
+				{
+					"cancel": self.Exit,
+					"exit": self.Exit,
+					"red": self.Exit,
+					"ok": self.ok,
+					"green": self.ok,
+				}, 1)
 			
-		self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent1('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
-		for logo in radiologo:
-			yname = logo.strip(".mvi")
-			if logo == "NFRradiologo.mvi":
-				print("deaultradiologo found")
-			else:
-				self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
+				self.Mlist = []
+				self.Mlist.append(MenuEntryItem((InfoEntryComponent1('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
+				for logo in radiologo:
+					yname = logo.strip(".mvi")
+					if logo == "NFRradiologo.mvi":
+						print("deaultradiologo found")
+					else:
+						self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
 
-		self.onChangedEntry = []
-		if (getDesktop(0).size().width() == 1920):
-			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
-		else:
-		        self["Mlist"] = PanelList([])
-		self["Mlist"].l.setList(self.Mlist)
-		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
+						self.onChangedEntry = []
+					if (getDesktop(0).size().width() == 1920):
+						self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
+					else:
+						self["Mlist"] = PanelList([])
+						self["Mlist"].l.setList(self.Mlist)
+						self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 
 	def KeyYellow(self):
 		self.session.open(MoveRadiologos)
