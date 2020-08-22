@@ -389,7 +389,7 @@ def parseSize(s, scale, object = None, desktop = None):
 		parentsize = getParentSize(object, desktop)
 	xval = parseCoordinate(x, parentsize.width())
 	yval = parseCoordinate(y, parentsize.height())
-	return eSize(xval * scale[0][0] / scale[0][1], yval * scale[1][0] // scale[1][1])
+	return eSize(xval * scale[0][0] // scale[0][1], yval * scale[1][0] // scale[1][1])
 
 def parseFont(s, scale):
 	try:
