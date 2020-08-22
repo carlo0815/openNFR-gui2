@@ -8,7 +8,7 @@ from sys import maxsize
 from twisted.internet import threads
 from enigma import eDBoxLCD, eTimer, eActionMap
 import os
-#import commands
+import subprocess
 
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
 from Components.SystemInfo import SystemInfo
