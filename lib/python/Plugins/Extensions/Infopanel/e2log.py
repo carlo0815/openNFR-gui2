@@ -18,20 +18,20 @@ import string
 
 class E2log(ConfigListScreen, Screen):
 
-    skin = """
-               <screen name="E2log" position="40,90" size="1180,590" title="E2log erstellen">
-               <ePixmap position="6,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" alphatest="blend" />
-               <ePixmap position="247,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" alphatest="blend" zPosition="2" />
-               <ePixmap position="493,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" alphatest="blend" zPosition="2" />
-               <ePixmap position="739,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/blue.png" alphatest="blend" zPosition="4" />
-               <widget name="key_red" render="Label" position="48,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular; 20" transparent="1" />
-               <widget name="key_green" render="Label" position="291,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <widget name="key_yellow" render="Label" position="540,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <widget name="key_blue" render="Label" position="777,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
-               <widget name="config" position="5,7" size="1170,527" scrollbarMode="showOnDemand" />
-    </screen> """
+	skin = """
+		<screen name="E2log" position="40,90" size="1180,590" title="E2log erstellen">
+		 <ePixmap position="6,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/red.png" alphatest="blend" />
+		<ePixmap position="247,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/green.png" alphatest="blend" zPosition="2" />
+		<ePixmap position="493,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/yellow.png" alphatest="blend" zPosition="2" />
+		<ePixmap position="739,559" size="35,27" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/blue.png" alphatest="blend" zPosition="4" />
+		<widget name="key_red" render="Label" position="48,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular; 20" transparent="1" />
+		<widget name="key_green" render="Label" position="291,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
+		<widget name="key_yellow" render="Label" position="540,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
+		<widget name="key_blue" render="Label" position="777,562" zPosition="2" size="190,22" valign="center" halign="center" font="Regular;21" transparent="1" backgroundColor="foreground" />
+		<widget name="config" position="5,7" size="1170,527" scrollbarMode="showOnDemand" />
+	</screen> """
 
-    def __init__(self, session, args = 0):
+	def __init__(self, session, args = 0):
 		Screen.__init__(self, session)
 		
 		self.place = "/home/root/logs"
@@ -45,7 +45,7 @@ class E2log(ConfigListScreen, Screen):
 		
 		self["key_red"] = Button(_("Stop_E2_Loggen"))
 		self["key_green"] = Button("Start_E2_Loggen")
-		self["key_yellow"] = Button("View E2Log")		
+		self["key_yellow"] = Button("View E2Log")
 		self["key_blue"] = Button(_("Exit"))
 		self['actions'] = ActionMap(['OkCancelActions', 'ColorActions', 'CiSelectionActions'],
 		{
@@ -58,24 +58,24 @@ class E2log(ConfigListScreen, Screen):
 		}, -2)
 		self['status'] = Label()
 
-    def ok(self):
+	def ok(self):
 		self.place = self.list[0][1].value
 		self.filename = self.list[1][1].value
 		if os.path.ismount(self.place) or os.path.exists(self.place):
 			target = "init 5; sleep 2 ; /usr/bin/enigma2 > "+self.place+"/"+self.filename+" 2>&1"  
-			self.session.open(Console, title=_("E2_Log..."), cmdlist = [target], closeOnSuccess = False)		
-                else:
-                        self.session.open(MessageBox, _("Folder not exist please try other!"), MessageBox.TYPE_INFO, timeout=10)
+			self.session.open(Console, title=_("E2_Log..."), cmdlist = [target], closeOnSuccess = False)
+		else:
+			self.session.open(MessageBox, _("Folder not exist please try other!"), MessageBox.TYPE_INFO, timeout=10)
 		
-    def cancel(self):
+	def cancel(self):
 		self.close(False)
 
-    def showLog(self):
-                self.sel = self.place + "/" + self.filename
+	def showLog(self):
+		self.sel = self.place + "/" + self.filename
 		if self.sel:
-			self.session.open(E2LogManagerViewLog, self.sel)		
-		
-    def red(self):
+			self.session.open(E2LogManagerViewLog, self.sel)
+
+	def red(self):
 		target = "init 6" 
 		self.session.open(Console, title=_("E2_Log..."), cmdlist = [target], closeOnSuccess = False)
 
