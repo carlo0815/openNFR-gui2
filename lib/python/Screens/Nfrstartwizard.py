@@ -121,47 +121,46 @@ class NfrWizardSetupScreen(Screen, ConfigListScreen):
 		self.close()
 		
 	def wiz_ard(self):
-                if config.wizardsetup.pluginmoveoutwizard == True:
-                        if harddiskmanager.HDDCount() == 0:
-                        	print "no Device found for moveout"
-                        else:	                                	
-                		self.session.open(MovePlugins)
+		if config.wizardsetup.pluginmoveoutwizard == True:
+			if harddiskmanager.HDDCount() == 0:
+				print ("no Device found for moveout")
+			else:
+				self.session.open(MovePlugins)
 		if config.wizardsetup.OpenNFRaddonsWizardSetup.value == True:
-                	self.session.open(OpenNFRWizardSetup)                  		
-                if config.wizardsetup.UserInterfacePositionerWizard.value == True:
-                        self.Console = Console()
-                        self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')			
-			self.session.open(UserInterfacePositionerWizard)                 		
+			self.session.open(OpenNFRWizardSetup)
+		if config.wizardsetup.UserInterfacePositionerWizard.value == True:
+			self.Console = Console()
+			self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
+			self.session.open(UserInterfacePositionerWizard)
 		if config.wizardsetup.OpenWebifConfig.value == True:
-                	self.session.open(OpenWebifConfig)                		
+			self.session.open(OpenWebifConfig)
 		if config.wizardsetup.bootvideomoveout.value == True and config.wizardsetup.pluginwizard.value == True:
-                       	if harddiskmanager.HDDCount() == 0:
-                       		print "no Device found for moveout"
-                       	else:	                        	
-				self.session.open(MoveVideos)                       		
+			if harddiskmanager.HDDCount() == 0:
+				print ("no Device found for moveout")
+			else:
+				self.session.open(MoveVideos)
 		if config.wizardsetup.bootvideo.value == True and config.wizardsetup.pluginwizard.value == True:
-			self.session.open(BootvideoSetupScreen)                		
+			self.session.open(BootvideoSetupScreen)
 		if config.wizardsetup.bootlogomoveout.value == True and config.wizardsetup.pluginwizard.value == True:
-                       	if harddiskmanager.HDDCount() == 0:
-                       		print "no Device found for moveout"
-                       	else:	                        	
-				self.session.open(MoveSpinner)                		
+			if harddiskmanager.HDDCount() == 0:
+				print ("no Device found for moveout")
+			else:
+				self.session.open(MoveSpinner)
 		if config.wizardsetup.bootlogo.value == True and config.wizardsetup.pluginwizard.value == True:
-			self.session.open(BootlogoSetupScreen)                 		
+			self.session.open(BootlogoSetupScreen)
 		if config.wizardsetup.spinnermoveout.value == True and config.wizardsetup.pluginwizard.value == True:
-                       	if harddiskmanager.HDDCount() == 0:
-                       		print "no Device found for moveout"
-                       	else:	
+			if harddiskmanager.HDDCount() == 0:
+				print ("no Device found for moveout")
+			else:
 				self.session.open(MoveSpinner)                		
 		if config.wizardsetup.spinnerselect.value == True and config.wizardsetup.pluginwizard.value == True:
 			SpinnerSelector(self.session)
-	        if config.wizardsetup.pluginwizard.value == True:
-	                from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
+		if config.wizardsetup.pluginwizard.value == True:
+			from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 			self.session.open(PluginInstall)
-                if  config.wizardsetup.poweroffsetup.value == True:
-                        self.openSetup("remotesetup")        			
+		if  config.wizardsetup.poweroffsetup.value == True:
+			self.openSetup("remotesetup")
 		self.close()
 		
 	def openSetup(self, dialog):
-                self.session.openWithCallback(self.close, Setup, dialog)
-
+		self.session.openWithCallback(self.close, Setup, dialog)
