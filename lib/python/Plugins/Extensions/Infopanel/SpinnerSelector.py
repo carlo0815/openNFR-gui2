@@ -15,11 +15,11 @@ class SpinnerSelector:
 		if not dirs:
 			for i in list(range(64)):
 				if (os.path.isfile("/usr/share/enigma2/spinner/wait%d.png"%(i+1))):
-				        if not os.path.exists("/usr/share/enigma2/Spinner/lastused"):
-                                                os.mkdir("/usr/share/enigma2/Spinner/lastused")
+					if not os.path.exists("/usr/share/enigma2/Spinner/lastused"):
+						os.mkdir("/usr/share/enigma2/Spinner/lastused")
 					shutil.copy("/usr/share/enigma2/spinner/wait%d.png"%(i+1), "/usr/share/enigma2/Spinner/lastused/wait%d.png"%(i+1))
 					dirs = os.listdir(path)
-                dirs.sort()
+		dirs.sort()
 		menu = []
 		for dir in dirs:
 			p = path + dir
