@@ -8,7 +8,7 @@ from sys import maxsize
 from twisted.internet import threads
 from enigma import eDBoxLCD, eTimer, eActionMap
 import os
-import commands
+#import commands
 
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigSlider, ConfigYesNo, ConfigNothing
 from Components.SystemInfo import SystemInfo
@@ -342,7 +342,7 @@ def InitLcd():
 		f = open("/proc/stb/lcd/live_enable", "r")
 		can_lcdmodechecking = f.read().strip().split(" ")
 		f.close()
-        else:
+	else:
 		can_lcdmodechecking = False
 	SystemInfo["LCDMiniTV"] = can_lcdmodechecking
 
@@ -381,7 +381,7 @@ def InitLcd():
 				config.lcd.modepip = ConfigNothing()
 				
 			config.lcd.screenshot = ConfigYesNo(default=False)
- 			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
+			config.lcd.screenshot.addNotifier(setLCDScreenshot)	
 			config.lcd.modeminitv = ConfigSelection(choices={
 					"0": _("normal"),
 					"1": _("MiniTV"),
@@ -396,7 +396,7 @@ def InitLcd():
 		elif can_lcdmodechecking:
 			def setLCDModeMinitTV4k(configElement):
 				try:
-					print 'setLCDModeMinitTV',configElement.value
+					print ('setLCDModeMinitTV',configElement.value)
 					f = open("/proc/stb/lcd/live_enable", "w")
 					f.write(configElement.value)
 					f.close()
@@ -406,7 +406,7 @@ def InitLcd():
 				pass
 			def setLCDModePiP(configElement):
 				try:
-					print 'setMiniTVPIP',configElement.value
+					print ('setMiniTVPIP',configElement.value)
 					f = open("/proc/stb/lcd/live_decoder", "w")
 					f.write(configElement.value)
 					f.close()
@@ -415,7 +415,7 @@ def InitLcd():
 				pass
 			
 			def setLCDScreenshot(configElement):
- 				ilcd.setScreenShot(configElement.value);
+				ilcd.setScreenShot(configElement.value);
 				
 			if getBoxType() in ('e4hdultra'):
 				config.lcd.modepip = ConfigSelection(choices={
@@ -428,7 +428,7 @@ def InitLcd():
 				config.lcd.modepip = ConfigNothing()
 				
 			config.lcd.screenshot = ConfigYesNo(default=False)
- 			config.lcd.screenshot.addNotifier(setLCDScreenshot)					
+			config.lcd.screenshot.addNotifier(setLCDScreenshot)
 			if getBoxType() in ('e4hdultra'):
 				config.lcd.modeminitv4k = ConfigSelection(choices={
 						"disable": _("normal"),
@@ -498,13 +498,13 @@ def InitLcd():
 			ilcd.setLCDMiniTVMode(configElement.value)
 			
 		def setLCDminitvmode4k(configElement):
-			ilcd.setLCDMiniTVMode4k(configElement.value)			
+			ilcd.setLCDMiniTVMode4k(configElement.value)
 
 		def setLCDminitvpipmode(configElement):
 			ilcd.setLCDMiniTVPIPMode(configElement.value)
 
 		def setLCDminitvfps(configElement):
-			ilcd.setLCDMiniTVFPS(configElement.value)			
+			ilcd.setLCDMiniTVFPS(configElement.value)
 
 		def setLCDrepeat(configElement):
 			ilcd.setRepeat(configElement.value);
@@ -535,7 +535,7 @@ def InitLcd():
 				f = open("/proc/stb/power/powerled", "w")
 				f.write(configElement.value)
 				f.close()
-                
+
 		def setPowerLEDstate2(configElement):
 			if fileExists("/proc/stb/power/powerled2"):
 				f = open("/proc/stb/power/powerled2", "w")
@@ -617,7 +617,7 @@ def InitLcd():
 
 		config.usage.lcd_powerled2 = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_powerled2.addNotifier(setPowerLEDstate2)
-        
+
 		config.usage.lcd_standbypowerled = ConfigSelection(default = "on", choices = [("off", _("Off")), ("on", _("On"))])
 		config.usage.lcd_standbypowerled.addNotifier(setPowerLEDstandbystate)
 
@@ -714,7 +714,7 @@ def InitLcd():
 				config.misc.standbyCounter.addNotifier(standbyCounterChangedLCDLiveTV, initial_call = False)
 
 		if SystemInfo["LCDMiniTV4k"]:
-		        SystemInfo["LCDMiniTV"] = False
+			SystemInfo["LCDMiniTV"] = False
 			if getBoxType() in ('e4hdultra'):
 				config.lcd.minitvmode4k = ConfigSelection([("disable", _("normal")), ("enable", _("MiniTV"))], "disable")
 				config.lcd.minitvmode4k.addNotifier(setLCDminitvmode4k)
