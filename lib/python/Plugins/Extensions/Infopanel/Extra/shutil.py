@@ -12,7 +12,7 @@ import fnmatch
 import errno
 
 __all__ = ["copyfileobj","copyfile","copymode","copystat","copy","copy2",
-	"copytree","move","rmtree","Error"]
+			"copytree","move","rmtree","Error"]
 
 class Error(EnvironmentError):
 	pass
@@ -40,7 +40,7 @@ def _samefile(src, dst):
 
 	# All other platforms: check for same pathname.
 	return (os.path.normcase(os.path.abspath(src)) ==
-		os.path.normcase(os.path.abspath(dst)))
+			os.path.normcase(os.path.abspath(dst)))
 
 def copyfile(src, dst):
 	"""Copy data from src to dst"""
@@ -56,7 +56,7 @@ def copymode(src, dst):
 	if hasattr(os, 'chmod'):
 		st = os.stat(src)
 		mode = stat.S_IMODE(st.st_mode)
-			os.chmod(dst, mode)
+		os.chmod(dst, mode)
 
 def copystat(src, dst):
 	"""Copy all stat info (mode bits, atime, mtime, flags) from src to dst"""
@@ -74,15 +74,15 @@ def copystat(src, dst):
 				raise
 
 def copy(src, dst):
-		"""Copy data and mode bits ("cp src dst").
+	"""Copy data and mode bits ("cp src dst").
 
 	The destination may be a directory.
 
 	"""
 	if os.path.isdir(dst):
 		dst = os.path.join(dst, os.path.basename(src))
-		copyfile(src, dst)
-		copymode(src, dst)
+	copyfile(src, dst)
+	copymode(src, dst)
 
 def copy2(src, dst):
 	"""Copy data and all stat info ("cp -p src dst").
@@ -92,20 +92,20 @@ def copy2(src, dst):
 	"""
 	if os.path.isdir(dst):
 		dst = os.path.join(dst, os.path.basename(src))
-		copyfile(src, dst)
-		copystat(src, dst)
+	copyfile(src, dst)
+	copystat(src, dst)
 
 def ignore_patterns(*patterns):
 	"""Function that can be used as copytree() ignore parameter.
 
 	Patterns is a sequence of glob-style patterns
 	that are used to exclude files"""
-def _ignore_patterns(path, names):
-	ignored_names = []
-	for pattern in patterns:
-		ignored_names.extend(fnmatch.filter(names, pattern))
-	return set(ignored_names)
-return _ignore_patterns
+	def _ignore_patterns(path, names):
+		ignored_names = []
+		for pattern in patterns:
+			ignored_names.extend(fnmatch.filter(names, pattern))
+		return set(ignored_names)
+	return _ignore_patterns
 
 def copytree(src, dst, symlinks=False, ignore=None):
 	"""Recursively copy a directory tree using copy2().
@@ -123,7 +123,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
 	being visited by copytree(), and `names` which is the list of
 	`src` contents, as returned by os.listdir():
 
-	callable(src, names) -> ignored_names
+		callable(src, names) -> ignored_names
 
 	Since copytree() is called recursively, the callable will be
 	called once for each directory that is copied. It returns a
@@ -139,28 +139,28 @@ def copytree(src, dst, symlinks=False, ignore=None):
 	else:
 		ignored_names = set()
 
-		os.makedirs(dst)
-		errors = []
-		for name in names:
-			if name in ignored_names:
-				continue
-			srcname = os.path.join(src, name)
-			dstname = os.path.join(dst, name)
-			try:
-				if symlinks and os.path.islink(srcname):
-					linkto = os.readlink(srcname)
-					os.symlink(linkto, dstname)
-				elif os.path.isdir(srcname):
-					copytree(srcname, dstname, symlinks, ignore)
-				else:
-					copy2(srcname, dstname)
-					# XXX What about devices, sockets etc.?
-			except (IOError, os.error), why:
-				errors.append((srcname, dstname, str(why)))
-				# catch the Error from the recursive copytree so that we can
-				# continue with other files
-			except Error, err:
-				errors.extend(err.args[0])
+	os.makedirs(dst)
+	errors = []
+	for name in names:
+		if name in ignored_names:
+			continue
+		srcname = os.path.join(src, name)
+		dstname = os.path.join(dst, name)
+		try:
+			if symlinks and os.path.islink(srcname):
+				linkto = os.readlink(srcname)
+				os.symlink(linkto, dstname)
+			elif os.path.isdir(srcname):
+				copytree(srcname, dstname, symlinks, ignore)
+			else:
+				copy2(srcname, dstname)
+			# XXX What about devices, sockets etc.?
+		except (IOError, os.error), why:
+			errors.append((srcname, dstname, str(why)))
+		# catch the Error from the recursive copytree so that we can
+		# continue with other files
+		except Error, err:
+			errors.extend(err.args[0])
 	try:
 		copystat(src, dst)
 	except OSError, why:
@@ -246,19 +246,19 @@ def move(src, dst):
 	real_dst = dst
 	if os.path.isdir(dst):
 		real_dst = os.path.join(dst, _basename(src))
-			if os.path.exists(real_dst):
-				raise Error, "Destination path '%s' already exists" % real_dst
+		if os.path.exists(real_dst):
+			raise Error, "Destination path '%s' already exists" % real_dst
 	try:
 		os.rename(src, real_dst)
 	except OSError:
 		if os.path.isdir(src):
 			if destinsrc(src, dst):
 				raise Error, "Cannot move a directory '%s' into itself '%s'." % (src, dst)
-				copytree(src, real_dst, symlinks=True)
-				rmtree(src)
-			else:
-				copy2(src, real_dst)
-				os.unlink(src)
+			copytree(src, real_dst, symlinks=True)
+			rmtree(src)
+		else:
+			copy2(src, real_dst)
+			os.unlink(src)
 
 def destinsrc(src, dst):
 	src = abspath(src)
