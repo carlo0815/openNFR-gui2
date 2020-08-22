@@ -1,4 +1,4 @@
-from config import config, ConfigSelection, ConfigNothing
+from Components.config import config, ConfigSelection, ConfigNothing
 from Components.SystemInfo import SystemInfo
 from Tools.Directories import fileExists
 from boxbranding import getBoxType
@@ -8,7 +8,7 @@ class WOL:
 		pass
 
 	def setWolState(self, value):
-		print '[WOL] set:',value
+		print ('[WOL] set:',value)
 		if fileExists("/proc/stb/fp/wol"):
 			f = open("/proc/stb/fp/wol", "w")
 			f.write(value)
