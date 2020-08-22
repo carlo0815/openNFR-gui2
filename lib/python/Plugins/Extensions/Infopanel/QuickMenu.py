@@ -311,22 +311,22 @@ class QuickMenu(Screen):
 		self.sublist = []
 		a_pfad = '/usr/keys/'
 		for ordner in os.listdir(a_pfad):
-                        if "oscam" in ordner:
-  				if path.exists("/usr/keys/%s/oscam.server" % ordner) or path.exists("/usr/keys/%s/oscam.user" % ordner) or path.exists("/usr/keys/%s/oscam.conf" % ordner) or path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
-                                        self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit", _("Oscam Config %s Edit" % ordner), _("Oscam Config %s Edit" % ordner)))
-                                        break
+			if "oscam" in ordner:
+				if path.exists("/usr/keys/%s/oscam.server" % ordner) or path.exists("/usr/keys/%s/oscam.user" % ordner) or path.exists("/usr/keys/%s/oscam.conf" % ordner) or path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
+					self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit", _("Oscam Config %s Edit" % ordner), _("Oscam Config %s Edit" % ordner)))
+					break
 		if path.exists("/usr/keys/oscam.server") or path.exists("/usr/keys/oscam.user") or path.exists("/usr/keys/oscam.conf") or path.exists("/usr/keys/oscam.dvbapi"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit", _("Oscam Config Edit"), _("Oscam Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("Oscam Config Edit", _("Oscam Config Edit"), _("Oscam Config Edit")))
 		if path.exists("/usr/keys/CCcam.cfg"):
-                	self.sublist.append(QuickSubMenuEntryComponent("CCcam Config Edit", _("CCcam Config Edit"), _("CCcam Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("CCcam Config Edit", _("CCcam Config Edit"), _("CCcam Config Edit")))
 		if path.exists("/usr/keys/mg_cfg") or path.exists("/usr/keys/cccamd.list") or path.exists("/usr/keys/newcamd.list"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Mgcamd Config Edit", _("Mgcamd Config Edit"), _("Mgcamd Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("Mgcamd Config Edit", _("Mgcamd Config Edit"), _("Mgcamd Config Edit")))
 		if path.exists("/usr/keys/camd3.config") or path.exists("/usr/keys/camd3.users") or path.exists("/usr/keys/camd3.servers"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Camd3 Config Edit", _("Camd3 Config Edit"), _("Camd3 Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("Camd3 Config Edit", _("Camd3 Config Edit"), _("Camd3 Config Edit")))
 		if path.exists("/usr/keys/gbox.cfg") or path.exists("/usr/keys/cwshare.cfg"): 
-                	self.sublist.append(QuickSubMenuEntryComponent("Gbox Config Edit", _("Gbox Config Edit"), _("Gbox Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("Gbox Config Edit", _("Gbox Config Edit"), _("Gbox Config Edit")))
 		if path.exists("/usr/keys/wicardd.conf"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Wicard Config Edit", _("Wicard Config Edit"), _("Wicard Config Edit")))
+			self.sublist.append(QuickSubMenuEntryComponent("Wicard Config Edit", _("Wicard Config Edit"), _("Wicard Config Edit")))
 		self["sublist"].l.setList(self.sublist)		
 
 #### Oscam Edit Menu ##############################
@@ -337,19 +337,19 @@ class QuickMenu(Screen):
 			if "oscam" in ordner:
 				if path.exists("/usr/keys/%s/oscam.server" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.server %s Edit" % ordner, _("Oscam.server %s Edit" % ordner), _("open Oscam.server %s to Edit" % ordner)))
-                		if path.exists("/usr/keys/%s/oscam.user" % ordner):
+				if path.exists("/usr/keys/%s/oscam.user" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.user %s Edit" % ordner, _("Oscam.user %s Edit" % ordner), _("open Oscam.user %s to Edit" % ordner)))
-                		if path.exists("/usr/keys/%s/oscam.conf" % ordner):
+				if path.exists("/usr/keys/%s/oscam.conf" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.conf %s Edit" % ordner, _("Oscam.conf %s Edit" % ordner), _("open Oscam.conf %s to Edit" % ordner)))
                 		if path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.dvbapi %s Edit" % ordner, _("Oscam.dvbapi %s Edit" % ordner), _("open Oscam.dvbapi %s to Edit" % ordner)))
 		if path.exists("/usr/keys/oscam.server"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.server Edit", _("Oscam.server Edit"), _("open Oscam.server to Edit")))
-                if path.exists("/usr/keys/oscam.user"):
+		if path.exists("/usr/keys/oscam.user"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.user Edit", _("Oscam.user Edit"), _("open Oscam.user to Edit")))
-                if path.exists("/usr/keys/oscam.conf"):
+		if path.exists("/usr/keys/oscam.conf"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.conf Edit", _("Oscam.conf Edit"), _("open Oscam.conf to Edit")))
-                if path.exists("/usr/keys/oscam.dvbapi"):
+		if path.exists("/usr/keys/oscam.dvbapi"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.dvbapi Edit", _("Oscam.dvbapi Edit"), _("open Oscam.dvbapi to Edit")))
 		self["sublist"].l.setList(self.sublist)
 #### Ccam Edit Menu ##############################
@@ -364,19 +364,19 @@ class QuickMenu(Screen):
 		if path.exists("/usr/keys/mg_cfg"):
 			self.sublist.append(QuickSubMenuEntryComponent("mg.cfg Edit", _("mg.cfg Edit"), _("open mg.cfg to Edit")))
 		if path.exists("/usr/keys/cccamd.list"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Mgcamd cccamd.list Edit", _("Mgcamd cccamd.list Edit"), _("open Mgcamd cccamd.list to Edit")))		
+			self.sublist.append(QuickSubMenuEntryComponent("Mgcamd cccamd.list Edit", _("Mgcamd cccamd.list Edit"), _("open Mgcamd cccamd.list to Edit")))
 		if path.exists("/usr/keys/newcamd.list"):
-                	self.sublist.append(QuickSubMenuEntryComponent("Mgcamd newcamd.list Edit", _("Mgcamd newcamd.list Edit"), _("open Mgcamd newcamd.list to Edit")))		
-		self["sublist"].l.setList(self.sublist)	
+			self.sublist.append(QuickSubMenuEntryComponent("Mgcamd newcamd.list Edit", _("Mgcamd newcamd.list Edit"), _("open Mgcamd newcamd.list to Edit")))
+		self["sublist"].l.setList(self.sublist)
 #### Camd3 Edit Menu ##############################
 	def QCamd3edit(self):
 		self.sublist = []
 		if path.exists("/usr/keys/camd3.config"):
 			self.sublist.append(QuickSubMenuEntryComponent("camd3.config Edit", _("camd3.config Edit"), _("open camd3.config to Edit")))
 		if path.exists("/usr/keys/camd3.users"):
-                	self.sublist.append(QuickSubMenuEntryComponent("camd3.users Edit", _("camd3.users Edit"), _("open camd3.users to Edit")))		
+			self.sublist.append(QuickSubMenuEntryComponent("camd3.users Edit", _("camd3.users Edit"), _("open camd3.users to Edit")))
 		if path.exists("/usr/keys/camd3.servers"):
-                	self.sublist.append(QuickSubMenuEntryComponent("camd3.servers Edit", _("camd3.servers Edit"), _("open camd3.servers to Edit")))		
+			self.sublist.append(QuickSubMenuEntryComponent("camd3.servers Edit", _("camd3.servers Edit"), _("open camd3.servers to Edit")))
 		self["sublist"].l.setList(self.sublist)	
 #### Gbox Edit Menu ##############################
 	def QGboxedit(self):
@@ -384,7 +384,7 @@ class QuickMenu(Screen):
 		if path.exists("/usr/keys/gbox.cfg"):
 			self.sublist.append(QuickSubMenuEntryComponent("gbox.cfg Edit", _("gbox.cfg Edit"), _("open gbox.cfg to Edit")))
 		if path.exists("/usr/keys/cwshare.cfg"):
-                	self.sublist.append(QuickSubMenuEntryComponent("cwshare.cfg Edit", _("cwshare.cfg Edit"), _("open cwshare.cfg to Edit")))		
+			self.sublist.append(QuickSubMenuEntryComponent("cwshare.cfg Edit", _("cwshare.cfg Edit"), _("open cwshare.cfg to Edit"))
 		self["sublist"].l.setList(self.sublist)	
 #### Wicardd Edit Menu ##############################
 	def QWicarddedit(self):
@@ -415,7 +415,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Automatic Scan", _("Service Searching"), _("Automatic scan for services")))
 		self.sublist.append(QuickSubMenuEntryComponent("Manual Scan", _("Service Searching"), _("Manual scan for services")))
 		self.sublist.append(QuickSubMenuEntryComponent("Sat Finder", _("Search Sats"), _("Search Sats, check signal and lock")))
-		self.sublist.append(QuickSubMenuEntryComponent("Sat Loader", _("Download satellites.xml"), _("Download satellites.xml")))		
+		self.sublist.append(QuickSubMenuEntryComponent("Sat Loader", _("Download satellites.xml"), _("Download satellites.xml")))
 		self["sublist"].l.setList(self.sublist)
 
 ######## Software Manager Menu ##############################
@@ -439,7 +439,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Remove Plugins", _("Delete Plugins"), _("Delete and unstall Plugins. This will remove the Plugin from your box")))
 		self.sublist.append(QuickSubMenuEntryComponent("IPK Installer", _("Install local extension"), _("Scan for local extensions and install them")))
 		self.sublist.append(QuickSubMenuEntryComponent("PackageManager", _("Install local extension"), _("Scan for local tar/rar/zip Package and install them")))	
-		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins", _("Move Plugins to HDD or USB"), _("Move Plugins to HDD or USB")))			
+		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins", _("Move Plugins to HDD or USB"), _("Move Plugins to HDD or USB")))
 		self["sublist"].l.setList(self.sublist)
 
 ######## Harddisk Menu ##############################
@@ -467,7 +467,7 @@ class QuickMenu(Screen):
 	def Qtar(self):
 		self.sublist = []
 		self.sublist.append(QuickSubMenuEntryComponent("PackageManager", _("Install local extension"), _("Scan for local tar/rar/zip Package and install them")))
-		self["sublist"].l.setList(self.sublist)		
+		self["sublist"].l.setList(self.sublist)
 ######## screenshot Menu ##############################
 	def Qscreenshot(self):
 		self.sublist = []
@@ -475,12 +475,12 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("VIDEO", _("Screenshot nur Video"), _("Screenshot nur Video")))		
 		self.sublist.append(QuickSubMenuEntryComponent("ALL", _("Screenshot Video+OSD"), _("Screenshot Video+OSD")))		
 		self["sublist"].l.setList(self.sublist)
-######## moveplugins Menu ##############################		
+######## moveplugins Menu ##############################
 	def Qmoveplugins(self):
 		self.sublist = []
 		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins to HDD/USB", _("Move Plugins to HDD/USB"), _("Move Plugins to HDD/USB")))
 		self.sublist.append(QuickSubMenuEntryComponent("Move Plugins back to Box", _("Move Plugins back to Box"), _("Move Plugins back to Box")))
-		self["sublist"].l.setList(self.sublist)		
+		self["sublist"].l.setList(self.sublist)
 #####################################################################
 ######## Make Selection MAIN MENU LIST ##############################
 #####################################################################
@@ -553,7 +553,7 @@ class QuickMenu(Screen):
 		elif item[0] == _("iperf Net_test"):
 			self.session.open(Net_test)
 		elif item[0] == _("Telnet Command"):
-			self.session.open(TelnetCommand)                        			
+			self.session.open(TelnetCommand)
 		elif item[0] == _("Samba"):
 			self.session.open(NetworkSamba)
 		elif item[0] == _("NFS"):
@@ -595,13 +595,13 @@ class QuickMenu(Screen):
 		elif item[0] == _("HDD Manager"):
 			self.session.open(HddSetup)
 		elif item[0] == _("HDD Fast Umount"):
-			self.session.open(HddFastRemove)			
+			self.session.open(HddFastRemove)
 		elif item[0] == _("SWAP Manager"):
-			self.session.open(SwapOverviewScreen)	
+			self.session.open(SwapOverviewScreen)
 ######## Select Softcam Menu ##############################
 		elif item[0] == _("Softcam Panel"):
-       			self.session.open(NFRCamManager)
-       	        elif item[0] == _("Softcam Config Edit"):
+			self.session.open(NFRCamManager)
+		elif item[0] == _("Softcam Config Edit"):
 			self.Qsoftcamedit()
 			self["sublist"].moveToIndex(0)
 ######## Select OscamEdit Menu ##############################
@@ -611,66 +611,66 @@ class QuickMenu(Screen):
 ######## Select CCcam Config Edit Menu ##############################
 		elif item[0] == _("CCcam Config Edit"):
 			self.QCCcamedit()
-			self["sublist"].moveToIndex(0)			
+			self["sublist"].moveToIndex(0)
 ######## Select Mgcamd Config Edit Menu ##############################
 		elif item[0] == _("Mgcamd Config Edit"):
 			self.QMgcamdedit()
-			self["sublist"].moveToIndex(0)					
+			self["sublist"].moveToIndex(0)
 ######## Select Camd3 Config Edit Menu ##############################
 		elif item[0] == _("Camd3 Config Edit"):
 			self.QCamd3edit()
-			self["sublist"].moveToIndex(0)					
+			self["sublist"].moveToIndex(0)
 ######## Select Gbox Config Edit Menu ##############################
 		elif item[0] == _("Gbox Config Edit"):
 			self.QGboxedit()
-			self["sublist"].moveToIndex(0)					
+			self["sublist"].moveToIndex(0)
 ######## Select Wicard Config Edit Menu ##############################
 		elif item[0] == _("Wicard Config Edit"):
 			self.QWicarddedit()
 			self["sublist"].moveToIndex(0)
 		elif item[0] == _("Oscam.server Edit"):
-			self.session.open(cEditor, "/usr/keys/oscam.server")	
+			self.session.open(cEditor, "/usr/keys/oscam.server")
 		elif item[0] == _("Oscam.user Edit"):
-			self.session.open(cEditor, "/usr/keys/oscam.user")	
+			self.session.open(cEditor, "/usr/keys/oscam.user")
 		elif item[0] == _("Oscam.conf Edit"):
-			self.session.open(cEditor, "/usr/keys/oscam.conf")	
+			self.session.open(cEditor, "/usr/keys/oscam.conf")
 		elif item[0] == _("Oscam.dvbapi Edit"):
-			self.session.open(cEditor, "/usr/keys/oscam.dvbapi")				
+			self.session.open(cEditor, "/usr/keys/oscam.dvbapi")
 		elif item[0] == _("CCcam.cfg Edit"):
-			self.session.open(cEditor, "/usr/keys/CCcam.cfg")	
+			self.session.open(cEditor, "/usr/keys/CCcam.cfg")
 		elif item[0] == _("mg.cfg Edit"):
-			self.session.open(cEditor, "/usr/keys/mg_cfg")	
+			self.session.open(cEditor, "/usr/keys/mg_cfg")
 		elif item[0] == _("Mgcamd cccamd.list Edit"):
-			self.session.open(cEditor, "/usr/keys/cccamd.list")	
+			self.session.open(cEditor, "/usr/keys/cccamd.list")
 		elif item[0] == _("Mgcamd newcamd.list Edit"):
-			self.session.open(cEditor, "/usr/keys/newcamd.list")	
+			self.session.open(cEditor, "/usr/keys/newcamd.list")
 		elif item[0] == _("camd3.config Edit"):
-			self.session.open(cEditor, "/usr/keys/camd3.config")	
+			self.session.open(cEditor, "/usr/keys/camd3.config")
 		elif item[0] == _("camd3.users Edit"):
-			self.session.open(cEditor, "/usr/keys/camd3.users")	
+			self.session.open(cEditor, "/usr/keys/camd3.users")
 		elif item[0] == _("camd3.servers Edit"):
-			self.session.open(cEditor, "/usr/keys/camd3.servers")	
+			self.session.open(cEditor, "/usr/keys/camd3.servers")
 		elif item[0] == _("gbox.cfg Edit"):
-			self.session.open(cEditor, "/usr/keys/gbox_cfg")	
+			self.session.open(cEditor, "/usr/keys/gbox_cfg")
 		elif item[0] == _("cwshare.cfg Edit"):
-			self.session.open(cEditor, "/usr/keys/cwshare.cfg")	
+			self.session.open(cEditor, "/usr/keys/cwshare.cfg")
 		elif item[0] == _("wicardd.conf Edit"):
-			self.session.open(cEditor, "/usr/keys/wicardd.conf")				
+			self.session.open(cEditor, "/usr/keys/wicardd.conf")
 ######## Select Screenshot Menu ##############################
 		elif item[0] == _("OSD"):
-                        self.Console = Console()
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh o ExecuteOnce")
-       		elif item[0] == _("VIDEO"):
-       		        self.Console = Console()
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh v ExecuteOnce")
-       		elif item[0] == _("ALL"):
-       		        self.Console = Console()
-                        self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh ExecuteOnce")
+			self.Console = Console()
+			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh o ExecuteOnce")
+		elif item[0] == _("VIDEO"):
+			self.Console = Console()
+			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh v ExecuteOnce")
+		elif item[0] == _("ALL"):
+			self.Console = Console()
+			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh ExecuteOnce")
 ######## Select moveplugins Menu ##############################
 		elif item[0] == _("Move Plugins to HDD/USB"):
-        		        self.session.open(MovePlugins)
-       		elif item[0] == _("Move Plugins back to Box"):
-       		                self.session.open(MovePlugins_int)
+			self.session.open(MovePlugins)
+		elif item[0] == _("Move Plugins back to Box"):
+			self.session.open(MovePlugins_int)
  ######## Select AV Setup Menu ##############################
 		elif item[0] == _("AV Settings"):
 			self.session.open(VideoSetup)
@@ -694,14 +694,14 @@ class QuickMenu(Screen):
 		elif item[0] == _("Sat Finder"):
 			self.SatfinderMain()
 		elif item[0] == _("Sat Loader"):
-			self.session.open(Satloader)			
+			self.session.open(Satloader)
 ######## Select Software Manager Menu ##############################
 		elif item[0] == _("Software Update"):
 			#self.session.open(UpdatePlugin)
 			self.session.open(SoftwarePanel)
 		elif item[0] == _("Flash Local-Online"):
-                        self.session.open(FlashOnline)
-                               			
+			self.session.open(FlashOnline)
+
 		elif item[0] == _("Complete Backup"):
 			if DFLASH == True:
 				self.session.open(dFlash)
@@ -736,7 +736,7 @@ class QuickMenu(Screen):
 				self.session.open(MessageBox, _("Sorry MediaScanner is not installed!"), MessageBox.TYPE_INFO, timeout = 10)
 		elif item[0] == _("Move Plugins"):
 			self.Qmoveplugins()	
-			self["sublist"].moveToIndex(0)				
+			self["sublist"].moveToIndex(0)
 ######## Select Harddisk Menu ############################################
 		elif item[0] == _("Harddisk Setup"):
 			self.openSetup("harddisk")
@@ -755,22 +755,22 @@ class QuickMenu(Screen):
 ######## Select tar Menu ############################################
 		elif item[0] == _("PackageManager"):
 			self.session.open(InfopanelManagerScreen)
-######## Select Oscam Config Edit Menu ##############################                       
+######## Select Oscam Config Edit Menu ##############################
 		a_pfad = "/usr/keys/"
 		for ordner in os.listdir(a_pfad):
-                        if "oscam" in ordner:			
-                                if item[0] == _("Oscam.server %s Edit" % ordner):
+			if "oscam" in ordner:
+				if item[0] == _("Oscam.server %s Edit" % ordner):
 					self.session.open(cEditor, "/usr/keys/%s/oscam.server" % ordner)
-                                        break	
+					break
 				elif item[0] == _("Oscam.user %s Edit" % ordner):
 					self.session.open(cEditor, "/usr/keys/%s/oscam.user" % ordner)
-                                        break	
+					break
 				elif item[0] == _("Oscam.conf %s Edit" % ordner):
 					self.session.open(cEditor, "/usr/keys/%s/oscam.conf" % ordner)
-                                        break	
+					break
 				elif item[0] == _("Oscam.dvbapi %s Edit" % ordner):
 					self.session.open(cEditor, "/usr/keys/%s/oscam.dvbapi" % ordner)
-                                        break                        			
+					break
 ######## OPEN SETUP MENUS ####################
 	def openSetup(self, dialog):
 		self.session.openWithCallback(self.menuClosed, Setup, dialog)
@@ -866,25 +866,25 @@ class QuickMenu(Screen):
 def QuickMenuEntryComponent(name, description, long_description = None, width=540):
 	pngname = name.replace(" ", "_") 
 	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/" + pngname + ".png")
-        if png is None:
-	        png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
+	if png is None:
+		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/default.png")
 	if getDesktop(0).size().width() == 1920:
-	    return [
-     	            _(name),
-                    MultiContentEntryText(pos=(120, 5), size=(width-160, 33), font=0, text = _(name)),
-	            MultiContentEntryText(pos=(120, 38), size=(width-160, 27), font=1, text = _(description)),
-	            MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 40), png = png),
-	            _(long_description),
-	          ]
+		return [
+		_(name),
+		MultiContentEntryText(pos=(120, 5), size=(width-160, 33), font=0, text = _(name)),
+		MultiContentEntryText(pos=(120, 38), size=(width-160, 27), font=1, text = _(description)),
+		MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 40), png = png),
+		_(long_description),
+		]
 	else:
-	    return [
-     	            _(name),
-     	            MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text = _(name)),
-     	            MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text = _(description)),
-     	            MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png = png),
-     	            _(long_description),
-	          ]
-				
+		return [
+			_(name),
+			MultiContentEntryText(pos=(120, 5), size=(width-120, 25), font=0, text = _(name)),
+			MultiContentEntryText(pos=(120, 26), size=(width-120, 17), font=1, text = _(description)),
+			MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png = png),
+			_(long_description),
+			]
+
 def QuickSubMenuEntryComponent(name, description, long_description = None, width=540):
 		if getDesktop(0).size().width() == 1920:
 			return [
@@ -903,7 +903,7 @@ def QuickSubMenuEntryComponent(name, description, long_description = None, width
 		
 class QuickMenuList(MenuList):
 	def __init__(self, list, enableWrapAround=True):
-		if getDesktop(0).size().width() == 1920:	
+		if getDesktop(0).size().width() == 1920:
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
 			self.l.setFont(1, gFont("Regular", 20))
@@ -916,7 +916,7 @@ class QuickMenuList(MenuList):
 			
 class QuickMenuSubList(MenuList):
 	def __init__(self, sublist, enableWrapAround=True):
-		if getDesktop(0).size().width() == 1920:	
+		if getDesktop(0).size().width() == 1920:
 			MenuList.__init__(self, sublist, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", 28))
 			self.l.setFont(1, gFont("Regular", 21))
@@ -1053,7 +1053,7 @@ class QuickMenuDevices(Screen):
 			if device.find('p8') > 1:
 				device2 = device.replace('p8', '')
 		except:
-			device2 = ''			
+			device2 = ''
 		devicetype = path.realpath('/sys/block/' + device2 + '/device')
 		d2 = device
 		name = 'USB: '
@@ -1082,7 +1082,7 @@ class QuickMenuDevices(Screen):
 		except:
 			swapdevices = ' '
 		if path.exists('/tmp/devices.tmp'):
-			remove('/tmp/devices.tmp')			
+			remove('/tmp/devices.tmp')
 		swapdevices = swapdevices.replace('\n', '')
 		swapdevices = swapdevices.split('/')
 		f = open('/proc/mounts', 'r')
