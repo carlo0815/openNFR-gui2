@@ -159,7 +159,7 @@ def InstallSoftCamConfigFiles(list, session, **kwargs):
 	path = os.path.split(f.path)[0]
 	if not path.endswith('/'):
 		path += '/'
-	print path
+	print (path)
 	if f.mimetype == "application/cccam":
 		print("Coping CCcam.cfg")
 		cmd = "cp -a " + path + "CCcam.cfg /usr/keys/CCcam.cfg"
