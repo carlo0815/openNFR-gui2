@@ -1779,7 +1779,7 @@ class PacketManager(Screen, NumericalTextInput):
 	def IpkgList_Finished(self, result, retval, extra_args = None):
 		if result:
 			result = six.ensure_str(result)
-+			result = result.replace('\n ', ' - ')        
+			result = result.replace('\n ', ' - ')
 			self.packetlist = []
 			last_name = ""
 			for x in result.splitlines():
@@ -1950,7 +1950,7 @@ def startSetup(menuid):
 
 def Plugins(path, **kwargs):
 	config.plugins.softwaremanager.onSetupMenu = ConfigYesNo(default=False)
-        config.plugins.softwaremanager.onBlueButton = ConfigYesNo(default=False)
+	config.plugins.softwaremanager.onBlueButton = ConfigYesNo(default=False)
 	global plugin_path
 	plugin_path = path
 	list = [
