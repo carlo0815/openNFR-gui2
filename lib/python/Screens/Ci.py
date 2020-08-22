@@ -617,17 +617,17 @@ class CiSelection(Screen):
 			entryData = self.entryData[idx]
 			action = entryData[0]
 			slot = entryData[1]
-                        if action == 0:		#reset
-			        try:
-                                        os.system('rm -f /etc/enigma2/ci_auth_slot_' + str(slot) + '.bin')
-			        except:
-			                print "slotfile not found"
-				print "action1:", action 
-                                eDVBCI_UI.getInstance().setReset(slot)
+			if action == 0:		#reset
+				try:
+					os.system('rm -f /etc/enigma2/ci_auth_slot_' + str(slot) + '.bin')
+				except:
+					print ("slotfile not found")
+					print ("action1:", action)
+					eDVBCI_UI.getInstance().setReset(slot)
 			elif action == 1:		#init
 				eDVBCI_UI.getInstance().setInit(slot)
 			elif action == 3:		#fix 
-				self.session.open(ciplusfix)					
+				self.session.open(ciplusfix)
 			elif action == 5:
 				self.session.openWithCallback(self.cancelCB, PermanentPinEntry, config.ci[slot].static_pin, _("Smartcard PIN"))
 			elif action == 6:
@@ -638,7 +638,7 @@ class CiSelection(Screen):
 				self.dlg = self.session.openWithCallback(self.dlgClosed, MMIDialog, slot, action)
 			elif self.state[slot] == 3:
 				self.session.open(MessageBox, _("Please remove Ci+ Modul and click ok!"), MessageBox.TYPE_INFO)
-				self.session.open(ciplusfix)				
+				self.session.open(ciplusfix)
 
 	def cancelCB(self, value):
 		pass
@@ -913,26 +913,26 @@ class CIHelperSetup(Screen, ConfigListScreen):
 
 class ciplusfix(ConfigListScreen, Screen):
 
-    skin = """
-               <screen name="CI+ Modul Fix Init" position="0,0" size="1280,720" title="CI+ Modul Fix Init" zPosition="1" flags="wfNoBorder">
-               <ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
-               <widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-               <convert type="ClockToText">Default</convert>
-               </widget>
-               <widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
-               <convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
-               </widget>
-               <widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
-               <ePixmap pixmap="skin_default/buttons/key_red.png" position="70,670" size="30,30" alphatest="blend" />
-               <ePixmap pixmap="skin_default/buttons/key_green.png" position="330,670" size="30,30" alphatest="blend" />
-               <widget name="key_red" position="105,672" size="240,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-               <widget name="key_green" position="365,672" size="540,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-               <ePixmap position="848,596" zPosition="2" size="350,44" pixmap="skin_default/icons/db.png" transparent="1" alphatest="blend" />
-               <ePixmap position="962,431" size="128,128" zPosition="2" pixmap="skin_default/icons/setup.png" transparent="1" alphatest="blend" />
-               <widget name="info-fix" position="75,110" zPosition="1" size="1280,720" font="Regular;23" halign="left" valign="top" transparent="1" />
-    </screen> """
+	skin = """
+		<screen name="CI+ Modul Fix Init" position="0,0" size="1280,720" title="CI+ Modul Fix Init" zPosition="1" flags="wfNoBorder">
+		<ePixmap position="center,center" zPosition="-10" size="1280,720" pixmap="skin_default/menu/back2b.png" />
+		<widget source="global.CurrentTime" render="Label" position="1125,12" size="100,28" font="Regular; 26" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+		<convert type="ClockToText">Default</convert>
+		</widget>
+		<widget source="global.CurrentTime" render="Label" position="905,37" size="320,25" font="Regular;20" halign="right" backgroundColor="background" transparent="1" foregroundColor="cyan1">
+		<convert type="ClockToText">Format:%A, %d.%m.%Y</convert>
+		</widget>
+		<widget source="Title" render="Label" position="65,17" size="720,43" font="Regular;35" backgroundColor="background" transparent="1" foregroundColor="cyan1" />
+		<ePixmap pixmap="skin_default/buttons/key_red.png" position="70,670" size="30,30" alphatest="blend" />
+		<ePixmap pixmap="skin_default/buttons/key_green.png" position="330,670" size="30,30" alphatest="blend" />
+		<widget name="key_red" position="105,672" size="240,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+		<widget name="key_green" position="365,672" size="540,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+		<ePixmap position="848,596" zPosition="2" size="350,44" pixmap="skin_default/icons/db.png" transparent="1" alphatest="blend" />
+		<ePixmap position="962,431" size="128,128" zPosition="2" pixmap="skin_default/icons/setup.png" transparent="1" alphatest="blend" />
+		<widget name="info-fix" position="75,110" zPosition="1" size="1280,720" font="Regular;23" halign="left" valign="top" transparent="1" />
+	</screen> """
 
-    def __init__(self, session, args = 0):
+	def __init__(self, session, args = 0):
 		Screen.__init__(self, session)
 	
 		self["key_red"] = Button(_("Exit"))
@@ -948,9 +948,9 @@ class ciplusfix(ConfigListScreen, Screen):
 		}, -2)
 		self['status'] = Label()
 
-    def ok(self):
+	def ok(self):
 		target = "init 4; /usr/bin/enigma2; reboot" 
 		self.session.open(SConsole, title=_("Restart CI+ Fix"), cmdlist = [target], closeOnSuccess = False)		
 		
-    def cancel(self):
+	def cancel(self):
 		self.close(False)	
