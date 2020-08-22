@@ -169,8 +169,8 @@ class Ceparted(Screen):
 						name = x[0][DEV_PATH]
 					tstr = name
 					tstr += "  (%s - %d %s %s)" % (x[0][DEV_SIZE], len(x) - 1, _("partition(s)"), x[0][DEV_PATH])
-                                        list.append((tstr, (name, x[0][DEV_PATH], x[0][DEV_SIZE])))
-			self["list"].setList(list)
+					list.append((tstr, (name, x[0][DEV_PATH], x[0][DEV_SIZE])))
+					self["list"].setList(list)
 
 #-------------------------------------------------------------------------------------
 
@@ -452,10 +452,10 @@ class Cpart(Screen):
 	def __delPart2Comlist(self, list, val):
 		partnr = val[PA_NR]
 		if "mmcblk1" in self.__devpath:
-                        self.__devpath1 = self.__devpath +"p"
-                	dev = "%s%s" % (self.__devpath1, partnr)		
+			self.__devpath1 = self.__devpath +"p"
+			dev = "%s%s" % (self.__devpath1, partnr)
 		else:
-                	dev = "%s%s" % (self.__devpath, partnr)
+			dev = "%s%s" % (self.__devpath, partnr)
 		mp = ismounted(dev)
 		if mp is not None:
 			if myExecute("umount %s" % mp, self.session):
