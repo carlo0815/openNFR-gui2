@@ -37,12 +37,12 @@ config.misc.pluginbrowser = ConfigSubsection()
 config.misc.pluginbrowser.plugin_order = ConfigText(default="")
 
 def getVarSpaceKb():
-    try:
-        s = statvfs('/')
-    except OSError:
-        return (0, 0)
+	try:
+		s = statvfs('/')
+	except OSError:
+		return (0, 0)
 
-    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 
 
 class PluginBrowserSummary(Screen):
@@ -127,24 +127,24 @@ class PluginBrowser(Screen, ProtectedScreen):
 		self.session.open(Setup, "pluginbrowsersetup")
 		
 	def wizardinstall(self):
-	        if os.path.isfile("/etc/opkg/secret-feed.conf"):
-	                self.session.openWithCallback(self.wizardinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
-	        else:
-                        self.session.open(PluginInstall)
+		if os.path.isfile("/etc/opkg/secret-feed.conf"):
+			self.session.openWithCallback(self.wizardinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
+		else:
+			self.session.open(PluginInstall)
 		
-        def wizardinstallmsg(self, ret):
-                if ret == False:
-                        self.session.open(PluginInstall)
-                else:
-                        self.session.openWithCallback(self.callbackremove1, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
-                        #self.delete()	
-        
-        def callbackremove1(self):
-                os.system("opkg update")
-                self.session.open(PluginInstall)
-                
+	def wizardinstallmsg(self, ret):
+		if ret == False:
+			self.session.open(PluginInstall)
+		else:
+			self.session.openWithCallback(self.callbackremove1, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
+			#self.delete()
+
+	def callbackremove1(self):
+		os.system("opkg update")
+		self.session.open(PluginInstall)
+
 	def wizarddeinstall(self):
-		self.session.open(PluginDeinstall)               		
+		self.session.open(PluginDeinstall)
 
 	def saveListsize(self):
 		listsize = self["list"].instance.size()
@@ -224,23 +224,23 @@ class PluginBrowser(Screen, ProtectedScreen):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.REMOVE)
 
 	def download(self):
-	        if os.path.isfile("/etc/opkg/secret-feed.conf"):
-	                self.session.openWithCallback(self.downloadinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
-	        else:
-                        self.download1()
+		if os.path.isfile("/etc/opkg/secret-feed.conf"):
+			self.session.openWithCallback(self.downloadinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
+		else:
+			self.download1()
 		
-        def downloadinstallmsg(self, ret):
-                if ret == False:
-                        self.download1()
-                else:
-                        self.session.openWithCallback(self.callbackremove, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
-                        #self.delete()	
-        
-        def callbackremove(self):
-                os.system("opkg update")
-                self.download1()
+	def downloadinstallmsg(self, ret):
+		if ret == False:
+			self.download1()
+		else:
+			self.session.openWithCallback(self.callbackremove, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
+		#self.delete()	
 
-        def download1(self):
+	def callbackremove(self):
+		os.system("opkg update")
+		self.download1()
+
+	def download1(self):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.DOWNLOAD, self.firsttime)
 		self.firsttime = False
 
@@ -284,7 +284,7 @@ class PluginDownloadBrowser(Screen):
 		self.reload_settings = False
 		self.check_settings = False
 		self.check_bootlogo = False
-		self['spaceused'] = ProgressBar()		
+		self['spaceused'] = ProgressBar()
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
 
@@ -410,11 +410,11 @@ class PluginDownloadBrowser(Screen):
 		self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_remove + Ipkg.opkgExtraDestinations() + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def doInstall(self, callback, pkgname):
-	        if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
-	                print "install mgcamd1"
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)	        
-	        else: 
-		        self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
+			print "install mgcamd1"
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		else: 
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def runSettingsRemove(self, val):
 		if val:
@@ -440,25 +440,25 @@ class PluginDownloadBrowser(Screen):
 		return str(Size)
 
 	def setWindowTitle(self):
-	    if self.type == self.DOWNLOAD:
-		diskSpace = getVarSpaceKb()
-		percFree = int(diskSpace[0] / diskSpace[1] * 100)
-		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
-		self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'),
-		 _('Free'),
-		 self.ConvertSize(int(diskSpace[0])),
-		 percFree))
-		self['spaceused'].setValue(percUsed)
-	    elif self.type == self.REMOVE:
- 		diskSpace = getVarSpaceKb()
-		percFree = int(diskSpace[0] / diskSpace[1] * 100)
-		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
-		self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
-		 _('Free'),
-		 self.ConvertSize(int(diskSpace[0])),
-		 percFree))
-		self['spaceused'].setValue(percUsed)                       
-                        			
+		if self.type == self.DOWNLOAD:
+			diskSpace = getVarSpaceKb()
+			percFree = int(diskSpace[0] / diskSpace[1] * 100)
+			percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+			self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'),
+			_('Free'),
+			self.ConvertSize(int(diskSpace[0])),
+			percFree))
+			self['spaceused'].setValue(percUsed)
+		elif self.type == self.REMOVE:
+ 			diskSpace = getVarSpaceKb()
+			percFree = int(diskSpace[0] / diskSpace[1] * 100)
+			percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+			self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
+			_('Free'),
+			self.ConvertSize(int(diskSpace[0])),
+			percFree))
+			self['spaceused'].setValue(percUsed)
+
 	def startIpkgListInstalled(self, pkgname = PLUGIN_PREFIX + '*'):
 		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed '%s'" % pkgname)
 
@@ -606,5 +606,5 @@ class PluginDownloadBrowser(Screen):
 			else:
 				_list.append(PluginCategoryComponent(x, expandableIcon, self.listWidth))
 			self.list = _list
-+			self["list"].l.setList(_list)
+			self["list"].l.setList(_list)
 		self["text"] = Label(_("Downloading plugin information complete.")) 
