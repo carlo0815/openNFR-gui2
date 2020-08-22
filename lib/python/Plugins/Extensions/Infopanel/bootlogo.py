@@ -100,13 +100,13 @@ class BootlogoSetupScreen(Screen):
 
 				self.list = []
 				self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
-			{
-				"cancel": self.Exit,
-				"exit": self.Exit,
-				"red": self.Exit,
-				"ok": self.ok,
-				"green": self.ok,
-			}, 1)
+					{
+					"cancel": self.Exit,
+					"exit": self.Exit,
+					"red": self.Exit,
+					"ok": self.ok,
+					"green": self.ok,
+					}, 1)
 			
 		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('NFRbootlogo'), _("NFRbootlogo"), 'defaultbootlogo')))
