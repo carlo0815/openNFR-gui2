@@ -284,8 +284,8 @@ class OscamSmartcard(ConfigListScreen, Screen):
 		self.ShowPicture()
 
 	def reboot(self):
-                self.restartSTB()
-                
+		self.restartSTB()
+
 	def showInfo(self):
 		self.session.open(MessageBox, _("OscamSmartcard mod by NFR Team for NFR Images"), MessageBox.TYPE_INFO)
 
@@ -485,4 +485,3 @@ class OscamSmartcard(ConfigListScreen, Screen):
 			else:
 					pass
 		self.close()
-
