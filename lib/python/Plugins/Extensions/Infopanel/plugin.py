@@ -138,12 +138,12 @@ if config.usage.keymap.value != eEnv.resolve("${datadir}/enigma2/keymap.xml"):
 		setDefaultKeymap()
 
 def getVarSpaceKb():
-    try:
-        s = statvfs('/')
-    except OSError:
-        return (0, 0)
+	try:
+		s = statvfs('/')
+	except OSError:
+		return (0, 0)
 
-    return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 		
 def setDefaultKeymap():
 	print("[Info-Panel] Set Keymap to Default")
@@ -152,24 +152,24 @@ def setDefaultKeymap():
 
 # edit bb , touch commands.getouput with this def #
 def command(comandline, strip=1):
-  comandline = comandline + " >/tmp/command.txt"
-  os.system(comandline)
-  text = ""
-  if os.path.exists("/tmp/command.txt") is True:
-    file = open("/tmp/command.txt", "r")
-    if strip == 1:
-      for line in file:
-        text = text + line.strip() + '\n'
-    else:
-      for line in file:
-        text = text + line
-        if text[-1:] != '\n': text = text + "\n"
-    file.close()
-  # if one or last line then remove linefeed
-  if text[-1:] == '\n': text = text[:-1]
-  comandline = text
-  os.system("rm /tmp/command.txt")
-  return comandline
+	comandline = comandline + " >/tmp/command.txt"
+	os.system(comandline)
+	text = ""
+	if os.path.exists("/tmp/command.txt") is True:
+		file = open("/tmp/command.txt", "r")
+	if strip == 1:
+		for line in file:
+			text = text + line.strip() + '\n'
+	else:
+		for line in file:
+			text = text + line
+		if text[-1:] != '\n': text = text + "\n"
+			file.close()
+		# if one or last line then remove linefeed
+		if text[-1:] == '\n': text = text[:-1]
+			comandline = text
+			os.system("rm /tmp/command.txt")
+		return comandline
 
 INFO_Panel_Version = 'Info-Panel V2.0 (mod by OpenNFR)'
 boxversion = getBoxType()
@@ -193,10 +193,10 @@ class ConfigPORT(ConfigSequence):
 def autostart(reason, session=None, **kwargs):
 	"called with reason=1 to during shutdown, with reason=0 at startup?"
 	global autoStartTimer
-        if reason == 0:
+	if reason == 0:
 		if session is not None:
-                        if autoStartTimer is None:
-				autoStartTimer = AutoStartTimer(session)		
+			if autoStartTimer is None:
+				autoStartTimer = AutoStartTimer(session)
 
 def main(session, **kwargs):
 		session.open(Infopanel)
@@ -208,14 +208,14 @@ def Apanel(menuid, **kwargs):
 		return []
 		
 def startcam(reason, **kwargs):
-        from Components.Console import Console
+	from Components.Console import Console
 	if config.NFRSoftcam.actcam.value != "none":
 		if reason == 0: # Enigma start
 			system("sleep 2")
 			try:
 				if "mgcamd" in config.NFRSoftcam.actcam.value:
-	                        	os.system("rm /dev/dvb/adapter0/ca1")
-	                        	os.system("ln -sf 'ca0' '/dev/dvb/adapter0/ca1'") 
+					os.system("rm /dev/dvb/adapter0/ca1")
+					os.system("ln -sf 'ca0' '/dev/dvb/adapter0/ca1'") 
 				cmd = Softcam.getcamcmd(config.NFRSoftcam.actcam.value)
 				Console().ePopen(cmd)
 				print("[OpenNFR SoftCam Manager] ", cmd)
@@ -225,7 +225,7 @@ def startcam(reason, **kwargs):
 			try:
 				Softcam.stopcam(config.NFRSoftcam.actcam.value)
 			except:
-				pass 		
+				pass
 def doneConfiguring(session, retval):
 	"user has closed configuration, check new values...."
 	global autoStartTimer
@@ -236,63 +236,63 @@ def doneConfiguring(session, retval):
 # Autostart section
 class AutoStartTimer:
 	def __init__(self, session):
-                config.plugins.configurationbackup = ConfigSubsection()
-                config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
-                config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
-                config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
-                config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
-	       
+		config.plugins.configurationbackup = ConfigSubsection()
+		config.plugins.configurationbackup.enabled = ConfigEnableDisable(default = False)
+		config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
+		config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
+		config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
+
 		self.session = session
 		self.timer = enigma.eTimer() 
 		self.timer.callback.append(self.onTimer)
 		self.update()
 	def getWakeTime(self):
 		if config.plugins.configurationbackup.enabled.value:
-                        clock = config.plugins.configurationbackup.wakeup.value
+			clock = config.plugins.configurationbackup.wakeup.value
 			nowt = time.time()
 			now = time.localtime(nowt)
 			return int(time.mktime((now.tm_year, now.tm_mon, now.tm_mday,
 					clock[0], clock[1], 0, now.tm_wday, now.tm_yday, now.tm_isdst)))
 		else:
-                        return -1
+			return -1
 	def update(self, atLeast = 0):
-                self.timer.stop()
+		self.timer.stop()
 		wake = self.getWakeTime()
 		now = int(time.time())
 		if wake > 0:
-                        if wake < now + atLeast:
-                                # Tomorrow.
+			if wake < now + atLeast:
+				# Tomorrow.
 				wake += 24*3600
 			next = wake - now
 			# it could be that we do not have the correct system time yet,
 			# limit the update interval to 1h, to make sure we try again soon
 			if next > 3600:
-                                next = 3600
+				next = 3600
 			# also, depending on the value of 'atLeast', next could be negative.
 			# which would stop our time
 			if next <= 0:
-                                next = 60
+				next = 60
 			self.timer.startLongTimer(next)
 		else:
-                        wake = -1
+			wake = -1
 		return wake
 		
 	def onTimer(self):
-                self.timer.stop()
+		self.timer.stop()
 		now = int(time.time())
 		wake = self.getWakeTime()
 		# If we're close enough, we're okay...
 		atLeast = 0
 		if abs(wake - now) < 60:
-                        self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True) 
+			self.session.openWithCallback(self.backupDone,BackupScreen, runBackup = True) 
 			atLeast = 60
-		self.update(atLeast)
+			self.update(atLeast)
 		
 	def backupDone(self,retval = None):
 		if retval is True:
 			self.session.open(MessageBox, _("Backup done."), MessageBox.TYPE_INFO, timeout = 10)
 		else:
-			self.session.open(MessageBox, _("Backup failed."), MessageBox.TYPE_INFO, timeout = 10)		
+			self.session.open(MessageBox, _("Backup failed."), MessageBox.TYPE_INFO, timeout = 10)
 		
 #def backupCommand():
 #	cmd = BACKUP_SCRIPT
@@ -373,31 +373,31 @@ INFO_SKIN2 =  """<screen name="PANEL-Info2"  position="center,center" size="530,
 
 ###################  Max Test ###################
 class PanelList(MenuList):
-        if (getDesktop(0).size().width() == 1920):
-	        def __init__(self, list, font0 = 38, font1 = 28, itemHeight = 60, enableWrapAround = True):
-		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-		        self.l.setFont(0, gFont("Regular", font0))
-		        self.l.setFont(1, gFont("Regular", font1))
-		        self.l.setItemHeight(itemHeight)
+	if (getDesktop(0).size().width() == 1920):
+		def __init__(self, list, font0 = 38, font1 = 28, itemHeight = 60, enableWrapAround = True):
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", font0))
+			self.l.setFont(1, gFont("Regular", font1))
+			self.l.setItemHeight(itemHeight)
 	else:
-                def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 50, enableWrapAround = True):	        
-		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-                        self.l.setFont(0, gFont("Regular", font0))
-		        self.l.setFont(1, gFont("Regular", font1))
-		        self.l.setItemHeight(itemHeight)
-		        
+		def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 50, enableWrapAround = True):
+			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+			self.l.setFont(0, gFont("Regular", font0))
+			self.l.setFont(1, gFont("Regular", font1))
+			self.l.setItemHeight(itemHeight)
+
 def MenuEntryItem(entry):
-        if (getDesktop(0).size().width() == 1920):
-	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 50), png=entry[0]))  # png vorn
-	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 50), font=0, text=entry[1]))  # menupunkt
-	   return res
+	if (getDesktop(0).size().width() == 1920):
+		res = [entry]
+		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 50), png=entry[0]))  # png vorn
+		res.append(MultiContentEntryText(pos=(110, 5), size=(690, 50), font=0, text=entry[1]))  # menupunkt
+		return res
 	else:
-	   res = [entry]
-	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-       	   res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
-	   return res
-           
+		res = [entry]
+		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
+			res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+		eturn res
+ 
 ###################  Max Test ###################
 
 #g
@@ -420,8 +420,8 @@ class Infopanel(Screen, InfoBarPiP):
 		self.session = session
 		self.skin = MENU_SKIN
 		self.onShown.append(self.setWindowTitle)
-                self.service = None
-		self['spaceused'] = ProgressBar()			
+		self.service = None
+		self['spaceused'] = ProgressBar()
 		global pluginlist
 		global videomode
 		global infook
@@ -470,7 +470,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
-                	
+
 	def isProtected(self):
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.infopanel.value
 
@@ -642,12 +642,12 @@ class Infopanel(Screen, InfoBarPiP):
 				self.session.open(dFlash)
 			else:                                  
 				#self.session.open(ImageBackup)
-                                self.session.open(TimerImageManager)
+				self.session.open(TimerImageManager)
 		elif menu == "backup-settings":
 			self.session.openWithCallback(self.backupDone, BackupScreen, runBackup = True)
 		elif menu == "backupauto":
 			import ui
-			self.session.openWithCallback(doneConfiguring, ui.Config)		
+			self.session.openWithCallback(doneConfiguring, ui.Config)
 		elif menu == "restore-settings":
 			self.backuppath = getBackupPath()
 			self.backupfile = getBackupFilename()
@@ -663,7 +663,7 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "radiologomanager":
 			self.session.open(RadiologoSetupScreen) 
 		elif menu == "spinnermanager":
-			SpinnerSelector(self.session) 			
+			SpinnerSelector(self.session)
 		elif menu == "backup-files":
 			self.session.openWithCallback(self.backupfiles_choosen, BackupSelection)
 		elif menu == "flash-local":
@@ -677,23 +677,23 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "SwapManager":
 			self.session.open(SwapOverviewScreen)
 		elif menu == "DefaulteSkin-Steps":
-			self.session.open(DefaulSkinchange)				
+			self.session.open(DefaulSkinchange)
 		elif menu == "Volume-Steps":
-			self.session.open(VolumeSteps)			
+			self.session.open(VolumeSteps)
 		elif menu == "Red-Key-Action":
 			self.session.open(RedPanel)
 		elif menu == "Red-Key-Action-Long":
-			self.session.open(RedPanelLong)				
+			self.session.open(RedPanelLong)
 		elif menu == "Blue-Key-Action":
 			self.session.open(BluePanel)
 		elif menu == "Blue-Key-Action-Long":
-			self.session.open(BluePanelLong)		
+			self.session.open(BluePanelLong)
 		elif menu == "Green-Key-Action-Long":
-			self.session.open(GreenPanelLong)		
+			self.session.open(GreenPanelLong)
 		elif menu == "Yellow-Key-Action-Long":
-			self.session.open(YellowPanelLong)					
+			self.session.open(YellowPanelLong)
 		elif menu == "Multi-Key-Action":
-			self.session.open(HotkeySetup)			
+			self.session.open(HotkeySetup)
 		elif menu == "KeymapSel":
 			self.session.open(KeymapSel)
 		elif menu == "QuickMenu":
@@ -708,17 +708,17 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(OpenNFRWizardSetup)
 		elif menu == "SkinSetup":
 			if config.skin.primary_skin.value == "Multibox/skin.xml":
-                        	self.Remote_Manager()
-			elif config.skin.primary_skin.value == "Ultimate/skin.xml":				
-                        	self.Remote_Manager()
-			elif config.skin.primary_skin.value == "NFR_Skin/skin.xml":				
-                        	self.Remote_Manager()                            
+				self.Remote_Manager()
+			elif config.skin.primary_skin.value == "Ultimate/skin.xml":
+				self.Remote_Manager()
+			elif config.skin.primary_skin.value == "NFR_Skin/skin.xml":
+				self.Remote_Manager()
 			else:
 				self.session.open(NfrHD_Config1)
 		elif menu == "PluginReLoad":
-                        if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):    
-                            from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
-                            self.session.open(PluginReLoadConfig)      				
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):
+				from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
+				self.session.open(PluginReLoadConfig)
 		else:
 			pass
 
@@ -892,7 +892,7 @@ class KeymapSel(ConfigListScreen, Screen):
 		if os.path.isfile(ntrkey):
 			keySel.append(('keymap.ntr', _("Neut  (keymap.ntr)")))
 		if os.path.isfile(u80key):
-			keySel.append(('keymap.u80', _("UP80  (keymap.u80)")))			
+			keySel.append(('keymap.u80', _("UP80  (keymap.u80)")))
 		if self.actkeymap == usrkey and not os.path.isfile(usrkey):
 			setDefaultKeymap()
 		if self.actkeymap == ntrkey and not os.path.isfile(ntrkey):
@@ -1075,7 +1075,7 @@ class VolumeSteps(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
-			self.close()			
+			self.close()
 
 class RedPanel(ConfigListScreen, Screen):
 	def __init__(self, session):
@@ -1249,7 +1249,7 @@ class RedPanelLong(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
-			self.close()			
+			self.close()
 			
 class BluePanel(ConfigListScreen, Screen):
 	def __init__(self, session):
@@ -1423,8 +1423,8 @@ class BluePanelLong(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
-			self.close()			
-						
+			self.close()
+
 class GreenPanelLong(ConfigListScreen, Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -1510,8 +1510,8 @@ class GreenPanelLong(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
-			self.close()			
-						
+			self.close()
+
 class YellowPanelLong(ConfigListScreen, Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -1597,8 +1597,8 @@ class YellowPanelLong(ConfigListScreen, Screen):
 		if self["config"].isChanged():
 			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
 		else:
-			self.close()			
-						
+			self.close()
+
 class Info(Screen):
 	def __init__(self, session, info):
 		self.service = None
@@ -1843,86 +1843,85 @@ class Info(Screen):
 			return o
 class NFRPasswdScreen(Screen):
 
-    def __init__(self, session, args = 0):
-        Screen.__init__(self, session)
-        self.title = _('Change Root Password')
-        try:
-            self['title'] = StaticText(self.title)
-        except:
-            print('self["title"] was not found in skin')
+	def __init__(self, session, args = 0):
+		Screen.__init__(self, session)
+			self.title = _('Change Root Password')
+			try:
+				self['title'] = StaticText(self.title)
+			except:
+				print('self["title"] was not found in skin')
 
-        self.user = 'root'
-        self.output_line = ''
-        self.list = []
-        self['passwd'] = ConfigList(self.list)
-        self['key_red'] = StaticText(_('Close'))
-        self['key_green'] = StaticText(_('Set Password'))
-        self['key_yellow'] = StaticText(_('new Random'))
-        self['key_blue'] = StaticText(_('virt. Keyboard'))
-        self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'red': self.close,
-         'green': self.SetPasswd,
-         'yellow': self.newRandom,
-         'blue': self.bluePressed,
-         'cancel': self.close}, -1)
-        self.buildList(self.GeneratePassword())
-        self.onShown.append(self.setWindowTitle)
+				self.user = 'root'
+				self.output_line = ''
+				self.list = []
+				self['passwd'] = ConfigList(self.list)
+				self['key_red'] = StaticText(_('Close'))
+				self['key_green'] = StaticText(_('Set Password'))
+				self['key_yellow'] = StaticText(_('new Random'))
+				self['key_blue'] = StaticText(_('virt. Keyboard'))
+				self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'red': self.close,
+					'green': self.SetPasswd,
+					'yellow': self.newRandom,
+					'blue': self.bluePressed,
+					'cancel': self.close}, -1)
+				self.buildList(self.GeneratePassword())
+				self.onShown.append(self.setWindowTitle)
 
-    def newRandom(self):
-        self.buildList(self.GeneratePassword())
+	def newRandom(self):
+		self.buildList(self.GeneratePassword())
 
-    def buildList(self, password):
-        self.password = password
-        self.list = []
-        self.list.append(getConfigListEntry(_('Enter new Password'), ConfigText(default=self.password, fixed_size=False)))
-        self['passwd'].setList(self.list)
+	def buildList(self, password):
+		self.password = password
+		self.list = []
+		self.list.append(getConfigListEntry(_('Enter new Password'), ConfigText(default=self.password, fixed_size=False)))
+		self['passwd'].setList(self.list)
 
-    def GeneratePassword(self):
-        passwdChars = string.letters + string.digits
-        passwdLength = 8
-        return ''.join(Random().sample(passwdChars, passwdLength))
+	def GeneratePassword(self):
+		passwdChars = string.letters + string.digits
+		passwdLength = 8
+		return ''.join(Random().sample(passwdChars, passwdLength))
 
-    def SetPasswd(self):
-        self.container = eConsoleAppContainer()
-        self.container.appClosed.append(self.runFinished)
-        self.container.dataAvail.append(self.processOutputLine)
-        retval = self.container.execute('passwd %s' % self.user)
-        if retval == 0:
-            self.session.open(MessageBox, _('Sucessfully changed password for root user to:\n%s ' % self.password), MessageBox.TYPE_INFO)
-        else:
-            self.session.open(MessageBox, _('Unable to change/reset password for root user'), MessageBox.TYPE_ERROR)
+	def SetPasswd(self):
+		self.container = eConsoleAppContainer()
+		self.container.appClosed.append(self.runFinished)
+		self.container.dataAvail.append(self.processOutputLine)
+		retval = self.container.execute('passwd %s' % self.user)
+		if retval == 0:
+			self.session.open(MessageBox, _('Sucessfully changed password for root user to:\n%s ' % self.password), MessageBox.TYPE_INFO)
+		else:
+			self.session.open(MessageBox, _('Unable to change/reset password for root user'), MessageBox.TYPE_ERROR)
 
-    def dataAvail(self, data):
-        self.output_line += data
-        if self.output_line.find('password changed.') == -1:
-            if self.output_line.endswith('new UNIX password: '):
-                print('1password:%s\n' % self.password)
-                self.processOutputLine(self.output_line[:1])
+	def dataAvail(self, data):
+		self.output_line += data
+		if self.output_line.find('password changed.') == -1:
+			if self.output_line.endswith('new UNIX password: '):
+				print('1password:%s\n' % self.password)
+				self.processOutputLine(self.output_line[:1])
 
-    def processOutputLine(self, line):
-        if line.find('new UNIX password: '):
-            print('2password:%s\n' % self.password)
-            self.container.write('%s\n' % self.password)
-            self.output_line = ''
+	def processOutputLine(self, line):
+		if line.find('new UNIX password: '):
+			print('2password:%s\n' % self.password)
+			self.container.write('%s\n' % self.password)
+			self.output_line = ''
 
-    def runFinished(self, retval):
-        del self.container.dataAvail[:]
-        del self.container.appClosed[:]
-        del self.container
-        self.close()
+	def runFinished(self, retval):
+		del self.container.dataAvail[:]
+		del self.container.appClosed[:]
+		del self.container
+		self.close()
 
-    def bluePressed(self):
-        self.session.openWithCallback(self.VirtualKeyBoardTextEntry, VirtualKeyBoard, title=_('Enter your password here:'), text=self.password)
+	def bluePressed(self):
+		self.session.openWithCallback(self.VirtualKeyBoardTextEntry, VirtualKeyBoard, title=_('Enter your password here:'), text=self.password)
 
-    def VirtualKeyBoardTextEntry(self, callback = None):
-        if callback is not None:
-            self.buildList(callback)
-        return
+	def VirtualKeyBoardTextEntry(self, callback = None):
+		if callback is not None:
+			self.buildList(callback)
+		return
 
-    def setWindowTitle(self, title = None):
-        if not title:
-            title = self.title
-        try:
-            self['title'] = StaticText(title)
-        except:
-            pass   
-
+	def setWindowTitle(self, title = None):
+		if not title:
+		title = self.title
+		try:
+			self['title'] = StaticText(title)
+		except:
+			pass
