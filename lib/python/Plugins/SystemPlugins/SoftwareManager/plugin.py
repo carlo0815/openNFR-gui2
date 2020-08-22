@@ -1535,17 +1535,17 @@ class IPKGSource(Screen):
 		self.setTitle(_("Edit upgrade source url."))
 
 	def ok(self):	
-	    if self.configfile:				
-                    self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit upgrade source url.'), text=self["text"].getText())	
+		if self.configfile:				
+			self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title=_('Edit upgrade source url.'), text=self["text"].getText())	
 							   
 	def VirtualKeyBoardCallback(self, callback = None):
-           if callback is not None and len(callback):	
-		text = self["text"].getText()
+		if callback is not None and len(callback):	
+			text = self["text"].getText()
 		if text:
 			fp = open(self.configfile, 'w')
-                        fp.write(callback)
-                        fp.flush()
-                        fp.close()
+			fp.write(callback)
+			fp.flush()
+			fp.close()
 		self.close()
 
 
