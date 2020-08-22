@@ -190,7 +190,7 @@ class TuneTest:
 					if self.currTuned is not None:
 						if self.tsid != self.currTuned[14] or self.onid != self.currTuned[15]:
 							self.failedTune.append([self.currTuned, self.oldTuned, "pids_failed", {"real": (self.tsid, self.onid), "expected": (self.currTuned[14], self.currTuned[15])}, dict])  # last parameter is the frontend status
- 							pidsFailed = True
+							pidsFailed = True
 						else:
 							self.successfullyTune.append([self.currTuned, self.oldTuned, dict])  # 3rd parameter is the frontend status
 							if self.stopOnSuccess != -1 and self.stopOnSuccess <= len(self.successfullyTune):
