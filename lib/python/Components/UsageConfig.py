@@ -367,9 +367,9 @@ def InitUsageConfig():
 		rec_nims.append((str(x.slot), x.getSlotName()))
 	nims_multi = [("-1", _("auto"))]
 	rec_nims_multi = [("-2", _("Disabled")), ("-1", _("auto"))]
-	for i in xrange(1,2**min(12,len(nimmanager.nim_slots))):
+	for i in list(range(1,2**min(12,len(nimmanager.nim_slots)))):
 		slot_names = ""
-		for x in xrange(min(12,len(nimmanager.nim_slots))):
+		for x in list(range(min(12,len(nimmanager.nim_slots)))):
 			if (i & 2**x):
 				if slot_names != "": slot_names = slot_names + "+"
 				slot_names = slot_names + nimmanager.nim_slots[x].getSlotName()
