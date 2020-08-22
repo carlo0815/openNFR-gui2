@@ -265,7 +265,7 @@ class MovePlugins_int(Screen):
 			message = _("Plugins already back in flash!")
 			self.session.openWithCallback(self.close, MessageBox, message, MessageBox.TYPE_INFO, timeout = 5)
 
- 	def ConvertSize(self, size):
+	def ConvertSize(self, size):
 		size = int(size)
 		if size >= 1073741824:
 			Size = '%0.2f TB' % (size / 1073741824.0)
@@ -408,7 +408,7 @@ class MoveVideos_ext(Screen):
 				if os.path.exists("%s" % mountpath) == True:
 					message = _("On Device is a folder bootvideos, do you want to use this? Attention if you answer with yes Bootvideos from flash will be deleted!")
 					self.session.openWithCallback(self.videoConfirmed_Ext, MessageBox, message)
-			 	else: 
+				else: 
 					shutil.copytree(VIDEODIR, mountpath)
 					if os.path.islink(VIDEODIR) and  os.path.exists("%s" % mountpath) == True:
 						message = _("Bootvideos already moved to %s!" % mountpath)
@@ -874,12 +874,12 @@ class MoveRadiologos_ext(Screen):
 		
 	def hddQuestion(self, answer=False):
 		try:
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+			if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+				message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+				message += '\n' + _("Do you want to continue?")
+				self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+			else:
+				self.hddConfirmed(True)
 		except:
 			self.hddConfirmed(True)
 
@@ -1134,12 +1134,12 @@ class MoveSpinner_ext(Screen):
 		
 	def hddQuestion(self, answer=False):
 		try:
-		if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
-			message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
-			message += '\n' + _("Do you want to continue?")
-			self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
-		else:
-			self.hddConfirmed(True)
+			if Screens.InfoBar.InfoBar.instance.timeshiftEnabled():
+				message = self.question + "\n\n" + _("You seem to be in timeshift, the service will briefly stop as timeshift stops.")
+				message += '\n' + _("Do you want to continue?")
+				self.session.openWithCallback(self.stopTimeshift, MessageBox, message)
+			else:
+				self.hddConfirmed(True)
 		except:
 			self.hddConfirmed(True)
 
