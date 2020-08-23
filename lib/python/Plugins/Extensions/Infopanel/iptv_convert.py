@@ -17,7 +17,7 @@ from os import path, walk
 from enigma import eConsoleAppContainer, eDVBDB, eEnv
 from skin import *
 import os
-import urllib2
+from urllib.request import urlopen
 import ssl
 import socket
 import time
@@ -109,8 +109,8 @@ class IPTV_glob(Screen):
 						if not line.startswith("#SERVICE 4097:0:2:0:0:0:0:0:0:0:rt"):
 							if line.startswith('http'):
 								line = '#SERVICE 4097:0:2:0:0:0:0:0:0:0:' + line
-									tmplist.append(line)
-									tmplist.append(tmp)
+								tmplist.append(line)
+								tmplist.append(tmp)
 					elif not self.convert:
 						tmplist.append(line)
 					else:
@@ -235,24 +235,24 @@ class IPTV(Screen):
 		pass
 
 	def ok(self):
-	self.IPTVInstalled = True
-	self.type = "TV"
-	url = None
-	sel = self["IPTVList"].getCurrent()
-	if sel == None:
-		print("[openNFR_M3U_convert] Nothing to select !!")
-		return
-		print("[openNFR_M3U_convert] Current selection: %s" % sel)
-		file = sel     
-		self.IPTV_glob = IPTV_glob(sel, file)
-		name_file = self.IPTV_glob.file_filter(sel)
-		self.IPTV_glob.Convert_m3u(sel, file)
-		self.Remove_hooks()
-		infotext = _('M3U Converter\n')
-		infotext += _('IPTV m3u Files convert to bouquetslist')
-		infotext += _('\n\n\n')
-		infotext += _('Update Bouquets and Services')
-		infotext += _('Press OK or EXIT to go back !')
+		self.IPTVInstalled = True
+		self.type = "TV"
+		url = None
+		sel = self["IPTVList"].getCurrent()
+		if sel == None:
+			print("[openNFR_M3U_convert] Nothing to select !!")
+			return
+			print("[openNFR_M3U_convert] Current selection: %s" % sel)
+			file = sel     
+			self.IPTV_glob = IPTV_glob(sel, file)
+			name_file = self.IPTV_glob.file_filter(sel)
+			self.IPTV_glob.Convert_m3u(sel, file)
+			self.Remove_hooks()
+			infotext = _('M3U Converter\n')
+			infotext += _('IPTV m3u Files convert to bouquetslist')
+			infotext += _('\n\n\n')
+			infotext += _('Update Bouquets and Services')
+			infotext += _('Press OK or EXIT to go back !')
 
 		self.session.open(MessageBox,_(infotext), MessageBox.TYPE_INFO)
 
@@ -347,7 +347,7 @@ class Iptvdownload(IPTV):
 	def layoutFinished(self):
 		pass
 
-	 def ok(self):
+	def ok(self):
 		sel = self["IPTVList"].getCurrent()
 		if sel == "German Provider Listen":
 			self.session.openWithCallback(self.cancel, Iptvdownloadprov)
@@ -458,11 +458,11 @@ class Iptvdownloadprov(IPTV):
 
 		ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
 		for line in bouquets:
-		if line.find('(') > -1 or line.find(')') > -1:
-			print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
-		else:
-			ff.write(line)
-			ff.close()
+			if line.find('(') > -1 or line.find(')') > -1:
+				print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
+			else:
+				ff.write(line)
+				ff.close()
 
 	def cancel(self):
 		if self.IPTVInstalled is True:
@@ -582,11 +582,11 @@ class Iptvdownloadprovsuisse(IPTV):
 
 		ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
 		for line in bouquets:
-		if line.find('(') > -1 or line.find(')') > -1:
-			print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
-		else:
-			ff.write(line)
-			ff.close()
+			if line.find('(') > -1 or line.find(')') > -1:
+				print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
+			else:
+				ff.write(line)
+				ff.close()
 
 	def cancel(self):
 		if self.IPTVInstalled is True:
@@ -725,15 +725,15 @@ class Iptvdownloadprovaustria(IPTV):
 		self.IPTVInstalled = True
 		self.type = "TV"
 		for l in self.iptvlist:
-		self.convert = True
-		name_file = self.file_filter(l)
-		file = l
-		self.Convert_m3u(l, file)
-		infotext = _('M3U Converter\n')
-		infotext += _('IPTV m3u Files convert to bouquetslist')
-		infotext += _('\n\n\n')
-		infotext += _('Update Bouquets and Services')
-		infotext += _('Press OK or EXIT to go back !')
+			self.convert = True
+			name_file = self.file_filter(l)
+			file = l
+			self.Convert_m3u(l, file)
+			infotext = _('M3U Converter\n')
+			infotext += _('IPTV m3u Files convert to bouquetslist')
+			infotext += _('\n\n\n')
+			infotext += _('Update Bouquets and Services')
+			infotext += _('Press OK or EXIT to go back !')
 
 		self.Remove_hooks()
 		self.session.open(MessageBox, _(infotext), MessageBox.TYPE_INFO)        
@@ -826,19 +826,19 @@ class Iptvdownloadkodi(IPTV):
 
 		ff = open('/etc/enigma2/bouquets.%s' % self.type.lower(), 'w+')
 		for line in bouquets:
-		if line.find('(') > -1 or line.find(')') > -1:
-			print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
-		else:
-			ff.write(line)
-			ff.close()
+			if line.find('(') > -1 or line.find(')') > -1:
+				print("[openNFR_M3U_convert] Removing line %s from bouquets.tv" % line)
+			else:
+				ff.write(line)
+				ff.close()
 
 	def cancel(self):
 		if self.IPTVInstalled is True:
-		infobox = self.session.open(MessageBox, _("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
-		infobox.setTitle(_("Info"))
-		eDVBDB.getInstance().reloadBouquets()
-		eDVBDB.getInstance().reloadServicelist()
-		self.close()
+			infobox = self.session.open(MessageBox, _("Reloading Bouquets and Services..."), MessageBox.TYPE_INFO, timeout=5)
+			infobox.setTitle(_("Info"))
+			eDVBDB.getInstance().reloadBouquets()
+			eDVBDB.getInstance().reloadServicelist()
+			self.close()
 
 	def install(self):
 		self.IPTVInstalled = True
