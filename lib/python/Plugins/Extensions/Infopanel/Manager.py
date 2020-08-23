@@ -15,7 +15,7 @@ from enigma import eTimer
 from time import sleep
 from os import path
 import os
-import Softcam
+from Plugins.Extensions.Infopanel.Softcam import Softcam
 import shutil
 from six.moves.urllib.request import urlopen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -197,12 +197,12 @@ class NFRCamManager(Screen):
 				ext_ip = ext_ip.encode('utf8')
 				print(ext_ip)
 				self.AboutText1 = "Online: " + (ext_ip)
+			else:
+				self.AboutText1 = "Offline"
 			if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
 				self.AboutText2 = "openVPN is running "
 			else:
 				self.AboutText2 = "no openVPN found" 
-			else:
-				self.AboutText1 = "Offline"
 				listecm = ""
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
@@ -219,15 +219,15 @@ class NFRCamManager(Screen):
 				listecm += self.AboutText2
 			except:
 				pass
-				self["status"].setText(listecm)
-				ecmfiles.close()
-			except:
+			self["status"].setText(listecm)
+			ecmfiles.close()
+		except:
 				listecm += "\n" + self.AboutText
 				listecm += "\n" + self.AboutText1
-			try:
-				listecm += "\n" + self.AboutText2
-			except:
-				pass
+				try:
+					listecm += "\n" + self.AboutText2
+				except:
+					pass
 				self["status"].setText(listecm)
 
 	def startcreatecamlist(self):
