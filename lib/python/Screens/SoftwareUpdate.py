@@ -225,14 +225,14 @@ class UpdatePlugin(Screen):
 			fobj_out = open("/etc/image-version_new","w")
 			for line in fobj_in:
 				if "date" in line:
-		 			line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
+					line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
 					fobj_out.write(line)
 				else:
 					fobj_out.write(line)
 
 			fobj_in.close()
 			fobj_out.close()
-			 os.system("mv /etc/image-version_new /etc/image-version") 
+			os.system("mv /etc/image-version_new /etc/image-version") 
 			self.session.open(TryQuitMainloop, retvalue=42)
 			self.close()
 		elif answer[1] == "channels":
