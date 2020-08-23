@@ -34,7 +34,7 @@ from Plugins.SystemPlugins.SoftwareManager.Multibootmgr import MultiBootWizard
 from Screens.Hotkey import HotkeySetup
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
-from __init__ import _
+from .__init__ import _
 from enigma import getDesktop
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.InputBox import PinInput
