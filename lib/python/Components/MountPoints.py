@@ -22,7 +22,7 @@ class MountPoints():
 		for entry in self.entries:
 			if entry["modified"]:
 				if len(entry["data"]) != 6:
-					print "WARNING: fstab entry with not valid data"
+					print ("WARNING: fstab entry with not valid data")
 					continue
 				conf.write("\t".join(entry["data"]) + "\n")
 			else:
@@ -44,16 +44,16 @@ class MountPoints():
 		return False
 		
 	def getRealMount(self, device, partition):
-                mounts = open("/proc/mounts")
+		mounts = open("/proc/mounts")
 		for mount in mounts:
 			res = mount.split(" ")
 			if res and len(res) > 1:
 				if "mmcblk" in device:
-                                	if res[0] == "/dev/%sp%i" % (device, partition):
-						mounts.close()				
-						return res[1]                                
-                                else:
-                                	if res[0] == "/dev/%s%i" % (device, partition):
+					if res[0] == "/dev/%sp%i" % (device, partition):
+						mounts.close()
+						return res[1]
+				else:
+					if res[0] == "/dev/%s%i" % (device, partition):
 						mounts.close()
 						return res[1]
 					
@@ -89,15 +89,15 @@ class MountPoints():
 		uuid = self.getUUID(device, partition)
 		for entry in self.entries:
 			if (len(entry["data"]) == 6):
-			        if "mmcblk" in device:
-			                device1 = device + "p"
+				if "mmcblk" in device:
+					device1 = device + "p"
 					if entry["data"][0] == "/dev/%s%i" % (device1, partition):
 						self.entries.remove(entry)
 					elif entry["data"][0] == "UUID=" + uuid:
 						self.entries.remove(entry)
 					elif entry["data"][1] == path:
-						self.entries.remove(entry)			
-			        else:
+						self.entries.remove(entry)
+				else:
 					if entry["data"][0] == "/dev/%s%i" % (device, partition):
 						self.entries.remove(entry)
 					elif entry["data"][0] == "UUID=" + uuid:
@@ -112,13 +112,13 @@ class MountPoints():
 		})
 		
 	def getUUID(self, device, partition):
-                for uuid in self.uuids:
-                	if "mmcblk" in device:
-                        	device1 = device + "p"
-                        	if uuid["device"] == device and uuid["partition"] == partition:
+		for uuid in self.uuids:
+			if "mmcblk" in device:
+				device1 = device + "p"
+				if uuid["device"] == device and uuid["partition"] == partition:
 					return uuid["uuid"]
 			else:
-                        	if uuid["device"] == device and uuid["partition"] == partition:
+				if uuid["device"] == device and uuid["partition"] == partition:
 					return uuid["uuid"]
 				
 		rows = os.popen(self.blkid).read().strip().split("\n")
@@ -126,9 +126,9 @@ class MountPoints():
 			tmp = row.split(":")
 			if len(tmp) < 2:
 				continue
-                	if "mmcblk" in device:
-                	        device1 = device + "p"
- 				if tmp[0] == "/dev/%s%i" % (device1, partition):
+			if "mmcblk" in device:
+				device1 = device + "p"
+				if tmp[0] == "/dev/%s%i" % (device1, partition):
 					tmp.reverse()
 					key = tmp.pop()
 					tmp.reverse()
@@ -142,9 +142,9 @@ class MountPoints():
 						"partition": partition,
 						"uuid": uuid
 					})
-					return uuid			
+					return uuid
 			else:
-                        	if tmp[0] == "/dev/%s%i" % (device, partition):
+				if tmp[0] == "/dev/%s%i" % (device, partition):
 					tmp.reverse()
 					key = tmp.pop()
 					tmp.reverse()
@@ -166,13 +166,13 @@ class MountPoints():
 		uuid = self.getUUID(device, partition)
 		for entry in self.entries:
 			if (len(entry["data"]) == 6):
-                		if "mmcblk" in device:
+				if "mmcblk" in device:
 					device1 = device + "p"
-                                        if entry["data"][0] == "/dev/%s%i" % (device1, partition):
+					if entry["data"][0] == "/dev/%s%i" % (device1, partition):
 						return entry["data"][1]
 					elif entry["data"][0] == "UUID=" + uuid:
 						return entry["data"][1]
-                                else:        			
+				else:
 					if entry["data"][0] == "/dev/%s%i" % (device, partition):
 						return entry["data"][1]
 					elif entry["data"][0] == "UUID=" + uuid:
