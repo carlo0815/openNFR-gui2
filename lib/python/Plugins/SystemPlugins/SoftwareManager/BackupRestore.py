@@ -112,15 +112,15 @@ class BackupScreen(Screen, ConfigListScreen):
 		self.setTitle(_("Backup is running..."))
 
 	def doBackup(self):
-	        from glob import glob
-	        import os
-	        config.plugins.configurationbackup.maxbackup = ConfigInteger(default=99, limits=(0, 99))
-                count1 = len(glob(self.backuppath + '/*enigma2settingsbackup.tar.gz'))
-                if count1 >= config.plugins.configurationbackup.maxbackup.value:
-                        files = glob(self.backuppath + "/*enigma2settingsbackup.tar.gz")
-                        files.sort(key=os.path.getmtime, reverse=True)
-                 	for i in range(config.plugins.configurationbackup.maxbackup.value-1, count1):
-                                os.remove(files[i])
+		from glob import glob
+		import os
+		config.plugins.configurationbackup.maxbackup = ConfigInteger(default=99, limits=(0, 99))
+		count1 = len(glob(self.backuppath + '/*enigma2settingsbackup.tar.gz'))
+		if count1 >= config.plugins.configurationbackup.maxbackup.value:
+			files = glob(self.backuppath + "/*enigma2settingsbackup.tar.gz")
+			files.sort(key=os.path.getmtime, reverse=True)
+			for i in range(config.plugins.configurationbackup.maxbackup.value-1, count1):
+				os.remove(files[i])
 		configfile.save()
 		try:
 			if path.exists(self.backuppath) == False:
@@ -173,7 +173,7 @@ class BackupSelection(Screen):
 			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
 			<widget source="key_blue" render="Label" position="420,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="blue" transparent="1" />
-                        <widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand" />
+			<widget name="checkList" position="5,50" size="550,250" transparent="1" scrollbarMode="showOnDemand" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -362,7 +362,7 @@ class RestoreMenu(Screen):
 			cmds.insert(0, "rm -R /etc/enigma2")
 			self.session.open(Console, title = _("Restoring..."), cmdlist = cmds)
 		else:
-                        self.session.open(Console, title = _("Restoring..."), cmdlist = cmds)
+			self.session.open(Console, title = _("Restoring..."), cmdlist = cmds)
 	
 	def deleteFile(self):
 		if (self.exe == False) and (self.entry == True):
@@ -725,7 +725,7 @@ class Dream_BackupScreen(Screen, ConfigListScreen):
 		try:
 			if path.exists(self.backuppathChannel) == False:
 				makedirs(self.backuppathChannel)
-                        makedirs(dirsbackup)
+				makedirs(dirsbackup)
 			cmd1 = "cp /etc/enigma2/blacklist /etc/enigma2/lamedb /etc/enigma2/whitelist /etc/enigma2/*.radio  /etc/enigma2/*.tv /etc/tuxbox/*.xml " + dirsbackup
 			cmd2 = "tar -czvf " + self.fullbackupfilenameChannel + " " + dirsbackup + " >/dev/null 2>&1"
 			cmd = [cmd1, cmd2]
@@ -744,10 +744,9 @@ class Dream_BackupScreen(Screen, ConfigListScreen):
 				self.session.openWithCallback(self.finished_cb, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
 			else:
 				self.session.openWithCallback(self.backupErrorCB,MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 ) 
-                        
 
 	def backupFinishedCB(self,retval = None):
-	        shutil.rmtree(dirsbackup)
+		shutil.rmtree(dirsbackup)
 		self.close(True)
 
 	def backupErrorCB(self,retval = None):
