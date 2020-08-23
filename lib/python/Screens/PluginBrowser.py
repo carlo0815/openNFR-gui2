@@ -450,7 +450,7 @@ class PluginDownloadBrowser(Screen):
 			percFree))
 			self['spaceused'].setValue(percUsed)
 		elif self.type == self.REMOVE:
- 			diskSpace = getVarSpaceKb()
+			diskSpace = getVarSpaceKb()
 			percFree = int(diskSpace[0] / diskSpace[1] * 100)
 			percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
 			self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
