@@ -2,6 +2,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 from Screens.ParentalControlSetup import ProtectedScreen
 from boxbranding import getImageVersion
+from urllib import urlopen
 import socket
 import os
 
