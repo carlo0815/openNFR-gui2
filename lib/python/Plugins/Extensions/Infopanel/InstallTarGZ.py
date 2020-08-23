@@ -185,7 +185,7 @@ class InstallTarGZ(Screen):
 		except:
 			pass
 
-				self['menu'].setList(self.list)
+		self['menu'].setList(self.list)
 
 
 	def okInst(self):
@@ -245,11 +245,11 @@ class InstallIpk(Screen):
 
 	def nList(self):
 		global fileplace2
-			self.list = []
-			ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/mmc/*.ipk /media/sda1/*.ipk')
-			ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/ipkmini.png'))
-			for line in ipklist.readlines():
-				dstring = line.split('/')
+		self.list = []
+		ipklist = os.popen('ls -lh  /tmp/*.ipk /media/usb/*.ipk /media/hdd/*.ipk /media/mmc/*.ipk /media/sda1/*.ipk')
+		ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/ipkmini.png'))
+		for line in ipklist.readlines():
+			dstring = line.split('/')
 			try:
 				if dstring[1] == 'tmp':
 					endstr = len(dstring[0] + dstring[1]) + 2
@@ -260,7 +260,7 @@ class InstallIpk(Screen):
 					self.list.append((line[endstr:], dstring[0], ipkminipng))
 			except:
 				pass
-					self['menu'].setList(self.list)
+		self['menu'].setList(self.list)
 
 	def okInst(self):
 		try:
@@ -323,20 +323,20 @@ class InstallZip(Screen):
 		ipklist = os.popen('ls -lh  /tmp/*.zip /media/usb/*.zip /media/hdd/*.zip /media/mmc/*.zip /media/sda1/*.zip')
 		ipkminipng = LoadPixmap(cached = True, path = resolveFilename(SCOPE_PLUGINS, 'Extensions/Infopanel/images/zipmini.png'))
 		for line in ipklist.readlines():
-		dstring = line.split('/')
+			dstring = line.split('/')
 
-		try:
-			if dstring[1] == 'tmp':
-				endstr = len(dstring[0] + dstring[1]) + 2
-				fileplace3 = dstring[1] 
-			else:
-				endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
-				fileplace3 = dstring[1] + "/" + dstring[2]
-				self.list.append((line[endstr:], dstring[0], ipkminipng))
-		except:
-			pass
+			try:
+				if dstring[1] == 'tmp':
+					endstr = len(dstring[0] + dstring[1]) + 2
+					fileplace3 = dstring[1] 
+				else:
+					endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
+					fileplace3 = dstring[1] + "/" + dstring[2]
+					self.list.append((line[endstr:], dstring[0], ipkminipng))
+			except:
+				pass
 
-				self['menu'].setList(self.list)
+		self['menu'].setList(self.list)
 
 
 	def okInst(self):
@@ -406,17 +406,17 @@ class AdvInstallIpk(Screen):
 		for line in ipklist.readlines():
 			dstring = line.split('/')
 
-		try:
-			if dstring[1] == 'tmp':
-				endstr = len(dstring[0] + dstring[1]) + 2
-				fileplace4 = dstring[1] 
-			else:
-				endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
-				fileplace4 = dstring[1] + "/" + dstring[2]
-				self.list.append((line[endstr:], dstring[0], ipkminipng))
-		except:
-			pass
-				self['menu'].setList(self.list)
+			try:
+				if dstring[1] == 'tmp':
+					endstr = len(dstring[0] + dstring[1]) + 2
+					fileplace4 = dstring[1] 
+				else:
+					endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
+					fileplace4 = dstring[1] + "/" + dstring[2]
+					self.list.append((line[endstr:], dstring[0], ipkminipng))
+			except:
+				pass
+		self['menu'].setList(self.list)
 
 
 	def okInst(self):
@@ -483,33 +483,32 @@ class InstallRar(Screen):
 		for line in ipklist.readlines():
 			dstring = line.split('/')
 
-		try:
-			if dstring[1] == 'tmp':
-				endstr = len(dstring[0] + dstring[1]) + 2
-				fileplace5 = dstring[1] 
-			else:
-				endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
-				fileplace5 = dstring[1] + "/" + dstring[2]
-				self.list.append((line[endstr:], dstring[0], ipkminipng))
-		except:
-			pass
-				self['menu'].setList(self.list)
+			try:
+				if dstring[1] == 'tmp':
+					endstr = len(dstring[0] + dstring[1]) + 2
+					fileplace5 = dstring[1] 
+				else:
+					endstr = len(dstring[0] + dstring[1] + dstring[2]) + 3
+					fileplace5 = dstring[1] + "/" + dstring[2]
+					self.list.append((line[endstr:], dstring[0], ipkminipng))
+			except:
+				pass
+		self['menu'].setList(self.list)
 
 
 	def okInst(self):
 
-	try:
-		item = self['menu'].getCurrent()
-		name = item[0]
-		if getBrandOEM() == "fulan":
-			pecommand1 = 'echo "unrar no working in sh4"'
-		else:
-			pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unrar-free x -u /%s/%s' % (fileplace5, name)            
+		try:
+			item = self['menu'].getCurrent()
+			name = item[0]
+			if getBrandOEM() == "fulan":
+				pecommand1 = 'echo "unrar no working in sh4"'
+			else:
+				pecommand1 = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/unrar-free x -u /%s/%s' % (fileplace5, name)            
 
-			self.session.open(Console, title = _('Install rar'), cmdlist = [
-			pecommand1])
-	except:
-		pass
+			self.session.open(Console, title = _('Install rar'), cmdlist = [pecommand1])
+		except:
+			pass
 
 
 	def cancel(self):
