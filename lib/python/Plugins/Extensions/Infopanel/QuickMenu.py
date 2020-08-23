@@ -341,7 +341,7 @@ class QuickMenu(Screen):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.user %s Edit" % ordner, _("Oscam.user %s Edit" % ordner), _("open Oscam.user %s to Edit" % ordner)))
 				if path.exists("/usr/keys/%s/oscam.conf" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.conf %s Edit" % ordner, _("Oscam.conf %s Edit" % ordner), _("open Oscam.conf %s to Edit" % ordner)))
-                		if path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
+				if path.exists("/usr/keys/%s/oscam.dvbapi" % ordner):
 					self.sublist.append(QuickSubMenuEntryComponent("Oscam.dvbapi %s Edit" % ordner, _("Oscam.dvbapi %s Edit" % ordner), _("open Oscam.dvbapi %s to Edit" % ordner)))
 		if path.exists("/usr/keys/oscam.server"):
 			self.sublist.append(QuickSubMenuEntryComponent("Oscam.server Edit", _("Oscam.server Edit"), _("open Oscam.server to Edit")))
@@ -384,14 +384,14 @@ class QuickMenu(Screen):
 		if path.exists("/usr/keys/gbox.cfg"):
 			self.sublist.append(QuickSubMenuEntryComponent("gbox.cfg Edit", _("gbox.cfg Edit"), _("open gbox.cfg to Edit")))
 		if path.exists("/usr/keys/cwshare.cfg"):
-			self.sublist.append(QuickSubMenuEntryComponent("cwshare.cfg Edit", _("cwshare.cfg Edit"), _("open cwshare.cfg to Edit"))
-		self["sublist"].l.setList(self.sublist)	
+			self.sublist.append(QuickSubMenuEntryComponent("cwshare.cfg Edit", _("cwshare.cfg Edit"), _("open cwshare.cfg to Edit")))
+		self["sublist"].l.setList(self.sublist)
 #### Wicardd Edit Menu ##############################
 	def QWicarddedit(self):
 		self.sublist = []
 		if path.exists("/usr/keys/wicardd.conf"):
 			self.sublist.append(QuickSubMenuEntryComponent("wicardd.conf Edit", _("wicardd.conf Edit"), _("open wicardd.conf to Edit")))
-		self["sublist"].l.setList(self.sublist)	
+		self["sublist"].l.setList(self.sublist)
 		
 ######## A/V Settings Menu ##############################
 	def Qavsetup(self):
@@ -428,7 +428,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Select Backup files", _("Choose the files to backup"), _("Here you can select which files should be added to backupfile. (default: E2-setup, channels, network")))
 		self.sublist.append(QuickSubMenuEntryComponent("Software Manager Setup", _("Manage your online update files"), _("Here you can select which files should be updated with a online update")))
 		if not getBoxType().startswith('az') and not getBoxType().startswith('dream') and not getBoxType().startswith('ebox'):
-		    self.sublist.append(QuickSubMenuEntryComponent("Flash Local-Online", _("Flash Local-Online a new image"), _("Flash on the fly your Receiver software.")))		
+			self.sublist.append(QuickSubMenuEntryComponent("Flash Local-Online", _("Flash Local-Online a new image"), _("Flash on the fly your Receiver software.")))		
 		self["sublist"].l.setList(self.sublist)
 
 ######## Plugins Menu ##############################
