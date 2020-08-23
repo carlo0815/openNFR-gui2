@@ -40,7 +40,7 @@ from Plugins.Plugin import PluginDescriptor
 from Plugins.Extensions.Infopanel.Softcamedit import vEditor, cEditor
 from Plugins.Extensions.Infopanel.nfsedit import NFS_EDIT
 from os import path, listdir
-import commands
+import subprocess
 from random import Random
 import string
 import os
