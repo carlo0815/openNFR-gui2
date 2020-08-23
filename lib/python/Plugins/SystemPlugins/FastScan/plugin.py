@@ -517,7 +517,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 					wv = open(favlist, "w")
 					wv.write("\n".join(map(lambda x: str(x), ret)))
 					wv.close()
-					eDVBDB.getInstance().reloadBouquets(
+					eDVBDB.getInstance().reloadBouquets()
 					self.keyCancel()
 			except:
 				print('My error, value:no xml found') 
