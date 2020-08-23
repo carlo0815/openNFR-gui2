@@ -20,6 +20,7 @@ def Load_defaults():
 	config.mediaplayer.sortPlaylists = ConfigYesNo(default=False)
 	config.mediaplayer.alwaysHideInfoBar = ConfigYesNo(default=True)
 	config.mediaplayer.onMainMenu = ConfigYesNo(default=False)
+Load_defaults()
 
 class DirectoryBrowser(Screen, HelpableScreen):
 
