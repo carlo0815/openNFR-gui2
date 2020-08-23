@@ -529,7 +529,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 			lastsc = self.path + "/userbouquet.LastScanned.tv"
 			newbouq = self.path + "/userbouquet." + self.scan_provider.value + ".tv"
 			newbouq_unsort = self.path + "/userbouquet." + self.scan_provider.value + ".tv_unsort"
-				favlist = self.path + "/bouquets.tv"
+			favlist = self.path + "/bouquets.tv"
 			newbouq_unsortlist = self.path + newbouq_unsort
 			newbouq1 = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.' + self.scan_provider.value + '.tv" ORDER BY bouquet\r'
 			newbouq2 = '#NAME ' + self.scan_provider.value + ' '
