@@ -28,9 +28,9 @@ def DiskEntry(model, size, removable):
 class HddSetup(Screen):
 
 	skin = """
-                   <screen name="HddSetup" position="center,115" size="900,530" title="HddSetup" flags="wfBorder">
-                      <widget source="menu" render="Listbox" position="10,10" size="880,450" scrollbarMode="showOnDemand" transparent="1">
-                         <convert type="TemplatedMultiContent">
+		<screen name="HddSetup" position="center,115" size="900,530" title="HddSetup" flags="wfBorder">
+			<widget source="menu" render="Listbox" position="10,10" size="880,450" scrollbarMode="showOnDemand" transparent="1">
+			<convert type="TemplatedMultiContent">
 				{"template": [
 					MultiContentEntryPixmapAlphaTest(pos = (5, 0), size = (48, 48), png = 0),
 					MultiContentEntryText(pos = (70, 3), size = (430, 38), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_TOP, text = 1),
@@ -39,17 +39,17 @@ class HddSetup(Screen):
 					"fonts": [gFont("Regular", 22)],
 					"itemHeight": 50
 				}
-                        </convert>
-                    </widget>
-                   <ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
-                   <ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
-                   <ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
-                   <ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
-                   <widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                   <widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                    <widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                   <widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                   </screen>"""
+			</convert>
+			</widget>
+			<ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
+			<ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
+			<ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
+			<ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
+			<widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			<widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+		</screen>"""
 
 	def __init__(self, session, args = 0):
 		self.session = session
@@ -59,8 +59,8 @@ class HddSetup(Screen):
 		
 		self.mdisks = Disks()
 		for disk in self.mdisks.disks:
-			print "disk:", disk
-                        capacity = "%d MB" % (disk[1] / (1024 * 1024))
+			print ("disk:", disk)
+			capacity = "%d MB" % (disk[1] / (1024 * 1024))
 			self.disks.append(DiskEntry(disk[3], capacity, disk[2]))
 		
 		self["menu"] = List(self.disks)
@@ -96,7 +96,7 @@ class HddSetup(Screen):
 		
 	def checkDefault(self):
 		mp = MountPoints()
-		print "mp:", mp
+		print ("mp:", mp)
 		mp.read()
 		if not mp.exist("/hdd"):
 			mp.add(self.mdisks.disks[self.sindex][0], 1, "/hdd")
@@ -177,9 +177,9 @@ class HddSetup(Screen):
 				
 		
 	def yellow(self):
-                from Plugins.Extensions.Infopanel.eparted import Ceparted
-                self.session.open(Ceparted)
-                #if len(self.mdisks.disks) > 0:
+		from Plugins.Extensions.Infopanel.eparted import Ceparted
+		self.session.open(Ceparted)
+		#if len(self.mdisks.disks) > 0:
 			#self.sindex = self['menu'].getIndex()
 			#self.session.openWithCallback(self.chooseFSType, ExtraMessageBox, "Please select your preferred configuration.", "HDD Partitioner",
 										#[ [ "One partition", "partitionmanager.png" ],
@@ -201,9 +201,9 @@ class HddSetup(Screen):
 			if len(self.mdisks.disks[self.sindex][5]) == 0:
 				self.session.open(MessageBox, _("You need to initialize your storage device first"), MessageBox.TYPE_ERROR)
 			else:
-				print "self.mdisks.disks[self.sindex]:", self.mdisks.disks[self.sindex]
-				print "self.sindex:", self.sindex
-                                self.session.open(HddPartitions, self.mdisks.disks[self.sindex])
+				print ("self.mdisks.disks[self.sindex]:", self.mdisks.disks[self.sindex])
+				print ("self.sindex:", self.sindex)
+				self.session.open(HddPartitions, self.mdisks.disks[self.sindex])
 		
 	def quit(self):
 		self.close()
