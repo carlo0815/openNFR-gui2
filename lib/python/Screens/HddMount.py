@@ -218,7 +218,7 @@ class HddFastRemove(Screen):
 						else: 
 							mp = self.mountpoints.get(partition[0][:3], int(partition[0][3:]))
 							rmp = self.mountpoints.getRealMount(partition[0][:3], int(partition[0][3:]))
-					except Exception, e:
+					except Exception as e:
 						pass
 					if len(mp) > 0:
 						if "mmcblk1" in partition[0][:7]:
