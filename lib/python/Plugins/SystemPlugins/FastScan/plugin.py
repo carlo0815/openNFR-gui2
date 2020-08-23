@@ -641,7 +641,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 			else:
 				config.usage.alternative_number_mode.value = False
 				config.usage.alternative_number_mode.save()
-			config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)`
+			config.misc.fastscan.last_configuration.value = '(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)'
 			config.misc.fastscan.save()
 			self.readXML(self.scan_provider.value.lower())
 		else:
@@ -650,8 +650,8 @@ class FastScanScreen(ConfigListScreen, Screen):
 				config.usage.alternative_number_mode.save()
 			else:
 				config.usage.alternative_number_mode.value = False
-				config.usage.alternative_number_mode.save()			
-			config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)`
+				config.usage.alternative_number_mode.save()
+			config.misc.fastscan.last_configuration.value = '(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)'
 			config.misc.fastscan.save()
 			self.startScan()
 
