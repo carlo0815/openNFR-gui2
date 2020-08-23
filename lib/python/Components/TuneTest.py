@@ -235,7 +235,7 @@ class TuneTest:
 		print("getting next transponder", self.tuningtransponder)
 		index = self.tuningtransponder + 1
 		if self.checkPIDs:
-			print "checkPIDs-loop"
+			print ("checkPIDs-loop")
 			# check for tsid != -1 and onid != -1
 			print("index:", index)
 			print("len(self.transponderlist):", len(self.transponderlist))
