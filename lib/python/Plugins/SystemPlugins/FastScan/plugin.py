@@ -635,12 +635,12 @@ class FastScanScreen(ConfigListScreen, Screen):
 	def keyGo(self):
 		prov = self.scan_provider.value.lower()
 		if prov == "astra_19_austriasat" or prov == "digitv" or prov == "focussat" or prov == "freesat_czech_republic" or prov == "freesat_hungary" or prov == "freesat_moldavia" or prov == "freesat_slovenske" or prov == "freesat_romania" or prov == "hdplus" or prov == "own_scan" or prov == "sky_de_starter" or prov == "sky_de_cinema" or prov == "sky_de_sport" or prov == "sky_de_bundesliga" or prov == "sky_de_entertainment" or prov == "sky_de_full" or prov == "upc":           
-		if self.scan_alternative_number_mode.value == True:
-			config.usage.alternative_number_mode.value = True
-			config.usage.alternative_number_mode.save()
-		else:
-			config.usage.alternative_number_mode.value = False
-			config.usage.alternative_number_mode.save()
+			if self.scan_alternative_number_mode.value == True:
+				config.usage.alternative_number_mode.value = True
+				config.usage.alternative_number_mode.save()
+			else:
+				config.usage.alternative_number_mode.value = False
+				config.usage.alternative_number_mode.save()
 			config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)`
 			config.misc.fastscan.save()
 			self.readXML(self.scan_provider.value.lower())
@@ -650,10 +650,10 @@ class FastScanScreen(ConfigListScreen, Screen):
 				config.usage.alternative_number_mode.save()
 			else:
 				config.usage.alternative_number_mode.value = False
-				config.usage.alternative_number_mode.save()
-				config.misc.fastscan.last_configuration.value = `repr((self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value))`
-				config.misc.fastscan.save()
-				self.startScan()
+				config.usage.alternative_number_mode.save()			
+			config.misc.fastscan.last_configuration.value = `(self.scan_nims.value, self.scan_provider.value, self.scan_hd.value, self.scan_keepnumbering.value, self.scan_keepsettings.value, self.scan_alternative_number_mode.value)`
+			config.misc.fastscan.save()
+			self.startScan()
 
 
 	def getTransponderParameters(self, number):
