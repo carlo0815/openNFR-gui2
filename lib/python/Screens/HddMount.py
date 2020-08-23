@@ -24,26 +24,26 @@ import re
 class HddMount(Screen):
 
 	skin = """
-                    <screen name="HddMount" position="center,115" size="900,530" title="HddMount" flags="wfBorder">
-                      <ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
-                      <ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
-                      <ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
-                      <ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
-                      <widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                      <widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                      <widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                      <widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                     <eLabel text="Hard Drive Mount" zPosition="2" position="10,11" size="880,40" halign="left" font="Regular;28" foregroundColor="un538eff" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="black" />
-                      <widget name="menu" position="10,59" size="880,410" scrollbarMode="showOnDemand" transparent="1" />
-                    </screen> """
-                    
+		<screen name="HddMount" position="center,115" size="900,530" title="HddMount" flags="wfBorder">
+			<ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
+			<ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
+			<ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
+			<ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
+			<widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			<widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			eLabel text="Hard Drive Mount" zPosition="2" position="10,11" size="880,40" halign="left" font="Regular;28" foregroundColor="un538eff" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="black" />
+			<widget name="menu" position="10,59" size="880,410" scrollbarMode="showOnDemand" transparent="1" />
+		</screen> """
+
 	def __init__(self, session, device, partition):
 		Screen.__init__(self, session)
 		if "mmcblk1" in device:
 			self.device = device + "p"
 		else:			
-			self.device = device			
-               	self.partition = partition
+			self.device = device
+		self.partition = partition
 		self.mountpoints = MountPoints()
 		self.mountpoints.read()
 		self.fast = False
@@ -122,15 +122,15 @@ class HddMount(Screen):
 	def setMountPoint(self, path):
 		self.cpath = path
 		mountp = ""
-	        f = open('/proc/mounts', 'r')
+		f = open('/proc/mounts', 'r')
 		for line in f.readlines():
-                        if path in line:
+			if path in line:
 				partsp = line.strip().split()
-                                mountp = str(partsp[1])
+				mountp = str(partsp[1])
 				break
 		
 		f.close()
-	        if path == mountp:		
+		if path == mountp:		
 			self.session.openWithCallback(self.setMountPointCb, ExtraMessageBox, "Selected mount point is already used by another drive.", "Mount point exist!",
 																[ [ "Change old drive with this new drive", "ok.png" ],
 																[ "Mantain old drive", "cancel.png" ],
@@ -147,12 +147,12 @@ class HddMount(Screen):
 					return
 			self.mountpoints.delete(self.cpath)
 			if not self.fast:
-                                if self.device == "mmcblk1p":
-                                        self.device1 = "mmcblk1"
-                                else:
-                                        self.device1 = self.device                               
-                                self.mountpoints.add(self.device1, self.partition, self.cpath)
-			self.mountpoints.write()
+				if self.device == "mmcblk1p":
+					self.device1 = "mmcblk1"
+				else:
+					self.device1 = self.device
+					self.mountpoints.add(self.device1, self.partition, self.cpath)
+					self.mountpoints.write()
 			if not self.mountpoints.mount(self.device, self.partition, self.cpath):
 				self.session.open(MessageBox, _("Cannot mount new drive.\nPlease check filesystem or format it and try again"), MessageBox.TYPE_ERROR)
 			elif self.cpath == "/media/hdd":
@@ -173,18 +173,18 @@ def MountEntry(description, details):
 class HddFastRemove(Screen):
 
 	skin = """
-                <screen name="HddFastRemove" position="center,115" size="900,530" title="HddFastRemove" flags="wfBorder">
-                      <ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
-                      <ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
-                      <ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
-                      <ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
-                      <widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                      <widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                      <widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                      <widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                      <eLabel text="Hard Drive Remove" zPosition="2" position="10,11" size="880,40" halign="left" font="Regular;28" foregroundColor="un538eff" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="black" />
-                      <widget source="menu" render="Listbox" position="11,58" size="880,410" scrollbarMode="showOnDemand" transparent="1">
-                      <convert type="TemplatedMultiContent">
+		<screen name="HddFastRemove" position="center,115" size="900,530" title="HddFastRemove" flags="wfBorder">
+			<ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
+			<ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
+			<ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
+			<ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
+			<widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			<widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			<eLabel text="Hard Drive Remove" zPosition="2" position="10,11" size="880,40" halign="left" font="Regular;28" foregroundColor="un538eff" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="black" />
+			<widget source="menu" render="Listbox" position="11,58" size="880,410" scrollbarMode="showOnDemand" transparent="1">
+			<convert type="TemplatedMultiContent">
 				{"template": [
 					MultiContentEntryPixmapAlphaTest(pos = (5, 0), size = (48, 48), png = 0),
 					MultiContentEntryText(pos = (65, 3), size = (190, 38), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_TOP, text = 1),
@@ -194,8 +194,8 @@ class HddFastRemove(Screen):
 					"itemHeight": 50
 				}
 			</convert>
-                     </widget>
-                    </screen>"""
+			</widget>
+		</screen>"""
 
 
 	def __init__(self, session):
@@ -206,33 +206,33 @@ class HddFastRemove(Screen):
 		self.disks = list ()
 		self.mounts = list ()
 		for disk in self.mdisks.disks:
-                        if disk[2] == True:
+			if disk[2] == True:
 				diskname = disk[3]
 				for partition in disk[5]:
 					mp = ""
 					rmp = ""
 					try:
-                                        	if "mmcblk1" in partition[0][:7]:
-                                                	mp = self.mountpoints.get(partition[0][:7], int(partition[0][8:]))
-					        	rmp = self.mountpoints.getRealMount(partition[0][:7], int(partition[0][8:]))
-                                        	else: 
-                                                	mp = self.mountpoints.get(partition[0][:3], int(partition[0][3:]))
-					        	rmp = self.mountpoints.getRealMount(partition[0][:3], int(partition[0][3:]))
+						if "mmcblk1" in partition[0][:7]:
+							mp = self.mountpoints.get(partition[0][:7], int(partition[0][8:]))
+							rmp = self.mountpoints.getRealMount(partition[0][:7], int(partition[0][8:]))
+						else: 
+							mp = self.mountpoints.get(partition[0][:3], int(partition[0][3:]))
+							rmp = self.mountpoints.getRealMount(partition[0][:3], int(partition[0][3:]))
 					except Exception, e:
 						pass
 					if len(mp) > 0:
 						if "mmcblk1" in partition[0][:7]:
-                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][7:], mp)))
-							self.mounts.append(mp)						
+							self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][7:], mp)))
+							self.mounts.append(mp)
 						else:
-                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][3:], mp)))
+							self.disks.append(MountEntry(disk[3], "P.%s (Fixed: %s)" % (partition[0][3:], mp)))
 							self.mounts.append(mp)
 					elif len(rmp) > 0:
 						if "mmcblk1" in partition[0][:7]:
-                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][7:], rmp)))
-							self.mounts.append(rmp)						
+							self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][7:], rmp)))
+							self.mounts.append(rmp)
 						else:
-                                                        self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][3:], rmp)))
+							self.disks.append(MountEntry(disk[3], "P.%s (Fast: %s)" % (partition[0][3:], rmp)))
 							self.mounts.append(rmp)
 						
 		self["menu"] = List(self.disks)
