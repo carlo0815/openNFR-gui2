@@ -13,7 +13,7 @@ from Components.Pixmap import Pixmap, MovingPixmap, MultiPixmap
 from os import popen, path, makedirs, listdir, access, stat, rename, remove, W_OK, R_OK
 from enigma import eEnv
 from boxbranding import getBoxType, getImageDistro
-from .BackupRestore import InitConfig as BackupRestore_InitConfig
+#from .BackupRestore import InitConfig as BackupRestore_InitConfig
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigText, ConfigLocations, ConfigBoolean
 from Components.Harddisk import harddiskmanager
 
@@ -26,7 +26,7 @@ if boxtype in ('maram9', 'classm', 'axodin', 'axodinc', 'starsatlx', 'genius', '
 	config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/backup/', visible_width = 50, fixed_size = False)
 else:
 	config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media/hdd/', visible_width = 50, fixed_size = False)
-config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/CCcam.cfg', '/usr/keys/', '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname', eEnv.resolve("${datadir}/enigma2/keymap.usr")])
+	config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/CCcam.cfg', '/usr/keys/', '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname', eEnv.resolve("${datadir}/enigma2/keymap.usr")])
 
 
 backupfile = "enigma2settingsbackup.tar.gz"
