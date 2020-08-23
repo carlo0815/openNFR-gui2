@@ -450,13 +450,13 @@ class Pic_Full_View(Screen):
 		self.size_w = getDesktop(0).size().width()
 		self.size_h = getDesktop(0).size().height()
 		(size_w, size_h) = (self.size_w, self.size_h)
-		print 'A:',self.size_w
-		print 'B:',self.size_h
+		print ('A:',self.size_w)
+		print ('B:',self.size_h)
 
 		if config.pic.fullview_resolution.value and (self.size_w, self.size_h) != eval(config.pic.fullview_resolution.value):
 			(size_w, size_h) = eval(config.pic.fullview_resolution.value)
-			print 'C:',size_w
-			print 'D:',size_h
+			print ('C:',size_w)
+			print ('D:',size_h)
 			gMainDC.getInstance().setResolution(size_w, size_h)
 			getDesktop(0).resize(eSize(size_w, size_h))
 
@@ -627,4 +627,3 @@ class Pic_Full_View(Screen):
 			getDesktop(0).resize(eSize(self.size_w, self.size_h))
 
 		self.close(self.lastindex + self.dirlistcount)
-
