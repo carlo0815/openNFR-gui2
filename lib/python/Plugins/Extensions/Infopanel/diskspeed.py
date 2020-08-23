@@ -62,9 +62,9 @@ class Disk_Speed(Screen):
 				if line.find('/media/usb') != -1:
 					myusb = '/media/usb'
 					continue
-		if line.find('/media/hdd') != -1:
-			myhdd = '/media/hdd'
-			continue
+				if line.find('/media/hdd') != -1:
+					myhdd = '/media/hdd'
+					continue
 
 			f.close()
 		else:
@@ -116,23 +116,23 @@ class Disk_Speed(Screen):
 		os.popen("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel)
 		f = open('/tmp/writebufferhdd', 'r')
 		for line in f.readlines():
-		if "MB/s" in line:
-			model = line.split(' ')[6]
-			speed = re.findall("[-+]?\d+[\.]?\d*", model)
-			f.close()
-			label1 = Label(_('Your Disk-Speed is:%s') %model)
-			percUsed = int(float(speed[0]) / 1.6) 
-		if float(speed[0]) <= 1.5:
-			label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
-		elif float(speed[0]) > 1.5 and float(speed[0]) <= 10:
-			label2 = Label(_('With this Speed you can Record 1 HD Channel!\n'))
-		elif float(speed[0]) > 10 and float(speed[0]) <= 15:
-			label2 = Label(_('With this Speed you can Record 2 HD Channel!\n'))
-		else:
-			label2 = Label(_('With this Speed you can Record more then 2 HD Channel!\n'))
-			os.system("rm %s/blank2" % mysel)
-			self.session.open(Disk_Test, percUsed, label1, label2)
-			os.system("rm /tmp/writebufferhdd")
+			if "MB/s" in line:
+				model = line.split(' ')[6]
+				speed = re.findall("[-+]?\d+[\.]?\d*", model)
+				f.close()
+				label1 = Label(_('Your Disk-Speed is:%s') %model)
+				percUsed = int(float(speed[0]) / 1.6) 
+			if float(speed[0]) <= 1.5:
+				label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
+			elif float(speed[0]) > 1.5 and float(speed[0]) <= 10:
+				label2 = Label(_('With this Speed you can Record 1 HD Channel!\n'))
+			elif float(speed[0]) > 10 and float(speed[0]) <= 15:
+				label2 = Label(_('With this Speed you can Record 2 HD Channel!\n'))
+			else:
+				label2 = Label(_('With this Speed you can Record more then 2 HD Channel!\n'))
+				os.system("rm %s/blank2" % mysel)
+				self.session.open(Disk_Test, percUsed, label1, label2)
+				os.system("rm /tmp/writebufferhdd")
 
 class Disk_Test(Screen):
 	def __init__(self, session, percUsed, label1, label2):
@@ -147,7 +147,7 @@ class Disk_Test(Screen):
 		self['label2'] = label2         
 		self['key_red'] = Label(_('Exit'))
 		self['spaceused'] = ProgressBar()        
-		elif['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'red': self.close,
 			'back': self.close})
 
 	def setWindowTitle(self):	        
