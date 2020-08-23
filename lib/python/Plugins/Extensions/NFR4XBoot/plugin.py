@@ -27,7 +27,7 @@ NFR4XBootImageInstall_Skin = '\n\t\t    <screen name="NFR4XBootImageInstall" pos
 def Freespace(dev):
     statdev = os.statvfs(dev)
     space = statdev.f_bavail * statdev.f_frsize / 1024
-    print '[NFR4XBoot] Free space on %s = %i kilobytes' % (dev, space)
+    print("[NFR4XBoot] Free space on %s = %i kilobytes" % (dev, space))
     return space
 
 
@@ -87,7 +87,7 @@ class NFR4XBootInstallation(Screen):
 
     def devpanel(self):
         try:
-			####ersetzen mit unseren Mountmanager####
+            ####ersetzen mit unseren Mountmanager####
             from Screens.HddSetup import HddSetup
             self.session.open(HddSetup)
         except:
@@ -164,22 +164,22 @@ class NFR4XBootInstallation(Screen):
                 self.close()
                 
     def install2(self, yesno):
-	config.NFRBootmanager = ConfigSubsection()
-	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
+        config.NFRBootmanager = ConfigSubsection()
+        config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5') 
         if getMachineBuild() in ("u5", "u51", "u52", "u53", "u54", "u55", "u56", "u41", "u5pvr", "sf8008"):
             self.install3(False)
         elif yesno:
             self.MACHINEBRAND = getMachineBrand()
             if  self.MACHINEBRAND == "Vu+":
-                os.system("opkg install packagegroup-base-nfs")	
-            message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
-            ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
-            ybox.setTitle(_('Install Confirmation'))
-        else:
-            self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
+                os.system("opkg install packagegroup-base-nfs") 
+                message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
+                ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
+                ybox.setTitle(_('Install Confirmation'))
+            else:
+                self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)                
 
     def install3(self, yesno):
-        print "yesno:", yesno
+        print("yesno:", yesno)
         if yesno:
             cmd2 = 'mkdir /media/nfr4xboot;mount ' + self.mysel + ' /media/nfr4xboot'
             os.system(cmd2)
@@ -188,34 +188,34 @@ class NFR4XBootInstallation(Screen):
                 f = open('/proc/mounts', 'r')
                 for line in f.readlines():
                     if line.find(self.mysel):
-		        mntdev = line.split(' ')[0]
-                f.close()
-                mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-                os.system("mv /etc/fstab /etc/fstab1")
-                os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
-                os.system("rm /etc/fstab1")
-                os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-                fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
-                fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults	       1        1'
-                fileHandle = open ('/etc/fstab', 'a')
-                fileHandle.write(fstabuuidwrite)
-                fileHandle.close()                
-            cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
-            os.system(cmd)
-            os.system('cp /sbin/nfr4x_multiboot /sbin/nfr4xinit')
-            os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
-            os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
-            out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
-            out3.write(config.NFRBootmanager.bootmanagertimeout.value)
-            out3.close()	
-            out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
-            out2.write('Flash')
-            out2.close()
-            out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
-            out.write(self.mysel)
-            out.close()
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
-            image = getImageDistro()
+                        mntdev = line.split(' ')[0]
+                        f.close()
+                        mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                        os.system("mv /etc/fstab /etc/fstab1")
+                        os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
+                        os.system("rm /etc/fstab1")
+                        os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                        fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
+                        fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults           1        1'
+                        fileHandle = open ('/etc/fstab', 'a')
+                        fileHandle.write(fstabuuidwrite)
+                        fileHandle.close()                
+                        cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
+                        os.system(cmd)
+                        os.system('cp /sbin/nfr4x_multiboot /sbin/nfr4xinit')
+                        os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
+                        os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
+                        out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
+                        out3.write(config.NFRBootmanager.bootmanagertimeout.value)
+                        out3.close()    
+                        out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+                        out2.write('Flash')
+                        out2.close()
+                        out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
+                        out.write(self.mysel)
+                        out.close()
+                        os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
+                        image = getImageDistro()
             if fileExists('/etc/image-version'):
                 if 'build' not in image:
                     f = open('/etc/image-version', 'r')
@@ -235,31 +235,31 @@ class NFR4XBootInstallation(Screen):
                 f = open('/proc/mounts', 'r')
                 for line in f.readlines():
                     if line.find(self.mysel):
-		        mntdev = line.split(' ')[0]
-                f.close()
-                mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-                os.system("mv /etc/fstab /etc/fstab1")
-                os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
-                os.system("rm /etc/fstab1")
-                os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
-                fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
-                fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults	       1        1'
-                fileHandle = open('/etc/fstab', 'a')
-                fileHandle.write(fstabuuidwrite)
-                fileHandle.close()
-            cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
-            os.system(cmd)
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
-            os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
-            os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
-            out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
-            out2.write('Flash')
-            out2.close()
-            out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
-            out.write(self.mysel)
-            out.close()
-            os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
-            image = getImageDistro()
+                        mntdev = line.split(' ')[0]
+                        f.close()
+                        mntid = os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                        os.system("mv /etc/fstab /etc/fstab1")
+                        os.system("grep -v  /media/nfr4xboot /etc/fstab1 > /etc/fstab")
+                        os.system("rm /etc/fstab1")
+                        os.system('blkid -s UUID -o value ' + mntdev + '>/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/install')
+                        fstabuuid = os.popen('blkid -s UUID -o value ' + mntdev).read()
+                        fstabuuidwrite = 'UUID=' + fstabuuid.strip() + '        /media/nfr4xboot        auto        defaults           1        1'
+                        fileHandle = open('/etc/fstab', 'a')
+                        fileHandle.write(fstabuuidwrite)
+                        fileHandle.close()
+                        cmd = 'mkdir ' + self.mysel + 'NFR4XBootI;mkdir ' + self.mysel + 'NFR4XBootUpload'
+                        os.system(cmd)
+                        os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit')
+                        os.system('chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init')
+                        os.system('mv /etc/init.d/volatile-media.sh /etc/init.d/volatile-media.sh.back')
+                        out2 = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+                        out2.write('Flash')
+                        out2.close()
+                        out = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location', 'w')
+                        out.write(self.mysel)
+                        out.close()
+                        os.system('cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/.nfr4xboot_location /etc/nfr4x/')
+                        image = getImageDistro()
             if fileExists('/etc/image-version'):
                 if 'build' not in image:
                     f = open('/etc/image-version', 'r')
@@ -312,13 +312,13 @@ class NFR4XBootImageChoose(Screen):
         if getMachineBuild() not in ("u5", "u51", "u52", "u53", "u54", "u55", "u56", "u41", "u5pvr", "sf8008"):
             menulist.append((_('Use Bootmanager by Booting'), 'withnfr4xboot'))
             menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))
-	    menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))
+            menulist.append((_('Setup Bootmanagertimeout'), 'bootmanagertimeout'))
         else:
-            menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))	
-        self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
+            menulist.append((_('Boot without Bootmanager'), 'withoutnfr4xboot'))    
+            self.session.openWithCallback(self.menuBootsetupCallback, ChoiceBox, title=_('What would You like to do ?'), list=menulist)
     def menuBootsetupCallback(self, choice):
-	config.NFRBootmanager = ConfigSubsection()
-	config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5')	
+        config.NFRBootmanager = ConfigSubsection()
+        config.NFRBootmanager.bootmanagertimeout = ConfigSelection([('5',_("5 seconds")),('10',_("10 seconds")),('15',_("15 seconds")),('20',_("20 seconds")),('30',_("30 seconds"))], default='5') 
         self.show()
         if choice is None:
             return
@@ -327,21 +327,21 @@ class NFR4XBootImageChoose(Screen):
                 cmd0 = 'cp /sbin/nfr4x_multiboot /sbin/nfr4xinit'
                 cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
                 self.session.openWithCallback(self.close, Console, _('NFR4XBoot work with Bootmanager by Booting!'), [cmd0, cmd1])
-            if choice[1] == 'withoutnfr4xboot':
-                cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
-                cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
-                self.session.openWithCallback(self.updateList, Console, _('NFR4XBoot work without Bootmanager by Booting!'), [cmd0, cmd1])
-            if choice[1] == 'bootmanagertimeout':
-                self.session.openWithCallback(self.setupDone, Setup, 'bootmanagertimeout', 'Extensions/Infopanel')
-	    return 
+                if choice[1] == 'withoutnfr4xboot':
+                    cmd0 = 'cp /usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/nfr4xinitnoboot /sbin/nfr4xinit'
+                    cmd1 = 'chmod 777 /sbin/nfr4xinit;chmod 777 /sbin/init;ln -sfn /sbin/nfr4xinit /sbin/init'
+                    self.session.openWithCallback(self.updateList, Console, _('NFR4XBoot work without Bootmanager by Booting!'), [cmd0, cmd1])
+                    if choice[1] == 'bootmanagertimeout':
+                        self.session.openWithCallback(self.setupDone, Setup, 'bootmanagertimeout', 'Extensions/Infopanel')
+                        return 
 
     def setupDone(self, test=None):
-	if config.NFRBootmanager.bootmanagertimeout == '':
+        if config.NFRBootmanager.bootmanagertimeout == '':
             config.NFRBootmanager.bootmanagertimeout = defaultprefix
             config.NFRBootmanager.bootmanagertimeout.save()
             out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
             out3.write(config.NFRBootmanager.bootmanagertimeout.value)
-            out3.close()            
+            out3.close()
         else:
             config.NFRBootmanager.bootmanagertimeout.save()
             out3 = open('/media/nfr4xboot/NFR4XBootI/.timer', 'w')
@@ -359,36 +359,35 @@ class NFR4XBootImageChoose(Screen):
             mypath = '/media/hdd'
 
         icon = 'dev_usb.png'
-	if 'hdd' in mypath:
+        if 'hdd' in mypath:
             icon = 'dev_hdd.png'
-        icon = pluginpath + '/images/' + icon
-        png = LoadPixmap(icon)
-        self['device_icon'].instance.setPixmap(png)
-        device = '/media/nfr4xboot'
-        dev_free = dev_free_space = def_free_space_percent = ''
-        rc = os.system('df > /tmp/ninfo.tmp')
-        if fileExists('/tmp/ninfo.tmp'):
-            f = open('/tmp/ninfo.tmp', 'r')
-            for line in f.readlines():
-                line = line.replace('part1', ' ')
-                parts = line.strip().split()
-                totsp = len(parts) - 1
-                if parts[totsp] == device:
-                    if totsp == 5:
-                        dev_free = parts[1]
-                        dev_free_space = parts[3]
-                        def_free_space_percent = parts[4]
-                    else:
-                        dev_free = 'N/A   '
-                        dev_free_space = parts[2]
-                        def_free_space_percent = parts[3]
-                    break
-
-            f.close()
-            os.remove('/tmp/ninfo.tmp')
-        self.availablespace = dev_free_space[0:-3]
-        perc = int(def_free_space_percent[:-1])
-        self['free_space_progressbar'].setValue(perc)
+            icon = pluginpath + '/images/' + icon
+            png = LoadPixmap(icon)
+            self['device_icon'].instance.setPixmap(png)
+            device = '/media/nfr4xboot'
+            dev_free = dev_free_space = def_free_space_percent = ''
+            rc = os.system('df > /tmp/ninfo.tmp')
+            if fileExists('/tmp/ninfo.tmp'):
+                f = open('/tmp/ninfo.tmp', 'r')
+                for line in f.readlines():
+                    line = line.replace('part1', ' ')
+                    parts = line.strip().split()
+                    totsp = len(parts) - 1
+                    if parts[totsp] == device:
+                        if totsp == 5:
+                            dev_free = parts[1]
+                            dev_free_space = parts[3]
+                            def_free_space_percent = parts[4]
+                        else:
+                            dev_free = 'N/A   '
+                            dev_free_space = parts[2]
+                            def_free_space_percent = parts[3]
+                        break
+                        f.close()
+                        os.remove('/tmp/ninfo.tmp')
+                        self.availablespace = dev_free_space[0:-3]
+                        perc = int(def_free_space_percent[:-1])
+                        self['free_space_progressbar'].setValue(perc)
         green = '#00389416'
         red = '#00ff2525'
         yellow = '#00ffe875'
@@ -492,7 +491,7 @@ class NFR4XBootImageChoose(Screen):
                     ybox = self.session.openWithCallback(self.remove2, MessageBox, message, MessageBox.TYPE_YESNO)
                     ybox.setTitle(_('Delete Confirmation'))
             except:
-                print 'no image to remove'
+                print('no image to remove')
 
         else:
             self.mysel
@@ -508,7 +507,7 @@ class NFR4XBootImageChoose(Screen):
             self['config'].setList(self.list)
             self.updateList()
         except:
-            print ' '
+            print('  ')
 
     def remove2(self, yesno):
         if yesno:
@@ -521,7 +520,7 @@ class NFR4XBootImageChoose(Screen):
     def installMedia(self):
         images = False
         myimages = os.listdir('/media/nfr4xboot/NFR4XBootUpload')
-        print myimages
+        print( myimages)
         for fil in myimages:
             if fil.endswith('.zip'):
                 images = True
@@ -578,7 +577,7 @@ class NFR4XBootImageChoose(Screen):
                 f = file('/etc/fstab','r')
                 lines = f.readlines()
                 f.close()
-                print "lines:", lines
+                print("lines:", lines)
                 for line in lines:
                     if "/media/nfr4xboot" in line:
                         lines.remove(line)
@@ -737,8 +736,8 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
                  str(self.zipdelete.value),
                  getImageFolder(),
                  getMachineRootFile(),
-                 getImageArch())						   
-                print '[NFR4X-BOOT]: ', cmd
+                 getImageArch())                           
+                print( '[NFR4X-BOOT]: ', cmd)
                 self.session.open(Console, _('NFR4XBoot: Install new image'), [message, cmd])
 
     def check_free_space(self):
