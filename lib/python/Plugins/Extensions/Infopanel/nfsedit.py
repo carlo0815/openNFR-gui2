@@ -103,7 +103,7 @@ class NFS_EDIT(Screen):
 			"ok": self.editLine,
 			"back": self.exitEditor,
 			"yellow": self.yellow, 
-			"blue": self.blue
+			"blue": self.blue,
 			"green": self.green,
 			"red": self.close,
 
