@@ -125,7 +125,7 @@ class PluginInstall(Screen):
 		else:
 			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
-			        if sel.name in self.setuplist:
+				if sel.name in self.setuplist:
 					self.setuplist.remove("%s" % sel.name)
 					if not self.setuplist:
 						pluginfiles += "no Plugin select"
@@ -546,7 +546,7 @@ class PluginDeinstall(Screen):
 		else:
 			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
-			 	if sel.name in self.setuplist:
+				if sel.name in self.setuplist:
 					self.setuplist.remove("%s" % sel.name)
 					if not self.setuplist:
 						pluginfiles += "no Plugin select"
@@ -945,7 +945,7 @@ class PluginSkinInstall(Screen):
 		if isinstance(sel, str): # category
 
 			if sel in self.expanded:
-			        
+				
 				self.expanded.remove(sel)
 			else:
 				self.expanded.append(sel)
@@ -954,7 +954,7 @@ class PluginSkinInstall(Screen):
 		else:
 			pluginfiles = ""
 			if self.type == self.DOWNLOAD:
-			        if sel.name in self.setuplist:
+				if sel.name in self.setuplist:
 					self.setuplist.remove("%s" % sel.name)
 					if not self.setuplist:
 						pluginfiles += "no Plugin select"
