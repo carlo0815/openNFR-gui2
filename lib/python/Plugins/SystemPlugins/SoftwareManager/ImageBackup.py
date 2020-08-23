@@ -306,8 +306,8 @@ class TimerImageManager(Screen):
 
 
 	def GreenPressed(self):
-		Timerstarts = False
 		global Timerstarts
+		Timerstarts = False
 		self.session.open(ImageBackup)
 
 	def keyBackup(self):
@@ -434,8 +434,8 @@ class AutoImageManagerTimer:
 				self.backupupdate(atLeast)
 		else:
 			print("[ImageManager] Running Backup", strftime("%c", localtime(now)))
-			Timerstarts = True
 			global Timerstarts
+			Timerstarts = True
 			ImageBackup(self.session)
 			sched = localtime(time())
 			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, 12, 0, 0, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
@@ -464,12 +464,12 @@ class ImageBackup(Screen):
 	def __init__(self, session, *args):
 		Screen.__init__(self, session)
 		self.title = _("Image Backup")
+		global Timerstarts
 		try:
 			if Timerstarts == True:
 				print("normal start")
 		except:
 			Timerstarts = False
-			global Timerstarts
 		self["key_red"] = StaticText(_("Cancel"))
 		self["description"] = StaticText(_("Use the cursor keys to select an installed image and then Start button."))
 		self["options"] = StaticText(_(" "))
@@ -521,9 +521,9 @@ class ImageBackup(Screen):
 					list.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
 				list.append(ChoiceEntryComponent('', (_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()), "1", "1", False)))
 			self["config"].setList(list)
+			global timerlist			
 			timerlist =[]
 			timerlist = list
-			global timerlist
 			self.start()
 		else:			
 			if imagedict:
