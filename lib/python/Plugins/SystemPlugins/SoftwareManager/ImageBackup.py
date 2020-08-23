@@ -259,7 +259,7 @@ class TimerImageManager(Screen):
 
 		try:
 			if not path.exists(self.BackupDirectory):
-				mkdir(self.BackupDirectory, 0755)
+				mkdir(self.BackupDirectory, 0o755)
 			if path.exists(self.BackupDirectory + config.imagemanager.folderprefix.value + '-' + getImageType() + '-swapfile_backup'):
 				system('swapoff ' + self.BackupDirectory + config.imagemanager.folderprefix.value + '-' + getImageType() + '-swapfile_backup')
 				remove(self.BackupDirectory + config.imagemanager.folderprefix.value + '-' + getImageType() + '-swapfile_backup')
