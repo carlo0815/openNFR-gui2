@@ -62,7 +62,7 @@ class UpdatePlugin(Screen):
 		if self.isProtected() and config.ParentalControl.servicepin[0].value:
 			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
 		else:
-                        self.checkNetworkState()
+			self.checkNetworkState()
 
 	def isProtected(self):
 		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.software_update.value
@@ -72,9 +72,9 @@ class UpdatePlugin(Screen):
 			self.closeProtectedScreen()
 		elif not result4:
 			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
-                else:
-                        self.checkNetworkState()
-                        
+		else:
+			self.checkNetworkState()
+
 	def closeProtectedScreen(self, result2=None):
 		self.close(None)
 		
@@ -221,18 +221,18 @@ class UpdatePlugin(Screen):
 			self.close()
 			return
 		if answer[1] == "cold":
-	                fobj_in = open("/etc/image-version")
-	                fobj_out = open("/etc/image-version_new","w")
-	                for line in fobj_in:
-	                        if "date" in line:
-	        		        line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
-	        		        fobj_out.write(line)
-	        	        else:
-	        		        fobj_out.write(line)
-	        	
-	                fobj_in.close()
-	                fobj_out.close()
-                        os.system("mv /etc/image-version_new /etc/image-version") 
+			fobj_in = open("/etc/image-version")
+			fobj_out = open("/etc/image-version_new","w")
+			for line in fobj_in:
+				if "date" in line:
+		 			line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
+					fobj_out.write(line)
+				else:
+					fobj_out.write(line)
+
+			fobj_in.close()
+			fobj_out.close()
+			 os.system("mv /etc/image-version_new /etc/image-version") 
 			self.session.open(TryQuitMainloop, retvalue=42)
 			self.close()
 		elif answer[1] == "channels":
@@ -240,18 +240,18 @@ class UpdatePlugin(Screen):
 			self.slider.setValue(1)
 			self.ipkg.startCmd(IpkgComponent.CMD_LIST, args = {'installed_only': True})
 		else:
-	                fobj_in = open("/etc/image-version")
-	                fobj_out = open("/etc/image-version_new","w")
-	                for line in fobj_in:
-	                        if "date" in line:
-	        		        line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
-	        		        fobj_out.write(line)
-	        	        else:
-	        		        fobj_out.write(line)
-	        	
-	                fobj_in.close()
-	                fobj_out.close()
-                        os.system("mv /etc/image-version_new /etc/image-version") 
+			fobj_in = open("/etc/image-version")
+			fobj_out = open("/etc/image-version_new","w")
+			for line in fobj_in:
+				if "date" in line:
+					line = "date=" + time.strftime("%Y%m%d%H%M%S") + '\n'
+					fobj_out.write(line)
+				else:
+					fobj_out.write(line)
+
+			fobj_in.close()
+			fobj_out.close()
+			os.system("mv /etc/image-version_new /etc/image-version") 
 			self.ipkg.startCmd(IpkgComponent.CMD_UPGRADE, args = {'test_only': False})
 
 	def modificationCallback(self, res):
