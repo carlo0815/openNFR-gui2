@@ -269,7 +269,7 @@ class EasySetup(ConfigListScreen, Screen):
 		if config.easysetup.timeshift.value is True:
 			self.openSetup("timeshift")
 		else:
-		self.run4()
+			self.run4()
 
 	def run4(self):
 		self.runed = '4'
@@ -386,10 +386,10 @@ class EasySetup(ConfigListScreen, Screen):
 				print("restart after Wizard")
 				self.close()
 
-			else:
-				config.easysetup.restart.setValue(False)
-				config.easysetup.restart.save()
-				self.close()
+		else:
+			config.easysetup.restart.setValue(False)
+			config.easysetup.restart.save()
+			self.close()
 
 	def openSetup(self, dialog):
 		self.session.openWithCallback(self.menuClosed, Setup, dialog)
