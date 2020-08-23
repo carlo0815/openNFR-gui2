@@ -164,11 +164,11 @@ def command(comandline, strip=1):
 		for line in file:
 			text = text + line
 	if text[-1:] != '\n': text = text + "\n"
-		file.close()
+	file.close()
 		# if one or last line then remove linefeed
 	if text[-1:] == '\n': text = text[:-1]
-		comandline = text
-		os.system("rm /tmp/command.txt")
+	comandline = text
+	os.system("rm /tmp/command.txt")
 	return comandline
 
 INFO_Panel_Version = 'Info-Panel V2.0 (mod by OpenNFR)'
@@ -395,8 +395,8 @@ def MenuEntryItem(entry):
 	else:
 		res = [entry]
 		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-			res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
-		eturn res
+		res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+		return res
  
 ###################  Max Test ###################
 
@@ -621,7 +621,7 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "PasswordChange":
 			self.session.open(NFRPasswdScreen)
 		elif menu == "UserMainMenu":
-		        plugin_path = None
+			plugin_path = None
 			self.session.open(UserMainMenuConfig, plugin_path)                                                				
 		elif menu == "System_Info":
 			self.System()
@@ -1845,27 +1845,27 @@ class NFRPasswdScreen(Screen):
 
 	def __init__(self, session, args = 0):
 		Screen.__init__(self, session)
-			self.title = _('Change Root Password')
-			try:
-				self['title'] = StaticText(self.title)
-			except:
-				print('self["title"] was not found in skin')
+		self.title = _('Change Root Password')
+		try:
+			self['title'] = StaticText(self.title)
+		except:
+			print('self["title"] was not found in skin')
 
-				self.user = 'root'
-				self.output_line = ''
-				self.list = []
-				self['passwd'] = ConfigList(self.list)
-				self['key_red'] = StaticText(_('Close'))
-				self['key_green'] = StaticText(_('Set Password'))
-				self['key_yellow'] = StaticText(_('new Random'))
-				self['key_blue'] = StaticText(_('virt. Keyboard'))
-				self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'red': self.close,
-					'green': self.SetPasswd,
-					'yellow': self.newRandom,
-					'blue': self.bluePressed,
-					'cancel': self.close}, -1)
-				self.buildList(self.GeneratePassword())
-				self.onShown.append(self.setWindowTitle)
+			self.user = 'root'
+			self.output_line = ''
+			self.list = []
+			self['passwd'] = ConfigList(self.list)
+			self['key_red'] = StaticText(_('Close'))
+			self['key_green'] = StaticText(_('Set Password'))
+			self['key_yellow'] = StaticText(_('new Random'))
+			self['key_blue'] = StaticText(_('virt. Keyboard'))
+			self['actions'] = ActionMap(['OkCancelActions', 'ColorActions'], {'red': self.close,
+				'green': self.SetPasswd,
+				'yellow': self.newRandom,
+				'blue': self.bluePressed,
+				'cancel': self.close}, -1)
+			self.buildList(self.GeneratePassword())
+			self.onShown.append(self.setWindowTitle)
 
 	def newRandom(self):
 		self.buildList(self.GeneratePassword())
@@ -1920,7 +1920,7 @@ class NFRPasswdScreen(Screen):
 
 	def setWindowTitle(self, title = None):
 		if not title:
-		title = self.title
+			title = self.title
 		try:
 			self['title'] = StaticText(title)
 		except:
