@@ -37,10 +37,10 @@ class About(Screen):
 		AboutText = _("Model:\t\t%s %s\n") % (getMachineBrand(), getMachineName())
 		
 		bootloader = ""
-                if path.exists('/sys/firmware/devicetree/base/bolt/tag'):
-		        f = open('/sys/firmware/devicetree/base/bolt/tag', 'r')
-	                bootloader = f.readline().replace('\x00', '').replace('\n', '')
-		        f.close()
+		if path.exists('/sys/firmware/devicetree/base/bolt/tag'):
+			f = open('/sys/firmware/devicetree/base/bolt/tag', 'r')
+			bootloader = f.readline().replace('\x00', '').replace('\n', '')
+			f.close()
 			AboutText += _("Bootloader:\t\t%s\n") % (bootloader)
 
 		if path.exists('/proc/stb/info/chipset'):
@@ -62,7 +62,7 @@ class About(Screen):
 		elif getMachineBuild() in ('vuduo4k'):
 			cpuMHz = _("   (2.1 GHz)")
 		elif getMachineBuild() in ('sf5008', 'et13000', 'et1x000', 'hd52', 'hd51', 'sf4008', 'vs1500', 'h7', 'osmio4k', 'osmio4kplus', 'osmini4k'):
-                        try:
+			try:
 				import binascii
 				f = open('/sys/firmware/devicetree/base/cpus/cpu@0/clock-frequency', 'rb')
 				clockfrequency = f.read()
@@ -88,7 +88,7 @@ class About(Screen):
 		AboutText += _("CPU:\t\t%s") % about.getCPUString() + cpuMHz + "\n"
 		AboutText += _("Cores:\t\t%s") % about.getCpuCoresString() + "\n"
 		
-                tempinfo = ""
+		tempinfo = ""
 		if path.exists('/proc/stb/sensors/temp0/value'):
 			f = open('/proc/stb/sensors/temp0/value', 'r')
 			tempinfo = f.read()
@@ -133,26 +133,26 @@ class About(Screen):
 				tempinfo = ""
 		if tempinfo and int(tempinfo.replace('\n', '')) > 0:
 			AboutText += _("Processor temperature:\t%s") % tempinfo.replace('\n', '').replace(' ', '') + SIGN + "C\n"
-                imagestarted = ""
+		imagestarted = ""
 		bootname = ''
-	        if path.exists('/boot/bootname'):
-	                f = open('/boot/bootname', 'r')
-		        bootname = f.readline().split('=')[1]
-		        f.close()
+		if path.exists('/boot/bootname'):
+			f = open('/boot/bootname', 'r')
+			bootname = f.readline().split('=')[1]
+			f.close()
 
-	        if SystemInfo["canMultiBoot"]:
-		        slot = image = GetCurrentImage()
-		        bootmode = ""
-                        part = "eMMC slot %s" %slot
-		        if SystemInfo["canMode12"]:
-			        bootmode = " bootmode = %s" %GetCurrentImageMode()
-		        if SystemInfo["HasHiSi"] and "sda" in SystemInfo["canMultiBoot"][slot]['device']:
-			        if slot > 4:
-				        image -=4
-			        else:
-				        image -=1
-			        part = "SDcard slot %s (%s) " %(image, SystemInfo["canMultiBoot"][slot]['device'])
-		        AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  (" + part + bootmode + ")\n"
+		if SystemInfo["canMultiBoot"]:
+			slot = image = GetCurrentImage()
+			bootmode = ""
+			part = "eMMC slot %s" %slot
+			if SystemInfo["canMode12"]:
+				bootmode = " bootmode = %s" %GetCurrentImageMode()
+			if SystemInfo["HasHiSi"] and "sda" in SystemInfo["canMultiBoot"][slot]['device']:
+				if slot > 4:
+					image -=4
+				else:
+					image -=1
+				part = "SDcard slot %s (%s) " %(image, SystemInfo["canMultiBoot"][slot]['device'])
+			AboutText += _("Selected Image:\t\t%s") % _("STARTUP_") + str(slot) + "  (" + part + bootmode + ")\n"
 		string = getDriverDate()
 		year = string[0:4]
 		month = string[4:6]
@@ -160,11 +160,11 @@ class About(Screen):
 		driversdate = '-'.join((year, month, day))
 		AboutText += _("Drivers:\t\t%s") % driversdate + "\n"
 		AboutText += _("Image:\t\t%s") % about.getImageVersionString() + "\n"
-		AboutText += _("Build:\t\t%s") % getImageBuild() + "\n"		
+		AboutText += _("Build:\t\t%s") % getImageBuild() + "\n"
 		AboutText += _("Kernel: \t\t%s") % about.getKernelVersionString() + "\n"
 		AboutText += _("Oe-Core:\t\t%s") % getOEVersion() + "\n"
 		AboutText += _("Enigma (re)starts:\t%d\n") % config.misc.startCounter.value
-		AboutText += _("GStreamer:\t\t%s") % about.getGStreamerVersionString() + "\n"	
+		AboutText += _("GStreamer:\t\t%s") % about.getGStreamerVersionString() + "\n"
 		AboutText += _("Python:\t\t%s") % about.getPythonVersionString() + "\n"
 
 		fp_version = getFPVersion()
@@ -178,14 +178,14 @@ class About(Screen):
 			AboutText += fp_version + "\n"
 
 		if getMachineBuild() not in ('gbmv200', 'vuduo4k', 'v8plus', 'ustym4kpro', 'hd60', 'hd61', 'i55plus', 'osmio4k', 'osmio4kplus', 'h9', 'h9combo', 'vuzero4k', 'sf5008', 'et13000', 'et1x000', 'hd51', 'hd52', 'vusolo4k', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'sf4008', 'dm820', 'dm7080', 'dm900', 'dm920', 'gb7252', 'dags7252', 'vs1500', 'h7', 'xc7439', '8100s', 'u41', 'u42', 'u43', 'u5', 'u5pvr', 'u52', 'u53', 'u54', 'u55', 'u56', 'u51', 'cc1', 'sf8008'):
-			AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"			
+			AboutText += _("Installed:\t\t%s") % about.getFlashDateString() + "\n"
 		AboutText += _("Last Upgrade:\t\t%s") % about.getLastUpdateString() + "\n\n" 
 		
 		self["FPVersion"] = StaticText(fp_version)
 
 		AboutText += _("WWW:\t\t%s") % about.getImageUrlString() + "\n\n"
 		AboutText += _("based on:\t\t%s") % "www.github.com/oe-alliance" + "\n\n"
-                # don't remove the string out of the _(), or it can't be "translated" anymore.
+		# don't remove the string out of the _(), or it can't be "translated" anymore.
 		# TRANSLATORS: Add here whatever should be shown in the "translator" about screen, up to 6 lines (use \n for newline)
 		info = _("TRANSLATOR_INFO")
 
@@ -267,7 +267,7 @@ class Devices(Screen):
 				"cancel": self.close,
 				"ok": self.close,
 				"up": self["AboutScrollLabel"].pageUp,
-				"down": self["AboutScrollLabel"].pageDown				
+				"down": self["AboutScrollLabel"].pageDown
 			})
 			
 	def populate(self):
@@ -364,15 +364,15 @@ class Devices(Screen):
 					self.mountinfo += "\n"
 				self.mountinfo += "%s (%sB, %sB %s)" % (ipaddress, mounttotal, mountfree, _("free"))
 		if self.mountinfo:
-                        self.mountinfo += "\n"
+			self.mountinfo += "\n"
 		else:
-                        self.mountinfo += (_('none'))
+			self.mountinfo += (_('none'))
 		try:
 			self.AboutText += self.mountinfo + "\n"
-		except:	
-                        pass
-                        
-                self["AboutScrollLabel"].setText(self.AboutText) 
+		except:
+			pass
+
+		self["AboutScrollLabel"].setText(self.AboutText) 
 
 
 class SystemMemoryInfo(Screen):
@@ -458,7 +458,7 @@ class SystemNetworkInfo(Screen):
 		self["LabelChannel"] = StaticText(_('Channel:'))
 		self["LabelEncType"] = StaticText(_('Encryption Type:'))
 		self["LabelFrequency"] = StaticText(_('Frequency:'))
-		self["LabelFrequencyNorm"] = StaticText(_('Frequency Norm:'))        
+		self["LabelFrequencyNorm"] = StaticText(_('Frequency Norm:'))
 		self["BSSID"] = StaticText()
 		self["ESSID"] = StaticText()
 		self["quality"] = StaticText()
@@ -711,7 +711,7 @@ class ViewGitLog(Screen):
 		self["key_green"] = Button(_("OK"))
 		self["key_yellow"] = Button(_("Show E2 Log"))
 		self["myactions"] = ActionMap(['ColorActions', 'OkCancelActions', 'DirectionActions'],
-									  {
+									{
 										  'cancel': self.closeRecursive,
 										  'green': self.closeRecursive,
 										  "red": self.closeRecursive,
@@ -720,7 +720,7 @@ class ViewGitLog(Screen):
 										  "right": self.pageDown,
 										  "down": self.pageDown,
 										  "up": self.pageUp
-									  }, -1)
+									}, -1)
 		self.onLayoutFinish.append(self.getlog)
 
 	def changelogtype(self):
