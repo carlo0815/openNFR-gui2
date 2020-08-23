@@ -14,26 +14,24 @@ def MessageBoxEntry(name, picture):
 	return (pixmap, name)
 	
 class ExtraMessageBox(Screen):
-        skin = """
-                <screen name="ExtraMessageBox" position="center,center" size="600,400" title="ExtraMessageBox" flags="wfBorder">
-                    <widget source="menu" render="Listbox" position="5,54" size="585,340" scrollbarMode="showOnDemand" transparent="1" zPosition="1">
-                    <convert type="TemplatedMultiContent">
-                      {"template": [
-                             MultiContentEntryPixmapAlphaTest(pos = (0, 0), size = (48, 48), png = 0),
-                             MultiContentEntryText(pos = (60, 10), size = (450, 38), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_TOP, text = 1),
-                      ],
-                            "fonts": [gFont("Regular", 22)],
-                            "itemHeight": 50
-                      }
-                       </convert>
-                     </widget>
-                     <widget name="message" position="5,5" size="585,26" font="Regular;20" foregroundColor="red" backgroundColor="red" transparent="1" zPosition="1" halign="center" />
-                     <eLabel position="5,40" size="585,2" foregroundColor="selfont" backgroundColor="selfont" />
-                 </screen>"""
-  
-  
-  
-        def __init__(self, session, message = "", title = "", menulist = [], type = 0, exitid = -1, default = 0, timeout = 0):
+	skin = """
+		<screen name="ExtraMessageBox" position="center,center" size="600,400" title="ExtraMessageBox" flags="wfBorder">
+			<widget source="menu" render="Listbox" position="5,54" size="585,340" scrollbarMode="showOnDemand" transparent="1" zPosition="1">
+			<convert type="TemplatedMultiContent">
+			{"template": [
+				MultiContentEntryPixmapAlphaTest(pos = (0, 0), size = (48, 48), png = 0),
+				MultiContentEntryText(pos = (60, 10), size = (450, 38), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_TOP, text = 1),
+			],
+				"fonts": [gFont("Regular", 22)],
+				"itemHeight": 50
+			}
+				</convert>
+			</widget>
+			<widget name="message" position="5,5" size="585,26" font="Regular;20" foregroundColor="red" backgroundColor="red" transparent="1" zPosition="1" halign="center" />
+			<eLabel position="5,40" size="585,2" foregroundColor="selfont" backgroundColor="selfont" />
+		</screen>"""
+
+	def __init__(self, session, message = "", title = "", menulist = [], type = 0, exitid = -1, default = 0, timeout = 0):
 		# type exist for compability... will be ignored
 		Screen.__init__(self, session)
 		self.session = session
