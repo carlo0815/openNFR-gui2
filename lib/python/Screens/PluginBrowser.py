@@ -411,7 +411,7 @@ class PluginDownloadBrowser(Screen):
 
 	def doInstall(self, callback, pkgname):
 		if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
-			print "install mgcamd1"
+			print ("install mgcamd1")
 			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 		else: 
 			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
