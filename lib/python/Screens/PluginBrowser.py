@@ -5,7 +5,7 @@ from boxbranding import getImageVersion
 from six.moves import urllib
 import socket
 import os
-
+from urllib.request import urlopen
 from enigma import eConsoleAppContainer, eDVBDB
 from Screens.InputBox import PinInput
 import six
