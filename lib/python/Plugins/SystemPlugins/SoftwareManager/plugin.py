@@ -40,11 +40,11 @@ from Tools.NumericalTextInput import NumericalTextInput
 from .ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer, ImageManagerautostart
 from .ImageWizard import ImageWizard
 from .Multibootmgr import MultiBootWizard
-from .BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getOldBackupPath, getBackupFilename, RestoreMyMetrixHD
-from .BackupRestore import InitConfig as BackupRestore_InitConfig
+from .BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getOldBackupPath, getBackupFilename
+#from .BackupRestore import InitConfig as BackupRestore_InitConfig
 from .SoftwareTools import iSoftwareTools
 from Screens.VirtualKeyBoard import VirtualKeyBoard
-from Plugins.Extensions.Infopanel.Flash_local import FlashOnline	
+from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 from Components.Label import Label
 import six
 from six.moves.cPickle import dump, load
