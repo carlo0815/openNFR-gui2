@@ -65,7 +65,7 @@ def writeAttributes(attribute, value):
 			buf.append(line)
 		script.close()
 	except IOError:
-		print "IOError"
+		print ("IOError")
 		pass
 		return -1
 
@@ -107,7 +107,7 @@ class SwapOverviewScreen(Screen,ConfigListScreen, HelpableScreen):
 			"green":	(self.activateSwap,_("Activate swap")),
 			"yellow":	(self.deactivateSwap,_("Deactivate swap")),
 			"blue":		(self.createSwap,_("Create swap file")),
-		}, -1)			
+		}, -1)
 
 		self["swapstatus_label"] = Label()
 		self["swapstatus_status"] = Label()
@@ -198,7 +198,7 @@ class SwapOverviewScreen(Screen,ConfigListScreen, HelpableScreen):
 						break
 			
 		except IOError:
-			print "didn't read /proc/swaps"
+			print ("didn't read /proc/swaps")
 
 		swapFile.close()
 
@@ -295,10 +295,10 @@ class SwapOverviewScreen(Screen,ConfigListScreen, HelpableScreen):
 		config.plugins.swapmanager.activateonboot.save()
 		
 	def dataAvail(self, str):
-		print str
+		print (str)
 
 	def runFinished(self, retval):
-		print "[SwapManager - Command executed] %d" %(retval)
+		print ("[SwapManager - Command executed] %d" %(retval))
 		self.run += 1
 		if self.run < len(self.cmdlist):
 			self.container.execute(self.cmdlist[self.run])
