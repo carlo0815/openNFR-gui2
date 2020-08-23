@@ -1,8 +1,9 @@
+from __future__ import absolute_import
 from boxbranding import getMachineBrand, getMachineName
 from Screens.Screen import Screen
 from Components.Harddisk import harddiskmanager
 from Screens.WizardUserInterfacePositioner import UserInterfacePositionerWizard
-from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
+import Plugins.Extensions.OpenWebif
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from boxbranding import getBoxType, getImageDistro, getMachineName, getMachineBrand, getBrandOEM, getImageVersion
 from Plugins.Extensions.Infopanel.SpinnerSelector import SpinnerSelector
