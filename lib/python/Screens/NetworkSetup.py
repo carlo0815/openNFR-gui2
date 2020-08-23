@@ -2126,9 +2126,8 @@ class NetworkNfs(Screen):
 	        	pass
 	        else:
 	        	os.system('echo "/media/hdd 192.168.0.0/255.255.255.0(rw,all_squash,anonuid=0,anongid=0,async)">/etc/exports')
-	
-		time.sleep(3)
-		self.updateService()
+	        	time.sleep(3)
+	        	self.updateService()
 
 	def Nfsset(self):
 		if fileExists('/etc/rc2.d/S11nfsserver') or fileExists('/etc/rc2.d/S13nfsserver') or fileExists('/etc/rc2.d/S20nfsserver'):
@@ -2277,13 +2276,12 @@ class NetworkOpenvpn(Screen):
 			os.makedirs('/etc/openvpn')
 		for file in os.listdir('/etc/openvpn'): 
  			if fnmatch.fnmatch(file, '*.conf'): 
- 				print file 
+ 				print (file) 
  				openvpnfile = '1' 
- 								 
- 		if openvpnfile == '0': 
- 			self.message = self.session.open(MessageBox, _("No config to start, please check /etc/openvpn and try again."), type=MessageBox.TYPE_INFO, close_on_any_key=True) 
- 		else: 
- 			print "config in etc/openvpn" 
+ 			if openvpnfile == '0':
+ 			    self.message = self.session.open(MessageBox, _("No config to start, please check /etc/openvpn and try again."), type=MessageBox.TYPE_INFO, close_on_any_key=True)
+ 			else: 
+ 			    print("config in etc/openvpn")
  			
 		time.sleep(3)
 		self.updateService()
@@ -2448,9 +2446,9 @@ class NetworkSamba(Screen):
 		
 	def Sambaedit(self):
 		if path.exists("/etc/samba/smb-user.conf"):
-                	self.session.open(cEditor, "/etc/samba/smb-user.conf")
-                else:
-                	pass        	
+			self.session.open(cEditor, "/etc/samba/smb-user.conf")
+		else:
+			pass        	
 
 	def SambaStartStop(self):
 		commands = []
