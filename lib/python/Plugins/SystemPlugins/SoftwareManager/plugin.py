@@ -2,13 +2,11 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getBrandOEM
-from cPickle import dump, load
 from os import path as os_path, stat, mkdir, makedirs, listdir, access, remove, W_OK, R_OK, F_OK
 from time import time
 from stat import ST_MTIME
 
 from enigma import eTimer, getDesktop, ePicLoad, eRCInput, getPrevAsciiCode, eEnv
-from cPickle import dump, load
 from twisted.web import client
 
 from Plugins.Plugin import PluginDescriptor
