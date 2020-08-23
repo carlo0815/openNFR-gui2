@@ -117,7 +117,7 @@ class ServiceScan(Screen):
 		self["actions"] = ActionMap(["SetupActions", "MenuActions"],
 		{
 			"up": self.up,
-			"down": self.down,		
+			"down": self.down,
 			"ok": self.ok,
 			"save": self.ok,
 			"cancel": self.cancel,
@@ -134,12 +134,12 @@ class ServiceScan(Screen):
 			self["servicelist"].moveToIndex(0)
 			if self["servicelist"].getCurrentSelection() is not None:
 				self.session.summary.updateService(self["servicelist"].getCurrentSelection()[0])
-                        self.ok()
+			self.ok()
 
 	def doServiceScan(self):
 		self["servicelist"].len = self["servicelist"].instance.size().height() / self["servicelist"].l.getItemSize().height()
 		self["scan"] = CScan(self["scan_progress"], self["scan_state"], self["servicelist"], self["pass"], self.scanList, self["network"], self["transponder"], self["FrontendInfo"], self.session.summary)
-                self.scanTimer.start(250)
+		self.scanTimer.start(250)
 		
 	def createSummary(self):
 		return ServiceScanSummary
