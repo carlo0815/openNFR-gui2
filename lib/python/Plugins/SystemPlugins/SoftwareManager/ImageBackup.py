@@ -1,6 +1,6 @@
 #################################################################################
-# FULL BACKUP UYILITY FOR ENIGMA2, SUPPORTS THE MODELS OE-A 2.0     			#
-#	                         						                            #
+# FULL BACKUP UYILITY FOR ENIGMA2, SUPPORTS THE MODELS OE-A 2.0					#
+#				 																#
 #					MAKES A FULLBACK-UP READY FOR FLASHING.						#
 #																				#
 #################################################################################
@@ -81,14 +81,14 @@ def ImageManagerautostart(reason, session=None, **kwargs):
 	global _session
 	now = int(time())
 	if reason == 0:
-		print "[ImageManager] AutoStart Enabled"
+		print("[ImageManager] AutoStart Enabled")
 		if session is not None:
 			_session = session
 			if autoImageManagerTimer is None:
 				autoImageManagerTimer = AutoImageManagerTimer(session)
 	else:
 		if autoImageManagerTimer is not None:
-			print "[ImageManager] Stop"
+			print("[ImageManager] Stop")
 			autoImageManagerTimer.stop()	
 	
 class TimerImageManager(Screen):
@@ -98,7 +98,7 @@ class TimerImageManager(Screen):
 		global autoImageManagerTimer
 		global _session
 		now = int(time())
-		print "[ImageManager] AutoStart Enabled"
+		print("[ImageManager] AutoStart Enabled")
 		if session is not None:
 			_session = session
 			if autoImageManagerTimer is None:
@@ -124,7 +124,7 @@ class TimerImageManager(Screen):
 		self.Console = Console()
 
 		if BackupTime > 0:
-		        now = int(time())
+			now = int(time())
 			t = localtime(BackupTime)
 			backuptext = _("Next Backup: ") + strftime(_("%a %e %b  %-H:%M"), t)
 		else:
@@ -210,7 +210,7 @@ class TimerImageManager(Screen):
 				if p.mountpoint != '/':
 					imparts.append((p.mountpoint, d))
 		config.imagemanager.backuplocation.setChoices(imparts)
-                config.imagemanager.backuplocation.save()
+		config.imagemanager.backuplocation.save()
 		if config.imagemanager.backuplocation.value.endswith('/'):
 			mount = config.imagemanager.backuplocation.value, config.imagemanager.backuplocation.value[:-1]
 		else:
@@ -274,9 +274,9 @@ class TimerImageManager(Screen):
 		self.session.openWithCallback(self.setupMaxDone, Setup, 'maxbackup', 'Extensions/Infopanel')		
 
 	def setupMaxDone(self, test=None):
-		print "set Max Backupt to:", config.imagemanager.backupmax.value
+		print("set Max Backupt to:", config.imagemanager.backupmax.value)
 		config.imagemanager.backupmax.save()
-                pass
+		pass
 		
 	def setupDone(self, test=None):
 		if config.imagemanager.folderprefix.value == '':
@@ -289,13 +289,13 @@ class TimerImageManager(Screen):
 		now = int(time())
 		if config.imagemanager.schedule.value:
 			if autoImageManagerTimer is not None:
-				print "[ImageManager] Backup Schedule Enabled at", strftime("%c", localtime(now))
+				print("[ImageManager] Backup Schedule Enabled at", strftime("%c", localtime(now)))
 				autoImageManagerTimer.backupupdate()
 		else:
 			if autoImageManagerTimer is not None:
 				global BackupTime
 				BackupTime = 0
-				print "[ImageManager] Backup Schedule Disabled at", strftime("%c", localtime(now))
+				print("[ImageManager] Backup Schedule Disabled at", strftime("%c", localtime(now)))
 				autoImageManagerTimer.backupstop()
 		if BackupTime > 0:
 			t = localtime(BackupTime)
@@ -338,16 +338,16 @@ class AutoImageManagerTimer:
 		now = int(time())
 		global BackupTime
 		if config.imagemanager.schedule.value:
-			print "[ImageManager] Backup Schedule Enabled at ", strftime("%c", localtime(now))
+			print("[ImageManager] Backup Schedule Enabled at ", strftime("%c", localtime(now)))
 			if now > 1262304000:
 				self.backupupdate()
 			else:
-				print "[ImageManager] Backup Time not yet set."
+				print("[ImageManager] Backup Time not yet set.")
 				BackupTime = 0
 				self.backupactivityTimer.start(36000)
 		else:
-                        BackupTime = 0
-			print "[ImageManager] Backup Schedule Disabled at", strftime("(now=%c)", localtime(now))
+			BackupTime = 0
+			print("[ImageManager] Backup Schedule Disabled at", strftime("(now=%c)", localtime(now)))
 			self.backupactivityTimer.stop()
 
 	def backupupdatedelay(self):
@@ -357,10 +357,10 @@ class AutoImageManagerTimer:
 	def getBackupTime(self):
 		backupclock = config.imagemanager.scheduletime.value
 		if not config.imagemanager.lastbackup.value:
-	                now = int(time())
-	                config.imagemanager.lastbackup.value = now
-	                config.imagemanager.lastbackup.save()
-                lastbkup_t = int(config.imagemanager.lastbackup.value)
+			now = int(time())
+			config.imagemanager.lastbackup.value = now
+			config.imagemanager.lastbackup.save()
+		lastbkup_t = int(config.imagemanager.lastbackup.value)
 		if config.imagemanager.repeattype.value == "daily":
 			nextbkup_t = lastbkup_t + 24*3600
 		elif config.imagemanager.repeattype.value == "weekly":
@@ -368,9 +368,9 @@ class AutoImageManagerTimer:
 		elif config.imagemanager.repeattype.value == "monthly":
 			nextbkup_t = lastbkup_t + 30*24*3600
 		elif config.imagemanager.repeattype.value == "daily-":
-			nextbkup_t = lastbkup_t + 600                        		
+			nextbkup_t = lastbkup_t + 600					
 		nextbkup = localtime(nextbkup_t)
-		print "nextbackup:", int(mktime((nextbkup.tm_year, nextbkup.tm_mon, nextbkup.tm_mday, backupclock[0], backupclock[1], 0, nextbkup.tm_wday, nextbkup.tm_yday, nextbkup.tm_isdst)))
+		print("nextbackup:", int(mktime((nextbkup.tm_year, nextbkup.tm_mon, nextbkup.tm_mday, backupclock[0], backupclock[1], 0, nextbkup.tm_wday, nextbkup.tm_yday, nextbkup.tm_isdst))))
 		return int(mktime((nextbkup.tm_year, nextbkup.tm_mon, nextbkup.tm_mday, backupclock[0], backupclock[1], 0, nextbkup.tm_wday, nextbkup.tm_yday, nextbkup.tm_isdst)))
 
 	def backupupdate(self, atLeast=0):
@@ -381,14 +381,14 @@ class AutoImageManagerTimer:
 		if BackupTime > 0:
 			if BackupTime < now + atLeast:
 				self.backuptimer.startLongTimer(60)
-				print "[ImageManager] Backup Time overdue - running in 60s"
+				print("[ImageManager] Backup Time overdue - running in 60s")
 			else:
 				delay = BackupTime - now
 				self.backuptimer.startLongTimer(delay)
 		else:
 			BackupTime = -1
 
-		print "[ImageManager] Backup Time set to", strftime("%c", localtime(BackupTime)), strftime("(now=%c)", localtime(now))
+		print("[ImageManager] Backup Time set to", strftime("%c", localtime(BackupTime)), strftime("(now=%c)", localtime(now)))
 		return BackupTime
 
 	def backupstop(self):
@@ -400,7 +400,7 @@ class AutoImageManagerTimer:
 		wake = self.getBackupTime()
 		atLeast = 0
 		if wake - now < 60:
-			print "[ImageManager] Backup onTimer occured at", strftime("%c", localtime(now))
+			print("[ImageManager] Backup onTimer occured at", strftime("%c", localtime(now)))
 			from Screens.Standby import inStandby
 
 			if not inStandby and config.imagemanager.query.value:
@@ -408,35 +408,35 @@ class AutoImageManagerTimer:
 				ybox = self.session.openWithCallback(self.doBackup, MessageBox, message, MessageBox.TYPE_YESNO, timeout=30)
 				ybox.setTitle('Scheduled Backup.')
 			else:
-				print "[ImageManager] in Standby or no querying, so just running backup", strftime("%c", localtime(now))
+				print("[ImageManager] in Standby or no querying, so just running backup", strftime("%c", localtime(now)))
 				self.doBackup(True)
 		else:
-			print '[ImageManager] Where are not close enough', strftime("%c", localtime(now))
+			print('[ImageManager] Where are not close enough', strftime("%c", localtime(now)))
 			self.backupupdate(60)
 
 	def doBackup(self, answer):
 		now = int(time())
 		if answer is False:
 			if config.imagemanager.backupretrycount.value < 2:
-				print '[ImageManager] Number of retries', config.imagemanager.backupretrycount.value
-				print "[ImageManager] Backup delayed."
+				print('[ImageManager] Number of retries', config.imagemanager.backupretrycount.value)
+				print("[ImageManager] Backup delayed.")
 				repeat = config.imagemanager.backupretrycount.value
 				repeat += 1
 				config.imagemanager.backupretrycount.setValue(repeat)
 				BackupTime = now + (int(config.imagemanager.backupretry.value) * 60)
-				print "[ImageManager] Backup Time now set to", strftime("%c", localtime(BackupTime)), strftime("(now=%c)", localtime(now))
+				print("[ImageManager] Backup Time now set to", strftime("%c", localtime(BackupTime)), strftime("(now=%c)", localtime(now)))
 				self.backuptimer.startLongTimer(int(config.imagemanager.backupretry.value) * 60)
 			else:
 				atLeast = 60
-				print "[ImageManager] Enough Retries, delaying till next schedule.", strftime("%c", localtime(now))
+				print("[ImageManager] Enough Retries, delaying till next schedule.", strftime("%c", localtime(now)))
 				self.session.open(MessageBox, _("Enough Retries, delaying till next schedule."), MessageBox.TYPE_INFO, timeout=10)
 				config.imagemanager.backupretrycount.setValue(0)
 				self.backupupdate(atLeast)
 		else:
-			print "[ImageManager] Running Backup", strftime("%c", localtime(now))
+			print("[ImageManager] Running Backup", strftime("%c", localtime(now)))
 			Timerstarts = True
 			global Timerstarts
-                        ImageBackup(self.session)
+			ImageBackup(self.session)
 			sched = localtime(time())
 			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, 12, 0, 0, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
 			config.imagemanager.lastbackup.value = sched_t
@@ -466,7 +466,7 @@ class ImageBackup(Screen):
 		self.title = _("Image Backup")
 		try:
 			if Timerstarts == True:
-				print "normal start"
+				print("normal start")
 		except:
 			Timerstarts = False
 			global Timerstarts
@@ -475,7 +475,7 @@ class ImageBackup(Screen):
 		self["options"] = StaticText(_(" "))
 		self["key_green"] = StaticText(_("Start"))
 		self["config"] = ChoiceList(list=[ChoiceEntryComponent('', ((_("Retrieving image slots - Please wait...")), "Queued"))])
-                imagedict = []
+		imagedict = []
 		self.getImageList = None
 		self.startit()
 
@@ -508,25 +508,25 @@ class ImageBackup(Screen):
 		list = []
 		mode = GetCurrentImageMode() or 0
 		currentimageslot = GetCurrentImage() or 1
-        	print("[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict))
+		print("[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict))
 		##### hier currentimage abfragen und noch einbauen ob timer oder nicht####
-                if Timerstarts == True:
-                	if imagedict:
+		if Timerstarts == True:
+			if imagedict:
 				for x in sorted(imagedict.keys()):
 					if imagedict[x]["imagename"] != _("Empty slot"):
-                                                if x == currentimageslot:
+						if x == currentimageslot:
 							list.append(ChoiceEntryComponent('', ((_("slot%s - %s - %s (current image)")) % (x, imagedict[x]['part'][0:3], imagedict[x]['imagename']), x, False)))
-			else:           
+			else:	   
 				if SystemInfo["canRecovery"]:
 					list.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
 				list.append(ChoiceEntryComponent('', (_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()), "1", "1", False)))
 			self["config"].setList(list)
 			timerlist =[]
-                	timerlist = list
-                	global timerlist
-                	self.start()
-                else:                        
-                	if imagedict:
+			timerlist = list
+			global timerlist
+			self.start()
+		else:			
+			if imagedict:
 				for x in sorted(imagedict.keys()):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == 1 and currentimageslot == 1 and SystemInfo["canRecovery"]:
@@ -536,29 +536,29 @@ class ImageBackup(Screen):
 				if SystemInfo["canRecovery"]:
 					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
 				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
-               	 	self["config"].setList(list)
+				self["config"].setList(list)
 
 	def start(self):
-                if Timerstarts == True:
-                        self.currentSelected = timerlist[0]
-                else:
-                	self.currentSelected = self["config"].l.getCurrentSelection()
-                title = _("Please select a backup destination")
+		if Timerstarts == True:
+			self.currentSelected = timerlist[0]
+		else:
+			self.currentSelected = self["config"].l.getCurrentSelection()
+		title = _("Please select a backup destination")
 		choices = []
 		retval = []
 		retval1 = []
 		if self.currentSelected[0][1] != "Queued":
-                        for media in ['/media/%s' % x for x in os.listdir('/media')] + (['/media/net/%s' % x for x in os.listdir('/media/net')] if os.path.isdir('/media/net') else []):
+			for media in ['/media/%s' % x for x in os.listdir('/media')] + (['/media/net/%s' % x for x in os.listdir('/media/net')] if os.path.isdir('/media/net') else []):
 				if Harddisk.Freespace(media) > 300000:
 					choices.append((_("Backup to destination: %s") % (media), self.currentSelected[0][1], media, self.currentSelected[0][2]))
 			choices.append((_("No, do not backup a image"), False))
-                        if Timerstarts == True:
-                                 for z in choices:
-                                          if config.imagemanager.backuplocation.value in z:
-                                                   retval1 = list(z)
-                                                   self.doFullBackup(retval1)
-                        else:
-                                 self.session.openWithCallback(self.doFullBackup, ChoiceBox, title=title, list=choices)
+			if Timerstarts == True:
+				for z in choices:
+					if config.imagemanager.backuplocation.value in z:
+						retval1 = list(z)
+						self.doFullBackup(retval1)
+			else:
+				self.session.openWithCallback(self.doFullBackup, ChoiceBox, title=title, list=choices)
 
 	def selectionChanged(self):
 		currentSelected = self["config"].l.getCurrentSelection()
@@ -580,8 +580,8 @@ class ImageBackup(Screen):
 		self.selectionChanged()
 
 	def doFullBackup(self, answer):
-                import os
-                if answer is not None:
+		import os
+		if answer is not None:
 			if answer[1]:
 				self.RECOVERY = answer[3]
 				self.DIRECTORY = "%s/images" %answer[2]
@@ -591,18 +591,18 @@ class ImageBackup(Screen):
 					except:
 						self.session.open(MessageBox, _("Cannot create backup directory"), MessageBox.TYPE_ERROR, timeout=10)
 						return
-                                if config.imagemanager.backupmax.value >0: 
-                                	from glob import glob
-                                	count1 = len(glob(self.DIRECTORY + '/' + getImageDistro() + '-' + getImageVersion() + '-' + GetBoxName() + '-backup*'))
-                                        if count1 >= config.imagemanager.backupmax.value:
+				if config.imagemanager.backupmax.value >0: 
+					from glob import glob
+					count1 = len(glob(self.DIRECTORY + '/' + getImageDistro() + '-' + getImageVersion() + '-' + GetBoxName() + '-backup*'))
+					if count1 >= config.imagemanager.backupmax.value:
 						files = glob(self.DIRECTORY + '/' + getImageDistro() + '-' + getImageVersion() + '-' + GetBoxName() + '-backup*')
-                                                files.sort(key=os.path.getmtime, reverse=True)
+						files.sort(key=os.path.getmtime, reverse=True)
 						for i in range(config.imagemanager.backupmax.value-1, count1):
 							if os.path.isfile(files[i]):
-                                                        	os.remove(files[i])
-                                                        else:
-                                                        	print "file %d is dir", i	
-                                self.SLOT = answer[1]
+								os.remove(files[i])
+							else:
+								print("file %d is dir", i)
+				self.SLOT = answer[1]
 				self.MODEL = GetBoxName()
 				self.OEM = getBrandOEM()
 				self.MACHINEBUILD = getMachineBuild()
@@ -628,25 +628,25 @@ class ImageBackup(Screen):
 				self.getImageList = self.saveImageList
 				if SystemInfo["canMultiBoot"]:
 					slot = GetCurrentImage()
-					self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.SLOT]["kernel"].split('/')[2] 
-					self.MTDROOTFS  = SystemInfo["canMultiBoot"][self.SLOT]["device"].split('/')[2]               
+					self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.SLOT]["kernel"].split('/')[2]
+					self.MTDROOTFS  = SystemInfo["canMultiBoot"][self.SLOT]["device"].split('/')[2]
 					if SystemInfo["HasRootSubdir"]:
 #						self.MTDROOTFS = "%s" %(self.getImageList[self.SLOT]['part'])
 #						try:
-#                                                       if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
+#							if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
 #								
-#                                                                self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
-#                                                        else:
-#                                                                print "self.MTDKERNEL:", self.MTDKERNEL
-#                                                                #self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
-#                                                except:
-#                                                        self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
-#                                        else:
+#								self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
+#							else:
+#								print "self.MTDKERNEL:", self.MTDKERNEL
+#								#self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
+#						except:
+#							self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
+#					else:
 #						try:
-#                                                        self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
+#							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
 #							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel%s" %self.SLOT)[5:]
 #						except:
-#                                                        self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs")[5:]
+#							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs")[5:]
 #							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel")[5:]
 						self.ROOTFSSUBDIR = SystemInfo["canMultiBoot"][self.SLOT]['rootsubdir']
 				else:
@@ -702,7 +702,7 @@ class ImageBackup(Screen):
 				self.message += _("Please be patient, a backup will now be made,\n")
 				self.message += _("because of the used filesystem the back-up\n")
 				self.message += _("will take about 1-15 minutes for this system\n")
-				self.message += "_________________________________________________\n\n"                
+				self.message += "_________________________________________________\n\n"		
 				if self.RECOVERY:
 					self.message += _("Backup Mode: USB Recovery\n")
 				else:
@@ -872,7 +872,7 @@ class ImageBackup(Screen):
 					ROOTFS_IMAGE_SEEK = int(ROOTFS_PARTITION_OFFSET) * int(BLOCK_SECTOR)
 					cmdlist.append('dd if=/dev/%s of=%s seek=%s ' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK ))
 				elif self.EMMCIMG == "emmc.img" and self.RECOVERY:
-                                        EMMC_IMAGE = "%s/%s"% (self.WORKDIR, self.EMMCIMG)
+					EMMC_IMAGE = "%s/%s"% (self.WORKDIR, self.EMMCIMG)
 					BLOCK_SECTOR=2
 					IMAGE_ROOTFS_ALIGNMENT=1024
 					BOOT_PARTITION_SIZE=3072
@@ -918,7 +918,7 @@ class ImageBackup(Screen):
 					ROOTFS_IMAGE_SEEK = int(ROOTFS1_PARTITION_OFFSET) * int(BLOCK_SECTOR)
 					cmdlist.append('dd if=/dev/%s of=%s seek=%s ' % (self.MTDROOTFS, EMMC_IMAGE, ROOTFS_IMAGE_SEEK ))
 				elif self.EMMCIMG == "usb_update.bin" and self.RECOVERY:
-                                        cmdlist.append('echo "' + _("Create: Recovery Fullbackup %s")% (self.EMMCIMG) + '"')
+					cmdlist.append('echo "' + _("Create: Recovery Fullbackup %s")% (self.EMMCIMG) + '"')
 					f = open("%s/emmc_partitions.xml" %self.WORKDIR, "w")
 					f.write('<?xml version="1.0" encoding="GB2312" ?>\n')
 					f.write('<Partition_Info>\n')
@@ -963,10 +963,10 @@ class ImageBackup(Screen):
 #		else:
 #			os.system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
 #		if SystemInfo["canMultiBoot"]:
-#		        if SystemInfo["HasRootSubdir"]:
-#			        os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))		        
-#		        else:
-#			        os.system('mv %s/kernel.bin %s/kernel.bin' %(self.WORKDIR, self.MAINDEST))
+#			if SystemInfo["HasRootSubdir"]:
+#				os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))			
+#			else:
+#				os.system('mv %s/kernel.bin %s/kernel.bin' %(self.WORKDIR, self.MAINDEST))
 #		elif self.MTDKERNEL.startswith('mmcblk0'):
 #			os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))
 #		else:
@@ -994,7 +994,7 @@ class ImageBackup(Screen):
 				if SystemInfo["canMultiBoot"] or self.MTDKERNEL.startswith('mmcblk0'):
 					os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))
 				else:
-					os.system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))        
+					os.system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))	
 		if self.RECOVERY:
 			if self.EMMCIMG == "usb_update.bin":
 				os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.EMMCIMG, self.MAINDESTROOT, self.EMMCIMG))
@@ -1004,7 +1004,7 @@ class ImageBackup(Screen):
 			else:
 				os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.EMMCIMG, self.MAINDEST, self.EMMCIMG))
 			if self.EMMCIMG == "emmc.img":
-				cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)                
+				cmdlist.append('echo "rename this file to "force" to force an update without confirmation" > %s/noforce' %self.MAINDEST)		
 		elif self.MODEL in ("vuultimo4k", "vusolo4k", "vuduo2", "vusolo2", "vusolo", "vuduo", "vuultimo", "vuuno"):
 			cmdlist.append('echo "This file forces a reboot after the update." > %s/reboot.update' %self.MAINDEST)
 		elif self.MODEL in ("vuzero" , "vusolose", "vuuno4k", "vuzero4k"):
@@ -1056,7 +1056,7 @@ class ImageBackup(Screen):
 		if SystemInfo["canRecovery"] and self.RECOVERY:
 			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_recovery_emmc.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 		else:
-                        cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_usb.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
+			cmdlist.append('7za a -r -bt -bd %s/%s-%s-%s-backup-%s_usb.zip %s/*' %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE, self.MAINDESTROOT))
 
 		cmdlist.append("sync")
 		file_found = True
@@ -1077,9 +1077,9 @@ class ImageBackup(Screen):
 			if not os.path.isfile("%s/%s" % (self.MAINDEST, self.KERNELBIN)):
 				print("[Image Backup] %s file not found" %(self.KERNELBIN))
 				file_found = False
-                
+		
 		if SystemInfo["canMultiBoot"] and not self.RECOVERY and not SystemInfo["HasRootSubdir"]:
-                        cmdlist.append('echo "_________________________________________________\n"')
+			cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo "' + _("Multiboot Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			cmdlist.append('echo "_________________________________________________"')
 			cmdlist.append('echo " "')
@@ -1088,11 +1088,11 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "' + _("To restore the image:") + '"')
 			cmdlist.append('echo "' + _("Use OnlineFlash in SoftwareManager") + '"')
 		elif file_found:
-                        cmdlist.append('echo "_________________________________________________\n"')
+			cmdlist.append('echo "_________________________________________________\n"')
 			if SystemInfo["canRecovery"] and self.RECOVERY:
-                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery_emmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_recovery_emmc.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			else:
-                                cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
+				cmdlist.append('echo "' + _("Image created on: %s/%s-%s-%s-backup-%s_usb.zip") %(self.DIRECTORY, self.IMAGEDISTRO, self.DISTROVERSION, self.MODEL, self.DATE) + '"')
 			cmdlist.append('echo "_________________________________________________"')
 			cmdlist.append('echo " "')
 			cmdlist.append('echo "' + _("Please wait...almost ready! ") + '"')
@@ -1101,7 +1101,7 @@ class ImageBackup(Screen):
 			cmdlist.append('echo "' + _("Please check the manual of the receiver") + '"')
 			cmdlist.append('echo "' + _("on how to restore the image") + '"')
 		else:
-                        cmdlist.append('echo "_________________________________________________\n"')
+			cmdlist.append('echo "_________________________________________________\n"')
 			cmdlist.append('echo "' + _("Image creation failed - ") + '"')
 			cmdlist.append('echo "' + _("Probable causes could be") + ':"')
 			cmdlist.append('echo "' + _("     wrong back-up destination ") + '"')
