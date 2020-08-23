@@ -48,10 +48,10 @@ class MenuWeights:
 
 	def load(self):
 		if not fileExists(XML_CONFIG):
-		        if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/menusort.xml"):
-                                os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/MenuSort/menusort.xml /etc/enigma2/menusort.xml") 
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/menusort.xml"):
+				os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/MenuSort/menusort.xml /etc/enigma2/menusort.xml") 
 			else:
-			        return
+				return
 
 		try:
 			config = cet_parse(XML_CONFIG).getroot()
