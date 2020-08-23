@@ -23,9 +23,9 @@ def PartitionEntry(description, size):
 
 class HddPartitions(Screen):
 	skin = """
-                   <screen name="HddPartitions" position="center,115" size="900,530" title="HddPartitions" flags="wfBorder">
-                        <widget source="menu" render="Listbox" position="10,47" size="880,410" scrollbarMode="showOnDemand" transparent="1">
-                        <convert type="TemplatedMultiContent">
+		<screen name="HddPartitions" position="center,115" size="900,530" title="HddPartitions" flags="wfBorder">
+			<widget source="menu" render="Listbox" position="10,47" size="880,410" scrollbarMode="showOnDemand" transparent="1">
+			<convert type="TemplatedMultiContent">
 				{"template": [
 					MultiContentEntryPixmapAlphaTest(pos = (5, 7), size = (48, 48), png = 0),
 					MultiContentEntryText(pos = (70, 1), size = (630, 38), font=0, flags = RT_HALIGN_LEFT|RT_VALIGN_TOP, text = 1),
@@ -35,17 +35,17 @@ class HddPartitions(Screen):
 					"itemHeight": 50
 				}
 			</convert>
-                       </widget>
-                      <widget name="label_disk" position="10,11" font="Regular;26" halign="center" size="880,26" transparent="1" backgroundColor="red" foregroundColor="red" />
-                       <ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
-                       <ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
-                       <ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
-                       <ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
-                       <widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
-                        <widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
-                       <widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                      <widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
-                     </screen>"""
+			</widget>
+			<widget name="label_disk" position="10,11" font="Regular;26" halign="center" size="880,26" transparent="1" backgroundColor="red" foregroundColor="red" />
+			<ePixmap position="10,497" size="35,27" pixmap="skin_default/buttons/red.png" alphatest="blend" />
+			<ePixmap position="230,497" size="35,27" pixmap="skin_default/buttons/green.png" alphatest="blend" />
+			<ePixmap position="464,497" size="35,27" pixmap="skin_default/buttons/yellow.png" alphatest="blend" />
+			<ePixmap position="695,497" size="35,27" pixmap="skin_default/buttons/blue.png" alphatest="blend" />
+			<widget name="key_red" position="48,498" zPosition="2" size="150,22" valign="center" halign="center" font="Regular; 20" transparent="1" shadowColor="black" shadowOffset="-1,-1" />
+			<widget name="key_green" position="273,499" zPosition="2" size="150,22" valign="center" halign="center" font="Regular;21" transparent="1" shadowColor="black" shadowOffset="-1,-1" backgroundColor="foreground" />
+			<widget name="key_yellow" position="508,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			<widget name="key_blue" position="736,499" zPosition="3" size="150,22" valign="center" halign="center" font="Regular; 21" transparent="1" backgroundColor="foreground" />
+			</screen>"""
 
 	def __init__(self, session, disk):
 		self.session = session
@@ -70,17 +70,17 @@ class HddPartitions(Screen):
 			"cancel": self.quit,
 		}, -2)
 		if len(self.disk[5]) > 0:
-		        print "self.disk[5]:", self.disk[5]
-                        print "self.disk[5][0][3]:", self.disk[5][0][3]
+			print ("self.disk[5]:", self.disk[5])
+			print ("self.disk[5][0][3]:", self.disk[5][0][3])
 			if self.disk[5][0][3] == "83" or self.disk[5][0][3] == "7" or self.disk[5][0][3] == "b":
 				self["key_green"].setText(_("Check"))
 				self["key_yellow"].setText(_("Format"))
 				mp = self.mountpoints.get(self.disk[0], 1)
-				print "self.disk[0]:", self.disk[0]
+				print ("self.disk[0]:", self.disk[0])
 				rmp = self.mountpoints.getRealMount(self.disk[0], 1)
-				print "mp:", mp
-				print "rmp:", rmp				
-				print "self.disk:", self.disk				
+				print ("mp:", mp)
+				print ("rmp:", rmp)
+				print ("self.disk:", self.disk)
 				if len(mp) > 0 or len(rmp) > 0:
 					self.mounted = True
 					self["key_red"].setText(_("Umount"))
@@ -120,13 +120,13 @@ class HddPartitions(Screen):
 			
 	def mkfs(self):
 		disks = Disks()
-	        if "mmcblk1" in (self.disk[0]):
-	        	ret = disks.mkfs(self.disk[5][self.index][0][:7], self.index+1, self.fstype)
-	        	print "ret1", ret
-	        else:
+		if "mmcblk1" in (self.disk[0]):
+			ret = disks.mkfs(self.disk[5][self.index][0][:7], self.index+1, self.fstype)
+			print ("ret1", ret)
+		else:
 			ret = disks.mkfs(self.disk[5][self.index][0][:3], self.index+1, self.fstype)
-			print "ret2", ret
-                if ret == 0:
+			print ("ret2", ret)
+		if ret == 0:
 			self.session.open(MessageBox, _("Format terminated with success"), MessageBox.TYPE_INFO)
 		elif ret == -2:
 			self.session.open(MessageBox, _("Cannot format current drive.\nA record in progress, timeshit or some external tools (like samba and nfsd) may cause this problem.\nPlease stop this actions/applications and try again"), MessageBox.TYPE_ERROR)
@@ -137,8 +137,8 @@ class HddPartitions(Screen):
 		return "ext4" in open("/proc/filesystems").read()
 	
 	def domkfs(self, result):
-		print "self.disk:", self.disk
-                if self.disk[5][self.index][3] == "83":
+		print ("self.disk:", self.disk)
+		if self.disk[5][self.index][3] == "83":
 			if self.isExt4Supported():
 				if result < 2:
 					self.fstype = result
@@ -240,7 +240,7 @@ class HddPartitions(Screen):
 					self.mountpoints.umount(rmp)
 				self.refreshMP()
 			else:
-                                self.session.openWithCallback(self.refreshMP, HddMount, self.disk[0], self.sindex+1)
+				self.session.openWithCallback(self.refreshMP, HddMount, self.disk[0], self.sindex+1)
 		
 	def quit(self):
 		self.close()
