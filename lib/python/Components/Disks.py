@@ -48,13 +48,13 @@ class Disks():
 										self.getVendor(res[3]),
 										[ ] ])
 				if len(res[3]) == 7 and res[3][:7] == "mmcblk1":
-					print "res[3]:", res[3]
-                                        self.disks.append([ res[3],
+					print ("res[3]:", res[3])
+					self.disks.append([ res[3],
 										int(res[2]) * 1024,
 										self.isRemovable(res[3][:7]),
 										self.getModel(res[3]),
 										self.getVendor(res[3]),
-										[ ] ])										
+										[ ] ])
 
 	def readPartitions(self):
 		partitions = open("/proc/partitions")
@@ -75,31 +75,31 @@ class Disks():
 		if removable == "1":
 			return True
 		elif "mmcblk1" in device:
-			return True		
+			return True
 		return False
 		
 	# in this case device is full device with slice number... for example sda1
 	def getTypeName(self, device):
 		if "mmcblk1" in device:
-                        res = "Linux"
+			res = "Linux"
 		else:
-                        cmd = "/usr/sbin/sfdisk -c /dev/%s %s --force" % (device[:3], device[3:])
-		        fdisk = os.popen(cmd, "r")
-		        res = fdisk.read().strip()
-		        fdisk.close()
+			cmd = "/usr/sbin/sfdisk -c /dev/%s %s --force" % (device[:3], device[3:])
+			fdisk = os.popen(cmd, "r")
+			res = fdisk.read().strip()
+			fdisk.close()
 		if res in self.ptypes.keys():
 			return self.ptypes[res]
-                return res
+		return res
 		
 	def getType(self, device):
 		if "mmcblk1" in device:
-                        res = "83"
+			res = "83"
 		else:
-                        cmd = "/usr/sbin/sfdisk -c /dev/%s %s --force" % (device[:3], device[3:])
-		        fdisk = os.popen(cmd, "r")
-		        res = fdisk.read().strip()
-		        fdisk.close()
-                return res
+			cmd = "/usr/sbin/sfdisk -c /dev/%s %s --force" % (device[:3], device[3:])
+			fdisk = os.popen(cmd, "r")
+			res = fdisk.read().strip()
+			fdisk.close()
+		return res
 	
 	def getModel(self, device):
 		try:
@@ -115,7 +115,7 @@ class Disks():
 			
 	def isMounted(self, device):
 		mounts = open("/proc/mounts")
-                for mount in mounts:
+		for mount in mounts:
 			res = mount.split(" ")
 			if res and len(res) > 1:
 				if res[0][:8] == "/dev/%s" % device:
@@ -125,10 +125,10 @@ class Disks():
 		return False
 		
 	def isMountedP(self, device, partition):
-                if "mmcblk1" in device:
-                	device1 = device + "p"
-                else:
-                	device1 = device 	
+		if "mmcblk1" in device:
+			device1 = device + "p"
+		else:
+			device1 = device
 		mounts = open("/proc/mounts")
 		for mount in mounts:
 			res = mount.split(" ")
@@ -140,10 +140,10 @@ class Disks():
 		return False
 	
 	def getMountedP(self, device, partition):
-                if "mmcblk1" in device:
-                	device1 = device + "p"
-                else:
-                	device1 = device 	
+		if "mmcblk1" in device:
+			device1 = device + "p"
+		else:
+			device1 = device 
 		mounts = open("/proc/mounts")
 		for mount in mounts:
 			res = mount.split(" ")
@@ -160,7 +160,7 @@ class Disks():
 			res = mount.split(" ")
 			if res and len(res) > 1:
 				if res[0][:8] == "/dev/%s" % device:
-					print "umount %s" % res[0]
+					print ("umount %s" % res[0])
 					if os.system("umount %s" % res[0]) != 0:
 						mounts.close()
 						return False
@@ -168,20 +168,20 @@ class Disks():
 		return True
 		
 	def umountP(self, device, partition):
-                if "mmcblk1" in device:
-                	device1 = device + "p"
-                else:
-                	device1 = device 	
+		if "mmcblk1" in device:
+			device1 = device + "p"
+		else:
+			device1 = device
 		if os.system("umount /dev/%s%d" % (device1, partition)) != 0:
 			return False
 			
 		return True
 			
 	def mountP(self, device, partition, path):
-                if "mmcblk1" in device:
-                	device1 = device + "p"
-                else:
-                	device1 = device 	
+		if "mmcblk1" in device:
+			device1 = device + "p"
+		else:
+			device1 = device
 		if os.system("mount /dev/%s%d %s" % (device1, partition, path)) != 0:
 			return False
 		return True
@@ -203,11 +203,11 @@ class Disks():
 	# -1 -> umount failed
 	# -2 -> sfdisk failed
 	def fdisk(self, device, size, type, fstype=0):
-		print "partitioning device %s" % device
+		print ("partitioning device %s" % device)
 		if self.isMounted(device):
-			print "device is mounted... umount"
+			print ("device is mounted... umount")
 			if not self.umount(device):
-				print "umount failed!"
+				print ("umount failed!")
 				return -1
 			
 		if fstype == 0 or fstype == 1:
@@ -248,12 +248,12 @@ class Disks():
 	# -2 -> sfdisk failed
 	def chkfs(self, device, partition, fstype=0):
 		fdevice = "%s%d" % (device, partition)
-		print "checking device %s" % fdevice
+		print ("checking device %s" % fdevice)
 		if self.isMountedP(device, partition):
 			oldmp = self.getMountedP(device, partition)
-			print "partition is mounted... umount"
+			print ("partition is mounted... umount")
 			if not self.umountP(device, partition):
-				print "umount failed!"
+				print ("umount failed!")
 				return -1
 		else:
 			oldmp = ""
@@ -278,14 +278,14 @@ class Disks():
 		return -2;
 		
 	def mkfs(self, device, partition, fstype=0):
-                if "mmcblk1" in device:
-                	device1 = device + "p"
-                else:
-                	device1 = device                	
-                dev = "%s%d" % (device1, partition)
+		if "mmcblk1" in device:
+			device1 = device + "p"
+		else:
+			device1 = device
+		dev = "%s%d" % (device1, partition)
 		size = 0
-		print "devmkfs:", dev
-                partitions = open("/proc/partitions")
+		print ("devmkfs:", dev)
+		partitions = open("/proc/partitions")
 		for part in partitions:
 			res = re.sub("\s+", " ", part).strip().split(" ")
 			if res and len(res) == 4:
@@ -297,11 +297,11 @@ class Disks():
 			return -1
 			
 		if self.isMountedP(device, partition):
-			print 
-                        oldmp = self.getMountedP(device, partition)
-			print "partition is mounted... umount"
+			print
+			oldmp = self.getMountedP(device, partition)
+			print ("partition is mounted... umount")
 			if not self.umountP(device, partition):
-				print "umount failed!"
+				print ("umount failed!")
 				return -2
 		else:
 			oldmp = ""
