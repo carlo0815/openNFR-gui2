@@ -179,7 +179,7 @@ class cEditor(Screen):
 		li = i - 1
 		lr = i + 2
 		#for x in self.list[li:lr]:
-		#	self.isChanged = True
+		#	 self.isChanged = True
 		del self.list[i]
 		self.selLine = None
 		self.session.open(MessageBox, _("Select Line is deleted!"), MessageBox.TYPE_INFO, timeout=3)

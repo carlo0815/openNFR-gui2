@@ -15,7 +15,7 @@ from enigma import eTimer
 from time import sleep
 from os import path
 import os
-from Plugins.Extensions.Infopanel.Softcam import Softcam
+from Plugins.Extensions.Infopanel.Softcam import *
 import shutil
 from six.moves.urllib.request import urlopen
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -95,7 +95,7 @@ class NFRCamManager(Screen):
 					spath = line.rstrip()
 				fobj.close()
 				testfile = spath + "use_softcam"
-				if os.path.exists(spath) and os.path.isfile(testfile):         
+				if os.path.exists(spath) and os.path.isfile(testfile):
 					epath = spath + "emu/"	
 					uemus=[]
 					uemus = os.listdir(epath)

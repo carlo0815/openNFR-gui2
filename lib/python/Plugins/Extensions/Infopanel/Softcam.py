@@ -11,7 +11,7 @@ def getcamcmd(cam):
 	xcamname = cam
 	if "gbox" in camname:
 		files=os.listdir("/lib")
- 		for filename in files:
+		for filename in files:
 			if filename.startswith('ld-2'):
 				ldcheck=filename
 				symcheck = "/lib/ld-linux.so.3"
@@ -59,8 +59,8 @@ def getcamcmd(cam):
 				cam_name = xcamname.strip(".x")
 				cam_scripts = "/etc/init.d/softcam." + cam_name
 				if cam_name == "oscam_oscamupdater":
-				        cam_name1 = cam_name[6:]
-				        cam_scripts = "/etc/init.d/softcam." + cam_name1
+					cam_name1 = cam_name[6:]
+					cam_scripts = "/etc/init.d/softcam." + cam_name1
 				if fAdd == cam_scripts:
 					cam_starts = cam_scripts + " start"
 					return cam_starts
@@ -109,7 +109,7 @@ def getcamcmd(cam):
 		elif "gbox" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " " + \
 				config.NFRSoftcam.camconfig.value + "/gbox.cfg"	
- 		elif "scam" in camname and not "oscam" in camname:
+		elif "scam" in camname and not "oscam" in camname:
 			return config.NFRSoftcam.camdir.value + "/" + cam + " -s " + \
 				config.NFRSoftcam.camconfig.value + "/"
 		else:
