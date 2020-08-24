@@ -115,7 +115,7 @@ from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 from Plugins.Extensions.Infopanel.SpinnerSelector import SpinnerSelector
 from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 from Components.ProgressBar import ProgressBar
-from urllib import urlopen
+from six.moves.urllib.request import urlopen
 import socket
 
 
