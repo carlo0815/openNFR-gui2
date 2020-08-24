@@ -38,13 +38,13 @@ from Screens.VirtualKeyBoard import VirtualKeyBoard
 class TelnetCommand(Screen, ConfigListScreen):
 	skin = """
 <screen name="TelnetCommand" position="center,center" size="820,180" title="TelnetCommand">
-  <ePixmap pixmap="skin_default/buttons/key_red.png" position="9,128" size="30,30" alphatest="blend" />
-  <ePixmap pixmap="skin_default/buttons/key_green.png" position="239,128" size="30,30" alphatest="blend" />
-  <ePixmap pixmap="skin_default/buttons/key_blue.png" position="477,128" size="30,30" alphatest="blend" />
-  <widget name="key_red" render="Label" position="43,131" size="160,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-  <widget name="key_green" render="Label" position="276,131" size="160,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-  <widget name="key_blue" render="Label" position="517,131" size="250,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
-  <widget name="config" position="6,10" size="800,100" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
+	<ePixmap pixmap="skin_default/buttons/key_red.png" position="9,128" size="30,30" alphatest="blend" />
+	<ePixmap pixmap="skin_default/buttons/key_green.png" position="239,128" size="30,30" alphatest="blend" />
+	<ePixmap pixmap="skin_default/buttons/key_blue.png" position="477,128" size="30,30" alphatest="blend" />
+	<widget name="key_red" render="Label" position="43,131" size="160,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+	<widget name="key_green" render="Label" position="276,131" size="160,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+	<widget name="key_blue" render="Label" position="517,131" size="250,25" zPosition="1" font="Regular;22" halign="left" backgroundColor="black" transparent="1" />
+	<widget name="config" position="6,10" size="800,100" zPosition="1" scrollbarMode="showOnDemand" transparent="1" />
 </screen>"""
 
 	def __init__(self, session):
