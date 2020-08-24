@@ -256,22 +256,22 @@ class FileList(MenuList):
 			random.shuffle(date_file_list)
 		for x in date_file_list:
 			if sort == "size" or sort == "sizereverse":
-				size = x[0]				
+				size = x[0]
 				name = x[1]
 				path = x[2]
 				file = x[3] 
-				timestamp = x[4]				
+				timestamp = x[4]
 				isDir = x[5]
-			elif sort == "date" or sort == "datereverse" or sort == "default":		
-				timestamp = x[0]					
+			elif sort == "date" or sort == "datereverse" or sort == "default":
+				timestamp = x[0]
 				name = x[1]
 				path = x[2]
 				file = x[3] 
 				size = x[4]
-				isDir = x[5]			
+				isDir = x[5]
 			elif sort == "alpha" or sort == "alphareverse":
 				name = x[0]
-				timestamp = x[1]					
+				timestamp = x[1]
 				path = x[2]
 				file = x[3] 
 				size = x[4]

@@ -11,16 +11,16 @@ from Plugins.SystemPlugins.Hotplug.plugin import hotplugNotifier
 class DVDToolbox(Screen):
 	skin = """
 		<screen name="DVDToolbox" position="center,center"  size="560,445" title="DVD media toolbox" >
-		    <ePixmap pixmap="buttons/red.png" position="0,0" size="140,40" alphatest="on" />
-		    <ePixmap pixmap="buttons/green.png" position="140,0" size="140,40" alphatest="on" />
-		    <ePixmap pixmap="buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
-		    <widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
-		    <widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
-		    <widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
-		    <widget source="info" render="Label" position="20,60" size="520,100" font="Regular;20" />
-		    <widget name="details" position="20,200" size="520,200" font="Regular;16" />
-		    <widget source="space_bar" render="Progress" position="10,410" size="540,26" borderWidth="1" backgroundColor="#254f7497" />
-		    <widget source="space_label" render="Label" position="20,414" size="520,22" zPosition="2" font="Regular;18" halign="center" transparent="1" foregroundColor="#000000" />
+			<ePixmap pixmap="buttons/red.png" position="0,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/green.png" position="140,0" size="140,40" alphatest="on" />
+			<ePixmap pixmap="buttons/yellow.png" position="280,0" size="140,40" alphatest="on" />
+			<widget source="key_red" render="Label" position="0,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
+			<widget source="key_green" render="Label" position="140,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
+			<widget source="key_yellow" render="Label" position="280,0" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+			<widget source="info" render="Label" position="20,60" size="520,100" font="Regular;20" />
+			<widget name="details" position="20,200" size="520,200" font="Regular;16" />
+			<widget source="space_bar" render="Progress" position="10,410" size="540,26" borderWidth="1" backgroundColor="#254f7497" />
+			<widget source="space_label" render="Label" position="20,414" size="520,22" zPosition="2" font="Regular;18" halign="center" transparent="1" foregroundColor="#000000" />
 		</screen>"""
 
 	def __init__(self, session):
@@ -40,12 +40,12 @@ class DVDToolbox(Screen):
 
 		self["toolboxactions"] = ActionMap(["ColorActions", "DVDToolbox", "OkCancelActions"],
 		{
-		    "red": self.exit,
-		    "green": self.update,
-		    "yellow": self.format,
-		    "cancel": self.exit,
-		    "pageUp": self.pageUp,
-		    "pageDown": self.pageDown
+			"red": self.exit,
+			"green": self.update,
+			"yellow": self.format,
+			"cancel": self.exit,
+			"pageUp": self.pageUp,
+			"pageDown": self.pageDown
 		})
 		self.update()
 		hotplugNotifier.append(self.update)
@@ -94,13 +94,13 @@ class DVDToolbox(Screen):
 					self.formattable = False
 			elif line.find("Legacy lead-out at:") > -1:
 				used = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] lead out used =", used
+				print ("[dvd+rw-mediainfo] lead out used =", used)
 			elif line.find("formatted:") > -1:
 				formatted_capacity = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] formatted capacity =", formatted_capacity
+				print ("[dvd+rw-mediainfo] formatted capacity =", formatted_capacity)
 			elif formatted_capacity == 0 and line.find("READ CAPACITY:") > -1:
 				read_capacity = int(line.rsplit('=',1)[1]) / 1048576.0
-				print "[dvd+rw-mediainfo] READ CAPACITY =", read_capacity
+				print ("[dvd+rw-mediainfo] READ CAPACITY =", read_capacity)
 		for line in mediuminfo.splitlines():
 			if line.find("Free Blocks:") > -1:
 				try:
@@ -111,14 +111,14 @@ class DVDToolbox(Screen):
 					capacity = size / 1048576
 					if used:
 						used = capacity-used
-					print "[dvd+rw-mediainfo] free blocks capacity=%d, used=%d" % (capacity, used)
+					print ("[dvd+rw-mediainfo] free blocks capacity=%d, used=%d" % (capacity, used))
 			elif line.find("Disc status:") > -1:
 				if line.find("blank") > -1:
-					print "[dvd+rw-mediainfo] Disc status blank capacity=%d, used=0" % capacity
+					print ("[dvd+rw-mediainfo] Disc status blank capacity=%d, used=0" % capacity)
 					capacity = used
 					used = 0
 				elif line.find("complete") > -1 and formatted_capacity == 0:
-					print "[dvd+rw-mediainfo] Disc status complete capacity=0, used=%d" % capacity
+					print ("[dvd+rw-mediainfo] Disc status complete capacity=0, used=%d" % capacity)
 					used = read_capacity
 					capacity = 1
 				else:
@@ -206,7 +206,7 @@ class DVDformatTask(Task):
 			self.error = self.ERROR_NOTWRITEABLE
 
 	def processOutput(self, data):
-		print "[DVDformatTask processOutput]  ", data
+		print ("[DVDformatTask processOutput]  ", data)
 		if data.endswith('%'):
 			data= data.replace('\x08','')
 			self.progress = int(float(data[:-1])*10)

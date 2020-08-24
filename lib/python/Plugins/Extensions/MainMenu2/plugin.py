@@ -66,10 +66,10 @@ class MM_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-              
+
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 5:
 			self["menu"].setIndex(1)
@@ -143,10 +143,10 @@ class Infopanel_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-                
+
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 3:
 			self["menu"].setIndex(1)
@@ -208,10 +208,10 @@ class ImageManager_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-                
+
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 3:
 			self["menu"].setIndex(1)
@@ -245,7 +245,7 @@ class ImageManager_MainMenu(Screen):
 		self.session.open(MessageBox,("UNEXPECTED ERROR:\n%s") % (error),  MessageBox.TYPE_INFO)
 	def Exit(self):
 		self.close()
-                
+
 class RemoteManager_MainMenu(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -274,10 +274,10 @@ class RemoteManager_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-                
+
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 4:
 			self["menu"].setIndex(1)
@@ -316,7 +316,7 @@ class RemoteManager_MainMenu(Screen):
 		from Screens.MessageBox import MessageBox
 		self.session.open(MessageBox,("UNEXPECTED ERROR:\n%s") % (error),  MessageBox.TYPE_INFO)
 	def Exit(self):
-		self.close()                		
+		self.close()
 		
 class Setup_MainMenu(Screen):
 	def __init__(self, session):
@@ -345,10 +345,10 @@ class Setup_MainMenu(Screen):
 			"up": self.prev,
 			"left": self.prev
 		}, -1)
-                
+
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 3:
 			self["menu"].setIndex(1)
@@ -447,7 +447,7 @@ class ChannelSearch_MainMenu(Screen):
 		self.session.open(MessageBox,("UNEXPECTED ERROR:\n%s") % (error),  MessageBox.TYPE_INFO)
 	def Exit(self):
 		self.close()
-                
+
 class System_MainMenu(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
@@ -478,7 +478,7 @@ class System_MainMenu(Screen):
                 
 	def next(self):
 		if self["menu"].getIndex() == 0:
-			self["menu"].setIndex(1)	
+			self["menu"].setIndex(1)
 		self["menu"].selectNext()
 		if self["menu"].getIndex() == 3:
 			self["menu"].setIndex(1)
@@ -514,7 +514,7 @@ class System_MainMenu(Screen):
 		self.close()    
 
 def sessionMainM(session, reason, **kwargs):
-        print("EasyMenu Load")
+	print("EasyMenu Load")
 
 
 def Plugins(**kwargs):

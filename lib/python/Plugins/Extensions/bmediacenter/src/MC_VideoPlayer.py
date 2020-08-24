@@ -61,7 +61,7 @@ class MC_VideoPlayer(Screen, HelpableScreen):
 				"red": (self.SelDelete, "Delete Movie"),
 				"blue": (self.KeySettings, "Settings"),
 			}, -2)
-                global currDir
+		global currDir
 		currDir = config.plugins.mc_vp.lastDir.value
 		if not pathExists(currDir):
 			currDir = "/"
@@ -118,22 +118,22 @@ class MC_VideoPlayer(Screen, HelpableScreen):
 
 	def selremove(self, ret):
 		if ret is True:
-		        self.filename = self.filelist.getFilename()
-		        if self.filename.endswith('.ts'):
-		                path = self.filename.replace('.ts', "")
-		                for fdelete in glob(path + ".*"):
-		                        os.remove (fdelete)
-		        elif self.filename.endswith('.vob'):
-		                path = self.filename.replace('.vob', "")
-		                print "path:", path
-		                for fdelete in glob(path + ".*"):
-		                        print "fdelete:", fdelete
-		                        os.remove (fdelete)	                        
-		        else:
-                                path = self.filename
-			        os.remove(path)
-                        self.updd()
-                        
+			self.filename = self.filelist.getFilename()
+			if self.filename.endswith('.ts'):
+				path = self.filename.replace('.ts', "")
+				for fdelete in glob(path + ".*"):
+					os.remove (fdelete)
+			elif self.filename.endswith('.vob'):
+				path = self.filename.replace('.vob', "")
+				print ("path:", path)
+				for fdelete in glob(path + ".*"):
+					print ("fdelete:", fdelete)
+					os.remove (fdelete)
+			else:
+				path = self.filename
+				os.remove(path)
+			self.updd()
+
 		else:
 			pass
 		
@@ -146,7 +146,7 @@ class MC_VideoPlayer(Screen, HelpableScreen):
 			self.session.open(MC_VideoInfoView, self["filelist"].getCurrentDirectory() + self["filelist"].getFilename() , self["filelist"].getFilename(), self["filelist"].getServiceRef())
 	def KeyOk(self):
 		self.filename = self.filelist.getFilename()
-		print self.filename
+		print (self.filename)
 		try:
 			if self.filename.endswith('.img') or self.filename.endswith('.iso') or self.filename.endswith('VIDEO_TS/') and config.plugins.mc_vp.dvd.value == "dvd":
 				self.showiframe.finishStillPicture()
@@ -157,8 +157,8 @@ class MC_VideoPlayer(Screen, HelpableScreen):
 					path = self.filename
 				self.session.open(DVD.DVDPlayer, dvd_filelist=[path])
 				return
-		except Exception, e:
-			print "DVD Player error:", e
+		except Exception as e:
+			print ("DVD Player error:", e)
 		if self.filelist.canDescent():
 			self.filelist.descent()
 		else:

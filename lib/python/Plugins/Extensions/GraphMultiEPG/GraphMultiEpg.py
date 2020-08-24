@@ -1,5 +1,5 @@
 from __future__ import division
-+from __future__ import print_function
+from __future__ import print_function
 from skin import parseColor, parseFont, parseSize
 from Components.config import config, ConfigClock, ConfigInteger, ConfigSubsection, ConfigYesNo, ConfigSelection, ConfigSelectionNumber
 from Components.Pixmap import Pixmap

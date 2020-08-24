@@ -16,15 +16,15 @@ config.plugins.um_globalsettings.Mediacenter = ConfigYesNo(default=False)
 config.plugins.um_globalsettings.Weather = ConfigYesNo(default=False)
 
 def localeInit():
-    lang = language.getLanguage()[:2]
-    os.environ['LANGUAGE'] = lang
-    gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
+	lang = language.getLanguage()[:2]
+	os.environ['LANGUAGE'] = lang
+	gettext.bindtextdomain(PluginLanguageDomain, resolveFilename(SCOPE_PLUGINS, PluginLanguagePath))
 
 def _(txt):
-    t = gettext.dgettext(PluginLanguageDomain, txt)
-    if t == txt:
-        t = gettext.gettext(txt)
-    return t
+	t = gettext.dgettext(PluginLanguageDomain, txt)
+	if t == txt:
+		t = gettext.gettext(txt)
+	return t
 
 localeInit()
 language.addCallback(localeInit)

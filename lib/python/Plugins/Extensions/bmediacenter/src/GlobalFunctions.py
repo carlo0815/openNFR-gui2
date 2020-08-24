@@ -59,7 +59,7 @@ class Showiframe():
 		try:
 			self.showSinglePic = dlsym(self.showiframe, "showSinglePic")
 			self.finishShowSinglePic = dlsym(self.showiframe, "finishShowSinglePic")
-		except OSError, e: 
+		except OSError as e: 
 			self.showSinglePic = dlsym(self.showiframe, "_Z13showSinglePicPKc")
 			self.finishShowSinglePic = dlsym(self.showiframe, "_Z19finishShowSinglePicv")
 	def showStillpicture(self, pic):

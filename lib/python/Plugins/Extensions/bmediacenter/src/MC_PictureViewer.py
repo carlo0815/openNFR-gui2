@@ -494,7 +494,7 @@ class MC_PicView(Screen, InfoBarBase, InfoBarSeek, InfoBarNotifications, Helpabl
 			self.index = self.maxentry
 
 	def slidePic(self):
-		print "slide to next Picture index=" + str(self.lastindex)
+		print ("slide to next Picture index=" + str(self.lastindex))
 		if config.plugins.mc_pp.loop.value==False and self.lastindex == self.maxentry:
 			self.PlayPause()
 		self.shownow = True

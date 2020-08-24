@@ -503,7 +503,7 @@ class WeatherPluginEntryConfigScreen(ConfigListScreen, Screen):
 			self.session.openWithCallback(self.searchCallback, MSNWeatherPluginSearch, xmlstring)
 	def error(self, error = None):
 		if error is not None:
-			print error
+			print (error)
 	def searchCallback(self, result):
 		if result:
 			self.current.weatherlocationcode.value = result[0]

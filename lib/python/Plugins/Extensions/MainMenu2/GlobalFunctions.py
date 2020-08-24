@@ -20,19 +20,19 @@ from os import path as os_path
 
 class Showiframe:
 
-    def __init__(self):
-        lib = '/usr/lib/'
-        if fileExists(lib + 'libshowiframe.so.0.0.0'):
-            self.showiframe = dlopen(lib + 'libshowiframe.so.0.0.0')
-        try:
-            self.showSinglePic = dlsym(self.showiframe, 'showSinglePic')
-            self.finishShowSinglePic = dlsym(self.showiframe, 'finishShowSinglePic')
-        except OSError as e:
-            self.showSinglePic = dlsym(self.showiframe, '_Z13showSinglePicPKc')
-            self.finishShowSinglePic = dlsym(self.showiframe, '_Z19finishShowSinglePicv')
+	def __init__(self):
+		lib = '/usr/lib/'
+		if fileExists(lib + 'libshowiframe.so.0.0.0'):
+			self.showiframe = dlopen(lib + 'libshowiframe.so.0.0.0')
+		try:
+			self.showSinglePic = dlsym(self.showiframe, 'showSinglePic')
+			self.finishShowSinglePic = dlsym(self.showiframe, 'finishShowSinglePic')
+		except OSError as e:
+			self.showSinglePic = dlsym(self.showiframe, '_Z13showSinglePicPKc')
+			self.finishShowSinglePic = dlsym(self.showiframe, '_Z19finishShowSinglePicv')
 
-    def showStillpicture(self, pic):
-        call_function(self.showSinglePic, (pic,))
+	def showStillpicture(self, pic):
+		call_function(self.showSinglePic, (pic,))
 
-    def finishStillPicture(self):
-        call_function(self.finishShowSinglePic, ())
+	def finishStillPicture(self):
+		call_function(self.finishShowSinglePic, ())

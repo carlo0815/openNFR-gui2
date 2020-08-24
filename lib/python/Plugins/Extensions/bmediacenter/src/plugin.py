@@ -34,8 +34,8 @@ try:
 	from Plugins.Extensions.DVDPlayer.plugin import *
 	dvdplayer = True
 except:
-	print "Media Center: Import DVDPlayer failed"
-        dvdplayer = False
+	print ("Media Center: Import DVDPlayer failed")
+	dvdplayer = False
 
 mcpath = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/skins/defaultHD/images/'
 class DMC_MainMenu(Screen):
@@ -147,27 +147,27 @@ class DMC_MainMenu(Screen):
 		self.session.open(TryQuitMainloop, 3)
 
 	def InstallCheckDVD(self):
-	        self.service_name = 'enigma2-plugin-extensions-dvdplayer'
+		self.service_name = 'enigma2-plugin-extensions-dvdplayer'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def InstallCheckVLC(self):
-	        self.service_name = 'enigma2-plugin-extensions-vlcplayer'
+		self.service_name = 'enigma2-plugin-extensions-vlcplayer'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def InstallCheckSHOUT(self):
-	        self.service_name = 'enigma2-plugin-extensions-shoutcast'
+		self.service_name = 'enigma2-plugin-extensions-shoutcast'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def InstallCheckTSMedia(self):
-	        self.service_name = 'enigma2-plugin-extensions-tsmedia-oe2.0'
+		self.service_name = 'enigma2-plugin-extensions-tsmedia-oe2.0'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def InstallCheckMUZU(self):
-	        self.service_name = 'enigma2-plugin-extensions-muzutv'
+		self.service_name = 'enigma2-plugin-extensions-muzutv'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
-                
+ 
 	def InstallCheckWebbrowser(self):
-	        self.service_name = 'enigma2-plugin-extensions-hbbtv-opennfr-fullhd'
+		self.service_name = 'enigma2-plugin-extensions-hbbtv-opennfr-fullhd'
 		self.Console.ePopen('/usr/bin/opkg list_installed ' + self.service_name, self.checkNetworkState)
 
 	def next(self):
@@ -244,7 +244,7 @@ class DMC_MainMenu(Screen):
 					self.session.open(DVDPlayer)
 				else:
 					self.InstallCheckDVD()
-                                        self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
+					self.session.open(MessageBox,"Error: DVD-Player Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 			elif selection[1] == "MC_PictureViewer":
 				from MC_PictureViewer import MC_PictureViewer
 				self.session.open(MC_PictureViewer)
@@ -252,12 +252,12 @@ class DMC_MainMenu(Screen):
 				from MC_AudioPlayer import MC_AudioPlayer
 				self.session.open(MC_AudioPlayer)
 			elif selection[1] == "MC_WebRadio":
-			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
-                                        from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
-                                        self.session.open(SHOUTcastWidget)
-                                else:
-					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
-					self.InstallCheckSHOUT()				
+				if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
+					from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
+					self.session.open(SHOUTcastWidget)
+				else:
+					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                         				
+					self.InstallCheckSHOUT()
 
 			elif selection[1] == "MC_VLCPlayer":
 				if pathExists("/usr/lib/enigma2/python/Plugins/Extensions/VlcPlayer/") == True:
@@ -265,25 +265,25 @@ class DMC_MainMenu(Screen):
 					self.session.open(MC_VLCServerlist)
 				else:
 					self.session.open(MessageBox,"Error: VLC-Player Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
-			        	self.InstallCheckVLC()
+					self.InstallCheckVLC()
 
 			elif selection[1] == "Webbrowser":
-                                if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/") == True:
-                                       from Plugins.Extensions.HbbTV.plugin import OperaBrowser
-		                       global didOpen
-		                       didOpen = True
-			               url = 'http://www.nachtfalke.biz'
-                                       self.session.open(OperaBrowser, url)
-                                       global browserinstance
-		                else:
-			                self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
+				if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/HbbTV/") == True:
+					from Plugins.Extensions.HbbTV.plugin import OperaBrowser
+					global didOpen
+					didOpen = True
+					url = 'http://www.nachtfalke.biz'
+					self.session.open(OperaBrowser, url)
+					global browserinstance
+				else:
+					self.session.open(MessageBox,"Error: WebBrowser Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckWebbrowser()
-                        elif selection[1] == "SHOUTcast":
-			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
-                                        from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
-                                        self.session.open(SHOUTcastWidget)
-                                else:
-					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
+			elif selection[1] == "SHOUTcast":
+				if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/SHOUTcast/") == True:
+					from Plugins.Extensions.SHOUTcast.plugin import SHOUTcastWidget
+					self.session.open(SHOUTcastWidget)
+				else:
+					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckSHOUT()
  			elif selection[1] == "MC_WeatherInfo":
  				self.session.nav.playService(self.oldbmcService)
@@ -292,25 +292,25 @@ class DMC_MainMenu(Screen):
 				from MC_Settings import MC_Settings
 				self.session.open(MC_Settings)
 			elif selection[1] == "MUZU.TV":
-			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MUZUtv/") == True:
-                                        from Plugins.Extensions.MUZUtv.plugin import muzuMain
-                                        self.session.open(muzuMain)
-                                else:
-					self.session.open(MessageBox,"Error: MUZUtv Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
+				if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MUZUtv/") == True:
+					from Plugins.Extensions.MUZUtv.plugin import muzuMain
+					self.session.open(muzuMain)
+				else:
+					self.session.open(MessageBox,"Error: MUZUtv Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckMUZU()
 			elif selection[1] == "TSMedia":
-			        if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/") == True:
-                                        self.TSPlugins()
-                                else:
-					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)                                  			
-					self.InstallCheckTSMedia()				
+				if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/TSmedia/") == True:
+					self.TSPlugins()
+				else:
+					self.session.open(MessageBox,"Error: TSmedia Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
+					self.InstallCheckTSMedia()
 			else:
 				self.session.open(MessageBox,("Error: Could not find plugin %s\ncoming soon ... :)") % (selection[1]),  MessageBox.TYPE_INFO)
 
 	def TSPlugins(self, **kwargs):
-	        from Plugins.Extensions.TSmedia.plugin import main as tsmain
-                from Plugins.Plugin import PluginDescriptor
-                tsmain(sessions, **kwargs)
+		from Plugins.Extensions.TSmedia.plugin import main as tsmain
+		from Plugins.Plugin import PluginDescriptor
+		tsmain(sessions, **kwargs)
 
 	def error(self, error):
 		from Screens.MessageBox import MessageBox
@@ -327,7 +327,7 @@ class DMC_MainMenu(Screen):
 					trans = commands.getoutput('cat /etc/enigma2/settings | grep config.osd.alpha | cut -d "=" -f2')
 				open("/proc/stb/video/alpha", "w").write(str(trans))
 			except:
-				print "Set OSD Transparacy failed"
+				print ("Set OSD Transparacy failed")
 		os.system('umount /media/upnp')
 		self.session.nav.playService(self.oldbmcService)
 		self.close()
@@ -357,8 +357,8 @@ def Plugins(**kwargs):
 			PluginDescriptor(name = "Media Center", description = "Media Center Plugin for your OpenNFR-Image", icon="plugin.png", where = PluginDescriptor.WHERE_PLUGINMENU, fnc = main)]
 
 def Plugins(**kwargs):
-    screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:
-        return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenterFHD.png', fnc=main)]
-    else:
-        return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenter.png', fnc=main)]
+	screenwidth = getDesktop(0).size().width()
+	if screenwidth and screenwidth == 1920:
+		return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenterFHD.png', fnc=main)]
+	else:
+		return [PluginDescriptor(name='Media Center', description=_('Media Center Plugin for your OpenNFR-Image'), where=PluginDescriptor.WHERE_PLUGINMENU, icon='MediaCenter.png', fnc=main)]

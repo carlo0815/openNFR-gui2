@@ -160,8 +160,8 @@ class MC_AudioPlayer(Screen, HelpableScreen, InfoBarSeek):
 				config.av.downmix_ac3.value = True
 				config.av.downmix_ac3.save()
 				os.system("touch /tmp/.ac3on")
-		except Exception, e:
-			print "Media Center: no ac3"
+		except Exception as e:
+			print ("Media Center: no ac3")
 		self["play"] = Pixmap()
 		self["green"] = Pixmap()
 		self["screensaver"] = MediaPixmap()
@@ -485,7 +485,7 @@ class MC_AudioPlayer(Screen, HelpableScreen, InfoBarSeek):
 				self.jpgIndex += 1
 			else:
 				self.jpgIndex = 0
-			print "MediaCenter: Last JPG Index: " + str(self.jpgLastIndex)
+			print ("MediaCenter: Last JPG Index: " + str(self.jpgLastIndex))
 			if self.jpgLastIndex != self.jpgIndex or self.jpgLastIndex == -1:
 				if config.plugins.mc_ap.whichjpg.value == "default":
 					path = mcpath +"saver/" + self.jpgList[self.jpgIndex]
@@ -496,7 +496,7 @@ class MC_AudioPlayer(Screen, HelpableScreen, InfoBarSeek):
 				time = config.plugins.mc_ap.jpg_delay.value * 1000
 				self.JpgTimer.start(time, True)
 		else:
-			print "MediaCenter: No Background Files found ..."
+			print ("MediaCenter: No Background Files found ...")
 	def doEOF(self):
 		if MC_AudioPlayer.playlistplay == 1:
 			next = self.playlist.getCurrentIndex() + 1
@@ -617,8 +617,8 @@ class MC_WebRadio(Screen, HelpableScreen):
 				config.av.downmix_ac3.value = True
 				config.av.downmix_ac3.save()
 				os.system("touch /tmp/.ac3on")
-		except Exception, e:
-			print "Media Center: no ac3"
+		except Exception as e:
+			print ("Media Center: no ac3")
 		self["play"] = Pixmap()
 		self["screensaver"] = MediaPixmap()
 		MC_AudioPlayer.STATE = "NONE"
@@ -820,7 +820,7 @@ class MC_WebRadio(Screen, HelpableScreen):
 				time = config.plugins.mc_ap.jpg_delay.value * 1000
 				self.JpgTimer.start(time, True)
 		else:
-			print "MediaCenter: No Background Files found ..."
+			print ("MediaCenter: No Background Files found ...")
 	def doEOF(self):
 		self.StopPlayback()
 		if config.plugins.mc_ap.showJpg.value:
@@ -882,7 +882,7 @@ class MC_WebRadio(Screen, HelpableScreen):
 		menu.append((_("Rundfunk"), "Rundfunk/"))
 		menu.append((_("Smooth"), "Smooth/"))
 		menu.append((_("Soul"), "Soul/"))
-		menu.append((_("Techno/House"), "Techno/"))		
+		menu.append((_("Techno/House"), "Techno/"))
 		menu.append((_("Worldmusic"), "Worldmusik/"))
 		self.session.openWithCallback(self.menuCallback, ChoiceBox, title="", list=menu)
 	def menuCallback(self, choice):
@@ -915,7 +915,7 @@ class MC_WebDown(Screen):
 		try:
 			os.remove("/tmp/index.txt")
 		except:
-			print "no Index found"
+			print ("no Index found")
 		self.close()
 class MC_AudioPlaylist(Screen, InfoBarSeek):
 	def __init__(self, session):
@@ -1124,8 +1124,8 @@ class MC_AudioPlaylist(Screen, InfoBarSeek):
 		try:
 			for i in os_listdir(playlistdir):
 				listpath.append((i,playlistdir + i))
-		except IOError,e:
-			print "Error while scanning subdirs ",e
+		except IOError as e:
+			print ("Error while scanning subdirs ",e)
 		self.session.openWithCallback(self.load_pls, ChoiceBox, title=_("Please select a playlist..."), list = listpath)
 	def load_pls(self,path):
 		if path is not None:
@@ -1143,8 +1143,8 @@ class MC_AudioPlaylist(Screen, InfoBarSeek):
 		try:
 			for i in os_listdir(playlistdir):
 				listpath.append((i,playlistdir + i))
-		except IOError,e:
-			print "Error while scanning subdirs ",e
+		except IOError as e:
+			print ("Error while scanning subdirs ",e)
 		self.session.openWithCallback(self.delete_saved_pls, ChoiceBox, title=_("Please select a playlist to delete..."), list = listpath)
 	def delete_saved_pls(self,path):
 		if path is not None:
@@ -1154,7 +1154,7 @@ class MC_AudioPlaylist(Screen, InfoBarSeek):
 		if confirmed:
 			try:
 				os_remove(self.delname)
-			except OSError,e:
+			except OSError as e:
 				self.session.open(MessageBox, _("Delete failed!"), MessageBox.TYPE_ERROR)
 	def addPlaylistParser(self, parser, extension):
 		self.playlistparsers[extension] = parser
@@ -1202,7 +1202,7 @@ class MC_AudioPlaylist(Screen, InfoBarSeek):
 				time = config.plugins.mc_ap.jpg_delay.value * 1000
 				self.JpgTimer.start(time, True)
 		else:
-			print "MediaCenter: No Background Files found ..."
+			print ("MediaCenter: No Background Files found ...")
 	def showLyrics(self):
 		if MC_AudioPlayer.STATE == "PLAY":
 			self.session.openWithCallback(self.updd, Lyrics)
