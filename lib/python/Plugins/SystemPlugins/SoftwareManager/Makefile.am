@@ -9,6 +9,7 @@ install_PYTHON =	\
 	ImageBackup.py \
 	ImageWizard.py \
 	SoftwareTools.py \
+	ShellCompatibleFunctions.py \	
 	Multibootmgr.py
 
 dist_install_DATA = \
