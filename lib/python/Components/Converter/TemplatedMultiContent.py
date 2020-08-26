@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import print_function
 from Components.Converter.StringList import StringList
 
 class TemplatedMultiContent(StringList):
@@ -46,7 +48,7 @@ class TemplatedMultiContent(StringList):
 					else:
 						tmp.append(src[x])
 			except Exception as error:
-				print '[TemplatedMultiContent] - %s' %error
+				print ('[TemplatedMultiContent] - %s' %error)
 				tmp = self.source.list
 			self.content.setList(tmp)
 
