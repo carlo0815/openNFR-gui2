@@ -247,7 +247,11 @@ class choicesList(object): # XXX: we might want a better name for this
 		return list(self.choices.keys())[index]
 
 	def index(self, value):
-		return self.__list__().index(value)
+		try:
+			return self.__list__().index(value)
+		except (ValueError, IndexError):
+			# occurs e.g. when default is not in list
+			return 0
 
 	def __setitem__(self, index, value):
 		if self.type == choicesList.LIST_TYPE_LIST:
