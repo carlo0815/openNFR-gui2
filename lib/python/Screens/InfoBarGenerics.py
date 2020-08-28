@@ -3749,7 +3749,7 @@ class InfoBarPowersaver:
 		self.restartInactiveTimer()
 		self.sleepTimer = eTimer()
 		self.sleepTimer.callback.append(self.sleepTimerTimeout)
-		eActionMap.getInstance().bindAction('', -maxint - 1, self.keypress)
+		eActionMap.getInstance().bindAction('', -maxsize - 1, self.keypress)
 
 	def keypress(self, key, flag):
 		if flag == 1:
