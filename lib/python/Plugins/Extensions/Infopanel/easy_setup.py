@@ -226,10 +226,10 @@ class EasySetup(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_('Enable Hotkey Setup?'), config.easysetup.Hotkey, _("Choose your remote buttons.")))
 		list.append(getConfigListEntry(_('Enable Channellist Setup?'), config.easysetup.channellist, _("Choose your Channel selection config.")))
 		list.append(getConfigListEntry(_('Enable M3U Convert to Channellist Setup?'), config.easysetup.m3u, _("Install your IPTV-m3u-files into channellist.\nFirst you must coppy a M3U-List to /etc/enigma2")))
-	if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
-		list.append(getConfigListEntry(_('Enable Menusort Setup?'), config.easysetup.menusort, _("Choose your Mainmenu sorts.")))
-	if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
-		list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
+		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
+			list.append(getConfigListEntry(_('Enable Menusort Setup?'), config.easysetup.menusort, _("Choose your Mainmenu sorts.")))
+		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+			list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 		list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))
 		list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
 		list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositioner, _("Choose your OSD Position in TV")))
@@ -278,7 +278,7 @@ class EasySetup(ConfigListScreen, Screen):
 			self.session.openWithCallback(self.run5, KeymapSel)
 		else:
 			config.easysetup.restart.setValue(False)
-			onfig.easysetup.restart.save()
+			config.easysetup.restart.save()
 			self.run5()
 
 	def run5(self):
@@ -377,7 +377,7 @@ class EasySetup(ConfigListScreen, Screen):
 			self.closetest()
 
 	def closetest(self, res = None):            
-		onfig.misc.firstrun = ConfigBoolean(default = True)
+		config.misc.firstrun = ConfigBoolean(default = True)
 		if config.easysetup.restart.value == True:
 			if config.misc.firstrun.value == False:
 				config.easysetup.restart.setValue(False)
