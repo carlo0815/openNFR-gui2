@@ -146,12 +146,13 @@ class ServiceList(HTMLComponent, GUIComponent):
 			self.l.setNonplayableMargins(int(value))
 		def itemsDistances(value):
 			self.l.setItemsDistances(int(value))
-		for (attrib, value) in list(self.skinAttributes):
-			try:
-				locals().get(attrib)(value)
-				self.skinAttributes.remove((attrib, value))
-			except:
-				pass
+		if self.skinAttributes is not None:		
+			for (attrib, value) in list(self.skinAttributes):
+				try:
+					locals().get(attrib)(value)
+					self.skinAttributes.remove((attrib, value))
+				except:
+					pass
 		rc = GUIComponent.applySkin(self, desktop, parent)
 		self.listHeight = self.instance.size().height()
 		self.listWidth = self.instance.size().width()
