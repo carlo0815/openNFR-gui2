@@ -54,7 +54,7 @@ from Tools.KeyBindings import getKeyDescription
 
 from enigma import eTimer, eServiceCenter, eDVBServicePMTHandler, iServiceInformation, iPlayableService, eServiceReference, eEPGCache, eActionMap
 from boxbranding import getBoxType, getBrandOEM, getMachineBrand, getMachineName, getMachineProcModel, getMachineBuild
-
+from keyids import KEYIDS
 from time import time, localtime, strftime
 from bisect import insort
 from sys import maxsize
