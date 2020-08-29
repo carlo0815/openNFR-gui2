@@ -62,7 +62,7 @@ from sys import maxsize
 import os
 from six.moves import cPickle as pickle
 import six
-
+from keyids import KEYIDS
 # hack alert!
 from Screens.Menu import MainMenu, Menu, mdom
 from Screens.Setup import Setup
