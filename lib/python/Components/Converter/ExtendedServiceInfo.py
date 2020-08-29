@@ -15,16 +15,16 @@ class ExtendedServiceInfo(Converter, object):
 	ORBITALPOSITION = 3
 	FROMCONFIG = 4
 	SATNAME = 5
-	PROVIDER = 6	
+	PROVIDER = 6
 	ALL = 7
 
 	def __init__(self, type):
 		Converter.__init__(self, type)
 		self.list = []
-        	self.satNames = {}
-        	self.readSatXml()
-        	self.getLists()
-        	self.getList()
+		self.satNames = {}
+		self.readSatXml()
+		self.getLists()
+		self.getList()
 		if type == "TunerInfo":
 			self.type = self.TUNERINFO
 		elif type == "ServiceName":
@@ -38,7 +38,7 @@ class ExtendedServiceInfo(Converter, object):
 		elif type == 'SatName':
 			self.type = self.SATNAME
 		elif type == 'Provider':
-			self.type = self.PROVIDER		
+			self.type = self.PROVIDER
 		else:
 			self.type = self.ALL
 
@@ -79,7 +79,7 @@ class ExtendedServiceInfo(Converter, object):
 		elif self.type == self.SATNAME:
 			text = satName
 		elif self.type == self.PROVIDER:
-			text = info.getInfoString(iServiceInformation.sProvider)				
+			text = info.getInfoString(iServiceInformation.sProvider)
 		elif self.type == self.FROMCONFIG:
 			if config.plugins.ExtendedServiceInfo.showServiceNumber.value == True:
 				text = "%s. %s" % (number, name)
@@ -178,25 +178,25 @@ class ExtendedServiceInfo(Converter, object):
 			services = serviceHandler.list(eServiceReference(bouquet[0]))
 			channels = services and services.getContent('SN', True)
 			for channel in channels:
-                		if not channel[0].startswith('1:64:'):
-                    			list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
+				if not channel[0].startswith('1:64:'):
+					list.append(channel[1].replace('\xc2\x86', '').replace('\xc2\x87', ''))
 
-        	return list
+		return list
 
 	def readSatXml(self):
-        	satXml = parse('/etc/tuxbox/satellites.xml').getroot()
-        	if satXml is not None:
-            		for sat in satXml.findall('sat'):
-                		name = sat.get('name') or None
-                		position = sat.get('position') or None
-                		if name is not None and position is not None:
-                    			position = '%s.%s' % (position[:-1], position[-1:])
-                    			if position.startswith('-'):
-                        			position = '%sW' % position[1:]
-                    			else:
-                        			position = '%sE' % position
-                    			if position.startswith('.'):
-                        			position = '0%s' % position
-                    			self.satNames[position] = name
+		satXml = parse('/etc/tuxbox/satellites.xml').getroot()
+		if satXml is not None:
+			for sat in satXml.findall('sat'):
+				name = sat.get('name') or None
+				position = sat.get('position') or None
+				if name is not None and position is not None:
+					position = '%s.%s' % (position[:-1], position[-1:])
+					if position.startswith('-'):
+						position = '%sW' % position[1:]
+					else:
+						position = '%sE' % position
+					if position.startswith('.'):
+						position = '0%s' % position
+					self.satNames[position] = name
 
-        	return	
+		return
