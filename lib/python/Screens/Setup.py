@@ -122,7 +122,7 @@ class Setup(ConfigListScreen, Screen):
 			{
 				"cancel": self.keyCancel,
 				"save": self.keySave,
-                "ok": self.keySave,
+				"ok": self.keySave,
 				"menu": self.closeRecursive,
 			}, -2)
 
@@ -246,39 +246,48 @@ class Setup(ConfigListScreen, Screen):
 					continue
 				if item_rectunerlevel == 2 and not config.usage.recording_frontend_priority.value == "experimental_mode":
 					continue
-				if item_rectunerlevel == 1 and not config.usage.recording_timer_start.value in ("expert_mode", "experimental_mode"):
-					continue
-				if item_rectunerlevel == 2 and not config.usage.recording_timer_start.value == "experimental_mode":
-					continue                                        
-                                        					
 
 				requires = x.get("requires")
-				if requires and requires.startswith('config.'):
-					item = eval(requires or "")
-					iv = item.value
-					if iv and not isinstance(iv, bool):
-						iv = six.ensure_str(iv)
-					if value and iv == value or not value and iv and not iv == "0":
-						SystemInfo[requires] = True
-					else:
-						SystemInfo[requires] = False
+				if requires:
+					meets = True
+					for requires in requires.split(';'):
+						negate = requires.startswith('!')
+						if negate:
+							requires = requires[1:]
+						if requires.startswith('config.'):
+							try:
+								item = eval(requires)
+								SystemInfo[requires] = True if item.value and item.value not in ("0", "False", "false", "off") else False
+							except AttributeError:
+								print('[Setup] unknown "requires" config element:', requires)
 
-				if requires and not SystemInfo.get(requires, False):
-					continue
+						if requires:
+							if not SystemInfo.get(requires, False):
+								if not negate:
+									meets = False
+									break
+							else:
+								if negate:
+									meets = False
+									break
+					if not meets:
+						continue
 
-				item_text = _(six.ensure_str(x.get("text", "??")))
-				item_text = item_text.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
-				item_description = _(six.ensure_str(x.get("description", " ")))
-				item_description = item_description.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
-				b = eval(x.text or "")
-				if b == "":
-					continue
-				#add to configlist
-				item = b
-				# the first b is the item itself, ignored by the configList.
-				# the second one is converted to string.
-				if not isinstance(item, ConfigNothing):
-					listItems.append((item_text, item, item_description))
+
+					item_text = _(six.ensure_str(x.get("text", "??")))
+					item_description = _(six.ensure_str(x.get("description", " ")))
+
+					item_text = item_text.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
+					item_description = item_description.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
+					b = eval(x.text or "")
+					if b == "":
+						continue
+					#add to configlist
+					item = b
+					# the first b is the item itself, ignored by the configList.
+					# the second one is converted to string.
+					if not isinstance(item, ConfigNothing):
+						listItems.append((item_text, item, item_description))
 
 def getSetupTitle(setupId):
 	xmldata = setupdom().getroot()
