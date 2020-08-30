@@ -15,9 +15,10 @@ from enigma import eTimer
 from time import sleep
 from os import path
 import os
-from Plugins.Extensions.Infopanel.Softcam import *
+from .Softcam import *
 import shutil
 from six.moves.urllib.request import urlopen
+from six.moves import urllib
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.About import about
 
@@ -203,7 +204,7 @@ class NFRCamManager(Screen):
 				self.AboutText2 = "openVPN is running "
 			else:
 				self.AboutText2 = "no openVPN found" 
-				listecm = ""
+			listecm = ""
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
