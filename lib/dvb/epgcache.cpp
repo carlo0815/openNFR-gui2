@@ -845,6 +845,23 @@ void eEPGCache::sectionRead(const uint8_t *data, int source, channel_data *chann
 	eventMap::iterator prevEventIt = servicemap.byEvent.end();
 	timeMap::iterator prevTimeIt = servicemap.byTime.end();
 
+	if (!(source & EPG_IMPORT) && (servicemap.sources & EPG_IMPORT))
+		return;
+	else if ((source & EPG_IMPORT) && !(servicemap.sources & EPG_IMPORT))
+	{
+		if (!eventmap.empty() || !timemap.empty())
+		{
+			flushEPG(service);
+			servicemap = eventDB[service];
+			eventmap = servicemap.byEvent;
+			timemap = servicemap.byTime;
+		}
+		servicemap.sources = source;
+	}
+	else
+		servicemap.sources |= source;
+
+
 	while (ptr<len)
 	{
 		uint16_t event_hash;
@@ -1034,6 +1051,11 @@ next:
 	}
 }
 
+void eEPGCache::flushEPG(int sid, int onid, int tsid)
+{
+	flushEPG(uniqueEPGKey(sid, onid, tsid));
+}
+
 void eEPGCache::flushEPG(const uniqueEPGKey & s)
 {
 	eDebug("[eEPGCache] flushEPG %d", (int)(bool)s);
@@ -1061,6 +1083,27 @@ void eEPGCache::flushEPG(const uniqueEPGKey & s)
 				content_time_tables.erase(it);
 			}
 #endif
+			// remove this service's channel from lastupdated map
+			for (updateMap::iterator it = channelLastUpdated.begin(); it != channelLastUpdated.end(); )
+			{
+				const eDVBChannelID &chid = it->first;
+				if(chid.original_network_id == s.onid && chid.transport_stream_id == s.tsid)
+					it = channelLastUpdated.erase(it);
+				else
+					++it;
+			}
+
+			singleLock m(channel_map_lock);
+			for (ChannelMap::const_iterator it(m_knownChannels.begin
+()); it != m_knownChannels.end(); ++it)
+			{
+				const eDVBChannelID chid = it->second->channel->getChannelID();
+				if(chid.original_network_id == s.onid && chid.transport_stream_id == s.tsid)
+				{
+					it->second->abortEPG();
+					it->second->startChannel();
+				}
+			}
 		}
 	}
 	else // clear complete EPG Cache
@@ -1082,7 +1125,10 @@ void eEPGCache::flushEPG(const uniqueEPGKey & s)
 		channelLastUpdated.clear();
 		singleLock m(channel_map_lock);
 		for (ChannelMap::const_iterator it(m_knownChannels.begin()); it != m_knownChannels.end(); ++it)
-			it->second->startEPG();
+		{
+			it->second->abortEPG();
+			it->second->startChannel();
+		}
 	}
 }
 

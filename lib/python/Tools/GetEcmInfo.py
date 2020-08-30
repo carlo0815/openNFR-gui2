@@ -191,4 +191,4 @@ class GetEcmInfo:
 		if provid == '0':
 			provid = info.get('prov', '0')
 		ecmpid = info.get('pid', '0')
-		return self.textvalue,decCI,provid,ecmpid
+		return str(self.textvalue), decCI, provid, ecmpid
