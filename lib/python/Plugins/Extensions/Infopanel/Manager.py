@@ -15,7 +15,7 @@ from enigma import eTimer
 from time import sleep
 from os import path
 import os
-from .Softcam import *
+from . import Softcam
 import shutil
 from six.moves.urllib.request import urlopen
 from six.moves import urllib
