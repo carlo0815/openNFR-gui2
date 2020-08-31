@@ -17,6 +17,7 @@ from os import path
 import os
 from . import Softcam
 import shutil
+import six
 from six.moves.urllib.request import urlopen
 from six.moves import urllib
 from Screens.VirtualKeyBoard import VirtualKeyBoard
@@ -191,11 +192,11 @@ class NFRCamManager(Screen):
 
 	def Stage1Complete(self, result, retval, extra_args=None):
 		result = result
-		if "Link detected: yes"  in result:
+		if b"Link detected: yes"  in result:
 			from Screens.NetworkSetup import NetworkOpenvpn
-			ext_ip = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
-			if isinstance(ext_ip, unicode):
-				ext_ip = ext_ip.encode('utf8')
+			ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
+			if isinstance(ext_ip, six.text_type):
+				ext_ip = six.ensure_str(ext_ip.encode('utf8'))
 				print(ext_ip)
 				self.AboutText1 = "Online: " + (ext_ip)
 			else:
