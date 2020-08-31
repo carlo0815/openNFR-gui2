@@ -238,7 +238,7 @@ class NFRCamManager(Screen):
 	
 
 	def camliststart(self, result, retval, extra_args):
-		if result.strip() and not result.startswith('ls: '):
+		if result.strip() and not result.startswith(b'ls: '):
 			self.iscam = True
 			self.softcamlist = result.splitlines()
 			self.Console.ePopen("chmod 755 %s/*" %
