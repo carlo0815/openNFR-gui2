@@ -69,13 +69,13 @@ if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/AudioSync"):
 else:
 	AUDIOSYNC = False
 
-if path.exists("/usr/lib/enigma2/python/Plugins/SystemPlugins/VideoEnhancement/plugin.pyo"):
+if path.exists("/usr/lib/enigma2/python/Plugins/SystemPlugins/VideoEnhancement/plugin.py"):
 	from Plugins.SystemPlugins.VideoEnhancement.plugin import VideoEnhancementSetup
 	VIDEOENH = True
 else:
 	VIDEOENH = False
 
-if path.exists("/usr/lib/enigma2/python/Plugins/SystemPlugins/AutoResolution/plugin.pyo"):
+if path.exists("/usr/lib/enigma2/python/Plugins/SystemPlugins/AutoResolution/plugin.py"):
 	from Plugins.SystemPlugins.AutoResolution.plugin import AutoResSetupMenu
 	AUTORES = True
 else:
