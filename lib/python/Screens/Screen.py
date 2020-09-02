@@ -155,6 +155,8 @@ class Screen(dict):
 		try:
 			if self.session and len(self.session.dialog_stack) > 1:
 				self.screenPath = " > ".join(ds[0].getTitle() for ds in self.session.dialog_stack[1:])
+			else:
+				self.screenPath = ""
 			if self.instance:
 				self.instance.setTitle(title)
 			self.summaries.setTitle(title)
@@ -276,12 +278,12 @@ class Screen(dict):
 			# DEBUG: if type(f) is not type(self.close):  # Is this the best way to do this?
 			# DEBUG: Is the following an acceptable fix?
 			if not isinstance(f, type(self.close)):
-				exec f in globals(), locals()
+				exec(f in globals(), locals())
 			else:
 				f()
 
 	def deleteGUIScreen(self):
-		for (name, val) in self.items():
+		for (name, val) in list(self.items()):
 			if isinstance(val, GUIComponent):
 				val.GUIdelete()
 

@@ -1,3 +1,4 @@
+from __future__ import print_function
 KEYIDS = {
 	"KEY_RESERVED": 0,
 	"KEY_ESC": 1,

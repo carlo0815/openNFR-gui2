@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Tools.Directories import resolveFilename, SCOPE_SYSETC
 #from Tools.HardwareInfo import HardwareInfo
 from os import path
