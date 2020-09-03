@@ -9,7 +9,7 @@ from os import path, remove, listdir
 
 profile("LOAD:enigma_skin")
 from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop
-from Components.config import ConfigSubsection, ConfigText, config, ConfigYesNo, ConfigSelection, ConfigNothing,  configfile
+from Components.config import ConfigSubsection, ConfigText, config, ConfigYesNo, ConfigSelection, ConfigNothing, configfile
 from Components.Converter.Converter import Converter
 from Components.Sources.Source import Source, ObsoleteSource
 from Components.SystemInfo import SystemInfo
@@ -107,9 +107,9 @@ config.skin = ConfigSubsection()
 config.defaultskinSetup = ConfigSubsection()
 config.defaultskinSetup.steps = ConfigSelection([('default Utopia',_("default Utopia")),('default SmokeR',_("default SmokeR"))])
 if config.defaultskinSetup.steps.value == "default SmokeR":
-       	DEFAULT_SKIN = "NFR_Skin/skin.xml"
+	DEFAULT_SKIN = "NFR_Skin/skin.xml"
 elif config.defaultskinSetup.steps.value == "default Utopia":
-       	DEFAULT_SKIN = "skin_default/skin.xml"        
+	DEFAULT_SKIN = "skin_default/skin.xml"
 
 if not fileExists(resolveFilename(SCOPE_SKIN, DEFAULT_SKIN)):
 	# in that case, fallback to Magic (which is an SD skin)
@@ -155,72 +155,72 @@ try:
 	print("[openNFR] loading user defined header file for skin", (primary_skin_path + 'skin_user_header.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined header file for skin")
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_infobar.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined infobar file for skin", (primary_skin_path + 'skin_user_infobar.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined infobar file for skin")	
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_sib.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sib file for skin", (primary_skin_path + 'skin_user_sib.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined sib file for skin")
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_ch_se.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined ch_se file for skin", (primary_skin_path + 'skin_user_ch_se.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined ch_se file for skin")
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_ev.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined ev file for skin", (primary_skin_path + 'skin_user_ev.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined ev file for skin")                	                	
-	
+	print("[openNFR] not loading user defined ev file for skin")
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_center.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined center file for skin", (primary_skin_path + 'skin_user_center.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined center file for skin")  
+	print("[openNFR] not loading user defined center file for skin")
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined sb file for skin")  
+	print("[openNFR] not loading user defined sb file for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_frame.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined frame file for skin", (primary_skin_path + 'skin_user_frame.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined frame file for skin")  
+	print("[openNFR] not loading user defined frame file for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_lines.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined lines file for skin", (primary_skin_path + 'skin_user_lines.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined lines file for skin")  
+	print("[openNFR] not loading user defined lines file for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sbar.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sbar file for skin", (primary_skin_path + 'skin_user_sbar.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined sbar file for skin")  
+	print("[openNFR] not loading user defined sbar file for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_wget.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined wget file for skin", (primary_skin_path + 'skin_user_wget.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined wget file for skin")  
+	print("[openNFR] not loading user defined wget file for skin")
 	
 try:
 	loadSkin(primary_skin_path + 'skin_user_sb.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined sb file for skin", (primary_skin_path + 'skin_user_sb.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined sb file for skin")               	                	
+	print("[openNFR] not loading user defined sb file for skin")
 	
 	
 try:
@@ -228,30 +228,30 @@ try:
 	print("[openNFR] loading user defined ul file for skin", (primary_skin_path + 'skin_user_ul.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined ul file for skin")
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_clock.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined clock file for skin", (primary_skin_path + 'skin_user_clock.xml'))
 except (SkinError, IOError, AssertionError) as err:
 	print("[openNFR] not loading user defined clock file for skin") 
-        
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_emc.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined emc file for skin", (primary_skin_path + 'skin_user_emc.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined emc file for skin")    
+	print("[openNFR] not loading user defined emc file for skin")
 
 try:
 	loadSkin(primary_skin_path + 'skin_user_volume.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined volume file for skin", (primary_skin_path + 'skin_user_volume.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined volume file for skin")    
-        
+	print("[openNFR] not loading user defined volume file for skin")
+
 try:
 	loadSkin(primary_skin_path + 'skin_user_movieselection.xml', SCOPE_SKIN)
 	print("[openNFR] loading user defined movieselection file for skin", (primary_skin_path + 'skin_user_movieselection.xml'))
 except (SkinError, IOError, AssertionError) as err:
-	print("[openNFR] not loading user defined movieselection file for skin")                                             	                	
+	print("[openNFR] not loading user defined movieselection file for skin")
 	
 	
 def load_modular_files():
@@ -294,7 +294,7 @@ try:
 	else:
 		print("addskin", addSkin(os.path.join('display', config.skin.display_skin.value))) 
 		if not addSkin(os.path.join('display/lcdskins', config.skin.display_skin.value)):
-		        raise DisplaySkinError("display skin not found")
+			raise DisplaySkinError("display skin not found")
 except Exception as err:
 	print("SKIN ERROR:", err)
 	skin = DEFAULT_DISPLAY_SKIN
@@ -485,15 +485,9 @@ class AttributeParser:
 	def conditional(self, value):
 		pass
 	def position(self, value):
-		if isinstance(value, tuple):
-			self.guiObject.move(ePoint(*value))
-		else:
-			self.guiObject.move(parsePosition(value, self.scale, self.guiObject, self.desktop, self.guiObject.csize()))
+		self.guiObject.move(ePoint(*value) if isinstance(value, tuple) else parsePosition(value, self.scaleTuple, self.guiObject, self.desktop, self.guiObject.csize()))
 	def size(self, value):
-		if isinstance(value, tuple):
-			self.guiObject.resize(eSize(*value))
-		else:
-			self.guiObject.resize(parseSize(value, self.scale, self.guiObject, self.desktop))
+		self.guiObject.resize(eSize(*value) if isinstance(value, tuple) else parseSize(value, self.scaleTuple, self.guiObject, self.desktop))
 	def animationPaused(self, value):
 		pass
 	def animationMode(self, value):
@@ -533,8 +527,8 @@ class AttributeParser:
 	def alphatest(self, value):
 		self.guiObject.setAlphatest(
 			{ "on": 1,
-			  "off": 0,
-			  "blend": 2,
+			"off": 0,
+			"blend": 2,
 			}[value])
 	def scale(self, value):
 		self.guiObject.setScale(1)
@@ -1001,13 +995,13 @@ def readSkin(screen, skin, names, desktop):
 		#if config.defaultskinSetup.steps.value == "default SmokeR" or config.defaultskinSetup.steps.value == "default Utopia":
 			#print "skinselection allready selected"
 		#else:
-		        #from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
+			#from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
 			#DefaulSkinchange.__init__(self, session)
 			#os.system('reboot')	
 	#except:
 		#from Plugins.Extensions.Infopanel.skin_setup import DefaulSkinchange
 		#DefaulSkinchange.__init__(self, session)
-		#os.system('reboot')        
+		#os.system('reboot')
 	if not isinstance(names, list):
 		names = [names]
 
@@ -1229,4 +1223,4 @@ def readSkin(screen, skin, names, desktop):
 	# solution is to avoid the nested scope above and use the context object to pass
 	# things around.
 	screen = None
-	visited_components = None  
+	visited_components = None

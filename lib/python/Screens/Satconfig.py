@@ -569,9 +569,8 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 
 			else:	#no Unicable
 				self.list.append(getConfigListEntry(_("Voltage mode"), Sat.voltage))
-				self.list.append(getConfigListEntry(_("Increased voltage"), currLnb.increased_voltage))
 				self.list.append(getConfigListEntry(_("Tone mode"), Sat.tonemode))
-
+			self.list.append(getConfigListEntry(_("Increased voltage"), currLnb.increased_voltage))
 			if lnbnum < 65 and diction !="EN50607":
 				self.advancedDiseqcMode = getConfigListEntry(_("DiSEqC mode"), currLnb.diseqcMode)
 				self.list.append(self.advancedDiseqcMode)
