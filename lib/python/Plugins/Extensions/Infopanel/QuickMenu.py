@@ -98,7 +98,7 @@ def isFileSystemSupported(filesystem):
 
 def Freespace(dev):
 	statdev = os.statvfs(dev)
-	space = (statdev.f_bavail * statdev.f_frsize) / 1024
+	space = (statdev.f_bavail * statdev.f_frsize) // 1024
 	print("[Flash] Free space on %s = %i kilobytes" %(dev, space))
 	return space
 
@@ -977,7 +977,7 @@ class QuickMenuDevices(Screen):
 			device = parts[3]
 			if not search('sd[a-z][1-9]', device) and not search('mmcblk[0-9]p[1-9]', device):
 				continue
-			if getMachineBuild() in ('gbmv200', 'multibox', 'h9combo', 'v8plus', 'hd60', 'hd61', 'vuduo4k', 'ustym4kpro', 'sf8008', 'sf8008s', 'cc1', 'dags72604', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'vuzero4k', 'u5', 'sf5008', 'et13000', 'et1x000', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]', device):
+			if getMachineBuild() in ('gbmv200', 'multibox', 'h9combo', 'v8plus', 'hd60', 'hd61', 'vuduo4k', 'ustym4kpro', 'sf8008', 'sf8008s', 'cc1', 'dags72604', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'vuzero4k', 'u5', 'sf5008', 'et13000', 'et1x000', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]', device):
 				continue
 			if getMachineBuild() in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
 				continue
@@ -1120,12 +1120,12 @@ class QuickMenuDevices(Screen):
 					size = size // 2
 				except:
 					size = 0
-			if ((((float(size) / 2) / 1024) / 1024) / 1024) > 1:
-				des = _("Size: ") + str(round(((((float(size) / 2) / 1024) / 1024) / 1024),2)) + _("TB")
-			elif (((size / 2) / 1024) / 1024) > 1:
-				des = _("Size: ") + str(((size / 2) / 1024) / 1024) + _("GB")
+			if ((((float(size) // 2) // 1024) // 1024) // 1024) > 1:
+				des = _("Size: ") + str(round(((((float(size) // 2) // 1024) // 1024) // 1024),2)) + _("TB")
+			elif (((size // 2) // 1024) // 1024) > 1:
+				des = _("Size: ") + str(((size // 2) // 1024) // 1024) + _("GB")
 			else:
-				des = _("Size: ") + str((size / 2) / 1024) + _("MB")
+				des = _("Size: ") + str((size // 2) // 1024) + _("MB")
 		f.close()
 		if des != '':
 			if rw.startswith('rw'):

@@ -154,7 +154,7 @@ def getCPUSpeedString():
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
-	elif getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
+	elif getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
 		return "1,6 GHz"	
 	elif getMachineBuild() in ('vuuno4k', 'vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 		return "1,7 GHz"
@@ -194,7 +194,7 @@ def getCPUSpeedString():
 def getCPUString():
 	if getMachineBuild() in ('osmio4k', 'osmio4kplus', 'osmini4k', 'dags72604', 'vuuno4kse', 'vuuno4k', 'vuultimo4k', 'xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'et1x000', 'xc7439', 'h7', '8100s', 'et13000', 'sf5008'):
 		return "Broadcom"
-	elif getMachineBuild() in ('gbmv200', 'u41', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
+	elif getMachineBuild() in ('gbmv200', 'u41', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
 		return "Hisilicon"	
 	else:
 		try:
