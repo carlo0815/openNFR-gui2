@@ -69,9 +69,9 @@ class MiniTV:
 	        if getBoxType() in ('vusolo4k'):
 	                value = config.lcd.modeminitv4k.value
 	                self.setMiniTV(value)
-                else:
-		        self.setMiniTV(config.plugins.minitv.enable.value)
-		        self.setMiniTVDecoder(config.plugins.minitv.decoder.value)
+	        else:
+	           self.setMiniTV(config.plugins.minitv.enable.value)
+	           self.setMiniTVDecoder(config.plugins.minitv.decoder.value)
 
 minitv_instance = MiniTV()
 
@@ -99,4 +99,3 @@ def Plugins(**kwargs):
 		fnc = autoStart))
 
 	return list
-

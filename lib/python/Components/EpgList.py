@@ -513,8 +513,9 @@ class EPGList(HTMLComponent, GUIComponent):
 				itemHeight = 32
 			if itemHeight < 15:
 				itemHeight = 15
+			itemHeight = int(itemHeight)
 			self.l.setItemHeight(itemHeight)
-			self.instance.resize(eSize(self.listWidth, self.listHeight / itemHeight * itemHeight))
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
@@ -525,8 +526,9 @@ class EPGList(HTMLComponent, GUIComponent):
 				itemHeight = 32
 			if itemHeight < 25:
 				itemHeight = 25
+			itemHeight = int(itemHeight)
 			self.l.setItemHeight(itemHeight)
-			self.instance.resize(eSize(self.listWidth, self.listHeight / itemHeight * itemHeight))
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
