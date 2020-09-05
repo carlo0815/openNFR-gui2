@@ -41,5 +41,5 @@ class StartWizard(WizardLanguage, Rc):
 			configfile.save()
 wizardManager.registerWizard(DefaulSkinchange, config.misc.skindefaultwizardenabled.value, priority = 0)
 wizardManager.registerWizard(LanguageWizard, config.misc.languageselected.value, priority = 1)
-wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 1)
+wizardManager.registerWizard(VideoWizard, config.misc.videowizardenabled.value, priority = 2)
 wizardManager.registerWizard(StartWizard, config.misc.firstrun.value, priority = 20)
