@@ -1,12 +1,12 @@
 # This converter base on Spaze Team weather converter. 
-
+from __future__ import absolute_import
 from Components.config import config
-from Converter import Converter
+from Components.Converter.Converter import Converter
 from Components.Element import cached
 import os
 from enigma import ePixmap
 import time
-from Poll import Poll
+from Components.Converter Poll import Poll
 import urllib
 import string
 from os import environ
@@ -60,7 +60,7 @@ def devgificono(imagen, actual = False):
 		'sunny.gif': '1',
 		'thunderstorm.gif': '99'
 	}
-    
+	
 	if imagen not in listaimagenes:
 		return '14_int-fs8.png'
 	valor = listaimagenes[imagen]
@@ -147,7 +147,7 @@ def cargaDatos(tipo = 1, extendido = False):
 	if crear and tipo == 5:
 		devxml()
 	return ('', '', '', '', '', '', '')
-      
+	
 def devxml():
 	if haywheather():
 		if hayinet():
@@ -173,11 +173,11 @@ def devStrTm(cadena, inicio, fin):
 		return str
 	except:
 		return ''
-	      
-	      
+		
+		
 def devXml(cadena, tag):
 	return devStrTm(cadena, '<' + tag + '>', '</' + tag + '>')
-      
+	
 def chequeanuevo():
 	if fileExists('/tmp/tempwf.xml'):
 		try:
@@ -247,133 +247,133 @@ def devinfoacuOLD(xmlstring, extendido):
 
 
 def devinfoacu(xmlstring, extendido):
-    try:
-        t2 = devStrTm(xmlstring, '>', '<').strip()
-        lacondicion = devStrTm(xmlstring, '<div class="right txt-tight">', '</div>').replace('<br />', '\n').replace('\n ', '\n')
-        arrcon = lacondicion.split('\n')
-        if len(arrcon) > 1:
-            t12 = arrcon[0]
-        t4 = devHtml(xmlstring, 'warm txt-xxlarge').strip().replace('+', '').strip()
-        t3 = ''
-        if extendido:
-            tempviento = devStrTm(xmlstring, '/img/symb-wind', '<br />')
-            dirviento = devStrTm(tempviento, 'alt="', '"')
-            dirviento = dirviento.replace('N', _('North')).replace('S', _('South')).replace('E', _('East')).replace('W', _('West')).replace('NorteOeste', 'NorOeste').replace('NorteEste', 'NorEste')
-            iviento = devStrTm(tempviento, '/>', '').replace('<br />', '')
-            viento = _('Wind') + ':' + dirviento + ' ' + iviento
-            if len(arrcon) > 6:
-                t3 = t3 + arrcon[4].strip()
-                t3 = t3 + ', ' + viento.strip()
-                t3 = t3 + '\n' + arrcon[2].strip()
-            else:
-                conta = 1
-                for iij in range(0, len(arrcon) - 1):
-                    if arrcon[iij].strip != '':
-                        if conta == 3:
-                            t3 = t3 + '\n'
-                            t3 = t3 + arrcon[iij]
-                        elif conta > 1:
-                            pass
-                        else:
-                            t3 = t3 + arrcon[iij]
-                        conta = conta + 1
-                        if conta > 3:
-                            break
+	try:
+		t2 = devStrTm(xmlstring, '>', '<').strip()
+		lacondicion = devStrTm(xmlstring, '<div class="right txt-tight">', '</div>').replace('<br />', '\n').replace('\n ', '\n')
+		arrcon = lacondicion.split('\n')
+		if len(arrcon) > 1:
+			t12 = arrcon[0]
+		t4 = devHtml(xmlstring, 'warm txt-xxlarge').strip().replace('+', '').strip()
+		t3 = ''
+		if extendido:
+			tempviento = devStrTm(xmlstring, '/img/symb-wind', '<br />')
+			dirviento = devStrTm(tempviento, 'alt="', '"')
+			dirviento = dirviento.replace('N', _('North')).replace('S', _('South')).replace('E', _('East')).replace('W', _('West')).replace('NorteOeste', 'NorOeste').replace('NorteEste', 'NorEste')
+			iviento = devStrTm(tempviento, '/>', '').replace('<br />', '')
+			viento = _('Wind') + ':' + dirviento + ' ' + iviento
+			if len(arrcon) > 6:
+				t3 = t3 + arrcon[4].strip()
+				t3 = t3 + ', ' + viento.strip()
+				t3 = t3 + '\n' + arrcon[2].strip()
+			else:
+				conta = 1
+				for iij in list(range(0, len(arrcon) - 1)):
+					if arrcon[iij].strip != '':
+						if conta == 3:
+							t3 = t3 + '\n'
+							t3 = t3 + arrcon[iij]
+						elif conta > 1:
+							pass
+						else:
+							t3 = t3 + arrcon[iij]
+						conta = conta + 1
+						if conta > 3:
+							break
 
-        tempdias = devStrTm(xmlstring, '<div class="c2">', '').replace('<br />', '')
-        arrdias = tempdias.split('<div class="c2_a">')
-        t5 = ''
-        t6 = ''
-        if len(arrdias) > 1:
-            eltexto = arrdias[1]
-            t6 = devStrTm(eltexto, '<span>', '</span>')
-            t6 = devStrTm(t6, ':', '').strip().replace('+', '')
-            temp2 = devStrTm(eltexto, '</span>', '</span>')
-            t5 = devStrTm(temp2, '<span>', '</span>')
-            t5 = devStrTm(t5, ':', '').strip().replace('+', '')
-        simirar = False
-        itemp = None
-        if 'cc_symb">' not in xmlstring:
-            simirar = True
-        if simirar:
-            try:
-                tempact = t4.split(' ')[0]
-                itemp = int(tempact)
-            except:
-                pass
+		tempdias = devStrTm(xmlstring, '<div class="c2">', '').replace('<br />', '')
+		arrdias = tempdias.split('<div class="c2_a">')
+		t5 = ''
+		t6 = ''
+		if len(arrdias) > 1:
+			eltexto = arrdias[1]
+			t6 = devStrTm(eltexto, '<span>', '</span>')
+			t6 = devStrTm(t6, ':', '').strip().replace('+', '')
+			temp2 = devStrTm(eltexto, '</span>', '</span>')
+			t5 = devStrTm(temp2, '<span>', '</span>')
+			t5 = devStrTm(t5, ':', '').strip().replace('+', '')
+		simirar = False
+		itemp = None
+		if 'cc_symb">' not in xmlstring:
+			simirar = True
+		if simirar:
+			try:
+				tempact = t4.split(' ')[0]
+				itemp = int(tempact)
+			except:
+				pass
 
-        t7 = gesImagen(xmlstring, simirar, itemp)
-        t8 = ''
-        t9 = ''
-        t10 = ''
-        cana = ''
-        eltexto = ''
-        if len(arrdias) > 2:
-            eltexto = arrdias[2]
-            t8 = devHtml(eltexto, 'a href="')
-            cana = devStrTm(eltexto, 'title="', '"')
-            t10 = devStrTm(eltexto, '<span>', '</span>')
-            t10 = devStrTm(t10, ':', '').strip().replace('+', '')
-            temp2 = devStrTm(eltexto, '</span>', '</span>')
-            t9 = devStrTm(temp2, '<span>', '</span>')
-            t9 = devStrTm(t9, ':', '').strip().replace('+', '')
-        if extendido:
-            t8 = t8 + '\n' + cana
-        t11 = gesImagen(eltexto)
-        return (t2,
-         t3,
-         t4,
-         t5,
-         t6,
-         t7,
-         t8,
-         t9,
-         t10,
-         t11,
-         t12)
-    except:
-        return ('', '', '', '', '', '', '', '', '', '', '')
+		t7 = gesImagen(xmlstring, simirar, itemp)
+		t8 = ''
+		t9 = ''
+		t10 = ''
+		cana = ''
+		eltexto = ''
+		if len(arrdias) > 2:
+			eltexto = arrdias[2]
+			t8 = devHtml(eltexto, 'a href="')
+			cana = devStrTm(eltexto, 'title="', '"')
+			t10 = devStrTm(eltexto, '<span>', '</span>')
+			t10 = devStrTm(t10, ':', '').strip().replace('+', '')
+			temp2 = devStrTm(eltexto, '</span>', '</span>')
+			t9 = devStrTm(temp2, '<span>', '</span>')
+			t9 = devStrTm(t9, ':', '').strip().replace('+', '')
+		if extendido:
+			t8 = t8 + '\n' + cana
+		t11 = gesImagen(eltexto)
+		return (t2,
+		 t3,
+		 t4,
+		 t5,
+		 t6,
+		 t7,
+		 t8,
+		 t9,
+		 t10,
+		 t11,
+		 t12)
+	except:
+		return ('', '', '', '', '', '', '', '', '', '', '')
 
 
 def getImagen(codigo, mirarnoche = False):
-    listaimagenes = {'111': '5',
-     '000': '1',
-     '100': '2',
-     '200': '3',
-     '210': '14',
-     '211': '21',
-     '212': '21',
-     '220': '13',
-     '221': '20',
-     '222': '20',
-     '240': '17',
-     '300': '6',
-     '310': '13',
-     '311': '23',
-     '312': '23',
-     '320': '13',
-     '321': '20',
-     '322': '20',
-     '340': '16',
-     '400': '7',
-     '410': '8',
-     '411': '24',
-     '412': '24',
-     '420': '18',
-     '421': '26',
-     '422': '19',
-     '430': '12',
-     '431': '29',
-     '432': '22',
-     '440': '15'}
-    imagen = codigo[1:]
-    if imagen not in listaimagenes:
-        valor = '5'
-    else:
-        valor = listaimagenes[imagen]
-    if codigo[0] == 'n' or mirarnoche:
-        valor = equivnoche(valor)
-    return valor + '_int-fs8.png'
+	listaimagenes = {'111': '5',
+	 '000': '1',
+	 '100': '2',
+	 '200': '3',
+	 '210': '14',
+	 '211': '21',
+	 '212': '21',
+	 '220': '13',
+	 '221': '20',
+	 '222': '20',
+	 '240': '17',
+	 '300': '6',
+	 '310': '13',
+	 '311': '23',
+	 '312': '23',
+	 '320': '13',
+	 '321': '20',
+	 '322': '20',
+	 '340': '16',
+	 '400': '7',
+	 '410': '8',
+	 '411': '24',
+	 '412': '24',
+	 '420': '18',
+	 '421': '26',
+	 '422': '19',
+	 '430': '12',
+	 '431': '29',
+	 '432': '22',
+	 '440': '15'}
+	imagen = codigo[1:]
+	if imagen not in listaimagenes:
+		valor = '5'
+	else:
+		valor = listaimagenes[imagen]
+	if codigo[0] == 'n' or mirarnoche:
+		valor = equivnoche(valor)
+	return valor + '_int-fs8.png'
 
 
 def gesImagen(xmlstring, mirarnoche = False, temperatura = None):
@@ -410,15 +410,15 @@ def gesImagen(xmlstring, mirarnoche = False, temperatura = None):
 
 def devinfowheather(extendido):
 	try:
-	    f = open('/tmp/' + devarchivo(), 'r')
-	    rettemp = f.read()
-	    f.close()
+		f = open('/tmp/' + devarchivo(), 'r')
+		rettemp = f.read()
+		f.close()
 	except:
-	    pondebug('devinfowheater ERROR')
-	    return ('', '', '', '', '', '', '', '', '', '', '')
+		pondebug('devinfowheater ERROR')
+		return ('', '', '', '', '', '', '', '', '', '', '')
 
 	if devtipo() == 1:
-	    return devinfoacu(rettemp, extendido)
+		return devinfoacu(rettemp, extendido)
 	sourceEncoding = 'iso-8859-1'
 	targetEncoding = 'utf-8'
 	ret = unicode(rettemp, sourceEncoding).encode(targetEncoding)
@@ -429,23 +429,23 @@ def devinfowheather(extendido):
 	infoman = devStrTm(ret, 'forecast_conditions><forecast_conditions>', '</forecast_conditions>')
 	unidades = '\xc2\xbaF'
 	if 'unit_system data="SI"' in infolugar:
-	    unidades = '\xc2\xbaC'
-	    t4 = devStrTm(infoactual, 'temp_c data="', '"') + unidades
+		unidades = '\xc2\xbaC'
+		t4 = devStrTm(infoactual, 'temp_c data="', '"') + unidades
 	else:
-	    t4 = devStrTm(infoactual, 'temp_f data="', '"') + unidades
+		t4 = devStrTm(infoactual, 'temp_f data="', '"') + unidades
 	t2 = devStrTm(infolugar, 'city data="', '"')
 	t12 = devStrTm(infoactual, 'condition data="', '"')
 	t3 = ''
 	if extendido:
-	    t3 = t3 + '' + devStrTm(infoactual, 'humidity data="', '"').replace(':', '')
-	    t3 = t3 + ', ' + devStrTm(infoactual, 'wind_condition data="', '"').replace(':', '')
+		t3 = t3 + '' + devStrTm(infoactual, 'humidity data="', '"').replace(':', '')
+		t3 = t3 + ', ' + devStrTm(infoactual, 'wind_condition data="', '"').replace(':', '')
 	t5 = devStrTm(infohoy, 'low data="', '"') + unidades
 	t6 = devStrTm(infohoy, 'high data="', '"') + unidades
 	t7 = devStrTm(infoactual, 'icon data="', '"').replace('/ig/images/weather/', '')
 	t8 = ''
 	t8 = t8 + '' + devsem(devStrTm(infoman, 'day_of_week data="', '"'))
 	if extendido:
-	    t8 = t8 + '\n' + devStrTm(infoman, 'condition data="', '"')
+		t8 = t8 + '\n' + devStrTm(infoman, 'condition data="', '"')
 	t9 = devStrTm(infoman, 'low data="', '"') + unidades
 	t10 = devStrTm(infoman, 'high data="', '"') + unidades
 	t11 = devStrTm(infoman, 'icon data="', '"').replace('/ig/images/weather/', '')
@@ -475,7 +475,7 @@ def hayinfowheather():
 		return True
 	else:
 		return False
-	      
+		
 def haywheather():
 	rethay = False
 	try:
@@ -503,17 +503,17 @@ def haywheather():
 
 
 def hayinet():
-    ret = False
-    try:
-        f = open('/tmp/testinet.txt', 'r')
-        texto = f.read().replace('\n', '')
-        f.close()
-        if '1 packets transmitted, 1 packets received' in texto:
+	ret = False
+	try:
+		f = open('/tmp/testinet.txt', 'r')
+		texto = f.read().replace('\n', '')
+		f.close()
+		if '1 packets transmitted, 1 packets received' in texto:
 		ret = True
-    except:
-        pass
+	except:
+		pass
 
-    return ret
+	return ret
 
 
 def devwheather():
@@ -535,10 +535,10 @@ def devwheather():
 				rethay3 = config.plugins.AccuWeatherPlugin.foreEntries[0].pais.value
 				rethay2 = config.plugins.AccuWeatherPlugin.foreEntries[0].dominio.value
 	except:
-	    pass
-	  
+		pass
+	
 	return (rethay, rethay2, rethay3, rethay4)
-      
+	
 class EGWeather(Poll, Converter, object):
 	WFEXIST = 0
 	TIEMPOHOY = 1
@@ -632,110 +632,110 @@ class EGWeather(Poll, Converter, object):
 		info = None
 		norec = False
 		try:
-		    info = self.source.getBoolean()
-		    if info:
+			info = self.source.getBoolean()
+			if info:
 			return ''
-		    norec = True
+			norec = True
 		except:
-		    pass
-
-		if not info and not norec:
-		    try:
-			info = self.source.time
-		    except:
 			pass
 
 		if not info and not norec:
-		    try:
+			try:
+			info = self.source.time
+			except:
+			pass
+
+		if not info and not norec:
+			try:
 			service = self.source.service
 			info = service and service.info()
-		    except:
+			except:
 			pass
 
 		if not info and not norec:
-		    return ''
+			return ''
 		text = ''
 		if haywheather():
-		    self.poll_interval = self.intervalo
-		    self.lugar, self.temperatura, self.textohoy, self.textomanana, self.iconohoy, self.iconomanana, self.ahora = cargaDatos(self.type, self.extended)
-		    if self.type == self.TIEMPOHOY:
+			self.poll_interval = self.intervalo
+			self.lugar, self.temperatura, self.textohoy, self.textomanana, self.iconohoy, self.iconomanana, self.ahora = cargaDatos(self.type, self.extended)
+			if self.type == self.TIEMPOHOY:
 			text = self.textohoy
-		    elif self.type == self.AHORA:
+			elif self.type == self.AHORA:
 			text = self.ahora
-		    elif self.type == self.TIEMPOMAN:
+			elif self.type == self.TIEMPOMAN:
 			text = self.textomanana
-		    elif self.type == self.WFLUGAR:
+			elif self.type == self.WFLUGAR:
 			text = self.lugar
-		    elif self.type == self.WFTEMP:
+			elif self.type == self.WFTEMP:
 			text = self.temperatura
-		    elif self.type == self.TEMPERATURAGRADOS:
+			elif self.type == self.TEMPERATURAGRADOS:
 			text = self.temperatura.replace('C', '').replace('F', '').replace(' ', '')
-		    elif self.type == self.LUGARGRADOS:
+			elif self.type == self.LUGARGRADOS:
 			if len(self.lugar) > 17:
-			    self.lugar = self.lugar[:16] + '...'
+				self.lugar = self.lugar[:16] + '...'
 			text = self.lugar + ' ' + self.textohoy.replace('C', '').replace('F', '').replace(' ', '')
-		    elif self.type == self.ICONOHOY:
+			elif self.type == self.ICONOHOY:
 			if self.iconohoy == '':
-			    pngname = ''
+				pngname = ''
 			else:
-			    iconogif = self.iconohoy
-			    if devtipo() == 0:
+				iconogif = self.iconohoy
+				if devtipo() == 0:
 				iconopng = devgificono(iconogif, actual=True)
 				rpng = self.rutapngacu
-			    else:
+				else:
 				iconopng = iconogif.replace('.jpg', '-fs8.png')
 				rpng = self.rutapngacu
-			    pondebug('imagen [' + rpng + iconopng + ']')
-			    if fileExists(rpng + iconopng):
+				pondebug('imagen [' + rpng + iconopng + ']')
+				if fileExists(rpng + iconopng):
 				pngname = rpng + iconopng
-			    elif fileExists(self.rutaimagen + iconogif):
+				elif fileExists(self.rutaimagen + iconogif):
 				pngname = self.rutaimagen + iconogif
-			    else:
+				else:
 				pngname = self.rutapng + '0-fs8.png'
 			text = pngname
-		    elif self.type == self.ICONOHOYVFD:
+			elif self.type == self.ICONOHOYVFD:
 			if self.iconohoy == '':
-			    pngname = ''
+				pngname = ''
 			else:
-			    iconogif = self.iconohoy
-			    if devtipo() == 0:
+				iconogif = self.iconohoy
+				if devtipo() == 0:
 				iconopng = devgificono(iconogif, actual=True)
 				rpng = self.rutavfd
-			    else:
+				else:
 				iconopng = iconogif.replace('.jpg', '-fs8.png')
 				rpng = self.rutavfd
-			    pondebug('imagen [' + rpng + iconopng + ']')
-			    if fileExists(rpng + iconopng):
+				pondebug('imagen [' + rpng + iconopng + ']')
+				if fileExists(rpng + iconopng):
 				pngname = rpng + iconopng
-			    elif fileExists(self.rutavfd + iconogif):
+				elif fileExists(self.rutavfd + iconogif):
 				pngname = self.rutavfd + iconogif
-			    else:
+				else:
 				pngname = self.rutapng + '0-fs8.png'
 			text = pngname
-		    elif self.type == self.ICONOMAN:
+			elif self.type == self.ICONOMAN:
 			if self.iconomanana == '':
-			    pngname = ''
+				pngname = ''
 			else:
-			    iconogif = self.iconomanana
-			    if devtipo() == 0:
+				iconogif = self.iconomanana
+				if devtipo() == 0:
 				iconopng = devgificono(iconogif)
 				rpng = self.rutapngacu
-			    else:
+				else:
 				iconopng = iconogif.replace('.jpg', '-fs8.png')
 				rpng = self.rutapngacu
-			    if fileExists(rpng + iconopng):
+				if fileExists(rpng + iconopng):
 				pngname = rpng + iconopng
-			    elif fileExists(self.rutaimagen + iconogif):
+				elif fileExists(self.rutaimagen + iconogif):
 				pngname = self.rutaimagen + iconogif
-			    else:
+				else:
 				pngname = self.rutapng + '0-fs8.png'
 			text = pngname
 		if text == '':
-		    self.poll_interval = 6000
+			self.poll_interval = 6000
 		return text
 
 	text = property(getText)
 
 	def changed(self, what):
-	    if what[0] != self.CHANGED_SPECIFIC or what[1] == self.type:
+		if what[0] != self.CHANGED_SPECIFIC or what[1] == self.type:
 		Converter.changed(self, what)

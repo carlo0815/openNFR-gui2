@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from Components.Converter.Converter import Converter
 from enigma import iServiceInformation, iPlayableService, iPlayableServicePtr, eServiceReference, eServiceCenter, eTimer, getBestPlayableServiceReference
 from Components.Element import cached
@@ -8,14 +9,14 @@ class NFRFunktion(Converter, object):
 	PLUGINS = 10
 	PLUGINS1 = 11
 	PLUGINS2 = 12
-	PLUGINS3 = 13                 	
+	PLUGINS3 = 13
 
 	def __init__(self, type):
 		Converter.__init__(self, type)
 		if type == "Plugins":
 			self.type = self.PLUGINS
 		elif type == "Plugins1":
-			self.type = self.PLUGINS1	
+			self.type = self.PLUGINS1
 		elif type == "Plugins2":
 			self.type = self.PLUGINS2
 

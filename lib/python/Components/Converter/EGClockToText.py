@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from Converter import Converter
+
+from __future__ import absolute_import
+from Components.Converter.Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
 from Components.config import *
@@ -60,13 +62,13 @@ class EGClockToText(Converter, object):
 			a = _("January") + _("February")  + _("March") + _("April") + _("May") + _("June")
 			b = _("July") + _("August")  + _("September") + _("October") + _("November") + _("December")
 			if(dateFormat == "DDNNMMYY"):
-				return strftime(_(strftime("%A",t)) + " " + _(strftime("%d",t)) + " " + _(strftime("%B",t)) + " " + _(strftime("%Y",t)) )
+				return strftime(_(strftime("%A", t)) + " " + _(strftime("%d", t)) + " " + _(strftime("%B", t)) + " " + _(strftime("%Y", t)) )
 			if(dateFormat == "NNMMYY"):
-				return strftime(_(strftime("%d",t)) + " " + _(strftime("%B",t)) + " " + _(strftime("%Y",t)))
+				return strftime(_(strftime("%d", t)) + " " + _(strftime("%B", t)) + " " + _(strftime("%Y", t)))
 			if(dateFormat == "MMNNYY"):
-				return strftime(_(strftime("%B",t)) + " " + _(strftime("%d",t)) + " " + _(strftime("%Y",t)))
+				return strftime(_(strftime("%B", t)) + " " + _(strftime("%d", t)) + " " + _(strftime("%Y", t)))
 			if(dateFormat == "MMNNDDYY"):
-				return strftime(_(strftime("%B",t)) + " " + _(strftime("%d",t)) + " " + _(strftime("%A",t)) + " " + _(strftime("%Y",t)) )
+				return strftime(_(strftime("%B", t)) + " " + _(strftime("%d", t)) + " " + _(strftime("%A", t)) + " " + _(strftime("%Y", t)) )
 			#return strftime("%A %B %d, %Y", t)
 		elif self.type == self.FORMAT:
 			spos = self.fmt_string.find('%')

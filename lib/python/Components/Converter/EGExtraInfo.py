@@ -1,11 +1,12 @@
 # Based on PliExtraInfo
 # Recoded for Black Pole by meo.
 
-
+from __future__ import print_function
+from __future__ import absolute_import
 from enigma import iServiceInformation
 from Components.Converter.Converter import Converter
 from Components.Element import cached
-from Poll import Poll
+from Components.Converter Poll import Poll
 
 
 class EGExtraInfo(Poll, Converter, object):
@@ -61,23 +62,23 @@ class EGExtraInfo(Poll, Converter, object):
 			data['using'] = info.get('using', '')
 			data['reader'] = info.get('reader', '')
 			## CCcam
-			if data['using']:	
-			    data['using'] = info.get('using', '')
-			    data['decode'] = info.get('decode', '')
-			    data['source'] = info.get('source', '')
-			    data['reader'] = info.get('reader', '')
-			    data['address'] = info.get('address', 'Unknown')
-			    data['address_from'] = info.get('from', 'Unknown')
-			    data['hops'] = info.get('hops', '0')
-			    data['ecm_time'] = info.get('ecm time', '?')
+			if data['using']:
+				data['using'] = info.get('using', '')
+				data['decode'] = info.get('decode', '')
+				data['source'] = info.get('source', '')
+				data['reader'] = info.get('reader', '')
+				data['address'] = info.get('address', 'Unknown')
+				data['address_from'] = info.get('from', 'Unknown')
+				data['hops'] = info.get('hops', '0')
+				data['ecm_time'] = info.get('ecm time', '?')
 			elif data['reader']:
-			    data['caid'] = info.get('caid', '')
-			    data['pid'] = info.get('pid', '')
-			    data['provider'] = info.get('prov', '')
-			    data['reader'] = info.get('reader', '')
-			    data['address'] = info.get('from', 'Unknown')
-			    data['hops'] = info.get('hops', '0')
-			    data['ecm_time'] = info.get('ecm time', '?')			    
+				data['caid'] = info.get('caid', '')
+				data['pid'] = info.get('pid', '')
+				data['provider'] = info.get('prov', '')
+				data['reader'] = info.get('reader', '')
+				data['address'] = info.get('from', 'Unknown')
+				data['hops'] = info.get('hops', '0')
+				data['ecm_time'] = info.get('ecm time', '?')
 			else:
 				data['decode'] = info.get('decode', '')
 				if data['decode']:
@@ -110,7 +111,7 @@ class EGExtraInfo(Poll, Converter, object):
 				else:
 					source = info.get('source', None)
 					if source:
-						print "Found Source"
+						print("Found Source")
 						#wicardd
 						if 'CaID 0x' in ecm[0] and 'pid 0x' in ecm[0]:
 							data['caid'] = ecm[0][ecm[0].find('CaID 0x')+7:ecm[0].find(',')]
