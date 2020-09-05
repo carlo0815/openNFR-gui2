@@ -9,6 +9,7 @@ from Components.ParentalControl import parentalControl
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.SystemInfo import SystemInfo
 from boxbranding import getBoxType, getMachineBuild
+from time import time
 import Components.RecordingConfig
 
 POLLTIME = 5 # seconds
@@ -68,7 +69,6 @@ class SymbolsCheckPoller:
 			self.Timer()
 		self.Subtitle()
 		self.ParentalControl()
-		self.PlaySymbol()
 		del self.service
 
 	def Recording(self):
@@ -114,7 +114,7 @@ class SymbolsCheckPoller:
 					self.led = "0"
 			elif self.led == "1":
 				open("/proc/stb/lcd/powerled", "w").write("1")
-		elif getBoxType() in ('dm7020hd', 'dm7020hdv2'):
+		elif getBoxType() in ('dm7020hd', 'dm7020hdv2') and fileExists("/proc/stb/fp/led_set"):
 			recordings = len(NavigationInstance.instance.getRecordings(False, Components.RecordingConfig.recType(config.recording.show_rec_symbol_for_rec_types.getValue())))
 			self.blink = not self.blink
 			if recordings > 0:
@@ -141,19 +141,28 @@ class SymbolsCheckPoller:
 		elif getMachineBuild() in ('sf8008', 'sf8008m', 'cc1', 'ustym4kpro', 'beyonwizv2', 'viper4k') and fileExists("/proc/stb/fp/ledpowercolor"):
 			import Screens.Standby
 			recordings = len(NavigationInstance.instance.getRecordings(False, Components.RecordingConfig.recType(config.recording.show_rec_symbol_for_rec_types.getValue())))
+			self.blink = not self.blink
 			if recordings > 0:
-				open("/proc/stb/fp/mixerled", "w").write("on")
-			elif not Screens.Standby.inStandby:
-				open("/proc/stb/fp/poweronled", "w").write("on")
-			elif Screens.Standby.inStandby:
-				open("/proc/stb/fp/standbyled", "w").write("on")
-		
+				if self.blink:
+					open("/proc/stb/fp/ledpowercolor", "w").write("0")
+					self.led = "1"
+				else:
+					if Screens.Standby.inStandby:
+						open("/proc/stb/fp/ledpowercolor", "w").write(config.usage.lcd_ledstandbycolor.value)
+					else:
+						open("/proc/stb/fp/ledpowercolor", "w").write(config.usage.lcd_ledpowercolor.value)
+					self.led = "0"
+			elif self.led == "1":
+				if Screens.Standby.inStandby:
+					open("/proc/stb/fp/ledpowercolor", "w").write(config.usage.lcd_ledstandbycolor.value)
+				else:
+					open("/proc/stb/fp/ledpowercolor", "w").write(config.usage.lcd_ledpowercolor.value)
 		else:
 			if not fileExists("/proc/stb/lcd/symbol_recording") or not fileExists("/proc/stb/lcd/symbol_record_1") or not fileExists("/proc/stb/lcd/symbol_record_2"):
 				return
-	
+
 			recordings = len(NavigationInstance.instance.getRecordings(False, Components.RecordingConfig.recType(config.recording.show_rec_symbol_for_rec_types.getValue())))
-		
+
 			if recordings > 0:
 				open("/proc/stb/lcd/symbol_recording", "w").write("1")
 				if recordings == 1:
@@ -167,7 +176,6 @@ class SymbolsCheckPoller:
 				open("/proc/stb/lcd/symbol_record_1", "w").write("0")
 				open("/proc/stb/lcd/symbol_record_2", "w").write("0")
 
-
 	def Subtitle(self):
 		if not fileExists("/proc/stb/lcd/symbol_smartcard") and not fileExists("/proc/stb/lcd/symbol_subtitle"):
 			return
@@ -179,27 +187,31 @@ class SymbolsCheckPoller:
 			subtitles = len(subtitlelist)
 			if fileExists("/proc/stb/lcd/symbol_subtitle"):
 				if subtitles > 0:
-						f = open("/proc/stb/lcd/symbol_subtitle", "w")
-						f.write("1")
-						f.close()
+					f = open("/proc/stb/lcd/symbol_subtitle", "w")
+					f.write("1")
+					f.close()
 				else:
-						f = open("/proc/stb/lcd/symbol_subtitle", "w")
-						f.write("0")
-						f.close()
+					f = open("/proc/stb/lcd/symbol_subtitle", "w")
+					f.write("0")
+					f.close()
 			else:
 				if subtitles > 0:
-						f = open("/proc/stb/lcd/symbol_smartcard", "w")
-						f.write("1")
-						f.close()
+					f = open("/proc/stb/lcd/symbol_smartcard", "w")
+					f.write("1")
+					f.close()
 				else:
-						f = open("/proc/stb/lcd/symbol_smartcard", "w")
-						f.write("0")
-						f.close()
-		else:
-				if fileExists("/proc/stb/lcd/symbol_smartcard"):
 					f = open("/proc/stb/lcd/symbol_smartcard", "w")
 					f.write("0")
 					f.close()
+		else:
+			if fileExists("/proc/stb/lcd/symbol_subtitle"):
+				f = open("/proc/stb/lcd/symbol_subtitle", "w")
+				f.write("0")
+				f.close()
+			else:
+				f = open("/proc/stb/lcd/symbol_smartcard", "w")
+				f.write("0")
+				f.close()
 
 	def ParentalControl(self):
 		if not fileExists("/proc/stb/lcd/symbol_parent_rating"):
@@ -274,21 +286,21 @@ class SymbolsCheckPoller:
 			f.close()
 
 	def Crypted(self):
-		if not fileExists("/proc/stb/lcd/symbol_scramled"):
+		if not fileExists("/proc/stb/lcd/symbol_scrambled"):
 			return
 
 		info = self.service and self.service.info()
 		if not info:
 			return ""
 
-		crypted = int(info.getInfo(iServiceInformation.sIsCrypted))
+		crypted = info.getInfo(iServiceInformation.sIsCrypted)
 
 		if crypted == 1:
-			f = open("/proc/stb/lcd/symbol_scramled", "w")
+			f = open("/proc/stb/lcd/symbol_scrambled", "w")
 			f.write("1")
 			f.close()
 		else:
-			f = open("/proc/stb/lcd/symbol_scramled", "w")
+			f = open("/proc/stb/lcd/symbol_scrambled", "w")
 			f.write("0")
 			f.close()
 
@@ -307,7 +319,6 @@ class SymbolsCheckPoller:
 			f.write("1")
 			f.close()
 		else:
-			open("/proc/stb/lcd/symbol_play ", "w").write("0")
 			f = open("/proc/stb/lcd/symbol_teletext", "w")
 			f.write("0")
 			f.close()
@@ -320,15 +331,15 @@ class SymbolsCheckPoller:
 		if not info:
 			return ""
 
-		hbbtv = int(info.getInfo(iServiceInformation.sHBBTVUrl))
+		hbbtv = info.getInfoString(iServiceInformation.sHBBTVUrl)
 
-		if hbbtv != -1:
+		if hbbtv != "":
 			f = open("/proc/stb/lcd/symbol_epg", "w")
-			f.write("0")
+			f.write("1")
 			f.close()
 		else:
 			f = open("/proc/stb/lcd/symbol_epg", "w")
-			f.write("1")
+			f.write("0")
 			f.close()
 
 	def Audio(self):
