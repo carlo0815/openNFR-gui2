@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import math
-from Renderer import Renderer
+from Components.Renderer.Renderer import Renderer
 from skin import parseColor
 from enigma import eCanvas, eSize, gRGB, eRect
 from Components.VariableText import VariableText
@@ -62,9 +63,9 @@ class OMaClockLcd(Renderer):
 		z = (math.pi / 180)
 		x = int(round((r * math.sin((a * z)))))
 		y = int(round((r * math.cos((a * z)))))
-		return ((m + x),(m1 - y))
+		return ((m + x), (m1 - y))
 
-	def hand(self,opt):
+	def hand(self, opt):
 		if LCDSIZE400:
 			width = 396
 			height = 240
@@ -76,7 +77,7 @@ class OMaClockLcd(Renderer):
 		elif LCDSIZE800:
 			width = 792
 			height = 475
-			l = 110				
+			l = 110
 		elif LCDSIZE220:
 			width = 218
 			height = 176
@@ -94,7 +95,7 @@ class OMaClockLcd(Renderer):
 			elif LCDSIZE480:
 				l = l + 72
 			elif LCDSIZE800:
-				l = l + 120					
+				l = l + 120
 			elif LCDSIZE220:
 				l = l + 50
 			else:
@@ -106,9 +107,9 @@ class OMaClockLcd(Renderer):
 			elif LCDSIZE480:
 				l = l + 66
 			elif LCDSIZE800:
-				l = l + 100					
+				l = l + 100
 			elif LCDSIZE220:
-				l = l + 40				
+				l = l + 40
 			else:
 				l = l + 40
 			self.fColor = self.fColorm
@@ -120,11 +121,11 @@ class OMaClockLcd(Renderer):
 	def line_draw(self, x0, y0, x1, y1):
 		steep = (abs((y1 - y0)) > abs((x1 - x0)))
 		if steep:
-			x0,y0 = y0,x0
-			x1,y1 = y1,x1
+			x0, y0 = y0, x0
+			x1, y1 = y1, x1
 		if (x0 > x1):
-			x0,x1 = x1,x0
-			y0,y1 = y1,y0
+			x0, x1 = x1, x0
+			y0, y1 = y1, y0
 		if (y0 < y1):
 			ystep = 1
 		else:
