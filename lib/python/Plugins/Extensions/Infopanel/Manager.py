@@ -1,7 +1,7 @@
 from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry
-from Components.Console import Console
+from . Console1 import Console
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.Sources.List import List
@@ -15,9 +15,11 @@ from enigma import eTimer
 from time import sleep
 from os import path
 import os
-from Plugins.Extensions.Infopanel.Softcam import *
+from . import Softcam
 import shutil
+import six
 from six.moves.urllib.request import urlopen
+from six.moves import urllib
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Components.About import about
 
@@ -192,9 +194,9 @@ class NFRCamManager(Screen):
 		result = result
 		if "Link detected: yes"  in result:
 			from Screens.NetworkSetup import NetworkOpenvpn
-			ext_ip = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read().decode('utf-8')
-			if isinstance(ext_ip, unicode):
-				ext_ip = ext_ip.encode('utf8')
+			ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
+			if isinstance(ext_ip, six.text_type):
+				ext_ip = six.ensure_str(ext_ip.encode('utf8'))
 				print(ext_ip)
 				self.AboutText1 = "Online: " + (ext_ip)
 			else:
@@ -203,7 +205,7 @@ class NFRCamManager(Screen):
 				self.AboutText2 = "openVPN is running "
 			else:
 				self.AboutText2 = "no openVPN found" 
-				listecm = ""
+			listecm = ""
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
