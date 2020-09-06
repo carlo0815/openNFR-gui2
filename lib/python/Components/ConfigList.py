@@ -16,7 +16,7 @@ class ConfigList(HTMLComponent, GUIComponent, object):
 		seperation, = skin.parameters.get("ConfigListSeperator", (350, ))
 		self.l.setSeperation(seperation)
 		self.timer = eTimer()
-		self.list = list
+		self.configList = list
 		self.onSelectionChanged = [ ]
 		self.current = None
 		self.session = session
@@ -109,7 +109,7 @@ class ConfigList(HTMLComponent, GUIComponent, object):
 
 	def isChanged(self):
 		is_changed = False
-		for x in self.list:
+		for x in self.configList:
 			is_changed |= x[1].isChanged()
 
 		return is_changed

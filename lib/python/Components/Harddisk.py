@@ -1,5 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
+from __future__ import division
 import os
 import time
 from Tools.CList import CList
@@ -9,6 +10,7 @@ from Tools.HardwareInfo import HardwareInfo
 from boxbranding import getBoxType, getMachineBuild
 import Components.Task
 import re
+import six
 
 def readFile(filename):
 	file = open(filename)
@@ -322,7 +324,7 @@ class Harddisk:
 		return 1
 
 	def killPartitionTable(self):
-		zero = 512 * '\0'
+		zero = 512 * b'\0'
 		h = open(self.dev_path, 'wb')
 		# delete first 9 sectors, which will likely kill the first partition too
 		for i in list(range(9)):
@@ -330,7 +332,7 @@ class Harddisk:
 		h.close()
 
 	def killPartition(self, n):
-		zero = 512 * '\0'
+		zero = 512 * b'\0''\0'
 		part = self.partitionPath(n)
 		h = open(part, 'wb')
 		for i in list(range(3)):
@@ -398,6 +400,8 @@ class Harddisk:
 		task = Components.Task.ConditionTask(job, _("Waiting for partition"))
 		task.check = lambda: os.path.exists(self.partitionPath("1"))
 		task.weighting = 1
+
+		task = UnmountTask(job, self)
 
 		task = MkfsTask(job, _("Creating filesystem"))
 		big_o_options = ["dir_index"]
@@ -796,7 +800,7 @@ class HarddiskManager:
 		error = False
 		removable = False
 		BLACKLIST=[]
-		if getMachineBuild() in ('gbmv200', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61', 'vuduo4k', 'ustym4kpro', 'beyonwizv2', 'viper4k', 'dags72604', 'u51', 'u52', 'u53', 'u532', 'u533', 'u54', 'u56', 'u5', 'u5pvr', 'cc1', 'sf8008', 'sf8008m', 'vuzero4k', 'et1x000', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900', 'dm7080', 'dm820', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'h7', '8100s', 'et13000', 'sf5008'):
+		if getMachineBuild() in ('gbmv200', 'plus', 'multibox', 'h9combo', 'h10', 'v8plus', 'hd60', 'hd61', 'vuduo4k', 'ustym4kpro', 'beyonwizv2', 'viper4k', 'dags72604', 'u51', 'u52', 'u53', 'u532', 'u533', 'u54', 'u56', 'u57', 'u5', 'u5pvr', 'cc1', 'sf8008', 'sf8008m', 'vuzero4k', 'et1x000', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900', 'dm7080', 'dm820', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'h7', '8100s', 'et13000', 'sf5008'):
  			BLACKLIST=["mmcblk0"]
 		elif getMachineBuild() in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k'):
 			BLACKLIST=["mmcblk1"]
@@ -1048,6 +1052,7 @@ class UnmountTask(Components.Task.LoggingTask):
 	def prepare(self):
 		try:
 			dev = self.hdd.disk_path.split('/')[-1]
+			dev = six.ensure_binary(dev)
 			open('/dev/nomount.%s' % dev, "wb").close()
 		except Exception as e:
 			print("ERROR: Failed to create /dev/nomount file:", e)
@@ -1105,23 +1110,18 @@ class MkfsTask(Components.Task.LoggingTask):
 	def prepare(self):
 		self.fsck_state = None
 	def processOutput(self, data):
-		print("[Mkfs]", data)
-		if 'Writing inode tables:' in data:
+		data = six.ensure_str(data)
+		if 'Writing inode tables:' in data or 'Die Superblöcke' in data:
 			self.fsck_state = 'inode'
-		elif 'Creating journal' in data:
-			self.fsck_state = 'journal'
-			self.setProgress(80)
-		elif 'Writing superblocks ' in data:
-			self.setProgress(95)
 		elif self.fsck_state == 'inode':
 			if '/' in data:
 				try:
 					d = data.strip(' \x08\r\n').split('/', 1)
 					if '\x08' in d[1]:
 						d[1] = d[1].split('\x08', 1)[0]
-					self.setProgress(80*int(d[0])/int(d[1]))
+					self.setProgress(80*int(d[0])//int(d[1]))
 				except Exception as e:
-					print("[Mkfs] E:", e)
+					print("[Harddisk] MkfsTask - [Mkfs] Error:", e)
 				return # don't log the progess
 		self.log.append(data)
 

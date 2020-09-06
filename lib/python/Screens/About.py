@@ -53,11 +53,11 @@ class About(Screen):
 			cpuMHz = "   (1,5 GHz)"
 		elif getMachineBuild() in ('formuler1', 'triplex'):
 			cpuMHz = "   (1,3 GHz)"
-		elif getMachineBuild() in ('gbmv200', 'u51', 'u5', 'u53', 'u52', 'u54', 'u55', 'u56', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
+		elif getMachineBuild() in ('gbmv200', 'plus', 'u51', 'u5', 'u53', 'u52', 'u54', 'u55', 'u56', 'u57', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
 			cpuMHz = "   (1,6 GHz)"			
 		elif getMachineBuild() in ('vuuno4k', 'vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 			cpuMHz = "   (1,7 GHz)"
-		elif getMachineBuild() in ('alien5', 'u53'):
+		elif getMachineBuild() in ('alien5', 'hzero', 'h8'):
 			cpuMHz = "   (2,0 GHz)"
 		elif getMachineBuild() in ('vuduo4k'):
 			cpuMHz = _("   (2.1 GHz)")

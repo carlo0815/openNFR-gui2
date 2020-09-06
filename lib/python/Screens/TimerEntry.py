@@ -295,7 +295,7 @@ class TimerEntry(Screen, ConfigListScreen):
 		if cur == self.channelEntry:
 			self.session.openWithCallback(
 				self.finishedChannelSelection,
-				ChannelSelection.SimpleChannelSelection,
+				Screens.ChannelSelection.SimpleChannelSelection,
 				_("Select channel to record from")
 			)
 		elif config.usage.setup_level.index >= 2 and cur == self.dirname:
@@ -348,7 +348,7 @@ class TimerEntry(Screen, ConfigListScreen):
 	def selectChannelSelector(self, *args):
 		self.session.openWithCallback(
 				self.finishedChannelSelectionCorrection,
-				ChannelSelection.SimpleChannelSelection,
+				Screens.ChannelSelection.SimpleChannelSelection,
 				_("Select channel to record from")
 			)
 

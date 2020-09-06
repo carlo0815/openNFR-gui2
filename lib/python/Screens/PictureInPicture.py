@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, division
 from Screens.Screen import Screen
 from Screens.Dish import Dishpip
 from enigma import ePoint, eSize, eRect, eServiceCenter, getBestPlayableServiceReference, eServiceReference, eTimer
@@ -21,7 +21,7 @@ def timedStopPipPigMode():
 		if SystemInfo["hasPIPVisibleProc"]:
 			open(SystemInfo["hasPIPVisibleProc"], "w").write("1")
 		elif hasattr(InfoBar.instance.session, "pip"):
-			InfoBar.instance.session.pip.playService(InfoBar.instance.session.pip.currentServicePiP,InfoBar.instance.session.pip.currentBouquetPiP)
+			InfoBar.instance.session.pip.playService(InfoBar.instance.session.pip.currentService)
 	global PipPigModeEnabled
 	PipPigModeEnabled = False
 
@@ -51,15 +51,11 @@ class PictureInPicture(Screen):
 	def __init__(self, session):
 		global pip_config_initialized
 		Screen.__init__(self, session)
-		self.skinName = "MyPip"
 		self["video"] = VideoWindow()
 		self.pipActive = session.instantiateDialog(PictureInPictureZapping)
 		self.dishpipActive = session.instantiateDialog(Dishpip)
-		self.currentBouquetMain = None
-		self.currentBouquetPiP = None
-		self.currentServicePiP = None
-		self.currentServiceReferencePiP = None
-		self.currentServicePtrPiP = None
+		self.currentService = None
+		self.currentServiceReference = None
 
 		self.choicelist = [("standard", _("Standard"))]
 		if SystemInfo["VideoDestinationConfigurable"]:
@@ -72,8 +68,6 @@ class PictureInPicture(Screen):
 
 		if not pip_config_initialized:
 			config.av.pip = ConfigPosition(default=[510, 28, 180, 135], args = (MAX_X, MAX_Y, MAX_X, MAX_Y))
-			config.av.pip_standard = ConfigPosition(default=[510, 28, 180, 135], args = (MAX_X, MAX_Y, MAX_X, MAX_Y))
-			config.av.pip_noadspip = ConfigPosition(default=[510, 28, 180, 135], args = (MAX_X, MAX_Y, MAX_X, MAX_Y))            
 			config.av.pip_mode = ConfigSelection(default="standard", choices=self.choicelist)
 			pip_config_initialized = True
 
@@ -99,23 +93,6 @@ class PictureInPicture(Screen):
 		self.relocate()
 		self.setExternalPiP(config.av.pip_mode.value == "external")
 		
-	def savePiPSettings(self):
-		if config.usage.pip_mode.value == "standard":
-			if config.av.pip_mode.value == "standard":
-				config.av.pip_standard.value[0] = config.av.pip.value[0]
-				config.av.pip_standard.value[1] = config.av.pip.value[1]
-				config.av.pip_standard.value[2] = config.av.pip.value[2]
-				config.av.pip_standard.value[3] = config.av.pip.value[3]
-				config.av.pip_standard.save()
-				configfile.save()
-				if config.usage.pip_position_size_save.value == "standard and noadspip":
-					config.av.pip_noadspip.value[0] = config.av.pip.value[0]
-					config.av.pip_noadspip.value[1] = config.av.pip.value[1]
-					config.av.pip_noadspip.value[2] = config.av.pip.value[2]
-					config.av.pip_noadspip.value[3] = config.av.pip.value[3]
-					config.av.pip_noadspip.save()
-					configfile.save()
-
 	def move(self, x, y):
 		config.av.pip.value[0] = x
 		config.av.pip.value[1] = y
@@ -125,11 +102,11 @@ class PictureInPicture(Screen):
 			x = MAX_X - w
 			y = 0
 		elif config.av.pip_mode.value == "split":
-			x = MAX_X / 2
+			x = MAX_X // 2
 			y = 0
 		elif config.av.pip_mode.value == "byside":
-			x = MAX_X / 2
-			y = MAX_Y / 4
+			x = MAX_X // 2
+			y = MAX_Y // 4
 		elif config.av.pip_mode.value in "bigpig external":
 			x = 0
 			y = 0
@@ -196,7 +173,7 @@ class PictureInPicture(Screen):
 	def getModeName(self):
 		return self.choicelist[config.av.pip_mode.index][1]
 
-	def playService(self, service, bouquet=None):
+	def playService(self, service):
 		if service is None:
 			return False
 		ref = self.resolveAlternatePipService(service)
@@ -212,55 +189,35 @@ class PictureInPicture(Screen):
 				if hasattr(self, "dishpipActive") and self.dishpipActive is not None:
 					self.dishpipActive.startPiPService(ref)
 				self.pipservice.start()
-				self.currentBouquetPiP = bouquet
-				self.currentServicePiP = service
-				self.currentServiceReferencePiP = ref
+				self.currentService = service
+				self.currentServiceReference = ref
 				return True
 			else:
 				self.pipservice = None
-				self.currentBouquetPiP = None
-				self.currentServicePiP = None
-				self.currentServiceReferencePiP = None
+				self.currentService = None
+				self.currentServiceReference = None
 				if not config.usage.hide_zap_errors.value:
 					Tools.Notifications.AddPopup(text = _("Incorrect type service for PiP!"), type = MessageBox.TYPE_ERROR, timeout = 5, id = "ZapPipError")
 		return False
-		
-	def setCurrentServicePtrPiP(self, currSerPtr=None):
-		self.currentServicePtrPiP = currSerPtr
 
-	def getCurrentServicePtrPiP(self):
-		return self.currentServicePtrPiP
-		
-	def setCurrentBouquetMain(self, bouquet=None):
-		self.currentBouquetMain = bouquet
-
-	def getCurrentBouquetMain(self):
-		return self.currentBouquetMain
-		
-	def setCurrentBouquetPiP(self, bouquet=None):
-		self.currentBouquetPiP = bouquet
-		
-	def getCurrentBouquetPiP(self):
-		return self.currentBouquetPiP
-	
 	def getCurrentService(self):
-		return self.currentServicePiP
+		return self.currentService
 
 	def getCurrentServiceReference(self):
-		return self.currentServiceReferencePiP
+		return self.currentServiceReference
 
 	def isPlayableForPipService(self, service):
 		playingref = self.session.nav.getCurrentlyPlayingServiceReference()
 		if playingref is None or service == playingref:
 			return True
 		info = eServiceCenter.getInstance().info(service)
-		oldref = self.currentServiceReferencePiP or eServiceReference()
+		oldref = self.currentServiceReference or eServiceReference()
 		if info and info.isPlayable(service, oldref):
 			return True
 		return False
 
 	def resolveAlternatePipService(self, service):
 		if service and (service.flags & eServiceReference.isGroup):
-			oldref = self.currentServiceReferencePiP or eServiceReference()
+			oldref = self.currentServiceReference or eServiceReference()
 			return getBestPlayableServiceReference(service, oldref)
 		return service

@@ -149,6 +149,8 @@ struct hash_uniqueEPGKey
 struct EventCacheItem {
 	eventMap byEvent;
 	timeMap byTime;
+	int sources;
+	EventCacheItem(): sources(0) {}
 };
 
 typedef std::set<uint32_t> tidMap;
@@ -378,6 +380,7 @@ public:
 	void save();
 	void load();
 	void timeUpdated();
+	void flushEPG(int sid, int onid, int tsid);
 	void flushEPG(const uniqueEPGKey & s=uniqueEPGKey());
 #ifndef SWIG
 	eEPGCache();

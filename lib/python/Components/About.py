@@ -1,3 +1,4 @@
+from __future__ import print_function
 from Tools.Directories import resolveFilename, SCOPE_SYSETC
 #from Tools.HardwareInfo import HardwareInfo
 from os import path
@@ -153,11 +154,11 @@ def getCPUSpeedString():
 		return "1,5 GHz"
 	elif getMachineBuild() in ('formuler1', 'triplex'):
 		return "1,3 GHz"
-	elif getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
+	elif getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox', 'plus'):
 		return "1,6 GHz"	
 	elif getMachineBuild() in ('vuuno4k', 'vuultimo4k', 'gb7252', 'dags7252', '8100s'):
 		return "1,7 GHz"
-	elif getMachineBuild() in ('alien5', 'u53'):
+	elif getMachineBuild() in ('alien5', 'hzero', 'h8'):
 		return "2,0 GHz"
 	elif getMachineBuild() in ('vuduo4k',):
 		return "2,1 GHz"
@@ -193,7 +194,7 @@ def getCPUSpeedString():
 def getCPUString():
 	if getMachineBuild() in ('osmio4k', 'osmio4kplus', 'osmini4k', 'dags72604', 'vuuno4kse', 'vuuno4k', 'vuultimo4k', 'xc7362', 'vusolo4k', 'hd51', 'hd52', 'sf4008', 'dm900','dm920', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'et1x000', 'xc7439', 'h7', '8100s', 'et13000', 'sf5008'):
 		return "Broadcom"
-	elif getMachineBuild() in ('gbmv200', 'u41', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox'):
+	elif getMachineBuild() in ('gbmv200', 'u41', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'u5', 'u5pvr', 'h9', 'h9combo', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'multibox', 'plus'):
 		return "Hisilicon"	
 	else:
 		try:
@@ -222,7 +223,7 @@ def getCpuCoresString():
 			if len(splitted) > 1:
 				splitted[1] = splitted[1].replace('\n','')
 				if splitted[0].startswith("processor"):
-					if getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'vuultimo4k', 'u5', 'u5pvr', 'h9', 'h9combo', 'alien5', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'vuduo4k', 'multibox'):
+					if getMachineBuild() in ('gbmv200', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'vuultimo4k', 'u5', 'u5pvr', 'h9', 'h9combo', 'alien5', 'cc1', 'sf8008', 'sf8008m', 'hd60', 'hd61', 'i55plus', 'ustym4kpro', 'v8plus', 'vuduo4k', 'multibox', 'plus', 'hzero', 'h8'):
  						cores = 4						
 					elif getMachineBuild() in ('u41'):
 						cores = 2

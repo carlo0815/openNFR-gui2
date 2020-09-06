@@ -260,10 +260,12 @@ class RecordTimerEntry(timer.TimerEntry, object):
 			else:
 				filename += " - " + self.name # standard
 
+
 		if config.recording.ascii_filenames.value:
 			filename = ASCIItranslit.legacyEncode(filename)
 
 		self.Filename = Directories.getRecordingFilename(filename, self.MountPath)
+
 		self.log(0, "Filename calculated as: '%s'" % self.Filename)
 		return self.Filename
 
@@ -846,7 +848,10 @@ class RecordTimer(timer.Timer):
 				list.append(' code="' + str(code) + '"')
 				list.append(' time="' + str(time) + '"')
 				list.append('>')
-				list.append(str(stringToXML(msg)))
+				if isinstance(msg, int):
+					list.append(str(msg))
+				else:
+					list.append(str(stringToXML(msg)))
 				list.append('</log>\n')
 
 			list.append('</timer>\n')

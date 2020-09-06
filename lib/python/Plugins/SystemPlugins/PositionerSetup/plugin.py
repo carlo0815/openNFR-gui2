@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import division
 from __future__ import absolute_import
 from enigma import eTimer, eDVBResourceManager, eDVBDiseqcCommand, eDVBFrontendParametersSatellite, iDVBFrontend
 
@@ -111,8 +112,8 @@ class PositionerSetup(Screen):
 		# True means we dont like that the normal sec stuff sends commands to the rotor!
 		self.tuner = Tuner(self.frontend, ignore_rotor = True)
 
-		tp = ( cur.get("frequency", 0) / 1000,
-			cur.get("symbol_rate", 0) / 1000,
+		tp = ( cur.get("frequency", 0) // 1000,
+			cur.get("symbol_rate", 0) // 1000,
 			cur.get("polarization", eDVBFrontendParametersSatellite.Polarisation_Horizontal),
 			cur.get("fec_inner", eDVBFrontendParametersSatellite.FEC_Auto),
 			cur.get("inversion", eDVBFrontendParametersSatellite.Inversion_Unknown),
@@ -663,7 +664,7 @@ class PositionerSetup(Screen):
 		def azimuth2Rotorcode(angle):
 			gotoXtable = (0x00, 0x02, 0x03, 0x05, 0x06, 0x08, 0x0A, 0x0B, 0x0D, 0x0E)
 			a = int(round(abs(angle) * 10.0))
-			return ((a / 10) << 4) + gotoXtable[a % 10]
+			return ((a // 10) << 4) + gotoXtable[a % 10]
 
 		satHourAngle = rotor_calc.calcSatHourangle(satlon, sitelat, sitelon)
 		if sitelat >= 0: # Northern Hemisphere
@@ -1056,7 +1057,7 @@ class PositionerSetupLog(Screen):
 		self.close(False)
 
 	def clear(self):
-		log.logfile.reset()
+		log.logfile.seek(0)
 		log.logfile.truncate()
 		self.close(False)
 
@@ -1301,7 +1302,7 @@ class TunerScreen(ConfigListScreen, Screen):
 				self.scan_sat.t2mi_pid.value)
 		elif self.tuning.type.value == "predefined_transponder":
 			transponder = nimmanager.getTransponders(satpos)[self.tuning.transponder.index]
-			returnvalue = (transponder[1] / 1000, transponder[2] / 1000,
+			returnvalue = (transponder[1] // 1000, transponder[2] // 1000,
 				transponder[3], transponder[4], 2, satpos, transponder[5], transponder[6], transponder[8], transponder[9], transponder[10], transponder[11], transponder[12], transponder[13], transponder[14])
 		self.close(returnvalue)
 

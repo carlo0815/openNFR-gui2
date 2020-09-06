@@ -172,9 +172,7 @@ eventData::eventData(const eit_event_struct* e, int size, int _type, int tsidoni
 
 					//convert our strings to UTF8
 					std::string eventNameUTF8 = convertDVBUTF8((const unsigned char*)&descr[6], eventNameLen, table, tsidonid);
-					std::string textUTF8 = convertDVBUTF8((const unsigned char*)&descr[7 + eventNameLen], eventTextLen, table, tsidonid);
 					unsigned int eventNameUTF8len = eventNameUTF8.length();
-					unsigned int textUTF8len = textUTF8.length();
 
 					//Rebuild the short event descriptor with UTF-8 strings
 
@@ -216,11 +214,10 @@ eventData::eventData(const eit_event_struct* e, int size, int _type, int tsidoni
 						*pdescr++ = title_crc;
 					}
 
-					//save the text
-					if( textUTF8len > 0 ) //only store the data if there is something to store
+					//save the text with original encoding
+					if( eventTextLen  > 0 ) //only store the data if there is something to store
 					{
-						textUTF8len = truncateUTF8(textUTF8, 255 - 6);
-						int text_len = 6 + textUTF8len;
+						int text_len = 6 + eventTextLen ;
 						uint8_t *text_data = new uint8_t[text_len + 2];
 						text_data[0] = SHORT_EVENT_DESCRIPTOR;
 						text_data[1] = text_len;
@@ -228,9 +225,8 @@ eventData::eventData(const eit_event_struct* e, int size, int _type, int tsidoni
 						text_data[3] = descr[3];
 						text_data[4] = descr[4];
 						text_data[5] = 0;
-						text_data[6] = textUTF8len + 1; //identify text as UTF-8
-						text_data[7] = 0x15; //identify text as UTF-8
-						memcpy(&text_data[8], textUTF8.data(), textUTF8len);
+						text_data[6] = eventTextLen;
+						memcpy(&text_data[7], &descr[7 + eventNameLen], eventTextLen);
 
 						text_len += 2; //add 2 the length to include the 2 bytes in the header
 						uint32_t text_crc = calculate_crc_hash(text_data, text_len);
@@ -845,6 +841,23 @@ void eEPGCache::sectionRead(const uint8_t *data, int source, channel_data *chann
 	eventMap::iterator prevEventIt = servicemap.byEvent.end();
 	timeMap::iterator prevTimeIt = servicemap.byTime.end();
 
+	if (!(source & EPG_IMPORT) && (servicemap.sources & EPG_IMPORT))
+		return;
+	else if ((source & EPG_IMPORT) && !(servicemap.sources & EPG_IMPORT))
+	{
+		if (!eventmap.empty() || !timemap.empty())
+		{
+			flushEPG(service);
+			servicemap = eventDB[service];
+			eventmap = servicemap.byEvent;
+			timemap = servicemap.byTime;
+		}
+		servicemap.sources = source;
+	}
+	else
+		servicemap.sources |= source;
+
+
 	while (ptr<len)
 	{
 		uint16_t event_hash;
@@ -1034,6 +1047,11 @@ next:
 	}
 }
 
+void eEPGCache::flushEPG(int sid, int onid, int tsid)
+{
+	flushEPG(uniqueEPGKey(sid, onid, tsid));
+}
+
 void eEPGCache::flushEPG(const uniqueEPGKey & s)
 {
 	eDebug("[eEPGCache] flushEPG %d", (int)(bool)s);
@@ -1061,6 +1079,27 @@ void eEPGCache::flushEPG(const uniqueEPGKey & s)
 				content_time_tables.erase(it);
 			}
 #endif
+			// remove this service's channel from lastupdated map
+			for (updateMap::iterator it = channelLastUpdated.begin(); it != channelLastUpdated.end(); )
+			{
+				const eDVBChannelID &chid = it->first;
+				if(chid.original_network_id == s.onid && chid.transport_stream_id == s.tsid)
+					it = channelLastUpdated.erase(it);
+				else
+					++it;
+			}
+
+			singleLock m(channel_map_lock);
+			for (ChannelMap::const_iterator it(m_knownChannels.begin
+()); it != m_knownChannels.end(); ++it)
+			{
+				const eDVBChannelID chid = it->second->channel->getChannelID();
+				if(chid.original_network_id == s.onid && chid.transport_stream_id == s.tsid)
+				{
+					it->second->abortEPG();
+					it->second->startChannel();
+				}
+			}
 		}
 	}
 	else // clear complete EPG Cache
@@ -1082,7 +1121,10 @@ void eEPGCache::flushEPG(const uniqueEPGKey & s)
 		channelLastUpdated.clear();
 		singleLock m(channel_map_lock);
 		for (ChannelMap::const_iterator it(m_knownChannels.begin()); it != m_knownChannels.end(); ++it)
-			it->second->startEPG();
+		{
+			it->second->abortEPG();
+			it->second->startChannel();
+		}
 	}
 }
 

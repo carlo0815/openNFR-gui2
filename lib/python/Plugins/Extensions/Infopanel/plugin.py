@@ -84,7 +84,7 @@ config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) *
 config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
 
 	
-if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
+if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.py") is True:
 	try:
 		from Plugins.Extensions.MultiQuickButton.plugin import *
 	except:
@@ -716,7 +716,7 @@ class Infopanel(Screen, InfoBarPiP):
 			else:
 				self.session.open(NfrHD_Config1)
 		elif menu == "PluginReLoad":
-			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyo") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):
 				from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
 				self.session.open(PluginReLoadConfig)
 		else:
@@ -736,7 +736,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('DiskSpeed'), _("Disk-Speed"), 'DiskSpeed')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('m3u-convert'), _("m3u-convert"), 'm3u-convert')))
-		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.pyo") is True:
+		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.py") is True:
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)

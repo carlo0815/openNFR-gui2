@@ -68,8 +68,7 @@ self.session.openWithCallback(msgClosed, EpgLoadMsg)
 					<item weight="11" level="2" text="OScam info" entryID="oscaminfo" requires="OScamInstalled"><screen module="OScamInfo" screen="OscamInfoMenu" /></item>
 				</menu>
 				<item weight="15" level="1" entryID="autolanguage_setup"><setup id="autolanguagesetup" /></item>
-				<item weight="15" level="0" entryID="channelselection_setup"><setup id="channelselection" /></item>
-				<item weight="10" level="0" entryID="pip_setup" requires="PIPAvailable"><setup id="pipsetup"/></item>
+				<item weight="10" level="0" entryID="channelselection_setup"><setup id="channelselection" /></item>
 			</menu>
 			<menu weight="5" level="0" text="System" entryID="system_selection">
 				<id val="system" />

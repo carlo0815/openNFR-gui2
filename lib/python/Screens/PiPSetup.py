@@ -1,3 +1,4 @@
+from __future__ import division
 from Screens.Screen import Screen
 from Components.ActionMap import NumberActionMap
 from Components.SystemInfo import SystemInfo
@@ -7,10 +8,10 @@ from Components.config import config
 # this is not so great.
 MAX_X = 720
 MAX_Y = 576
-MAX_W = MAX_X * 3 / 4
-MAX_H = MAX_Y * 3 / 4
-MIN_W = MAX_X / 8
-MIN_H = MAX_Y / 8
+MAX_W = MAX_X * 3 // 4
+MAX_H = MAX_Y * 3 // 4
+MIN_W = MAX_X // 8
+MIN_H = MAX_Y // 8
 
 def clip(val, min, max):
 	if min <= val <= max:
@@ -18,20 +19,11 @@ def clip(val, min, max):
 	if min <= val:
 		return max
 	return min
-	
-class MyPiPSetup(Screen):
-	skin = """<screen name="MyPiPSetup" position="center,center" size="662,302" flags="wfNoBorder" backgroundColor="background" zPosition="2">
-+		<eLabel text="PiPSetup" position="1,5" size="660,50" font="Regular;28" foregroundColor="white" backgroundColor="background" halign="center" valign="center" zPosition="2" />
-+		<eLabel position="1,60" size="660,1" backgroundColor="white" zPosition="2" />
-+		<widget name="text" position="40,90" size="620,200" halign="left" font="Regular;20" foregroundColor="white" backgroundColor="background" zPosition="2" />
-+	</screen>"""
 
 class PiPSetup(Screen):
 	def __init__(self, session, pip):
 		Screen.__init__(self, session)
-		self.skin = MyPiPSetup.skin
 		self.pip = pip
-		self.skinName = "MyPiPSetup"
 		self.pos = (config.av.pip.value[0], config.av.pip.value[1])
 		self.size = (config.av.pip.value[2], config.av.pip.value[3])
 		self.mode = self.pip.getMode()
@@ -42,10 +34,10 @@ class PiPSetup(Screen):
 
 		self.resize = 100
 
-		self.helptext = _("Position change:  Use direction keys to move the PiP window\nSize change:  Channel +/- to resize the window\nOK  -  save changes  |  EXIT  -  cancel")
+		self.helptext = _("Please use direction keys to move the PiP window.\nPress Bouquet +/- to resize the window.\nPress OK to go back to the TV mode or EXIT to cancel the moving.")
 		if SystemInfo["VideoDestinationConfigurable"] or SystemInfo["HasExternalPIP"]:
-			self.helptext += "\n\n" + _("Press '0' to toggle PiP current mode")
-		self.modetext = _("Current mode:   %s\n\n")
+			self.helptext += "\n" + _("Press '0' to toggle PiP mode")
+		self.modetext = _("Current mode: %s \n")
 
 		self["text"] = Label((self.modetext % self.pip.getModeName()) + self.helptext)
 
@@ -72,7 +64,6 @@ class PiPSetup(Screen):
 		}, -1)
 
 	def go(self):
-		self.pip.savePiPSettings()
 		self.close()
 
 	def cancel(self):
@@ -92,15 +83,15 @@ class PiPSetup(Screen):
 
 		oldsize = self.size
 		if self.mode != "split":
-			w = clip(self.size[0] * resize / 100, MIN_W, MAX_W)
-			h = clip(self.size[1] * resize / 100, MIN_H, MAX_H)
+			w = clip(self.size[0] * resize // 100, MIN_W, MAX_W)
+			h = clip(self.size[1] * resize // 100, MIN_H, MAX_H)
 		else:
-			w = clip(self.size[0] * resize / 100, MAX_X / 2, MAX_X)
-			h = clip(self.size[1] * resize / 100, MAX_Y / 2, MAX_Y)
+			w = clip(self.size[0] * resize // 100, MAX_X // 2, MAX_X)
+			h = clip(self.size[1] * resize // 100, MAX_Y // 2, MAX_Y)
 
 		# calculate offset from center
-		mx = (oldsize[0] - w) / 2
-		my = (oldsize[1] - h) / 2
+		mx = (oldsize[0] - w) // 2
+		my = (oldsize[1] - h) // 2
 
 		self.size = (w, h)
 		# reclip, account for new center
@@ -136,16 +127,16 @@ class PiPSetup(Screen):
 
 	def keyNumberGlobal(self, number):
 		if number > 0 and self.mode == "standard":
-			colsize = MAX_X / 3
-			rowsize = MAX_Y / 3
+			colsize = MAX_X // 3
+			rowsize = MAX_Y // 3
 			col = (number-1) % 3
-			row = (number-1) / 3
+			row = (number-1) // 3
 
 			self.size = (180, 135)
 
 			# offset to keep center
-			ox = (colsize - self.size[0]) / 2
-			oy = (rowsize - self.size[1]) / 2
+			ox = (colsize - self.size[0]) // 2
+			oy = (rowsize - self.size[1]) // 2
 
 			self.pos = (col * colsize + ox, row * rowsize + oy)
 		elif number == 0:
