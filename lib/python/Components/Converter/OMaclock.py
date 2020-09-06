@@ -1,4 +1,5 @@
-from Converter import Converter
+from __future__ import absolute_import
+from Components.Converter.Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
 
@@ -28,12 +29,12 @@ class OMaclock(Converter, object):
 		t = localtime(time)
 
 		if self.type == self.OMA_SEC:
-			return "%02d,sec" % t.tm_sec
+			return "%02d, sec" % t.tm_sec
 		elif self.type == self.OMA_MIN:
-			return "%02d,min" % t.tm_min
+			return "%02d, min" % t.tm_min
 		elif self.type == self.OMA_HOUR:
 			ret = (t.tm_hour*5)+(t.tm_min/12);
-			return "%02d,hour" % ret
+			return "%02d, hour" % ret
 		else:
 			return "???"
 

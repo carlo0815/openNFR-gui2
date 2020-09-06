@@ -4,6 +4,7 @@
 # some broadcaster do define other types so this list
 # may grow or be replaced..
 #
+from __future__ import absolute_import
 maintype = [	_("Reserved"),
 		_("Movie/Drama"),
 		_("News Current Affairs"),
@@ -152,7 +153,7 @@ def getGenreStringSub(hn, ln):
 		if ln < len(subtype[hn]):
 			return subtype[hn][ln]
 #		return _("Reserved") " " + str(ln)
-#	return _("Reserved") + " " + str(hn) + "," + str(ln)
+#	return _("Reserved") + " " + str(hn) + ", " + str(ln)
 	return ""
 
 def getGenreStringLong(hn, ln):
@@ -162,7 +163,7 @@ def getGenreStringLong(hn, ln):
 		return _("User defined") + " " + str(ln)
 	if 0 < hn < len(maintype):
 		return maintype[hn] + ": " + getGenreStringSub(hn, ln)
-#	return _("Reserved") + " " + str(hn) + "," + str(ln)
+#	return _("Reserved") + " " + str(hn) + ", " + str(ln)
 	return ""
 
 #
