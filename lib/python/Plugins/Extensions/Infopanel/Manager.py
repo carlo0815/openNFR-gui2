@@ -1,7 +1,7 @@
 from __future__ import print_function
 from Components.ActionMap import ActionMap
 from Components.config import config, getConfigListEntry
-from Components.Console import Console
+from . Console1 import Console
 from Components.ConfigList import ConfigListScreen
 from Components.Label import Label
 from Components.Sources.List import List
@@ -192,7 +192,7 @@ class NFRCamManager(Screen):
 
 	def Stage1Complete(self, result, retval, extra_args=None):
 		result = result
-		if b"Link detected: yes"  in result:
+		if "Link detected: yes"  in result:
 			from Screens.NetworkSetup import NetworkOpenvpn
 			ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
 			if isinstance(ext_ip, six.text_type):
@@ -238,7 +238,7 @@ class NFRCamManager(Screen):
 	
 
 	def camliststart(self, result, retval, extra_args):
-		if result.strip() and not result.startswith(b'ls: '):
+		if result.strip() and not result.startswith('ls: '):
 			self.iscam = True
 			self.softcamlist = result.splitlines()
 			self.Console.ePopen("chmod 755 %s/*" %
