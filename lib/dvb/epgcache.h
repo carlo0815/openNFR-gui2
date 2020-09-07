@@ -7,11 +7,8 @@
 #define ENABLE_NETMED 1
 #define ENABLE_VIRGIN 1
 #define ENABLE_ATSC 1
-#define ENABLE_OPENTV 1
 
 #ifndef SWIG
-
-#include <time.h>
 
 #include <vector>
 #include <list>
@@ -22,10 +19,6 @@
 #include <lib/dvb/eit.h>
 #ifdef ENABLE_MHW_EPG
 #include <lib/dvb/lowlevel/mhw.h>
-#endif
-#ifdef ENABLE_OPENTV
-#include <lib/dvb/opentv.h>
-#include <lib/base/huffman.h>
 #endif
 #include <lib/dvb/idvb.h>
 #include <lib/dvb/demux.h>
