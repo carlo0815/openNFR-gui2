@@ -838,8 +838,8 @@ void eEPGCache::sectionRead(const uint8_t *data, int source, channel_data *chann
 	// hier wird immer eine eventMap zurck gegeben.. entweder eine vorhandene..
 	// oder eine durch [] erzeugte
 	EventCacheItem &servicemap = eventDB[service];
-	eventMap::iterator prevEventIt = servicemap.byEvent.end();
-	timeMap::iterator prevTimeIt = servicemap.byTime.end();
+	eventMap &eventmap = servicemap.byEvent;
+	timeMap &timemap = servicemap.byTime;
 
 	if (!(source & EPG_IMPORT) && (servicemap.sources & EPG_IMPORT))
 		return;
