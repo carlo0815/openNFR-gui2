@@ -18,7 +18,7 @@ from Tools.Import import my_import
 from Tools.LoadPixmap import LoadPixmap
 from Components.RcModel import rc_model
 from boxbranding import getBoxType
-
+GUI_SKIN_ID = 0  # Main frame-buffer.
 colorNames = {}
 skinerrorfile = '/tmp/.skinerror'
 # Predefined fonts, typically used in built-in screens and for components like
