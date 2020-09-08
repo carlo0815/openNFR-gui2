@@ -332,7 +332,7 @@ class Harddisk:
 		h.close()
 
 	def killPartition(self, n):
-		zero = 512 * b'\0''\0'
+		zero = 512 * b'\0'
 		part = self.partitionPath(n)
 		h = open(part, 'wb')
 		for i in list(range(3)):
