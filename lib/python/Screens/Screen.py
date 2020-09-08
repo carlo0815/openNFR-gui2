@@ -4,8 +4,7 @@ from enigma import eRCInput, eTimer, eWindow  # , getDesktop
 from skin import GUI_SKIN_ID, applyAllAttributes
 from Components.config import config
 from Components.GUIComponent import GUIComponent
-
-from Components.Sources.Source import 
+from Components.Sources.Source import Source
 from Components.Sources.StaticText import StaticText
 from Tools.CList import CList
 
