@@ -57,6 +57,7 @@ class NFRCamManager(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.setTitle(_("NFR-SoftCam manager"))
+		self.AboutText = ""
 		self.Console = Console()
 		self["key_red"] = Label(_("Stop"))
 		self["key_green"] = Label(_("Start"))
