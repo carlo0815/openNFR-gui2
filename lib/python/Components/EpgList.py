@@ -641,15 +641,6 @@ class EPGList(HTMLComponent, GUIComponent):
 		xpos, width = self.calcEntryPosAndWidthHelper(ev_start, ev_duration, time_base, time_base + time_epoch * 60, event_rect.width())
 		return xpos + event_rect.left(), width
 
-	def isIceTV(self, service):
-		if hasattr(config.plugins, "icetv"):
-			try:
-				from Plugins.SystemPlugins.IceTV.plugin import fetcher
-				return fetcher is not None and fetcher.isIceTVEpgChannel(eServiceReference(service))
-			except ImportError as e:
-				pass
-		return False
-
 	def getPixmapForEntry(self, service, eventId, beginTime, duration):
 		if not beginTime:
 			return None
@@ -787,20 +778,7 @@ class EPGList(HTMLComponent, GUIComponent):
 			fact3 = 20
 			borderw = 1
 
-		if self.isIceTV(service) and config.epg.eit.value:
-			iceicon_size = self.icetvicon.size()
-			r_ice = Rect(0, 0, iceicon_size.width(), iceicon_size.height())
-		else:
-			r_ice = Rect(0, 0, 0, 0)
-
-		res = [None, (eListboxPythonMultiContent.TYPE_TEXT, r1.x, r1.y, r1.w - r_ice.w, r1.h, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, service_name)] # no private data needed
-
-		if r_ice.w > 0 and r_ice.h > 0:
-			res.append(MultiContentEntryPixmapAlphaBlend(
-				pos=(r1.x + r1.w - r_ice.w, r1.y),
-				size=(r_ice.w, r_ice.h),
-				png=self.icetvicon,
-				backcolor=None, backcolor_sel=None))
+		res = [None, (eListboxPythonMultiContent.TYPE_TEXT, r1.x, r1.y, r1.w , r1.h, 0, RT_HALIGN_LEFT | RT_VALIGN_CENTER, service_name)] # no private data needed
 
 		if beginTime is not None:
 			clock_types = self.getPixmapForEntry(service, eventId, beginTime, duration)
@@ -937,15 +915,6 @@ class EPGList(HTMLComponent, GUIComponent):
 				text = service_name,
 				color = serviceForeColor, color_sel = serviceForeColor,
 				backcolor = serviceBackColor, backcolor_sel = serviceBackColor))
-
-		if self.isIceTV(service) and config.epg.eit.value:
-			iceicon_size = self.icetvicon.size()
-			res.append(MultiContentEntryPixmapAlphaBlend(
-				pos=(r1.x + r1.w - self.serviceBorderWidth - iceicon_size.width(), r1.y + r1.h - self.serviceBorderWidth - iceicon_size.height()),
-				size=(iceicon_size.width(), iceicon_size.height()),
-				png=self.icetvicon,
-				backcolor=None, backcolor_sel=None))
-
 		# Service Borders
 		if self.borderTopPix is not None and self.graphic:
 			res.append(MultiContentEntryPixmapAlphaTest(
