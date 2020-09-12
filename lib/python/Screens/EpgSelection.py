@@ -1416,8 +1416,6 @@ class EPGSelection(Screen, HelpableScreen):
 			self.session.pipshown = False
 			del self.session.pip
 		self.closeEventViewDialog()
-		if self.type == EPG_TYPE_VERTICAL and NOCLOSE:
-			return
 		self.close(True)
 
 	def zap(self):
