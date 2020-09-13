@@ -78,18 +78,18 @@ class LCDClockSelector(Screen):
 	def find(self, arg, dirname, names):
 		for x in names:
 			if x.startswith("clock_") and x.endswith(".xml"):
-				if dirname <> self.root:
-					subdir = dirname[19:]
-					skinname = x
-					skinname = subdir + "/" + skinname
-					self.clocklist.append(skinname)
-				else:
-					skinname = x
-					self.clocklist.append(skinname)
+			    if dirname != self.root:
+			        subdir = dirname[19:]
+			        skinname = x
+			        skinname = subdir + "/" + skinname
+			        self.clocklist.append(skinname)
+			    else:
+			        skinname = x
+			        self.clocklist.append(skinname)
 
 	def ok(self):
 		skinfile = self["ClockList"].getCurrent()
-		print "LCDSkinselector: Selected Skin: ", skinfile
+		print ("LCDSkinselector: Selected Skin: ", skinfile)
 		if skinfile == "no Clock":
 			config.skin.display_skin.value = "skin_display.xml"
 		else:

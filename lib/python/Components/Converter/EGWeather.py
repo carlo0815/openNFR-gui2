@@ -6,7 +6,7 @@ from Components.Element import cached
 import os
 from enigma import ePixmap
 import time
-from Components.Converter Poll import Poll
+from Components.Converter.Poll import Poll
 import urllib
 import string
 from os import environ

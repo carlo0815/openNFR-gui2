@@ -112,7 +112,7 @@ class NFR4XBootImageChoose(Screen):
                 if os.path.isdir(os.path.join(mypath, fil)):
                     self.list.append(fil)
         except:
-            print "no other Image found"
+            print( "no other Image found")
 
         self['label11'].setText(str(len(self.list) - 1))
         self['config'].setList(self.list)
@@ -157,7 +157,7 @@ class NFR4XBootImageChoose(Screen):
             self['config'].setList(self.list)
             self.updateList()
         except:
-            print ' '
+            print( ' ')
 
 def main(session, **kwargs):
     f = open('/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot_client/.nfr4xboot_location', 'r')

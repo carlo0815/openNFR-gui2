@@ -74,7 +74,7 @@ def getCoverPath():
 
 	for dir in dirList:
 		if dir in blockList:
-			print dir, blockList
+			print(dir, blockList)
 			continue
 		if os_path.ismount("/media/%s" %(dir)) or (os_path.islink("/media/%s" %(dir)) and os_path.ismount(os_path.realpath("/media/%s" %(dir)))):
 			path = "/media/%s/cover/" % (dir)
@@ -127,14 +127,14 @@ class BackgroundCoverScanner(Thread):
 				self.bgTimer.callback.append(self.getFileList)
 			self.bgTimer.start(3600000 * int(config.movielist.cover.bgtime.value))
 			self.bgTimerRunning = True
-			print "----------------------- S t a r t - T i m e r -------------------------"
+			print( "----------------------- S t a r t - T i m e r -------------------------")
 
 	def stopTimer(self):
 		if self.bgTimerRunning:
 			if not config.movielist.cover.bgtimer.value:
 				self.bgTimer.stop()
 				self.bgTimerRunning = False
-				print "----------------------- S t o p - T i m e r -------------------------"
+				print( "----------------------- S t o p - T i m e r -------------------------")
 
 	def setCallbacks(self, callback_infos, callback_found, callback_notfound, callback_error, callback_menulist, callback_finished):
 		# self.msgCallback, self.foundCallback, self.notFoundCallback, self.errorCallback, self.listCallback, self.msgDone
@@ -148,8 +148,8 @@ class BackgroundCoverScanner(Thread):
 	def getFileList(self, background=True):
 		self.background = background
 		if not self.scanning:
-			print "----------------------- Cover Background Scanner -------------------------"
-			print "Scan Path: %s" % config.movielist.cover.scanpath.value
+			print( "----------------------- Cover Background Scanner -------------------------")
+			print( "Scan Path: %s" % config.movielist.cover.scanpath.value)
 			self.scanning = True
 			if config.movielist.cover.savestyle.value == "opennfr":
 				if not pathExists(config.movielist.cover.coverpath.value):
@@ -216,7 +216,7 @@ class BackgroundCoverScanner(Thread):
 									#if metaName is not None:
 										cleanTitle = re.sub('[Ss][0-9]+[Ee][0-9]+.*[a-zA-Z0-9_]+','', metaName, flags=re.S|re.I)
 										cleanTitle = cleanFile(cleanTitle)
-										print "cleanTitle:", cleanTitle
+										print( "cleanTitle:", cleanTitle)
 										url = 'http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=de' % cleanTitle.replace(' ','%20')
 										data.append(('file', 'serie', filename, cleanTitle, url, None, None))
 									#else:
@@ -243,7 +243,7 @@ class BackgroundCoverScanner(Thread):
 				else:
 					self.scanning = False
 		else:
-			print "still scanning.."
+			print( "still scanning..")
 
 	def getMovieSaveFile(self, moviename):
 		if re.search('[Ss][0-9]+[Ee][0-9]+', moviename) is not None:
@@ -333,17 +333,17 @@ class BackgroundCoverScanner(Thread):
 		self.checkDone()
 
 	def checkDone(self):
-		print self.counting, self.count
+		print( self.counting, self.count)
 		if int(self.counting) == int(str(self.count)):
 			elapsed_time = (time.clock() - self.start_time)
 			if not self.background:
 				self.callback_infos("Downloaded %s Cover(s) in %.1f sec." % (str(self.found), elapsed_time))
 				self.callback_finished("Done")
 			self.scanning = False
-			print "Found:", self.found
-			print "Not Found:", self.notfound
-			print "Errors:", self.error
-			print "Total: %s / %s" % (self.counting, self.count)
+			print( "Found:", self.found)
+			print( "Not Found:", self.notfound)
+			print( "Errors:", self.error)
+			print( "Total: %s / %s" % (self.counting, self.count))
 			self.callback_finished(self.count)
 
 	def countFound(self, data):
@@ -375,13 +375,13 @@ class BackgroundCoverScanner(Thread):
 			wFile.close()
 
 	def dataError(self, error):
-		print "ERROR:", error
+		print( "ERROR:", error)
 		self.checkDone()
 
 	def dataErrorInfo(self, error):
 		self.error += 1
 		self.counting += 1
-		print "ERROR dataErrorInfo:", error
+		print( "ERROR dataErrorInfo:", error)
 		if not self.background:
 			self.callback_error(self.error)
 		self.checkDone()
@@ -391,7 +391,7 @@ class BackgroundCoverScanner(Thread):
 		self.counting += 1
 		if not self.background:
 			self.callback_error(self.error)
-		print "ERROR:", error
+		print( "ERROR:", error)
 		self.checkDone()
 
 class fmlcMenuList(GUIComponent, object):
@@ -661,7 +661,7 @@ class FindMovieListScanPath(Screen):
 		try:
 			self["title"] = StaticText(self.title)
 		except:
-			print 'self["title"] was not found in skin'
+			print( 'self["title"] was not found in skin')
 
 		self["key_red" ]= Label(_("Cancel"))
 		self["key_green"] = Label(_("Ok"))

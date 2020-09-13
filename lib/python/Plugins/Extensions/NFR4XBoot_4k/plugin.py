@@ -27,7 +27,7 @@ NFR4XBootImageInstall_Skin = '\n\t\t    <screen name="NFR4XBootImageInstall" pos
 def Freespace(dev):
     statdev = os.statvfs(dev)
     space = statdev.f_bavail * statdev.f_frsize / 1024
-    print '[NFR4XBoot] Free space on %s = %i kilobytes' % (dev, space)
+    print( '[NFR4XBoot] Free space on %s = %i kilobytes' % (dev, space))
     return space
 
 
@@ -415,7 +415,7 @@ class NFR4XBootImageChoose(Screen):
                     ybox = self.session.openWithCallback(self.remove2, MessageBox, message, MessageBox.TYPE_YESNO)
                     ybox.setTitle(_('Delete Confirmation'))
             except:
-                print 'no image to remove'
+                print( 'no image to remove')
 
         else:
             self.mysel
@@ -431,7 +431,7 @@ class NFR4XBootImageChoose(Screen):
             self['config'].setList(self.list)
             self.updateList()
         except:
-            print ' '
+            print( ' ')
 
     def remove2(self, yesno):
         if yesno:
@@ -444,7 +444,7 @@ class NFR4XBootImageChoose(Screen):
     def installMedia(self):
         images = False
         myimages = os.listdir('/media/nfr4xboot/NFR4XBootUpload')
-        print myimages
+        print( myimages)
         for fil in myimages:
             if fil.endswith('.zip'):
                 images = True
@@ -647,7 +647,7 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
                  str(self.zipdelete.value),
                  getImageFolder(),
                  getMachineRootFile())
-                print '[NFR4X-BOOT]: ', cmd
+                print( '[NFR4X-BOOT]: ', cmd)
                 self.session.open(Console, _('NFR4XBoot: Install new image'), [message, cmd])
 
     def check_free_space(self):

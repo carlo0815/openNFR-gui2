@@ -265,7 +265,7 @@ class AutoMountEdit(Screen, ConfigListScreen):
 			self.createSetup()
 
 	def KeyText(self):
-		print "Green Pressed"
+		print( "Green Pressed")
 		if self["config"].getCurrent() == self.sharenameEntry:
 			self.session.openWithCallback(lambda x : self.VirtualKeyBoardCallback(x, 'sharename'), VirtualKeyBoard, title = (_("Enter share name:")), text = self.sharenameConfigEntry.value)
 		if self["config"].getCurrent() == self.sharedirEntry:

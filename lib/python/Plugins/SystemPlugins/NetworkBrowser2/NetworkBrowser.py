@@ -28,8 +28,8 @@ def write_cache(cache_file, cache_data):
         try:
             mkdir(os_path.dirname(cache_file))
         except OSError:
-            print os_path.dirname(cache_file),
-            print '[Networkbrowser] is a file'
+            print( os_path.dirname(cache_file),)
+            print( '[Networkbrowser] is a file')
     fd = open(cache_file, 'w')
     dump(cache_data, fd, -1)
     fd.close()
@@ -163,8 +163,8 @@ class NetworkBrowser(Screen):
     def scanIPclosed(self, result):
         if result[0]:
             if result[1] == 'address':
-                print '[Networkbrowser] got IP:',
-                print result[1]
+                print( '[Networkbrowser] got IP:',)
+                print( result[1])
                 nwlist = []
                 nwlist.append(netscan.netzInfo(result[0] + '/24'))
                 self.networklist += nwlist[0]
@@ -211,14 +211,14 @@ class NetworkBrowser(Screen):
         self.inv_cache = 0
         self.vc = valid_cache(self.cache_file, self.cache_ttl)
         if self.cache_ttl > 0 and self.vc != 0:
-            print '[Networkbrowser] Loading network cache from ',
-            print self.cache_file
+            print( '[Networkbrowser] Loading network cache from ',)
+            print( self.cache_file)
             try:
                 self.networklist = load_cache(self.cache_file)
             except:
                 self.inv_cache = 1
         if self.cache_ttl == 0 or self.inv_cache == 1 or self.vc == 0:
-            print '[Networkbrowser] Getting fresh network list'
+            print( '[Networkbrowser] Getting fresh network list')
             self.networklist = self.getNetworkIPs()
             write_cache(self.cache_file, self.networklist)
         if len(self.networklist) > 0:
@@ -232,12 +232,12 @@ class NetworkBrowser(Screen):
         nwlist = []
         sharelist = []
         self.IP = iNetwork.getAdapterAttribute(self.iface, 'ip')
-        print 'Current IP',
-        print self.IP
-        print 'EthIP',
-        print iNetwork.getAdapterAttribute('eth0', 'ip')
-        print 'WlanIP',
-        print iNetwork.getAdapterAttribute('wlan0', 'ip')
+        print( 'Current IP',)
+        print( self.IP)
+        print( 'EthIP',)
+        print( iNetwork.getAdapterAttribute('eth0', 'ip'))
+        print( 'WlanIP',)
+        print( iNetwork.getAdapterAttribute('wlan0', 'ip'))
         if len(self.IP):
             strIP = str(self.IP[0]) + '.' + str(self.IP[1]) + '.' + str(self.IP[2]) + '.0/24'
             nwlist.append(netscan.netzInfo(strIP))
@@ -251,8 +251,8 @@ class NetworkBrowser(Screen):
         self.sharecache_file = None
         self.sharecache_file = '/etc/enigma2/' + hostname.strip() + '.cache'
         if os_path.exists(self.sharecache_file):
-            print '[Networkbrowser] Loading userinfo from ',
-            print self.sharecache_file
+            print( '[Networkbrowser] Loading userinfo from ',)
+            print( self.sharecache_file)
             try:
                 self.hostdata = load_cache(self.sharecache_file)
                 username = self.hostdata['username']
@@ -448,8 +448,8 @@ class NetworkBrowser(Screen):
                 self.hostcache_file = None
                 self.hostcache_file = '/etc/enigma2/' + selectedhostname.strip() + '.cache'
                 if os_path.exists(self.hostcache_file):
-                    print '[Networkbrowser] Loading userinfo cache from ',
-                    print self.hostcache_file
+                    print( '[Networkbrowser] Loading userinfo cache from ',)
+                    print( self.hostcache_file)
                     try:
                         self.hostdata = load_cache(self.hostcache_file)
                         self.passwordQuestion(False)
@@ -458,15 +458,15 @@ class NetworkBrowser(Screen):
                 else:
                     self.session.openWithCallback(self.passwordQuestion, MessageBox, _('Do you want to enter a username and password for this host?\n'))
         if sel[0][0] == 'nfsShare':
-            print '[Networkbrowser] sel nfsShare'
+            print( '[Networkbrowser] sel nfsShare')
             self.openMountEdit(sel[0])
         if sel[0][0] == 'smbShare':
-            print '[Networkbrowser] sel cifsShare'
+            print( '[Networkbrowser] sel cifsShare')
             self.hostcache_file = None
             self.hostcache_file = '/etc/enigma2/' + selectedhostname.strip() + '.cache'
             if os_path.exists(self.hostcache_file):
-                print '[Networkbrowser] userinfo found from ',
-                print self.sharecache_file
+                print( '[Networkbrowser] userinfo found from ',)
+                print( self.sharecache_file)
                 self.openMountEdit(sel[0])
             else:
                 self.session.openWithCallback(self.passwordQuestion, MessageBox, _('Do you want to enter a username and password for this host?\n'))
@@ -541,8 +541,8 @@ class NetworkBrowser(Screen):
                 self.sharecache_file = None
                 self.sharecache_file = '/etc/enigma2/' + selection[1].strip() + '.cache'
                 if os_path.exists(self.sharecache_file):
-                    print '[Networkbrowser] Loading userinfo from ',
-                    print self.sharecache_file
+                    print( '[Networkbrowser] Loading userinfo from ',)
+                    print( self.sharecache_file)
                     try:
                         self.hostdata = load_cache(self.sharecache_file)
                         data['username'] = self.hostdata['username']

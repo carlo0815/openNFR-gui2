@@ -6,7 +6,7 @@ from __future__ import absolute_import
 from enigma import iServiceInformation
 from Components.Converter.Converter import Converter
 from Components.Element import cached
-from Components.Converter Poll import Poll
+from Components.Converter.Poll import Poll
 
 
 class EGExtraInfo(Poll, Converter, object):

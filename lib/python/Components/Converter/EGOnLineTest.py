@@ -3,7 +3,7 @@ from Components.config import config
 from Components.Converter.Converter import Converter
 from Components.Element import cached
 from enigma import eServiceCenter, eServiceReference, iServiceInformation
-from Components.Converter Poll import Poll
+from Components.Converter.Poll import Poll
 from os import system
 from Components.Network import iNetwork
 from Components.config import ConfigYesNo

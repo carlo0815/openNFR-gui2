@@ -140,13 +140,13 @@ class Channelnumber:
 ChannelnumberInstance = None
 
 def leaveStandby():
-	print "[F1 LED] Leave Standby"
+	print( "[F1 LED] Leave Standby")
 
 	if config.plugins.VFD_ini.showClock.value == 'Off':
 		vfd_write("    ")
 
 def standbyCounterChanged(configElement):
-	print "[F1 LED] In Standby"
+	print( "[F1 LED] In Standby")
 
 	from Screens.Standby import inStandby
 	inStandby.onClose.append(leaveStandby)
@@ -155,7 +155,7 @@ def standbyCounterChanged(configElement):
 		vfd_write("    ")
 
 def initVFD():
-	print "[F1 LED] initVFD"
+	print( "[F1 LED] initVFD")
 
 	if config.plugins.VFD_ini.showClock.value == 'Off':
 		vfd_write("    ")
@@ -210,12 +210,12 @@ class VFD_INISetup(ConfigListScreen, Screen):
 		self.newConfig()
 
 	def newConfig(self):
-		print self["config"].getCurrent()[0]
+		print( self["config"].getCurrent()[0])
 		if self["config"].getCurrent()[0] == _('Show on VFD'):
 			self.createSetup()
 
 	def abort(self):
-		print "aborting"
+		print( "aborting")
 
 	def save(self):
 		for x in self["config"].list:
@@ -237,7 +237,7 @@ class VFD_INISetup(ConfigListScreen, Screen):
 
 class VFD_INI:
 	def __init__(self, session):
-		print "[F1 LED] initializing"
+		print( "[F1 LED] initializing")
 		self.session = session
 		self.service = None
 		self.onClose = [ ]
@@ -254,7 +254,7 @@ class VFD_INI:
 		self.abort()
 
 	def abort(self):
-		print "[F1 LED] aborting"
+		print( "[F1 LED] aborting")
 		config.misc.standbyCounter.addNotifier(standbyCounterChanged, initial_call = False)
 
 def main(menuid):
@@ -275,15 +275,15 @@ def controliniVfd():
 	global mySession
 
 	if gReason == 0 and mySession != None and iniVfd == None:
-		print "[F1 LED] Starting !!"
+		print( "[F1 LED] Starting !!")
 		iniVfd = VFD_INI(mySession)
 	elif gReason == 1 and iniVfd != None:
-		print "[F1 LED] Stopping !!"
+		print( "[F1 LED] Stopping !!")
 
 		iniVfd = None
 
 def sessionstart(reason, **kwargs):
-	print "[F3 LED] sessionstart"
+	print( "[F3 LED] sessionstart")
 	global iniVfd
 	global gReason
 	global mySession
