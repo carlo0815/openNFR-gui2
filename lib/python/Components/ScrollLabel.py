@@ -128,7 +128,7 @@ class ScrollLabel(HTMLComponent, GUIComponent):
 				self.scrollbar.hide()
 
 	def appendText(self, text, showBottom=True):
-		if isinstance(s, text):
+		if isinstance(text, str):
 			text = text
 		else:
 			text = text.decode()
