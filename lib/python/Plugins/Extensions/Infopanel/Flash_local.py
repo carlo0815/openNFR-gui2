@@ -18,6 +18,8 @@ from enigma import eTimer, fbClass
 import os, json, shutil, math, time, zipfile, shutil
 from six.moves.urllib.request import urlopen
 from six.moves.urllib.request import Request
+from six.moves import urllib
+import six
 from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigText, ConfigLocations, ConfigYesNo, ConfigSelection
 from Components.ConfigList import ConfigListScreen
 
