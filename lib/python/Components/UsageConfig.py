@@ -62,6 +62,9 @@ def InitUsageConfig():
 	config.usage.numzaptimeout1 = ConfigSlider(default = 3000, increment = 250, limits = (750, 5000))
 	config.usage.numzaptimeout2 = ConfigSlider(default = 1000, increment = 250, limits = (750, 5000))
 	config.usage.showScreenPath = ConfigSelection(default="off", choices=[("off", _("None")), ("small", _("Small")), ("large", _("Large"))])
+	config.usage.subnetwork = ConfigYesNo(default = True)
+	config.usage.subnetwork_cable = ConfigYesNo(default = True)
+	config.usage.subnetwork_terrestrial = ConfigYesNo(default = True)
 
 	config.usage.alternative_number_mode = ConfigYesNo(default = False)
 	def alternativeNumberModeChange(configElement):
@@ -566,7 +569,7 @@ def InitUsageConfig():
 	config.usage.show_eit_nownext = ConfigYesNo(default = True)
 	config.usage.show_vcr_scart = ConfigYesNo(default = False)
 	config.usage.pic_resolution = ConfigSelection(default = None, choices = [(None, _("Same resolution as skin")), ("(720, 576)", "720x576"), ("(1280, 720)", "1280x720"), ("(1920, 1080)", "1920x1080")])
-
+	config.usage.enable_delivery_system_workaround = ConfigYesNo(default = False)
 
 	config.usage.date = ConfigSubsection()
 	config.usage.date.enabled = NoSave(ConfigBoolean(default=False))
