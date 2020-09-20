@@ -4,7 +4,7 @@ from Components.Converter.Converter import Converter
 from Components.Element import cached
 from ServiceReference import ServiceReference
 from enigma import eServiceCenter, eServiceReference, iServiceInformation, iPlayableService
-from string import upper
+from string import ascii_uppercase
 import gettext
 from xml.etree.cElementTree import parse
 
