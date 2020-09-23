@@ -4,7 +4,7 @@ from enigma import eEPGCache
 from Components.Converter.Converter import Converter
 from Components.Element import cached
 from Components.Converter.genre import getGenreStringSub
-
+from string import ascii_uppercase, ascii_lowercase
 
 class EventName(Converter, object):
 	NAME = 0

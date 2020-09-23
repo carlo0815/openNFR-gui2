@@ -13,7 +13,7 @@ from Components.config import config, ConfigYesNo, NoSave, ConfigSubsection, Con
 from Components.Console import Console
 from Components.Network import iNetwork
 from wifi.scan import Cell
-
+from string import ascii_uppercase, ascii_lowercase
 
 liste = ["WPA/WPA2", "WPA2", "WPA", "WEP", "Unencrypted"]
 

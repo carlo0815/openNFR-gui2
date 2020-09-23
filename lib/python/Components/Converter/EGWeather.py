@@ -462,7 +462,7 @@ def devinfowheather(extendido):
 	t12)
 
 
-from string import upper
+from string import asci_uppercase
 
 def devsem(dia):
 	ret = dia

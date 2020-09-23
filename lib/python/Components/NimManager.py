@@ -7,7 +7,7 @@ from datetime import datetime
 import xml.etree.cElementTree
 from os import path
 import six
-
+from string import ascii_uppercase, ascii_lowercase
 from enigma import eDVBSatelliteEquipmentControl as secClass, \
 	eDVBSatelliteLNBParameters as lnbParam, \
 	eDVBSatelliteDiseqcParameters as diseqcParam, \

@@ -20,7 +20,7 @@ from Components.AVSwitch import AVSwitch
 from Components.ConfigList import ConfigList, ConfigListScreen
 from Components.config import ConfigSubsection, ConfigSubList, ConfigText, ConfigInteger, config
 from setup import initConfigfore, WeatherPluginEntriesListConfigScreenfore
-from string import upper
+from string import ascii_uppercase, ascii_lowercase
 from Screens.ChoiceBox import ChoiceBox
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_WRAP, RT_VALIGN_CENTER
 from Components.MenuList import MenuList

@@ -8,6 +8,7 @@ import time
 from boxbranding import getImageVersion, getMachineBuild, getBoxType
 from sys import modules, version_info
 import socket, fcntl, struct
+from string import ascii_uppercase, ascii_lowercase
 
 def getVersionString():
 	return getImageVersion()

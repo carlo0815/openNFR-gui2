@@ -24,7 +24,7 @@ import time
 import shlex, subprocess
 from subprocess import Popen
 from glob import glob
-
+from string import ascii_uppercase, ascii_lowercase
 
 class IPTV_glob(Screen):
 	def __init__(self, name, file):

@@ -20,7 +20,7 @@ from Screens.ServiceStopScreen import ServiceStopScreen
 from Screens.AutoDiseqc import AutoDiseqc
 from Tools.BoundFunction import boundFunction
 from boxbranding import getBoxType
-
+from string import ascii_uppercase, ascii_lowercase
 from time import mktime, localtime
 from datetime import datetime
 from os import path

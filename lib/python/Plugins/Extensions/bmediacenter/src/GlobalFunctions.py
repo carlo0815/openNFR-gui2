@@ -16,6 +16,7 @@ from Components.FileList import FileList
 from _ctypes import *
 import os, re
 from os import path as os_path
+from string import ascii_uppercase, ascii_lowercase
 #------------------------------------------------------------------------------------------
 class MC_VideoInfoView(Screen):
 	if getDesktop(0).size().width() == 1920:

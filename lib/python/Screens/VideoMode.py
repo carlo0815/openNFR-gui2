@@ -16,6 +16,7 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 from Tools.HardwareInfo import HardwareInfo
 from Components.AVSwitch import iAVSwitch
+from string import ascii_uppercase, ascii_lowercase
 
 resolutionlabel = None
 

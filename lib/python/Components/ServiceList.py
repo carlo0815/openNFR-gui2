@@ -9,7 +9,7 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.TextBoundary import getTextBoundarySize
 
 from Tools.Directories import resolveFilename, SCOPE_ACTIVE_SKIN
-
+from string import ascii_uppercase, ascii_lowercase
 from Components.Renderer.Picon import getPiconName
 from Components.config import config
 

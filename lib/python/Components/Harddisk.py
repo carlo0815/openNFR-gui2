@@ -11,6 +11,7 @@ from boxbranding import getBoxType, getMachineBuild
 import Components.Task
 import re
 import six
+from string import ascii_uppercase, ascii_lowercase
 
 def readFile(filename):
 	file = open(filename)

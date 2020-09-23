@@ -39,7 +39,7 @@ from Components.config import config, ConfigSubsection, ConfigYesNo, ConfigSelec
 from Components.Harddisk import harddiskmanager, getProcMounts
 import shutil
 import urllib
-
+from string import ascii_uppercase, ascii_lowercase
 if sys.version_info[0] >= 3:
 	import subprocess
 else:

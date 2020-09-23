@@ -6,6 +6,7 @@ import sys
 import types
 import xml.dom.minidom
 import shlex
+from string import ascii_uppercase, ascii_lowercase
 try:
     from multiprocessing import Process
 except ImportError:

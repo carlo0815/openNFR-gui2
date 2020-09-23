@@ -19,6 +19,7 @@ from ServiceReference import ServiceReference
 from Components.Renderer.Picon import getPiconName
 import NavigationInstance
 import skin
+from string import ascii_uppercase, ascii_lowercase
 
 AUDIO_EXTENSIONS = frozenset((".dts", ".mp3", ".wav", ".wave", ".ogg", ".flac", ".m4a", ".mp2", ".m2a", ".3gp", ".3g2", ".asf", ".wma"))
 DVD_EXTENSIONS = ('.iso', '.img')
