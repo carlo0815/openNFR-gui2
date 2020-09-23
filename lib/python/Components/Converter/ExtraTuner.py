@@ -5,7 +5,7 @@ from Components.Converter.Converter import Converter
 from Components.Element import cached
 from ServiceReference import ServiceReference
 from enigma import eServiceCenter, eServiceReference, iServiceInformation, iPlayableService, eDVBFrontendParametersSatellite, eDVBFrontendParametersCable
-from string import upper
+from string import ascii_uppercase
 import gettext
 
 class ExtraTuner(Converter, object):
