@@ -225,8 +225,11 @@ class NFRCamManager(Screen):
 			self["status"].setText(listecm)
 			ecmfiles.close()
 		except:
-				listecm += "\n" + self.AboutText
-				listecm += "\n" + self.AboutText1
+				try:
+					listecm += "\n" + self.AboutText
+					listecm += "\n" + self.AboutText1
+				except:
+					pass
 				try:
 					listecm += "\n" + self.AboutText2
 				except:
