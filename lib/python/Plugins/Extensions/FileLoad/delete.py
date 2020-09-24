@@ -27,8 +27,9 @@ __home_page__ = ""
  
 import os, sys, platform
 import posixpath
-import BaseHTTPServer
-from SocketServer import ThreadingMixIn
+from http.server import HTTPServer as BaseHTTPServer
+from http.server import BaseHTTPRequestHandler
+from socketserver import ThreadingMixIn
 import threading
 import urllib
 import cgi
@@ -36,12 +37,7 @@ import shutil
 import mimetypes
 import re
 import time
-
-
-try:
-	from cStringIO import StringIO
-except ImportError:
-	from StringIO import StringIO
+from io import StringIO
 
 print ("")
 print ('----------------------------------------------------------------------->> ')
@@ -163,48 +159,48 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		return (False, "Unexpect Ends of data.")
 
 	def send_head(self):
-	"""Common code for GET and HEAD commands.
+		"""Common code for GET and HEAD commands.
 
-	This sends the response code and MIME headers.
+		This sends the response code and MIME headers.
 
-	Return value is either a file object (which has to be copied
-	to the outputfile by the caller unless the command was HEAD,
-	and must be closed by the caller under all circumstances), or
-	None, in which case the caller has nothing further to do.
+		Return value is either a file object (which has to be copied
+		to the outputfile by the caller unless the command was HEAD,
+		and must be closed by the caller under all circumstances), or
+		None, in which case the caller has nothing further to do.
 
-	"""
-	path = self.translate_path(self.path)
-	f = None
-	if os.path.isdir(path):
-		if not self.path.endswith('/'):
-			# redirect browser - doing basically what apache does
-			self.send_response(301)
-			self.send_header("Location", self.path + "/")
-			self.end_headers()
-			return None
-		for index in "index.html", "index.htm":
-			index = os.path.join(path, index)
-			if os.path.exists(index):
-				path = index
-				break
-			else:
-				return self.list_directory(path)
-		ctype = self.guess_type(path)
-		try:
-			# Always read in binary mode. Opening files in text mode may cause
-			# newline translations, making the actual size of the content
-			# transmitted *less* than the content-length!
-			f = open(path, 'rb')
-		except IOError:
-			self.send_error(404, "File not found")
-			return None
-		self.send_response(200)
-		self.send_header("Content-type", ctype)
-		fs = os.fstat(f.fileno())
-		self.send_header("Content-Length", str(fs[6]))
-		self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
-		self.end_headers()
-		return f
+		"""
+		path = self.translate_path(self.path)
+		f = None
+		if os.path.isdir(path):
+			if not self.path.endswith('/'):
+				# redirect browser - doing basically what apache does
+				self.send_response(301)
+				self.send_header("Location", self.path + "/")
+				self.end_headers()
+				return None
+				for index in "index.html", "index.htm":
+					index = os.path.join(path, index)
+					if os.path.exists(index):
+						path = index
+						break
+					else:
+						return self.list_directory(path)
+						ctype = self.guess_type(path)
+					try:
+						# Always read in binary mode. Opening files in text mode may cause
+						# newline translations, making the actual size of the content
+						# transmitted *less* than the content-length!
+						f = open(path, 'rb')
+					except IOError:
+						self.send_error(404, "File not found")
+						return None
+						self.send_response(200)
+						self.send_header("Content-type", ctype)
+						fs = os.fstat(f.fileno())
+						self.send_header("Content-Length", str(fs[6]))
+						self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
+						self.end_headers()
+					return f
 
 	def list_directory(self, path):
 		"""Helper to produce a directory listing (absent index.html).
@@ -250,8 +246,8 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				# Note: a link to a directory displays with @ and links with /
 			filename = os.getcwd() + '/' + displaypath + displayname
 			f.write('<table bgcolor="#346ca7"><tr><td width="50%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td><td width="10%%"><form ENCTYPE=\"multipart/form-data\" method=\"post\"><input id=\"del\" type=\"submit\" name=\"%s\" value=\"Delete\" ID=\"Delete\" /></form></td></tr>'
-                    % (urllib.quote(linkname), colorName,
-                        sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.quote(linkname)))
+			% (urllib.quote(linkname), colorName,
+			sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.quote(linkname)))
 			f.write("</table></body></html>")
 			f.write("</table></td></tr></table></body></html>")
 			length = f.tell()
@@ -281,10 +277,11 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			drive, word = os.path.splitdrive(word)
 			head, word = os.path.split(word)
 			if word in (os.curdir, os.pardir): continue
-				path = os.path.join(path, word)
-			return path
+			path = os.path.join(path, word)
+		return path
 
 	def copyfile(self, source, outputfile):
+
 		"""Copy all data between two file objects.
 
 		The SOURCE argument is a file object open for reading
