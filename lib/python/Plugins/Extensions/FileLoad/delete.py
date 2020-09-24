@@ -31,7 +31,8 @@ from http.server import HTTPServer as BaseHTTPServer
 from http.server import BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 import threading
-import urllib
+import six
+from six.moves import urllib
 import cgi
 import shutil
 import mimetypes
