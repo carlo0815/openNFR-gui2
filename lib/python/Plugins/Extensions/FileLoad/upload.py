@@ -27,21 +27,18 @@ __home_page__ = ""
 
 import os, sys, platform
 import posixpath
-import BaseHTTPServer
-from SocketServer import ThreadingMixIn
+from http.server import HTTPServer as BaseHTTPServer
+from http.server import BaseHTTPRequestHandler
+from socketserver import ThreadingMixIn
 import threading
-import urllib
+import six
+from six.moves import urllib
 import cgi
 import shutil
 import mimetypes
 import re
 import time
-
-
-try:
-	from cStringIO import StringIO
-except ImportError:
-	from StringIO import StringIO
+from io import StringIO
 
 print ("")
 print ('----------------------------------------------------------------------->> ')
