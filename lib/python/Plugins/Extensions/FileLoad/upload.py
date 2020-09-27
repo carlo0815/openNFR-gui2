@@ -107,7 +107,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		f.write(b'<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
 		f.write(b"<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Upload Result Page</h2>")
 		f.write(b'<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-		f.write(b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer'])
+		f.write(("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer']).encode())
 		f.write(b'<ul></td></tr>')
 		f.write(b'<tr><td valign=top bgcolor="#346ca7" height="65%">')
 		if r:
@@ -130,13 +130,17 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			f.close()
 
 	def deal_post_data(self):
-		boundary = self.headers.plisttext.split("=")[1]
+		content_type = self.headers['content-type']
+		if not content_type:
+			return (False, "Content-Type header doesn't contain boundary")
+		boundary = content_type.split("=")[1].encode()
+		#boundary = self.headers.plisttext.split("=")[1]
 		remainbytes = int(self.headers['content-length'])
 		line = self.rfile.readline()
 		remainbytes -= len(line)
 		if not boundary in line:
 			return (False, "Content NOT begin with boundary")
-		line = self.rfile.readline()
+		line = self.rfile.readline().decode('utf-8')
 		remainbytes -= len(line)
 		fn = re.findall(r'Content-Disposition.*name="file"; filename="(.*)"', line)
 		if fn == [""]:
@@ -147,13 +151,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			return (False, "Can't find out file name...")
 		path = self.translate_path(self.path)
 		osType = platform.system()
-		try:
-			if osType == "Linux":
-				fn = os.path.join(path, fn[0].decode('gbk').encode('utf-8'))
-			else:
-				fn = os.path.join(path, fn[0])
-		except Exception as e:
-			return (False, "?????????,????IE?????????")
+		fn = os.path.join(path, fn[0])
 		while os.path.exists(fn):
 			fn += "_"
 		line = self.rfile.readline()
@@ -175,7 +173,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			remainbytes -= len(line)
 			if boundary in line:
 				preline = preline[0:-1]
-				if preline.endswith('\r'):
+				if preline.endswith(b'\r'):
 					preline = preline[0:-1]
 				out.write(preline)
 				out.close()
