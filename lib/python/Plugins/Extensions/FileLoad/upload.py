@@ -28,15 +28,10 @@ __home_page__ = ""
 
 import os, sys, platform
 import posixpath
-#from http.server import HTTPServer as BaseHTTPServer
-#from http.server import BaseHTTPRequestHandler
-#from socketserver import ThreadingMixIn
-#import threading
 import http.server
 import urllib.request, urllib.parse, urllib.error
 import html
 import six
-#from six.moves import urllib
 import cgi
 import shutil
 import mimetypes
@@ -243,10 +238,10 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 		"""
 		#http.Request.getRequestHostname = new_getRequestHostname
-		serveradress = re.findall('Host: (.*?)\r\n',str(self.headers))
-		print("serveradress:", serveradress)
-		#url = serveradress[0].split(':',1)
-		url = b"192.168.0.190"
+		import netifaces as ni
+		ni.ifaddresses('eth0')
+		url1 = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+		url = bytes(url1, encoding='UTF-8')
 		try:
 			list = os.listdir(path)
 		except os.error:
