@@ -29,6 +29,7 @@ __home_page__ = ""
 import os, sys, platform
 import posixpath
 import http.server
+from socketserver import ThreadingMixIn
 import urllib.request, urllib.parse, urllib.error
 import html
 import six
@@ -134,7 +135,6 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		if not content_type:
 			return (False, "Content-Type header doesn't contain boundary")
 		boundary = content_type.split("=")[1].encode()
-		#boundary = self.headers.plisttext.split("=")[1]
 		remainbytes = int(self.headers['content-length'])
 		line = self.rfile.readline()
 		remainbytes -= len(line)
@@ -364,15 +364,16 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		'.h': 'text/plain',
 		})
  
-#class ThreadingServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
-	#pass
+class ThreadingServer(ThreadingMixIn, http.server.HTTPServer):
+	pass
 
 def test(HandlerClass = SimpleHTTPRequestHandler,
 	ServerClass = http.server.HTTPServer):
 	http.server.test(HandlerClass, ServerClass)
 
 if __name__ == '__main__':
-	os.chdir("/")  
+	os.chdir("/")
+       
 	test()
 
 	#???

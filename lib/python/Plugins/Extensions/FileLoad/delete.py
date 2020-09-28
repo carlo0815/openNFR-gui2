@@ -1,3 +1,4 @@
+from __future__ import print_function
 #!/usr/bin/env python
 #coding=utf-8
 # modifyDate: 20190718 ~ 20190723
@@ -27,23 +28,21 @@ __home_page__ = ""
  
 import os, sys, platform
 import posixpath
-from http.server import HTTPServer as BaseHTTPServer
-from http.server import BaseHTTPRequestHandler
+import http.server
 from socketserver import ThreadingMixIn
-import threading
+import urllib.request, urllib.parse, urllib.error
+import html
 import six
-from six.moves import urllib
 import cgi
 import shutil
 import mimetypes
 import re
 import time
-from io import StringIO
+from io import BytesIO
 
 print ("")
 print ('----------------------------------------------------------------------->> ')
 try:
-	#port = int(sys.argv[1])
 	port = 8090   
 except Exception as e:
 	print ('-------->> Warning: Port is not given, will use deafult port: 8090 ')
@@ -71,10 +70,9 @@ def modification_date(filename):
 	# return datetime.datetime.fromtimestamp(t)
 	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(os.path.getmtime(filename)))
 
-class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
 	"""Simple HTTP request handler with GET/HEAD/POST commands.
-
 	This serves files from the current directory and any of its
 	subdirectories.  The MIME type for files is determined by
 	calling the .guess_type() method. And can reveive file uploaded
@@ -104,21 +102,21 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		"""Serve a POST request."""
 		r, info = self.deal_post_data()
 		print (r, info, "by: ", self.client_address)
-		f = StringIO()
-		f.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
-		f.write("<html>\n<title>Delete Result Page</title>\n")
-		f.write('<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
-		f.write("<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Delete Result Page</h2>")
-		f.write('<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-		f.write("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer'])
-		f.write('<ul></td></tr>')
-		f.write('<tr><td valign=top bgcolor="#346ca7" height="65%">')
+		f = BytesIO()
+		f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
+		f.write(b"<html>\n<title>Delete Result Page</title>\n")
+		f.write(b'<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
+		f.write(b"<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Delete Result Page</h2>")
+		f.write(b'<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
+		f.write((b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer']).encode())
+		f.write(b'<ul></td></tr>')
+		f.write(b'<tr><td valign=top bgcolor="#346ca7" height="65%">')
 		if r:
-			f.write("<strong>Success:</strong>")
+			f.write(b"<strong>Success:</strong>")
 		else:
 			f.write("<strong>Failed:</strong>")
-			f.write(info)
-			f.write("<br><a href=\"%s\">back</a>" % self.headers['referer'])
+			f.write(info.encode())
+			f.write(("<br><a href=\"%s\">back</a>" % self.headers['referer']).encode())
 			f.write("Mod By: OpenNFR Team")
 			f.write("<a href=\"http://www.nachtfalke.biz\">")
 			f.write("Nachtfalke</a>.</small></body>\n</html>\n")
@@ -133,15 +131,18 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				f.close()
 
 	def deal_post_data(self):
-		boundary = self.headers.plisttext.split("=")[1]
+		content_type = self.headers['content-type']
+		if not content_type:
+			return (False, "Content-Type header doesn't contain boundary")
+		boundary = content_type.split("=")[1].encode()
 		remainbytes = int(self.headers['content-length'])
 		line = self.rfile.readline()
 		remainbytes -= len(line)
 		if not boundary in line:
 			return (False, "Content NOT begin with boundary")
-		line = self.rfile.readline()
-		line1 = self.rfile.readline()
-		line2 = self.rfile.readline()
+		line = self.rfile.readline().decode('utf-8')
+		line1 = self.rfile.readline().decode('utf-8')
+		line2 = self.rfile.readline().decode('utf-8')
 		remainbytes -= len(line)
 		fx = line.split('"')
 		fn = fx[1]
@@ -179,29 +180,29 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				self.send_header("Location", self.path + "/")
 				self.end_headers()
 				return None
-				for index in "index.html", "index.htm":
-					index = os.path.join(path, index)
-					if os.path.exists(index):
-						path = index
-						break
-					else:
-						return self.list_directory(path)
-						ctype = self.guess_type(path)
-					try:
-						# Always read in binary mode. Opening files in text mode may cause
-						# newline translations, making the actual size of the content
-						# transmitted *less* than the content-length!
-						f = open(path, 'rb')
-					except IOError:
-						self.send_error(404, "File not found")
-						return None
-						self.send_response(200)
-						self.send_header("Content-type", ctype)
-						fs = os.fstat(f.fileno())
-						self.send_header("Content-Length", str(fs[6]))
-						self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
-						self.end_headers()
-					return f
+			for index in "index.html", "index.htm":
+				index = os.path.join(path, index)
+				if os.path.exists(index):
+					path = index
+					break
+			else:
+				return self.list_directory(path)
+		ctype = self.guess_type(path)
+		try:
+			# Always read in binary mode. Opening files in text mode may cause
+			# newline translations, making the actual size of the content
+			# transmitted *less* than the content-length!
+			f = open(path, 'rb')
+		except IOError:
+			self.send_error(404, "File not found")
+			return None
+		self.send_response(200)
+		self.send_header("Content-type", ctype)
+		fs = os.fstat(f.fileno())
+		self.send_header("Content-Length", str(fs[6]))
+		self.send_header("Last-Modified", self.date_time_string(fs.st_mtime))
+		self.end_headers()
+		return f
 
 	def list_directory(self, path):
 		"""Helper to produce a directory listing (absent index.html).
@@ -211,27 +212,29 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		interface the same as for send_head().
 
 		"""
+		import netifaces as ni
+		ni.ifaddresses('eth0')
+		url1 = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+		url = bytes(url1, encoding='UTF-8')		
 		try:
 			list = os.listdir(path)
 		except os.error:
 			self.send_error(404, "No permission to list directory")
 			return None
-		serveradress = re.findall('Host: (.*?)\r\n',str(self.headers))
-		url = serveradress[0].split(':',1)    
 		list.sort(key=lambda a: a.lower())
-		f = StringIO()
-		displaypath = cgi.escape(urllib.unquote(self.path))
-		f.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
-		f.write('<html>\n<title>OpenNFR FileLoad %s</title>\n' % displaypath)
-		f.write('<body>')
-		f.write('<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
-		f.write("<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Directory listing</h2>")
-		f.write('<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-		f.write("<input type=\"button\" value=\"HomePage\" onClick=\"self.location.href='http://%s:8000'\">" % url[0])        
-		f.write("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='../'\"></form>")
-		f.write('</form>')
-		f.write('<ul></td></tr>')
-		f.write('<tr><td valign=top bgcolor="#346ca7" height="65%">')
+		f = BytesIO()
+		displaypath = html.escape(urllib.parse.unquote(self.path))
+		f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
+		f.write(('<html>\n<title>OpenNFR FileLoad %s</title>\n' % displaypath).encode())
+		f.write(b'<body>')
+		f.write(b'<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
+		f.write(b"<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Directory listing</h2>")
+		f.write(b'<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
+		f.write(b"<input type=\"button\" value=\"HomePage\" onClick=\"self.location.href='http://%s:8000'\">" % url)        
+		f.write(b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='../'\"></form>")
+		f.write(b'</form>')
+		f.write(b'<ul></td></tr>')
+		f.write(b'<tr><td valign=top bgcolor="#346ca7" height="65%">')
 
 		for name in list:
 			fullname = os.path.join(path, name)
@@ -246,18 +249,16 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 				displayname = name
 				# Note: a link to a directory displays with @ and links with /
 			filename = os.getcwd() + '/' + displaypath + displayname
-			f.write('<table bgcolor="#346ca7"><tr><td width="50%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td><td width="10%%"><form ENCTYPE=\"multipart/form-data\" method=\"post\"><input id=\"del\" type=\"submit\" name=\"%s\" value=\"Delete\" ID=\"Delete\" /></form></td></tr>'
-			% (urllib.quote(linkname), colorName,
-			sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.quote(linkname)))
-			f.write("</table></body></html>")
-			f.write("</table></td></tr></table></body></html>")
-			length = f.tell()
-			f.seek(0)
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
-			self.send_header("Content-Length", str(length))
-			self.end_headers()
-			return f
+			f.write(('<table bgcolor="#346ca7"><tr><td width="60%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename))).encode())
+		f.write(b"</table></body></html>")
+		f.write(b"</table></td></tr></table></body></html>")
+		length = f.tell()
+		f.seek(0)
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.send_header("Content-Length", str(length))
+		self.end_headers()
+		return f
 
 	def translate_path(self, path):
 		"""Translate a /-separated PATH to the local filename syntax.
@@ -270,7 +271,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		# abandon query parameters
 		path = path.split('?',1)[0]
 		path = path.split('#',1)[0]
-		path = posixpath.normpath(urllib.unquote(path))
+		path = posixpath.normpath(urllib.parse.unquote(path))
 		words = path.split('/')
 		words = filter(None, words)
 		path = os.getcwd()
@@ -331,20 +332,17 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		'.c': 'text/plain',
 		'.h': 'text/plain',
 		})
-
-class ThreadingServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
+class ThreadingServer(ThreadingMixIn, http.server.HTTPServer):
 	pass
+    
+def test(HandlerClass = SimpleHTTPRequestHandler,
+	ServerClass = http.server.HTTPServer):
+	http.server.test(HandlerClass, ServerClass)
 
-	def test(HandlerClass = SimpleHTTPRequestHandler,
-		ServerClass = BaseHTTPServer.HTTPServer):
-		BaseHTTPServer.test(HandlerClass, ServerClass)
+if __name__ == '__main__':
+	os.chdir("/")
+	srvr = ThreadingServer(serveraddr, SimpleHTTPRequestHandler)
+	srvr.serve_forever()            
+          
+	test()
 
-	if __name__ == '__main__':
-		os.chdir("/")  
-		srvr = ThreadingServer(serveraddr, SimpleHTTPRequestHandler)
-		srvr.serve_forever()    
-		test()
-		#???
-		# srvr = BaseHTTPServer.HTTPServer(serveraddr, SimpleHTTPRequestHandler)
-
-		#???
