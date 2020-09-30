@@ -108,27 +108,27 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		f.write(b'<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
 		f.write(b"<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Delete Result Page</h2>")
 		f.write(b'<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-		f.write((b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer']).encode())
+		f.write(("<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='%s'\"></form>" % self.headers['referer']).encode())
 		f.write(b'<ul></td></tr>')
 		f.write(b'<tr><td valign=top bgcolor="#346ca7" height="65%">')
 		if r:
 			f.write(b"<strong>Success:</strong>")
 		else:
 			f.write("<strong>Failed:</strong>")
-			f.write(info.encode())
-			f.write(("<br><a href=\"%s\">back</a>" % self.headers['referer']).encode())
-			f.write("Mod By: OpenNFR Team")
-			f.write("<a href=\"http://www.nachtfalke.biz\">")
-			f.write("Nachtfalke</a>.</small></body>\n</html>\n")
-			length = f.tell()
-			f.seek(0)
-			self.send_response(200)
-			self.send_header("Content-type", "text/html")
-			self.send_header("Content-Length", str(length))
-			self.end_headers()
-			if f:
-				self.copyfile(f, self.wfile)
-				f.close()
+		f.write(info.encode())
+		f.write(("<br><a href=\"%s\">back</a>" % self.headers['referer']).encode())
+		f.write(b"Mod By: OpenNFR Team")
+		f.write(b"<a href=\"http://www.nachtfalke.biz\">")
+		f.write(b"Nachtfalke</a>.</small></body>\n</html>\n")
+		length = f.tell()
+		f.seek(0)
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.send_header("Content-Length", str(length))
+		self.end_headers()
+		if f:
+			self.copyfile(f, self.wfile)
+			f.close()
 
 	def deal_post_data(self):
 		content_type = self.headers['content-type']
@@ -249,7 +249,8 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 				displayname = name
 				# Note: a link to a directory displays with @ and links with /
 			filename = os.getcwd() + '/' + displaypath + displayname
-			f.write(('<table bgcolor="#346ca7"><tr><td width="60%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename))).encode())
+			f.write(('<table bgcolor="#346ca7"><tr><td width="50%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td><td width="10%%"><form ENCTYPE=\"multipart/form-data\" method=\"post\"><input id=\"del\" type=\"submit\" name=\"%s\" value=\"Delete\" ID=\"Delete\" /></form></td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.parse.quote(linkname))).encode())
+			#f.write(('<table bgcolor="#346ca7"><tr><td width="60%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename))).encode())
 		f.write(b"</table></body></html>")
 		f.write(b"</table></td></tr></table></body></html>")
 		length = f.tell()
@@ -345,4 +346,3 @@ if __name__ == '__main__':
 	srvr.serve_forever()            
           
 	test()
-
