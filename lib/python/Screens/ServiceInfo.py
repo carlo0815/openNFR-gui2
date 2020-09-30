@@ -182,7 +182,7 @@ class ServiceInfo(Screen):
 					(_("Service reference"), refstr, TYPE_TEXT),
 					(_("Coding Systems"), codenumbers, TYPE_TEXT))
 
-			if codenumbers > 0:
+			if codenumbers == 0:
 				i = 0
 				caidssyst1 = caidssyst.splitlines()
 				codesystem1 = codesystem.splitlines()
