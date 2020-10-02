@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
@@ -8,8 +10,9 @@ from Components.MenuList import MenuList
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
-from os import path, walk
+from os import path
 from enigma import eEnv
+import os
 
 class LCDClockSelector(Screen):
 	clocklist = []
@@ -21,7 +24,7 @@ class LCDClockSelector(Screen):
 
 		self.clocklist = []
 		self.previewPath = ""
-		path.walk(self.root, self.find, "")
+		os.walk(self.root, self.find, "")
 
 		self.clocklist.sort()
 		self["ClockList"] = MenuList(self.clocklist)
@@ -78,22 +81,22 @@ class LCDClockSelector(Screen):
 	def find(self, arg, dirname, names):
 		for x in names:
 			if x.startswith("clock_") and x.endswith(".xml"):
-			    if dirname != self.root:
-			        subdir = dirname[19:]
-			        skinname = x
-			        skinname = subdir + "/" + skinname
-			        self.clocklist.append(skinname)
-			    else:
-			        skinname = x
-			        self.clocklist.append(skinname)
+				if dirname != self.root:
+					subdir = dirname[19:]
+					skinname = x
+					skinname = subdir + "/" + skinname
+					self.clocklist.append(skinname)
+				else:
+					skinname = x
+					self.clocklist.append(skinname)
 
 	def ok(self):
 		skinfile = self["ClockList"].getCurrent()
-		print ("LCDSkinselector: Selected Skin: ", skinfile)
+		print ("LcdClockSelector: Selected Skin: ", skinfile)
 		if skinfile == "no Clock":
 			config.skin.display_skin.value = "skin_display.xml"
 		else:
-                	config.skin.display_skin.value = skinfile
+			config.skin.display_skin.value = skinfile
 		config.skin.display_skin.save()
 		restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
 		restartbox.setTitle(_("Restart GUI now?"))
@@ -107,7 +110,7 @@ class LCDClockSelector(Screen):
 			pngpath = resolveFilename("${datadir}/enigma2/display/lcdskins/noprev.png")
 		
 		if not path.exists(pngpath):
-			pngpath = eEnv.resolve("${datadir}/enigma2/display/lcdskins/noprev.png")		
+			pngpath = eEnv.resolve("${datadir}/enigma2/display/lcdskins/noprev.png")
 		if self.previewPath != pngpath:
 			self.previewPath = pngpath
 
