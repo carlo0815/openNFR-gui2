@@ -21,7 +21,7 @@ class SkinSelectorBase:
 		if self.PICONSKINXML and os.path.exists(os.path.join(self.root, self.PICONSKINXML)):
 			self.skinlist.append(self.PICONDEFAULTSKIN)
 		if self.NFRSKINXML and os.path.exists(os.path.join(self.root, self.NFRSKINXML)):
-			self.skinlist.append(self.NFRDEFAULTSKIN)			
+			self.skinlist.append(self.NFRDEFAULTSKIN)
 		for root, dirs, files in os.walk(self.root, followlinks=True):
 			for subdir in dirs:
 				dir = os.path.join(root,subdir)
@@ -75,7 +75,7 @@ class SkinSelectorBase:
 			skinfile = os.path.join(skinfile, self.PICONSKINXML)
 		elif self["SkinList"].getCurrent() == self.NFRDEFAULTSKIN:
 			skinfile = ""
-			skinfile = os.path.join(skinfile, self.NFRSKINXML)			
+			skinfile = os.path.join(skinfile, self.NFRSKINXML)
 		else:
 			skinfile = self["SkinList"].getCurrent()
 			skinfile = os.path.join(skinfile, self.SKINXML)
@@ -116,7 +116,7 @@ class SkinSelectorBase:
 			pngpath = os.path.join(os.path.join(self.root, pngpath), "piconprev.png")
 		elif self["SkinList"].getCurrent() == self.NFRDEFAULTSKIN:
 			pngpath = "."
-			pngpath = os.path.join(os.path.join(self.root, pngpath), "piconprev.png")			
+			pngpath = os.path.join(os.path.join(self.root, pngpath), "piconprev.png")
 		else:
 			pngpath = self["SkinList"].getCurrent()
 			pngpath = os.path.join(os.path.join(self.root, pngpath), "prev.png")
@@ -146,7 +146,7 @@ class SkinSelector(Screen, SkinSelectorBase):
 	PICONSKINXML = None
 	PICONDEFAULTSKIN = None
 	NFRSKINXML = None
-	NFRDEFAULTSKIN = None		
+	NFRDEFAULTSKIN = None
 
 	skinlist = []
 	root = os.path.join(eEnv.resolve("${datadir}"),"enigma2")
