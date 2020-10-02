@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop
 from Screens.MessageBox import MessageBox
@@ -8,7 +10,7 @@ from Components.MenuList import MenuList
 from Plugins.Plugin import PluginDescriptor
 from Components.config import config
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_LCDSKIN
-from os import path, walk
+from os import path
 from enigma import eEnv
 import os
 from boxbranding import getBoxType
@@ -16,10 +18,12 @@ from boxbranding import getBoxType
 class LCDSkinSelector(Screen):
 	skinlist = []
 	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008', 'formuler1'):
-        	root = eEnv.resolve("${datadir}/enigma2/display/")
-        else:
-        	root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
-	root1 = eEnv.resolve("${datadir}/enigma2/display/")
+		root = eEnv.resolve("${datadir}/enigma2/display/")
+	else:
+		root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
+		root1 = eEnv.resolve("${datadir}/enigma2/display/")
+		print("root:", root)
+		print("root1:", root1)
 
 	def __init__(self, session, args = None):
 
@@ -27,11 +31,12 @@ class LCDSkinSelector(Screen):
 
 		self.skinlist = []
 		self.previewPath = ""
-		path.walk(self.root, self.find, "")
+		os.walk(self.root, self.find, "")
 
 		self.skinlist.sort()
-		print "self.skinlist1:", self.skinlist
+		print ("self.skinlist1:", self.skinlist)
 		self["SkinList"] = MenuList(self.skinlist)
+		self.skinlist.insert(0, "no Skin")
 		self["Preview"] = Pixmap()
 		self["lab1"] = Label(_("Select skin:"))
 		self["lab2"] = Label(_("Preview:"))
@@ -58,7 +63,7 @@ class LCDSkinSelector(Screen):
 				if skin == tmp:
 					break
 				idx += 1
-			if idx < len(self.skinlist):
+			if idx != len(self.skinlist):
 				self["SkinList"].moveToIndex(idx)
 		else:
 			idx = 0
@@ -85,33 +90,33 @@ class LCDSkinSelector(Screen):
 		for root, dirs, files in os.walk(self.root1, followlinks=True):
 			for subdir in dirs:
 				if ("lcdskins") not in subdir:
-                                        if subdir.startswith("OE-A_") or subdir.startswith("OpenNFR_"):
-                                                src = self.root1 + subdir
-					        dst = self.root + subdir
-					        if not os.path.islink(dst):
-						        os.symlink(src, dst)
-                for x in names:
-                        if x.startswith("skin_") and x.endswith(".xml"):
-				if dirname <> self.root:
-				        if ("lcdskins") not in dirname:
-					        subdir = dirname[27:]
-					        skinname = x
-					        skinname = subdir + "/" + skinname
-					        self.skinlist.append(skinname)				        
-				        else:
-					        subdir = dirname[19:]
-					        skinname = x
-					        skinname = subdir + "/" + skinname
-					        self.skinlist.append(skinname)
+					if subdir.startswith("OE-A_") or subdir.startswith("OpenNFR_"):
+						src = self.root1 + subdir
+						dst = self.root + subdir
+						if not os.path.islink(dst):
+							os.symlink(src, dst)
+		for x in names:
+			if x.startswith("skin_") and x.endswith(".xml"):
+				if dirname < self.root:
+					if ("lcdskins") not in dirname:
+						subdir = dirname[27:]
+						skinname = x
+						skinname = subdir + "/" + skinname
+						self.skinlist.append(skinname)
+					else:
+						subdir = dirname[19:]
+						skinname = x
+						skinname = subdir + "/" + skinname
+						self.skinlist.append(skinname)
 				else:
 					skinname = x
 					self.skinlist.append(skinname)
 					
 			else:
-                        	if x.startswith("OE-A_") or x.startswith("OpenNFR_"):
-                                        skinname = x
+				if x.startswith("OE-A_") or x.startswith("OpenNFR_"):
+					skinname = x
 					self.skinlist.append(skinname)
-                                		
+
 	def ok(self):
 		try:
 			skinstest = self["SkinList"].getCurrent()
@@ -119,7 +124,7 @@ class LCDSkinSelector(Screen):
 				skinfile = self["SkinList"].getCurrent() + "/skin_display.xml"
 			else:
 				skinfile = self["SkinList"].getCurrent()
-			print "LCDSkinselector: Selected Skin: ", skinfile
+			print ("LCDSkinselector: Selected Skin: ", skinfile)
 			config.skin.display_skin.value = skinfile
 			config.skin.display_skin.save()
 			restartbox = self.session.openWithCallback(self.restartGUI,MessageBox,_("GUI needs a restart to apply a new skin\nDo you want to Restart the GUI now?"), MessageBox.TYPE_YESNO)
@@ -129,35 +134,35 @@ class LCDSkinSelector(Screen):
 		
 	def loadPreview(self):
 		pngpath = self["SkinList"].getCurrent()
-		print "pngpath:", pngpath
-                try:
-                	if pngpath.startswith("OE-A_") or pngpath.startswith("OpenNFR_"):
-                		try:
+		print ("pngpath:", pngpath)
+		try:
+			if pngpath.startswith("OE-A_") or pngpath.startswith("OpenNFR_"):
+				try:
 					pngpath = pngpath + ("/prev.png")
 					pngpath = self.root+pngpath
-					print "pngpath1:", pngpath
-				except AttributeError:
-					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")   
-				        print "pngpath4:", pngpath                                                     
-                	else:
-                
-                		try:
-					if getBoxType() in ('vuduo2'):
-                                        	pngpath = pngpath.replace("skin_display.xml", "prev.png")
-						pngpath = self.root+pngpath
-						print "pngpath2a:", pngpath
-                                        else:
-                                        	pngpath = pngpath.replace(".xml", "_prev.png")
-						pngpath = self.root+pngpath
-						print "pngpath2b:", pngpath                                        
-                                         
+					print ("pngpath1:", pngpath)
 				except AttributeError:
 					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
-					print "pngpath3:", pngpath
+					print ("pngpath4:", pngpath)
+			else:
+
+				try:
+					if getBoxType() in ('vuduo2'):
+						pngpath = pngpath.replace("skin_display.xml", "prev.png")
+						pngpath = self.root+pngpath
+						print ("pngpath2a:", pngpath)
+					else:
+						pngpath = pngpath.replace(".xml", "_prev.png")
+						pngpath = self.root+pngpath
+						print ("pngpath2b:", pngpath)
+
+				except AttributeError:
+					pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
+					print ("pngpath3:", pngpath)
 		except AttributeError:
-		        pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
+			pngpath = resolveFilename(SCOPE_LCDSKIN, "lcdskins/noprev.png")
 		if not path.exists(pngpath):
-			pngpath = eEnv.resolve("/usr/share/enigma2/display/lcdskins/noprev.png")		
+			pngpath = eEnv.resolve("/usr/share/enigma2/display/lcdskins/noprev.png")
 		if self.previewPath != pngpath:
 			self.previewPath = pngpath
 
