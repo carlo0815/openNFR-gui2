@@ -11,6 +11,7 @@ from Components.Label import Label
 from Components.Sources.Boolean import Boolean
 
 from enigma import eEnv
+from gettext import dgettext
 from boxbranding import getMachineBrand, getMachineName
 
 import xml.etree.cElementTree
@@ -18,10 +19,10 @@ import six
 
 def setupdom(plugin=None):
 	# read the setupmenu
-	try:
+	if plugin:
 		# first we search in the current path
 		setupfile = open(resolveFilename(SCOPE_CURRENT_PLUGIN, plugin + '/setup.xml'), 'r')
-	except:
+	else:
 		# if not found in the current path, we use the global datadir-path
 		setupfile = open(eEnv.resolve('${datadir}/enigma2/setup.xml'), 'r')
 	setupfiledom = xml.etree.cElementTree.parse(setupfile)
@@ -94,7 +95,7 @@ class Setup(ConfigListScreen, Screen):
 			self.setup_title = six.ensure_str(x.get("title", ""))
 			self.seperation = int(x.get('separation', '0'))
 
-	def __init__(self, session, setup, plugin=None):
+	def __init__(self, session, setup, plugin=None, PluginLanguageDomain=None):
 		Screen.__init__(self, session)
 		# for the skin: first try a setup_<setupID>, then Setup
 		self.skinName = ["setup_" + setup, "Setup" ]
@@ -108,6 +109,7 @@ class Setup(ConfigListScreen, Screen):
 		self.item = None
 		self.setup = setup
 		self.plugin = plugin
+		self.PluginLanguageDomain = PluginLanguageDomain
 		listItems = []
 		self.onNotifiers = [ ]
 		self.refill(listItems)
@@ -172,7 +174,7 @@ class Setup(ConfigListScreen, Screen):
 						if self["config"].getCurrent()[1].help_window.instance is not None:
 							helpwindowpos = self["HelpWindow"].getPosition()
 							from enigma import ePoint
-							self["config"].getCurrent()[1].help_window.instance.move(ePoint(helpwindowpos[0],helpwindowpos[1]))
+							self["config"].getCurrent()[1].help_window.instance.move(ePoint(helpwindowpos[0], helpwindowpos[1]))
 				else:
 					if "VKeyIcon" in self:
 						self["VirtualKB"].setEnabled(False)
@@ -274,21 +276,24 @@ class Setup(ConfigListScreen, Screen):
 					if not meets:
 						continue
 
-
+				if self.PluginLanguageDomain:
+					item_text = dgettext(self.PluginLanguageDomain, six.ensure_str(x.get("text", "??")))
+					item_description = dgettext(self.PluginLanguageDomain, six.ensure_str(x.get("description", " ")))
+				else:
 					item_text = _(six.ensure_str(x.get("text", "??")))
 					item_description = _(six.ensure_str(x.get("description", " ")))
 
-					item_text = item_text.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
-					item_description = item_description.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
-					b = eval(x.text or "")
-					if b == "":
-						continue
-					#add to configlist
-					item = b
-					# the first b is the item itself, ignored by the configList.
-					# the second one is converted to string.
-					if not isinstance(item, ConfigNothing):
-						listItems.append((item_text, item, item_description))
+				item_text = item_text.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
+				item_description = item_description.replace("%s %s", "%s %s" % (getMachineBrand(), getMachineName()))
+				b = eval(x.text or "")
+				if b == "":
+					continue
+				#add to configlist
+				item = b
+				# the first b is the item itself, ignored by the configList.
+				# the second one is converted to string.
+				if not isinstance(item, ConfigNothing):
+					listItems.append((item_text, item, item_description))
 
 def getSetupTitle(setupId):
 	xmldata = setupdom().getroot()
