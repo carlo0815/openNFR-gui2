@@ -24,7 +24,11 @@ class LCDClockSelector(Screen):
 
 		self.clocklist = []
 		self.previewPath = ""
-		os.walk(self.root, self.find, "")
+		path = []
+		dirs = []
+		files = []
+		for (path, dirs, files) in os.walk(self.root):
+			self.find(path, dirs, files)
 
 		self.clocklist.sort()
 		self["ClockList"] = MenuList(self.clocklist)
@@ -78,17 +82,11 @@ class LCDClockSelector(Screen):
 		self["ClockList"].pageDown()
 		self.loadPreview()
 
-	def find(self, arg, dirname, names):
+	def find(self, path, dirs, names):
 		for x in names:
 			if x.startswith("clock_") and x.endswith(".xml"):
-				if dirname != self.root:
-					subdir = dirname[19:]
-					skinname = x
-					skinname = subdir + "/" + skinname
-					self.clocklist.append(skinname)
-				else:
-					skinname = x
-					self.clocklist.append(skinname)
+				skinname = x
+				self.clocklist.append(skinname)
 
 	def ok(self):
 		skinfile = self["ClockList"].getCurrent()
