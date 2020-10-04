@@ -22,21 +22,20 @@ class LCDSkinSelector(Screen):
 	else:
 		root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
 		root1 = eEnv.resolve("${datadir}/enigma2/display/")
-		print("root:", root)
-		print("root1:", root1)
 
 	def __init__(self, session, args = None):
 
 		Screen.__init__(self, session)
-
 		self.skinlist = []
 		self.previewPath = ""
-		os.walk(self.root, self.find, "")
-
+		path = []
+		dirs = []
+		files = []
+		for (path, dirs, files) in os.walk(self.root1):
+			self.find(path, dirs, files)
 		self.skinlist.sort()
 		print ("self.skinlist1:", self.skinlist)
 		self["SkinList"] = MenuList(self.skinlist)
-		self.skinlist.insert(0, "no Skin")
 		self["Preview"] = Pixmap()
 		self["lab1"] = Label(_("Select skin:"))
 		self["lab2"] = Label(_("Preview:"))
@@ -87,6 +86,9 @@ class LCDSkinSelector(Screen):
 		self.loadPreview()
 
 	def find(self, arg, dirname, names):
+		print("arg:", arg)
+		print("dirname:", dirname)
+		print("names:", names)
 		for root, dirs, files in os.walk(self.root1, followlinks=True):
 			for subdir in dirs:
 				if ("lcdskins") not in subdir:
@@ -96,8 +98,9 @@ class LCDSkinSelector(Screen):
 						if not os.path.islink(dst):
 							os.symlink(src, dst)
 		for x in names:
+			print("x:", x)
 			if x.startswith("skin_") and x.endswith(".xml"):
-				if dirname < self.root:
+				if dirname != self.root and not len(dirname) == 0 :
 					if ("lcdskins") not in dirname:
 						subdir = dirname[27:]
 						skinname = x
