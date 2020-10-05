@@ -883,7 +883,6 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/Makefile
 	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/Makefile
 	lib/python/Plugins/Extensions/MainMenu2/skins/defaultHD/images/default/Makefile
-	lib/python/Plugins/Extensions/MenuSort/Makefile
 	lib/python/Plugins/Extensions/CustomSubservices/Makefile
 	lib/python/Plugins/Extensions/MediaScanner/Makefile
 	lib/python/Plugins/Extensions/MediaScanner/meta/Makefile
