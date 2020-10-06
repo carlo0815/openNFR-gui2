@@ -35,7 +35,7 @@ from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 from Plugins.Extensions.Infopanel.iptv_convert import IPTV
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.UserInterfacePositioner import UserInterfacePositioner
-#from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
+from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
 if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
 	try:
 		from Plugins.Extensions.MenuSort.plugin import *
