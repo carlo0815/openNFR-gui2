@@ -1003,5 +1003,37 @@
 		<key id="KEY_MOUSE" mapto="mouse_long" flags="l"/>
 		<key id="KEY_VOD" mapto="vod" flags="b"/>
 		<key id="KEY_VOD" mapto="vod_long" flags="l"/>
-  </map>			
+  </map>
+	<map context="VirtualKeyBoardActions">
+		<!-- Also uses NumberActions -->
+		<!-- Also uses TextEditActions -->
+		<key id="KEY_RED" mapto="cancel" flags="m" />
+		<key id="KEY_GREEN" mapto="save" flags="m" />
+		<key id="KEY_YELLOW" mapto="shift" flags="m" />
+		<key id="KEY_BLUE" mapto="capsLock" flags="m" />
+		<key id="KEY_EXIT" mapto="cancel" flags="m" />
+		<key id="KEY_OK" mapto="select" flags="mr" />
+		<key id="KEY_TEXT" mapto="locale" flags="m" />
+		<key id="KEY_UP" mapto="up" flags="mr" />
+		<key id="KEY_PREVIOUS" mapto="first" flags="m" />
+		<key id="KEY_REWIND" mapto="prev" flags="mr" />
+		<key id="KEY_LEFT" mapto="left" flags="mr" />
+		<key id="KEY_RIGHT" mapto="right" flags="mr" />
+		<key id="KEY_FASTFORWARD" mapto="next" flags="mr" />
+		<key id="KEY_NEXT" mapto="last" flags="m" />
+		<key id="KEY_DOWN" mapto="down" flags="mr" />
+		<!-- Keyboard specific buttons -->
+		<key id="KEY_F5" mapto="cancel" flags="m" />
+		<key id="KEY_F6" mapto="save" flags="m" />
+		<key id="KEY_F7" mapto="locale" flags="m" />
+		<key id="KEY_F8" mapto="shift" flags="m" />
+		<key id="KEY_ESC" mapto="cancel" flags="m" />
+		<key id="KEY_ENTER" mapto="select" flags="mr" />
+		<key id="KEY_PREVIOUSSONG" mapto="first" flags="m" />
+		<key id="KEY_F9" mapto="first" flags="m" />
+		<key id="KEY_F11" mapto="prev" flags="m" />
+		<key id="KEY_F12" mapto="next" flags="m" />
+		<key id="KEY_F10" mapto="last" flags="m" />
+		<key id="KEY_NEXTSONG" mapto="last" flags="m" />
+	</map>			
 </keymap>
