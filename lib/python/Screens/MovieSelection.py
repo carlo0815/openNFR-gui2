@@ -30,6 +30,7 @@ from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.LocationBox import MovieLocationBox
 from Screens.HelpMenu import HelpableScreen
+from Screens import InfoBar
 import Screens.InfoBar
 from Tools import NumericalTextInput
 from Tools.Directories import resolveFilename, SCOPE_HDD
