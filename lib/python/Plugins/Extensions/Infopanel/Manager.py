@@ -221,20 +221,22 @@ class NFRCamManager(Screen):
 			try:
 				listecm += self.AboutText2
 			except:
-				pass
+				listecm += "no ECM File" 
+
 			self["status"].setText(listecm)
 			ecmfiles.close()
 		except:
-				try:
-					listecm += "\n" + self.AboutText
-					listecm += "\n" + self.AboutText1
-				except:
-					pass
-				try:
-					listecm += "\n" + self.AboutText2
-				except:
-					pass
-				self["status"].setText(listecm)
+			listecm = ""
+			try:
+				listecm += "\n" + self.AboutText
+				listecm += "\n" + self.AboutText1
+			except:
+				listecm += "no ECM File" 
+			try:
+				listecm += "\n" + self.AboutText2
+			except:
+				listecm += "no ECM File" 
+			self["status"].setText(listecm)
 
 	def startcreatecamlist(self):
 		self.Console.ePopen("ls %s" % config.NFRSoftcam.camdir.value,
@@ -489,3 +491,5 @@ class ConfigEdit(Screen, ConfigListScreen):
 		if callback is not None and len(callback):
 			self["config"].getCurrent()[1].setValue(callback)
 			self["config"].invalidate(self["config"].getCurrent())
+
+
