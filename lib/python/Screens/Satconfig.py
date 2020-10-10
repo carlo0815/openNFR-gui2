@@ -892,7 +892,7 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 		for x in self["config"].list:
 			x[1].cancel()
 		if hasattr(self, "originalTerrestrialRegion"):
-			self.nimConfig.dvbt.terrestrial,value = self.originalTerrestrialRegion
+			self.nimConfig.dvbt.terrestrial.value = self.originalTerrestrialRegion
 			self.nimConfig.dvbt.terrestrial.save()
 		if hasattr(self, "originalCableRegion"):
 			self.nimConfig.cable.scan_provider.value = self.originalCableRegion
