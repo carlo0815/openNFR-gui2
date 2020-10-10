@@ -536,7 +536,7 @@ class ImageBackup(Screen):
 				if SystemInfo["canRecovery"]:
 					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
 				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
-				self["config"].setList(list)
+		self["config"].setList(list)
 
 	def start(self):
 		if Timerstarts == True:
