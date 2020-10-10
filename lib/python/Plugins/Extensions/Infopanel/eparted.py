@@ -443,7 +443,7 @@ class Cpart(Screen):
 		
 		print(442)
 		if "mmcblk1" in self.__devpath:
-		        self.__devpath1 = self.__devpath + "p"
+			self.__devpath1 = self.__devpath + "p"
 			com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath1, partnr)		
 		else:
 			com = "%s %s%s | sleep 35 | echo -e  y" % (mkfs, self.__devpath, partnr)
