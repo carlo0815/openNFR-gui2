@@ -31,7 +31,7 @@ def getLocationChoices():
 	return result
 
 
-class Config(ConfigListScreen,Screen):
+class ConfigUI(ConfigListScreen,Screen):
 	skin = """
 <screen position="center,center" size="560,400" title="AutoBackup Configuration" >
 	<ePixmap name="red"    position="0,0"   zPosition="2" size="140,40" pixmap="skin_default/buttons/red.png" transparent="1" alphatest="on" />
