@@ -539,7 +539,7 @@ class QuickMenu(Screen):
 		if item[0] == _("Network Wizard"):
 			self.session.open(NetworkWizard)
 		elif item[0] == _("Password"):
-			from easy_setup import NFRPasswdScreen
+			from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 			self.session.open(NFRPasswdScreen)
 		elif item[0] == _("Network Adapter Selection"):
 			self.session.open(NetworkAdapterSelection)
