@@ -514,6 +514,7 @@ class EPGSelection(Screen, HelpableScreen):
 			self['list'].fillGraphEPG(None, self.ask_time)
 			self.moveTimeLines()
 		elif self.type == EPG_TYPE_MULTI:
+			curr = self['list'].getCurrentChangeCount()
 			self['list'].fillMultiEPG(self.services, self.ask_time)
 			for i in list(range(curr)):
  				self['list'].updateMultiEPG(1)            
