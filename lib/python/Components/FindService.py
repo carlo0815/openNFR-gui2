@@ -7,14 +7,14 @@ from Screens.ChannelSelection import service_types_tv
 from enigma import eServiceCenter, eTimer, eServiceReference
 from operator import itemgetter
 from os import system
-import os       
+import os
 
 SPECIAL_CHAR = 96
 class FindService(Screen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
-                self.list = []
+		self.list = []
 		self.servicelist = FindServiceControlListe(self.list)
 		self["servicelist"] = self.servicelist;
 		#self.onShown.append(self.chooseLetter)
@@ -37,25 +37,20 @@ class FindService(Screen):
 		self.chooseLetter()
 
 	def select(self):
-                new_ref = self.servicelist.etoggleSelectedLock()
-                ref = str(new_ref)
-                
-                #Testabfrage
-                #f = open('/tmp/new_ref','w')
-                #f.write('%s' % (ref))
-                #f.close()
-                
-                cmd = str('#!/bin/sh\n#created by TBX (EOS-Developer)\nwget "http://127.0.0.1/web/zap?sRef=%s">/dev/null 2>&1 -O /tmp' % ref)
-                
-                f = open('/tmp/cmd','w')
-                f.write(cmd)
-                f.close()
-                
-                os.system("chmod 755 /tmp/cmd")
-                os.system('/tmp/cmd &')
-                os.system('sleep 1')
-                os.system('rm /tmp/cmd')
-                self.close()
+		new_ref = self.servicelist.etoggleSelectedLock()
+		ref = str(new_ref)
+
+		cmd = str('#!/bin/sh\n#created by TBX (EOS-Developer)\nwget "http://127.0.0.1/web/zap?sRef=%s">/dev/null 2>&1 -O /tmp' % ref)
+
+		f = open('/tmp/cmd','w')
+		f.write(cmd)
+		f.close()
+ 
+		os.system("chmod 755 /tmp/cmd")
+		os.system('/tmp/cmd &')
+		os.system('sleep 1')
+		os.system('rm /tmp/cmd')
+		self.close()
 
 	def readServiceList(self):
 		serviceHandler = eServiceCenter.getInstance()
@@ -93,7 +88,7 @@ class FindService(Screen):
 			self.currentLetter = result[1]
 			self.list = [FindServiceControlEntryComponent(x[0], x[1]) for x in self.servicesList[result[1]]]
 			
-                        self.servicelist.setList(self.list)
+			self.servicelist.setList(self.list)
 		else:
 		
 			self.close()

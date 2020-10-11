@@ -1,4 +1,4 @@
-from MenuList import MenuList
+from .MenuList import MenuList
 from enigma import eListboxPythonMultiContent, gFont, RT_HALIGN_LEFT
 
 def FindServiceControlEntryComponent(service, name):
