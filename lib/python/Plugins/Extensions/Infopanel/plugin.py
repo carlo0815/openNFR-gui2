@@ -646,8 +646,8 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "backup-settings":
 			self.session.openWithCallback(self.backupDone, BackupScreen, runBackup = True)
 		elif menu == "backupauto":
-			import ui
-			self.session.openWithCallback(doneConfiguring, ui.Config)
+			from Plugins.Extensions.Infopanel.ui import ConfigUI
+			self.session.openWithCallback(doneConfiguring, ConfigUI)
 		elif menu == "restore-settings":
 			self.backuppath = getBackupPath()
 			self.backupfile = getBackupFilename()
