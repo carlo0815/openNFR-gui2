@@ -338,7 +338,8 @@ class PluginInstall(Screen):
 				if self.type == self.DOWNLOAD:
 					self["text"].setText(_("Sorry feeds are down for maintenance"))
 
-	def dataAvail(self, str):
+	def dataAvail(self, str1):
+		str = str1.decode('utf8')
 		if self.type == self.DOWNLOAD and ('wget returned 1' or 'wget returned 255' or '404 Not Found') in str:
 			self.run = 3
 			return
@@ -401,7 +402,8 @@ class PluginInstall(Screen):
 
 		temp = self.plugins.keys()
 		if config.usage.sort_pluginlist.value:
-			temp.sort()
+			sorted(temp)
+			#temp.sort()
 		for x in temp:
 			if x in self.expanded:
 				list.append(PluginCategoryComponent(x, expandedIcon, self.listWidth))
@@ -794,7 +796,8 @@ class PluginDeinstall(Screen):
 				if self.type == self.DOWNLOAD:
 					self["text"].setText(_("Sorry feeds are down for maintenance"))
 
-	def dataAvail(self, str):
+	def dataAvail(self, str1):
+		str = str1.decode('utf8')
 		if self.type == self.DOWNLOAD and ('wget returned 1' or 'wget returned 255' or '404 Not Found') in str:
 			self.run = 3
 			return
@@ -857,7 +860,7 @@ class PluginDeinstall(Screen):
 
 		temp = self.plugins.keys()
 		if config.usage.sort_pluginlist.value:
-			temp.sort()
+			sorted(temp)
 		for x in temp:
 			if x in self.expanded:
 				list.append(PluginCategoryComponent(x, expandedIcon, self.listWidth))
@@ -1167,7 +1170,8 @@ class PluginSkinInstall(Screen):
 				if self.type == self.DOWNLOAD:
 					self["text"].setText(_("Sorry feeds are down for maintenance"))
 
-	def dataAvail(self, str):
+	def dataAvail(self, str1):
+		str = str1.decode('utf8')
 		if self.type == self.DOWNLOAD and ('wget returned 1' or 'wget returned 255' or '404 Not Found') in str:
 			self.run = 3
 			return
@@ -1230,7 +1234,7 @@ class PluginSkinInstall(Screen):
 
 		temp = self.plugins.keys()
 		if config.usage.sort_pluginlist.value:
-			temp.sort()
+			sorted(temp)
 		for x in temp:
 			if x in self.expanded:
 				list.append(PluginCategoryComponent(x, expandedIcon, self.listWidth))
