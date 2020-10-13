@@ -17,7 +17,7 @@ import Components.Harddisk
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists
 from Components.ProgressBar import ProgressBar
-
+from os import system
 import os
 import re
 from skin import parseColor
@@ -114,6 +114,7 @@ class Disk_Speed(Screen):
 	def install2(self):
 		os.system("echo 3 >/proc/sys/vm/drop_caches")
 		os.popen("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel)
+		system("sleep 2")
 		f = open('/tmp/writebufferhdd', 'r')
 		for line in f.readlines():
 			if "MB/s" in line:
