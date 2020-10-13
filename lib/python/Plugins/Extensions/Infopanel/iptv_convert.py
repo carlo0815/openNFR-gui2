@@ -275,7 +275,7 @@ class IPTV(Screen):
 			infobox.setTitle(_("Info"))
 			eDVBDB.getInstance().reloadBouquets()
 			eDVBDB.getInstance().reloadServicelist()
-			self.close()
+		self.close()
 
 	def install(self):
 		self.IPTVInstalled = True
