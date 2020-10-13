@@ -92,7 +92,7 @@ class E2LogManagerViewLog(Screen):
 		Screen.__init__(self, session)
 		self.setTitle(E2log)
 		if os.path.exists(files):
-			log = file(files).read()
+			log = open(files).read()
 		else:
 			log = ""
 		self["list"] = ScrollLabel(str(log))
