@@ -618,7 +618,7 @@ class NFRPasswdScreen(Screen):
     def dataAvail(self, data):
         self.output_line += data
         if self.output_line.find('password changed.') == -1:
-            if self.output_line.endswith('new UNIX password: '):
+            if self.output_line.endswith(b'new UNIX password: '):
                 print '1password:%s\n' % self.password
                 self.processOutputLine(self.output_line[:1])
 
