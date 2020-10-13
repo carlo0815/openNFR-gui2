@@ -619,7 +619,7 @@ class NFRPasswdScreen(Screen):
 				self.processOutputLine(self.output_line[:1])
 
 	def processOutputLine(self, line):
-		if line.find('new UNIX password: '):
+		if line.find(b'new UNIX password: '):
 			print('2password:%s\n' % self.password)
 			self.container.write('%s\n' % self.password)
 			self.output_line = ''
