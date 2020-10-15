@@ -1224,3 +1224,10 @@ def readSkin(screen, skin, names, desktop):
 	# things around.
 	screen = None
 	visited_components = None
+
+def getSkinFactor():
+	skinfactor = getDesktop(GUI_SKIN_ID).size().height() / 720.0
+	# if skinfactor not in [0.8, 1, 1.5, 3, 6]:
+	# 	print("[Skin] Warning: Unexpected result for getSkinFactor '%0.4f'!" % skinfactor)
+	return skinfactor
+
