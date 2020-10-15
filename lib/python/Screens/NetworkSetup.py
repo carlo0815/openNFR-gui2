@@ -2360,7 +2360,7 @@ class NetworkSamba(Screen):
 		self['key_menu'] = Label(_("Samba Config Edit"))
 		self.Console = Console()
 		self.my_Samba_run = False
-		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'blue': self.Sambashowlog, 'menu': self.Sambaedit})
+		self['actions'] = ActionMap(['WizardActions', 'ColorActions'], {'ok': self.close, 'back': self.close, 'red': self.UninstallCheck, 'green': self.SambaStartStop, 'blue': self.Sambashowlog, 'yellow': self.Sambaedit})
 		self.service_name = basegroup + '-smbfs-server'
 		self.onLayoutFinish.append(self.InstallCheck)
 
