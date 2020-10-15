@@ -37,7 +37,7 @@ from Screens.Swap import SwapOverviewScreen
 from Plugins.Extensions.Infopanel.Manager import *
 from Plugins.Extensions.Infopanel.outofflash import MovePlugins_int, MovePlugins
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer
-from Plugins.SystemPlugins.SoftwareManager.plugin import UpdatePlugin, SoftwareManagerSetup
+#from Plugins.SystemPlugins.SoftwareManager.plugin import UpdatePlugin, SoftwareManagerSetup
 from Plugins.SystemPlugins.SoftwareManager.BackupRestore import BackupScreen, RestoreScreen, BackupSelection, getBackupPath, getBackupFilename
 from Plugins.Extensions.Infopanel.SoftwarePanel import SoftwarePanel
 from Plugins.Extensions.Infopanel.e2log import E2log
@@ -421,12 +421,12 @@ class QuickMenu(Screen):
 ######## Software Manager Menu ##############################
 	def Qsoftware(self):
 		self.sublist = []
-		self.sublist.append(QuickSubMenuEntryComponent("Software Update", _("Online software update"), _("Check/Install online updates (you must have a working internet connection)")))
+		#self.sublist.append(QuickSubMenuEntryComponent("Software Update", _("Online software update"), _("Check/Install online updates (you must have a working internet connection)")))
 		self.sublist.append(QuickSubMenuEntryComponent("Complete Backup", _("Backup your current image"), _("Backup your current image to HDD or USB. This will make a 1:1 copy of your box")))
 		self.sublist.append(QuickSubMenuEntryComponent("Backup Settings", _("Backup your current settings"), _("Backup your current settings. This includes E2-setup, channels, network and all selected files")))
 		self.sublist.append(QuickSubMenuEntryComponent("Restore Settings", _("Restore settings from a backup"), _("Restore your settings back from a backup. After restore the box will restart to activated the new settings")))
 		self.sublist.append(QuickSubMenuEntryComponent("Select Backup files", _("Choose the files to backup"), _("Here you can select which files should be added to backupfile. (default: E2-setup, channels, network")))
-		self.sublist.append(QuickSubMenuEntryComponent("Software Manager Setup", _("Manage your online update files"), _("Here you can select which files should be updated with a online update")))
+		#self.sublist.append(QuickSubMenuEntryComponent("Software Manager Setup", _("Manage your online update files"), _("Here you can select which files should be updated with a online update")))
 		if not getBoxType().startswith('az') and not getBoxType().startswith('dream') and not getBoxType().startswith('ebox'):
 			self.sublist.append(QuickSubMenuEntryComponent("Flash Local-Online", _("Flash Local-Online a new image"), _("Flash on the fly your Receiver software.")))		
 		self["sublist"].l.setList(self.sublist)
@@ -696,9 +696,9 @@ class QuickMenu(Screen):
 		elif item[0] == _("Sat Loader"):
 			self.session.open(Satloader)
 ######## Select Software Manager Menu ##############################
-		elif item[0] == _("Software Update"):
+		#elif item[0] == _("Software Update"):
 			#self.session.open(UpdatePlugin)
-			self.session.open(SoftwarePanel)
+			#self.session.open(SoftwarePanel)
 		elif item[0] == _("Flash Local-Online"):
 			self.session.open(FlashOnline)
 
