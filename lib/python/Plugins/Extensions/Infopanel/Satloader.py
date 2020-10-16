@@ -71,10 +71,10 @@ class Satloader(Screen):
 
 	def onLayoutFinished(self):
 		self.list.clearList()
-		self.list.addSelection("Lyngsat", "http://satellites.satloader.net/lyngsat", 0, None)
-		self.list.addSelection("Satbeams", "http://satellites.satloader.net/satbeams", 1, None)
-		self.list.addSelection("Kingofsat", "http://satellites.satloader.net/kingofsat", 2, None)
-		self.list.addSelection("Kingofsat (feeds)", "http://satellites.satloader.net/kingofsat/feeds", 3, None)
+		self.list.addSelection("Lyngsat", b"http://satellites.satloader.net/lyngsat", 0, None)
+		self.list.addSelection("Satbeams", b"http://satellites.satloader.net/satbeams", 1, None)
+		self.list.addSelection("Kingofsat", b"http://satellites.satloader.net/kingofsat", 2, None)
+		self.list.addSelection("Kingofsat (feeds)", b"http://satellites.satloader.net/kingofsat/feeds", 3, None)
 		self["info"].setText("%s" %(_("Press ok or green button to install satellites.xml")))
 
 	def btnRed(self):
@@ -83,7 +83,7 @@ class Satloader(Screen):
 
 	def btnOK(self):
 		self["info"].setText("%s" %(_("Please wait...")))
-		saturl = self["list"].l.getCurrentSelection()[0][1]+"/satellites.xml"
+		saturl = self["list"].l.getCurrentSelection()[0][1]+b"/satellites.xml"
 		downloadPage(saturl, "/etc/tuxbox/satellites.xml").addCallback(self.downloadListSATCallback).addErrback(self.downloadListError)
 
 	def btnYellow(self):
@@ -91,7 +91,7 @@ class Satloader(Screen):
 
 	def btnBlue(self):
 		satname = self["list"].l.getCurrentSelection()[0][0]
-		saturl = self["list"].l.getCurrentSelection()[0][1]+"/multisat.tar.gz"
+		saturl = self["list"].l.getCurrentSelection()[0][1]+b"/multisat.tar.gz"
 		self.session.open(SatloaderMultiSat, satname, saturl)
 
 	def btnInfo(self):
@@ -177,7 +177,7 @@ class SatloaderBouquet(Screen):
 
 	def onLayoutFinished(self):
 		self["info"].setText("%s" %(_("Please wait...")))
-		downloadPage("http://satellites.satloader.net/bouquet.tar.gz", "/tmp/bouquet.tar.gz").addCallback(self.downloadListBouquetCallback).addErrback(self.downloadListError)
+		downloadPage(b"http://satellites.satloader.net/bouquet.tar.gz", "/tmp/bouquet.tar.gz").addCallback(self.downloadListBouquetCallback).addErrback(self.downloadListError)
 
 	def btnRed(self):
 		print("\n[SatloaderBouquet] cancel\n")
