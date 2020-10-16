@@ -416,8 +416,8 @@ class Iptvdownloadprov(IPTV):
 		pass
 
 	def ok(self):
-		import commands
-		resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
+		import subprocess
+		resultpxy = subprocess.getoutput('/usr/bin/opkg list_installed udpxy')
 		if 'udpxy' in resultpxy:
 			print("udpxy is installed")
 		else:
@@ -540,8 +540,8 @@ class Iptvdownloadprovsuisse(IPTV):
 		pass
 
 	def ok(self):
-		import commands
-		resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
+		import subprocess
+		resultpxy = subprocess.getoutput('/usr/bin/opkg list_installed udpxy')
 		if 'udpxy' in resultpxy:
 			print("udpxy is installed")
 		else:
@@ -665,8 +665,8 @@ class Iptvdownloadprovaustria(IPTV):
 		pass
 
 	def ok(self):
-		import commands
-		resultpxy = commands.getoutput('/usr/bin/opkg list_installed udpxy')
+		import subprocess
+		resultpxy = subprocess.getoutput('/usr/bin/opkg list_installed udpxy')
 		if 'udpxy' in resultpxy:
 			print("udpxy is installed")
 		else:
