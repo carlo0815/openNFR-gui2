@@ -56,7 +56,7 @@ class OpenNFRBluePanelLong:
 
 	def showOpenNFRBluePanelLong(self):
 		if config.plugins.infopanel_bluekeylong.list.value == '0':
-			import plugin
+			from Plugins.Extensions.Infopanel.plugin import Infopanel
 			self.session.openWithCallback(self.callEgAction, Infopanel)
 		elif config.plugins.infopanel_bluekeylong.list.value == '1':
 			from Screens.InfoBar import InfoBarRedButton
