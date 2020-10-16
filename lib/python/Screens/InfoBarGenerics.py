@@ -1041,15 +1041,15 @@ class InfoBarChannelSelection:
 				"openServiceList": (self.openServiceList, _("open servicelist")),
 				"openSatellites": (self.openSatellites, _("open Satellites")),
 				"openBouquetList": (self.openBouquetList, _("open Favorites")),
-				"openFIND": (self.openFIND, _("open find service")),
+#				"openFIND": (self.openFIND, _("open find service")),
 				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
 
 				
 			})
 
-	def openFIND(self):
-		from Components.FindService import FindService
-		self.session.open(FindService)
+#	def openFIND(self):
+#		from Components.FindService import FindService
+#		self.session.open(FindService)
 
 	def showMediaCenter(self):
 		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
