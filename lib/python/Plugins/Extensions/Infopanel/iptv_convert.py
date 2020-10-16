@@ -500,7 +500,7 @@ class Iptvdownloadprovsuisse(IPTV):
 		self.session = session
 		self.Console = Console()
 		self.IPTVInstalled = False
-		elf.Version = args
+		self.Version = args
 		self["IPTVList"] = MenuList(tlist)
 		self["country"] = Pixmap()
 		self["text1"] = Label(_("Select IPTVlist to download and add into TV Bouquet"))
