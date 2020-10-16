@@ -245,7 +245,6 @@ class QuickMenu(Screen):
 		self.list.append(QuickMenuEntryComponent("Network", _("Setup your local network"), _("Setup your local network. For Wlan you need to boot with a USB-Wlan stick")))
 		self.list.append(QuickMenuEntryComponent("Tuner Setup", _("Setup Tuner"), _("Setup your Tuner and search for channels")))
 		self.list.append(QuickMenuEntryComponent("Plugins", _("Download plugins"), _("Shows available pluigns. Here you can download and install them")))
-		self.list.append(QuickMenuEntryComponent("ScreenShot Manager", _("make Screenshot"), _("make your OSD; VIDEO; ALL Screenshots")))
 		self["list"].l.setList(self.list)
 
 ######## System Setup Menu ##############################
@@ -468,13 +467,6 @@ class QuickMenu(Screen):
 		self.sublist = []
 		self.sublist.append(QuickSubMenuEntryComponent("PackageManager", _("Install local extension"), _("Scan for local tar/rar/zip Package and install them")))
 		self["sublist"].l.setList(self.sublist)
-######## screenshot Menu ##############################
-	def Qscreenshot(self):
-		self.sublist = []
-		self.sublist.append(QuickSubMenuEntryComponent("OSD", _("Screenshot nur OSD"), _("Screenshot nur OSD")))
-		self.sublist.append(QuickSubMenuEntryComponent("VIDEO", _("Screenshot nur Video"), _("Screenshot nur Video")))		
-		self.sublist.append(QuickSubMenuEntryComponent("ALL", _("Screenshot Video+OSD"), _("Screenshot Video+OSD")))		
-		self["sublist"].l.setList(self.sublist)
 ######## moveplugins Menu ##############################
 	def Qmoveplugins(self):
 		self.sublist = []
@@ -519,9 +511,6 @@ class QuickMenu(Screen):
 ######## Select tar Menu ##############################
 		elif item[0] == _("PackageManager"):
 			self.Qtar()			
-######## Select screenshot Menu ##############################
-		elif item[0] == _("ScreenShot Manager"):
-			self.Qscreenshot()			
 ######## Select Tuner Setup Menu ##############################
 		elif item[0] == _("Harddisk"):
 			self.Qharddisk()
@@ -656,16 +645,6 @@ class QuickMenu(Screen):
 			self.session.open(cEditor, "/usr/keys/cwshare.cfg")
 		elif item[0] == _("wicardd.conf Edit"):
 			self.session.open(cEditor, "/usr/keys/wicardd.conf")
-######## Select Screenshot Menu ##############################
-		elif item[0] == _("OSD"):
-			self.Console = Console()
-			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh o ExecuteOnce")
-		elif item[0] == _("VIDEO"):
-			self.Console = Console()
-			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh v ExecuteOnce")
-		elif item[0] == _("ALL"):
-			self.Console = Console()
-			self.Console.ePopen("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/data/screenshot.sh ExecuteOnce")
 ######## Select moveplugins Menu ##############################
 		elif item[0] == _("Move Plugins to HDD/USB"):
 			self.session.open(MovePlugins)
