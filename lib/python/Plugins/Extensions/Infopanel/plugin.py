@@ -92,7 +92,6 @@ if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/p
 
 from Screens.CronTimer import *
 from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config, NfrHD_Config1, NfrHD_Config2, DefaulSkinchange
-from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
@@ -620,9 +619,6 @@ class Infopanel(Screen, InfoBarPiP):
 			self.session.open(EasySetup)                        			
 		elif menu == "PasswordChange":
 			self.session.open(NFRPasswdScreen)
-		elif menu == "UserMainMenu":
-			plugin_path = None
-			self.session.open(UserMainMenuConfig, plugin_path)                                                				
 		elif menu == "System_Info":
 			self.System()
 		elif menu == "JobManager":
@@ -832,7 +828,6 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SpinnerManager" ), _("SpinnerManager"), ("spinnermanager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PasswordChange'), _("PasswordChange"), 'PasswordChange')))
-		self.tlist.append(MenuEntryItem((InfoEntryComponent('UserMainMenu'), _("UserMainMenu"), 'UserMainMenu')))                		
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
