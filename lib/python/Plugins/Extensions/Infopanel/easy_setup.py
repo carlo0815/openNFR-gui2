@@ -136,7 +136,6 @@ import time
 import datetime
 from Screens.CronTimer import *
 from Plugins.Extensions.Infopanel.skin_setup import NfrHD_Config, DefaulSkinchange
-from Plugins.Extensions.Infopanel.UserMainMenu import UserMainMenuConfig
 from Plugins.Extensions.Infopanel.ScriptRunner import *
 from Plugins.Extensions.Infopanel.bootvideo import BootvideoSetupScreen
 from Plugins.Extensions.Infopanel.bootlogo import BootlogoSetupScreen, RadiologoSetupScreen
@@ -201,13 +200,11 @@ class EasySetup(ConfigListScreen, Screen):
 		config.easysetup.Hotkey = ConfigYesNo(default=False)
 		config.easysetup.channellist = ConfigYesNo(default=False)
 		config.easysetup.m3u = ConfigYesNo(default=False)
-		config.easysetup.menusort = ConfigYesNo(default=False)
 		config.easysetup.hdmicec = ConfigYesNo(default=False)
 		config.easysetup.password = ConfigYesNo(default=False)
 		config.easysetup.displaysetup = ConfigYesNo(default=False)
 		config.wizardsetup.UserInterfacePositioner = ConfigYesNo(default = False) 
 		config.wizardsetup.OpenWebifConfig = ConfigYesNo(default = False)
-		config.wizardsetup.OpenNFRaddonsWizardSetup = ConfigYesNo(default = False)
 		config.wizardsetup.poweroffsetup = ConfigYesNo(default = False)
 		config.wizardsetup.ipkinstall = ConfigYesNo(default = False)        	
 		self.backup = '0'
@@ -226,15 +223,12 @@ class EasySetup(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_('Enable Hotkey Setup?'), config.easysetup.Hotkey, _("Choose your remote buttons.")))
 		list.append(getConfigListEntry(_('Enable Channellist Setup?'), config.easysetup.channellist, _("Choose your Channel selection config.")))
 		list.append(getConfigListEntry(_('Enable M3U Convert to Channellist Setup?'), config.easysetup.m3u, _("Install your IPTV-m3u-files into channellist.\nFirst you must coppy a M3U-List to /etc/enigma2")))
-		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
-			list.append(getConfigListEntry(_('Enable Menusort Setup?'), config.easysetup.menusort, _("Choose your Mainmenu sorts.")))
 		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
 			list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 		list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))
 		list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
 		list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositioner, _("Choose your OSD Position in TV")))
 		list.append(getConfigListEntry(_('Enable OpenWebif Setup?'), config.wizardsetup.OpenWebifConfig, _("Choose your Openwebif config.")))
-		list.append(getConfigListEntry(_('Enable OpenNFR-Addons Setup?'), config.wizardsetup.OpenNFRaddonsWizardSetup, _("Install OpenNFR Plugins.")))
 		list.append(getConfigListEntry(_('Enable Install local extension Setup?'), config.wizardsetup.ipkinstall, _("Scan for local extensions and install them.")))
 		list.append(getConfigListEntry(_('Enable Power Off Menu Setup?'), config.wizardsetup.poweroffsetup, _("Choose your Powerbutton Funktion on Remotecontrol.")))
 		self["key_red"] = Label(_("Exit"))
@@ -300,70 +294,52 @@ class EasySetup(ConfigListScreen, Screen):
 			self.session.openWithCallback(self.run8, IPTV)
 		else:
 				self.run8()
-
 	def run8(self):
 		self.runed = "8"
-		if config.easysetup.menusort.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
-			self.session.openWithCallback(self.run8a, SortableMenu, mdom.getroot())
+		if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+			self.session.openWithCallback(self.run10, HdmiCECSetupScreen)
 		else:
 			self.run9()
 
-	def run8a(self, ret):
-		self.run9()
-
 	def run9(self):
 		self.runed = "9"
-		if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
-			self.session.openWithCallback(self.run10, HdmiCECSetupScreen)
+		if config.easysetup.password.value is True:
+			self.session.openWithCallback(self.run11, NFRPasswdScreen)
 		else:
 			self.run10()
 
 	def run10(self):
 		self.runed = "10"
-		if config.easysetup.password.value is True:
-			self.session.openWithCallback(self.run11, NFRPasswdScreen)
+		if config.easysetup.displaysetup.value is True:
+			self.openSetup("display")
 		else:
 			self.run11()
 
 	def run11(self):
 		self.runed = "11"
-		if config.easysetup.displaysetup.value is True:
-			self.openSetup("display")
-		else:
-			self.run11a()
-
-	def run11a(self):
-		self.runed = "11a"
 		if config.wizardsetup.UserInterfacePositioner.value is True:
 			self.Console = Console()
 			self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
 			self.session.openWithCallback(self.run11b, UserInterfacePositioner)  
 		else:
+			self.run11a()
+
+	def run11a(self):
+		self.runed = "11a"
+		if config.wizardsetup.OpenWebifConfig.value is True:
+			self.session.openWithCallback(self.run11c, OpenWebifConfig)
+		else:
 			self.run11b()
 
 	def run11b(self):
 		self.runed = "11b"
-		if config.wizardsetup.OpenWebifConfig.value is True:
-			self.session.openWithCallback(self.run11c, OpenWebifConfig)
-		else:
-			self.run11c()
-
-	def run11c(self):
-		self.runed = "11c"
-		if config.wizardsetup.OpenNFRaddonsWizardSetup.value is True:
-			self.session.openWithCallback(self.run11d, OpenNFRWizardSetup)
-		else:
-			self.run11d()
-
-	def run11d(self):
-		self.runed = "11d"
 		if config.wizardsetup.ipkinstall.value is True:
 			self.session.openWithCallback(self.run11e, InfopanelManagerScreen)
 		else:
-			self.run11e()  
+			self.run11c()  
 
-	def run11e(self):
-		self.runed = "11e"
+	def run11c(self):
+		self.runed = "11c"
 		if config.wizardsetup.poweroffsetup.value is True:
 			self.openSetup("remotesetup")
 		else:
@@ -423,10 +399,6 @@ class EasySetup(ConfigListScreen, Screen):
 		elif self.runed == "11b":
 			self.run11c()
 		elif self.runed == "11c":
-			self.run11d()
-		elif self.runed == "11d":
-			self.run11e()
-		elif self.runed == "11e":
 			self.run12()
 
 	def dontSaveAndExit(self):
