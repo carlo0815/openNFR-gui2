@@ -785,7 +785,8 @@ class ImageBackup(Screen):
 					cmdlist.append("dd if=/dev/mtd4 of=%s/logo.bin" % self.WORKDIR)
 
 				if self.EMMCIMG == "usb_update.bin" and self.RECOVERY:
-					SEEK_CONT = (Harddisk.getFolderSize(self.backuproot)/ 1024) + 100000
+					SEEK_CONT1 = subprocess.check_output(['du','-s', self.backuproot]).split()[0].decode('utf-8')
+					SEEK_CONT = int(SEEK_CONT1) + 100000
 					cmdlist.append('echo "' + _("Create:") + " fastboot dump" + '"')
 					cmdlist.append('cp -f /usr/share/fastboot.bin %s/fastboot.bin' %(self.WORKDIR))
 					cmdlist.append('echo "' + _("Create:") + " bootargs dump" + '"')
