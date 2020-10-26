@@ -1413,6 +1413,11 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	{
 		ret = snr*10;
 	}
+	else if (!strcmp(m_description, "ATBM7821 DVB-T2/C")) //SF8008
+	{
+		ret = snr*10;
+		ter_max = cab_max = 4200;
+	}
 	else if (strstr(m_description, "Si2166B"))
 	{
 		ret = (snr * 240) >> 8;
@@ -1457,6 +1462,10 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 	{
 		ret = (int)((((double(snr) / (65535.0 / 100.0)) * 0.1710) - 1.0000) * 100);
 	}
+	else if (!strcmp(m_description, "GIGA DVB-S2 NIM (TS3L10)") || !strcmp(m_description, "GIGA DVB-S2 NIM (TS2L08)")) //GB IP 4K
+	{
+		ret = snr;
+	}
 	else if (!strcmp(m_description, "DVB-S2 NIM(45208 FBC)")
 		|| !strcmp(m_description, "DVB-S2 NIM(45308 FBC)")
 		)
@@ -1486,7 +1495,7 @@ void eDVBFrontend::calculateSignalQuality(int snr, int &signalquality, int &sign
 				break;
 			case feTerrestrial:
 				ret = (int)(snr / 30);
-				ter_max = 1700;
+				ter_max = 4200;
 				break;
 		}
 	}
@@ -3505,6 +3514,7 @@ RESULT eDVBFrontend::setVoltage(int voltage)
 	}
 	if (m_simulate)
 		return 0;
+	eDebug("[eDVBFrontend%d] setVoltage FE_ENABLE_HIGH_LNB_VOLTAGE %d FE_SET_VOLTAGE %d", m_dvbid, increased, vlt);
 	::ioctl(m_fd, FE_ENABLE_HIGH_LNB_VOLTAGE, increased);
 	return ::ioctl(m_fd, FE_SET_VOLTAGE, vlt);
 }
