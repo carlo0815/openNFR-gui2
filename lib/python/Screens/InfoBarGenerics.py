@@ -365,14 +365,7 @@ class SecondInfoBar(Screen):
 		self["epg_description"].setText("")
 		self["FullDescription"].setText("")
 		self["channel"].setText("")
-		if hasattr(self.session, "pip") and InfoBarPiP.pipWindowActive:
-			ref = self.session.pip.getCurrentService()
-			#to-do:  Show information on PiP right window on side-by-side mode by INFO button pressed
-			if self.session.pip.getCurrentServicePtrPiP() is None:
-				self.session.open(MessageBox, _('This feature is currently unavailable!'), type=MessageBox.TYPE_INFO, timeout=10)
-				return
-		else:
-			ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
+		ref = self.session.nav.getCurrentlyPlayingServiceOrGroup()
 		self.getNowNext()
 		epglist = self.epglist
 		if not epglist:
@@ -1609,20 +1602,13 @@ class InfoBarEPG:
 
 	def getNowNext(self):
 		epglist = [ ]
-		if hasattr(self.session, "pip") and InfoBarPiP.pipWindowActive:
-			#to-do:  PiP -> getCurrentService   -  convert to ePtr< iPlayableService >
-			if self.session.pip.getCurrentServicePtrPiP() is not None:
-				service = self.session.pip.getCurrentServicePtrPiP()
-			else:	
-				service = self.session.nav.getCurrentService()
-		else:
-			service = self.session.nav.getCurrentService()
+		service = self.session.nav.getCurrentService()
 		info = service and service.info()
 		ptr = info and info.getEvent(0)
-		if ptr:
+		if ptr and ptr.getEventName() != "":
 			epglist.append(ptr)
 		ptr = info and info.getEvent(1)
-		if ptr:
+		if ptr and ptr.getEventName() != "":
 			epglist.append(ptr)
 		self.epglist = epglist
 
