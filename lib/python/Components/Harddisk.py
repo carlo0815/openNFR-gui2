@@ -820,7 +820,7 @@ class HarddiskManager:
 				dev = int(readFile(devpath + "/dev").split(':')[0])
 			else:
 				dev = None
-			devlist = [1, 7, 31, 253, 254] # ram, loop, mtdblock, romblock, ramzswap
+			devlist = [1, 7, 31, 253, 254, None] # ram, loop, mtdblock, romblock, ramzswap
 			if dev in devlist:
 				blacklisted = True
 			if blockdev[0:2] == 'sr':
