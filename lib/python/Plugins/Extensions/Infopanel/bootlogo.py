@@ -53,15 +53,15 @@ def InfoEntryComponent(file):
 	png = LoadPixmap("/usr/share/enigma2/bootlogos/" + file + ".png")
 	if png == None:
 		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default_logo.png")
-		res = (png)
-		return res
+	res = (png)
+	return res
 
 def InfoEntryComponent1(file):
 	png = LoadPixmap("/usr/share/enigma2/radiologos/" + file + ".png")
 	if png == None:
 		png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/default_logo.png")
-		res = (png)
-		return res
+	res = (png)
+	return res
 
 class BootlogoSetupScreen(Screen):
 	skin = """<screen name="BootlogoSetupScreen" position="center,center" size="950,520" title="BootlogoSetupScreen">
@@ -98,15 +98,15 @@ class BootlogoSetupScreen(Screen):
 			if xlogo.endswith(".mvi"):
 				bootlogo.append(xlogo)
 
-				self.list = []
-				self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
-					{
-					"cancel": self.Exit,
-					"exit": self.Exit,
-					"red": self.Exit,
-					"ok": self.ok,
-					"green": self.ok,
-					}, 1)
+		self.list = []
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
+			{
+				"cancel": self.Exit,
+				"exit": self.Exit,
+				"red": self.Exit,
+				"ok": self.ok,
+				"green": self.ok,
+			}, 1)
 			
 		self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('NFRbootlogo'), _("NFRbootlogo"), 'defaultbootlogo')))
@@ -197,32 +197,32 @@ class RadiologoSetupScreen(Screen):
 			if xradio.endswith(".mvi"):
 				radiologo.append(xradio)
  
-				self.list = []
-				self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
-				{
-					"cancel": self.Exit,
-					"exit": self.Exit,
-					"red": self.Exit,
-					"ok": self.ok,
-					"green": self.ok,
-				}, 1)
+		self.list = []
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions"],
+			{
+				"cancel": self.Exit,
+				"exit": self.Exit,
+				"red": self.Exit,
+				"ok": self.ok,
+				"green": self.ok,
+			}, 1)
 			
-				self.Mlist = []
-				self.Mlist.append(MenuEntryItem((InfoEntryComponent1('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
-				for logo in radiologo:
-					yname = logo.strip(".mvi")
-					if logo == "NFRradiologo.mvi":
-						print("deaultradiologo found")
-					else:
-						self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
+		self.Mlist = []
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent1('NFRradiologo'), _("NFRradiologo"), 'defaultradiologo')))
+		for logo in radiologo:
+			yname = logo.strip(".mvi")
+			if logo == "NFRradiologo.mvi":
+				print("deaultradiologo found")
+			else:
+				self.Mlist.append(MenuEntryItem((InfoEntryComponent1('%s' % yname), _('%s' % yname), '%s' % logo)))
 
-						self.onChangedEntry = []
-					if (getDesktop(0).size().width() == 1920):
-						self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
-					else:
-						self["Mlist"] = PanelList([])
-						self["Mlist"].l.setList(self.Mlist)
-						self["Mlist"].onSelectionChanged.append(self.selectionChanged)
+		self.onChangedEntry = []
+		if (getDesktop(0).size().width() == 1920):
+			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=92)
+		else:
+			self["Mlist"] = PanelList([])
+		self["Mlist"].l.setList(self.Mlist)
+		self["Mlist"].onSelectionChanged.append(self.selectionChanged)
 
 	def KeyYellow(self):
 		self.session.open(MoveRadiologos)
@@ -232,7 +232,6 @@ class RadiologoSetupScreen(Screen):
 
 	def setWindowTitle(self):
 		self.setTitle('%s' % (_('Radiologo Setup')))
-		
 	
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
@@ -240,7 +239,7 @@ class RadiologoSetupScreen(Screen):
 			menuv1 = list(menuv)[7]
 			if menuv1 == "Default Radiologo":
 				menuv1 = "NFRradiologo.mvi"
-				selection = self['Mlist'].l.getCurrentSelection()[0]
+			selection = self['Mlist'].l.getCurrentSelection()[0]
 			if (selection[0] is not None):
 				return selection[0]
 
@@ -256,9 +255,9 @@ class RadiologoSetupScreen(Screen):
 		menu1 = list(menu)[7]
 		if menu1 == "Default Radiologo":
 			menu1 = "NFRradiologo.mvi"
-			os.system("rm /usr/share/enigma2/radio.mvi")
-			os.system("cp /usr/share/enigma2/radiologos/%s.mvi /usr/share/enigma2/radio.mvi" %menu1)
-			config.radiologo.booting.value = menu1
-			config.radiologo.booting.save()	
-			configfile.save()
-			self.close() 
+		os.system("rm /usr/share/enigma2/radio.mvi")
+		os.system("cp /usr/share/enigma2/radiologos/%s.mvi /usr/share/enigma2/radio.mvi" %menu1)
+		config.radiologo.booting.value = menu1
+		config.radiologo.booting.save()	
+		configfile.save()
+		self.close() 
