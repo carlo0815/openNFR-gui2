@@ -13,15 +13,6 @@ class ActionMap:
 		self.p = eActionMap.getInstance()
 		self.bound = False
 		self.exec_active = False
-		self.enabled = True
-		unknown = list(self.actions.keys())
-		for action in unknown:
-			for context in self.contexts:
-				if queryKeyBinding(context, action):
-					unknown.remove(action)
-					break
-		if unknown:
-			print("[ActionMap] Keymap(s) '%s' -> Undefined action(s) '%s'." % (", ".join(contexts), ", ".join(unknown)))
 
 	def setEnabled(self, enabled):
 		self.enabled = enabled
