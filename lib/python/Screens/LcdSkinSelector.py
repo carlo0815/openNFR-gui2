@@ -102,7 +102,7 @@ class LCDSkinSelector(Screen):
 			if x.startswith("skin_") and x.endswith(".xml"):
 				if dirname != self.root and not len(dirname) == 0 :
 					if ("lcdskins") not in dirname:
-						subdir = dirname[27:]
+						subdir = dirname[0]
 						skinname = x
 						skinname = subdir + "/" + skinname
 						self.skinlist.append(skinname)
