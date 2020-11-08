@@ -98,30 +98,30 @@ class BootvideoSetupScreen(Screen):
 					bootvideo.append(xvideo)
 				elif xvideo.endswith(".mpeg"):
 					bootvideo.append(xvideo)   
-					self.list = []
-					self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions"],
-						{
-						"cancel": self.Exit,
-						"exit": self.Exit,
-						"red": self.Exit,
-						"ok": self.ok,
-						"green": self.ok,
-						"info": self.KeyInfo,
+		self.list = []
+		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions"],
+			{
+				"cancel": self.Exit,
+				"exit": self.Exit,
+				"red": self.Exit,
+				"ok": self.ok,
+				"green": self.ok,
+				"info": self.KeyInfo,
 
-						}, 1)
+			}, 1)
 			
-					self.Mlist = []
-					self.Mlist.append(MenuEntryItem((InfoEntryComponent('no Bootvideo'), _("no Bootvideo"), 'nobootvideo')))
-					for video in bootvideo:
-						self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % video), _('%s' % video), '%s' % video)))
+		self.Mlist = []
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('no Bootvideo'), _("no Bootvideo"), 'nobootvideo')))
+		for video in bootvideo:
+			self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % video), _('%s' % video), '%s' % video)))
 
-						self.onChangedEntry = []
-					if (getDesktop(0).size().width() == 1920):
-						self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
-					else:
-						self["Mlist"] = PanelList([])
-						self["Mlist"].l.setList(self.Mlist)
-						self["Mlist"].onSelectionChanged.append(self.selectionChanged) 	
+		self.onChangedEntry = []
+		if (getDesktop(0).size().width() == 1920):
+			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
+		else:
+			self["Mlist"] = PanelList([])
+		self["Mlist"].l.setList(self.Mlist)
+		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 	
 		
 	def KeyInfo(self):
 		self.session.nav.stopService()
