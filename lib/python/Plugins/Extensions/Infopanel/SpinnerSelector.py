@@ -25,7 +25,7 @@ class SpinnerSelector:
 			p = path + dir
 			if os.path.isdir(p):
 				menu.append((dir,dir))
-		self.session.openWithCallback(self.menuCallback, SpinnerSelectionBox, title=_("Chose Spinner"), list=menu)
+		self.session.openWithCallback(self.menuCallback, SpinnerSelectionBox, title=_("Chose Spinner"), list1=menu)
 
 	def menuCallback(self,choice):
 		if choice is None:

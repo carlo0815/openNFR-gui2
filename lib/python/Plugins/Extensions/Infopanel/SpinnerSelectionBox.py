@@ -33,11 +33,11 @@ class SpinnerSelectionBox(Screen):
 		<widget source="key_red" render="Label" position="105,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 		<widget source="key_green" render="Label" position="395,672" size="240,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 		</screen>"""
-	def __init__(self, session, title = "", list = []):
+	def __init__(self, session, title = "", list1 = []):
 		Screen.__init__(self, session)
 
 		self["text"] = Label(title)
-		self.list = list #[]
+		self.list = list1
 		self.summarylist = [] 
 		cursel = self.list[0]
 		self.Bilder = []
