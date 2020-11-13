@@ -1,3 +1,5 @@
+from __future__ import print_function
+import codecs
 from enigma import *
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
@@ -11,10 +13,11 @@ from Components.Button import Button
 from Components.Label import Label
 from Components.ConfigList import ConfigListScreen
 from Components.config import ConfigSelection, getConfigListEntry, config
-
+import subprocess
 import os
 import sys
 import re
+import time
 
 class HddInfo(ConfigListScreen, Screen):
 	skin = """
@@ -69,6 +72,7 @@ class HddInfo(ConfigListScreen, Screen):
 	
 	def drawInfo(self):
 		device = "/dev/%s" % self.device
+		print("device:", device)
 		#regexps
 		modelRe = re.compile(r"Model Number:\s*([\w\-]+)")
 		serialRe = re.compile(r"Serial Number:\s*([\w\-]+)")
@@ -116,10 +120,21 @@ class HddInfo(ConfigListScreen, Screen):
 			if readCache:
 				self["readCache"].setText("Read disk cache speed: %s" % readCache[0].lstrip())
 		hdparm.close()
-		hddtemp = os.popen("/usr/sbin/hddtemp -q %s" % device)
-		for line in hddtemp:
+		if os.path.exists("/tmp/tmpa.txt"):
+			os.remove("/tmp/tmpa.txt")
+		else:
+			os.system("touch /tmp/tmpa.txt")
+			time.sleep(1)                        		
+		hddtemp = os.popen("/usr/sbin/hddtemp -q %s >/tmp/tmpa.txt" % device)
+		time.sleep(1)
+		with open("/tmp/tmpa.txt", 'r', encoding='windows-1252') as f:
+			lines = f.readlines()
+		for line in lines:
 			temp = re.findall(tempRe, line)
 			if temp:
 				self["temp"].setText("Disk temperature: %s" % temp[0].lstrip())
+		f.close()
+		if os.path.exists("/tmp/tmpa.txt"):
+			os.remove("/tmp/tmpa.txt")                				
 		hddtemp.close()
 	
