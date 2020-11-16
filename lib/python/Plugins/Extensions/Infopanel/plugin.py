@@ -618,6 +618,7 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "easy-setup":
 			self.session.open(EasySetup)                        			
 		elif menu == "PasswordChange":
+			from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 			self.session.open(NFRPasswdScreen)
 		elif menu == "System_Info":
 			self.System()
