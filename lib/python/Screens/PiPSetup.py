@@ -23,7 +23,9 @@ def clip(val, min, max):
 class PiPSetup(Screen):
 	def __init__(self, session, pip):
 		Screen.__init__(self, session)
+
 		self.pip = pip
+
 		self.pos = (config.av.pip.value[0], config.av.pip.value[1])
 		self.size = (config.av.pip.value[2], config.av.pip.value[3])
 		self.mode = self.pip.getMode()

@@ -255,6 +255,7 @@ class MovieBrowserConfiguration(ConfigListScreen, Screen):
 		configList.append(getConfigListEntry(_("Root directory"), config.movielist.root, _("Sets the root folder of movie list, to remove the '..' from benign shown in that folder.")))
 		configList.append(getConfigListEntry(_("Hide known extensions"), config.movielist.hide_extensions, _("Allows you to hide the extensions of known file types.")))
 		configList.append(getConfigListEntry(_("Show live tv when movie stopped"), config.movielist.show_live_tv_in_movielist, _("When set the PIG will return to live after a movie has stopped playing.")))
+		configList.append(getConfigListEntry(_("Show Covers in Movielist"), config.usage.movielist_show_cover, _("Shows the Covers in Movielist and Moviebar")))		
 		for btn in (('red', _('Red')), ('green', _('Green')), ('yellow', _('Yellow')), ('blue', _('Blue')), ('redlong', _('Red long')), ('greenlong', _('Green long')), ('yellowlong', _('Yellow long')), ('bluelong', _('Blue long')), ('TV', _('TV')), ('Radio', _('Radio')), ('Text', _('Text')), ('F1', _('F1')), ('F2', _('F2')), ('F3', _('F3'))):
 			configList.append(getConfigListEntry(_("Button") + " " + _(btn[1]), userDefinedButtons[btn[0]], _("Allows you to setup the button to do what you choose.")))
 		ConfigListScreen.__init__(self, configList, session = self.session, on_change = self.changedEntry)
@@ -375,6 +376,7 @@ class MovieContextMenu(Screen, ProtectedScreen):
 		self["key_green"] = StaticText(_("OK"))
 		menu = [(_("Settings") + "...", csel.configure),
 				(_("Device mounts") + "...", csel.showDeviceMounts),
+				(_("Device Hdd Fast Umount") + "...", csel.showHddFastUmount),
 				(_("Network mounts") + "...", csel.showNetworkMounts),
 				(_("Create directory"), csel.do_createdir),
 				(_("Sort by") + "...", csel.selectSortby)]
@@ -398,6 +400,7 @@ class MovieContextMenu(Screen, ProtectedScreen):
 				menu.append((_("Reset playback position"), csel.do_reset))
 				menu.append((_("Rename"), csel.do_rename))
 				menu.append((_("Start offline decode"), csel.do_decode))
+				menu.append((_("Search for Covers"), csel.do_covers))				
 				# Plugins expect a valid selection, so only include them if we selected a non-dir
 				menu.extend([(p.description, boundFunction(p, session, service)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
 
@@ -1634,11 +1637,26 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 
 	def can_createdir(self, item):
 		return True
+
 	def do_createdir(self):
 		from Screens.VirtualKeyBoard import VirtualKeyBoard
 		self.session.openWithCallback(self.createDirCallback, VirtualKeyBoard,
 			title = _("Please enter name of the new directory"),
 			text = "")
+
+	def do_covers(self):
+		item = self.getCurrentSelection()
+		current = item[0]
+		info = item[1]
+		if info is None:
+			# Special case
+			return
+		else:
+			service = info and info.getName(current)
+			print ("service:", service)
+			from Components.SearchCovers import getCoverPath, cleanFile, BackgroundCoverScanner, fmlcMenuList, FindMovieList, FindMovieListScanPath
+			self.session.openWithCallback(self.reloadList, FindMovieList, service)
+
 	def createDirCallback(self, name):
 		if not name:
 			return
@@ -2040,12 +2058,16 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 		Tools.Trashcan.cleanAll(os.path.split(current.getPath())[0])
 
 	def showNetworkMounts(self):
-		import NetworkSetup
-		self.session.open(NetworkSetup.NetworkMountsMenu)
+		from Screens.NetworkSetup import NetworkMountsMenu
+		self.session.open(NetworkMountsMenu)
 
 	def showDeviceMounts(self):
-		from Plugins.Extensions.Infopanel.MountManager import HddMount
-		self.session.open(HddMount)
+		from Screens.HddSetup import HddSetup
+		self.session.open(HddSetup)
+
+	def showHddFastUmount(self):
+		from Screens.HddMount import HddFastRemove
+		self.session.open(HddFastRemove)
 
 	def showActionFeedback(self, text):
 		if self.feedbackTimer is None:

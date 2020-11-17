@@ -5,7 +5,7 @@ from enigma import ePoint, eSize, eRect, eServiceCenter, getBestPlayableServiceR
 from Components.SystemInfo import SystemInfo
 from Components.VideoWindow import VideoWindow
 from Components.config import config, ConfigPosition, ConfigYesNo, ConfigSelection
-import Tools.Notifications
+from Tools import Notifications
 from Screens.MessageBox import MessageBox
 from os import access, W_OK
 
@@ -92,7 +92,7 @@ class PictureInPicture(Screen):
 		self.onLayoutFinish.remove(self.LayoutFinished)
 		self.relocate()
 		self.setExternalPiP(config.av.pip_mode.value == "external")
-		
+
 	def move(self, x, y):
 		config.av.pip.value[0] = x
 		config.av.pip.value[1] = y
@@ -185,7 +185,7 @@ class PictureInPicture(Screen):
 					Tools.Notifications.AddPopup(text = _("No free tuner!"), type = MessageBox.TYPE_ERROR, timeout = 5, id = "ZapPipError")
 				return False
 			self.pipservice = eServiceCenter.getInstance().play(ref)
-			if self.pipservice and not self.pipservice.setTarget(1):
+			if self.pipservice and not self.pipservice.setTarget(1, True):
 				if hasattr(self, "dishpipActive") and self.dishpipActive is not None:
 					self.dishpipActive.startPiPService(ref)
 				self.pipservice.start()
