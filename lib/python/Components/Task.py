@@ -532,9 +532,9 @@ class FailedPostcondition(Condition):
 	def getErrorMessage(self, task):
 		if isinstance(self.exception, int):
 			if hasattr(task, 'log'):
-				log = ''.join(task.log).strip()
-				log = log.split('\n')[-4:]
-				log = '\n'.join(log)
+				log = b''.join(task.log).strip()
+				log = log.split(b'\n')[-4:]
+				log = b'\n'.join(log)
 				return log
 			else:
 				return _("Error code") + " %s" % self.exception
