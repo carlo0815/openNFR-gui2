@@ -436,11 +436,11 @@ class AutoImageManagerTimer:
 			print("[ImageManager] Running Backup", strftime("%c", localtime(now)))
 			global Timerstarts
 			Timerstarts = True
-			ImageBackup(self.session)
 			sched = localtime(time())
-			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, 12, 0, 0, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
+			sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, sched.tm_hour, sched.tm_min, sched.tm_sec, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
 			config.imagemanager.lastbackup.value = sched_t
 			config.imagemanager.lastbackup.save()
+			ImageBackup(self.session)
 
 class ImageBackup(Screen):
 
@@ -559,6 +559,10 @@ class ImageBackup(Screen):
 					mount = config.imagemanager.backuplocation.value
 				for z in choices:
 					if mount in z:
+						sched = localtime(time())
+						sched_t = int(mktime((sched.tm_year, sched.tm_mon, sched.tm_mday, sched.tm_hour, sched.tm_min, sched.tm_sec, sched.tm_wday, sched.tm_yday, sched.tm_isdst)))
+						config.imagemanager.lastbackup.value = sched_t
+						config.imagemanager.lastbackup.save()						
 						retval1 = list(z)
 						self.doFullBackup(retval1)
 			else:
