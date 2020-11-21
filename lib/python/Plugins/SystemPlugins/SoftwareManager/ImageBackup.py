@@ -505,29 +505,29 @@ class ImageBackup(Screen):
 
 	def ImageList(self, imagedict):
 		self.saveImageList = imagedict
-		list = []
+		lista = []
 		mode = GetCurrentImageMode() or 0
 		currentimageslot = GetCurrentImage() or 1
 		print("[Image Backup] Current Image Slot %s, Imagelist %s"% ( currentimageslot, imagedict))
 		##### hier currentimage abfragen und noch einbauen ob timer oder nicht####
 		if Timerstarts == True:
 			if imagedict:
-				for x in sorted(imagedict.keys()):
+				for x in sorted(list(imagedict.keys())):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == currentimageslot:
-							list.append(ChoiceEntryComponent('', ((_("slot%s - %s (current image)")) % (x, imagedict[x]['imagename']), x, True)))
+							lista.append(ChoiceEntryComponent('', ((_("slot%s - %s (current image)")) % (x, imagedict[x]['imagename']), x, True)))
 			else:	   
 				if SystemInfo["canRecovery"]:
-					list.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
+					lista.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
 				list.append(ChoiceEntryComponent('', (_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()), "1", "1", False)))
-			self["config"].setList(list)
+			self["config"].setList(lista)
 			global timerlist			
 			timerlist =[]
-			timerlist = list
+			timerlist = lista
 			self.start()
 		else:			
 			if imagedict:
-				for x in sorted(imagedict.keys()):
+				for x in sorted(list(imagedict.keys())):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == 1 and currentimageslot == 1 and SystemInfo["canRecovery"]:
 							list.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
@@ -553,8 +553,12 @@ class ImageBackup(Screen):
 					choices.append((_("Backup to destination: %s") % (media), self.currentSelected[0][1], media, self.currentSelected[0][2]))
 			choices.append((_("No, do not backup a image"), False))
 			if Timerstarts == True:
+				if config.imagemanager.backuplocation.value.endswith('/'):
+					mount = config.imagemanager.backuplocation.value[:-1]
+				else:
+					mount = config.imagemanager.backuplocation.value
 				for z in choices:
-					if config.imagemanager.backuplocation.value in z:
+					if mount in z:
 						retval1 = list(z)
 						self.doFullBackup(retval1)
 			else:
@@ -631,23 +635,6 @@ class ImageBackup(Screen):
 					self.MTDKERNEL  = SystemInfo["canMultiBoot"][self.SLOT]["kernel"].split('/')[2]
 					self.MTDROOTFS  = SystemInfo["canMultiBoot"][self.SLOT]["device"].split('/')[2]
 					if SystemInfo["HasRootSubdir"]:
-#						self.MTDROOTFS = "%s" %(self.getImageList[self.SLOT]['part'])
-#						try:
-#							if self.SLOT >= 2 and os.path.islink("/dev/block/by-name/userdata"):
-#								
-#								self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel%s" %self.SLOT)[5:]
-#							else:
-#								print "self.MTDKERNEL:", self.MTDKERNEL
-#								#self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
-#						except:
-#							self.MTDKERNEL = os.readlink("/dev/block/by-name/linuxkernel")
-#					else:
-#						try:
-#							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs%s" %self.SLOT)[5:]
-#							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel%s" %self.SLOT)[5:]
-#						except:
-#							self.MTDROOTFS = os.readlink("/dev/block/by-name/rootfs")[5:]
-#							self.MTDKERNEL = os.readlink("/dev/block/by-name/kernel")[5:]
 						self.ROOTFSSUBDIR = SystemInfo["canMultiBoot"][self.SLOT]['rootsubdir']
 				else:
 					self.MTDKERNEL = getMachineMtdKernel()
@@ -950,29 +937,6 @@ class ImageBackup(Screen):
 		cmdlist.append(self.message)
 		cmdlist.append('echo "' + _("Almost there... ") + '"')
 		cmdlist.append('echo "' + _("Now building the Backup Image") + '"')
-
-#		os.system('rm -rf %s' %self.MAINDEST)
-#		if not os.path.exists(self.MAINDEST):
-#			os.makedirs(self.MAINDEST)
-#
-#		f = open("%s/imageversion" %self.MAINDEST, "w")
-#		f.write(self.IMAGEVERSION)
-#		f.close()
-#
-#		if self.ROOTFSBIN == "rootfs.tar.bz2":
-#			os.system('mv %s/rootfs.tar.bz2 %s/rootfs.tar.bz2' %(self.WORKDIR, self.MAINDEST))
-#		else:
-#			os.system('mv %s/root.%s %s/%s' %(self.WORKDIR, self.ROOTFSTYPE, self.MAINDEST, self.ROOTFSBIN))
-#		if SystemInfo["canMultiBoot"]:
-#			if SystemInfo["HasRootSubdir"]:
-#				os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))			
-#			else:
-#				os.system('mv %s/kernel.bin %s/kernel.bin' %(self.WORKDIR, self.MAINDEST))
-#		elif self.MTDKERNEL.startswith('mmcblk0'):
-#			os.system('mv %s/%s %s/%s' %(self.WORKDIR, self.KERNELBIN, self.MAINDEST, self.KERNELBIN))
-#		else:
-#			os.system('mv %s/vmlinux.gz %s/%s' %(self.WORKDIR, self.MAINDEST, self.KERNELBIN))
-#
 		if self.EMMCIMG == "usb_update.bin" and self.RECOVERY:
 			os.system('rm -rf %s' %self.MAINDESTROOT)
 			if not os.path.exists(self.MAINDESTROOT):
