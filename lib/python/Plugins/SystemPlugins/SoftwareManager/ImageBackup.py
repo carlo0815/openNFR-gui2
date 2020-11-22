@@ -515,7 +515,7 @@ class ImageBackup(Screen):
 				for x in sorted(list(imagedict.keys())):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == currentimageslot:
-							lista.append(ChoiceEntryComponent('', ((_("slot%s - %s (current image)")) % (x, imagedict[x]['imagename']), x, True)))
+							lista.append(ChoiceEntryComponent('', ((_("slot%s - %s (current image)")) % (x, imagedict[x]['imagename']), x, False)))
 			else:	   
 				if SystemInfo["canRecovery"]:
 					lista.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
