@@ -42,7 +42,7 @@ import os
 #from . import _
 
 choicelist = [("8192",_("8 MB")), ("16384",_("16 MB")), ("32768",_("32 MB")), ("65536",_("64 MB")), ("131072",_("128 MB")), ("262144",_("256 MB")), ("524288",_("512 MB")), ("1048576",_("1024 MB"))]
-mountlist = [("/media/hdd",_("/media/hdd")), ("/media/cf",_("/media/cf")), ("/media/usb",_("/media/usb"))]
+mountlist = [("/media/hdd",_("/media/hdd")), ("/media/cf",_("/media/cf")), ("/media/usb",_("/media/usb")), ("/media/mmc",_("/media/mmc"))]
 filenamelist = [("swap",_("swap")), ("swapfile",_("swapfile")), ("myswap",_("myswap"))]
 
 config.plugins.swapmanager = ConfigSubsection()
