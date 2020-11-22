@@ -519,7 +519,7 @@ class ImageBackup(Screen):
 			else:	   
 				if SystemInfo["canRecovery"]:
 					lista.append(ChoiceEntryComponent('', (_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()), "1", "1", True)))
-				list.append(ChoiceEntryComponent('', (_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()), "1", "1", False)))
+				lista.append(ChoiceEntryComponent('', (_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()), "1", "1", False)))
 			self["config"].setList(lista)
 			global timerlist			
 			timerlist =[]
@@ -530,13 +530,13 @@ class ImageBackup(Screen):
 				for x in sorted(list(imagedict.keys())):
 					if imagedict[x]["imagename"] != _("Empty slot"):
 						if x == 1 and currentimageslot == 1 and SystemInfo["canRecovery"]:
-							list.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
-					list.append(ChoiceEntryComponent('',((_("slot%s - %s (current image)") if x == currentimageslot else _("slot%s - %s")) % (x, imagedict[x]["imagename"]), x, False)))
+							lista.append(ChoiceEntryComponent('',(_("slot%s - %s as USB Recovery") % (x, imagedict[x]["imagename"]), x, True)))
+					lista.append(ChoiceEntryComponent('',((_("slot%s - %s (current image)") if x == currentimageslot else _("slot%s - %s")) % (x, imagedict[x]["imagename"]), x, False)))
 			else:
 				if SystemInfo["canRecovery"]:
-					list.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
-				list.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
-		self["config"].setList(list)
+					lista.append(ChoiceEntryComponent('',(_("internal flash: %s %s as USB Recovery") %(getImageDistro(), getImageVersion()),"1","1",True)))
+				lista.append(ChoiceEntryComponent('',(_("internal flash:  %s %s ") %(getImageDistro(), getImageVersion()),"1","1",False)))
+		self["config"].setList(lista)
 
 	def start(self):
 		if Timerstarts == True:
