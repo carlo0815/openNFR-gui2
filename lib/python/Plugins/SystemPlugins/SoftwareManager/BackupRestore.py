@@ -30,6 +30,8 @@ from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageDis
 from . import ShellCompatibleFunctions
 import six
 import shutil
+from Components.SystemInfo import SystemInfo
+from enigma import eConsoleAppContainer
 
 boxtype = getBoxType()
 distro = getImageDistro()
@@ -135,6 +137,7 @@ class BackupScreen(Screen, ConfigListScreen):
 			cmd2 = "ipkg list-changed-conffiles > /tmp/changed-configfiles.txt"
 			cmd3 = "tar -czvf " + self.fullbackupfilename + " " + self.backupdirs
 			cmd = [cmd1, cmd2, cmd3]
+			cmdx = (cmd1 + " | " + cmd2 + " | " + cmd3) 
 			if path.exists(self.fullbackupfilename):
 				dt = str(datetime.fromtimestamp(stat(self.fullbackupfilename).st_ctime).strftime('%Y-%m-%d %H-%M-%S'))
 				self.newfilename = self.backuppath + "/" + dt + '-' + self.backupfile
@@ -142,9 +145,15 @@ class BackupScreen(Screen, ConfigListScreen):
 					remove(self.newfilename)
 				rename(self.fullbackupfilename, self.newfilename)
 			if self.finished_cb:
-				self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
+				if SystemInfo["StandbyState"] == True:
+					self.prombt(cmdx)
+				else:
+					self.session.openWithCallback(self.finished_cb, Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
 			else:
-				self.session.open(Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
+				if SystemInfo["StandbyState"] == True:
+					self.prombt(cmdx)
+				else:			
+					self.session.open(Console, title = _("Backup is running..."), cmdlist = cmd, finishedCallback = self.backupFinishedCB, closeOnSuccess = True)
 		except OSError:
 			if self.finished_cb:
 				self.session.openWithCallback(self.finished_cb, MessageBox, _("Sorry, your backup destination is not writeable.\nPlease select a different one."), MessageBox.TYPE_INFO, timeout = 10 )
@@ -160,6 +169,12 @@ class BackupScreen(Screen, ConfigListScreen):
 	def runAsync(self, finished_cb):
 		self.finished_cb = finished_cb
 		self.doBackup()
+
+	def prombt(self, com):
+		container = eConsoleAppContainer()
+		container.execute(com)			
+		self.close(True)
+
 
 
 class BackupSelection(Screen):
