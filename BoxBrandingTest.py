@@ -1,3 +1,4 @@
+from __future__ import print_function
 import boxbranding
 print("getMachineBuild=%s<" %boxbranding.getMachineBuild())
 print("getMachineMake=%s<" %boxbranding.getMachineMake())
@@ -42,4 +43,3 @@ print("getHaveWWOL=%s<" %boxbranding.getHaveWWOL())
 print("getHaveTranscoding1=%s<" %boxbranding.getHaveTranscoding1())
 print("getHaveTranscoding2=%s<" %boxbranding.getHaveTranscoding2())
 print("getHaveCI=%s<" %boxbranding.getHaveCI())
-
