@@ -954,11 +954,7 @@ class QuickMenuDevices(Screen):
 			if not parts:
 				continue
 			device = parts[3]
-			if not search('sd[a-z][1-9]', device) and not search('mmcblk[0-9]p[1-9]', device):
-				continue
-			if getMachineBuild() in ('gbmv200', 'plus', 'multibox', 'h9combo', 'v8plus', 'hd60', 'hd61', 'vuduo4k', 'ustym4kpro', 'sf8008', 'sf8008s', 'sf8008m', 'cc1', 'dags72604', 'u51', 'u52', 'u53', 'u54', 'u55', 'u56', 'u57', 'vuzero4k', 'u5', 'sf5008', 'et13000', 'et1x000', 'vuuno4k', 'vuuno4kse', 'vuultimo4k', 'vusolo4k', 'hd51', 'hd52', 'dm820', 'dm7080', 'sf4008', 'dm900', 'dm920', 'gb7252', 'gb72604', 'dags7252', 'vs1500', 'h7', '8100s') and search('mmcblk0p[1-9]', device):
-				continue
-			if getMachineBuild() in ('xc7439', 'osmio4k', 'osmio4kplus', 'osmini4k') and search('mmcblk1p[1-9]', device):
+			if not search('sd[a-z][1-9]', device):
 				continue
 			if device in list2:
 				continue
@@ -973,96 +969,26 @@ class QuickMenuDevices(Screen):
 			self['lab1'].hide()
 
 	def buildMy_rec(self, device):
-		device2 = ''
-		try:
-			if device.find('1') > 0:
-				device2 = device.replace('1', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('2') > 0:
-				device2 = device.replace('2', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('3') > 0:
-				device2 = device.replace('3', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('4') > 0:
-				device2 = device.replace('4', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p1') > 1:
-				device2 = device.replace('p1', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p2') > 1:
-				device2 = device.replace('p2', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p3') > 1:
-				device2 = device.replace('p3', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p4') > 1:
-				device2 = device.replace('p4', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p5') > 1:
-				device2 = device.replace('p5', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p6') > 1:
-				device2 = device.replace('p6', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p7') > 1:
-				device2 = device.replace('p7', '')
-		except:
-			device2 = ''
-		try:
-			if device.find('p8') > 1:
-				device2 = device.replace('p8', '')
-		except:
-			device2 = ''
+		device2 = device[:-1]	#strip device number
 		devicetype = path.realpath('/sys/block/' + device2 + '/device')
 		d2 = device
 		name = 'USB: '
 		mypixmap = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/dev_usbstick.png'
-		if device2.startswith('mmcblk'):
-			model = open('/sys/block/' + device2 + '/device/name').read()
-			mypixmap = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/dev_mmc.png'
-			name = 'MMC: '
-		else:
-			model = open('/sys/block/' + device2 + '/device/model').read()
+		model = open('/sys/block/' + device2 + '/device/model').read()
 		model = str(model).replace('\n', '')
 		des = ''
-		if devicetype.find('/devices/pci') != -1 or devicetype.find('ahci') != -1:
+		if devicetype.find('/devices/pci') != -1:
 			name = _("HARD DISK: ")
 			mypixmap = '/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/icons/dev_hdd.png'
 		name = name + model
 
 		from Components.Console import Console
 		self.Console = Console()
-		self.Console.ePopen("sfdisk -l | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
+		self.Console.ePopen("sfdisk -l /dev/sd? | grep swap | awk '{print $(NF-9)}' >/tmp/devices.tmp")
 		sleep(0.5)
-		try:
-			f = open('/tmp/devices.tmp', 'r')
-			swapdevices = f.read()
-			f.close()
-		except:
-			swapdevices = ' '
-		if path.exists('/tmp/devices.tmp'):
-			remove('/tmp/devices.tmp')
+		f = open('/tmp/devices.tmp', 'r')
+		swapdevices = f.read()
+		f.close()
 		swapdevices = swapdevices.replace('\n', '')
 		swapdevices = swapdevices.split('/')
 		f = open('/proc/mounts', 'r')
@@ -1100,12 +1026,12 @@ class QuickMenuDevices(Screen):
 					size = size // 2
 				except:
 					size = 0
-			if ((((float(size) // 2) // 1024) // 1024) // 1024) > 1:
-				des = _("Size: ") + str(round(((((float(size) // 2) // 1024) // 1024) // 1024),2)) + _("TB")
-			elif (((size // 2) // 1024) // 1024) > 1:
-				des = _("Size: ") + str(((size // 2) // 1024) // 1024) + _("GB")
+
+			if ((size / 1024) / 1024) > 1:
+				des = _("Size: ") + str((size // 1024) // 1024) + " " + _("GB")
 			else:
-				des = _("Size: ") + str((size // 2) // 1024) + _("MB")
+				des = _("Size: ") + str(size // 1024) + " " + _("MB")
+
 		f.close()
 		if des != '':
 			if rw.startswith('rw'):
@@ -1117,4 +1043,4 @@ class QuickMenuDevices(Screen):
 			des += '\t' + _("Mount: ") + d1 + '\n' + _("Device: ") + ' /dev/' + device + '\t' + _("Type: ") + dtype + rw
 			png = LoadPixmap(mypixmap)
 			res = (name, des, png)
-			self.devicelist.append(res) 
+			self.devicelist.append(res)
