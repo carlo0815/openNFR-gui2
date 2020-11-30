@@ -233,29 +233,34 @@ class MovieBrowserConfiguration(ConfigListScreen, Screen):
 		cfg.moviesort = ConfigSelection(default=str(config.movielist.moviesort.value), choices = l_moviesort)
 		cfg.description = ConfigYesNo(default=(config.movielist.description.value != MovieList.HIDE_DESCRIPTION))
 		configList = [getConfigListEntry(_("Use trash can in movielist"), config.usage.movielist_trashcan, _("When enabled, deleted recordings are moved to the trash can, instead of being deleted immediately.")),
-					  getConfigListEntry(_("Remove items from trash can after (days)"), config.usage.movielist_trashcan_days, _("Configure the number of days after which items are automatically removed from the trash can.")),
-					  getConfigListEntry(_("Clean network trash cans"), config.usage.movielist_trashcan_network_clean, _("When enabled, network trash cans are probed for cleaning.")),
-					  getConfigListEntry(_("Disk space to reserve for recordings (in GB)"), config.usage.movielist_trashcan_reserve, _("Configure the minimum amount of disk space to be available for recordings. When the amount of space drops below this value, deleted items will be removed from the trash can.")),
-					  getConfigListEntry(_("Background delete option"), config.misc.erase_flags, _("Configure on which devices the background delete option should be used.")),
-					  getConfigListEntry(_("Background delete speed"), config.misc.erase_speed, _("Configure the speed of the background deletion process. Lower speed will consume less hard disk drive performance.")),
-					  getConfigListEntry(_("Fontsize"), config.movielist.fontsize, _("This allows you change the font size relative to skin size, so 1 increases by 1 point size, and -1 decreases by 1 point size")),
-					  getConfigListEntry(_("Number of rows"), config.movielist.itemsperpage, _("Number of rows to display")),
-					  getConfigListEntry(_("Use extended List"), config.movielist.useextlist, _("Use the extended List")),
-					  getConfigListEntry(_("Update delay for Events in List"), config.movielist.eventinfo_delay, _("Update delay for Events in List. Scrolling in List is faster with higher delay, especially on big Lists !")),
-					  getConfigListEntry(_("Use slim screen"), config.movielist.useslim, _("Use the alternative screen")),
-					  getConfigListEntry(_("Sort"), cfg.moviesort, _("Set the default sorting method.")),
-					  getConfigListEntry(_("Show extended description"), cfg.description, _("Show or hide the extended description, (skin dependent).")),
-					  getConfigListEntry(_("Use individual settings for each directory"), config.movielist.settings_per_directory, _("When set each folder will show the previous state used, when off the default values will be shown.")),
-					  getConfigListEntry(_("Behavior when a movie reaches the end"), config.usage.on_movie_eof, _("On reaching the end of a file during playback, you can choose the box's behavior.")),
-					  getConfigListEntry(_("Stop service on return to movie list"), config.movielist.stop_service, _("Stop previous broadcasted service on return to movielist.")),
-					  getConfigListEntry(_("Show status icons in movielist"), config.usage.show_icons_in_movielist, _("Shows the watched status of the movie."))]		
+					getConfigListEntry(_("Remove items from trash can after (days)"), config.usage.movielist_trashcan_days, _("Configure the number of days after which items are automatically removed from the trash can.")),
+					getConfigListEntry(_("Clean network trash cans"), config.usage.movielist_trashcan_network_clean, _("When enabled, network trash cans are probed for cleaning.")),
+					getConfigListEntry(_("Disk space to reserve for recordings (in GB)"), config.usage.movielist_trashcan_reserve, _("Configure the minimum amount of disk space to be available for recordings. When the amount of space drops below this value, deleted items will be removed from the trash can.")),
+					getConfigListEntry(_("Background delete option"), config.misc.erase_flags, _("Configure on which devices the background delete option should be used.")),
+					getConfigListEntry(_("Background delete speed"), config.misc.erase_speed, _("Configure the speed of the background deletion process. Lower speed will consume less hard disk drive performance.")),
+					getConfigListEntry(_("Fontsize"), config.movielist.fontsize, _("This allows you change the font size relative to skin size, so 1 increases by 1 point size, and -1 decreases by 1 point size")),
+					getConfigListEntry(_("Number of rows"), config.movielist.itemsperpage, _("Number of rows to display")),
+					getConfigListEntry(_("Use extended List"), config.movielist.useextlist, _("Use the extended List")),
+					getConfigListEntry(_("Update delay for Events in List"), config.movielist.eventinfo_delay, _("Update delay for Events in List. Scrolling in List is faster with higher delay, especially on big Lists !")),
+					getConfigListEntry(_("Use slim screen"), config.movielist.useslim, _("Use the alternative screen")),
+					getConfigListEntry(_("Sort"), cfg.moviesort, _("Set the default sorting method.")),
+					getConfigListEntry(_("Show extended description"), cfg.description, _("Show or hide the extended description, (skin dependent).")),
+					getConfigListEntry(_("Use individual settings for each directory"), config.movielist.settings_per_directory, _("When set each folder will show the previous state used, when off the default values will be shown.")),
+					getConfigListEntry(_("Behavior when a movie is started"), config.usage.on_movie_start, _("Configure the behavior when movie playback is started.")),
+					getConfigListEntry(_("Behavior when a movie is stopped"), config.usage.on_movie_stop, _("Configure the behavior when movie playback is manually stopped.")),
+					getConfigListEntry(_("Behavior when a movie reaches the end"), config.usage.on_movie_eof, _("Configure the behavior when reaching the end of a movie, during movie playback.")),
+					getConfigListEntry(_("Stop service on return to movie list"), config.movielist.stop_service, _("Stop previous broadcasted service on return to movielist.")),
+					getConfigListEntry(_("Allow quit movieplayer with exit"), config.usage.leave_movieplayer_onExit, _("When enabled, it is possible to leave the movieplayer with exit.")),
+					getConfigListEntry(_("Display message before playing next movie"), config.usage.next_movie_msg, _("When enabled, a popup message will be shown when a movie has finished and the next one will start.")),
+					getConfigListEntry(_("Behavior of 'pause' when paused"), config.seek.on_pause, _("Configure the behavior of the 'pause' key when movie playback is already paused.")),
+					getConfigListEntry(_("Show status icons in movielist"), config.usage.show_icons_in_movielist, _("Shows the watched status of the movie."))]
 		if config.usage.show_icons_in_movielist.value:
 			configList.append(getConfigListEntry(_("Show icon for new/unseen items"), config.usage.movielist_unseen, _("Shows the icons when new/unseen, else will not show an icon.")))
 		configList.append(getConfigListEntry(_("Play audio in background"), config.movielist.play_audio_internal, _("Keeps MovieList open whilst playing audio files.")))
 		configList.append(getConfigListEntry(_("Root directory"), config.movielist.root, _("Sets the root folder of movie list, to remove the '..' from benign shown in that folder.")))
 		configList.append(getConfigListEntry(_("Hide known extensions"), config.movielist.hide_extensions, _("Allows you to hide the extensions of known file types.")))
 		configList.append(getConfigListEntry(_("Show live tv when movie stopped"), config.movielist.show_live_tv_in_movielist, _("When set the PIG will return to live after a movie has stopped playing.")))
-		configList.append(getConfigListEntry(_("Show Covers in Movielist"), config.usage.movielist_show_cover, _("Shows the Covers in Movielist and Moviebar")))		
+		configList.append(getConfigListEntry(_("Show Covers in Movielist"), config.usage.movielist_show_cover, _("Shows the Covers in Movielist and Moviebar")))
 		for btn in (('red', _('Red')), ('green', _('Green')), ('yellow', _('Yellow')), ('blue', _('Blue')), ('redlong', _('Red long')), ('greenlong', _('Green long')), ('yellowlong', _('Yellow long')), ('bluelong', _('Blue long')), ('TV', _('TV')), ('Radio', _('Radio')), ('Text', _('Text')), ('F1', _('F1')), ('F2', _('F2')), ('F3', _('F3'))):
 			configList.append(getConfigListEntry(_("Button") + " " + _(btn[1]), userDefinedButtons[btn[0]], _("Allows you to setup the button to do what you choose.")))
 		ConfigListScreen.__init__(self, configList, session = self.session, on_change = self.changedEntry)
