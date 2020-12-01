@@ -460,10 +460,11 @@ class Harddisk:
 		else:
 			# otherwise, assume there is one partition
 			dev = self.partitionPath("1")
-		task = Components.Task.LoggingTask(job, "fsck")
-		task.setTool('fsck.ext3')
-		task.args.append('-f')
+		task = Components.Task.LoggingTask(job, "e2fsck")
+		task.setTool('e2fsck')
+		task.args.append('-c')
 		task.args.append('-p')
+		task.args.append('-f')		
 		task.args.append(dev)
 		MountTask(job, self)
 		task = Components.Task.ConditionTask(job, _("Waiting for mount"))
