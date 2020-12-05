@@ -98,13 +98,13 @@ SystemInfo["ForceLNBPowerChanged"] = fileCheck("/proc/stb/frontend/fbc/force_lnb
 SystemInfo["ForceToneBurstChanged"] = fileCheck("/proc/stb/frontend/fbc/force_toneburst")
 SystemInfo["USETunersetup"] = SystemInfo["ForceLNBPowerChanged"] or SystemInfo["ForceToneBurstChanged"]
 SystemInfo["HDMIin"] = getHaveHDMIinHD() in ('True')
-SystemInfo["HaveRCA"] = getHaveRCA() in ('True')
-SystemInfo["HaveDVI"] = getHaveDVI() in ('True')
-SystemInfo["HaveAVJACK"] = getHaveAVJACK() in ('True')
-SystemInfo["HaveSCART"] = getHaveSCART() in ('True')
-SystemInfo["HaveSCARTYUV"] = getHaveSCARTYUV() in ('True')
-SystemInfo["HaveYUV"] = getHaveYUV() in ('True')
-SystemInfo["HaveHDMI"] = getHaveHDMI() in ('True')
+SystemInfo["HaveRCA"] = getHaveRCA() == "True"
+SystemInfo["HaveDVI"] = getHaveDVI() == "True"
+SystemInfo["HaveAVJACK"] = getHaveAVJACK() == "True"
+SystemInfo["HAVESCART"] = getHaveSCART() == "True"
+SystemInfo["HAVESCARTYUV"] = getHaveSCARTYUV() == "True"
+SystemInfo["HAVEYUV"] = getHaveYUV() == "True"
+SystemInfo["HAVEHDMI"] = getHaveHDMI() == "True"
 SystemInfo["MBbootdevice"] = getMBbootdevice()
 SystemInfo["canMultiBoot"] = getMultibootslots()
 SystemInfo["canMode12"] = getMachineBuild() in ('hd51','vs1500','h7') and ('brcm_cma=440M@328M brcm_cma=192M@768M', 'brcm_cma=520M@248M brcm_cma=200M@768M')
