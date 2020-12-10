@@ -1,3 +1,4 @@
+from __future__ import print_function
 from boxbranding import getMachineProcModel, getMachineBuild, getBoxType, getMachineName 
 from Screens.Screen import Screen
 from Plugins.Extensions.Infopanel.Console import Console
@@ -20,6 +21,8 @@ from Components.ProgressBar import ProgressBar
 from os import system
 import os
 import re
+import time
+import subprocess
 from skin import parseColor
 from boxbranding import getImageDistro
 PLUGINVERSION = '1.00'
@@ -96,32 +99,43 @@ class Disk_Speed(Screen):
 		self.mysel = self['config'].getCurrent()
 		global mysel
 		mysel = self.mysel
-		if fileExists('/proc/mounts'):
-			fileExists('/proc/mounts')
-			f = open('/proc/mounts', 'r')
-			for line in f.readlines():
-				if line.find(self.mysel) != -1:
-					check = True
-					continue
-			f.close()
+		if mysel != None:
+			if fileExists('/proc/mounts'):
+				f = open('/proc/mounts', 'r')
+				for line in f.readlines():
+					if line.find(self.mysel) != -1:
+						check = True
+						continue
+				f.close()
 		else:
-			fileExists('/proc/mounts')
+			check = False
 		if check == False:
 			self.session.open(MessageBox, _('Sorry, there is not any connected devices in your STB.\nPlease connect HDD or USB to test the Speed!'), MessageBox.TYPE_INFO)
 		else:
 			self.install2()
 
 	def install2(self):
-		os.system("echo 3 >/proc/sys/vm/drop_caches")
-		os.popen("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel)
-		system("sleep 2")
+		os.system("touch /tmp/writebufferhdd")
+		reads = subprocess.run("time dd if=/dev/zero of=%s/blanks2 bs=1024k count=50 2>/tmp/writebufferhdd" % self.mysel, shell=True)
+		#reads.wait()
 		f = open('/tmp/writebufferhdd', 'r')
-		for line in f.readlines():
+		x = []
+		x = f.readlines()
+		model = "not to check" 		
+		for line in x:
 			if "MB/s" in line:
+				print("1")
 				model = line.split(' ')[6]
+				print("model", model)				
 				speed = re.findall("[-+]?\d+[\.]?\d*", model)
+				print("2")
+#			else:
+#				model = line.split(' ')[3]			
+#				print("model", model)
+#				speed = re.findall("[-+]?\d+[\.]?\d*", model)			
 		f.close()
-		label1 = Label(_('Your Disk-Speed is:%s') %model)
+		
+		label1 = Label(_('Your Disk-Speed is:%s') % model)
 		percUsed = int(float(speed[0]) / 1.6) 
 		if float(speed[0]) <= 1.5:
 			label2 = Label(_('With this Speed you can Record 1 SD Channel!\n'))
