@@ -56,19 +56,33 @@ class Disk_Speed(Screen):
 	def updateList(self):
 		if fileExists('/tmp/writebufferhdd'):
 			os.system("rm /tmp/writebufferhdd")
-		myusb, myhdd = ('', '')
+		myusb, myhdd, myusb1, myusb2, myusb3, mycf, mymmc1 = ('', '', '', '', '', '', '')
 		myoptions = []
 		if fileExists('/proc/mounts'):
 			fileExists('/proc/mounts')
 			f = open('/proc/mounts', 'r')
 			for line in f.readlines():
-				if line.find('/media/usb') != -1:
+				if line.find('/media/usb ') != -1:
 					myusb = '/media/usb'
 					continue
-				if line.find('/media/hdd') != -1:
+				if line.find('/media/hdd ') != -1:
 					myhdd = '/media/hdd'
 					continue
-
+				if line.find('/media/usb1 ') != -1:
+					myusb1 = '/media/usb1'
+					continue					
+				if line.find('/media/usb2 ') != -1:
+					myusb2 = '/media/usb2'
+					continue					
+				if line.find('/media/usb3 ') != -1:
+					myusb3 = '/media/usb3'
+					continue
+				if line.find('/media/cf ') != -1:
+					mycf = '/media/cf'
+					continue
+				if line.find('/media/mmc1 ') != -1:
+					mymmc1 = '/media/mmc1'
+					continue                                        					
 			f.close()
 		else:
 			self['label2'].setText(_('Sorry it seems that there are not Linux formatted devices mounted on your STB. To install NFR4XBoot you need a Linux formatted part1 device. Click on the blue button to open NFR Devices Panel'))
@@ -78,10 +92,30 @@ class Disk_Speed(Screen):
 		else:
 			myusb
 		if myhdd:
-			myhdd
 			self.list.append(myhdd)
 		else:
 			myhdd
+		if myusb1:
+			self.list.append(myusb1)
+		else:
+			myusb1
+		if myusb2:
+			self.list.append(myusb2)
+		else:
+			myusb2			
+		if myusb3:
+			self.list.append(myusb3)
+		else:
+			myusb3
+		if mycf:
+			self.list.append(mycf)
+		else:
+			mycf			
+		if mymmc1:
+			self.list.append(mymmc1)
+		else:
+			mymmc1			
+		print("self.list:", self.list)	
 		self['config'].setList(self.list)
 
 	def devpanel(self):
