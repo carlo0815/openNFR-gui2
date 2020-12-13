@@ -3999,7 +3999,7 @@ class IPv6Setup(Screen, ConfigListScreen, HelpableScreen):
 			inetdData += "8002	stream	tcp	nowait	root	/usr/bin/transtreamproxy	transtreamproxy\n"
 		else:
 			pass
-		fd = file("/etc/inetd.conf", 'w')
+		fd = open("/etc/inetd.conf", 'w')
 		fd.write(inetdData)
 		fd.close()
 		self.session.open(MessageBox, _("Successfully restored /etc/inetd.conf!"), type = MessageBox.TYPE_INFO,timeout = 10 )
@@ -4083,7 +4083,7 @@ class InetdRecovery(Screen, ConfigListScreen):
 		if getBoxType() in ('gbquad', 'gbquadplus', 'ini-9000de', 'xpeedlx3',):
 			inetdData += "8002	stream	" + sockType + "	nowait	root	/usr/bin/transtreamproxy	transtreamproxy\n"
 			
-		fd = file("/etc/inetd.conf", 'w')
+		fd = open("/etc/inetd.conf", 'w')
 		fd.write(inetdData)
 		fd.close()
 		self.inetdRestart()
