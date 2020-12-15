@@ -143,7 +143,7 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 			self.list.append(getConfigListEntry(_("Put TV in standby"), config.hdmicec.control_tv_standby, _('helptext'),'refreshlist'))
 			if config.hdmicec.advanced_settings.value and config.hdmicec.control_tv_standby.value:
 				self.list.append(getConfigListEntry(tab + _("Even if TV has another input active?"), config.hdmicec.tv_standby_notinputactive, _('You can skip this function and turn off the TV when you wake the receiver from standby and immediately switch back to standby.'), ))
-			self.list.append(getConfigListEntry(_("Wakeup TV from standby"), config.hdmicec.control_tv_wakeup, _('helptext') ,'refreshlist'))
+			self.list.append(getConfigListEntry(_("Wakeup TV from standby"), config.hdmicec.control_tv_wakeup, _('helptext'),'refreshlist'))
 			if config.hdmicec.advanced_settings.value and config.hdmicec.control_tv_wakeup.value:
 				self.list.append(getConfigListEntry(tab + _("Even if a 'zap' recording timer starting?"), config.hdmicec.tv_wakeup_zaptimer, _('helptext'), ))
 				self.list.append(getConfigListEntry(tab + _("Even if a 'zap and record' recording timer starting?"), config.hdmicec.tv_wakeup_zapandrecordtimer, _('helptext'), ))
