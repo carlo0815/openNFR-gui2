@@ -1,4 +1,3 @@
-installdir = $(libdir)/enigma2/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi
-SUBDIRS = block headers volume
+installdir = $(libdir)/enigma2/python/Plugins/Extensions/NFR4XBoot/ubi_reader/ubi/block
 install_PYTHON = *.py \
                  *.pyo
