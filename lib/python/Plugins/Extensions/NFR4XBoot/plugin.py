@@ -455,11 +455,8 @@ class NFR4XBootImageChoose(Screen):
 	def boot(self):
 		self.mysel = self['config'].getCurrent()
 		if self.mysel:
-			out = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
-			out.write(self.mysel)
-			out.close()
 			os.system('rm /tmp/.nfr4xreboot')
-			message = _('Are you sure you want to Boot Image:\n') + self.mysel + ' ?'
+			message = _('Are you sure you want to start the image now?:\n') + self.mysel + ' ?'
 			ybox = self.session.openWithCallback(self.boot2, MessageBox, message, MessageBox.TYPE_YESNO)
 			ybox.setTitle(_('Boot Confirmation'))
 		else:
@@ -467,11 +464,24 @@ class NFR4XBootImageChoose(Screen):
 
 	def boot2(self, yesno):
 		if yesno:
+			out = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+			out.write(self.mysel)
+			out.close()
 			os.system('touch /tmp/.nfr4xreboot')
 			os.system('reboot -p')
 		else:
+			message = _('Should the image be booted next time? \n')
+			ybox = self.session.openWithCallback(self.nextboot, MessageBox, message, MessageBox.TYPE_YESNO)
+	
+	def nextboot(self, yesno):
+		if yesno:
+			out = open('/media/nfr4xboot/NFR4XBootI/.nfr4xboot', 'w')
+			out.write(self.mysel)
+			out.close()
 			os.system('touch /tmp/.nfr4xreboot')
 			self.session.open(MessageBox, _('Image will be booted on the next STB boot!'), MessageBox.TYPE_INFO)
+		else:
+			self.session.open(MessageBox, _('Boot image not changed.'), MessageBox.TYPE_INFO)
 
 	def remove(self):
 		self.mysel = self['config'].getCurrent()
