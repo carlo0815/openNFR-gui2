@@ -173,11 +173,11 @@ class NFR4XBootInstallation(Screen):
 			self.MACHINEBRAND = getMachineBrand()
 			if  self.MACHINEBRAND == "Vu+":
 				os.system("opkg install packagegroup-base-nfs") 
-				message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
-				ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
-				ybox.setTitle(_('Install Confirmation'))
-			else:
-				self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)				
+			message = _('Do you want to use Bootmanager by booting?\nBox will reboot after choice ')
+			ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
+			ybox.setTitle(_('Install Confirmation'))
+		else:
+			self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)			
 
 	def install3(self, yesno):
 		print("yesno:", yesno)
