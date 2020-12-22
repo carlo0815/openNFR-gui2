@@ -548,7 +548,7 @@ class NFR4XBootImageChoose(Screen):
 		else:
 			menulist = []
 			menulist.append((_('Install from /media/nfr4xboot/NFR4XBootUpload'), 'media'))
-			menulist.append((_('Install from Internet (OpenPLi,OpenVix,OpenATV,Egami,OpenNFR,OpenHDF)'), 'internet'))
+			menulist.append((_('Install from Internet (OpenVix,OpenATV,OpenNFR,OpenHDF)'), 'internet'))
 			self.session.openWithCallback(self.menuCallback, ChoiceBox, title=_('Choose they way for installation!'), list=menulist)
 
 	def menuCallback(self, choice):
