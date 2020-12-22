@@ -177,7 +177,7 @@ class NFR4XBootInstallation(Screen):
 			ybox = self.session.openWithCallback(self.install3, MessageBox, message, MessageBox.TYPE_YESNO)
 			ybox.setTitle(_('Install Confirmation'))
 		else:
-			self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)			
+			self.session.open(MessageBox, _('Installation aborted !'), MessageBox.TYPE_INFO)				
 
 	def install3(self, yesno):
 		print("yesno:", yesno)
