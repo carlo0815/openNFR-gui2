@@ -313,7 +313,9 @@ class DownloadOnLineImage(Screen):
 			except:
  				stb = 'no Image for this Box on this Side'  					
 		elif self.distro == 'openeight':
-			if box in ('sf208', 'sf228', 'sf108', 'sf3038', 'sf98', 'sf128', 'sf138', 'sf4008'):
+			if box in ('sf8008t', 'sf8008s'):
+				box = 'sf8008'				
+			if box in ('sf208', 'sf228', 'sf108', 'sf3038', 'sf98', 'sf128', 'sf138', 'sf4008', 'sf8008', 'sf8008m'):
 				if box in ('sf4008'):
 					box = 'sf4008'
 					urlbox = getBoxType()               
@@ -345,7 +347,15 @@ class DownloadOnLineImage(Screen):
 				elif box in ('sf138'):
 					box = 'sf138'
 					urlbox = getBoxType() 
-					stb = '1'			
+					stb = '1'
+				elif box in ('sf8008'):
+					box = 'sf8008'
+					urlbox = getBoxType() 
+					stb = '1'
+				elif box in ('sf8008m'):
+					box = 'sf8008m'
+					urlbox = getBoxType() 
+					stb = '1'    					
 			else:   
 				stb = 'no Image for this Box on this Side'    
 		return (box, urlbox, stb)
