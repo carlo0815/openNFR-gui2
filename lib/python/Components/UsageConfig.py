@@ -108,6 +108,11 @@ def InitUsageConfig():
 	config.usage.volume_step_fast = ConfigSelectionNumber(default = 3, stepwidth = 1, min = 1, max = 10, wraparound = False)
 
 	choicelist = []
+	for i in list(range(10, 310, 10)):
+		choicelist.append(("%d" % i, "%d " % i  + _("seconds")))
+	config.usage.shutdown_msgbox_timeout = ConfigSelection(default = "180", choices = choicelist)	
+	
+	choicelist = []
 	for i in list(range(1, 11)):
 		choicelist.append(("%d" % i, ngettext("%d second", "%d seconds", i) % i))
 	config.usage.infobar_timeout = ConfigSelection(default = "5", choices = [("0", _("No timeout"))] + choicelist)
