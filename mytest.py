@@ -22,6 +22,10 @@ if boxtype in ('dm500hd','dm500hdv2','dm520','dm525','dm7020hd','dm7020hdv2','dm
 	os.system("cp /usr/lib/enigma2/python/Plugins/Extensions/Infopanel/images/dreambox /usr/share/bootlogo.mvi")		
 from traceback import print_exc
 
+profile("Geolocation")
+import Tools.Geolocation
+Tools.Geolocation.InitGeolocation()
+
 profile("SetupDevices")
 import Components.SetupDevices
 Components.SetupDevices.InitSetupDevices()
