@@ -16,7 +16,7 @@ def NFR4XBootMainEx(source, target, installsettings, bootquest, zipdelete, getim
 	media_nfr_target = mediahome + target
 	list_one = ['rm -r ' + media_nfr_target + dev_null,
 				'mkdir ' + media_nfr_target + dev_null, 
-				'chmod -R 0o777 ' + media_nfr_target]
+				'chmod -R 0777 ' + media_nfr_target]
 
 	for command in list_one:
 		os.system(command)
