@@ -585,7 +585,7 @@ class NFR4XBootImageChoose(Screen):
 			return
 		else:
 			if choice[1] == 'rmnfr4xboot':
-				f = file('/etc/fstab','r')
+				f = open('/etc/fstab','r')
 				lines = f.readlines()
 				f.close()
 				print("lines:", lines)
@@ -593,7 +593,7 @@ class NFR4XBootImageChoose(Screen):
 					if "/media/nfr4xboot" in line:
 						lines.remove(line)
 				os.system("/etc/fstab")
-				f = file('/etc/fstab','w')  
+				f = open('/etc/fstab','w')  
 				for l in lines:
 					f.write(l)
 				f.close()
