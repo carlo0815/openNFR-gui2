@@ -801,6 +801,7 @@ AC_CONFIG_FILES([Makefile
 	data/extensions/Makefile
 	data/keymaps/Makefile
 	data/7segment/Makefile
+	data/defaults/Makefile	
 	data/displaytext/Makefile
 	data/display96/Makefile
 	data/display96/lcdskins/Makefile
