@@ -499,11 +499,12 @@ class EPGList(HTMLComponent, GUIComponent):
 				else:
 					itemHeight = 54 # some default (270/5)
 			if self.NumberOfRows:
-				itemHeight = self.listHeight / self.NumberOfRows
-				self.l.setItemHeight(itemHeight)
-				self.instance.resize(eSize(self.listWidth, self.listHeight / itemHeight * itemHeight))
-				self.listHeight = self.instance.size().height()
-				self.listWidth = self.instance.size().width()
+					itemHeight = self.listHeight / self.NumberOfRows
+			itemHeight = int(itemHeight)
+			self.l.setItemHeight(itemHeight)
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
+			self.listHeight = self.instance.size().height()
+			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
 
 		elif self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_SINGLE or self.type == EPG_TYPE_SIMILAR:
