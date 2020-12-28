@@ -104,6 +104,8 @@ fi
 
 if [ ! -e /etc/enigma2/settings ]; then
 	touch /etc/enigma2/settings
+	echo "config.usage.menu_sort_mode=user" >> /etc/enigma2/settings
+	echo "config.usage.menu_sort_weight={'mainmenu': {'submenu': {'plugin_selection': {'sort': 60}, 'timer_menu': {'sort': 50}, 'setup_selection': {'sort': 20}, 'info_screen': {'sort': 30}, 'standby_restart_list': {'sort': 40}, 'Infopanel': {'sort': 10}, 'nfr4x_boot': {'sort': 70}}}}" >> /etc/enigma2/settings
 fi
 
 #check for default sat settings
