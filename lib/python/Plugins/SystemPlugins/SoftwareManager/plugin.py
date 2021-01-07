@@ -1539,12 +1539,12 @@ class IPKGSource(Screen):
 	def VirtualKeyBoardCallback(self, callback = None):
 		if callback is not None and len(callback):	
 			text = self["text"].getText()
-		if text:
-			fp = open(self.configfile, 'w')
-			fp.write(callback)
-			fp.flush()
-			fp.close()
-		self.close()
+			if text:
+				fp = open(self.configfile, 'w')
+				fp.write(callback)
+				fp.flush()
+				fp.close()
+			self.close()
 
 
 class PacketManager(Screen, NumericalTextInput):
