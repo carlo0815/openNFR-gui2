@@ -552,8 +552,8 @@ class NFR4XBootImageChoose(Screen):
 			if os.path.isdir(dirfile):
 				count = count + 1
 
-		if count > 12:
-			myerror = _('Sorry you can install a max of 10 images.')
+		if count > 100:
+			myerror = _('Sorry you can install a max of 98 images.')
 			self.session.open(MessageBox, myerror, MessageBox.TYPE_INFO)
 		else:
 			menulist = []
