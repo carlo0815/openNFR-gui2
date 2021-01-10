@@ -53,7 +53,7 @@ class Console(Screen):
 			lastpage = self["text"].isAtLastPage()
 			str = self["text"].getText()
 			str += _("Execution finished!!")
-			fp = file("/tmp/telnet_log.txt", 'w')
+			fp = open("/tmp/telnet_log.txt", 'w')
 			fp.write(str)
 			fp.write("\n")
 			fp.close()			
@@ -73,6 +73,6 @@ class Console(Screen):
 
 	def dataAvail(self, str):
 		lastpage = self["text"].isAtLastPage()
-		self["text"].setText(self["text"].getText() + str)
+		self["text"].setText(self["text"].getText() + str.decode('utf-8'))
 		if lastpage:
 			self["text"].lastPage()
