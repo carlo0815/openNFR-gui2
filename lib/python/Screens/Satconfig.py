@@ -895,8 +895,8 @@ class NimSetup(Screen, ConfigListScreen, ServiceStopScreen):
 			self.nimConfig.dvbt.terrestrial.value = self.originalTerrestrialRegion
 			self.nimConfig.dvbt.terrestrial.save()
 		if hasattr(self, "originalCableRegion"):
-			self.nimConfig.cable.scan_provider.value = self.originalCableRegion
-			self.nimConfig.cable.scan_provider.save()
+			self.nimConfig.dvbc.scan_provider.value = self.originalCableRegion
+			self.nimConfig.dvbc.scan_provider.save()
 		# we need to call saveAll to reset the connectedTo choices
 		self.saveAll()
 		self.restoreService(_("Zap back to service before tuner setup?"))
