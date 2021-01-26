@@ -142,7 +142,12 @@ def InitUsageConfig():
 	config.usage.menu_sort_mode = ConfigSelection(default = "default", choices = [
 		("a_z", _("alphabetical")),
 		("default", _("Default")),
-		("user", _("user defined")),])	
+		("user", _("user defined")),])
+	config.usage.plugins_sort_mode = ConfigSelection(default = "user", choices = [
+		("a_z", _("alphabetical")),
+		("default", _("Default")),
+		("user", _("user defined")),])
+	config.usage.plugin_sort_weight = ConfigDictionarySet()
 	config.usage.enable_tt_caching = ConfigYesNo(default = True)
 	
 	config.usage.tuxtxt_font_and_res = ConfigSelection(default = "TTF_SD", choices = [("X11_SD", _("Fixed X11 font (SD)")), ("TTF_SD", _("TrueType font (SD)")), ("TTF_HD", _("TrueType font (HD)")), ("TTF_FHD", _("TrueType font (full-HD)")), ("expert_mode", _("Expert mode"))])

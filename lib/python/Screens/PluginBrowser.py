@@ -1,49 +1,74 @@
 from __future__ import print_function
 from __future__ import absolute_import
-from Screens.ParentalControlSetup import ProtectedScreen
 from boxbranding import getImageVersion
-from six.moves import urllib
-import socket
 import os
-from urllib.request import urlopen
-from enigma import eConsoleAppContainer, eDVBDB
-from Screens.InputBox import PinInput
 import six
 from Screens.Screen import Screen
-from Components.ActionMap import ActionMap
-from Components.PluginComponent import plugins
-from Components.PluginList import PluginList, PluginEntryComponent, PluginCategoryComponent, PluginDownloadComponent
-from Components.Label import Label
+from Screens.ParentalControlSetup import ProtectedScreen
 from Components.Language import language
-from Components.Button import Button
+from enigma import eConsoleAppContainer, eDVBDB
+from Components.ActionMap import ActionMap, NumberActionMap
+from Components.PluginComponent import plugins
+from Components.PluginList import *
+from Components.Label import Label
+from Components.Pixmap import Pixmap
 from Components.Harddisk import harddiskmanager
 from Components.Sources.StaticText import StaticText
 from Components import Ipkg
 from Components.config import config, ConfigSubsection, ConfigYesNo, getConfigListEntry, configfile, ConfigText
+from Components.ConfigList import ConfigListScreen
 from Screens.MessageBox import MessageBox
 from Screens.ChoiceBox import ChoiceBox
 from Screens.Console import Console
+from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Plugins.Plugin import PluginDescriptor
-from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN
-from Tools.LoadPixmap import LoadPixmap
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
-from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
-from Components.ProgressBar import ProgressBar
-from Tools.BoundFunction import boundFunction
-language.addCallback(plugins.reloadPlugins)
+from Tools.Directories import resolveFilename, fileExists, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN, fileExists
+from Tools.LoadPixmap import LoadPixmap
 
-config.misc.pluginbrowser = ConfigSubsection()
-config.misc.pluginbrowser.plugin_order = ConfigText(default="")
+from time import time
 
-def getVarSpaceKb():
-	try:
-		s = statvfs('/')
-	except OSError:
-		return (0, 0)
+config.pluginfilter = ConfigSubsection()
+config.pluginfilter.kernel = ConfigYesNo(default = False)
+config.pluginfilter.drivers = ConfigYesNo(default = True)
+config.pluginfilter.extensions = ConfigYesNo(default = True)
+config.pluginfilter.po = ConfigYesNo(default = True)
+config.pluginfilter.m2k = ConfigYesNo(default = True)
+config.pluginfilter.picons = ConfigYesNo(default = True)
+config.pluginfilter.pli = ConfigYesNo(default = False)
+config.pluginfilter.security = ConfigYesNo(default = True)
+config.pluginfilter.settings = ConfigYesNo(default = True)
+config.pluginfilter.skin = ConfigYesNo(default = True)
+config.pluginfilter.display = ConfigYesNo(default = True)
+config.pluginfilter.softcams = ConfigYesNo(default = True)
+config.pluginfilter.systemplugins = ConfigYesNo(default = True)
+config.pluginfilter.vix = ConfigYesNo(default = False)
+config.pluginfilter.weblinks = ConfigYesNo(default = True)
+config.pluginfilter.userfeed = ConfigText(default = 'http://', fixed_size=False)
 
-	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
+def languageChanged():
+	plugins.clearPluginList()
+	plugins.readPluginList(resolveFilename(SCOPE_PLUGINS))
 
+def Check_Softcam():
+	found = False
+	if fileExists("/etc/enigma2/noemu"):
+		found = False
+	else:
+		for x in os.listdir('/etc'):
+			if x.find('.emu') > -1:
+				found = True
+				break;
+	return found
+
+def CreateFeedConfig():
+	fileconf = "/etc/opkg/user-feed.conf"
+	feedurl = "src/gz user-feeds %s\n" % config.pluginfilter.userfeed.value
+	f = open(fileconf, "w")
+	f.write(feedurl)
+	f.close()
+	os.system("ipkg update")
 
 class PluginBrowserSummary(Screen):
 	def __init__(self, session, parent):
@@ -68,83 +93,88 @@ class PluginBrowserSummary(Screen):
 class PluginBrowser(Screen, ProtectedScreen):
 	def __init__(self, session):
 		Screen.__init__(self, session)
+		if config.ParentalControl.configured.value:
+			ProtectedScreen.__init__(self)
 		Screen.setTitle(self, _("Plugin Browser"))
-		ProtectedScreen.__init__(self)		
+		ProtectedScreen.__init__(self)
+
 		self.firsttime = True
 
+		self.sort_mode = False
+		self.selected_plugin = None
 
-		self["key_red"] = Button(_("Remove plugins"))
-		self["key_green"] = Button(_("Download plugins"))
-		self["key_yellow"] = Button(_("PluginInstallWizard"))
-		self["key_blue"] = Button(_("PluginDeinstallWizard"))		
+		self["key_red"] = self["red"] = Label(_("Remove plugins"))
+		self["key_green"] = self["green"] = Label(_("Download plugins"))
+		self["key_yellow"] = self["yellow"] = Label(_("PluginInstallWizard"))
+		self["key_blue"] = self["blue"] = Label(_("PluginDeinstallWizard"))
+		self["key_info"] = self["key_Info"] = Label(_(""))
 
 		self.list = []
 		self["list"] = PluginList(self.list)
-		if config.usage.sort_pluginlist.value:
-			self["list"].list.sort()
 
-		self["actions"] = ActionMap(["WizardActions", "MenuActions"],
+		self["actions"] = ActionMap(["SetupActions", "WizardActions"],
 		{
-			"ok": self.save,
-			"back": self.close,
-			"menu": self.openSetup,
+			"ok": self.keyOk,
+			"back": self.keyCancel,
+			"menu": self.menu,
 		})
-		self["PluginDownloadActions"] = ActionMap(["ColorActions"],
+		self["PluginDownloadActions"] = ActionMap(["SetupActions", "ColorActions"],
 		{
 			"red": self.delete,
 			"green": self.download,
+			"blue": self.keyBlue,
 			"yellow": self.wizardinstall,
-			"blue": self.wizarddeinstall			
+			"info": self.keyInfo,	
 		})
-		self["DirectionActions"] = ActionMap(["DirectionActions"],
- 		{
- 			"moveUp": self.moveUp,
- 			"moveDown": self.moveDown
- 		})
+		self["SoftwareActions"] = ActionMap(["SetupActions", "ColorActions"],
+		{
+			"red": self.keyRed,
+			"green": self.keyGreen,
+			"yellow": self.keyYellow,
+			"blue": self.keyBlue,
+			"info": self.keyInfo,
+		})
+		self["MoveActions"] = ActionMap(["WizardActions"],
+			{
+				"left": self.keyLeft,
+				"right": self.keyRight,
+				"up": self.keyUp,
+				"down": self.keyDown,
+			}, -1
+		)
 
+		self["NumberAction"] = NumberActionMap(["NumberActions"],
+			{
+				"0": self.resetSortOrder,
+			}, -1
+		)
+
+		self["PluginDownloadActions"].setEnabled(True)
+		self["SoftwareActions"].setEnabled(False)
 		self.onFirstExecBegin.append(self.checkWarnings)
 		self.onShown.append(self.updateList)
 		self.onChangedEntry = []
 		self["list"].onSelectionChanged.append(self.selectionChanged)
 		self.onLayoutFinish.append(self.saveListsize)
-		if self.isProtected() and config.ParentalControl.servicepin[0].value:
-			self.onFirstExecBegin.append(boundFunction(self.session.openWithCallback, self.pinEntered, PinInput, pinList=[x.value for x in config.ParentalControl.servicepin], triesEntry=config.ParentalControl.retries.servicepin, title=_("Please enter the correct pin code"), windowTitle=_("Enter pin code")))
+		if config.pluginfilter.userfeed.value != "http://":
+				if not os.path.exists("/etc/opkg/user-feed.conf"):
+					CreateFeedConfig()
 
-	def isProtected(self):
-		return config.ParentalControl.setuppinactive.value and config.ParentalControl.config_sections.plugin_browser.value
-
-	def pinEntered(self, result):
-		if result is None:
-			self.closeProtectedScreen()
-		elif not result:
-			self.session.openWithCallback(self.close(), MessageBox, _("The pin code you entered is wrong."), MessageBox.TYPE_ERROR, timeout=3)
-
-	def closeProtectedScreen(self, result=None):
-		self.close(None)
-		
 	def openSetup(self):
 		from Screens.Setup import Setup
 		self.session.open(Setup, "pluginbrowsersetup")
-		
+	
 	def wizardinstall(self):
-		if os.path.isfile("/etc/opkg/secret-feed.conf"):
-			self.session.openWithCallback(self.wizardinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
-		else:
-			self.session.open(PluginInstall)
-		
-	def wizardinstallmsg(self, ret):
-		if ret == False:
-			self.session.open(PluginInstall)
-		else:
-			self.session.openWithCallback(self.callbackremove1, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
-			#self.delete()
-
-	def callbackremove1(self):
-		os.system("opkg update")
 		self.session.open(PluginInstall)
 
 	def wizarddeinstall(self):
 		self.session.open(PluginDeinstall)
+		
+	def isProtected(self):
+		return config.ParentalControl.setuppinactive.value and not config.ParentalControl.config_sections.main_menu.value and config.ParentalControl.config_sections.plugin_browser.value
+
+	def menu(self):
+		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginFilter)
 
 	def saveListsize(self):
 		listsize = self["list"].instance.size()
@@ -160,9 +190,19 @@ class PluginBrowser(Screen, ProtectedScreen):
 			p = item[0]
 			name = p.name
 			desc = p.description
+			if self.sort_mode:
+				if config.usage.plugin_sort_weight.getConfigValue(name.lower(), "hidden"):
+					self["key_yellow"].setText(_("show"))
+					self["yellow"].setText(_("show"))
+				else:
+					self["key_yellow"].setText(_("hide"))
+					self["yellow"].setText(_("hide"))
 		else:
 			name = "-"
 			desc = ""
+			if self.sort_mode:
+				self["key_yellow"].setText("")
+				self["yellow"].setText("")
 		for cb in self.onChangedEntry:
 			cb(name, desc)
 
@@ -176,71 +216,187 @@ class PluginBrowser(Screen, ProtectedScreen):
 
 	def save(self):
 		self.run()
-
+	
 	def run(self):
 		plugin = self["list"].l.getCurrentSelection()[0]
 		plugin(session=self.session)
 
-	def moveUp(self):
-		self.move(-1)
+	def keyLeft(self):
+		self.cur_idx = self["list"].getSelectedIndex()
+		self["list"].pageUp()
+		if self.sort_mode and self.selected_plugin is not None:
+			self.moveAction()
 
-	def moveDown(self):
-		self.move(1)
+	def keyRight(self):
+		self.cur_idx = self["list"].getSelectedIndex()
+		self["list"].pageDown()
+		if self.sort_mode and self.selected_plugin is not None:
+			self.moveAction()
 
-	def move(self, direction):
-			if len(self.list) > 1:
-					currentIndex = self["list"].getSelectionIndex()
-					swapIndex = (currentIndex + direction) % len(self.list)
-					if currentIndex == 0 and swapIndex != 1:
-							self.list = self.list[1:] + [self.list[0]]
-					elif swapIndex == 0 and currentIndex != 1:
-							self.list = [self.list[-1]] + self.list[:-1]
-					else:
-							self.list[currentIndex], self.list[swapIndex] = self.list[swapIndex], self.list[currentIndex]
-					self["list"].l.setList(self.list)
-					if direction == 1:
-							self["list"].down()
-					else:
-							self["list"].up()
-					plugin_order = []
-					for x in self.list:
-							plugin_order.append(x[0].path[24:])
-					config.misc.pluginbrowser.plugin_order.value = ",".join(plugin_order)
-					config.misc.pluginbrowser.plugin_order.save()	
+	def keyDown(self):
+		self.cur_idx = self["list"].getSelectedIndex()
+		self["list"].down()
+		if self.sort_mode and self.selected_plugin is not None:
+			self.moveAction()
+
+	def keyUp(self):
+		self.cur_idx = self["list"].getSelectedIndex()
+		self["list"].up()
+		if self.sort_mode and self.selected_plugin is not None:
+			self.moveAction()
+
+	def moveAction(self):
+		entry = self.list.pop(self.cur_idx)
+		newpos = self["list"].getSelectedIndex()
+		self.list.insert(newpos, entry)
+		self["list"].l.setList(self.list)
+
+	def keyYellow(self):
+		if self.sort_mode:
+			plugin = self["list"].l.getCurrentSelection()[0]
+			hidden = config.usage.plugin_sort_weight.getConfigValue(plugin.name.lower(), "hidden") or 0
+			if hidden:
+				config.usage.plugin_sort_weight.removeConfigValue(plugin.name.lower(), "hidden")
+				self["key_yellow"].setText(_("hide"))
+				self["yellow"].setText(_("hide"))
+			else:
+				config.usage.plugin_sort_weight.changeConfigValue(plugin.name.lower(), "hidden", 1)
+				self["key_yellow"].setText(_("show"))
+				self["yellow"].setText(_("show"))
+
+	def keyBlue(self):
+		self.wizarddeinstall()
+
+	def keyInfo(self):
+		if config.usage.plugins_sort_mode.value == "user":
+			self.toggleSortMode()
+
+	def keyRed(self):
+		pass
+
+	def keyCancel(self):
+		if self.sort_mode:
+			self.toggleSortMode()
+		self.close()
+
+	def keyGreen(self):
+		if config.usage.plugins_sort_mode.value == "user" and self.sort_mode:
+			self.keyOk()
+
+	def keyOk(self):
+		if self.sort_mode and len(self.list):
+			plugin = self["list"].l.getCurrentSelection()[0]
+			select = False
+			if self.selected_plugin is None:
+				select = True
+			elif  self.selected_plugin != plugin:
+				select = True
+			if not select:
+				self.selected_plugin = None
+			idx = 0
+			for x in self.list:
+				if plugin == x[0] and select == True:
+					self.list.pop(idx)
+					self.list.insert(idx, PluginEntryComponentSelected(x[0], self.listWidth))
+					self.selected_plugin = plugin
+					break
+				elif plugin == x[0] and select == False:
+					self.list.pop(idx)
+					self.list.insert(idx, PluginEntryComponent(x[0], self.listWidth))
+					self.selected_plugin = None
+					break
+				idx += 1
+			if self.selected_plugin is not None:
+				self["key_green"].setText(_("Move mode off"))
+				self["green"].setText(_("Move mode off"))
+			else:
+				self["key_green"].setText(_("Move mode on"))
+				self["green"].setText(_("Move mode on"))
+			self["list"].l.setList(self.list)
+		elif len(self.list):
+			self.save()
+
+	def resetSortOrder(self, key = None):
+		config.usage.plugin_sort_weight.value = {}
+		config.usage.plugin_sort_weight.save()
+		self.updateList()
+
+	def toggleSortMode(self):
+		if self.sort_mode:
+			self.sort_mode = False
+			i = 10
+			idx = 0
+			for x in self.list:
+				config.usage.plugin_sort_weight.changeConfigValue(x[0].name.lower(), "sort", i)
+				if self.selected_plugin is not None:
+					if x[0] == self.selected_plugin:
+						self.list.pop(idx)
+						self.list.insert(idx, PluginEntryComponent(x[0], self.listWidth))
+						self.selected_plugin = None
+				i += 10
+				idx += 1
+			config.usage.plugin_sort_weight.save()
+			self.updateList()
+		else:
+			self.sort_mode = True
+			self.updateList()
 
 	def updateList(self):
-			self.list = []
-			pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)[:]
-			for x in config.misc.pluginbrowser.plugin_order.value.split(","):
-					plugin = list(plugin for plugin in pluginlist if plugin.path[24:] == x)
-					if plugin:
-							self.list.append(PluginEntryComponent(plugin[0], self.listWidth))
-							pluginlist.remove(plugin[0])
-			self.list = self.list + [PluginEntryComponent(plugin, self.listWidth) for plugin in pluginlist]
-			self["list"].l.setList(self.list)
-
+		self.pluginlist = plugins.getPlugins(PluginDescriptor.WHERE_PLUGINMENU)
+		empty_sort_order = len(config.usage.plugin_sort_weight.value) or False
+		self.list = []
+		i = 10
+		for plugin in self.pluginlist:
+			plugin.listweight = config.usage.plugin_sort_weight.getConfigValue(plugin.name.lower(), "sort") or i
+			if self.sort_mode or not config.usage.plugin_sort_weight.getConfigValue(plugin.name.lower(), "hidden"):
+				self.list.append(PluginEntryComponent(plugin, self.listWidth))
+			i += 10
+		if config.usage.plugins_sort_mode.value == "a_z" or (not empty_sort_order and config.usage.plugins_sort_mode.value == "user"):
+			self.list.sort(key=lambda p_name : p_name[0].name.lower())
+		elif config.usage.plugins_sort_mode.value == "user":
+			self.list.sort(key=lambda listweight : listweight[0].listweight)
+		self["list"].l.setList(self.list)
+		if self.sort_mode:
+			self["key_info"].setText(_("Edit mode off"))
+			self["key_Info"].setText(_("Edit mode off"))
+			self["key_blue"].setText(_("PluginDeinstallWizard"))
+			self["blue"].setText(_("PluginDeinstallWizard"))
+			self["key_green"].setText(_("Move mode off"))
+			self["green"].setText(_("Move mode off"))
+			self["key_red"].setText("")
+			self["red"].setText("")
+			self["SoftwareActions"].setEnabled(True)
+			self["PluginDownloadActions"].setEnabled(False)
+			if self.selected_plugin:
+				self["key_green"].setText(_("Move mode off"))
+				self["green"].setText(_("Move mode off"))
+			else:
+				self["key_green"].setText(_("Move mode on"))
+				self["green"].setText(_("Move mode on"))
+		else:
+			if config.usage.plugins_sort_mode.value == "user":
+				self["key_info"].setText(_("Edit mode on"))
+				self["key_Info"].setText(_("Edit mode on"))
+				self["key_blue"].setText(_("PluginDeinstallWizard"))
+				self["blue"].setText(_("PluginDeinstallWizard"))
+			else:
+				self["key_info"].setText("")
+				self["key_Info"].setText("")
+				self["key_blue"].setText("")
+				self["blue"].setText("")
+			self["SoftwareActions"].setEnabled(False)
+			self["PluginDownloadActions"].setEnabled(True)
+			self["key_yellow"].setText("")
+			self["yellow"].setText("PluginInstallWizard")
+			self["key_red"].setText(_("Remove plugins"))
+			self["red"].setText(_("Remove plugins"))
+			self["key_green"].setText(_("Download plugins"))
+			self["green"].setText(_("Download plugins"))
 
 	def delete(self):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.REMOVE)
 
 	def download(self):
-		if os.path.isfile("/etc/opkg/secret-feed.conf"):
-			self.session.openWithCallback(self.downloadinstallmsg, MessageBox, _("You have installed Softcamfeed, with this Ci+ Installation will be broken!\n\n You will deinstall Softcamfeed manually?"), MessageBox.TYPE_YESNO, timeout = 7, default = False)
-		else:
-			self.download1()
-		
-	def downloadinstallmsg(self, ret):
-		if ret == False:
-			self.download1()
-		else:
-			self.session.openWithCallback(self.callbackremove, Console, cmdlist= ["/usr/bin/opkg remove softcam-feed-universal | rm /etc/opkg/secret-feed.conf "], closeOnSuccess = True)
-		#self.delete()	
-
-	def callbackremove(self):
-		os.system("opkg update")
-		self.download1()
-
-	def download1(self):
 		self.session.openWithCallback(self.PluginDownloadBrowserClosed, PluginDownloadBrowser, PluginDownloadBrowser.DOWNLOAD, self.firsttime)
 		self.firsttime = False
 
@@ -260,14 +416,19 @@ class PluginBrowser(Screen, ProtectedScreen):
 class PluginDownloadBrowser(Screen):
 	DOWNLOAD = 0
 	REMOVE = 1
+	UPDATE = 2
 	PLUGIN_PREFIX = 'enigma2-plugin-'
+	PLUGIN_PREFIX2 = []
 	lastDownloadDate = None
 
 	def __init__(self, session, type = 0, needupdate = True):
 		Screen.__init__(self, session)
+		Screen.setTitle(self, _("Download plugins"))
 
 		self.type = type
 		self.needupdate = needupdate
+		self.createPluginFilter()
+		self.LanguageList = language.getLanguageListSelection()
 
 		self.container = eConsoleAppContainer()
 		self.container.appClosed.append(self.runFinished)
@@ -284,9 +445,10 @@ class PluginDownloadBrowser(Screen):
 		self.reload_settings = False
 		self.check_settings = False
 		self.check_bootlogo = False
-		self['spaceused'] = ProgressBar()
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
+		self.onChangedEntry = []
+		self["list"].onSelectionChanged.append(self.selectionChanged)
 
 		if self.type == self.DOWNLOAD:
 			self["text"] = Label(_("Downloading plugin information. Please wait..."))
@@ -295,7 +457,7 @@ class PluginDownloadBrowser(Screen):
 
 		self.run = 0
 		self.remainingdata = ""
-		self["actions"] = ActionMap(["WizardActions"],
+		self["actions"] = ActionMap(["WizardActions"], 
 		{
 			"ok": self.go,
 			"back": self.requestClose,
@@ -304,12 +466,63 @@ class PluginDownloadBrowser(Screen):
 			self.ipkg = '/usr/bin/opkg'
 			self.ipkg_install = self.ipkg + ' install --force-overwrite'
 			self.ipkg_remove =  self.ipkg + ' remove --autoremove --force-depends'
-			self.ipkg_install1 = self.ipkg_install + ' --force-depends'
 		else:
 			self.ipkg = 'ipkg'
 			self.ipkg_install = 'ipkg install --force-overwrite -force-defaults'
-			self.ipkg_remove =  self.ipkg + ' remove --autoremove --force-depends'
-			self.ipkg_install1 = self.ipkg_install + ' --force-depends'
+			self.ipkg_remove =  self.ipkg + ' remove'
+
+	def createSummary(self):
+		return PluginBrowserSummary
+
+	def selectionChanged(self):
+		item = self["list"].getCurrent()
+		try:
+			if isinstance(item[0], str): # category
+				name = item[0]
+				desc = ""
+			else:
+				p = item[0]
+				name = item[1][0:8][7]
+				desc = p.description
+		except:
+			name = ""
+			desc = ""
+		for cb in self.onChangedEntry:
+			cb(name, desc)
+
+	def createPluginFilter(self):
+		#Create Plugin Filter
+		self.PLUGIN_PREFIX2 = []
+		if config.pluginfilter.drivers.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'drivers')
+		if config.pluginfilter.extensions.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'extensions')
+		if config.pluginfilter.po.value:
+			self.PLUGIN_PREFIX2.append('enigma2-locale-')
+		if config.pluginfilter.m2k.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'm2k')
+		if config.pluginfilter.picons.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'picons')
+		if config.pluginfilter.pli.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'pli')
+		if config.pluginfilter.security.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'security')
+		if config.pluginfilter.settings.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'settings')
+		if config.pluginfilter.skin.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'skin')
+		if config.pluginfilter.display.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'display')
+		if config.pluginfilter.softcams.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'softcams')
+		if config.pluginfilter.systemplugins.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'systemplugins')
+		if config.pluginfilter.vix.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'vix')
+		if config.pluginfilter.weblinks.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'weblinks')
+		if config.pluginfilter.kernel.value:
+			self.PLUGIN_PREFIX2.append('kernel-module-')
 
 	def go(self):
 		sel = self["list"].l.getCurrentSelection()
@@ -363,7 +576,7 @@ class PluginDownloadBrowser(Screen):
 			self.doInstall(self.installFinished, self["list"].l.getCurrentSelection()[0].name + ' ' + extra)
 		else:
 			self.resetPostInstall()
-
+				
 	def runInstall(self, val):
 		if val:
 			if self.type == self.DOWNLOAD:
@@ -404,16 +617,21 @@ class PluginDownloadBrowser(Screen):
 				else:
 					self.runSettingsInstall()
 			elif self.type == self.REMOVE:
-				self.doRemove(self.installFinished, self["list"].l.getCurrentSelection()[0].name + " --force-remove --force-depends")
+				if self["list"].l.getCurrentSelection()[0].name.startswith("bootlogo-"):
+					self.doRemove(self.installFinished, self["list"].l.getCurrentSelection()[0].name + " --force-remove --force-depends")
+				else:
+					self.doRemove(self.installFinished, self["list"].l.getCurrentSelection()[0].name)
 
 	def doRemove(self, callback, pkgname):
-		self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_remove + Ipkg.opkgExtraDestinations() + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
+		if pkgname.startswith('kernel-module-') or pkgname.startswith('enigma2-locale-'):
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_remove + Ipkg.opkgExtraDestinations() + " " + pkgname, "sync"], closeOnSuccess = True)
+		else:
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_remove + Ipkg.opkgExtraDestinations() + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def doInstall(self, callback, pkgname):
-		if "mgcamd" in pkgname or "scam" in pkgname or "gbox" in pkgname:
-			print ("install mgcamd1")
-			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install1 + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
-		else: 
+		if pkgname.startswith('kernel-module-') or pkgname.startswith('enigma2-locale-'):
+			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + pkgname, "sync"], closeOnSuccess = True)
+		else:
 			self.session.openWithCallback(callback, Console, cmdlist = [self.ipkg_install + " " + self.PLUGIN_PREFIX + pkgname, "sync"], closeOnSuccess = True)
 
 	def runSettingsRemove(self, val):
@@ -427,50 +645,25 @@ class PluginDownloadBrowser(Screen):
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
 
-	def ConvertSize(self, size):
-		size = int(size)
-		if size >= 1073741824:
-			Size = '%0.2f TB' % (size / 1073741824.0)
-		elif size >= 1048576:
-			Size = '%0.2f GB' % (size / 1048576.0)
-		elif size >= 1024:
-			Size = '%0.2f MB' % (size / 1024.0)
-		else:
-			Size = '%0.2f KB' % size
-		return str(Size)
-
 	def setWindowTitle(self):
 		if self.type == self.DOWNLOAD:
-			diskSpace = getVarSpaceKb()
-			percFree = int(diskSpace[0] / diskSpace[1] * 100)
-			percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
-			self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'),
-			_('Free'),
-			self.ConvertSize(int(diskSpace[0])),
-			percFree))
-			self['spaceused'].setValue(percUsed)
+			self.setTitle(_("Install plugins"))
 		elif self.type == self.REMOVE:
-			diskSpace = getVarSpaceKb()
-			percFree = int(diskSpace[0] / diskSpace[1] * 100)
-			percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
-			self.setTitle('%s - %s: %s (%d%%)' % (_('Remove plugins'),
-			_('Free'),
-			self.ConvertSize(int(diskSpace[0])),
-			percFree))
-			self['spaceused'].setValue(percUsed)
+			self.setTitle(_("Remove plugins"))
 
 	def startIpkgListInstalled(self, pkgname = PLUGIN_PREFIX + '*'):
-		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed '%s'" % pkgname)
+		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list_installed")
 
 	def startIpkgListAvailable(self):
-		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list '" + self.PLUGIN_PREFIX + "*'")
-
+		self.container.execute(self.ipkg + Ipkg.opkgExtraDestinations() + " list")
+		
 	def startRun(self):
 		listsize = self["list"].instance.size()
 		self["list"].instance.hide()
 		self.listWidth = listsize.width()
 		self.listHeight = listsize.height()
 		if self.type == self.DOWNLOAD:
+			self.type = self.UPDATE
 			self.container.execute(self.ipkg + " update")
 		elif self.type == self.REMOVE:
 			self.run = 1
@@ -488,7 +681,7 @@ class PluginDownloadBrowser(Screen):
 		except:
 			pass
 		for plugin in self.pluginlist:
-			if plugin[3] == self["list"].l.getCurrentSelection()[0].name:
+			if plugin[3] == self["list"].l.getCurrentSelection()[0].name or plugin[0] == self["list"].l.getCurrentSelection()[0].name:
 				self.pluginlist.remove(plugin)
 				break
 		self.plugins_changed = True
@@ -510,24 +703,14 @@ class PluginDownloadBrowser(Screen):
 		self.remainingdata = ""
 		if self.run == 0:
 			self.run = 1
-			if self.type == self.DOWNLOAD:
+			if self.type == self.UPDATE:
+				self.type = self.DOWNLOAD
 				self.startIpkgListInstalled()
 		elif self.run == 1 and self.type == self.DOWNLOAD:
 			self.run = 2
-			from Components import opkg
-			pluginlist = []
-			self.pluginlist = pluginlist
-			for plugin in opkg.enumPlugins(self.PLUGIN_PREFIX):
-				if plugin[0] not in self.installedplugins and ((not config.pluginbrowser.po.value and not plugin[0].endswith('-po')) or config.pluginbrowser.po.value) and ((not config.pluginbrowser.src.value and not plugin[0].endswith('-src')) or config.pluginbrowser.src.value):
-					pluginlist.append(plugin + (plugin[0][15:],))
-			if pluginlist:
-				pluginlist.sort()
-				self.updateList()
-				self["list"].instance.show()
-			else:
-				self["text"].setText(_("No new plugins found"))
+			self.startIpkgListAvailable()
 		else:
-			if self.pluginlist:
+			if len(self.pluginlist) > 0:
 				self.updateList()
 				self["list"].instance.show()
 			else:
@@ -536,10 +719,10 @@ class PluginDownloadBrowser(Screen):
 
 	def dataAvail(self, str):
 		str = six.ensure_str(str)
-		if self.type == self.DOWNLOAD and ('wget returned 1' or 'wget returned 255' or '404 Not Found') in str:
+		if self.type == self.DOWNLOAD and str.find('404 Not Found') >= 0:
+			self["text"].setText(_("Sorry feeds are down for maintenance"))
 			self.run = 3
 			return
-
 		#prepend any remaining data from the previous call
 		str = self.remainingdata + str
 		#split in lines
@@ -564,21 +747,32 @@ class PluginDownloadBrowser(Screen):
 			self.session.openWithCallback(self.runBootlogoRemove, MessageBox, _('You already have a bootlogo installed,\nwould you like to remove\n"%s"?') % self.remove_bootlogo_name)
 			return
 
-		if self.run == 1:
-			for x in lines:
-				plugin = x.split(" - ", 2)
-				# 'opkg list_installed' only returns name + version, no description field
-				if len(plugin) >= 2:
-					if not plugin[0].endswith('-dev') and not plugin[0].endswith('-staticdev') and not plugin[0].endswith('-dbg') and not plugin[0].endswith('-doc'):
-						if plugin[0] not in self.installedplugins:
-							if self.type == self.DOWNLOAD and ((not config.pluginbrowser.po.value and not plugin[0].endswith('-po')) or config.pluginbrowser.po.value) and ((not config.pluginbrowser.src.value and not plugin[0].endswith('-src')) or config.pluginbrowser.src.value):
-								self.installedplugins.append(plugin[0])
+		for x in lines:
+			plugin = x.split(" - ", 2)
+			# 'opkg list_installed' only returns name + version, no description field
+			if len(plugin) >= 1:
+				if not plugin[0].endswith('-dev') and not plugin[0].endswith('-staticdev') and not plugin[0].endswith('-dbg') and not plugin[0].endswith('-doc') and not plugin[0].endswith('-src') and not plugin[0].endswith('-meta'):
+					# Plugin filter
+					for s in self.PLUGIN_PREFIX2:
+						if plugin[0].startswith(s):
+							if self.run == 1 and self.type == self.DOWNLOAD:
+								if plugin[0] not in self.installedplugins:
+									self.installedplugins.append(plugin[0])
 							else:
-								if len(plugin) == 2:
-									plugin.append('')
-								plugin.append(plugin[0][15:])
-								self.pluginlist.append(plugin)
-			self.pluginlist.sort()
+								if plugin[0] not in self.installedplugins:
+									if len(plugin) == 2:
+										# 'opkg list_installed' does not return descriptions, append empty description
+										if plugin[0].startswith('enigma2-locale-'):
+											lang = plugin[0].split('-')
+											if len(lang) > 3:
+												plugin.append(lang[2] + '-' + lang[3])
+											else:
+												plugin.append(lang[2])
+										else:
+											plugin.append('')
+									plugin.append(plugin[0][15:])
+
+									self.pluginlist.append(plugin)
 
 	def updateList(self):
 		_list = []
@@ -587,14 +781,47 @@ class PluginDownloadBrowser(Screen):
 		verticallineIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "icons/verticalline-plugins.png"))
 
 		self.plugins = {}
+
+		if self.type == self.UPDATE:
+			self.list = _list
+			self["list"].l.setList(_list)
+			return
+
 		for x in self.pluginlist:
 			split = x[3].split('-', 1)
-			if len(split) < 2:
-				continue
+			if x[0][0:14] == 'kernel-module-':
+				split[0] = "kernel modules"
+			elif x[0][0:15] == 'enigma2-locale-':
+				split[0] = "languages"
+
 			if split[0] not in self.plugins:
 				self.plugins[split[0]] = []
 
-			self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))
+			if split[0] == "kernel modules":
+				self.plugins[split[0]].append((PluginDescriptor(name = x[0], description = x[2], icon = verticallineIcon), x[0][14:], x[1]))
+			elif split[0] == "languages":
+				for t in self.LanguageList:
+					if len(x[2])>2:
+						tmpT = t[0].lower()
+						tmpT = tmpT.replace('_', '-')
+						if tmpT == x[2]:
+							countryIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "countries/" + t[0] + ".png"))
+							if countryIcon is None:
+								countryIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "countries/missing.png"))
+							self.plugins[split[0]].append((PluginDescriptor(name = x[0], description = x[2], icon = countryIcon), t[1], x[1]))
+							break
+					else:
+						if t[0][:2] == x[2] and t[0][3:] != 'GB':
+							countryIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "countries/" + t[0] + ".png"))
+							if countryIcon is None:
+								countryIcon = LoadPixmap(resolveFilename(SCOPE_ACTIVE_SKIN, "countries/missing.png"))
+							self.plugins[split[0]].append((PluginDescriptor(name = x[0], description = x[2], icon = countryIcon), t[1], x[1]))
+							break
+							
+			else:
+				if len(split) < 2:
+					continue
+				self.plugins[split[0]].append((PluginDescriptor(name = x[3], description = x[2], icon = verticallineIcon), split[1], x[1]))
 
 		temp = list(self.plugins.keys())
 		if config.usage.sort_pluginlist.value:
@@ -605,6 +832,116 @@ class PluginDownloadBrowser(Screen):
 				_list.extend([PluginDownloadComponent(plugin[0], plugin[1], plugin[2], self.listWidth) for plugin in self.plugins[x]])
 			else:
 				_list.append(PluginCategoryComponent(x, expandableIcon, self.listWidth))
-			self.list = _list
-			self["list"].l.setList(_list)
-		self["text"] = Label(_("Downloading plugin information complete.")) 
+		self.list = _list
+		self["list"].l.setList(_list)
+
+class PluginFilter(ConfigListScreen, Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.session = session
+		self.skinName = "Setup"
+		Screen.setTitle(self, _("Plugin Filter"))
+		self["HelpWindow"] = Pixmap()
+		self["HelpWindow"].hide()
+		self["status"] = StaticText()
+		self["footnote"] = Label()
+		self["description"] = Label("")
+		self["labelExitsave"] = Label("[Exit] = " +_("Cancel") +"              [Ok] =" +_("Save"))
+
+		self.onChangedEntry = [ ]
+		self.list = []
+		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+		self.createSetup()
+
+		self["actions"] = ActionMap(["SetupActions", 'ColorActions', 'VirtualKeyboardActions'],
+		{
+			"ok": self.keySave,
+			"cancel": self.keyCancel,
+			"red": self.keyCancel,
+			"green": self.keySave,
+			"menu": self.keyCancel,
+			"showVirtualKeyboard": self.KeyText
+		}, -2)
+
+		self["key_red"] = StaticText(_("Cancel"))
+		self["key_green"] = StaticText(_("OK"))
+		if not self.selectionChanged in self["config"].onSelectionChanged:
+			self["config"].onSelectionChanged.append(self.selectionChanged)
+		self.selectionChanged()
+
+	def createSetup(self):
+		self.editListEntry = None
+		self.list = []
+		self.list.append(getConfigListEntry(_("drivers"), config.pluginfilter.drivers, _("This allows you to show drivers modules in downloads")))
+		self.list.append(getConfigListEntry(_("extensions"), config.pluginfilter.extensions, _("This allows you to show extensions modules in downloads")))
+		self.list.append(getConfigListEntry(_("languages"), config.pluginfilter.po, _("This allows you to show languages in downloads")))
+		self.list.append(getConfigListEntry(_("systemplugins"), config.pluginfilter.systemplugins, _("This allows you to show systemplugins modules in downloads")))
+		if Check_Softcam():
+			self.list.append(getConfigListEntry(_("softcams"), config.pluginfilter.softcams, _("This allows you to show softcams modules in downloads")))
+		self.list.append(getConfigListEntry(_("skin"), config.pluginfilter.skin, _("This allows you to show skin modules in downloads")))
+		self.list.append(getConfigListEntry(_("display"), config.pluginfilter.display, _("This allows you to show lcd skins in downloads")))
+		self.list.append(getConfigListEntry(_("picons"), config.pluginfilter.picons, _("This allows you to show picons modules in downloads")))
+		self.list.append(getConfigListEntry(_("settings"), config.pluginfilter.settings, _("This allows you to show settings modules in downloads")))
+		self.list.append(getConfigListEntry(_("m2k"), config.pluginfilter.m2k, _("This allows you to show m2k modules in downloads")))
+		self.list.append(getConfigListEntry(_("weblinks"), config.pluginfilter.weblinks, _("This allows you to show weblinks modules in downloads")))
+		self.list.append(getConfigListEntry(_("pli"), config.pluginfilter.pli, _("This allows you to show pli modules in downloads")))
+		self.list.append(getConfigListEntry(_("vix"), config.pluginfilter.vix, _("This allows you to show vix modules in downloads")))
+		self.list.append(getConfigListEntry(_("security"), config.pluginfilter.security, _("This allows you to show security modules in downloads")))
+		self.list.append(getConfigListEntry(_("kernel modules"), config.pluginfilter.kernel, _("This allows you to show kernel modules in downloads")))
+		self.list.append(getConfigListEntry(_("user feed url"), config.pluginfilter.userfeed, _("Please enter your personal feed URL")))
+		
+		self["config"].list = self.list
+		self["config"].setList(self.list)
+		if config.usage.sort_settings.value:
+			self["config"].list.sort()
+
+	def selectionChanged(self):
+		self["status"].setText(self["config"].getCurrent()[2])
+		self["description"].setText(self["config"].getCurrent()[2])
+
+	def changedEntry(self):
+		for x in self.onChangedEntry:
+			x()
+		self.selectionChanged()
+
+	def getCurrentEntry(self):
+		return self["config"].getCurrent()[0]
+
+	def getCurrentValue(self):
+		return str(self["config"].getCurrent()[1].getText())
+
+	def saveAll(self):
+		for x in self["config"].list:
+			x[1].save()
+		configfile.save()
+		if config.pluginfilter.userfeed.value != "http://":
+			CreateFeedConfig()
+
+	def keySave(self):
+		self.saveAll()
+		self.close()
+
+	def cancelConfirm(self, result):
+		if not result:
+			return
+		for x in self["config"].list:
+			x[1].cancel()
+		self.close()
+
+	def keyCancel(self):
+		if self["config"].isChanged():
+			self.session.openWithCallback(self.cancelConfirm, MessageBox, _("Really close without saving settings?"))
+		else:
+			self.close()
+
+	def KeyText(self):
+		sel = self['config'].getCurrent()
+		if sel:
+			self.session.openWithCallback(self.VirtualKeyBoardCallback, VirtualKeyBoard, title = self["config"].getCurrent()[0], text = self["config"].getCurrent()[1].value)
+
+	def VirtualKeyBoardCallback(self, callback = None):
+		if callback is not None and len(callback):
+			self["config"].getCurrent()[1].value = callback
+			self["config"].invalidate(self["config"].getCurrent())
+
+language.addCallback(languageChanged)
