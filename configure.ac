@@ -912,6 +912,7 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/Extensions/SocketMMI/src/Makefile
 	lib/python/Plugins/Extensions/TuxboxPlugins/Makefile
 	lib/python/Plugins/Extensions/TuxboxPlugins/meta/Makefile
+	lib/python/Plugins/Extensions/TVHeadEnd//Makefile	
 	lib/python/Plugins/Extensions/AccuWeather/Makefile
 	lib/python/Plugins/Extensions/AccuWeather/acuwheathericons/Makefile
 	lib/python/Plugins/Extensions/AccuWeather/image/Makefile
