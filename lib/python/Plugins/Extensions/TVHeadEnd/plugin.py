@@ -2,8 +2,9 @@ from __future__ import print_function
 from Screens.Screen import Screen
 from Screens.Console import Console
 from Screens.MessageBox import MessageBox
+from Tools import Notifications
 from Components.MenuList import MenuList
-from Components.ActionMap import ActionMap
+from Components.ActionMap import ActionMap, HelpableActionMap
 from Plugins.Plugin import PluginDescriptor
 from Plugins.Extensions.TVHeadEnd.TVHSatconfig import *
 from Screens.WizardLanguage import WizardLanguage
@@ -85,14 +86,32 @@ class TVHeadendSetup(Screen):
 		self.close(None)
 
 ###########################################################################
+		
+class Installcheck(Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		self.prombt()
+		
+	def prombt(self):
+		self.session.openWithCallback(self.install,MessageBox,_("This Setup-plugin need Install tvheadendplugin too. Do you want to Install it?"),  MessageBox.TYPE_YESNO, timeout = 20)
+
+	def install(self, answer):
+		if answer is True:
+			print("INSTALL")
+			cmd = "opkg update;"
+			cmd += "opkg install --force-overwrite tvheadend;"
+			self.session.open(Console, title = _("Please wait install TVHeadend-BinaryPlugin"), cmdlist = [cmd], closeOnSuccess = True)	
+		else:
+			print("NO INSTALL")		
+			self.close()
+###########################################################################
 
 def main(session, **kwargs):
 	if os.path.isfile('/usr/bin/tvheadend'):
 		print("\n[TVHeadend_Setup] start\n")	
 		session.open(TVHeadendSetup)
 	else:	
-		session.open(MessageBox, _("This Setup-plugin need Install tvheadendplugin too. Please install it from Feed!"), MessageBox.TYPE_INFO, timeout=10)
-
+		Installcheck(session)
 
 ###########################################################################
 
