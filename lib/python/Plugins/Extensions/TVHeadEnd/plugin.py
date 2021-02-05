@@ -120,5 +120,5 @@ def Plugins(**kwargs):
 			name="TVHeadend_Setup",
 			description="Setup your Tuner for TVHeadend",
 			where = PluginDescriptor.WHERE_PLUGINMENU,
-			icon="pluginLogo.png",
+			icon="logo.png",
 			fnc=main)
