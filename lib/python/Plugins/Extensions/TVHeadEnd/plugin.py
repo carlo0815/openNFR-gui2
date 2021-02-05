@@ -17,9 +17,17 @@ if os.path.isfile('/etc/init.d/tvheadend.sh'):
 	os.system("/etc/init.d/tvheadend.sh start")
 class TVHeadendSetup(Screen):
 	skin = """
-		<screen position="center,center" size="720,320" title="TVHeadend_Setup" >
-			<widget name="myMenu" position="10,10" size="720,320" scrollbarMode="showOnDemand" />
-		</screen>"""
+		<screen name="OpenNFR TVHeadend Setup" position="center,center" size="950,470" title="OpenNFR TVHeadend Setup">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
+		<!--widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="white" halign="right" transparent="1" zPosition="5">
+		<convert type="ClockToText">&gt;Format%H:%M:%S</convert>
+		</widget!-->
+		<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
+		<widget name="myMenu" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
+		</screen>
+"""
 
 	def __init__(self, session, args = 0):
 		self.session = session
