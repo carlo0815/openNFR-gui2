@@ -35,7 +35,8 @@ class TVHeadendSetup(Screen):
 		list.append(("TVHeadend Setup and Autostart every Boot", "TVHeadend_Setup"))
 		list.append(("Stop 'Autostart TVHeadend every Boot'", "TVHeadend_Stop"))
 		list.append(("Start TVHeadend", "TVHeadend_Setup1"))                
-		list.append(("Stop TVHeadend", "TVHeadend_Stop1"))                		
+		list.append(("Stop TVHeadend", "TVHeadend_Stop1"))
+		list.append(("Start TVHeadend standalone without E2", "TVHeadend_Start1"))                                  		
 		list.append((_("Exit"), "exit"))
 		
 		Screen.__init__(self, session)
@@ -60,7 +61,11 @@ class TVHeadendSetup(Screen):
 				self.close(None)                                  
 			elif returnValue is "TVHeadend_Stop1":
 				os.system("/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/tvheadend.sh stop")
-				self.close(None)                                                        		
+				self.close(None)
+			elif returnValue is "TVHeadend_Start1":
+				os.system("/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/tvheadend1.sh &")
+				os.system("killall enigma2")
+				self.close(None)                                                                                         		
 			else:
 				print("\n[TVHeadend_Setup] cancel\n")
 				self.close(None)
