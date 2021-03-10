@@ -1002,18 +1002,18 @@ class HdmiCec:
 			return 0
 
 	def sethdmipreemphasis(self):
-			if fileExists("/proc/stb/hdmi/preemphasis"):
-				try:
-					if config.hdmicec.preemphasis.value == True:
-						file = open("/proc/stb/hdmi/preemphasis", "w")
-						file.write('on')
-						file.close()
-					else:
-						file = open("/proc/stb/hdmi/preemphasis", "w")
-						file.write('off')
-						file.close()
-				except:
-					return
+		if fileExists("/proc/stb/hdmi/preemphasis"):
+			try:
+				if config.hdmicec.preemphasis.value == True:
+					file = open("/proc/stb/hdmi/preemphasis", "w")
+					file.write('on')
+					file.close()
+				else:
+					file = open("/proc/stb/hdmi/preemphasis", "w")
+					file.write('off')
+					file.close()
+			except:
+				return
 
 	def checkifPowerupWithoutWakingTv(self):
 		try:
