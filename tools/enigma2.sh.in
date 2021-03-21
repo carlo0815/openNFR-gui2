@@ -48,21 +48,27 @@ if [ -e /proc/stb/info/boxtype ]; then
 		fi
 	fi
 fi
-if [ -x @bindir@/showiframe ]; then
-	if [ -e /proc/stb/info/boxtype ]; then
-		stbcheck=`cat /proc/stb/info/boxtype | cut -c1-2`
-		if [ ! $stbcheck == "u5" ] && [ ! $stbcheck == "u4" ]; then
-			killall -9 showiframe; sleep 1
-		fi
-	else
-		killall -9 showiframe; sleep 1
-	fi
-	if [ -f @sysconfdir@/enigma2/backdrop.mvi ]; then
-		@bindir@/showiframe @sysconfdir@/enigma2/backdrop.mvi
-	elif [ -f @datadir@/backdrop.mvi ]; then
-		@bindir@/showiframe @datadir@/backdrop.mvi
-	fi
-fi
+if [ "$(grep config.misc.bootvideo /etc/enigma2/settings)" == "config.misc.bootvideo=true" ]; then
+	if [ -x /usr/bin/eplayer5 ]; then
+                /etc/init.d/bootvideo
+        fi
+else
+        if [ -x @bindir@/showiframe ]; then
+	        if [ -e /proc/stb/info/boxtype ]; then
+		        stbcheck=`cat /proc/stb/info/boxtype | cut -c1-2`
+		        if [ ! $stbcheck == "u5" ] && [ ! $stbcheck == "u4" ]; then
+			        killall -9 showiframe; sleep 1
+		        fi
+	        else
+		        killall -9 showiframe; sleep 1
+	        fi
+	        if [ -f @sysconfdir@/enigma2/backdrop.mvi ]; then
+		        @bindir@/showiframe @sysconfdir@/enigma2/backdrop.mvi
+	        elif [ -f @datadir@/backdrop.mvi ]; then
+		        @bindir@/showiframe @datadir@/backdrop.mvi
+	        fi
+        fi
+fi	
 
 # hook to execute scripts always before enigma2 start
 if [ -x @bindir@/enigma2_pre_start.sh ]; then
