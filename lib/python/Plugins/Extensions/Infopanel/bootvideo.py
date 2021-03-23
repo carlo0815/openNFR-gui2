@@ -157,7 +157,16 @@ class BootvideoSetupScreen(Screen):
 	def ok(self):
 		menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
-		config.bootvideo.booting.value = menu1
-		config.bootvideo.booting.save()	
+		menu2 = menu1[:-4]
+		os.system("rm /usr/share/bootvideo.mp4")
+		os.system("rm /etc/init.d/bootvideo")
+                if menu1 != "no Bootvideo":
+			config.misc.bootvideo.value = True                
+			os.system("cp /usr/share/enigma2/bootvideos/%s /usr/share/bootvideo.mp4" % menu1)		
+			os.system("cp /usr/share/enigma2/bootvideos/%s_bootvideo /etc/init.d/bootvideo" % menu2)
+			os.chmod("/etc/init.d/bootvideo", 0755)
+		else:
+			config.misc.bootvideo.value = False 		
+		config.misc.bootvideo.save()	
 		configfile.save()
-		self.close()
+                self.close()
