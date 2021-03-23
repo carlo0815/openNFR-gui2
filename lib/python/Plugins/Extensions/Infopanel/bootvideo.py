@@ -18,31 +18,31 @@ config.bootvideo = ConfigSubsection()
 config.bootvideo.booting = ConfigText(default = "no Bootvideo")
 
 class PanelList(MenuList):
-	if (getDesktop(0).size().width() == 1920):
-		def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 50, enableWrapAround = True):
-			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-			self.l.setFont(0, gFont("Regular", font0))
-			self.l.setFont(1, gFont("Regular", font1))
-			self.l.setItemHeight(itemHeight)
+        if (getDesktop(0).size().width() == 1920):
+	        def __init__(self, list, font0 = 32, font1 = 24, itemHeight = 50, enableWrapAround = True):
+		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+		        self.l.setFont(0, gFont("Regular", font0))
+		        self.l.setFont(1, gFont("Regular", font1))
+		        self.l.setItemHeight(itemHeight)
 	else:
-		def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 50, enableWrapAround = True):
-			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
-			self.l.setFont(0, gFont("Regular", font0))
-			self.l.setFont(1, gFont("Regular", font1))
-			self.l.setItemHeight(itemHeight)
-
+                def __init__(self, list, font0 = 24, font1 = 16, itemHeight = 50, enableWrapAround = True):	        
+		        MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
+                        self.l.setFont(0, gFont("Regular", font0))
+		        self.l.setFont(1, gFont("Regular", font1))
+		        self.l.setItemHeight(itemHeight)
+		        
 def MenuEntryItem(entry):
-	if (getDesktop(0).size().width() == 1920):
-		res = [entry]
-		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-		res.append(MultiContentEntryText(pos=(110, 5), size=(690, 40), font=0, text=entry[1]))  # menupunkt
-		return res
+        if (getDesktop(0).size().width() == 1920):
+	   res = [entry]
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
+	   res.append(MultiContentEntryText(pos=(110, 5), size=(690, 40), font=0, text=entry[1]))  # menupunkt
+	   return res
 	else:
-		res = [entry]
-		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
-		res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
-		return res
-		
+	   res = [entry]
+	   res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(100, 40), png=entry[0]))  # png vorn
+       	   res.append(MultiContentEntryText(pos=(110, 10), size=(440, 40), font=0, text=entry[1]))  # menupunkt
+	   return res
+	   
 
 def InfoEntryComponent(file):
 	png = LoadPixmap("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/" + file + ".png")
@@ -51,7 +51,8 @@ def InfoEntryComponent(file):
 
 	res = (png)
 	return res
-
+                        	   
+           
 class BootvideoSetupScreen(Screen):
 	skin = """<screen name="BootvideoSetupScreen" position="center,center" size="950,520" title="BootvideoSetupScreen">
 				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
@@ -70,75 +71,76 @@ class BootvideoSetupScreen(Screen):
 				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="key_info" render="Label" position="775,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
 				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
-		</screen>"""	
+                </screen>"""	
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		self.session = session
+                self.session = session
 		Screen.setTitle(self, _("BootvideoSetupScreen"))
-		self.Console = Console()
+                self.Console = Console()
 		self.onShown.append(self.setWindowTitle)
 		aktbootvideo = config.bootvideo.booting.value
 		self.oldbmcService = self.session.nav.getCurrentlyPlayingServiceReference()
 		self["label1"] = Label(_("now Using Bootvideo: %s") % aktbootvideo)
 		self["key_red"] = StaticText(_("Exit"))
-		self["key_green"] = StaticText(_("Save"))
+                self["key_green"] = StaticText(_("Save"))
 		self["key_info"] = StaticText(_("preview"))
 
-		vpath = "/usr/share/enigma2/bootvideos/"
-		if not os.path.exists(vpath):
-			bootvideo = []
-		else:
-			uvideo=[]
-			uvideo = os.listdir(vpath)
-			bootvideo = []
-			for xvideo in uvideo:
-				if xvideo.endswith(".mp4"):
-					bootvideo.append(xvideo)
-				elif xvideo.endswith(".mkv"):
-					bootvideo.append(xvideo)
-				elif xvideo.endswith(".mpeg"):
-					bootvideo.append(xvideo)   
+	        vpath = "/usr/share/enigma2/bootvideos/"	
+                if not os.path.exists(vpath):
+                       	bootvideo = []
+                else:
+		       	uvideo=[]
+		       	uvideo = os.listdir(vpath)
+		       	bootvideo = []
+                       	for xvideo in uvideo:
+                       	       	if xvideo.endswith(".mp4"):
+                       	       	       	bootvideo.append(xvideo)
+                       	       	elif xvideo.endswith(".mkv"):
+                       	       	       	bootvideo.append(xvideo)
+                       	       	elif xvideo.endswith(".mpeg"):
+                       	       	       	bootvideo.append(xvideo)   
 		self.list = []
 		self["actions"] = ActionMap(["OkCancelActions", "DirectionActions", "ColorActions", "MenuActions", "EPGSelectActions"],
 			{
 				"cancel": self.Exit,
 				"exit": self.Exit,
-				"red": self.Exit,
+				"red": self.Exit,                                				
 				"ok": self.ok,
 				"green": self.ok,
 				"info": self.KeyInfo,
-
+                                				
 			}, 1)
 			
-		self.Mlist = []
+                self.Mlist = []
 		self.Mlist.append(MenuEntryItem((InfoEntryComponent('no Bootvideo'), _("no Bootvideo"), 'nobootvideo')))
-		for video in bootvideo:
+                for video in bootvideo:
 			self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % video), _('%s' % video), '%s' % video)))
 
 		self.onChangedEntry = []
 		if (getDesktop(0).size().width() == 1920):
 			self["Mlist"] = PanelList([], font0=36, font1=28, itemHeight=50)
 		else:
-			self["Mlist"] = PanelList([])
+		        self["Mlist"] = PanelList([])
 		self["Mlist"].l.setList(self.Mlist)
 		self["Mlist"].onSelectionChanged.append(self.selectionChanged) 	
 		
 	def KeyInfo(self):
-		self.session.nav.stopService()
-		menu = self['Mlist'].getCurrent()[2]
+	        self.session.nav.stopService()
+	        menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
 		os.system('gst-launch-1.0 playbin uri=file:///usr/share/enigma2/bootvideos/%s' % menu1)
-		self.session.nav.playService(self.oldbmcService)
+                self.session.nav.playService(self.oldbmcService)
 
 	def KeyYellow(self):
 		self.session.open(MoveVideos)
 		
 	def KeyBlue(self):
-		self.session.open(MoveVideos_int)
+		self.session.open(MoveVideos_int)		
 
 	def setWindowTitle(self):
 		self.setTitle('%s' % (_('Bootvideo Setup')))
-
+		
+	
 	def getCurrentEntry(self):
 		if self['Mlist'].l.getCurrentSelection():
 			selection = self['Mlist'].l.getCurrentSelection()[0]
@@ -155,7 +157,16 @@ class BootvideoSetupScreen(Screen):
 	def ok(self):
 		menu = self['Mlist'].getCurrent()[2]
 		menu1 = list(menu)[7]
-		config.bootvideo.booting.value = menu1
-		config.bootvideo.booting.save()	
+		menu2 = menu1[:-4]
+		os.system("rm /usr/share/bootvideo.mp4")
+		os.system("rm /etc/init.d/bootvideo")
+                if menu1 != "no Bootvideo":
+			config.misc.bootvideo.value = True                
+			os.system("cp /usr/share/enigma2/bootvideos/%s /usr/share/bootvideo.mp4" % menu1)		
+			os.system("cp /usr/share/enigma2/bootvideos/%s_bootvideo /etc/init.d/bootvideo" % menu2)
+			os.chmod("/etc/init.d/bootvideo", 0755)
+		else:
+			config.misc.bootvideo.value = False 		
+		config.misc.bootvideo.save()	
 		configfile.save()
-		self.close()
+                self.close()
