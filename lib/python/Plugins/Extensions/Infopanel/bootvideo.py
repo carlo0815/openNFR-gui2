@@ -162,7 +162,7 @@ class BootvideoSetupScreen(Screen):
 			config.misc.bootvideo.value = True
 			os.system("cp /usr/share/enigma2/bootvideos/%s /usr/share/bootvideo.mp4" % menu1)
 			os.system("cp /usr/share/enigma2/bootvideos/%s_bootvideo /etc/init.d/bootvideo" % menu2)
-			os.chmod("/etc/init.d/bootvideo", 0755)
+			os.chmod("/etc/init.d/bootvideo", 0o755)
 		else:
 			config.misc.bootvideo.value = False
 		config.misc.bootvideo.save()
