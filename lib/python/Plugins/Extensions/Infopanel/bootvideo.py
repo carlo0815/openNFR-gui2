@@ -53,24 +53,25 @@ def InfoEntryComponent(file):
 	return res
 
 class BootvideoSetupScreen(Screen):
-	skin = """<screen name="BootvideoSetupScreen" position="center,center" size="950,520" title="BootvideoSetupScreen">
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
-				<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
-				<widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="white" halign="right" transparent="1" zPosition="5">
-				<convert type="ClockToText">&gt;Format%H:%M:%S</convert>
-				</widget>
-				<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
-				<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
-				<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
-				<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
-				<ePixmap pixmap="skin_default/buttons/key_info.png" position="735,480" size="30,30" alphatest="blend" />
-				<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="key_info" render="Label" position="775,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
-				<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
-				</screen>"""
+	skin = """
+	<screen name="BootvideoSetupScreen" position="center,center" size="950,520" title="BootvideoSetupScreen">
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/redlogo.png" position="0,380" size="950,84" alphatest="on" zPosition="1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/alliance.png" position="670,255" size="100,67" alphatest="on" zPosition="1" />
+		<ePixmap pixmap="/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/pics/opennfr_info.png" position="510,11" size="550,354" alphatest="on" zPosition="1" />
+			<widget source="global.CurrentTime" render="Label" position="450, 340" size="500,24" font="Regular;20" foregroundColor="white" halign="right" transparent="1" zPosition="5">
+			<convert type="ClockToText">&gt;Format%H:%M:%S</convert>
+			</widget>
+		<eLabel backgroundColor="un56c856" position="0,330" size="950,1" zPosition="0" />
+			<widget name="Mlist" position="10,10" size="480,300" zPosition="1" scrollbarMode="showOnDemand" backgroundColor="un251e1f20" transparent="1" />
+			<widget name="label1" position="10,340" size="490,25" font="Regular;20" transparent="1" foregroundColor="#f2e000" halign="left" />
+		<ePixmap pixmap="skin_default/buttons/red.png" position="10,480" size="30,30" alphatest="blend" />
+		<ePixmap pixmap="skin_default/buttons/green.png" position="190,480" size="30,30" alphatest="blend" />
+		<ePixmap pixmap="skin_default/buttons/key_info.png" position="735,480" size="30,30" alphatest="blend" />
+			<widget source="key_red" render="Label" position="45,482" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+			<widget source="key_green" render="Label" position="225,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+			<widget source="key_info" render="Label" position="775,483" size="140,24" zPosition="1" font="Regular;20" halign="left" backgroundColor="black" transparent="1" />
+			<widget source="session.VideoPicture" render="Pig" position="510,11" size="420,236" backgroundColor="transparent" zPosition="2" />
+	</screen>"""
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		self.session = session
@@ -161,7 +162,7 @@ class BootvideoSetupScreen(Screen):
 			config.misc.bootvideo.value = True
 			os.system("cp /usr/share/enigma2/bootvideos/%s /usr/share/bootvideo.mp4" % menu1)
 			os.system("cp /usr/share/enigma2/bootvideos/%s_bootvideo /etc/init.d/bootvideo" % menu2)
-			os.chmod("/etc/init.d/bootvideo", 0o755)
+			os.chmod("/etc/init.d/bootvideo", 0755)
 		else:
 			config.misc.bootvideo.value = False
 		config.misc.bootvideo.save()
