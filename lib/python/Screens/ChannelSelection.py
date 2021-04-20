@@ -850,6 +850,8 @@ class ChannelSelectionEPG:
 		if self.ChoiceBoxDialog:
 			self.ChoiceBoxDialog['actions'].execEnd()
 			self.session.deleteDialog(self.ChoiceBoxDialog)
+		else:
+			self.close()
 		self['actions'].setEnabled(True)
 		self['recordingactions'].setEnabled(True)
 		self['ChannelSelectEPGActions'].setEnabled(True)
