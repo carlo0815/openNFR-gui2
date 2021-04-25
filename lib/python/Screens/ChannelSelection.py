@@ -776,7 +776,7 @@ class ChannelSelectionEPG:
 			}, -1)
 		self['dialogactions'] = ActionMap(['WizardActions'],
 			{
-				'back': self.closeChoiceBoxDialog,
+				'cancel': self.closeChoiceBoxDialog,
 			})
 		self['dialogactions'].execEnd()
 
