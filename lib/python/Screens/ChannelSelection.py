@@ -776,7 +776,7 @@ class ChannelSelectionEPG:
 			}, -1)
 		self['dialogactions'] = ActionMap(['WizardActions'],
 			{
-				'cancel': self.closeChoiceBoxDialog,
+				'back': self.closeChoiceBoxDialog,
 			})
 		self['dialogactions'].execEnd()
 
@@ -850,8 +850,6 @@ class ChannelSelectionEPG:
 		if self.ChoiceBoxDialog:
 			self.ChoiceBoxDialog['actions'].execEnd()
 			self.session.deleteDialog(self.ChoiceBoxDialog)
-		else:
-			self.close()
 		self['actions'].setEnabled(True)
 		self['recordingactions'].setEnabled(True)
 		self['ChannelSelectEPGActions'].setEnabled(True)
@@ -2276,9 +2274,6 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 
 	def __init__(self, session):
 		ChannelSelectionBase.__init__(self, session)
-		ChannelSelectionEdit.__init__(self)
-		ChannelSelectionEPG.__init__(self)
-		SelectionEventInfo.__init__(self)
 		if config.usage.servicelist_mode.value == 'simple':
 			self.skinName = ["SlimChannelSelection", "SimpleChannelSelection", "ChannelSelection"]
 		else:
@@ -2290,7 +2285,9 @@ class ChannelSelection(ChannelSelectionBase, ChannelSelectionEdit, ChannelSelect
 				"keyRadio": self.toogleTvRadio,
 				"keyTV": self.toogleTvRadio,
 			})
-			
+		ChannelSelectionEdit.__init__(self)
+		ChannelSelectionEPG.__init__(self)
+		SelectionEventInfo.__init__(self)			
 		self.radioTV = 0	
 
 		self.__event_tracker = ServiceEventTracker(screen=self, eventmap=
