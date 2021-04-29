@@ -7,6 +7,7 @@ from Components.Ipkg import IpkgComponent
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from enigma import eDVBDB
 import os
+from Screens.Console import Console
 
 config.misc.installwizard = ConfigSubsection()
 config.misc.installwizard.hasnetwork = ConfigBoolean(default = False)
@@ -21,7 +22,7 @@ class InstallWizard(Screen, ConfigListScreen):
 
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
-		print ("installwizard starts")
+				print "installwizard starts"
 		self.index = args
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
@@ -31,17 +32,17 @@ class InstallWizard(Screen, ConfigListScreen):
 			config.misc.installwizard.ipkgloaded.value = False
 			modes = {0: " "}
 			self.enabled = ConfigSelection(choices = modes, default = 0)
-			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getAdapterList()]
+			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
 			is_found = False
 			if os.path.isfile("/tmp/netwizardselection"):
-				f = open('/tmp/netwizardselection', 'r')
-				adapx1 = f.read()
-				f.close()
-				adapx1 = adapx1.replace('\n','')
-				print ("adapx1:", adapx1)
-			else:
+					f = open('/tmp/netwizardselection', 'r')
+					adapx1 = f.read()
+					f.close()
+					adapx1 = adapx1.replace('\n','')
+							print "adapx1:", adapx1 
+						else:
 				adapx1 = 'eth0'
-				print ("adapx1+1:", adapx1)
+								print "adapx1+1:", adapx1
 			for x in self.adapters:
 				if adapx1 == 'eth0':
 					if iNetwork.getAdapterAttribute(adapx1, 'up'):
@@ -71,7 +72,7 @@ class InstallWizard(Screen, ConfigListScreen):
 				self.createMenu()
 		elif self.index == self.STATE_CHOISE_CHANNELLIST:
 			self.enabled = ConfigYesNo(default = True)
-			modes = {"default": _("OpenNFR List"), "scan": _("scan new")}
+			modes = {"default": _("OpenNFR List"),"scan": _("scan new")}
 			self.channellist_type = ConfigSelection(choices = modes, default = "default")
 			self.createMenu()
 
@@ -117,8 +118,15 @@ class InstallWizard(Screen, ConfigListScreen):
 			os.system("tar -xzf /etc/channel.tar.gz -C /etc/enigma2")
 			eDVBDB.getInstance().reloadServicelist()
 			eDVBDB.getInstance().reloadBouquets()
+		else:
+			cmd = "opkg update && opkg install --force-reinstall opennfr-settings;"
+			self.session.open(Console, title = _("Please wait configuring OpenNFR Channellist"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)
 		return
-	
+		
+	def reloadPlugin(self):
+		eDVBDB.getInstance().reloadServicelist()
+		eDVBDB.getInstance().reloadBouquets()
+		return
 class InstallWizardIpkgUpdater(Screen):
 	def __init__(self, session, index, info, cmd, pkg = None):
 		Screen.__init__(self, session)
