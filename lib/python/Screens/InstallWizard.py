@@ -7,6 +7,7 @@ from Components.Ipkg import IpkgComponent
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from enigma import eDVBDB
 import os
+from Screens.Console import Console
 
 config.misc.installwizard = ConfigSubsection()
 config.misc.installwizard.hasnetwork = ConfigBoolean(default = False)
@@ -38,10 +39,10 @@ class InstallWizard(Screen, ConfigListScreen):
 			        adapx1 = f.read()
 			        f.close()
 			        adapx1 = adapx1.replace('\n','')
-                        	print "adapx1:", adapx1 
-                        else:                                                				
+                        	print "adapx1:", adapx1
+                        else:
 				adapx1 = 'eth0'
-                                print "adapx1+1:", adapx1 	
+                                print "adapx1+1:", adapx1
 			for x in self.adapters:
 				if adapx1 == 'eth0':
 					if iNetwork.getAdapterAttribute(adapx1, 'up'):
@@ -110,15 +111,22 @@ class InstallWizard(Screen, ConfigListScreen):
 		self.createMenu()
 
 	def run(self):
-                if self.index == self.STATE_CHOISE_CHANNELLIST and self.enabled.value and self.channellist_type.value == "scan":
-                        os.system("rm /etc/enigma2/*.tv")
-                        os.system("rm /etc/enigma2/*.radio") 
-                        config.misc.installwizard.channellistdownloaded.value = False
+		if self.index == self.STATE_CHOISE_CHANNELLIST and self.enabled.value and self.channellist_type.value == "scan":
+			os.system("rm /etc/enigma2/*.tv")
+			os.system("rm /etc/enigma2/*.radio")
+			config.misc.installwizard.channellistdownloaded.value = False
 			os.system("tar -xzf /etc/channel.tar.gz -C /etc/enigma2")
-                        eDVBDB.getInstance().reloadServicelist()
+			eDVBDB.getInstance().reloadServicelist()
 			eDVBDB.getInstance().reloadBouquets()
+		else:
+			cmd = "opkg update && opkg install --force-reinstall opennfr-settings;"
+			self.session.open(Console, title = _("Please wait configuring OpenNFR Channellist"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)
 		return
-	
+
+	def reloadPlugin(self):
+		eDVBDB.getInstance().reloadServicelist()
+		eDVBDB.getInstance().reloadBouquets()
+		return
 class InstallWizardIpkgUpdater(Screen):
 	def __init__(self, session, index, info, cmd, pkg = None):
 		Screen.__init__(self, session)
@@ -128,7 +136,7 @@ class InstallWizardIpkgUpdater(Screen):
 		self.pkg = pkg
 		self.index = index
 		self.state = 0
-		
+
 		self.ipkg = IpkgComponent()
 		self.ipkg.addCallback(self.ipkgCallback)
 
