@@ -22,7 +22,7 @@ class InstallWizard(Screen, ConfigListScreen):
 
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
-				print "installwizard starts"
+		print "installwizard starts"
 		self.index = args
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
@@ -32,17 +32,17 @@ class InstallWizard(Screen, ConfigListScreen):
 			config.misc.installwizard.ipkgloaded.value = False
 			modes = {0: " "}
 			self.enabled = ConfigSelection(choices = modes, default = 0)
-			self.adapters = [(iNetwork.getFriendlyAdapterName(x),x) for x in iNetwork.getAdapterList()]
-			is_found = False
+			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getAdapterList()]
+			is_found = False 
 			if os.path.isfile("/tmp/netwizardselection"):
-					f = open('/tmp/netwizardselection', 'r')
-					adapx1 = f.read()
-					f.close()
-					adapx1 = adapx1.replace('\n','')
-							print "adapx1:", adapx1 
-						else:
+				f = open('/tmp/netwizardselection', 'r')
+				adapx1 = f.read()
+				f.close()
+				adapx1 = adapx1.replace('\n','')
+				print ("adapx1:", adapx1)
+			else:
 				adapx1 = 'eth0'
-								print "adapx1+1:", adapx1
+				print "(adapx1+1:", adapx1)
 			for x in self.adapters:
 				if adapx1 == 'eth0':
 					if iNetwork.getAdapterAttribute(adapx1, 'up'):
@@ -72,7 +72,7 @@ class InstallWizard(Screen, ConfigListScreen):
 				self.createMenu()
 		elif self.index == self.STATE_CHOISE_CHANNELLIST:
 			self.enabled = ConfigYesNo(default = True)
-			modes = {"default": _("OpenNFR List"),"scan": _("scan new")}
+			modes = {"default": _("OpenNFR List"), "scan": _("scan new")}
 			self.channellist_type = ConfigSelection(choices = modes, default = "default")
 			self.createMenu()
 
