@@ -22,7 +22,7 @@ class InstallWizard(Screen, ConfigListScreen):
 
 	def __init__(self, session, args = None):
 		Screen.__init__(self, session)
-		print "installwizard starts"
+		print ("installwizard starts")
 		self.index = args
 		self.list = []
 		ConfigListScreen.__init__(self, self.list)
@@ -33,7 +33,7 @@ class InstallWizard(Screen, ConfigListScreen):
 			modes = {0: " "}
 			self.enabled = ConfigSelection(choices = modes, default = 0)
 			self.adapters = [(iNetwork.getFriendlyAdapterName(x), x) for x in iNetwork.getAdapterList()]
-			is_found = False 
+			is_found = False
 			if os.path.isfile("/tmp/netwizardselection"):
 				f = open('/tmp/netwizardselection', 'r')
 				adapx1 = f.read()
@@ -42,7 +42,7 @@ class InstallWizard(Screen, ConfigListScreen):
 				print ("adapx1:", adapx1)
 			else:
 				adapx1 = 'eth0'
-				print "(adapx1+1:", adapx1)
+				print ("adapx1+1:", adapx1)
 			for x in self.adapters:
 				if adapx1 == 'eth0':
 					if iNetwork.getAdapterAttribute(adapx1, 'up'):
@@ -113,7 +113,7 @@ class InstallWizard(Screen, ConfigListScreen):
 	def run(self):
 		if self.index == self.STATE_CHOISE_CHANNELLIST and self.enabled.value and self.channellist_type.value == "scan":
 			os.system("rm /etc/enigma2/*.tv")
-			os.system("rm /etc/enigma2/*.radio") 
+			os.system("rm /etc/enigma2/*.radio")
 			config.misc.installwizard.channellistdownloaded.value = False
 			os.system("tar -xzf /etc/channel.tar.gz -C /etc/enigma2")
 			eDVBDB.getInstance().reloadServicelist()
@@ -122,11 +122,12 @@ class InstallWizard(Screen, ConfigListScreen):
 			cmd = "opkg update && opkg install --force-reinstall opennfr-settings;"
 			self.session.open(Console, title = _("Please wait configuring OpenNFR Channellist"), cmdlist = [cmd], finishedCallback = self.reloadPlugin, closeOnSuccess = True)
 		return
-		
+
 	def reloadPlugin(self):
 		eDVBDB.getInstance().reloadServicelist()
 		eDVBDB.getInstance().reloadBouquets()
 		return
+
 class InstallWizardIpkgUpdater(Screen):
 	def __init__(self, session, index, info, cmd, pkg = None):
 		Screen.__init__(self, session)
@@ -136,7 +137,7 @@ class InstallWizardIpkgUpdater(Screen):
 		self.pkg = pkg
 		self.index = index
 		self.state = 0
-		
+
 		self.ipkg = IpkgComponent()
 		self.ipkg.addCallback(self.ipkgCallback)
 
