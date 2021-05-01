@@ -10917,6 +10917,9 @@ msgstr "Image Local-Online flashen"
 msgid "Flash On the fly (select a image)"
 msgstr "Image zum Flashen auswählen"
 
+msgid "Flash On the fly (select a image )"
+msgstr "Image zum Flashen auswählen"
+
 msgid "Online = Download a image and flash it"
 msgstr "Online = Image online herunterladen und flashen"
 
