@@ -270,6 +270,7 @@ class LoggingTask(Task):
 		Task.__init__(self, job, name)
 		self.log = []
 	def processOutput(self, data):
+		data = six.ensure_str(data)
 		print("[%s]" % self.name, data, end=' ')
 		self.log.append(data)
 
