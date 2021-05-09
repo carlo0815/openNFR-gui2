@@ -542,10 +542,8 @@ class FlashImage(Screen):
 			self["header"].setText(_("Flashing image successful"))
 			print "MBbootdevice: found %s" % SystemInfo["MBbootdevice"] 
 			if SystemInfo["MBbootdevice"]:
-				print "Zeile 545"
 				self["info"].setText(_("%s\nPress ok to select Multiboot") % self.imagename)
 			else:
-				print "Zeile 548"
 				self["info"].setText(_("%s\nPress ok to close") % self.imagename)
 		else:
 			self.session.openWithCallback(self.abort, MessageBox, _("Flashing image was not successful\n%s") % self.imagename, type=MessageBox.TYPE_ERROR, simple=True)
