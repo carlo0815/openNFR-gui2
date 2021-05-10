@@ -6,7 +6,7 @@ from datetime import datetime
 from enigma import eEPGCache
 
 from Screens.Screen import Screen
-from Screens import ChannelSelection
+#from Screens import ChannelSelection
 from ServiceReference import ServiceReference
 from Components.config import config, ConfigSelection, ConfigText, ConfigSubList, ConfigDateTime, ConfigClock, ConfigYesNo, getConfigListEntry
 from Components.ActionMap import NumberActionMap, ActionMap
@@ -28,6 +28,7 @@ from Screens.Setup import SetupSummary
 from RecordTimer import AFTEREVENT
 from os import statvfs
 import six
+import Screens.ChannelSelection
 
 class TimerEntry(Screen, ConfigListScreen):
 	def __init__(self, session, timer):
