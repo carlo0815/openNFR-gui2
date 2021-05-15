@@ -15,9 +15,8 @@ from Tools.Directories import pathExists, fileExists
 from Screens.PluginBrowser import PluginDownloadBrowser, PluginBrowser
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
-from __init__ import _
+from . __init__ import _
 import os
-import commands
 from enigma import getDesktop
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
 from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
