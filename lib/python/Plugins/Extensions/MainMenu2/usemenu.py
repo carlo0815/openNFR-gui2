@@ -18,7 +18,6 @@ from Screens.Standby import TryQuitMainloop
 from .__init__ import _
 from Components.Button import Button
 import os
-import commands
 from enigma import getDesktop
 from Plugins.SystemPlugins.SoftwareManager.ImageBackup import ImageBackup
 from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
