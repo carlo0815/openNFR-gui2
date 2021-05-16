@@ -10,11 +10,11 @@ from . import _
 
 def uniq(inlist):
 	uniques = []
-		for item in inlist:
-			if item not in uniques:
-				uniques.append(item)
+	for item in inlist:
+		if item not in uniques:
+			uniques.append(item)
 
-		return uniques
+	return uniques
 
 
 def get_weather_from_yahoo(location):

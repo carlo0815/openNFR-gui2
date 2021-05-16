@@ -10,8 +10,8 @@ from Screens.Screen import Screen
 from Components.Pixmap import Pixmap
 from Plugins.Plugin import PluginDescriptor
 from Tools.Directories import pathExists, fileExists
-from Weather import *
-from Search_Id import *
+from Plugins.Extensions.BMediaCenter.Weather import *
+from Plugins.Extensions.BMediaCenter.Search_Id import *
 from Screens.MessageBox import MessageBox
 from Screens.Standby import TryQuitMainloop
 from __init__ import _
@@ -50,7 +50,7 @@ class DMC_MainMenu(Screen):
 		self.session.nav.stopService()
 		global sessions
 		sessions = session
-                # Disable OSD Transparency
+# Disable OSD Transparency
 		try:
 			self.can_osd_alpha = open("/proc/stb/video/alpha", "r") and True or False
 		except:
@@ -121,7 +121,7 @@ class DMC_MainMenu(Screen):
 	def checkNetworkStateFinished(self, result, retval,extra_args=None):
 		if 'bad address' in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Your %s %s is not connected to the internet, please check your network settings and try again.") % (getMachineBrand(), getMachineName()), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
- 		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
+		elif ('wget returned 1' or 'wget returned 255' or '404 Not Found') in result:
 			self.session.openWithCallback(self.InstallPackageFailed, MessageBox, _("Sorry feeds are down for maintenance, please try again later."), type=MessageBox.TYPE_INFO, timeout=10, close_on_any_key=True)
 		else:
 			self.session.openWithCallback(self.InstallPackage, MessageBox, _('Ready to install %s ?') % self.service_name, MessageBox.TYPE_YESNO)
@@ -285,8 +285,8 @@ class DMC_MainMenu(Screen):
 				else:
 					self.session.open(MessageBox,"Error: SHOUTcast Plugin not installed ...",  MessageBox.TYPE_INFO, timeout=5)
 					self.InstallCheckSHOUT()
- 			elif selection[1] == "MC_WeatherInfo":
- 				self.session.nav.playService(self.oldbmcService)
+			elif selection[1] == "MC_WeatherInfo":
+				self.session.nav.playService(self.oldbmcService)
 				self.session.open(MeteoMain)
 			elif selection[1] == "MC_Settings":
 				from MC_Settings import MC_Settings

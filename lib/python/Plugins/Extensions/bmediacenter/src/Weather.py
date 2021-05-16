@@ -6,15 +6,19 @@ from Components.Sources.List import List
 from Components.Label import Label
 from Components.Pixmap import Pixmap
 from Tools.Directories import fileExists
-from urllib import quote
-from urllib2 import Request, urlopen, URLError, HTTPError
+from six.moves.urllib.parse import quote
+from six.moves import urllib
+from six.moves.urllib.request import urlopen, Request
+import requests
+import six
+#from urllib2 import Request, urlopen, URLError, HTTPError
 from xml.dom import minidom, Node
 from enigma import loadPic, eTimer, gFont, getDesktop
 from Components.config import config, ConfigSubsection, ConfigYesNo
 config.plugins.YahooWeather = ConfigSubsection()
 config.plugins.YahooWeather.compactskin = ConfigYesNo(default=True)
 try:
-	from Search_Id import *
+	from Plugins.Extensions.BMediaCenter.Search_Id import *
 except:
 	pass
 
@@ -141,11 +145,9 @@ class MeteoMain(Screen):
 
 	def updateInfo(self):
 		myurl = self.get_Url()
-		req = Request(myurl)
+		req =  urllib.request.Request(myurl)
 		try:
-			handler = urlopen(req)
-		except HTTPError as e:
-			maintext = 'Error: connection failed !'
+			handler = urllib.request.urlopen(req)
 		except URLError as e:
 			maintext = 'Error: Page not available !'
 		else:
@@ -264,7 +266,7 @@ class MeteoMain(Screen):
 				png = loadPic(myicon, 100, 100, 0, 0, 0, 0)
 			else:
 				icon = '/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon/%s.png' % str(weather_data['forecasts'][1]['code'])
-				 myicon = self.checkIcon(icon)		
+				myicon = self.checkIcon(icon)		
 				png = loadPic(myicon, 81, 59, 0, 0, 0, 0)					
 			self['lab22'].instance.setPixmap(png)
 			txt = self.extend_day(str(weather_data['forecasts'][2]['day']))
@@ -349,11 +351,11 @@ class MeteoMain(Screen):
 		else:
 			maintext = 'Error getting XML document!'
 
-	self['lab1'].setText(maintext)
+		self['lab1'].setText(maintext)
 
 	def xml_get_ns_yahoo_tag(self, dom, ns, tag, attrs):
 		element = dom.getElementsByTagNameNS(ns, tag)[0]
-	return self.xml_get_attrs(element, attrs)
+		return self.xml_get_attrs(element, attrs)
 
 	def xml_get_attrs(self, xml_element, attrs):
 		result = {}
@@ -540,7 +542,7 @@ class MeteoMain(Screen):
 			pass
 		else:
 			url = localfile.replace('/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter/Icon', 'http://www.mysite.net/weapic/weabig')
-			handler = urlopen(url)
+			handler = urllib.request.urlopen(url)
 			if handler:
 				content = handler.read()
 				fileout = open(localfile, 'wb')
