@@ -128,7 +128,7 @@ class User_MainMenu(Screen):
 					testl = "1" 
 		if config.plugins.um_globalsettings.Weather.value == True:
 			if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
-				from Plugins.Extensions.BMediaCenter.Weather import *
+				from Plugins.Extensions.BMediaCenter.Weather import MeteoMain
 				list.append((_("Weather"), "MeteoMain", "MenuIconWeather.png", "MenuIconWeathersw.png"))
 				if testl == "0":
 					self["text"] = Label(_("Yahoo Weather"))
