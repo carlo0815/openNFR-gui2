@@ -929,9 +929,6 @@ AC_CONFIG_FILES([Makefile
 	lib/python/Plugins/SystemPlugins/CommonInterfaceAssignment/meta/Makefile
 	lib/python/Plugins/SystemPlugins/DiseqcTester/Makefile
 	lib/python/Plugins/SystemPlugins/DiseqcTester/meta/Makefile
-	lib/python/Plugins/SystemPlugins/FastScan/Makefile
-	lib/python/Plugins/SystemPlugins/FastScan/xml/Makefile
-	lib/python/Plugins/SystemPlugins/FastScan/xml/bouq/Makefile	
 	lib/python/Plugins/SystemPlugins/FastZapSupport/Makefile
 	lib/python/Plugins/SystemPlugins/HdmiCEC/Makefile
 	lib/python/Plugins/SystemPlugins/Hotplug/Makefile
