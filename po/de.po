@@ -853,8 +853,8 @@ msgstr "Regelmäßiges lesen der EPG Daten von der %s %s erlauben."
 msgid "Allows the %s %s to store the EPG data regularly."
 msgstr "Regelmäßiges schreiben der EPG Daten von der %s %s erlauben."
 
-msgid "Allows you to adjust the amount of time the resolution infomation display on screen."
-msgstr "Erlaubt es die Zeit einzustellen für die das Fenster mit der neuen Auflösung angezeigt wird."
+msgid "Allows you to adjust the amount of time the resolution information display on screen."
+msgstr "Erlaubt es die Zeit einzustellen, für die das Fenster mit der neuen Auflösung angezeigt wird."
 
 msgid "Allows you to enable the debug logs. They contain very detailed information about everything the system does."
 msgstr "Debug Log erlauben. Das Debug Log enthält detaillierte Informationen über alles was das System macht."
@@ -6257,8 +6257,8 @@ msgstr "Wähle die Durchlaufgeschwindigkeit für Text im Display. Dies wird von 
 msgid "Set the scrolling speed of text on the front display."
 msgstr "Wähle die Durchlaufgeschwindigkeit für Text im Display"
 
-msgid "Set the time before checking video source for resolution infomation."
-msgstr "Systemzeit setzen vor Prüfung der Videoauflösung."
+msgid "Set the time before checking video source for resolution information."
+msgstr "Einstellen der Verzögerungszeit, bevor die automatische Auflösung die Videoquelle prüft."
 
 msgid "Set the time delay before hiding the infobar."
 msgstr "Wähle die Anzeigedauer von Infobar."
@@ -7401,16 +7401,34 @@ msgid "This option allows you to choose from the two channel lists that are avai
 msgstr "Diese Option gibt dir die Wahl zwischen den beiden verfügbaren Senderlisten."
 
 msgid "This option allows you to choose how to display 1080p 24Hz on your TV. (as not all TV's support these resolutions)"
-msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 24Hz Video angezeigt wird. (Niicht alle Fernseher unterstützen alle Formate)"
+msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 24Hz Video angezeigt wird. (Nicht alle Fernseher unterstützen alle Formate)"
 
 msgid "This option allows you to choose how to display 1080p 25Hz on your TV. (as not all TV's support these resolutions)"
-msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 25Hz Video angezeigt wird. (Niicht alle Fernseher unterstützen alle Formate)"
+msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 25Hz Video angezeigt wird. (Nicht alle Fernseher unterstützen alle Formate)"
 
 msgid "This option allows you to choose how to display 1080p 30Hz on your TV. (as not all TV's support these resolutions)"
-msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 30Hz Video angezeigt wird. (Niicht alle Fernseher unterstützen alle Formate)"
+msgstr "Diese Option erlaubt es einzustellen wie ein 1080p 30Hz Video angezeigt wird. (Nicht alle Fernseher unterstützen alle Formate)"
+
+msgid "This option allows you to always use e.g. 1080p50 for TV/.ts, and 1080p24/p50/p60 for videos"
+msgstr "Mit dieser Option wird, je nach Auswahl, z.B. 1080p50 für TV und Aufnahmen und 1080p24/p50/p60 für Videodateien benutzt."
+
+msgid "This option allows you to choose how to display 2160p 24Hz on your TV. (as not all TV's support these resolutions)"
+msgstr "Einstellen, wie 2160p 24Hz angezeigt werden soll (einige Fernseher unterstützen diese Auflösung nicht)."
+
+msgid "This option allows you to choose how to display 2160p 25Hz on your TV. (as not all TV's support these resolutions)"
+msgstr "Einstellen, wie 2160p 25Hz angezeigt werden soll (einige Fernseher unterstützen diese Auflösung nicht)."
+
+msgid "This option allows you to choose how to display 2160p 30Hz on your TV. (as not all TV's support these resolutions)"
+msgstr "Einstellen, wie 2160p 30Hz angezeigt werden soll (einige Fernseher unterstützen diese Auflösung nicht)."
 
 msgid "This option allows you to choose how to display 720p 24Hz on your TV. (as not all TV's support these resolutions)"
-msgstr "Diese Option erlaubt es einzustellen wie ein 720p 24Hz Video angezeigt wird. (Niicht alle Fernseher unterstützen alle Formate)"
+msgstr "Diese Option erlaubt es einzustellen wie ein 720p 24Hz Video angezeigt wird. (Nicht alle Fernseher unterstützen alle Formate)"
+
+msgid "This option allows you to choose how to display SD progressive 24Hz on your TV. (as not all TV's support these resolutions)"
+msgstr "Einstellen, wie ein 480/576p 24Hz Video angezeigt wird (einige Fernseher unterstützen nicht alle Formate)."
+
+msgid "This option allows you can config the Colordepth for UHD"
+msgstr "Stellen Sie die Farbtiefe im UHD Modus ein."
 
 msgid "This option allows you to choose how to display elapsed time. As + or -"
 msgstr "Diese Option erlaubt dir zu wählen ob die verstrichene Zeit mit + oder - angezeigt wird"
