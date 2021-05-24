@@ -405,7 +405,7 @@ class MovieContextMenu(Screen, ProtectedScreen):
 				menu.append((_("Reset playback position"), csel.do_reset))
 				menu.append((_("Rename"), csel.do_rename))
 				menu.append((_("Start offline decode"), csel.do_decode))
-				menu.append((_("Search for Covers"), csel.do_covers))				
+				#menu.append((_("Search for Covers"), csel.do_covers))				
 				# Plugins expect a valid selection, so only include them if we selected a non-dir
 				menu.extend([(p.description, boundFunction(p, session, service)) for p in plugins.getPlugins(PluginDescriptor.WHERE_MOVIELIST)])
 
@@ -1649,18 +1649,18 @@ class MovieSelection(Screen, HelpableScreen, SelectionEventInfo, InfoBarBase, Pr
 			title = _("Please enter name of the new directory"),
 			text = "")
 
-	def do_covers(self):
-		item = self.getCurrentSelection()
-		current = item[0]
-		info = item[1]
-		if info is None:
-			# Special case
-			return
-		else:
-			service = info and info.getName(current)
-			print ("service:", service)
-			from Components.SearchCovers import getCoverPath, cleanFile, BackgroundCoverScanner, fmlcMenuList, FindMovieList, FindMovieListScanPath
-			self.session.openWithCallback(self.reloadList, FindMovieList, service)
+#	def do_covers(self):
+#		item = self.getCurrentSelection()
+#		current = item[0]
+#		info = item[1]
+#		if info is None:
+#			# Special case
+#			return
+#		else:
+#			service = info and info.getName(current)
+#			print ("service:", service)
+#			from Components.SearchCovers import getCoverPath, cleanFile, BackgroundCoverScanner, fmlcMenuList, FindMovieList, FindMovieListScanPath
+#			self.session.openWithCallback(self.reloadList, FindMovieList, service)
 
 	def createDirCallback(self, name):
 		if not name:
