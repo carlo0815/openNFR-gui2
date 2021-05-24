@@ -831,33 +831,36 @@ class MovieList(GUIComponent):
 	def _moveToChrStr(self):
 		currentIndex = self.instance.getCurrentIndex()
 		found = False
-		if currentIndex < (len(self.list) - 1):
-			itemsBelow = self.list[currentIndex + 1:]
-			#first search the items below the selection
-			for index, item in enumerate(itemsBelow):
-				ref = item[0]
-				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName.startswith(self._char):
-					found = True
-					self.instance.moveSelectionTo(index + currentIndex + 1)
-					break
-				elif len(self._char) > 1 and itemName.find(self._char) >= 0:
-					found = True
-					self.instance.moveSelectionTo(index + currentIndex + 1)
-					break
-		if found == False and currentIndex > 0:
-			itemsAbove = self.list[1:currentIndex] #first item (0) points parent folder - no point to include
-			for index, item in enumerate(itemsAbove):
-				ref = item[0]
-				itemName = getShortName(item[1].getName(ref).upper(), ref)
-				if len(self._char) == 1 and itemName.startswith(self._char):
-					found = True
-					self.instance.moveSelectionTo(index + 1)
-					break
-				elif len(self._char) > 1 and itemName.find(self._char) >= 0:
-					found = True
-					self.instance.moveSelectionTo(index + 1)
-					break
+		if type(self._char) == int:
+			print("no Index")
+		else:        		
+			if currentIndex < (len(self.list) - 1):
+				itemsBelow = self.list[currentIndex + 1:]
+				#first search the items below the selection
+				for index, item in enumerate(itemsBelow):
+					ref = item[0]
+					itemName = getShortName(item[1].getName(ref).upper(), ref)
+					if len(self._char) == 1 and itemName.startswith(self._char):
+						found = True
+						self.instance.moveSelectionTo(index + currentIndex + 1)
+						break
+					elif len(self._char) > 1 and itemName.find(self._char) >= 0:
+						found = True
+						self.instance.moveSelectionTo(index + currentIndex + 1)
+						break
+			if found == False and currentIndex > 0:
+				itemsAbove = self.list[1:currentIndex] #first item (0) points parent folder - no point to include
+				for index, item in enumerate(itemsAbove):
+					ref = item[0]
+					itemName = getShortName(item[1].getName(ref).upper(), ref)
+					if len(self._char) == 1 and itemName.startswith(self._char):
+						found = True
+						self.instance.moveSelectionTo(index + 1)
+						break
+					elif len(self._char) > 1 and itemName.find(self._char) >= 0:
+						found = True
+						self.instance.moveSelectionTo(index + 1)
+						break
 
 		self._char = ''
 		if self._lbl:
