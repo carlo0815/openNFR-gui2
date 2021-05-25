@@ -223,7 +223,7 @@ class EasySetup(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_('Enable Hotkey Setup?'), config.easysetup.Hotkey, _("Choose your remote buttons.")))
 		list.append(getConfigListEntry(_('Enable Channellist Setup?'), config.easysetup.channellist, _("Choose your Channel selection config.")))
 		list.append(getConfigListEntry(_('Enable M3U Convert to Channellist Setup?'), config.easysetup.m3u, _("Install your IPTV-m3u-files into channellist.\nFirst you must coppy a M3U-List to /etc/enigma2")))
-		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
 			list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 		list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))
 		list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
@@ -334,7 +334,7 @@ class EasySetup(ConfigListScreen, Screen):
 	def run11b(self):
 		self.runed = "11b"
 		if config.wizardsetup.ipkinstall.value is True:
-			self.session.openWithCallback(self.run11e, InfopanelManagerScreen)
+			self.session.openWithCallback(self.run11c, InfopanelManagerScreen)
 		else:
 			self.run11c()  
 
