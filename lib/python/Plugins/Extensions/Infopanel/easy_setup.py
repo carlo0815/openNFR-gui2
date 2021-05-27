@@ -36,13 +36,8 @@ from Plugins.Extensions.Infopanel.iptv_convert import IPTV
 from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.UserInterfacePositioner import UserInterfacePositioner
 from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
-if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MenuSort/plugin.pyo") is True:
-	try:
-		from Plugins.Extensions.MenuSort.plugin import *
-	except:
-		pass		
 from Screens.Menu import Menu, mdom
-if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
 	config.hdmicec = ConfigSubsection()
 	config.hdmicec.enabled = ConfigYesNo(default = False) # query from this value in hdmi_cec.cpp
 	config.hdmicec.control_tv_standby = ConfigYesNo(default = True)
@@ -296,7 +291,7 @@ class EasySetup(ConfigListScreen, Screen):
 				self.run8()
 	def run8(self):
 		self.runed = "8"
-		if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.pyo") is True:
+		if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
 			self.session.openWithCallback(self.run10, HdmiCECSetupScreen)
 		else:
 			self.run9()
