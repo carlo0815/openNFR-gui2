@@ -415,7 +415,6 @@ class MovieList(GUIComponent):
 			len = ""
 
 		iconSize = 0
-
 		if switch == 'i':
 			iconSize = dataIconSize
 			iconPosX = listBeginX
