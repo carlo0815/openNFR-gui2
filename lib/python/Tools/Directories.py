@@ -443,3 +443,11 @@ def getSize(path, pattern=".*"):
 	elif os.path.isfile(path):
 		path_size = os.path.getsize(path)
 	return path_size
+
+def isPluginInstalled(pluginname, pluginfile="plugin"):
+	path, flags = defaultPaths.get(SCOPE_PLUGINS)
+	for plugintype in ["Extensions", "SystemPlugins"]:
+		for fileext in [".py", ".pyc"]:
+			fullpath = os.path.join(path, plugintype, pluginname, pluginfile + fileext)
+			if os.path.isfile(fullpath):
+				return True

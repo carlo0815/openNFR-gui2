@@ -24,7 +24,7 @@ from Screens.VirtualKeyBoard import VirtualKeyBoard
 from Plugins.Plugin import PluginDescriptor
 from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
-from Tools.Directories import resolveFilename, fileExists, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN, fileExists
+from Tools.Directories import resolveFilename, fileExists, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN, fileExists, isPluginInstalled
 from Tools.LoadPixmap import LoadPixmap
 
 from time import time

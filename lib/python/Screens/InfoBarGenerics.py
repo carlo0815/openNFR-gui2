@@ -49,7 +49,7 @@ from RecordTimer import RecordTimerEntry, parseEvent, AFTEREVENT, findSafeRecord
 from Screens.TimerEntry import TimerEntry as TimerEntry
 
 from Tools import Notifications
-from Tools.Directories import pathExists, fileExists
+from Tools.Directories import pathExists, fileExists, isPluginInstalled
 from Tools.KeyBindings import getKeyDescription
 
 from enigma import eTimer, eServiceCenter, eDVBServicePMTHandler, iServiceInformation, iPlayableService, eServiceReference, eEPGCache, eActionMap
@@ -67,6 +67,12 @@ from keyids import KEYIDS
 from Screens.Menu import MainMenu, Menu, mdom
 from Screens.Setup import Setup
 import Screens.Standby
+
+if isPluginInstalled("CoolTVGuide"):
+	COOLTVGUIDE = True
+else:
+	COOLTVGUIDE = False
+
 
 def isStandardInfoBar(self):
 	return self.__class__.__name__ == "InfoBar"
@@ -1035,7 +1041,7 @@ class InfoBarChannelSelection:
 				"openSatellites": (self.openSatellites, _("open Satellites")),
 				"openBouquetList": (self.openBouquetList, _("open Favorites")),
 #				"openFIND": (self.openFIND, _("open find service")),
-				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
+#				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
 
 				
 			})
@@ -1044,12 +1050,12 @@ class InfoBarChannelSelection:
 #		from Components.FindService import FindService
 #		self.session.open(FindService)
 
-	def showMediaCenter(self):
-		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
-			from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
-			self.session.open(DMC_MainMenu)
-		else:
-			self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+#	def showMediaCenter(self):
+#		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+#			from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
+#			self.session.open(DMC_MainMenu)
+#		else:
+#			self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 						
 	def openBouquetList(self):
@@ -1187,7 +1193,7 @@ class InfoBarMenu:
 		self["MenuActions"] = HelpableActionMap(self, "InfobarMenuActions",
 			{
 				"mainMenu": (self.mainMenu, _("Enter main menu...")),
-				"mainMenu2": (self.mainMenu2, _("Enter Easy menu...")),
+#				"mainMenu2": (self.mainMenu2, _("Enter Easy menu...")),
 				"showNetworkSetup": (self.showNetworkMounts, _("Show network mounts ...")),
 				"showSystemSetup": (self.showSystemMenu, _("Show network mounts ...")),
 				"showRFmod": (self.showRFSetup, _("Show RFmod setup...")),
@@ -1195,12 +1201,12 @@ class InfoBarMenu:
 			})
 		self.session.infobar = None
 
-	def mainMenu2(self):
-		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
-			from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
-			self.session.open(MM_MainMenu)
-		else:
-			self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+#	def mainMenu2(self):
+#		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
+#			from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
+#			self.session.open(MM_MainMenu)
+#		else:
+#			self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 
 	def mainMenu(self):
@@ -2486,7 +2492,7 @@ class InfoBarExtensions:
 		self.session.open(OSD3DSetupScreen)
 		
 	def showAutoTimerList(self):
-		if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/AutoTimer/plugin.py*"):
+		if isPluginInstalled("AutoTimer"):
 			from Plugins.Extensions.AutoTimer.plugin import main, autostart
 			from Plugins.Extensions.AutoTimer.AutoTimer import AutoTimer
 			from Plugins.Extensions.AutoTimer.AutoPoller import AutoPoller
@@ -2561,7 +2567,7 @@ class InfoBarExtensions:
 			self.session.open(EPGSearch)
 
 	def showIMDB(self):
-		if os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/IMDb/plugin.py*"):
+		if isPluginInstalled("IMDb"):
 			from Plugins.Extensions.IMDb.plugin import IMDB
 			s = self.session.nav.getCurrentService()
 			if s:
@@ -2916,8 +2922,8 @@ class InfoBarInstantRecord:
 			else:
 				self.session.openWithCallback(self.setEndtime, TimerSelection, list)
 		elif answer[1] == "timer":
-			import Screens.TimerEdit
-			self.session.open(TimerEdit.TimerEditList)
+			from Screens.TimerEdit import TimerEditList
+			self.session.open(TimerEditList)
 		elif answer[1] == "stop":
 			self.session.openWithCallback(self.stopCurrentRecording, TimerSelection, list)
 		elif answer[1] in ( "indefinitely", "manualduration", "manualendtime", "event"):

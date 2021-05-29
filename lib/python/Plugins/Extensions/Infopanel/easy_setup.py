@@ -27,6 +27,7 @@ from random import Random
 from Screens.VirtualKeyBoard import VirtualKeyBoard
 from traceback import print_exc
 from Tools.Import import my_import
+from Tools.Directories import isPluginInstalled
 from Screens.Setup import Setup, getSetupTitle
 from Screens.HddSetup import HddSetup
 from Screens.Recordings import RecordingSettings
@@ -37,7 +38,7 @@ from Screens.OpenNFR_wizard import OpenNFRWizardSetup
 from Screens.UserInterfacePositioner import UserInterfacePositioner
 from Plugins.Extensions.OpenWebif.plugin import OpenWebifConfig
 from Screens.Menu import Menu, mdom
-if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
+if isPluginInstalled("HdmiCEC"):
 	config.hdmicec = ConfigSubsection()
 	config.hdmicec.enabled = ConfigYesNo(default = False) # query from this value in hdmi_cec.cpp
 	config.hdmicec.control_tv_standby = ConfigYesNo(default = True)
@@ -218,7 +219,7 @@ class EasySetup(ConfigListScreen, Screen):
 		list.append(getConfigListEntry(_('Enable Hotkey Setup?'), config.easysetup.Hotkey, _("Choose your remote buttons.")))
 		list.append(getConfigListEntry(_('Enable Channellist Setup?'), config.easysetup.channellist, _("Choose your Channel selection config.")))
 		list.append(getConfigListEntry(_('Enable M3U Convert to Channellist Setup?'), config.easysetup.m3u, _("Install your IPTV-m3u-files into channellist.\nFirst you must coppy a M3U-List to /etc/enigma2")))
-		if os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
+		if isPluginInstalled("HdmiCEC"):
 			list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 		list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))
 		list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
@@ -291,15 +292,15 @@ class EasySetup(ConfigListScreen, Screen):
 				self.run8()
 	def run8(self):
 		self.runed = "8"
-		if config.easysetup.hdmicec.value is True and os.path.isfile("/usr/lib/enigma2/python/Plugins/SystemPlugins/HdmiCEC/plugin.py") is True:
-			self.session.openWithCallback(self.run10, HdmiCECSetupScreen)
+		if config.easysetup.hdmicec.value is True and isPluginInstalled("HdmiCEC"):
+			self.session.openWithCallback(self.run9, HdmiCECSetupScreen)
 		else:
 			self.run9()
 
-	def run9(self):
+	def run9(self, *args):
 		self.runed = "9"
 		if config.easysetup.password.value is True:
-			self.session.openWithCallback(self.run11, NFRPasswdScreen)
+			self.session.openWithCallback(self.run10, NFRPasswdScreen)
 		else:
 			self.run10()
 

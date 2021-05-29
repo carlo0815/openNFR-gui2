@@ -17,7 +17,7 @@ from GlobalActions import globalActionMap
 from Screens.ChoiceBox import ChoiceBox
 from Tools.BoundFunction import boundFunction
 from Tools.LoadPixmap import LoadPixmap
-from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN, SCOPE_PLUGINS
+from Tools.Directories import resolveFilename, SCOPE_CURRENT_SKIN, SCOPE_PLUGINS, isPluginInstalled
 from Components.MenuList import MenuList
 from Components.FileList import FileList
 from Components.Label import Label
@@ -41,11 +41,12 @@ from Screens.InputBox import PinInput
 import string
 from random import Random
 
-if path.exists("/usr/lib/enigma2/python/Plugins/Extensions/dFlash"):
+if isPluginInstalled("dFlash"):
 	from Plugins.Extensions.dFlash.plugin import dFlash
 	DFLASH = True
 else:
 	DFLASH = False
+
 import os
 import sys
 import re
@@ -83,8 +84,7 @@ config.plugins.configurationbackup.backuplocation = ConfigText(default = '/media
 config.plugins.configurationbackup.wakeup = ConfigClock(default = ((3*60) + 0) * 60) # 3:00
 config.plugins.configurationbackup.backupdirs = ConfigLocations(default=[eEnv.resolve('${sysconfdir}/enigma2/'), '/etc/network/interfaces', '/etc/wpa_supplicant.conf', '/etc/wpa_supplicant.ath0.conf', '/etc/wpa_supplicant.wlan0.conf', '/etc/resolv.conf', '/etc/default_gw', '/etc/hostname'])
 
-	
-if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.py") is True:
+if isPluginInstalled("MultiQuickButton"):
 	try:
 		from Plugins.Extensions.MultiQuickButton.plugin import *
 	except:
@@ -373,7 +373,7 @@ INFO_SKIN2 =  """<screen name="PANEL-Info2"  position="center,center" size="530,
 ###################  Max Test ###################
 class PanelList(MenuList):
 	if (getDesktop(0).size().width() == 1920):
-		def __init__(self, list, font0 = 38, font1 = 28, itemHeight = 60, enableWrapAround = True):
+		def __init__(self, list, font0 = 32, font1 = 28, itemHeight = 50, enableWrapAround = True):
 			MenuList.__init__(self, list, enableWrapAround, eListboxPythonMultiContent)
 			self.l.setFont(0, gFont("Regular", font0))
 			self.l.setFont(1, gFont("Regular", font1))
@@ -388,8 +388,8 @@ class PanelList(MenuList):
 def MenuEntryItem(entry):
 	if (getDesktop(0).size().width() == 1920):
 		res = [entry]
-		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 10), size=(100, 50), png=entry[0]))  # png vorn
-		res.append(MultiContentEntryText(pos=(110, 5), size=(690, 50), font=0, text=entry[1]))  # menupunkt
+		res.append(MultiContentEntryPixmapAlphaTest(pos=(0, 5), size=(40, 40), png=entry[0]))  # png vorn
+		res.append(MultiContentEntryText(pos=(60, 7), size=(820, 40), font=0, text=entry[1]))  # menupunkt
 		return res
 	else:
 		res = [entry]
@@ -733,7 +733,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("LogManager" ), _("Log-Manager"), ("LogManager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('DiskSpeed'), _("Disk-Speed"), 'DiskSpeed')))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('m3u-convert'), _("m3u-convert"), 'm3u-convert')))
-		if os.path.isfile("/usr/lib/enigma2/python/Plugins/Extensions/MultiQuickButton/plugin.py") is True:
+		if isPluginInstalled("MultiQuickButton"):
 			self.tlist.append(MenuEntryItem((InfoEntryComponent('MultiQuickButton'), _("MultiQuickButton"), 'MultiQuickButton')))
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
