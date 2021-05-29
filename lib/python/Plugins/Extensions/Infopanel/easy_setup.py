@@ -318,7 +318,7 @@ class EasySetup(ConfigListScreen, Screen):
         else:
             self.run10()
             
-    def run10(self):
+    def run10(self, *args):
         self.runed = "10"
         if config.easysetup.password.value is True:
             self.session.openWithCallback(self.run11,NFRPasswdScreen)
