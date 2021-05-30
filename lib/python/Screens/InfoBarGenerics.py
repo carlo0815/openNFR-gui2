@@ -1041,7 +1041,7 @@ class InfoBarChannelSelection:
 				"openSatellites": (self.openSatellites, _("open Satellites")),
 				"openBouquetList": (self.openBouquetList, _("open Favorites")),
 #				"openFIND": (self.openFIND, _("open find service")),
-#				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
+				"showMediaCenter": (self.showMediaCenter, _("open Media Center")),
 
 				
 			})
@@ -1050,12 +1050,12 @@ class InfoBarChannelSelection:
 #		from Components.FindService import FindService
 #		self.session.open(FindService)
 
-#	def showMediaCenter(self):
-#		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
-#			from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
-#			self.session.open(DMC_MainMenu)
-#		else:
-#			self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+	def showMediaCenter(self):
+		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/BMediaCenter"):
+			from Plugins.Extensions.BMediaCenter.plugin import DMC_MainMenu
+			self.session.open(DMC_MainMenu)
+		else:
+			self.session.open(MessageBox, _("The MediaCenter plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 						
 	def openBouquetList(self):
@@ -1193,7 +1193,7 @@ class InfoBarMenu:
 		self["MenuActions"] = HelpableActionMap(self, "InfobarMenuActions",
 			{
 				"mainMenu": (self.mainMenu, _("Enter main menu...")),
-#				"mainMenu2": (self.mainMenu2, _("Enter Easy menu...")),
+				"mainMenu2": (self.mainMenu2, _("Enter Easy menu...")),
 				"showNetworkSetup": (self.showNetworkMounts, _("Show network mounts ...")),
 				"showSystemSetup": (self.showSystemMenu, _("Show network mounts ...")),
 				"showRFmod": (self.showRFSetup, _("Show RFmod setup...")),
@@ -1201,12 +1201,12 @@ class InfoBarMenu:
 			})
 		self.session.infobar = None
 
-#	def mainMenu2(self):
-#		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
-#			from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
-#			self.session.open(MM_MainMenu)
-#		else:
-#			self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
+	def mainMenu2(self):
+		if  os.path.exists("/usr/lib/enigma2/python/Plugins/Extensions/MainMenu2"):
+			from Plugins.Extensions.MainMenu2.plugin import MM_MainMenu
+			self.session.open(MM_MainMenu)
+		else:
+			self.session.open(MessageBox, _("The Easy Menu plugin is not installed!\nPlease install it."), type = MessageBox.TYPE_INFO,timeout = 10 ) 
 
 
 	def mainMenu(self):
