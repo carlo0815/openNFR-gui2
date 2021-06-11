@@ -193,20 +193,23 @@ class NFRCamManager(Screen):
 
 	def Stage1Complete(self, result, retval, extra_args=None):
 		result = result
-		if "Link detected: yes"  in result:
-			from Screens.NetworkSetup import NetworkOpenvpn
-			ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
-			if isinstance(ext_ip, six.text_type):
-				ext_ip = six.ensure_str(ext_ip.encode('utf8'))
-				print(ext_ip)
-				self.AboutText1 = "Online: " + (ext_ip)
-			else:
-				self.AboutText1 = "Offline"
-			if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
-				self.AboutText2 = "openVPN is running "
-			else:
-				self.AboutText2 = "no openVPN found" 
-			listecm = ""
+		try:
+			if "Link detected: yes"  in result:
+				from Screens.NetworkSetup import NetworkOpenvpn
+				ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
+				if isinstance(ext_ip, six.text_type):
+					ext_ip = six.ensure_str(ext_ip.encode('utf8'))
+					print(ext_ip)
+					self.AboutText1 = "Online: " + (ext_ip)
+				else:
+					self.AboutText1 = "Offline"
+				if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
+					self.AboutText2 = "openVPN is running "
+				else:
+					self.AboutText2 = "no openVPN found" 
+				listecm = ""
+		except:
+			self.AboutText2 = "Link not detectet"             				
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
