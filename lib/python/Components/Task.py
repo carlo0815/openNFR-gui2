@@ -520,9 +520,14 @@ class ReturncodePostcondition(Condition):
 
 	def getErrorMessage(self, task):
 		if hasattr(task, 'log') and task.log:
-			log = b''.join(task.log).strip()
-			log = log.split(b'\n')[-3:]
-			log = b'\n'.join(log)
+			try:
+				log = b''.join(task.log).strip()
+				log = log.split(b'\n')[-3:]
+				log = b'\n'.join(log)
+			except:
+				log = ''.join(task.log).strip()
+				log = log.split('\n')[-3:]
+				log = '\n'.join(log)			
 			return log
 		else:
 			return _("Error code") + ": %s" % task.returncode
