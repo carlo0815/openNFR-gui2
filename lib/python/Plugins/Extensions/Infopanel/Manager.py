@@ -77,6 +77,7 @@ class NFRCamManager(Screen):
 		Softcam.checkconfigdir()
 		self.actcam = config.NFRSoftcam.actcam.value
 		self.camstartcmd = ""
+		self.vpncheck()
 		self.createinfo()
 		self.Timer = eTimer()
 		self.Timer.callback.append(self.listecminfo)
@@ -190,26 +191,50 @@ class NFRCamManager(Screen):
 			self.iface = 'wlan1'
 		self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
 
-
+	def vpncheck(self):
+		from Screens.NetworkSetup import NetworkOpenvpn
+		try:
+			global response			
+			response = urlopen('http://ip-api.com/csv/?fields=countryCode,city,query',timeout=5.0).read().decode('utf-8')
+			#global response
+			print("your IP: %s" % response)
+			if isinstance(response, str):
+				response = response.encode('utf8')
+		except urllib.error.URLError as e:
+			print("Url Error: %r" % e)
+			
 	def Stage1Complete(self, result, retval, extra_args=None):
 		result = result
-		try:
-			if "Link detected: yes"  in result:
-				from Screens.NetworkSetup import NetworkOpenvpn
-				ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
-				if isinstance(ext_ip, six.text_type):
-					ext_ip = six.ensure_str(ext_ip.encode('utf8'))
-					print(ext_ip)
-					self.AboutText1 = "Online: " + (ext_ip)
-				else:
-					self.AboutText1 = "Offline"
+		try:		
+			if "Link detected: yes" in result:
+				print ("response:", response)
+				self.AboutText1 = "Online: " + (response)
 				if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
-					self.AboutText2 = "openVPN is running "
+					self.AboutText2 = _("openVPN is running ")
 				else:
-					self.AboutText2 = "no openVPN found" 
-				listecm = ""
-		except:
-			self.AboutText2 = "Link not detectet"             				
+					self.AboutText2 = _("no openVPN found")
+			else:
+				self.AboutText1 = "Offline"
+		except:				
+			self.AboutText2 = "Link not detectet"                         		
+		listecm = ""
+		#try:
+	#		if "Link detected: yes"  in result:
+	#			from Screens.NetworkSetup import NetworkOpenvpn
+	#			ext_ip = six.ensure_text(urlopen('http://ip-api.com/csv/?fields=countryCode,city,query').read())
+	#			if isinstance(ext_ip, six.text_type):
+	#				ext_ip = six.ensure_str(ext_ip.encode('utf8'))
+	#				print(ext_ip)
+	#				self.AboutText1 = "Online: " + (ext_ip)
+	#			else:
+	#				self.AboutText1 = "Offline"
+	#			if os.system("ls /var/run/openvpn.*.pid 2> /dev/null") == False:
+	#				self.AboutText2 = "openVPN is running "
+	#			else:
+	#				self.AboutText2 = "no openVPN found" 
+	#			listecm = ""
+	#	except:
+	#		self.AboutText2 = "Link not detectet"             				
 		try:
 			ecmfiles = open("/tmp/ecm.info", "r")
 			for line in ecmfiles:
