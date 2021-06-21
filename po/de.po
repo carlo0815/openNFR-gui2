@@ -14626,3 +14626,12 @@ msgstr "Startzeit :"
 
 msgid "End Time :"
 msgstr "Endzeit :"
+
+msgid "openVPN is running"
+msgstr "openVPN läuft"
+
+msgid "no openVPN found"
+msgstr "kein openVPN gefunden"
+
+msgid "Link not detected"
+msgstr "Link nicht erkannt"
