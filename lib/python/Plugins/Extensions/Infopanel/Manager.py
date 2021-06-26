@@ -188,7 +188,7 @@ class NFRCamManager(Screen):
 		if wlan1.has_key('addr'):
 			self.AboutText += _("IP:") + wlan1['addr'] + "\n"
 			self.iface = 'wlan1'
-			self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
+		self.Console.ePopen("ethtool " +  self.iface + " | grep Link ", self.Stage1Complete)
 
 	def vpncheck(self):
 		from Screens.NetworkSetup import NetworkOpenvpn
