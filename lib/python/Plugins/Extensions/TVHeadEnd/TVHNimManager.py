@@ -1668,10 +1668,10 @@ def InitNimManager(nimmgr, update_slots=None):
 	root = doc.getroot()
 
 	entry = root.find("lnb")
-	for manufacturer in entry.getchildren():
+	for manufacturer in entry:
 		m={}
 		m_update = m.update
-		for product in manufacturer.getchildren():
+		for product in manufacturer:
 			p={}												#new dict empty for new product
 			p_update = p.update
 			scr=[]
@@ -1716,10 +1716,10 @@ def InitNimManager(nimmgr, update_slots=None):
 		unicablelnbproducts.update({manufacturer.get("name"):m})
 
 	entry = root.find("matrix")
-	for manufacturer in entry.getchildren():
+	for manufacturer in entry:
 		m={}
 		m_update = m.update
-		for product in manufacturer.getchildren():
+		for product in manufacturer:
 			p={}												#new dict empty for new product
 			p_update = p.update
 			scr=[]
