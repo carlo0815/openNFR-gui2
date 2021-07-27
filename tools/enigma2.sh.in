@@ -158,7 +158,9 @@ if [ "$(grep config.crash.enabledebug /etc/enigma2/settings)" == "config.crash.e
 	LD_PRELOAD=$LIBS @bindir@/enigma2 --debug-no-color $VERBOSE &> ${LOGFOLDER}Enigma2-debug-$(date +%Y%m%d_%H-%M-%S)${RANDOMIZE1970}.log
 else
 	# in case $TERM is "linux" the serial output is activated - discard debug output
-	if [ "$TERM" = linux ]; then
+	if [ "$(grep config.start.enabledebug /etc/enigma2/settings)" == "config.start.enabledebug=true" ]; then  
+	        LD_PRELOAD=$LIBS /usr/bin/enigma2 $VERBOSE &> /home/root/logs/startlog-$(date +%Y%m%d_%H-%M-%S)${RANDOMIZE1970}.txt	
+	elif [ "$TERM" = linux ]; then
 		LD_PRELOAD=$LIBS @bindir@/enigma2 $VERBOSE 2> /dev/null
 	else
 		LD_PRELOAD=$LIBS @bindir@/enigma2 $VERBOSE
