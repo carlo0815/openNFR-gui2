@@ -19,6 +19,8 @@ from sys import maxint
 def InitUsageConfig():
 	config.misc.useNTPminutes = ConfigSelection(default = "30", choices = [("30", "30" + " " +_("minutes")), ("60", _("Hour")), ("1440", _("Once per day"))])
 	config.misc.remotecontrol_text_support = ConfigYesNo(default = True)
+	config.start = ConfigSubsection()
+	config.start.enabledebug = ConfigYesNo(default = False)		
         config.NFRTelnet = ConfigSubsection()
         config.NFRTelnet.command = ConfigText(visible_width = 200)
 	config.NFRSoftcam = ConfigSubsection()
