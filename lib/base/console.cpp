@@ -111,12 +111,12 @@ int eConsoleAppContainer::execute(const char *cmdline, const char * const argv[]
 	pid=-1;
 	killstate=0;
 
-	// get one read ,one write and the err pipe to the prog..
+	// get one read, one write and the err pipe to the prog..
 	pid = bidirpipe(fd, cmdline, argv, m_cwd.empty() ? 0 : m_cwd.c_str());
 
 	if ( pid == -1 ) {
 		eDebug("[eConsoleAppContainer] failed to start %s", cmdline);
- 		return -3;
+		return -3;
 	}
 
 //	eDebug("[eConsoleAppContainer] pipe in = %d, out = %d, err = %d", fd[0], fd[1], fd[2]);
@@ -234,16 +234,19 @@ void eConsoleAppContainer::readyRead(int what)
 	bool hungup = what & eSocketNotifier::Hungup;
 	if (what & (eSocketNotifier::Priority|eSocketNotifier::Read))
 	{
-//		eDebug("[eConsoleAppContainer] readyErrRead what = %d", what);
+//		eDebug("[eConsoleAppContainer] readyRead what = %d", what);
 		char* buf = &buffer[0];
 		int rd;
-		while((rd = read(fd[0], buf, buffer.size())) > 0)
+		while((rd = read(fd[0], buf, buffer.size()-1)) > 0)
 		{
 			buf[rd]=0;
 			/*emit*/ dataAvail(std::make_pair(buf, rd));
 			stdoutAvail(std::make_pair(buf, rd));
 			if ( filefd[1] >= 0 )
-				::write(filefd[1], buf, rd);
+			{
+				ssize_t ret = ::write(filefd[1], buf, rd);
+				if (ret < 0) eDebug("[eConsoleAppContainer] write failed: %m");
+			}
 			if (!hungup)
 				break;
 		}
@@ -273,10 +276,10 @@ void eConsoleAppContainer::readyErrRead(int what)
 {
 	if (what & (eSocketNotifier::Priority|eSocketNotifier::Read))
 	{
-//		eDebug("[eConsoleAppContainer] readyRead what = %d", what);
+//		eDebug("[eConsoleAppContainer] readyErrRead what = %d", what);
 		char* buf = &buffer[0];
 		int rd;
-		while((rd = read(fd[2], buf, buffer.size())) > 0)
+		while((rd = read(fd[2], buf, buffer.size()-1)) > 0)
 		{
 /*			for ( int i = 0; i < rd; i++ )
 				eDebug("[eConsoleAppContainer] %d = %c (%02x)", i, buf[i], buf[i] );*/
