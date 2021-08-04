@@ -72,25 +72,25 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>enigma2/picload.h at 7.0 · openatv/enigma2</title>
+  <title>enigma2/pixmapcache.h at 7.0 · openatv/enigma2</title>
     <meta name="description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub.">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
   <meta property="fb:app_id" content="1401488693436528">
   <meta name="apple-itunes-app" content="app-id=1477376905" />
-    <meta name="twitter:image:src" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="enigma2/picload.h at 7.0 · openatv/enigma2" /><meta name="twitter:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
-    <meta property="og:image" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta property="og:image:alt" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="enigma2/picload.h at 7.0 · openatv/enigma2" /><meta property="og:url" content="https://github.com/openatv/enigma2" /><meta property="og:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
+    <meta name="twitter:image:src" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="enigma2/pixmapcache.h at 7.0 · openatv/enigma2" /><meta name="twitter:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
+    <meta property="og:image" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta property="og:image:alt" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="enigma2/pixmapcache.h at 7.0 · openatv/enigma2" /><meta property="og:url" content="https://github.com/openatv/enigma2" /><meta property="og:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
 
 
 
     
 
   <link rel="assets" href="https://github.githubassets.com/">
-    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6751057/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NzUxMDU3LCJzIjo2NjI1MDU5OTMsImMiOjI1NzkyMDY5MjIsInQiOjE2MjgxMTEwNjh9--f4cec8b9c18743012b6234aedf52d3753cd5109a525c3301475d3856ebe2447a" data-refresh-url="/_alive" data-session-id="2216845d3c3e1929cd509fa19a92bcddda9b1f8bb0120a9b4a70e4f1b7b65bd9">
+    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6751057/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NzUxMDU3LCJzIjo2NjI1MDU5OTMsImMiOjI4NjU1NjYxMzYsInQiOjE2MjgxMTEwODZ9--b517597e2ea6118a5cee8113a51ca56fa5494df8b68063ba8471592039b9893c" data-refresh-url="/_alive" data-session-id="2216845d3c3e1929cd509fa19a92bcddda9b1f8bb0120a9b4a70e4f1b7b65bd9">
     <link rel="shared-web-socket-src" href="/socket-worker-3f088aa2.js">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
 
-  <meta name="request-id" content="DA6F:25C7:2A2849:2B92F9:610B00D4" data-pjax-transient="true" /><meta name="html-safe-nonce" content="b6bcfd0b5f705dea86043717a94159dfbcc4c003f6d6bac07565023a846a8d4f" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYXR2L2VuaWdtYTIvdHJlZS83LjAvbGliL2dkaSIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEyODQ5OjJCOTJGOTo2MTBCMDBENCIsInZpc2l0b3JfaWQiOiI2MDAyODE2NzQ0NTg2MTg3NTc4IiwicmVnaW9uX2VkZ2UiOiJmcmEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="f96829cd57534118f15155e9a130a0e74da1c171c480ca1880e8c9687206bae1" data-pjax-transient="true" />
+  <meta name="request-id" content="DA6F:25C7:2A3C99:2BA7EB:610B00E6" data-pjax-transient="true" /><meta name="html-safe-nonce" content="b6bcfd0b5f705dea86043717a94159dfbcc4c003f6d6bac07565023a846a8d4f" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYXR2L2VuaWdtYTIvdHJlZS83LjAvbGliL2dkaSIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEzQzk5OjJCQTdFQjo2MTBCMDBFNiIsInZpc2l0b3JfaWQiOiI2MDAyODE2NzQ0NTg2MTg3NTc4IiwicmVnaW9uX2VkZ2UiOiJmcmEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="e8f397a6a44fcbdfb389e46a2ecce8750e023b36dc4e000dc3925617b1c36fae" data-pjax-transient="true" />
 
     <meta name="hovercard-subject-tag" content="repository:4813239" data-pjax-transient>
 
@@ -129,7 +129,7 @@
 
       <meta name="expected-hostname" content="github.com">
 
-      <meta name="js-proxy-site-detection-payload" content="YTdmOWU4MmQ5ZTU3NTZmYjc2YTlhOTU0ZjRiZjA1MjZiZmZhNjczNzIxYmRiYjgyZjA1NzNkNzk0OTMyMzI4Y3x7InJlbW90ZV9hZGRyZXNzIjoiNzkuMjQ0Ljg1LjExNiIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEyODQ5OjJCOTJGOTo2MTBCMDBENCIsInRpbWVzdGFtcCI6MTYyODExMTA2OCwiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
+      <meta name="js-proxy-site-detection-payload" content="YTRkY2YwNmIzN2U0ZWU4NjgyMjk2YzBkYzNhODJiN2E1YTU3NjQ4YjczYzAxM2YxZjk3YjQ1MmI4YWU0ZTJmMnx7InJlbW90ZV9hZGRyZXNzIjoiNzkuMjQ0Ljg1LjExNiIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEzQzk5OjJCQTdFQjo2MTBCMDBFNiIsInRpbWVzdGFtcCI6MTYyODExMTA4NiwiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
 
     <meta name="enabled-features" content="MARKETPLACE_PENDING_INSTALLATIONS,GITHUB_TOKEN_PERMISSION">
 
@@ -143,7 +143,7 @@
 
 
 
-    <link rel="canonical" href="https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -185,7 +185,7 @@
   href="https://github.com/"
   data-hotkey="g d"
   aria-label="Homepage "
-  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="02ff668ce9472e2d54473ae7dded9e7217b12f64ce2fade3b23e5bee9538b576"
+  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4e5f15bef34bc20b75473debb335f2fab96e48faaca4bad59a1616a1f150213b"
 >
   <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
 </a>
@@ -228,7 +228,7 @@
             spellcheck="false"
             autocomplete="off"
           >
-          <input type="hidden" value="XU7le1259zewc0AKd9fcPuC6i/wpVwXIU8JEp55CPXbWl+ymvRRART6GNWkQ88hiNHhHLOuWCU3rF2lEtKqb+g==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
+          <input type="hidden" value="mL/kOKPDki/zDHP7umpFRL8/aFJxV9jUyt3y8kiV0KMTZu3lQ24lXX35BpjdTlEYa/2kgrOW1FFyCN8RYn12Lw==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
           <input type="hidden" class="js-site-search-type-field" name="type" >
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" class="mr-1 header-search-key-slash"><path fill="none" stroke="#979A9C" opacity=".4" d="M3.5.5h12c1.7 0 3 1.3 3 3v13c0 1.7-1.3 3-3 3h-12c-1.7 0-3-1.3-3-3v-13c0-1.7 1.3-3 3-3z"></path><path fill="#979A9C" d="M11.8 6L8 15.1h-.9L10.8 6h1z"></path></svg>
 
@@ -408,7 +408,7 @@
     <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:workspaces context:user" data-selected-links="/codespaces /codespaces" href="/codespaces">
       Codespaces
 </a>
-      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;torwald12&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="795651420eb454b6527c7fe56072bebb19ad6522dea15ce6f094e5bd32e85d8b" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
+      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;torwald12&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="8bbb465e6db61275d48e33d3a29d1cd43aaa4cb5693296e7aa0d2021ecdfd11b" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
 
     <a class="Header-link d-block d-md-none mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade" href="/settings/profile">
       Settings
@@ -417,12 +417,12 @@
       <img class="avatar avatar-user" loading="lazy" decoding="async" src="https://avatars.githubusercontent.com/u/6751057?s=40&amp;v=4" width="20" height="20" alt="@torwald12" />
       torwald12
 </a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="Ompx9jRRMmPnO0sLmGhL6b1PnZvFDolX1S+HGylYCLWl+pZkfJY93KrXNP3XhrTA1HidIRR1gdsN5DVyb9IlXg==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="vt2knvikMNw+YiIaAIubu/+igQzjfQCUSM5faGEP0EIhTUMMsGM/Y3OOXexPZWSSlpWBtjIGCBiQBe0BJ4X9qQ==" />
       <button
         type="submit"
         class="Header-link mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade d-md-none btn-link d-block width-full text-left"
         style="padding-left: 2px;"
-        data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;sign out&quot;,&quot;label&quot;:&quot;icon:logout&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="954243cfd2907209a035a1ee73f4088128a8e7edbd273ca8ff1c199652dd06c1"
+        data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;sign out&quot;,&quot;label&quot;:&quot;icon:logout&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="38fcef01ad123efaa891fb88554c2bc8b3d0a58925a413152be43ad234305fc6"
       >
         <svg class="octicon octicon-sign-out v-align-middle" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 2.75C2 1.784 2.784 1 3.75 1h2.5a.75.75 0 010 1.5h-2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h2.5a.75.75 0 010 1.5h-2.5A1.75 1.75 0 012 13.25V2.75zm10.44 4.5H6.75a.75.75 0 000 1.5h5.69l-1.97 1.97a.75.75 0 101.06 1.06l3.25-3.25a.75.75 0 000-1.06l-3.25-3.25a.75.75 0 10-1.06 1.06l1.97 1.97z"></path></svg>
         Sign out
@@ -437,7 +437,7 @@
   href="https://github.com/"
   data-hotkey="g d"
   aria-label="Homepage "
-  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="02ff668ce9472e2d54473ae7dded9e7217b12f64ce2fade3b23e5bee9538b576"
+  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4e5f15bef34bc20b75473debb335f2fab96e48faaca4bad59a1616a1f150213b"
 >
   <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
 </a>
@@ -451,7 +451,7 @@
       <notification-indicator
         class="js-socket-channel"
         data-test-selector="notifications-indicator"
-        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6Njc1MTA1NyIsInQiOjE2MjgxMTEwNjh9--81b4bcddec9808fd56081e6511bedae0c8efdcf1d34f998cb5194754624f8d05">
+        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6Njc1MTA1NyIsInQiOjE2MjgxMTEwODZ9--b469c7a97530c40b6956925996385fa51347c90c085aa240b94ddf390482f494">
         <a href="/notifications"
           class="Header-link notification-indicator position-relative tooltipped tooltipped-sw"
           
@@ -474,7 +474,7 @@
   <summary
     class="Header-link"
     aria-label="Create new…"
-    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;create new&quot;,&quot;label&quot;:&quot;icon:add&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="30da52668c53014bc1522ad013c6e3c0ea1ee40530d382b861d6d428205791c9"
+    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;create new&quot;,&quot;label&quot;:&quot;icon:add&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="982b2cf4134533a785fd80a840bb631e683e691cbeb0928dcb3cdc4017d9c948"
   >
       <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-plus">
     <path fill-rule="evenodd" d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 110 1.5H8.5v4.25a.75.75 0 11-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"></path>
@@ -512,7 +512,7 @@
   <summary
     class="Header-link"
     aria-label="View profile and more"
-    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;show menu&quot;,&quot;label&quot;:&quot;icon:avatar&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="87959ae571eb696786c63dc56b70c4d7ac98f07dc793ff3a24034ae6e5b21fdd"
+    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;show menu&quot;,&quot;label&quot;:&quot;icon:avatar&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="78893c2c18dafcbf39c8945d1a2edb6ada2ea1c8b0a9f7667a8ad145259f8b38"
   >
     <img src="https://avatars.githubusercontent.com/u/6751057?s=60&amp;v=4" alt="@torwald12" size="20" data-view-component="true" height="20" width="20" class="avatar-user avatar avatar-small"></img>
       <span class="feature-preview-indicator js-feature-preview-indicator" style="top: 1px;" hidden></span>
@@ -628,7 +628,7 @@
         data-action="toggle:notifications-list-subscription-form#detailsToggled"
       >
 
-      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="bcff4397e90cc2be37d90f885627523553e4e5bb312f629624d26cfa1aaeb0ad" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
+      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="6f8978a0e7e07277704acd5911d9e05da26acf94e9e68a6222074cb7db47f25d" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
           <span data-menu-button>
             <span
               hidden
@@ -680,7 +680,7 @@
             </header>
 
             <div class="SelectMenu-list">
-              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="oKGsjNs6V91cD+WYzBFr9pbQ7zvZx5TLDF7HyVIAco2Sd1Y1f6fMEQ4ejg+Aritn++oSUxYAgrg5/6IVudd4ng==" />
+              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="FnrJYevWa1mK72aD4OV4NNj+qwghtbdLBSEl5FOFB44krDPYT0vwldj+DRSsWjiltcRWYO5yoTgwgEA4uFINnQ==" />
 
                 <input type="hidden" name="repository_id" value="4813239">
 
@@ -792,7 +792,7 @@
 
         <details-dialog class="notifications-component-dialog " data-target="notifications-list-subscription-form.customDialog" hidden>
           <div class="SelectMenu-modal notifications-component-dialog-modal overflow-visible">
-            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="n0nIaNqRLlFx5+lGb/9kwtM2s3KVV22QnQGlFVJGGT+tnzLRfgy1nSP2gtEjQCRTvgxOGlqQe+OooMDJuZETLA==" />
+            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="eJorKfIGo1D4TVwK9g5T8dtQi09QPzDIw16JbfkCYuRKTNGQVps4nKpcN526sRNgtmp2J5/4Jrv2/+yxEtVo9w==" />
 
               <input type="hidden" name="repository_id" value="4813239">
 
@@ -951,9 +951,9 @@
 
   <li>
         <div class="d-block js-toggler-container js-social-container starring-container ">
-    <form class="starred js-social-form" action="/openatv/enigma2/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="nw6CKgRO54OPijQzyakezv+vEj1MCjoW1jRzK5r5OJk9wM2S4G9GeKfkdHaVNwPi+b5ruOzMZW8dGQ6TCy1DVQ==" />
+    <form class="starred js-social-form" action="/openatv/enigma2/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="c7H9joz84o+KAIGQljf6QR1mb5UiFU70G8FU7VOnizLRf7I2aN1DdKJuwdXKqedtG3cWEILTEY3Q7ClVwnPw/g==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="b8a326d1de6f686b9ae225bb130dce4330428a3cdf232d40a0a099df676fe343" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star-fill mr-1">
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="33886de9e3525988379513194e7311f84ac7a1d5e08fb3856f508af5a8e79cf8" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star-fill mr-1">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
 </svg>
         <span data-view-component="true">
@@ -963,9 +963,9 @@
            139
         </a>
 </form>
-    <form class="unstarred js-social-form" action="/openatv/enigma2/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="jWk9b3XtLw1OEiBSiPGGnFwAtgeauxYFGfRIeH1j77S1xNG476XYjG/Yi5QxALl5/yir48jGD1DHfb2QbzHDYA==" />
+    <form class="unstarred js-social-form" action="/openatv/enigma2/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="wnqUOsgY0wXcrwh2cnBp1LK5b4c4TeMKfokzAjLOO0H613jtUlAkhP1lo7DLgVYxEZFyY2ow+l+gAMbqIJwXlQ==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="0bfea0b50e66fe68caed88b875c862b57d09401a0e5a225287d3204fda93eeb9" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star mr-1">
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="73d5fc63add3ceb1a592f2d1c55bca5c07e6b81a656f566a9c6ed13290ad815d" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star mr-1">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
 </svg>
         <span data-view-component="true">
@@ -984,7 +984,7 @@
                       <summary
                     class="btn btn-sm btn-with-count"
                     title="Fork your own copy of openatv/enigma2 to your account"
-                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="5c4cdc23d925dec1f94e3af7c6783aa153d2cb950e17d531b40180caa9e055ad" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
+                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="3e75476fa034b38c145995ce7d618fa9bc7a029caee645fc89e93c00c879c0f7" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
                     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-repo-forked">
     <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
 </svg>
@@ -1165,9 +1165,9 @@
   
 
 
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/picload.h">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.h">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v22:675832769e1427792ce4a313e4acba91216144191f96c25c8d8199d764a94fa5 -->
+    <!-- blob contrib key: blob_contributors:v22:e3df185ae23decea3d2ad0570436f5d4e218c82e6f69dcbd39e1c893a67720e1 -->
 
     <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
       
@@ -1252,7 +1252,7 @@
             </div>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/picload.h" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/pixmapcache.h" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -1292,7 +1292,7 @@
             </template>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/picload.h" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/pixmapcache.h" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -1323,7 +1323,7 @@
 </div>
 
       <h2 id="blob-path" class="breadcrumb flex-auto flex-self-center min-width-0 text-normal mx-2 width-full width-md-auto flex-order-1 flex-md-order-none mt-3 mt-md-0">
-        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2"><span>enigma2</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib"><span>lib</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib/gdi"><span>gdi</span></a></span><span class="separator">/</span><strong class="final-path">picload.h</strong>
+        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2"><span>enigma2</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib"><span>lib</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib/gdi"><span>gdi</span></a></span><span class="separator">/</span><strong class="final-path">pixmapcache.h</strong>
       </h2>
       <a href="/openatv/enigma2/find/7.0"
             class="js-pjax-capture-input btn mr-2 d-none d-md-block"
@@ -1344,7 +1344,7 @@
 </summary>
   <div data-view-component="true">          <ul class="dropdown-menu dropdown-menu-sw">
             <li class="d-block d-md-none">
-              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="779c5831de832003d809052dca6f1fec13d880bf965c3446566e248940f50082" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/openatv/enigma2/find/7.0">
+              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="3d5b136ce78d4df30ca1ad62e79201a1425360564b7ceda8361a2e00faa41fd0" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/openatv/enigma2/find/7.0">
                 <span class="flex-auto">Go to file</span>
                 <span class="text-small color-text-secondary" aria-hidden="true">T</span>
 </a>            </li>
@@ -1358,12 +1358,12 @@
             </li>
             <li class="dropdown-divider" role="none"></li>
             <li>
-              <clipboard-copy value="lib/gdi/picload.h" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
+              <clipboard-copy value="lib/gdi/pixmapcache.h" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
                 Copy path
               </clipboard-copy>
             </li>
             <li>
-              <clipboard-copy value="https://github.com/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/picload.h" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
+              <clipboard-copy value="https://github.com/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.h" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
                 <span class="d-flex flex-items-baseline">
                   <span class="flex-auto">Copy permalink</span>
                 </span>
@@ -1377,7 +1377,7 @@
 
 
     <div class="Box d-flex flex-column flex-shrink-0 mb-3">
-      <include-fragment src="/openatv/enigma2/contributors/7.0/lib/gdi/picload.h" class="commit-loader">
+      <include-fragment src="/openatv/enigma2/contributors/7.0/lib/gdi/pixmapcache.h" class="commit-loader">
         <div class="Box-header Box-header--blue d-flex flex-items-center">
           <div class="Skeleton avatar avatar-user flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1" style="width:24px;height:24px;"></div>
           <div class="Skeleton Skeleton--text col-5 ml-2">&nbsp;</div>
@@ -1412,21 +1412,21 @@
 
   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1">
 
-      118 lines (102 sloc)
+      20 lines (15 sloc)
       <span class="file-info-divider"></span>
-    2.38 KB
+    322 Bytes
   </div>
 
   <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between hide-sm hide-md">
 
     <div class="BtnGroup">
-      <a href="/openatv/enigma2/raw/7.0/lib/gdi/picload.h" id="raw-url" role="button" data-view-component="true" class="btn-sm btn BtnGroup-item">
+      <a href="/openatv/enigma2/raw/7.0/lib/gdi/pixmapcache.h" id="raw-url" role="button" data-view-component="true" class="btn-sm btn BtnGroup-item">
   
   Raw
   
 
 </a>
-        <a href="/openatv/enigma2/blame/7.0/lib/gdi/picload.h" data-hotkey="b" role="button" data-view-component="true" class="js-update-url-with-hash btn-sm btn BtnGroup-item">
+        <a href="/openatv/enigma2/blame/7.0/lib/gdi/pixmapcache.h" data-hotkey="b" role="button" data-view-component="true" class="js-update-url-with-hash btn-sm btn BtnGroup-item">
   
   Blame
   
@@ -1445,7 +1445,7 @@
 </svg>
           </a>
 
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/openatv/enigma2/edit/7.0/lib/gdi/picload.h" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="UbXqGP6DbhmFEV6iLTrjDaRnkLHH21d7JNnOMK0Fj3/ryIRHV3wtDlKfRdJgiQkIcliZ7kndzpvl32g9v41XGA==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/openatv/enigma2/edit/7.0/lib/gdi/pixmapcache.h" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="IExX1hooUXsZL1mnIMtvKi0o8xiE6/wagLO07bTbBJTsFRzE88HLzOScbtaeIS12GPNVSxqQ4NY5LqjJgximnw==" />
             <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and edit the file" data-hotkey="e" data-disable-with>
               <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-pencil">
@@ -1453,7 +1453,7 @@
 </svg>
             </button>
 </form>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/openatv/enigma2/delete/7.0/lib/gdi/picload.h" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="XHdGQnZRnVtIvzOsPZfppNPIjPEEoK+56mcZC6WNV7VFafofrKtfIGKndrCwg7rFTqlxJ3yyK1VVjZexQmswcA==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/openatv/enigma2/delete/7.0/lib/gdi/pixmapcache.h" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="V4TSNRl8SsEzjGn2Aj05rAO+3/HN8exmwhNnA0ANRVFMCx6q83uTGYhqYjs+5tyL/OzSmHLjKoJGKRmBgvHv0g==" />
             <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and delete the file" data-disable-with>
               <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-trash">
@@ -1481,22 +1481,22 @@
                 </a>
             </li>
           <li>
-            <a class="dropdown-item" href="/openatv/enigma2/raw/7.0/lib/gdi/picload.h">
+            <a class="dropdown-item" href="/openatv/enigma2/raw/7.0/lib/gdi/pixmapcache.h">
               View raw
             </a>
           </li>
             <li>
-              <a class="dropdown-item" href="/openatv/enigma2/blame/7.0/lib/gdi/picload.h">
+              <a class="dropdown-item" href="/openatv/enigma2/blame/7.0/lib/gdi/pixmapcache.h">
                 View blame
               </a>
             </li>
 
               <li class="dropdown-divider" role="none"></li>
               <li>
-                <a class="dropdown-item" href="/openatv/enigma2/edit/7.0/lib/gdi/picload.h">Edit file</a>
+                <a class="dropdown-item" href="/openatv/enigma2/edit/7.0/lib/gdi/pixmapcache.h">Edit file</a>
               </li>
               <li>
-                <a class="dropdown-item menu-item-danger" href="/openatv/enigma2/delete/7.0/lib/gdi/picload.h">Delete file</a>
+                <a class="dropdown-item menu-item-danger" href="/openatv/enigma2/delete/7.0/lib/gdi/pixmapcache.h">Delete file</a>
               </li>
         </ul>
       </details>
@@ -1511,11 +1511,11 @@
 <table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip>
       <tr>
         <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">ifndef</span> __picload_h__</td>
+        <td id="LC1" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">ifndef</span> __pixmapcache_h</td>
       </tr>
       <tr>
         <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">define</span> <span class="pl-en">__picload_h__</span></td>
+        <td id="LC2" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">define</span> <span class="pl-en">__pixmapcache_h</span></td>
       </tr>
       <tr>
         <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
@@ -1528,474 +1528,71 @@
       </tr>
       <tr>
         <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/thread.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC5" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/python/python.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC6" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">ifndef</span> SWIG</td>
       </tr>
       <tr>
         <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/message.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC7" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/ebase.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-en">PixmapCache</span></td>
       </tr>
       <tr>
         <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC9" class="blob-code blob-code-inner js-file-line">{</td>
       </tr>
       <tr>
         <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">ifndef</span> SWIG</td>
+        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-k">private:</span></td>
       </tr>
       <tr>
         <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-k">struct</span> <span class="pl-en">Cfilepara</span></td>
+        <td id="LC11" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">static</span> <span class="pl-c1">uint</span> MaximumSize;</td>
       </tr>
       <tr>
         <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line">{</td>
+        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-k">public:</span></td>
       </tr>
       <tr>
         <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">char</span> *file;</td>
+        <td id="LC13" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">PixmapDisposed</span>(<span class="pl-smi">gPixmap</span> *pixmap);</td>
       </tr>
       <tr>
         <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">unsigned</span> <span class="pl-k">char</span> *pic_buffer;</td>
+        <td id="LC14" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">static</span> <span class="pl-smi">gPixmap</span>* <span class="pl-en">Get</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename);</td>
       </tr>
       <tr>
         <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gRGB</span> *palette;</td>
+        <td id="LC15" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">Set</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-smi">gPixmap</span> *pixmap);</td>
       </tr>
       <tr>
         <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> palette_size;</td>
+        <td id="LC16" class="blob-code blob-code-inner js-file-line">};</td>
       </tr>
       <tr>
         <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> bits;</td>
+        <td id="LC17" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> id;</td>
+        <td id="LC18" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">endif</span></td>
       </tr>
       <tr>
         <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> max_x;</td>
+        <td id="LC19" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> max_y;</td>
-      </tr>
-      <tr>
-        <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
-        <td id="LC21" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> ox;</td>
-      </tr>
-      <tr>
-        <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> oy;</td>
-      </tr>
-      <tr>
-        <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line">	std::string picinfo;</td>
-      </tr>
-      <tr>
-        <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">bool</span> callback;</td>
-      </tr>
-      <tr>
-        <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">Cfilepara</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *mfile, <span class="pl-k">int</span> mid, std::string size):</td>
-      </tr>
-      <tr>
-        <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">file</span>(strdup(mfile)),</td>
-      </tr>
-      <tr>
-        <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
-        <td id="LC28" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">pic_buffer</span>(<span class="pl-c1">NULL</span>),</td>
-      </tr>
-      <tr>
-        <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">palette</span>(<span class="pl-c1">NULL</span>),</td>
-      </tr>
-      <tr>
-        <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">palette_size</span>(<span class="pl-c1">0</span>),</td>
-      </tr>
-      <tr>
-        <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
-        <td id="LC31" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">bits</span>(<span class="pl-c1">24</span>),</td>
-      </tr>
-      <tr>
-        <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">id</span>(mid),</td>
-      </tr>
-      <tr>
-        <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">max_x</span>(<span class="pl-c1">0</span>),</td>
-      </tr>
-      <tr>
-        <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">max_y</span>(<span class="pl-c1">0</span>),</td>
-      </tr>
-      <tr>
-        <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">ox</span>(<span class="pl-c1">0</span>),</td>
-      </tr>
-      <tr>
-        <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">oy</span>(<span class="pl-c1">0</span>),</td>
-      </tr>
-      <tr>
-        <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">picinfo</span>(mfile),</td>
-      </tr>
-      <tr>
-        <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">callback</span>(<span class="pl-c1">true</span>)</td>
-      </tr>
-      <tr>
-        <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line">		picinfo += <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span> + size + <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>;</td>
-      </tr>
-      <tr>
-        <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">~Cfilepara</span>()</td>
-      </tr>
-      <tr>
-        <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (pic_buffer != <span class="pl-c1">NULL</span>)	<span class="pl-k">delete</span> pic_buffer;</td>
-      </tr>
-      <tr>
-        <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (palette != <span class="pl-c1">NULL</span>) <span class="pl-k">delete</span> palette;</td>
-      </tr>
-      <tr>
-        <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">free</span>(file);</td>
-      </tr>
-      <tr>
-        <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">addExifInfo</span>(std::string val) { picinfo += val + <span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-cce">\n</span><span class="pl-pds">&quot;</span></span>; }</td>
-      </tr>
-      <tr>
-        <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">endif</span></td>
-      </tr>
-      <tr>
-        <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-en">ePicLoad</span>: <span class="pl-k">public</span> <span class="pl-en">eMainloop</span>, <span class="pl-k">public</span> <span class="pl-en">eThread</span>, <span class="pl-k">public</span> <span class="pl-en">sigc</span>::trackable, public iObject</td>
-      </tr>
-      <tr>
-        <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">DECLARE_REF</span>(ePicLoad);</td>
-      </tr>
-      <tr>
-        <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">enum</span>{ F_PNG, F_JPEG, F_BMP, F_GIF, F_SVG};</td>
-      </tr>
-      <tr>
-        <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">decodePic</span>();</td>
-      </tr>
-      <tr>
-        <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">decodeThumb</span>();</td>
-      </tr>
-      <tr>
-        <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">resizePic</span>();</td>
-      </tr>
-      <tr>
-        <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">	Cfilepara *m_filepara;</td>
-      </tr>
-      <tr>
-        <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">bool</span> threadrunning;</td>
-      </tr>
-      <tr>
-        <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">struct</span> <span class="pl-en">PConf</span></td>
-      </tr>
-      <tr>
-        <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
-        <td id="LC69" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> max_x;</td>
-      </tr>
-      <tr>
-        <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> max_y;</td>
-      </tr>
-      <tr>
-        <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">double</span> aspect_ratio;</td>
-      </tr>
-      <tr>
-        <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">unsigned</span> <span class="pl-k">int</span> background;</td>
-      </tr>
-      <tr>
-        <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">bool</span> resizetype;</td>
-      </tr>
-      <tr>
-        <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">bool</span> usecache;</td>
-      </tr>
-      <tr>
-        <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> thumbnailsize;</td>
-      </tr>
-      <tr>
-        <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> test;</td>
-      </tr>
-      <tr>
-        <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">PConf</span>();</td>
-      </tr>
-      <tr>
-        <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">	} m_conf;</td>
-      </tr>
-      <tr>
-        <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L80" class="blob-num js-line-number" data-line-number="80"></td>
-        <td id="LC80" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">struct</span> <span class="pl-en">Message</span></td>
-      </tr>
-      <tr>
-        <td id="L81" class="blob-num js-line-number" data-line-number="81"></td>
-        <td id="LC81" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L82" class="blob-num js-line-number" data-line-number="82"></td>
-        <td id="LC82" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> type;</td>
-      </tr>
-      <tr>
-        <td id="L83" class="blob-num js-line-number" data-line-number="83"></td>
-        <td id="LC83" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">enum</span></td>
-      </tr>
-      <tr>
-        <td id="L84" class="blob-num js-line-number" data-line-number="84"></td>
-        <td id="LC84" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L85" class="blob-num js-line-number" data-line-number="85"></td>
-        <td id="LC85" class="blob-code blob-code-inner js-file-line">			decode_Pic,</td>
-      </tr>
-      <tr>
-        <td id="L86" class="blob-num js-line-number" data-line-number="86"></td>
-        <td id="LC86" class="blob-code blob-code-inner js-file-line">			decode_Thumb,</td>
-      </tr>
-      <tr>
-        <td id="L87" class="blob-num js-line-number" data-line-number="87"></td>
-        <td id="LC87" class="blob-code blob-code-inner js-file-line">			decode_finished,</td>
-      </tr>
-      <tr>
-        <td id="L88" class="blob-num js-line-number" data-line-number="88"></td>
-        <td id="LC88" class="blob-code blob-code-inner js-file-line">			decode_error,</td>
-      </tr>
-      <tr>
-        <td id="L89" class="blob-num js-line-number" data-line-number="89"></td>
-        <td id="LC89" class="blob-code blob-code-inner js-file-line">			quit</td>
-      </tr>
-      <tr>
-        <td id="L90" class="blob-num js-line-number" data-line-number="90"></td>
-        <td id="LC90" class="blob-code blob-code-inner js-file-line">		};</td>
-      </tr>
-      <tr>
-        <td id="L91" class="blob-num js-line-number" data-line-number="91"></td>
-        <td id="LC91" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">Message</span>(<span class="pl-k">int</span> type=<span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L92" class="blob-num js-line-number" data-line-number="92"></td>
-        <td id="LC92" class="blob-code blob-code-inner js-file-line">			:type(type) {}</td>
-      </tr>
-      <tr>
-        <td id="L93" class="blob-num js-line-number" data-line-number="93"></td>
-        <td id="LC93" class="blob-code blob-code-inner js-file-line">	};</td>
-      </tr>
-      <tr>
-        <td id="L94" class="blob-num js-line-number" data-line-number="94"></td>
-        <td id="LC94" class="blob-code blob-code-inner js-file-line">	eFixedMessagePump&lt;Message&gt; msg_thread, msg_main;</td>
-      </tr>
-      <tr>
-        <td id="L95" class="blob-num js-line-number" data-line-number="95"></td>
-        <td id="LC95" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L96" class="blob-num js-line-number" data-line-number="96"></td>
-        <td id="LC96" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">gotMessage</span>(<span class="pl-k">const</span> Message &amp;message);</td>
-      </tr>
-      <tr>
-        <td id="L97" class="blob-num js-line-number" data-line-number="97"></td>
-        <td id="LC97" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">thread</span>();</td>
-      </tr>
-      <tr>
-        <td id="L98" class="blob-num js-line-number" data-line-number="98"></td>
-        <td id="LC98" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> <span class="pl-en">startThread</span>(<span class="pl-k">int</span> what, <span class="pl-k">const</span> <span class="pl-k">char</span> *file, <span class="pl-k">int</span> x, <span class="pl-k">int</span> y, <span class="pl-k">bool</span> async=<span class="pl-c1">true</span>);</td>
-      </tr>
-      <tr>
-        <td id="L99" class="blob-num js-line-number" data-line-number="99"></td>
-        <td id="LC99" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">thread_finished</span>();</td>
-      </tr>
-      <tr>
-        <td id="L100" class="blob-num js-line-number" data-line-number="100"></td>
-        <td id="LC100" class="blob-code blob-code-inner js-file-line"><span class="pl-k">public:</span></td>
-      </tr>
-      <tr>
-        <td id="L101" class="blob-num js-line-number" data-line-number="101"></td>
-        <td id="LC101" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">void</span> <span class="pl-en">waitFinished</span>();</td>
-      </tr>
-      <tr>
-        <td id="L102" class="blob-num js-line-number" data-line-number="102"></td>
-        <td id="LC102" class="blob-code blob-code-inner js-file-line">	PSignal1&lt;<span class="pl-k">void</span>, <span class="pl-k">const</span> <span class="pl-k">char</span>*&gt; PictureData;</td>
-      </tr>
-      <tr>
-        <td id="L103" class="blob-num js-line-number" data-line-number="103"></td>
-        <td id="LC103" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L104" class="blob-num js-line-number" data-line-number="104"></td>
-        <td id="LC104" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">ePicLoad</span>();</td>
-      </tr>
-      <tr>
-        <td id="L105" class="blob-num js-line-number" data-line-number="105"></td>
-        <td id="LC105" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">~ePicLoad</span>();</td>
-      </tr>
-      <tr>
-        <td id="L106" class="blob-num js-line-number" data-line-number="106"></td>
-        <td id="LC106" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L107" class="blob-num js-line-number" data-line-number="107"></td>
-        <td id="LC107" class="blob-code blob-code-inner js-file-line">	RESULT <span class="pl-en">startDecode</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> x=<span class="pl-c1">0</span>, <span class="pl-k">int</span> y=<span class="pl-c1">0</span>, <span class="pl-k">bool</span> async=<span class="pl-c1">true</span>);</td>
-      </tr>
-      <tr>
-        <td id="L108" class="blob-num js-line-number" data-line-number="108"></td>
-        <td id="LC108" class="blob-code blob-code-inner js-file-line">	RESULT <span class="pl-en">getThumbnail</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> x=<span class="pl-c1">0</span>, <span class="pl-k">int</span> y=<span class="pl-c1">0</span>, <span class="pl-k">bool</span> async=<span class="pl-c1">true</span>);</td>
-      </tr>
-      <tr>
-        <td id="L109" class="blob-num js-line-number" data-line-number="109"></td>
-        <td id="LC109" class="blob-code blob-code-inner js-file-line">	RESULT <span class="pl-en">setPara</span>(PyObject *val);</td>
-      </tr>
-      <tr>
-        <td id="L110" class="blob-num js-line-number" data-line-number="110"></td>
-        <td id="LC110" class="blob-code blob-code-inner js-file-line">	RESULT <span class="pl-en">setPara</span>(<span class="pl-k">int</span> width, <span class="pl-k">int</span> height, <span class="pl-k">double</span> aspectRatio, <span class="pl-k">int</span> as, <span class="pl-k">bool</span> useCache, <span class="pl-k">int</span> resizeType, <span class="pl-k">const</span> <span class="pl-k">char</span> *bg_str);</td>
-      </tr>
-      <tr>
-        <td id="L111" class="blob-num js-line-number" data-line-number="111"></td>
-        <td id="LC111" class="blob-code blob-code-inner js-file-line">	PyObject *<span class="pl-en">getInfo</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename);</td>
-      </tr>
-      <tr>
-        <td id="L112" class="blob-num js-line-number" data-line-number="112"></td>
-        <td id="LC112" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">SWIG_VOID</span>(<span class="pl-k">int</span>) getData(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;SWIG_OUTPUT);</td>
-      </tr>
-      <tr>
-        <td id="L113" class="blob-num js-line-number" data-line-number="113"></td>
-        <td id="LC113" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L114" class="blob-num js-line-number" data-line-number="114"></td>
-        <td id="LC114" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L115" class="blob-num js-line-number" data-line-number="115"></td>
-        <td id="LC115" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span>for old plugins</span></td>
-      </tr>
-      <tr>
-        <td id="L116" class="blob-num js-line-number" data-line-number="116"></td>
-        <td id="LC116" class="blob-code blob-code-inner js-file-line"><span class="pl-en">SWIG_VOID</span>(<span class="pl-k">int</span>) loadPic(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;SWIG_OUTPUT, std::string filename, <span class="pl-k">int</span> x, <span class="pl-k">int</span> y, <span class="pl-k">int</span> aspect, <span class="pl-k">int</span> resize_mode=<span class="pl-c1">0</span>, <span class="pl-k">int</span> rotate=<span class="pl-c1">0</span>, <span class="pl-k">unsigned</span> <span class="pl-k">int</span> background=<span class="pl-c1">0</span>, std::string cachefile=<span class="pl-s"><span class="pl-pds">&quot;</span><span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L117" class="blob-num js-line-number" data-line-number="117"></td>
-        <td id="LC117" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L118" class="blob-num js-line-number" data-line-number="118"></td>
-        <td id="LC118" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">endif</span> <span class="pl-c"><span class="pl-c">//</span> __picload_h__</span></td>
+        <td id="LC20" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">endif</span></td>
       </tr>
 </table>
 
@@ -2020,7 +1617,7 @@
             Copy permalink
           </clipboard-copy>
         </li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/openatv/enigma2/blame/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/picload.h">View git blame</a></li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/openatv/enigma2/blame/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.h">View git blame</a></li>
           <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/openatv/enigma2/issues/new">Reference in new issue</a></li>
       </ul>
     </details-menu>
@@ -2065,10 +1662,10 @@
   <div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 color-text-secondary border-top color-border-secondary ">
     <ul class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
       <li class="mr-3 mr-lg-0">&copy; 2021 GitHub, Inc.</li>
-        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="74476cb86a1fda57de16b59a2f1715804d302bbe81d2993d09fa68ec42638241">Terms</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="a45b03217e7d88db75acbcf4d38b8679399f874ea658eaf4cb36a547793be769">Privacy</a></li>
-        <li class="mr-3 mr-lg-0"><a data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="35144c8d7c22bcfff9231ec7dc1a09ff2113cb493d8e98018ee234a68705572c" href="https://github.com/security">Security</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="dba78d3502e67dc829233a8305cd71c4070b5030b7e65b21053ea3948506f19e">Status</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="a0a0aa76cf91f4d8ac25998808d6153398da94ee9849bbcd4d93accf3cf91d11">Terms</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="8ee3578ff1c0dcf957df642c6baaef88a5c20c0f2f9c1836da313c660c2198ea">Privacy</a></li>
+        <li class="mr-3 mr-lg-0"><a data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="243ba5670bb0fc242512fb6b3b8a4719675778e3409966ac7bdea845f0ce33c6" href="https://github.com/security">Security</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="0a7dd4e6a8b89b00d2ede1be2656433efb24d04284188d36184a0aa073219b08">Status</a></li>
         <li><a data-ga-click="Footer, go to help, text:Docs" href="https://docs.github.com">Docs</a></li>
     </ul>
 
@@ -2078,11 +1675,11 @@
 </svg>
 </a>
     <ul class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
-        <li class="mr-3 mr-lg-0"><a href="https://support.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="88ef7525b8983621fba0eaae320ab19a4c39b909bba748610b76b9e97758d80f">Contact GitHub</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="17347f09eaaba74859a919fdbbb152e38b5be2f3907d4e465db61fcff74f6524">Pricing</a></li>
-      <li class="mr-3 mr-lg-0"><a href="https://docs.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="fab0300e28c9d5fabb52aa76e468d575d711c93196e618cf671b8d82de84e364">API</a></li>
-      <li class="mr-3 mr-lg-0"><a href="https://services.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="98ffa533e9ad04a0b6e80c437a63e6f366e6847691a21e5980f733b177ab4548">Training</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://github.blog" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/picload.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="251fed443618dfed68242d34eea56a8433871686f5d26a94aa5880601db73245">Blog</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://support.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="d6e2c07bcb451ecaf28663c1fc68ac55be52a2ad478eb51de756648cf5d32829">Contact GitHub</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="873bf538c5a076a615c956b313931d9de73c186ea92a30c21ccd70a068c5e9d6">Pricing</a></li>
+      <li class="mr-3 mr-lg-0"><a href="https://docs.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="27824f00d9d5355ff0afa517770524db4d39c253bacc4107b7c661beed8b1bae">API</a></li>
+      <li class="mr-3 mr-lg-0"><a href="https://services.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="f2e8d723440f758115a68029f0a92521084e171511c53006c853c8debde95f49">Training</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://github.blog" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.h&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="91afd0c977982412dedba6e685493949bb0759e8cb576a5b8f387c1f278911e1">Blog</a></li>
         <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
     </ul>
   </div>

@@ -72,25 +72,25 @@
 
   <meta name="viewport" content="width=device-width">
   
-  <title>enigma2/epng.cpp at 7.0 · openatv/enigma2</title>
+  <title>enigma2/pixmapcache.cpp at 7.0 · openatv/enigma2</title>
     <meta name="description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub.">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
   <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
   <meta property="fb:app_id" content="1401488693436528">
   <meta name="apple-itunes-app" content="app-id=1477376905" />
-    <meta name="twitter:image:src" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="enigma2/epng.cpp at 7.0 · openatv/enigma2" /><meta name="twitter:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
-    <meta property="og:image" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta property="og:image:alt" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="enigma2/epng.cpp at 7.0 · openatv/enigma2" /><meta property="og:url" content="https://github.com/openatv/enigma2" /><meta property="og:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
+    <meta name="twitter:image:src" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta name="twitter:site" content="@github" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="enigma2/pixmapcache.cpp at 7.0 · openatv/enigma2" /><meta name="twitter:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
+    <meta property="og:image" content="https://opengraph.githubassets.com/9d990d3b05323cdfe7dbecba6682ee7722eb012f8982a0fd65abc691cdf604ad/openatv/enigma2" /><meta property="og:image:alt" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="600" /><meta property="og:site_name" content="GitHub" /><meta property="og:type" content="object" /><meta property="og:title" content="enigma2/pixmapcache.cpp at 7.0 · openatv/enigma2" /><meta property="og:url" content="https://github.com/openatv/enigma2" /><meta property="og:description" content="openatv-gui. Contribute to openatv/enigma2 development by creating an account on GitHub." />
 
 
 
     
 
   <link rel="assets" href="https://github.githubassets.com/">
-    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6751057/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NzUxMDU3LCJzIjo2NjI1MDU5OTMsImMiOjExNjMzMjg0MTEsInQiOjE2MjgxMTEwMDN9--b31f3a5cd8aea326a789a606ac2d55323ffdb3e1760fbf217889b7dc74e72695" data-refresh-url="/_alive" data-session-id="2216845d3c3e1929cd509fa19a92bcddda9b1f8bb0120a9b4a70e4f1b7b65bd9">
+    <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/6751057/ws?session=eyJ2IjoiVjMiLCJ1Ijo2NzUxMDU3LCJzIjo2NjI1MDU5OTMsImMiOjIzNTI1MjYzOTgsInQiOjE2MjgxMTEwNzh9--208688532d2ada3e803d094edb0f8408aced87c8f8e2e274832751ad70dadd75" data-refresh-url="/_alive" data-session-id="2216845d3c3e1929cd509fa19a92bcddda9b1f8bb0120a9b4a70e4f1b7b65bd9">
     <link rel="shared-web-socket-src" href="/socket-worker-3f088aa2.js">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
 
-  <meta name="request-id" content="DA6F:25C7:29DBED:2B4414:610B008E" data-pjax-transient="true" /><meta name="html-safe-nonce" content="b6bcfd0b5f705dea86043717a94159dfbcc4c003f6d6bac07565023a846a8d4f" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYXR2L2VuaWdtYTIvdHJlZS83LjAvbGliL2dkaSIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MjlEQkVEOjJCNDQxNDo2MTBCMDA4RSIsInZpc2l0b3JfaWQiOiI2MDAyODE2NzQ0NTg2MTg3NTc4IiwicmVnaW9uX2VkZ2UiOiJmcmEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="68a2d4ecde47679182236a95f4fd356bfad651b18b62077228abe95b5a43d542" data-pjax-transient="true" />
+  <meta name="request-id" content="DA6F:25C7:2A3459:2B9F79:610B00DC" data-pjax-transient="true" /><meta name="html-safe-nonce" content="b6bcfd0b5f705dea86043717a94159dfbcc4c003f6d6bac07565023a846a8d4f" data-pjax-transient="true" /><meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYXR2L2VuaWdtYTIvdHJlZS83LjAvbGliL2dkaSIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEzNDU5OjJCOUY3OTo2MTBCMDBEQyIsInZpc2l0b3JfaWQiOiI2MDAyODE2NzQ0NTg2MTg3NTc4IiwicmVnaW9uX2VkZ2UiOiJmcmEiLCJyZWdpb25fcmVuZGVyIjoiaWFkIn0=" data-pjax-transient="true" /><meta name="visitor-hmac" content="8add58c68fe99dd2b689bcd9286e2d6addbd5e36b9f937e665d306989817c384" data-pjax-transient="true" />
 
     <meta name="hovercard-subject-tag" content="repository:4813239" data-pjax-transient>
 
@@ -129,7 +129,7 @@
 
       <meta name="expected-hostname" content="github.com">
 
-      <meta name="js-proxy-site-detection-payload" content="ZDEyZmUxNTVhYWM5ODY4ZjNmNjA1NmRkZTcxZTk2YjE4MGMzYmEwMzViY2I4MDg4Y2QwODNjMTQzOGQ4MTNiOXx7InJlbW90ZV9hZGRyZXNzIjoiNzkuMjQ0Ljg1LjExNiIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MjlEQkVEOjJCNDQxNDo2MTBCMDA4RSIsInRpbWVzdGFtcCI6MTYyODExMTAwMywiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
+      <meta name="js-proxy-site-detection-payload" content="NDVkZTM5MWZhZmY1YzJhNjRlY2JjZmQxN2YwOTQyN2FiMjM0Y2FlNTA4YTVlYTUxMGJhZjRmM2NjNzBmMjEyN3x7InJlbW90ZV9hZGRyZXNzIjoiNzkuMjQ0Ljg1LjExNiIsInJlcXVlc3RfaWQiOiJEQTZGOjI1Qzc6MkEzNDU5OjJCOUY3OTo2MTBCMDBEQyIsInRpbWVzdGFtcCI6MTYyODExMTA3OCwiaG9zdCI6ImdpdGh1Yi5jb20ifQ==">
 
     <meta name="enabled-features" content="MARKETPLACE_PENDING_INSTALLATIONS,GITHUB_TOKEN_PERMISSION">
 
@@ -143,7 +143,7 @@
 
 
 
-    <link rel="canonical" href="https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp" data-pjax-transient>
+    <link rel="canonical" href="https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp" data-pjax-transient>
 
 
   <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
@@ -185,7 +185,7 @@
   href="https://github.com/"
   data-hotkey="g d"
   aria-label="Homepage "
-  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="ccb7c7aa01bb111a05160d27766fb7b470e21480d37f9e37a108c45d020b88ef"
+  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="2d091efa8146638a2d3d3df1bab11695fab3c0b3005512aa2d93798e4b0f5dd3"
 >
   <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
 </a>
@@ -228,7 +228,7 @@
             spellcheck="false"
             autocomplete="off"
           >
-          <input type="hidden" value="gm9FKm+RWlbzva687k2YfMLAeb42Yk5hm/TzbL/sTgEJtkz3jzztJH1I29+JaYwgFgK1bvSjQuQjId6PlQTojQ==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
+          <input type="hidden" value="YhgZpwOuRJYxE6Z6eXDZk9kHl9/856T3EIqJaQMVw6jpwRB64wPz5L/m0xkeVM3PDcVbDz4mqHKoX6SKKf1lJA==" data-csrf="true" class="js-data-jump-to-suggestions-path-csrf" />
           <input type="hidden" class="js-site-search-type-field" name="type" >
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" class="mr-1 header-search-key-slash"><path fill="none" stroke="#979A9C" opacity=".4" d="M3.5.5h12c1.7 0 3 1.3 3 3v13c0 1.7-1.3 3-3 3h-12c-1.7 0-3-1.3-3-3v-13c0-1.7 1.3-3 3-3z"></path><path fill="#979A9C" d="M11.8 6L8 15.1h-.9L10.8 6h1z"></path></svg>
 
@@ -408,7 +408,7 @@
     <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:workspaces context:user" data-selected-links="/codespaces /codespaces" href="/codespaces">
       Codespaces
 </a>
-      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;torwald12&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="975d440b2218b58a7a47bf1d6c2be39408b914cdeabc1d540d82e11fab94e29a" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
+      <a class="js-selected-navigation-item Header-link d-block d-md-none py-2 py-md-3 border-top border-md-top-0 border-white-fade" data-ga-click="Header, click, Nav menu - item:Sponsors" data-hydro-click="{&quot;event_type&quot;:&quot;sponsors.button_click&quot;,&quot;payload&quot;:{&quot;button&quot;:&quot;HEADER_SPONSORS_DASHBOARD&quot;,&quot;sponsorable_login&quot;:&quot;torwald12&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="ee6b203e69d03ddd7413d6949fd9cabf64ebe7fde4153beaffeaecd49d1a8eab" data-selected-links=" /sponsors/accounts" href="/sponsors/accounts">Sponsors</a>
 
     <a class="Header-link d-block d-md-none mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade" href="/settings/profile">
       Settings
@@ -417,12 +417,12 @@
       <img class="avatar avatar-user" loading="lazy" decoding="async" src="https://avatars.githubusercontent.com/u/6751057?s=40&amp;v=4" width="20" height="20" alt="@torwald12" />
       torwald12
 </a>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="7dt2g/tP2f6t5jUBUa1lF3nO2QUWbLztPgdqwABlSPxyS5ERs4jWQeAKSvceQ5o+EPnZv8cXtGHmzNipRu9lFw==" />
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form action="/logout" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="hCkm+pEGXTMewVW+lneDuGk0kfQaww/Ffg+q/jUv4CsbucFo2cFSjFMtKkjZmXyRAAORTsu4B0mmxBiXc6XNwA==" />
       <button
         type="submit"
         class="Header-link mr-0 mr-md-3 py-2 py-md-3 border-top border-md-top-0 border-white-fade d-md-none btn-link d-block width-full text-left"
         style="padding-left: 2px;"
-        data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;sign out&quot;,&quot;label&quot;:&quot;icon:logout&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="691401e6b8d47846ae448c9e16d593d047206a5ca953c8b5df5a9fed8851cb41"
+        data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;sign out&quot;,&quot;label&quot;:&quot;icon:logout&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="20c2c28453fafce74bf16c5202022c30963460677618116ea906446c45578132"
       >
         <svg class="octicon octicon-sign-out v-align-middle" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2 2.75C2 1.784 2.784 1 3.75 1h2.5a.75.75 0 010 1.5h-2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h2.5a.75.75 0 010 1.5h-2.5A1.75 1.75 0 012 13.25V2.75zm10.44 4.5H6.75a.75.75 0 000 1.5h5.69l-1.97 1.97a.75.75 0 101.06 1.06l3.25-3.25a.75.75 0 000-1.06l-3.25-3.25a.75.75 0 10-1.06 1.06l1.97 1.97z"></path></svg>
         Sign out
@@ -437,7 +437,7 @@
   href="https://github.com/"
   data-hotkey="g d"
   aria-label="Homepage "
-  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="ccb7c7aa01bb111a05160d27766fb7b470e21480d37f9e37a108c45d020b88ef"
+  data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;go to dashboard&quot;,&quot;label&quot;:&quot;icon:logo&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="2d091efa8146638a2d3d3df1bab11695fab3c0b3005512aa2d93798e4b0f5dd3"
 >
   <svg class="octicon octicon-mark-github v-align-middle" height="32" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
 </a>
@@ -451,7 +451,7 @@
       <notification-indicator
         class="js-socket-channel"
         data-test-selector="notifications-indicator"
-        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6Njc1MTA1NyIsInQiOjE2MjgxMTEwMDN9--5eb75acd318cedd6e3c42fc33d5cf19350c423f2ca08305b1b670a4baf5872f2">
+        data-channel="eyJjIjoibm90aWZpY2F0aW9uLWNoYW5nZWQ6Njc1MTA1NyIsInQiOjE2MjgxMTEwNzh9--4f386d7da83637d0383992117fb98530b8800da6f0de935dd754a9bf21c53c7e">
         <a href="/notifications"
           class="Header-link notification-indicator position-relative tooltipped tooltipped-sw"
           
@@ -474,7 +474,7 @@
   <summary
     class="Header-link"
     aria-label="Create new…"
-    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;create new&quot;,&quot;label&quot;:&quot;icon:add&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="00caa30ec9b030b06d7dc5e2afa2c577bfe004916c18007314ad90489fb066ce"
+    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;create new&quot;,&quot;label&quot;:&quot;icon:add&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="2ac6f26c9e320db78177bf3db80ea65ab885d3827b55c7c3f49efce8cb1b2296"
   >
       <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-plus">
     <path fill-rule="evenodd" d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 110 1.5H8.5v4.25a.75.75 0 11-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"></path>
@@ -512,7 +512,7 @@
   <summary
     class="Header-link"
     aria-label="View profile and more"
-    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;show menu&quot;,&quot;label&quot;:&quot;icon:avatar&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="c2a660d619f0160dd2a67f75d8e037ad17ea259bffd140de5107c91ba2caac67"
+    data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Header&quot;,&quot;action&quot;:&quot;show menu&quot;,&quot;label&quot;:&quot;icon:avatar&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4f38565c46fb98e855923d561408e4460552f48ddff6bef0f7dfbb42aa4403ce"
   >
     <img src="https://avatars.githubusercontent.com/u/6751057?s=60&amp;v=4" alt="@torwald12" size="20" data-view-component="true" height="20" width="20" class="avatar-user avatar avatar-small"></img>
       <span class="feature-preview-indicator js-feature-preview-indicator" style="top: 1px;" hidden></span>
@@ -628,7 +628,7 @@
         data-action="toggle:notifications-list-subscription-form#detailsToggled"
       >
 
-      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="8478ad4acc9fe3e82bd688b609cf966b978cdb6c25359071f81dae6c2db96549" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
+      <summary class="btn btn-sm rounded-right-0" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;WATCH_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="31c32b30c4cf05ca541e15a38af1ce656f2a785d48e4b61290146a43e9533311" data-ga-click="Repository, click Watch settings, action:blob#show" aria-label="Notifications settings">
           <span data-menu-button>
             <span
               hidden
@@ -680,7 +680,7 @@
             </header>
 
             <div class="SelectMenu-list">
-              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="K5rDGN9togIUR3IZh3CWehqyQ6yp2RlgjfAlgQLDKb8ZTDmhe/A5zkZWGY7Lz9brd4i+xGYeDxO4UUBd6RQjrA==" />
+              <form data-target="notifications-list-subscription-form.form" data-action="submit:notifications-list-subscription-form#submitForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="OUeh/ykG246JHVT4ig9raZQwwuyUv0M5bk1zik1HUmULkVtGjZtAQtsMP2/GsCv4+Qo/hFt4VUpb7BZWppBYdg==" />
 
                 <input type="hidden" name="repository_id" value="4813239">
 
@@ -792,7 +792,7 @@
 
         <details-dialog class="notifications-component-dialog " data-target="notifications-list-subscription-form.customDialog" hidden>
           <div class="SelectMenu-modal notifications-component-dialog-modal overflow-visible">
-            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="J6WT5cCsLiqazVHp4ZJVldb8UDNVYSMcmYRIlNdHYA4Vc2lcZDG15sjcOn6tLRUEu8atW5qmNW+sJS1IPJBqHQ==" />
+            <form data-target="notifications-list-subscription-form.customform" data-action="submit:notifications-list-subscription-form#submitCustomForm" action="/notifications/subscribe" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="ZN76hAMc9GBWKShVMU1Ugo0Ake2o4+4EETtlD+KwHz9WCAA9p4FvrAQ4Q8J98hQT4DpshWck+HckmgDTCWcVLA==" />
 
               <input type="hidden" name="repository_id" value="4813239">
 
@@ -951,9 +951,9 @@
 
   <li>
         <div class="d-block js-toggler-container js-social-container starring-container ">
-    <form class="starred js-social-form" action="/openatv/enigma2/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="bJfvzr6k4sOv0tGfAm5g9sFJ9rhUQ9sxrXsofL17wyXOWaB2WoVDOIe8kdpe8H3ax1iPPfSFhEhmVlXELK+46Q==" />
+    <form class="starred js-social-form" action="/openatv/enigma2/unstar" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="LFkTYBbJmpL7kz7KgSLbibF+fQNIX5+VFUusFLeiLoOOl1zY8ug7adP9fo/dvMalt28EhuiZwOzeZtGsJnZVTw==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4d4f1dbe5be3939f09bb7628f4e3840026c34f7bb34376601e3868162c76563b" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star-fill mr-1">
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Unstar openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;UNSTAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="c872f62ba0740ac1861d2642086e8fbb173d0a14565c75ec11824e0d5965a303" data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star-fill mr-1">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
 </svg>
         <span data-view-component="true">
@@ -963,9 +963,9 @@
            139
         </a>
 </form>
-    <form class="unstarred js-social-form" action="/openatv/enigma2/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="tpzGJULP1Dfh8oIc2GPRnTz4nj06Xosxd0gb3CISa/COMSry2IcjtsA4Kdphku54n9CD2WgjkmSpwe40MEBHJA==" />
+    <form class="unstarred js-social-form" action="/openatv/enigma2/star" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="zO2UB0JLl6UL5t/f0wO4jZEaj69xZgHUSM1uIgRKYWb0QHjQ2ANgJCosdBlq8odoMjKSSyMbGIGWRJvKFhhNsg==" />
       <input type="hidden" name="context" value="repository">
-      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="a5465303de0fa18514e32ddcfea00e19aa486888ced4b12f14f70c19049828e2" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star mr-1">
+      <button type="submit" class="btn btn-sm btn-with-count  js-toggler-target" aria-label="Unstar this repository" title="Star openatv/enigma2" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;STAR_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="d44aba231abcf05049f82b6b3ba8003d624a2c6939315296226023cefd4178ac" data-ga-click="Repository, click star button, action:blob#show; text:Star">        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-star mr-1">
     <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path>
 </svg>
         <span data-view-component="true">
@@ -984,7 +984,7 @@
                       <summary
                     class="btn btn-sm btn-with-count"
                     title="Fork your own copy of openatv/enigma2 to your account"
-                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="450e432e3d341d53442b348ffeb40a7707bb2df44d04da09efb9fdad272178fa" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
+                    data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FORK_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="0f676600fe5ac07fea8fabe8c8154838ceb366be21f3b3cee6ffa59d73a0ff9e" data-ga-click="Repository, show fork modal, action:blob#show; text:Fork">
                     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-repo-forked">
     <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"></path>
 </svg>
@@ -1165,9 +1165,9 @@
   
 
 
-    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/epng.cpp">Permalink</a>
+    <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.cpp">Permalink</a>
 
-    <!-- blob contrib key: blob_contributors:v22:3b19b688b1aed9750d3a8a13aaa721da4dd90d499273f88fac2dc808054c55f2 -->
+    <!-- blob contrib key: blob_contributors:v22:b79ca28756b96335de89694ab6abbe1fdc560acf4bef639daa42fe31b524704a -->
 
     <div class="d-flex flex-items-start flex-shrink-0 pb-3 flex-wrap flex-md-nowrap flex-justify-between flex-md-justify-start">
       
@@ -1252,7 +1252,7 @@
             </div>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/epng.cpp" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/pixmapcache.cpp" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -1292,7 +1292,7 @@
             </template>
 
               <template data-target="ref-selector.itemTemplate">
-  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/epng.cpp" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
+  <a href="https://github.com/openatv/enigma2/blob/{{ urlEncodedRefName }}/lib/gdi/pixmapcache.cpp" class="SelectMenu-item" role="menuitemradio" rel="nofollow" aria-checked="{{ isCurrent }}" data-index="{{ index }}">
     <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check">
     <path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path>
 </svg>
@@ -1323,7 +1323,7 @@
 </div>
 
       <h2 id="blob-path" class="breadcrumb flex-auto flex-self-center min-width-0 text-normal mx-2 width-full width-md-auto flex-order-1 flex-md-order-none mt-3 mt-md-0">
-        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2"><span>enigma2</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib"><span>lib</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib/gdi"><span>gdi</span></a></span><span class="separator">/</span><strong class="final-path">epng.cpp</strong>
+        <span class="js-repo-root text-bold"><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2"><span>enigma2</span></a></span></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib"><span>lib</span></a></span><span class="separator">/</span><span class="js-path-segment d-inline-block wb-break-all"><a data-pjax="#repo-content-pjax-container" href="/openatv/enigma2/tree/7.0/lib/gdi"><span>gdi</span></a></span><span class="separator">/</span><strong class="final-path">pixmapcache.cpp</strong>
       </h2>
       <a href="/openatv/enigma2/find/7.0"
             class="js-pjax-capture-input btn mr-2 d-none d-md-block"
@@ -1344,7 +1344,7 @@
 </summary>
   <div data-view-component="true">          <ul class="dropdown-menu dropdown-menu-sw">
             <li class="d-block d-md-none">
-              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4169e9c39d2277a82b7dde5b0adec29c629ed84abdf9c202ef819084b8f271fc" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/openatv/enigma2/find/7.0">
+              <a class="dropdown-item d-flex flex-items-baseline" data-hydro-click="{&quot;event_type&quot;:&quot;repository.click&quot;,&quot;payload&quot;:{&quot;target&quot;:&quot;FIND_FILE_BUTTON&quot;,&quot;repository_id&quot;:4813239,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="8660b382dc0d418c37716d96ae63dec65af24346e6ca0c3e33358d8236a976e4" data-ga-click="Repository, find file, location:repo overview" data-hotkey="t" data-pjax="true" href="/openatv/enigma2/find/7.0">
                 <span class="flex-auto">Go to file</span>
                 <span class="text-small color-text-secondary" aria-hidden="true">T</span>
 </a>            </li>
@@ -1358,12 +1358,12 @@
             </li>
             <li class="dropdown-divider" role="none"></li>
             <li>
-              <clipboard-copy value="lib/gdi/epng.cpp" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
+              <clipboard-copy value="lib/gdi/pixmapcache.cpp" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details">
                 Copy path
               </clipboard-copy>
             </li>
             <li>
-              <clipboard-copy value="https://github.com/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/epng.cpp" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
+              <clipboard-copy value="https://github.com/openatv/enigma2/blob/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.cpp" class="dropdown-item cursor-pointer" data-toggle-for="blob-more-options-details" >
                 <span class="d-flex flex-items-baseline">
                   <span class="flex-auto">Copy permalink</span>
                 </span>
@@ -1377,98 +1377,17 @@
 
 
     <div class="Box d-flex flex-column flex-shrink-0 mb-3">
-      
-  <div class="Box-header Box-header--blue Details js-details-container">
-      <div class="d-flex flex-items-center">
-        <span class="flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1">
-          <a rel="contributor" data-skip-pjax="true" data-hovercard-type="user" data-hovercard-url="/users/jbleyel/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/jbleyel"><img class="avatar avatar-user" src="https://avatars.githubusercontent.com/u/964927?s=48&amp;v=4" width="24" height="24" alt="@jbleyel" /></a>
-        </span>
-        <div class="flex-1 d-flex flex-items-center ml-3 min-width-0">
-          <div class="css-truncate css-truncate-overflow">
-            <a class="text-bold Link--primary" rel="contributor" data-hovercard-type="user" data-hovercard-url="/users/jbleyel/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/jbleyel">jbleyel</a>
-
-              <span class="markdown-title">
-                <a data-pjax="true" title="fix gPixmap cache" class="Link--secondary" href="/openatv/enigma2/commit/cd40fa54805901f28e60fdee0338caea020e9d9b">fix gPixmap cache</a>
-              </span>
-          </div>
-
-
-          <span class="ml-2">
-            <include-fragment accept="text/fragment+html" src="/openatv/enigma2/commit/cd40fa54805901f28e60fdee0338caea020e9d9b/rollup?direction=e" class="d-inline"></include-fragment>
-          </span>
+      <include-fragment src="/openatv/enigma2/contributors/7.0/lib/gdi/pixmapcache.cpp" class="commit-loader">
+        <div class="Box-header Box-header--blue d-flex flex-items-center">
+          <div class="Skeleton avatar avatar-user flex-shrink-0 ml-n1 mr-n1 mt-n1 mb-n1" style="width:24px;height:24px;"></div>
+          <div class="Skeleton Skeleton--text col-5 ml-2">&nbsp;</div>
         </div>
-        <div class="ml-3 d-flex flex-shrink-0 flex-items-center flex-justify-end color-text-secondary no-wrap">
-          <span class="d-none d-md-inline">
-            <span>Latest commit</span>
-            <a class="text-small text-mono Link--secondary" href="/openatv/enigma2/commit/cd40fa54805901f28e60fdee0338caea020e9d9b" data-pjax>cd40fa5</a>
-            <span itemprop="dateModified"><relative-time datetime="2021-04-25T15:28:55Z" class="no-wrap">Apr 25, 2021</relative-time></span>
-          </span>
 
-          <a data-pjax href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp" class="ml-3 no-wrap Link--primary no-underline">
-            <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-history text-gray">
-    <path fill-rule="evenodd" d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z"></path>
-</svg>
-            <span class="d-none d-sm-inline">
-              <strong>History</strong>
-            </span>
-          </a>
+        <div class="Box-body d-flex flex-items-center" >
+          <div class="Skeleton Skeleton--text col-1">&nbsp;</div>
+          <span class="color-text-danger h6 loader-error">Cannot retrieve contributors at this time</span>
         </div>
-      </div>
-
-  </div>
-
-  <div class="Box-body d-flex flex-items-center flex-auto border-bottom-0 flex-wrap" >
-    <details class="details-reset details-overlay details-overlay-dark lh-default color-text-primary float-left mr-3" id="blob_contributors_box">
-      <summary class="Link--primary">
-        <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-people text-gray">
-    <path fill-rule="evenodd" d="M5.5 3.5a2 2 0 100 4 2 2 0 000-4zM2 5.5a3.5 3.5 0 115.898 2.549 5.507 5.507 0 013.034 4.084.75.75 0 11-1.482.235 4.001 4.001 0 00-7.9 0 .75.75 0 01-1.482-.236A5.507 5.507 0 013.102 8.05 3.49 3.49 0 012 5.5zM11 4a.75.75 0 100 1.5 1.5 1.5 0 01.666 2.844.75.75 0 00-.416.672v.352a.75.75 0 00.574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 101.434-.44 5.01 5.01 0 00-2.56-3.012A3 3 0 0011 4z"></path>
-</svg>
-        <strong>7</strong>
-        
-        contributors
-      </summary>
-      <details-dialog
-        class="Box Box--overlay d-flex flex-column anim-fade-in fast"
-        aria-label="Users who have contributed to this file"
-        src="/openatv/enigma2/contributors-list/7.0/lib/gdi/epng.cpp" preload>
-        <div class="Box-header">
-          <button class="Box-btn-octicon btn-octicon float-right" type="button" aria-label="Close dialog" data-close-dialog>
-            <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-x">
-    <path fill-rule="evenodd" d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"></path>
-</svg>
-          </button>
-          <h3 class="Box-title">
-            Users who have contributed to this file
-          </h3>
-        </div>
-        <include-fragment>
-          <svg style="box-sizing: content-box; color: var(--color-icon-primary);" viewBox="0 0 16 16" fill="none" data-view-component="true" width="32" height="32" class="my-3 mx-auto d-block anim-rotate">
-  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2" vector-effect="non-scaling-stroke" />
-  <path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke" />
-</svg>
-        </include-fragment>
-      </details-dialog>
-    </details>
-      <span class="">
-    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/tmbinc/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=tmbinc">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/334045?s=48&amp;v=4" width="24" height="24" alt="@tmbinc" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/atvcaptain/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=atvcaptain">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/974786?s=48&amp;v=4" width="24" height="24" alt="@atvcaptain" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/jbleyel/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=jbleyel">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/964927?s=48&amp;v=4" width="24" height="24" alt="@jbleyel" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/radxnl/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=radxnl">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/1626876?s=48&amp;v=4" width="24" height="24" alt="@radxnl" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/pieterg/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=pieterg">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/1038561?s=48&amp;v=4" width="24" height="24" alt="@pieterg" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/mtdcr/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=mtdcr">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/925299?s=48&amp;v=4" width="24" height="24" alt="@mtdcr" /> 
-</a>    <a class="avatar-link" data-hovercard-type="user" data-hovercard-url="/users/dvb-adenin/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/openatv/enigma2/commits/7.0/lib/gdi/epng.cpp?author=dvb-adenin">
-      <img class="avatar mr-2 avatar-user" src="https://avatars.githubusercontent.com/u/13708325?s=48&amp;v=4" width="24" height="24" alt="@dvb-adenin" /> 
-</a>
-</span>
-
-  </div>
-    </div>
+</include-fragment>    </div>
 
 
 
@@ -1493,21 +1412,21 @@
 
   <div class="text-mono f6 flex-auto pr-3 flex-order-2 flex-md-order-1">
 
-      479 lines (418 sloc)
+      157 lines (139 sloc)
       <span class="file-info-divider"></span>
-    12 KB
+    4.4 KB
   </div>
 
   <div class="d-flex py-1 py-md-0 flex-auto flex-order-1 flex-md-order-2 flex-sm-grow-0 flex-justify-between hide-sm hide-md">
 
     <div class="BtnGroup">
-      <a href="/openatv/enigma2/raw/7.0/lib/gdi/epng.cpp" id="raw-url" role="button" data-view-component="true" class="btn-sm btn BtnGroup-item">
+      <a href="/openatv/enigma2/raw/7.0/lib/gdi/pixmapcache.cpp" id="raw-url" role="button" data-view-component="true" class="btn-sm btn BtnGroup-item">
   
   Raw
   
 
 </a>
-        <a href="/openatv/enigma2/blame/7.0/lib/gdi/epng.cpp" data-hotkey="b" role="button" data-view-component="true" class="js-update-url-with-hash btn-sm btn BtnGroup-item">
+        <a href="/openatv/enigma2/blame/7.0/lib/gdi/pixmapcache.cpp" data-hotkey="b" role="button" data-view-component="true" class="js-update-url-with-hash btn-sm btn BtnGroup-item">
   
   Blame
   
@@ -1526,7 +1445,7 @@
 </svg>
           </a>
 
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/openatv/enigma2/edit/7.0/lib/gdi/epng.cpp" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="gp7d5LbVXggZyiv8l/qSMH8IYB6Qo44HAuZmifzm9QRvxiJcl5lJtTNubkMwnka0MAnwXqX0FOqxbXJFswAyvw==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form js-update-url-with-hash" action="/openatv/enigma2/edit/7.0/lib/gdi/pixmapcache.cpp" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="vr0UMHmRRa/ys6XawUOwbHHFxYqFZEa36rxJDFsnWGRedvJvbEuHuYojZ1bLuuWGt31nqapm15g40Eyw7QKTUQ==" />
             <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and edit the file" data-hotkey="e" data-disable-with>
               <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-pencil">
@@ -1534,7 +1453,7 @@
 </svg>
             </button>
 </form>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/openatv/enigma2/delete/7.0/lib/gdi/epng.cpp" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="5q5rTl98VGO4BPV+DOsOHh5u6/ZxskZu1S6vz/Cjn/qxCU6E281iopr/EHwchhNAmgJQDbyL83V/UlmVarzTAA==" />
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form class="inline-form" action="/openatv/enigma2/delete/7.0/lib/gdi/pixmapcache.cpp" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="8mATukL7JDeHRT9RNI+WzYSr1h+AyEZngfobPOJ9IDyN5Zb1TJk7RLjBKt2FI18pX+z2rb1Y9wMMICP1fKKgTw==" />
             <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and delete the file" data-disable-with>
               <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" height="16" width="16" class="octicon octicon-trash">
@@ -1562,22 +1481,22 @@
                 </a>
             </li>
           <li>
-            <a class="dropdown-item" href="/openatv/enigma2/raw/7.0/lib/gdi/epng.cpp">
+            <a class="dropdown-item" href="/openatv/enigma2/raw/7.0/lib/gdi/pixmapcache.cpp">
               View raw
             </a>
           </li>
             <li>
-              <a class="dropdown-item" href="/openatv/enigma2/blame/7.0/lib/gdi/epng.cpp">
+              <a class="dropdown-item" href="/openatv/enigma2/blame/7.0/lib/gdi/pixmapcache.cpp">
                 View blame
               </a>
             </li>
 
               <li class="dropdown-divider" role="none"></li>
               <li>
-                <a class="dropdown-item" href="/openatv/enigma2/edit/7.0/lib/gdi/epng.cpp">Edit file</a>
+                <a class="dropdown-item" href="/openatv/enigma2/edit/7.0/lib/gdi/pixmapcache.cpp">Edit file</a>
               </li>
               <li>
-                <a class="dropdown-item menu-item-danger" href="/openatv/enigma2/delete/7.0/lib/gdi/epng.cpp">Delete file</a>
+                <a class="dropdown-item menu-item-danger" href="/openatv/enigma2/delete/7.0/lib/gdi/pixmapcache.cpp">Delete file</a>
               </li>
         </ul>
       </details>
@@ -1592,86 +1511,86 @@
 <table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip>
       <tr>
         <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
-        <td id="LC1" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">define</span> <span class="pl-en">PNG_SKIP_SETJMP_CHECK</span></td>
+        <td id="LC1" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/gdi/pixmapcache.h<span class="pl-pds">&gt;</span></span></td>
       </tr>
       <tr>
         <td id="L2" class="blob-num js-line-number" data-line-number="2"></td>
-        <td id="LC2" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>zlib.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC2" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L3" class="blob-num js-line-number" data-line-number="3"></td>
-        <td id="LC3" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>png.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC3" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>algorithm<span class="pl-pds">&gt;</span></span></td>
       </tr>
       <tr>
         <td id="L4" class="blob-num js-line-number" data-line-number="4"></td>
-        <td id="LC4" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>stdio.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC4" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>map<span class="pl-pds">&gt;</span></span></td>
       </tr>
       <tr>
         <td id="L5" class="blob-num js-line-number" data-line-number="5"></td>
-        <td id="LC5" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/cfile.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC5" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span></td>
       </tr>
       <tr>
         <td id="L6" class="blob-num js-line-number" data-line-number="6"></td>
-        <td id="LC6" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/wrappers.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC6" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/elock.h<span class="pl-pds">&gt;</span></span></td>
       </tr>
       <tr>
         <td id="L7" class="blob-num js-line-number" data-line-number="7"></td>
-        <td id="LC7" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/gdi/epng.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC7" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L8" class="blob-num js-line-number" data-line-number="8"></td>
-        <td id="LC8" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/gdi/pixmapcache.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC8" class="blob-code blob-code-inner js-file-line"><span class="pl-c1">uint</span> PixmapCache::MaximumSize = <span class="pl-c1">256</span>;</td>
       </tr>
       <tr>
         <td id="L9" class="blob-num js-line-number" data-line-number="9"></td>
-        <td id="LC9" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>unistd.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC9" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L10" class="blob-num js-line-number" data-line-number="10"></td>
-        <td id="LC10" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> Cache objects work best when we manage the ref counting manually. ePtr brings memory protection violations on shutdown</span></td>
       </tr>
       <tr>
         <td id="L11" class="blob-num js-line-number" data-line-number="11"></td>
-        <td id="LC11" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>map<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> We track the filesize and modified date of the file. If either change, the item is considered stale is removedand must be reloaded</span></td>
       </tr>
       <tr>
         <td id="L12" class="blob-num js-line-number" data-line-number="12"></td>
-        <td id="LC12" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>string<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC12" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> We also track the last used time so the cache can remove least recently used items when it gets too full. Full is defined</span></td>
       </tr>
       <tr>
         <td id="L13" class="blob-num js-line-number" data-line-number="13"></td>
-        <td id="LC13" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>lib/base/elock.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC13" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> as a number of items, rather than memory used, so there&#39;s a potential for the cache to occupy too much memory if</span></td>
       </tr>
       <tr>
         <td id="L14" class="blob-num js-line-number" data-line-number="14"></td>
-        <td id="LC14" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC14" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">//</span> many large images are loaded with the cached flag set</span></td>
       </tr>
       <tr>
         <td id="L15" class="blob-num js-line-number" data-line-number="15"></td>
-        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-k">extern</span> <span class="pl-s"><span class="pl-pds">&quot;</span>C<span class="pl-pds">&quot;</span></span> {</td>
+        <td id="LC15" class="blob-code blob-code-inner js-file-line"><span class="pl-k">struct</span> <span class="pl-en">CacheItem</span></td>
       </tr>
       <tr>
         <td id="L16" class="blob-num js-line-number" data-line-number="16"></td>
-        <td id="LC16" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>jpeglib.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC16" class="blob-code blob-code-inner js-file-line">{</td>
       </tr>
       <tr>
         <td id="L17" class="blob-num js-line-number" data-line-number="17"></td>
-        <td id="LC17" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC17" class="blob-code blob-code-inner js-file-line"><span class="pl-k">public:</span></td>
       </tr>
       <tr>
         <td id="L18" class="blob-num js-line-number" data-line-number="18"></td>
-        <td id="LC18" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC18" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">CacheItem</span>()</td>
       </tr>
       <tr>
         <td id="L19" class="blob-num js-line-number" data-line-number="19"></td>
-        <td id="LC19" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>nanosvg.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC19" class="blob-code blob-code-inner js-file-line">	{</td>
       </tr>
       <tr>
         <td id="L20" class="blob-num js-line-number" data-line-number="20"></td>
-        <td id="LC20" class="blob-code blob-code-inner js-file-line">#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>nanosvgrast.h<span class="pl-pds">&gt;</span></span></td>
+        <td id="LC20" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L21" class="blob-num js-line-number" data-line-number="21"></td>
@@ -1680,193 +1599,198 @@
       </tr>
       <tr>
         <td id="L22" class="blob-num js-line-number" data-line-number="22"></td>
-        <td id="LC22" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/*</span> TODO: I wonder why this function ALWAYS returns 0 <span class="pl-c">*/</span></span></td>
+        <td id="LC22" class="blob-code blob-code-inner js-file-line">	CacheItem&amp; <span class="pl-k">operator</span>=(<span class="pl-k">const</span> CacheItem&amp; p)</td>
       </tr>
       <tr>
         <td id="L23" class="blob-num js-line-number" data-line-number="23"></td>
-        <td id="LC23" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">loadPNG</span>(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;result, <span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> accel, <span class="pl-k">int</span> cached)</td>
+        <td id="LC23" class="blob-code blob-code-inner js-file-line">	{</td>
       </tr>
       <tr>
         <td id="L24" class="blob-num js-line-number" data-line-number="24"></td>
-        <td id="LC24" class="blob-code blob-code-inner js-file-line">{</td>
+        <td id="LC24" class="blob-code blob-code-inner js-file-line">		pixmap = p.<span class="pl-smi">pixmap</span>;</td>
       </tr>
       <tr>
         <td id="L25" class="blob-num js-line-number" data-line-number="25"></td>
-        <td id="LC25" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached &amp;&amp; (result = <span class="pl-c1">PixmapCache::Get</span>(filename)))</td>
+        <td id="LC25" class="blob-code blob-code-inner js-file-line">		filesize = p.<span class="pl-smi">filesize</span>;</td>
       </tr>
       <tr>
         <td id="L26" class="blob-num js-line-number" data-line-number="26"></td>
-        <td id="LC26" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC26" class="blob-code blob-code-inner js-file-line">		modifiedDate = p.<span class="pl-smi">modifiedDate</span>;</td>
       </tr>
       <tr>
         <td id="L27" class="blob-num js-line-number" data-line-number="27"></td>
-        <td id="LC27" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC27" class="blob-code blob-code-inner js-file-line">		lastUsed = p.<span class="pl-smi">lastUsed</span>;</td>
       </tr>
       <tr>
         <td id="L28" class="blob-num js-line-number" data-line-number="28"></td>
-        <td id="LC28" class="blob-code blob-code-inner js-file-line">	CFile <span class="pl-smi">fp</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>rb<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC28" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> *<span class="pl-c1">this</span>;</td>
       </tr>
       <tr>
         <td id="L29" class="blob-num js-line-number" data-line-number="29"></td>
-        <td id="LC29" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC29" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L30" class="blob-num js-line-number" data-line-number="30"></td>
-        <td id="LC30" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!fp)</td>
+        <td id="LC30" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L31" class="blob-num js-line-number" data-line-number="31"></td>
-        <td id="LC31" class="blob-code blob-code-inner js-file-line">	{</td>
+        <td id="LC31" class="blob-code blob-code-inner js-file-line">	<span class="pl-en">CacheItem</span>(<span class="pl-smi">gPixmap</span>* p, <span class="pl-c1">off_t</span> s, <span class="pl-c1">time_t</span> m)</td>
       </tr>
       <tr>
         <td id="L32" class="blob-num js-line-number" data-line-number="32"></td>
-        <td id="LC32" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] couldn&#39;t open %s<span class="pl-pds">&quot;</span></span>, filename );</td>
+        <td id="LC32" class="blob-code blob-code-inner js-file-line">	{</td>
       </tr>
       <tr>
         <td id="L33" class="blob-num js-line-number" data-line-number="33"></td>
-        <td id="LC33" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC33" class="blob-code blob-code-inner js-file-line">		pixmap = p;</td>
       </tr>
       <tr>
         <td id="L34" class="blob-num js-line-number" data-line-number="34"></td>
-        <td id="LC34" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC34" class="blob-code blob-code-inner js-file-line">		filesize = s;</td>
       </tr>
       <tr>
         <td id="L35" class="blob-num js-line-number" data-line-number="35"></td>
-        <td id="LC35" class="blob-code blob-code-inner js-file-line">	{</td>
+        <td id="LC35" class="blob-code blob-code-inner js-file-line">		modifiedDate = m;</td>
       </tr>
       <tr>
         <td id="L36" class="blob-num js-line-number" data-line-number="36"></td>
-        <td id="LC36" class="blob-code blob-code-inner js-file-line">		__u8 header[<span class="pl-c1">8</span>];</td>
+        <td id="LC36" class="blob-code blob-code-inner js-file-line">		lastUsed = ::<span class="pl-c1">time</span>(<span class="pl-c1">0</span>);</td>
       </tr>
       <tr>
         <td id="L37" class="blob-num js-line-number" data-line-number="37"></td>
-        <td id="LC37" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (!<span class="pl-c1">fread</span>(header, <span class="pl-c1">8</span>, <span class="pl-c1">1</span>, fp))</td>
+        <td id="LC37" class="blob-code blob-code-inner js-file-line">	};</td>
       </tr>
       <tr>
         <td id="L38" class="blob-num js-line-number" data-line-number="38"></td>
-        <td id="LC38" class="blob-code blob-code-inner js-file-line">		{</td>
+        <td id="LC38" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L39" class="blob-num js-line-number" data-line-number="39"></td>
-        <td id="LC39" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to get png header<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC39" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gPixmap</span>* pixmap;</td>
       </tr>
       <tr>
         <td id="L40" class="blob-num js-line-number" data-line-number="40"></td>
-        <td id="LC40" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC40" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">off_t</span> filesize;</td>
       </tr>
       <tr>
         <td id="L41" class="blob-num js-line-number" data-line-number="41"></td>
-        <td id="LC41" class="blob-code blob-code-inner js-file-line">		}</td>
+        <td id="LC41" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">time_t</span> modifiedDate;</td>
       </tr>
       <tr>
         <td id="L42" class="blob-num js-line-number" data-line-number="42"></td>
-        <td id="LC42" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (<span class="pl-c1">png_sig_cmp</span>(header, <span class="pl-c1">0</span>, <span class="pl-c1">8</span>))</td>
+        <td id="LC42" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> lastUsed;</td>
       </tr>
       <tr>
         <td id="L43" class="blob-num js-line-number" data-line-number="43"></td>
-        <td id="LC43" class="blob-code blob-code-inner js-file-line">		{</td>
+        <td id="LC43" class="blob-code blob-code-inner js-file-line">};</td>
       </tr>
       <tr>
         <td id="L44" class="blob-num js-line-number" data-line-number="44"></td>
-        <td id="LC44" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] header size mismatch<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC44" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L45" class="blob-num js-line-number" data-line-number="45"></td>
-        <td id="LC45" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC45" class="blob-code blob-code-inner js-file-line"><span class="pl-k">typedef</span> std::map&lt;std::string, CacheItem&gt; NameToPixmap;</td>
       </tr>
       <tr>
         <td id="L46" class="blob-num js-line-number" data-line-number="46"></td>
-        <td id="LC46" class="blob-code blob-code-inner js-file-line">		}</td>
+        <td id="LC46" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L47" class="blob-num js-line-number" data-line-number="47"></td>
-        <td id="LC47" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC47" class="blob-code blob-code-inner js-file-line"><span class="pl-k">static</span> <span class="pl-k">bool</span> <span class="pl-en">CompareLastUsed</span>(NameToPixmap::value_type i, NameToPixmap::value_type j) </td>
       </tr>
       <tr>
         <td id="L48" class="blob-num js-line-number" data-line-number="48"></td>
-        <td id="LC48" class="blob-code blob-code-inner js-file-line">	png_structp png_ptr = <span class="pl-c1">png_create_read_struct</span>(PNG_LIBPNG_VER_STRING, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>);</td>
+        <td id="LC48" class="blob-code blob-code-inner js-file-line">{ </td>
       </tr>
       <tr>
         <td id="L49" class="blob-num js-line-number" data-line-number="49"></td>
-        <td id="LC49" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!png_ptr)</td>
+        <td id="LC49" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> i.<span class="pl-smi">second</span>.<span class="pl-smi">lastUsed</span> &lt; j.<span class="pl-smi">second</span>.<span class="pl-smi">lastUsed</span>;</td>
       </tr>
       <tr>
         <td id="L50" class="blob-num js-line-number" data-line-number="50"></td>
-        <td id="LC50" class="blob-code blob-code-inner js-file-line">	{</td>
+        <td id="LC50" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L51" class="blob-num js-line-number" data-line-number="51"></td>
-        <td id="LC51" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to create read struct<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC51" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L52" class="blob-num js-line-number" data-line-number="52"></td>
-        <td id="LC52" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC52" class="blob-code blob-code-inner js-file-line"><span class="pl-k">static</span> eSingleLock pixmapCacheLock;</td>
       </tr>
       <tr>
         <td id="L53" class="blob-num js-line-number" data-line-number="53"></td>
-        <td id="LC53" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC53" class="blob-code blob-code-inner js-file-line"><span class="pl-k">static</span> NameToPixmap pixmapCache;</td>
       </tr>
       <tr>
         <td id="L54" class="blob-num js-line-number" data-line-number="54"></td>
-        <td id="LC54" class="blob-code blob-code-inner js-file-line">	png_infop info_ptr = <span class="pl-c1">png_create_info_struct</span>(png_ptr);</td>
+        <td id="LC54" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L55" class="blob-num js-line-number" data-line-number="55"></td>
-        <td id="LC55" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!info_ptr)</td>
+        <td id="LC55" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">/*</span> The &quot;dispose&quot; method isn&#39;t very efficient, but not called unless</span></td>
       </tr>
       <tr>
         <td id="L56" class="blob-num js-line-number" data-line-number="56"></td>
-        <td id="LC56" class="blob-code blob-code-inner js-file-line">	{</td>
+        <td id="LC56" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * a pixmap is being replaced by another when the cache is full and even then,</span></td>
       </tr>
       <tr>
         <td id="L57" class="blob-num js-line-number" data-line-number="57"></td>
-        <td id="LC57" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to create info struct<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC57" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * not loading the same pixmap repeatedly will probably make up for that.</span></td>
       </tr>
       <tr>
         <td id="L58" class="blob-num js-line-number" data-line-number="58"></td>
-        <td id="LC58" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_destroy_read_struct</span>(&amp;png_ptr, (png_infopp)<span class="pl-c1">0</span>, (png_infopp)<span class="pl-c1">0</span>);</td>
+        <td id="LC58" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * There is a race condition, when two threads load the same image,</span></td>
       </tr>
       <tr>
         <td id="L59" class="blob-num js-line-number" data-line-number="59"></td>
-        <td id="LC59" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC59" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * the worst case scenario is then that the pixmap is loaded twice. This</span></td>
       </tr>
       <tr>
         <td id="L60" class="blob-num js-line-number" data-line-number="60"></td>
-        <td id="LC60" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC60" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * isn&#39;t any worse than before, and all the UI pixmaps will be loaded</span></td>
       </tr>
       <tr>
         <td id="L61" class="blob-num js-line-number" data-line-number="61"></td>
-        <td id="LC61" class="blob-code blob-code-inner js-file-line">	png_infop end_info = <span class="pl-c1">png_create_info_struct</span>(png_ptr);</td>
+        <td id="LC61" class="blob-code blob-code-inner js-file-line"><span class="pl-c"> * from the same thread anyway. <span class="pl-c">*/</span></span></td>
       </tr>
       <tr>
         <td id="L62" class="blob-num js-line-number" data-line-number="62"></td>
-        <td id="LC62" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!end_info)</td>
+        <td id="LC62" class="blob-code blob-code-inner js-file-line"><span class="pl-k">void</span> <span class="pl-en">PixmapCache::PixmapDisposed</span>(<span class="pl-smi">gPixmap</span>* pixmap)</td>
       </tr>
       <tr>
         <td id="L63" class="blob-num js-line-number" data-line-number="63"></td>
-        <td id="LC63" class="blob-code blob-code-inner js-file-line">	{</td>
+        <td id="LC63" class="blob-code blob-code-inner js-file-line">{</td>
       </tr>
       <tr>
         <td id="L64" class="blob-num js-line-number" data-line-number="64"></td>
-        <td id="LC64" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to create end info struct<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC64" class="blob-code blob-code-inner js-file-line">	eSingleLocker <span class="pl-smi">lock</span>(pixmapCacheLock);</td>
       </tr>
       <tr>
         <td id="L65" class="blob-num js-line-number" data-line-number="65"></td>
-        <td id="LC65" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_destroy_read_struct</span>(&amp;png_ptr, &amp;info_ptr, (png_infopp)<span class="pl-c1">NULL</span>);</td>
+        <td id="LC65" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L66" class="blob-num js-line-number" data-line-number="66"></td>
-        <td id="LC66" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC66" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">for</span> (NameToPixmap::iterator it = pixmapCache.<span class="pl-c1">begin</span>();</td>
       </tr>
       <tr>
         <td id="L67" class="blob-num js-line-number" data-line-number="67"></td>
-        <td id="LC67" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC67" class="blob-code blob-code-inner js-file-line">		 it != pixmapCache.<span class="pl-c1">end</span>();</td>
       </tr>
       <tr>
         <td id="L68" class="blob-num js-line-number" data-line-number="68"></td>
-        <td id="LC68" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (<span class="pl-c1">setjmp</span>(<span class="pl-c1">png_jmpbuf</span>(png_ptr)))</td>
+        <td id="LC68" class="blob-code blob-code-inner js-file-line">		 ++it)</td>
       </tr>
       <tr>
         <td id="L69" class="blob-num js-line-number" data-line-number="69"></td>
@@ -1874,1698 +1798,361 @@
       </tr>
       <tr>
         <td id="L70" class="blob-num js-line-number" data-line-number="70"></td>
-        <td id="LC70" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] png setjump failed or activated<span class="pl-pds">&quot;</span></span>);</td>
+        <td id="LC70" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span> == pixmap)</td>
       </tr>
       <tr>
         <td id="L71" class="blob-num js-line-number" data-line-number="71"></td>
-        <td id="LC71" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_destroy_read_struct</span>(&amp;png_ptr, &amp;info_ptr, &amp;end_info);</td>
+        <td id="LC71" class="blob-code blob-code-inner js-file-line">		{</td>
       </tr>
       <tr>
         <td id="L72" class="blob-num js-line-number" data-line-number="72"></td>
-        <td id="LC72" class="blob-code blob-code-inner js-file-line">		result = <span class="pl-c1">0</span>;</td>
+        <td id="LC72" class="blob-code blob-code-inner js-file-line">			pixmapCache.<span class="pl-c1">erase</span>(it);</td>
       </tr>
       <tr>
         <td id="L73" class="blob-num js-line-number" data-line-number="73"></td>
-        <td id="LC73" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
+        <td id="LC73" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">break</span>;</td>
       </tr>
       <tr>
         <td id="L74" class="blob-num js-line-number" data-line-number="74"></td>
-        <td id="LC74" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC74" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L75" class="blob-num js-line-number" data-line-number="75"></td>
-        <td id="LC75" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_init_io</span>(png_ptr, fp);</td>
+        <td id="LC75" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L76" class="blob-num js-line-number" data-line-number="76"></td>
-        <td id="LC76" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_set_sig_bytes</span>(png_ptr, <span class="pl-c1">8</span>);</td>
+        <td id="LC76" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L77" class="blob-num js-line-number" data-line-number="77"></td>
-        <td id="LC77" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_read_info</span>(png_ptr, info_ptr);</td>
+        <td id="LC77" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L78" class="blob-num js-line-number" data-line-number="78"></td>
-        <td id="LC78" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC78" class="blob-code blob-code-inner js-file-line"><span class="pl-smi">gPixmap</span>* <span class="pl-en">PixmapCache::Get</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename)</td>
       </tr>
       <tr>
         <td id="L79" class="blob-num js-line-number" data-line-number="79"></td>
-        <td id="LC79" class="blob-code blob-code-inner js-file-line">	png_uint_32 width, height;</td>
+        <td id="LC79" class="blob-code blob-code-inner js-file-line">{</td>
       </tr>
       <tr>
         <td id="L80" class="blob-num js-line-number" data-line-number="80"></td>
-        <td id="LC80" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> bit_depth;</td>
+        <td id="LC80" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gPixmap</span>* disposePixmap = <span class="pl-c1">NULL</span>;</td>
       </tr>
       <tr>
         <td id="L81" class="blob-num js-line-number" data-line-number="81"></td>
-        <td id="LC81" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> color_type;</td>
+        <td id="LC81" class="blob-code blob-code-inner js-file-line">	{</td>
       </tr>
       <tr>
         <td id="L82" class="blob-num js-line-number" data-line-number="82"></td>
-        <td id="LC82" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> interlace_type;</td>
+        <td id="LC82" class="blob-code blob-code-inner js-file-line">		eSingleLocker <span class="pl-smi">lock</span>(pixmapCacheLock);</td>
       </tr>
       <tr>
         <td id="L83" class="blob-num js-line-number" data-line-number="83"></td>
-        <td id="LC83" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> channels;</td>
+        <td id="LC83" class="blob-code blob-code-inner js-file-line">		NameToPixmap::iterator it = pixmapCache.<span class="pl-c1">find</span>(filename);</td>
       </tr>
       <tr>
         <td id="L84" class="blob-num js-line-number" data-line-number="84"></td>
-        <td id="LC84" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> trns;</td>
+        <td id="LC84" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (it != pixmapCache.<span class="pl-c1">end</span>())</td>
       </tr>
       <tr>
         <td id="L85" class="blob-num js-line-number" data-line-number="85"></td>
-        <td id="LC85" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC85" class="blob-code blob-code-inner js-file-line">		{</td>
       </tr>
       <tr>
         <td id="L86" class="blob-num js-line-number" data-line-number="86"></td>
-        <td id="LC86" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_get_IHDR</span>(png_ptr, info_ptr, &amp;width, &amp;height, &amp;bit_depth, &amp;color_type, &amp;interlace_type, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>);</td>
+        <td id="LC86" class="blob-code blob-code-inner js-file-line">			<span class="pl-c"><span class="pl-c">//</span> find out whether the image has been modified</span></td>
       </tr>
       <tr>
         <td id="L87" class="blob-num js-line-number" data-line-number="87"></td>
-        <td id="LC87" class="blob-code blob-code-inner js-file-line">	channels = <span class="pl-c1">png_get_channels</span>(png_ptr, info_ptr);</td>
+        <td id="LC87" class="blob-code blob-code-inner js-file-line">			<span class="pl-c"><span class="pl-c">//</span> if so, it&#39;ll need to be reloaded from disk</span></td>
       </tr>
       <tr>
         <td id="L88" class="blob-num js-line-number" data-line-number="88"></td>
-        <td id="LC88" class="blob-code blob-code-inner js-file-line">	trns = <span class="pl-c1">png_get_valid</span>(png_ptr, info_ptr, PNG_INFO_tRNS);</td>
+        <td id="LC88" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">struct</span> <span class="pl-en">stat</span> img_stat;</td>
       </tr>
       <tr>
         <td id="L89" class="blob-num js-line-number" data-line-number="89"></td>
-        <td id="LC89" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span>eDebug(&quot;[ePNG] %s: before %dx%dx%dbpcx%dchan coltyp=%d&quot;, filename, (int)width, (int)height, bit_depth, channels, color_type);</span></td>
+        <td id="LC89" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> (<span class="pl-c1">stat</span>(filename, &amp;img_stat) == <span class="pl-c1">0</span> &amp;&amp; img_stat.<span class="pl-smi">st_mtime</span> == it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">modifiedDate</span> &amp;&amp; img_stat.<span class="pl-smi">st_size</span> == it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">filesize</span>)</td>
       </tr>
       <tr>
         <td id="L90" class="blob-num js-line-number" data-line-number="90"></td>
-        <td id="LC90" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC90" class="blob-code blob-code-inner js-file-line">			{</td>
       </tr>
       <tr>
         <td id="L91" class="blob-num js-line-number" data-line-number="91"></td>
-        <td id="LC91" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">/*</span></span></td>
+        <td id="LC91" class="blob-code blob-code-inner js-file-line">				<span class="pl-c"><span class="pl-c">//</span> file still exists and hasn&#39;t been modified</span></td>
       </tr>
       <tr>
         <td id="L92" class="blob-num js-line-number" data-line-number="92"></td>
-        <td id="LC92" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 * gPixmaps use 8 bits per channel. rgb pixmaps are stored as abgr.</span></td>
+        <td id="LC92" class="blob-code blob-code-inner js-file-line">				it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">lastUsed</span> = ::<span class="pl-c1">time</span>(<span class="pl-c1">0</span>);</td>
       </tr>
       <tr>
         <td id="L93" class="blob-num js-line-number" data-line-number="93"></td>
-        <td id="LC93" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 * So convert 1,2 and 4 bpc to 8bpc images that enigma can blit</span></td>
+        <td id="LC93" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">return</span> it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span>;</td>
       </tr>
       <tr>
         <td id="L94" class="blob-num js-line-number" data-line-number="94"></td>
-        <td id="LC94" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 * so add &#39;empty&#39; alpha channel</span></td>
+        <td id="LC94" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L95" class="blob-num js-line-number" data-line-number="95"></td>
-        <td id="LC95" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 * Expand G+tRNS to GA, RGB+tRNS to RGBA</span></td>
+        <td id="LC95" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">else</span></td>
       </tr>
       <tr>
         <td id="L96" class="blob-num js-line-number" data-line-number="96"></td>
-        <td id="LC96" class="blob-code blob-code-inner js-file-line"><span class="pl-c">	 <span class="pl-c">*/</span></span></td>
+        <td id="LC96" class="blob-code blob-code-inner js-file-line">			{</td>
       </tr>
       <tr>
         <td id="L97" class="blob-num js-line-number" data-line-number="97"></td>
-        <td id="LC97" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (bit_depth == <span class="pl-c1">16</span>)</td>
+        <td id="LC97" class="blob-code blob-code-inner js-file-line">				<span class="pl-c"><span class="pl-c">//</span> file no longer exists, has been modified or changed size, so remove from the cache</span></td>
       </tr>
       <tr>
         <td id="L98" class="blob-num js-line-number" data-line-number="98"></td>
-        <td id="LC98" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_strip_16</span>(png_ptr);</td>
+        <td id="LC98" class="blob-code blob-code-inner js-file-line">				pixmapCache.<span class="pl-c1">erase</span>(it);</td>
       </tr>
       <tr>
         <td id="L99" class="blob-num js-line-number" data-line-number="99"></td>
-        <td id="LC99" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (bit_depth &lt; <span class="pl-c1">8</span>)</td>
+        <td id="LC99" class="blob-code blob-code-inner js-file-line">				disposePixmap = it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span>;</td>
       </tr>
       <tr>
         <td id="L100" class="blob-num js-line-number" data-line-number="100"></td>
-        <td id="LC100" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_packing</span> (png_ptr);</td>
+        <td id="LC100" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L101" class="blob-num js-line-number" data-line-number="101"></td>
-        <td id="LC101" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC101" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L102" class="blob-num js-line-number" data-line-number="102"></td>
-        <td id="LC102" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (color_type == PNG_COLOR_TYPE_GRAY &amp;&amp; bit_depth &lt; <span class="pl-c1">8</span>)</td>
+        <td id="LC102" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L103" class="blob-num js-line-number" data-line-number="103"></td>
-        <td id="LC103" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_expand_gray_1_2_4_to_8</span>(png_ptr);</td>
+        <td id="LC103" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L104" class="blob-num js-line-number" data-line-number="104"></td>
-        <td id="LC104" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (color_type == PNG_COLOR_TYPE_GRAY &amp;&amp; trns)</td>
+        <td id="LC104" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Release might cause a callback into PixmapDisposed</span></td>
       </tr>
       <tr>
         <td id="L105" class="blob-num js-line-number" data-line-number="105"></td>
-        <td id="LC105" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_tRNS_to_alpha</span>(png_ptr);</td>
+        <td id="LC105" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Avoid the risk of a deadlock by doing the release outside the lock</span></td>
       </tr>
       <tr>
         <td id="L106" class="blob-num js-line-number" data-line-number="106"></td>
-        <td id="LC106" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> ((color_type == PNG_COLOR_TYPE_GRAY &amp;&amp; trns) || color_type == PNG_COLOR_TYPE_GRAY_ALPHA) {</td>
+        <td id="LC106" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (disposePixmap)</td>
       </tr>
       <tr>
         <td id="L107" class="blob-num js-line-number" data-line-number="107"></td>
-        <td id="LC107" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_gray_to_rgb</span>(png_ptr);</td>
+        <td id="LC107" class="blob-code blob-code-inner js-file-line">		disposePixmap-&gt;<span class="pl-c1">Release</span>();</td>
       </tr>
       <tr>
         <td id="L108" class="blob-num js-line-number" data-line-number="108"></td>
-        <td id="LC108" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_bgr</span>(png_ptr);</td>
+        <td id="LC108" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L109" class="blob-num js-line-number" data-line-number="109"></td>
-        <td id="LC109" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC109" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">NULL</span>;</td>
       </tr>
       <tr>
         <td id="L110" class="blob-num js-line-number" data-line-number="110"></td>
-        <td id="LC110" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC110" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
       <tr>
         <td id="L111" class="blob-num js-line-number" data-line-number="111"></td>
-        <td id="LC111" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (color_type == PNG_COLOR_TYPE_RGB) {</td>
+        <td id="LC111" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L112" class="blob-num js-line-number" data-line-number="112"></td>
-        <td id="LC112" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (trns)</td>
+        <td id="LC112" class="blob-code blob-code-inner js-file-line"><span class="pl-k">void</span> <span class="pl-en">PixmapCache::Set</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-smi">gPixmap</span>* pixmap)</td>
       </tr>
       <tr>
         <td id="L113" class="blob-num js-line-number" data-line-number="113"></td>
-        <td id="LC113" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">png_set_tRNS_to_alpha</span>(png_ptr);</td>
+        <td id="LC113" class="blob-code blob-code-inner js-file-line">{</td>
       </tr>
       <tr>
         <td id="L114" class="blob-num js-line-number" data-line-number="114"></td>
-        <td id="LC114" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">else</span></td>
+        <td id="LC114" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gPixmap</span>* disposePixmap = <span class="pl-c1">NULL</span>;</td>
       </tr>
       <tr>
         <td id="L115" class="blob-num js-line-number" data-line-number="115"></td>
-        <td id="LC115" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">png_set_add_alpha</span>(png_ptr, <span class="pl-c1">255</span>, PNG_FILLER_AFTER);</td>
+        <td id="LC115" class="blob-code blob-code-inner js-file-line">	{</td>
       </tr>
       <tr>
         <td id="L116" class="blob-num js-line-number" data-line-number="116"></td>
-        <td id="LC116" class="blob-code blob-code-inner js-file-line">	}</td>
+        <td id="LC116" class="blob-code blob-code-inner js-file-line">		eSingleLocker <span class="pl-smi">lock</span>(pixmapCacheLock);</td>
       </tr>
       <tr>
         <td id="L117" class="blob-num js-line-number" data-line-number="117"></td>
-        <td id="LC117" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC117" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">struct</span> <span class="pl-en">stat</span> img_stat;</td>
       </tr>
       <tr>
         <td id="L118" class="blob-num js-line-number" data-line-number="118"></td>
-        <td id="LC118" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (color_type == PNG_COLOR_TYPE_RGB || color_type == PNG_COLOR_TYPE_RGB_ALPHA)</td>
+        <td id="LC118" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (<span class="pl-c1">stat</span>(filename, &amp;img_stat) == <span class="pl-c1">0</span>)</td>
       </tr>
       <tr>
         <td id="L119" class="blob-num js-line-number" data-line-number="119"></td>
-        <td id="LC119" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_bgr</span>(png_ptr);</td>
+        <td id="LC119" class="blob-code blob-code-inner js-file-line">		{</td>
       </tr>
       <tr>
         <td id="L120" class="blob-num js-line-number" data-line-number="120"></td>
-        <td id="LC120" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC120" class="blob-code blob-code-inner js-file-line">			NameToPixmap::iterator it = pixmapCache.<span class="pl-c1">find</span>(filename);</td>
       </tr>
       <tr>
         <td id="L121" class="blob-num js-line-number" data-line-number="121"></td>
-        <td id="LC121" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Update the info structures after the transformations take effect</span></td>
+        <td id="LC121" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> (it != pixmapCache.<span class="pl-c1">end</span>())</td>
       </tr>
       <tr>
         <td id="L122" class="blob-num js-line-number" data-line-number="122"></td>
-        <td id="LC122" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (interlace_type != PNG_INTERLACE_NONE)</td>
+        <td id="LC122" class="blob-code blob-code-inner js-file-line">			{</td>
       </tr>
       <tr>
         <td id="L123" class="blob-num js-line-number" data-line-number="123"></td>
-        <td id="LC123" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_set_interlace_handling</span>(png_ptr);  <span class="pl-c"><span class="pl-c">//</span> needed before read_update_info()</span></td>
+        <td id="LC123" class="blob-code blob-code-inner js-file-line">				<span class="pl-c"><span class="pl-c">//</span> need to release the pixmap being replaced after we&#39;ve finished updating the cache</span></td>
       </tr>
       <tr>
         <td id="L124" class="blob-num js-line-number" data-line-number="124"></td>
-        <td id="LC124" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_read_update_info</span> (png_ptr, info_ptr);</td>
+        <td id="LC124" class="blob-code blob-code-inner js-file-line">				disposePixmap = it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span>;</td>
       </tr>
       <tr>
         <td id="L125" class="blob-num js-line-number" data-line-number="125"></td>
-        <td id="LC125" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_get_IHDR</span>(png_ptr, info_ptr, &amp;width, &amp;height, &amp;bit_depth, &amp;color_type, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>);</td>
+        <td id="LC125" class="blob-code blob-code-inner js-file-line">				</td>
       </tr>
       <tr>
         <td id="L126" class="blob-num js-line-number" data-line-number="126"></td>
-        <td id="LC126" class="blob-code blob-code-inner js-file-line">	channels = <span class="pl-c1">png_get_channels</span>(png_ptr, info_ptr);</td>
+        <td id="LC126" class="blob-code blob-code-inner js-file-line">				<span class="pl-c"><span class="pl-c">//</span> swap in the updated pixmap</span></td>
       </tr>
       <tr>
         <td id="L127" class="blob-num js-line-number" data-line-number="127"></td>
-        <td id="LC127" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC127" class="blob-code blob-code-inner js-file-line">				pixmap-&gt;<span class="pl-c1">AddRef</span>();</td>
       </tr>
       <tr>
         <td id="L128" class="blob-num js-line-number" data-line-number="128"></td>
-        <td id="LC128" class="blob-code blob-code-inner js-file-line">	result = <span class="pl-k">new</span> <span class="pl-c1">gPixmap</span>(width, height, bit_depth * channels, cached ? PixmapCache::PixmapDisposed : <span class="pl-c1">NULL</span>, accel);</td>
+        <td id="LC128" class="blob-code blob-code-inner js-file-line">				it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span> = pixmap;</td>
       </tr>
       <tr>
         <td id="L129" class="blob-num js-line-number" data-line-number="129"></td>
-        <td id="LC129" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gUnmanagedSurface</span> *surface = result-&gt;<span class="pl-smi">surface</span>;</td>
+        <td id="LC129" class="blob-code blob-code-inner js-file-line">				it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">filesize</span> = img_stat.<span class="pl-smi">st_size</span>;</td>
       </tr>
       <tr>
         <td id="L130" class="blob-num js-line-number" data-line-number="130"></td>
-        <td id="LC130" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC130" class="blob-code blob-code-inner js-file-line">				it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">modifiedDate</span> = img_stat.<span class="pl-smi">st_mtime</span>;</td>
       </tr>
       <tr>
         <td id="L131" class="blob-num js-line-number" data-line-number="131"></td>
-        <td id="LC131" class="blob-code blob-code-inner js-file-line">	png_bytep *rowptr = <span class="pl-k">new</span> png_bytep[height];</td>
+        <td id="LC131" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L132" class="blob-num js-line-number" data-line-number="132"></td>
-        <td id="LC132" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">for</span> (<span class="pl-k">unsigned</span> <span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; height; i++)</td>
+        <td id="LC132" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">else</span></td>
       </tr>
       <tr>
         <td id="L133" class="blob-num js-line-number" data-line-number="133"></td>
-        <td id="LC133" class="blob-code blob-code-inner js-file-line">		rowptr[i] = ((png_byte*)(surface-&gt;<span class="pl-smi">data</span>)) + i * surface-&gt;<span class="pl-smi">stride</span>;</td>
+        <td id="LC133" class="blob-code blob-code-inner js-file-line">			{</td>
       </tr>
       <tr>
         <td id="L134" class="blob-num js-line-number" data-line-number="134"></td>
-        <td id="LC134" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_read_image</span>(png_ptr, rowptr);</td>
+        <td id="LC134" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">if</span> (pixmapCache.<span class="pl-c1">size</span>() &gt; MaximumSize)</td>
       </tr>
       <tr>
         <td id="L135" class="blob-num js-line-number" data-line-number="135"></td>
-        <td id="LC135" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC135" class="blob-code blob-code-inner js-file-line">				{</td>
       </tr>
       <tr>
         <td id="L136" class="blob-num js-line-number" data-line-number="136"></td>
-        <td id="LC136" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">delete []</span> rowptr;</td>
+        <td id="LC136" class="blob-code blob-code-inner js-file-line">					<span class="pl-c"><span class="pl-c">//</span> find the least recently used</span></td>
       </tr>
       <tr>
         <td id="L137" class="blob-num js-line-number" data-line-number="137"></td>
-        <td id="LC137" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC137" class="blob-code blob-code-inner js-file-line">					NameToPixmap::iterator it = <span class="pl-c1">std::min_element</span>(pixmapCache.<span class="pl-c1">begin</span>(), pixmapCache.<span class="pl-c1">end</span>(), &amp;CompareLastUsed);</td>
       </tr>
       <tr>
         <td id="L138" class="blob-num js-line-number" data-line-number="138"></td>
-        <td id="LC138" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> num_palette = -<span class="pl-c1">1</span>, num_trans = -<span class="pl-c1">1</span>;</td>
+        <td id="LC138" class="blob-code blob-code-inner js-file-line">					<span class="pl-k">if</span> (it != pixmapCache.<span class="pl-c1">end</span>())</td>
       </tr>
       <tr>
         <td id="L139" class="blob-num js-line-number" data-line-number="139"></td>
-        <td id="LC139" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (color_type == PNG_COLOR_TYPE_PALETTE) {</td>
+        <td id="LC139" class="blob-code blob-code-inner js-file-line">					{</td>
       </tr>
       <tr>
         <td id="L140" class="blob-num js-line-number" data-line-number="140"></td>
-        <td id="LC140" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (<span class="pl-c1">png_get_valid</span>(png_ptr, info_ptr, PNG_INFO_PLTE)) {</td>
+        <td id="LC140" class="blob-code blob-code-inner js-file-line">						pixmapCache.<span class="pl-c1">erase</span>(it);</td>
       </tr>
       <tr>
         <td id="L141" class="blob-num js-line-number" data-line-number="141"></td>
-        <td id="LC141" class="blob-code blob-code-inner js-file-line">			png_color *palette;</td>
+        <td id="LC141" class="blob-code blob-code-inner js-file-line">						<span class="pl-c"><span class="pl-c">//</span> need to release the pixmap being removed after we&#39;ve finished updating the cache</span></td>
       </tr>
       <tr>
         <td id="L142" class="blob-num js-line-number" data-line-number="142"></td>
-        <td id="LC142" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">png_get_PLTE</span>(png_ptr, info_ptr, &amp;palette, &amp;num_palette);</td>
+        <td id="LC142" class="blob-code blob-code-inner js-file-line">						disposePixmap = it-&gt;<span class="pl-smi">second</span>.<span class="pl-smi">pixmap</span>;</td>
       </tr>
       <tr>
         <td id="L143" class="blob-num js-line-number" data-line-number="143"></td>
-        <td id="LC143" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> (num_palette)</td>
+        <td id="LC143" class="blob-code blob-code-inner js-file-line">					}</td>
       </tr>
       <tr>
         <td id="L144" class="blob-num js-line-number" data-line-number="144"></td>
-        <td id="LC144" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span> = <span class="pl-k">new</span> <span class="pl-smi">gRGB</span>[num_palette];</td>
+        <td id="LC144" class="blob-code blob-code-inner js-file-line">				}</td>
       </tr>
       <tr>
         <td id="L145" class="blob-num js-line-number" data-line-number="145"></td>
-        <td id="LC145" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">else</span></td>
+        <td id="LC145" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L146" class="blob-num js-line-number" data-line-number="146"></td>
-        <td id="LC146" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span> = <span class="pl-c1">0</span>;</td>
+        <td id="LC146" class="blob-code blob-code-inner js-file-line">				pixmap-&gt;<span class="pl-c1">AddRef</span>();</td>
       </tr>
       <tr>
         <td id="L147" class="blob-num js-line-number" data-line-number="147"></td>
-        <td id="LC147" class="blob-code blob-code-inner js-file-line">			surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">colors</span> = num_palette;</td>
+        <td id="LC147" class="blob-code blob-code-inner js-file-line">				NameToPixmap::value_type pr = <span class="pl-c1">std::make_pair</span>(<span class="pl-c1">std::string</span>(filename), <span class="pl-c1">CacheItem</span>(pixmap, img_stat.<span class="pl-smi">st_size</span>, img_stat.<span class="pl-smi">st_mtime</span>));</td>
       </tr>
       <tr>
         <td id="L148" class="blob-num js-line-number" data-line-number="148"></td>
-        <td id="LC148" class="blob-code blob-code-inner js-file-line">
-</td>
+        <td id="LC148" class="blob-code blob-code-inner js-file-line">				pixmapCache.<span class="pl-c1">insert</span>(pr);</td>
       </tr>
       <tr>
         <td id="L149" class="blob-num js-line-number" data-line-number="149"></td>
-        <td id="LC149" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; num_palette; i++) {</td>
+        <td id="LC149" class="blob-code blob-code-inner js-file-line">			}</td>
       </tr>
       <tr>
         <td id="L150" class="blob-num js-line-number" data-line-number="150"></td>
-        <td id="LC150" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">a</span> = <span class="pl-c1">0</span>;</td>
+        <td id="LC150" class="blob-code blob-code-inner js-file-line">		}</td>
       </tr>
       <tr>
         <td id="L151" class="blob-num js-line-number" data-line-number="151"></td>
-        <td id="LC151" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">r</span> = palette[i].<span class="pl-smi">red</span>;</td>
+        <td id="LC151" class="blob-code blob-code-inner js-file-line">	}</td>
       </tr>
       <tr>
         <td id="L152" class="blob-num js-line-number" data-line-number="152"></td>
-        <td id="LC152" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">g</span> = palette[i].<span class="pl-smi">green</span>;</td>
+        <td id="LC152" class="blob-code blob-code-inner js-file-line">
+</td>
       </tr>
       <tr>
         <td id="L153" class="blob-num js-line-number" data-line-number="153"></td>
-        <td id="LC153" class="blob-code blob-code-inner js-file-line">				surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">b</span> = palette[i].<span class="pl-smi">blue</span>;</td>
+        <td id="LC153" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Release might cause a callback into PixmapDisposed</span></td>
       </tr>
       <tr>
         <td id="L154" class="blob-num js-line-number" data-line-number="154"></td>
-        <td id="LC154" class="blob-code blob-code-inner js-file-line">			}</td>
+        <td id="LC154" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Avoid the risk of a deadlock by doing the release outside the lock</span></td>
       </tr>
       <tr>
         <td id="L155" class="blob-num js-line-number" data-line-number="155"></td>
-        <td id="LC155" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> (trns) {</td>
+        <td id="LC155" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (disposePixmap)</td>
       </tr>
       <tr>
         <td id="L156" class="blob-num js-line-number" data-line-number="156"></td>
-        <td id="LC156" class="blob-code blob-code-inner js-file-line">				png_byte *trans;</td>
+        <td id="LC156" class="blob-code blob-code-inner js-file-line">		disposePixmap-&gt;<span class="pl-c1">Release</span>();</td>
       </tr>
       <tr>
         <td id="L157" class="blob-num js-line-number" data-line-number="157"></td>
-        <td id="LC157" class="blob-code blob-code-inner js-file-line">				<span class="pl-c1">png_get_tRNS</span>(png_ptr, info_ptr, &amp;trans, &amp;num_trans, <span class="pl-c1">0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L158" class="blob-num js-line-number" data-line-number="158"></td>
-        <td id="LC158" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; num_trans; i++)</td>
-      </tr>
-      <tr>
-        <td id="L159" class="blob-num js-line-number" data-line-number="159"></td>
-        <td id="LC159" class="blob-code blob-code-inner js-file-line">					surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">a</span> = <span class="pl-c1">255</span> - trans[i];</td>
-      </tr>
-      <tr>
-        <td id="L160" class="blob-num js-line-number" data-line-number="160"></td>
-        <td id="LC160" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">for</span> (<span class="pl-k">int</span> i = num_trans; i &lt; num_palette; i++)</td>
-      </tr>
-      <tr>
-        <td id="L161" class="blob-num js-line-number" data-line-number="161"></td>
-        <td id="LC161" class="blob-code blob-code-inner js-file-line">					surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span>[i].<span class="pl-smi">a</span> = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L162" class="blob-num js-line-number" data-line-number="162"></td>
-        <td id="LC162" class="blob-code blob-code-inner js-file-line">			}</td>
-      </tr>
-      <tr>
-        <td id="L163" class="blob-num js-line-number" data-line-number="163"></td>
-        <td id="LC163" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L164" class="blob-num js-line-number" data-line-number="164"></td>
-        <td id="LC164" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">else</span> {</td>
-      </tr>
-      <tr>
-        <td id="L165" class="blob-num js-line-number" data-line-number="165"></td>
-        <td id="LC165" class="blob-code blob-code-inner js-file-line">			surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">data</span> = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L166" class="blob-num js-line-number" data-line-number="166"></td>
-        <td id="LC166" class="blob-code blob-code-inner js-file-line">			surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">colors</span> = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L167" class="blob-num js-line-number" data-line-number="167"></td>
-        <td id="LC167" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L168" class="blob-num js-line-number" data-line-number="168"></td>
-        <td id="LC168" class="blob-code blob-code-inner js-file-line">		surface-&gt;<span class="pl-smi">clut</span>.<span class="pl-smi">start</span> = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L169" class="blob-num js-line-number" data-line-number="169"></td>
-        <td id="LC169" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L170" class="blob-num js-line-number" data-line-number="170"></td>
-        <td id="LC170" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L171" class="blob-num js-line-number" data-line-number="171"></td>
-        <td id="LC171" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached)</td>
-      </tr>
-      <tr>
-        <td id="L172" class="blob-num js-line-number" data-line-number="172"></td>
-        <td id="LC172" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">PixmapCache::Set</span>(filename, result);</td>
-      </tr>
-      <tr>
-        <td id="L173" class="blob-num js-line-number" data-line-number="173"></td>
-        <td id="LC173" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L174" class="blob-num js-line-number" data-line-number="174"></td>
-        <td id="LC174" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span>eDebug(&quot;[ePNG] %s: after  %dx%dx%dbpcx%dchan coltyp=%d cols=%d trans=%d&quot;, filename, (int)width, (int)height, bit_depth, channels, color_type, num_palette, num_trans);</span></td>
-      </tr>
-      <tr>
-        <td id="L175" class="blob-num js-line-number" data-line-number="175"></td>
-        <td id="LC175" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L176" class="blob-num js-line-number" data-line-number="176"></td>
-        <td id="LC176" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_read_end</span>(png_ptr, end_info);</td>
-      </tr>
-      <tr>
-        <td id="L177" class="blob-num js-line-number" data-line-number="177"></td>
-        <td id="LC177" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_destroy_read_struct</span>(&amp;png_ptr, &amp;info_ptr, &amp;end_info);</td>
-      </tr>
-      <tr>
-        <td id="L178" class="blob-num js-line-number" data-line-number="178"></td>
-        <td id="LC178" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L179" class="blob-num js-line-number" data-line-number="179"></td>
-        <td id="LC179" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L180" class="blob-num js-line-number" data-line-number="180"></td>
-        <td id="LC180" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L181" class="blob-num js-line-number" data-line-number="181"></td>
-        <td id="LC181" class="blob-code blob-code-inner js-file-line"><span class="pl-k">struct</span> <span class="pl-en">my_error_mgr</span> {</td>
-      </tr>
-      <tr>
-        <td id="L182" class="blob-num js-line-number" data-line-number="182"></td>
-        <td id="LC182" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">struct</span> <span class="pl-en">jpeg_error_mgr</span> pub;</td>
-      </tr>
-      <tr>
-        <td id="L183" class="blob-num js-line-number" data-line-number="183"></td>
-        <td id="LC183" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">jmp_buf</span> setjmp_buffer;</td>
-      </tr>
-      <tr>
-        <td id="L184" class="blob-num js-line-number" data-line-number="184"></td>
-        <td id="LC184" class="blob-code blob-code-inner js-file-line">};</td>
-      </tr>
-      <tr>
-        <td id="L185" class="blob-num js-line-number" data-line-number="185"></td>
-        <td id="LC185" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L186" class="blob-num js-line-number" data-line-number="186"></td>
-        <td id="LC186" class="blob-code blob-code-inner js-file-line"><span class="pl-k">typedef</span> <span class="pl-k">struct</span> <span class="pl-en">my_error_mgr</span> * my_error_ptr;</td>
-      </tr>
-      <tr>
-        <td id="L187" class="blob-num js-line-number" data-line-number="187"></td>
-        <td id="LC187" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L188" class="blob-num js-line-number" data-line-number="188"></td>
-        <td id="LC188" class="blob-code blob-code-inner js-file-line"><span class="pl-k">static</span> <span class="pl-k">void</span></td>
-      </tr>
-      <tr>
-        <td id="L189" class="blob-num js-line-number" data-line-number="189"></td>
-        <td id="LC189" class="blob-code blob-code-inner js-file-line"><span class="pl-en">my_error_exit</span> (j_common_ptr cinfo)</td>
-      </tr>
-      <tr>
-        <td id="L190" class="blob-num js-line-number" data-line-number="190"></td>
-        <td id="LC190" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L191" class="blob-num js-line-number" data-line-number="191"></td>
-        <td id="LC191" class="blob-code blob-code-inner js-file-line">	my_error_ptr myerr = (my_error_ptr) cinfo-&gt;<span class="pl-smi">err</span>;</td>
-      </tr>
-      <tr>
-        <td id="L192" class="blob-num js-line-number" data-line-number="192"></td>
-        <td id="LC192" class="blob-code blob-code-inner js-file-line">	(*cinfo-&gt;<span class="pl-smi">err</span>-&gt;<span class="pl-smi">output_message</span>) (cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L193" class="blob-num js-line-number" data-line-number="193"></td>
-        <td id="LC193" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">longjmp</span>(myerr-&gt;<span class="pl-smi">setjmp_buffer</span>, <span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L194" class="blob-num js-line-number" data-line-number="194"></td>
-        <td id="LC194" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L195" class="blob-num js-line-number" data-line-number="195"></td>
-        <td id="LC195" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L196" class="blob-num js-line-number" data-line-number="196"></td>
-        <td id="LC196" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">loadJPG</span>(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;result, <span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> cached)</td>
-      </tr>
-      <tr>
-        <td id="L197" class="blob-num js-line-number" data-line-number="197"></td>
-        <td id="LC197" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L198" class="blob-num js-line-number" data-line-number="198"></td>
-        <td id="LC198" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">loadJPG</span>(result, filename, ePtr&lt;<span class="pl-smi">gPixmap</span>&gt;(), cached);</td>
-      </tr>
-      <tr>
-        <td id="L199" class="blob-num js-line-number" data-line-number="199"></td>
-        <td id="LC199" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L200" class="blob-num js-line-number" data-line-number="200"></td>
-        <td id="LC200" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L201" class="blob-num js-line-number" data-line-number="201"></td>
-        <td id="LC201" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">loadJPG</span>(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;result, <span class="pl-k">const</span> <span class="pl-k">char</span> *filename, ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; alpha, <span class="pl-k">int</span> cached)</td>
-      </tr>
-      <tr>
-        <td id="L202" class="blob-num js-line-number" data-line-number="202"></td>
-        <td id="LC202" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L203" class="blob-num js-line-number" data-line-number="203"></td>
-        <td id="LC203" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached &amp;&amp; (result = <span class="pl-c1">PixmapCache::Get</span>(filename)))</td>
-      </tr>
-      <tr>
-        <td id="L204" class="blob-num js-line-number" data-line-number="204"></td>
-        <td id="LC204" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L205" class="blob-num js-line-number" data-line-number="205"></td>
-        <td id="LC205" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L206" class="blob-num js-line-number" data-line-number="206"></td>
-        <td id="LC206" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">struct</span> <span class="pl-en">jpeg_decompress_struct</span> cinfo;</td>
-      </tr>
-      <tr>
-        <td id="L207" class="blob-num js-line-number" data-line-number="207"></td>
-        <td id="LC207" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">struct</span> <span class="pl-en">my_error_mgr</span> jerr;</td>
-      </tr>
-      <tr>
-        <td id="L208" class="blob-num js-line-number" data-line-number="208"></td>
-        <td id="LC208" class="blob-code blob-code-inner js-file-line">	JSAMPARRAY buffer;</td>
-      </tr>
-      <tr>
-        <td id="L209" class="blob-num js-line-number" data-line-number="209"></td>
-        <td id="LC209" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> row_stride;</td>
-      </tr>
-      <tr>
-        <td id="L210" class="blob-num js-line-number" data-line-number="210"></td>
-        <td id="LC210" class="blob-code blob-code-inner js-file-line">	CFile <span class="pl-smi">infile</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>rb<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L211" class="blob-num js-line-number" data-line-number="211"></td>
-        <td id="LC211" class="blob-code blob-code-inner js-file-line">	result = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L212" class="blob-num js-line-number" data-line-number="212"></td>
-        <td id="LC212" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L213" class="blob-num js-line-number" data-line-number="213"></td>
-        <td id="LC213" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (alpha)</td>
-      </tr>
-      <tr>
-        <td id="L214" class="blob-num js-line-number" data-line-number="214"></td>
-        <td id="LC214" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L215" class="blob-num js-line-number" data-line-number="215"></td>
-        <td id="LC215" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">bpp</span> != <span class="pl-c1">8</span>)</td>
-      </tr>
-      <tr>
-        <td id="L216" class="blob-num js-line-number" data-line-number="216"></td>
-        <td id="LC216" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L217" class="blob-num js-line-number" data-line-number="217"></td>
-        <td id="LC217" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">eWarning</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[loadJPG] alpha channel for jpg must be 8bit<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L218" class="blob-num js-line-number" data-line-number="218"></td>
-        <td id="LC218" class="blob-code blob-code-inner js-file-line">			alpha = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L219" class="blob-num js-line-number" data-line-number="219"></td>
-        <td id="LC219" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L220" class="blob-num js-line-number" data-line-number="220"></td>
-        <td id="LC220" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L221" class="blob-num js-line-number" data-line-number="221"></td>
-        <td id="LC221" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L222" class="blob-num js-line-number" data-line-number="222"></td>
-        <td id="LC222" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!infile)</td>
-      </tr>
-      <tr>
-        <td id="L223" class="blob-num js-line-number" data-line-number="223"></td>
-        <td id="LC223" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L224" class="blob-num js-line-number" data-line-number="224"></td>
-        <td id="LC224" class="blob-code blob-code-inner js-file-line">	cinfo.<span class="pl-smi">err</span> = <span class="pl-c1">jpeg_std_error</span>(&amp;jerr.<span class="pl-smi">pub</span>);</td>
-      </tr>
-      <tr>
-        <td id="L225" class="blob-num js-line-number" data-line-number="225"></td>
-        <td id="LC225" class="blob-code blob-code-inner js-file-line">	jerr.<span class="pl-smi">pub</span>.<span class="pl-smi">error_exit</span> = my_error_exit;</td>
-      </tr>
-      <tr>
-        <td id="L226" class="blob-num js-line-number" data-line-number="226"></td>
-        <td id="LC226" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (<span class="pl-c1">setjmp</span>(jerr.<span class="pl-smi">setjmp_buffer</span>)) {</td>
-      </tr>
-      <tr>
-        <td id="L227" class="blob-num js-line-number" data-line-number="227"></td>
-        <td id="LC227" class="blob-code blob-code-inner js-file-line">		result = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L228" class="blob-num js-line-number" data-line-number="228"></td>
-        <td id="LC228" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">jpeg_destroy_decompress</span>(&amp;cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L229" class="blob-num js-line-number" data-line-number="229"></td>
-        <td id="LC229" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L230" class="blob-num js-line-number" data-line-number="230"></td>
-        <td id="LC230" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L231" class="blob-num js-line-number" data-line-number="231"></td>
-        <td id="LC231" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">jpeg_create_decompress</span>(&amp;cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L232" class="blob-num js-line-number" data-line-number="232"></td>
-        <td id="LC232" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">jpeg_stdio_src</span>(&amp;cinfo, infile);</td>
-      </tr>
-      <tr>
-        <td id="L233" class="blob-num js-line-number" data-line-number="233"></td>
-        <td id="LC233" class="blob-code blob-code-inner js-file-line">	(<span class="pl-k">void</span>) <span class="pl-c1">jpeg_read_header</span>(&amp;cinfo, <span class="pl-c1">TRUE</span>);</td>
-      </tr>
-      <tr>
-        <td id="L234" class="blob-num js-line-number" data-line-number="234"></td>
-        <td id="LC234" class="blob-code blob-code-inner js-file-line">	cinfo.<span class="pl-smi">out_color_space</span> = JCS_RGB;</td>
-      </tr>
-      <tr>
-        <td id="L235" class="blob-num js-line-number" data-line-number="235"></td>
-        <td id="LC235" class="blob-code blob-code-inner js-file-line">	cinfo.<span class="pl-smi">scale_denom</span> = <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L236" class="blob-num js-line-number" data-line-number="236"></td>
-        <td id="LC236" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L237" class="blob-num js-line-number" data-line-number="237"></td>
-        <td id="LC237" class="blob-code blob-code-inner js-file-line">	(<span class="pl-k">void</span>) <span class="pl-c1">jpeg_start_decompress</span>(&amp;cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L238" class="blob-num js-line-number" data-line-number="238"></td>
-        <td id="LC238" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L239" class="blob-num js-line-number" data-line-number="239"></td>
-        <td id="LC239" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> grayscale = cinfo.<span class="pl-smi">output_components</span> == <span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L240" class="blob-num js-line-number" data-line-number="240"></td>
-        <td id="LC240" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L241" class="blob-num js-line-number" data-line-number="241"></td>
-        <td id="LC241" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (alpha)</td>
-      </tr>
-      <tr>
-        <td id="L242" class="blob-num js-line-number" data-line-number="242"></td>
-        <td id="LC242" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L243" class="blob-num js-line-number" data-line-number="243"></td>
-        <td id="LC243" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (((<span class="pl-k">int</span>)cinfo.<span class="pl-smi">output_width</span> != alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">x</span>) || ((<span class="pl-k">int</span>)cinfo.<span class="pl-smi">output_height</span> != alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">y</span>))</td>
-      </tr>
-      <tr>
-        <td id="L244" class="blob-num js-line-number" data-line-number="244"></td>
-        <td id="LC244" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L245" class="blob-num js-line-number" data-line-number="245"></td>
-        <td id="LC245" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">eWarning</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[loadJPG] alpha channel size (%dx%d) must match jpeg size (%dx%d)<span class="pl-pds">&quot;</span></span>, alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">x</span>, alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">y</span>, cinfo.<span class="pl-smi">output_width</span>, cinfo.<span class="pl-smi">output_height</span>);</td>
-      </tr>
-      <tr>
-        <td id="L246" class="blob-num js-line-number" data-line-number="246"></td>
-        <td id="LC246" class="blob-code blob-code-inner js-file-line">			alpha = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L247" class="blob-num js-line-number" data-line-number="247"></td>
-        <td id="LC247" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L248" class="blob-num js-line-number" data-line-number="248"></td>
-        <td id="LC248" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (grayscale)</td>
-      </tr>
-      <tr>
-        <td id="L249" class="blob-num js-line-number" data-line-number="249"></td>
-        <td id="LC249" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L250" class="blob-num js-line-number" data-line-number="250"></td>
-        <td id="LC250" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">eWarning</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[loadJPG] we don&#39;t support grayscale + alpha at the moment<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L251" class="blob-num js-line-number" data-line-number="251"></td>
-        <td id="LC251" class="blob-code blob-code-inner js-file-line">			alpha = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L252" class="blob-num js-line-number" data-line-number="252"></td>
-        <td id="LC252" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L253" class="blob-num js-line-number" data-line-number="253"></td>
-        <td id="LC253" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L254" class="blob-num js-line-number" data-line-number="254"></td>
-        <td id="LC254" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L255" class="blob-num js-line-number" data-line-number="255"></td>
-        <td id="LC255" class="blob-code blob-code-inner js-file-line">	result = <span class="pl-k">new</span> <span class="pl-c1">gPixmap</span>(cinfo.<span class="pl-smi">output_width</span>, cinfo.<span class="pl-smi">output_height</span>, grayscale ? <span class="pl-c1">8</span> : <span class="pl-c1">32</span>, cached ? PixmapCache::PixmapDisposed : <span class="pl-c1">NULL</span>);</td>
-      </tr>
-      <tr>
-        <td id="L256" class="blob-num js-line-number" data-line-number="256"></td>
-        <td id="LC256" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L257" class="blob-num js-line-number" data-line-number="257"></td>
-        <td id="LC257" class="blob-code blob-code-inner js-file-line">	row_stride = cinfo.<span class="pl-smi">output_width</span> * cinfo.<span class="pl-smi">output_components</span>;</td>
-      </tr>
-      <tr>
-        <td id="L258" class="blob-num js-line-number" data-line-number="258"></td>
-        <td id="LC258" class="blob-code blob-code-inner js-file-line">	buffer = (*cinfo.<span class="pl-smi">mem</span>-&gt;<span class="pl-smi">alloc_sarray</span>)((j_common_ptr) &amp;cinfo, JPOOL_IMAGE, row_stride, <span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L259" class="blob-num js-line-number" data-line-number="259"></td>
-        <td id="LC259" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">while</span> (cinfo.<span class="pl-smi">output_scanline</span> &lt; cinfo.<span class="pl-smi">output_height</span>) {</td>
-      </tr>
-      <tr>
-        <td id="L260" class="blob-num js-line-number" data-line-number="260"></td>
-        <td id="LC260" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">int</span> y = cinfo.<span class="pl-smi">output_scanline</span>;</td>
-      </tr>
-      <tr>
-        <td id="L261" class="blob-num js-line-number" data-line-number="261"></td>
-        <td id="LC261" class="blob-code blob-code-inner js-file-line">		(<span class="pl-k">void</span>) <span class="pl-c1">jpeg_read_scanlines</span>(&amp;cinfo, buffer, <span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L262" class="blob-num js-line-number" data-line-number="262"></td>
-        <td id="LC262" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">unsigned</span> <span class="pl-k">char</span> *dst = ((<span class="pl-k">unsigned</span> <span class="pl-k">char</span>*)result-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">data</span>) + result-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">stride</span> * y;</td>
-      </tr>
-      <tr>
-        <td id="L263" class="blob-num js-line-number" data-line-number="263"></td>
-        <td id="LC263" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">unsigned</span> <span class="pl-k">char</span> *src = (<span class="pl-k">unsigned</span> <span class="pl-k">char</span>*)buffer[<span class="pl-c1">0</span>];</td>
-      </tr>
-      <tr>
-        <td id="L264" class="blob-num js-line-number" data-line-number="264"></td>
-        <td id="LC264" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">unsigned</span> <span class="pl-k">char</span> *palpha = alpha ? ((<span class="pl-k">unsigned</span> <span class="pl-k">char</span>*)alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">data</span> + alpha-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">stride</span> * y) : <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L265" class="blob-num js-line-number" data-line-number="265"></td>
-        <td id="LC265" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (grayscale)</td>
-      </tr>
-      <tr>
-        <td id="L266" class="blob-num js-line-number" data-line-number="266"></td>
-        <td id="LC266" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">memcpy</span>(dst, src, cinfo.<span class="pl-smi">output_width</span>);</td>
-      </tr>
-      <tr>
-        <td id="L267" class="blob-num js-line-number" data-line-number="267"></td>
-        <td id="LC267" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">else</span></td>
-      </tr>
-      <tr>
-        <td id="L268" class="blob-num js-line-number" data-line-number="268"></td>
-        <td id="LC268" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L269" class="blob-num js-line-number" data-line-number="269"></td>
-        <td id="LC269" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">if</span> (palpha)</td>
-      </tr>
-      <tr>
-        <td id="L270" class="blob-num js-line-number" data-line-number="270"></td>
-        <td id="LC270" class="blob-code blob-code-inner js-file-line">			{</td>
-      </tr>
-      <tr>
-        <td id="L271" class="blob-num js-line-number" data-line-number="271"></td>
-        <td id="LC271" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">for</span> (<span class="pl-k">int</span> x = (<span class="pl-k">int</span>)cinfo.<span class="pl-smi">output_width</span>; x != <span class="pl-c1">0</span>; --x)</td>
-      </tr>
-      <tr>
-        <td id="L272" class="blob-num js-line-number" data-line-number="272"></td>
-        <td id="LC272" class="blob-code blob-code-inner js-file-line">				{</td>
-      </tr>
-      <tr>
-        <td id="L273" class="blob-num js-line-number" data-line-number="273"></td>
-        <td id="LC273" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">2</span>];</td>
-      </tr>
-      <tr>
-        <td id="L274" class="blob-num js-line-number" data-line-number="274"></td>
-        <td id="LC274" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">1</span>];</td>
-      </tr>
-      <tr>
-        <td id="L275" class="blob-num js-line-number" data-line-number="275"></td>
-        <td id="LC275" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">0</span>];</td>
-      </tr>
-      <tr>
-        <td id="L276" class="blob-num js-line-number" data-line-number="276"></td>
-        <td id="LC276" class="blob-code blob-code-inner js-file-line">					*dst++ = *palpha++;</td>
-      </tr>
-      <tr>
-        <td id="L277" class="blob-num js-line-number" data-line-number="277"></td>
-        <td id="LC277" class="blob-code blob-code-inner js-file-line">					src += <span class="pl-c1">3</span>;</td>
-      </tr>
-      <tr>
-        <td id="L278" class="blob-num js-line-number" data-line-number="278"></td>
-        <td id="LC278" class="blob-code blob-code-inner js-file-line">				}</td>
-      </tr>
-      <tr>
-        <td id="L279" class="blob-num js-line-number" data-line-number="279"></td>
-        <td id="LC279" class="blob-code blob-code-inner js-file-line">			}</td>
-      </tr>
-      <tr>
-        <td id="L280" class="blob-num js-line-number" data-line-number="280"></td>
-        <td id="LC280" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">else</span></td>
-      </tr>
-      <tr>
-        <td id="L281" class="blob-num js-line-number" data-line-number="281"></td>
-        <td id="LC281" class="blob-code blob-code-inner js-file-line">			{</td>
-      </tr>
-      <tr>
-        <td id="L282" class="blob-num js-line-number" data-line-number="282"></td>
-        <td id="LC282" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">for</span> (<span class="pl-k">int</span> x = (<span class="pl-k">int</span>)cinfo.<span class="pl-smi">output_width</span>; x != <span class="pl-c1">0</span>; --x)</td>
-      </tr>
-      <tr>
-        <td id="L283" class="blob-num js-line-number" data-line-number="283"></td>
-        <td id="LC283" class="blob-code blob-code-inner js-file-line">				{</td>
-      </tr>
-      <tr>
-        <td id="L284" class="blob-num js-line-number" data-line-number="284"></td>
-        <td id="LC284" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">2</span>];</td>
-      </tr>
-      <tr>
-        <td id="L285" class="blob-num js-line-number" data-line-number="285"></td>
-        <td id="LC285" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">1</span>];</td>
-      </tr>
-      <tr>
-        <td id="L286" class="blob-num js-line-number" data-line-number="286"></td>
-        <td id="LC286" class="blob-code blob-code-inner js-file-line">					*dst++ = src[<span class="pl-c1">0</span>];</td>
-      </tr>
-      <tr>
-        <td id="L287" class="blob-num js-line-number" data-line-number="287"></td>
-        <td id="LC287" class="blob-code blob-code-inner js-file-line">					*dst++ = <span class="pl-c1">0xFF</span>;</td>
-      </tr>
-      <tr>
-        <td id="L288" class="blob-num js-line-number" data-line-number="288"></td>
-        <td id="LC288" class="blob-code blob-code-inner js-file-line">					src += <span class="pl-c1">3</span>;</td>
-      </tr>
-      <tr>
-        <td id="L289" class="blob-num js-line-number" data-line-number="289"></td>
-        <td id="LC289" class="blob-code blob-code-inner js-file-line">				}</td>
-      </tr>
-      <tr>
-        <td id="L290" class="blob-num js-line-number" data-line-number="290"></td>
-        <td id="LC290" class="blob-code blob-code-inner js-file-line">			}</td>
-      </tr>
-      <tr>
-        <td id="L291" class="blob-num js-line-number" data-line-number="291"></td>
-        <td id="LC291" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L292" class="blob-num js-line-number" data-line-number="292"></td>
-        <td id="LC292" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L293" class="blob-num js-line-number" data-line-number="293"></td>
-        <td id="LC293" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L294" class="blob-num js-line-number" data-line-number="294"></td>
-        <td id="LC294" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached)</td>
-      </tr>
-      <tr>
-        <td id="L295" class="blob-num js-line-number" data-line-number="295"></td>
-        <td id="LC295" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">PixmapCache::Set</span>(filename, result);</td>
-      </tr>
-      <tr>
-        <td id="L296" class="blob-num js-line-number" data-line-number="296"></td>
-        <td id="LC296" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L297" class="blob-num js-line-number" data-line-number="297"></td>
-        <td id="LC297" class="blob-code blob-code-inner js-file-line">	(<span class="pl-k">void</span>) <span class="pl-c1">jpeg_finish_decompress</span>(&amp;cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L298" class="blob-num js-line-number" data-line-number="298"></td>
-        <td id="LC298" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">jpeg_destroy_decompress</span>(&amp;cinfo);</td>
-      </tr>
-      <tr>
-        <td id="L299" class="blob-num js-line-number" data-line-number="299"></td>
-        <td id="LC299" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L300" class="blob-num js-line-number" data-line-number="300"></td>
-        <td id="LC300" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L301" class="blob-num js-line-number" data-line-number="301"></td>
-        <td id="LC301" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L302" class="blob-num js-line-number" data-line-number="302"></td>
-        <td id="LC302" class="blob-code blob-code-inner js-file-line"><span class="pl-k">static</span> <span class="pl-k">int</span> <span class="pl-en">savePNGto</span>(FILE *fp, <span class="pl-smi">gPixmap</span> *pixmap)</td>
-      </tr>
-      <tr>
-        <td id="L303" class="blob-num js-line-number" data-line-number="303"></td>
-        <td id="LC303" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L304" class="blob-num js-line-number" data-line-number="304"></td>
-        <td id="LC304" class="blob-code blob-code-inner js-file-line">	<span class="pl-smi">gUnmanagedSurface</span> *surface = pixmap-&gt;<span class="pl-smi">surface</span>;</td>
-      </tr>
-      <tr>
-        <td id="L305" class="blob-num js-line-number" data-line-number="305"></td>
-        <td id="LC305" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!surface)</td>
-      </tr>
-      <tr>
-        <td id="L306" class="blob-num js-line-number" data-line-number="306"></td>
-        <td id="LC306" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">2</span>;</td>
-      </tr>
-      <tr>
-        <td id="L307" class="blob-num js-line-number" data-line-number="307"></td>
-        <td id="LC307" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L308" class="blob-num js-line-number" data-line-number="308"></td>
-        <td id="LC308" class="blob-code blob-code-inner js-file-line">	png_structp png_ptr = <span class="pl-c1">png_create_write_struct</span>(PNG_LIBPNG_VER_STRING, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L309" class="blob-num js-line-number" data-line-number="309"></td>
-        <td id="LC309" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!png_ptr)</td>
-      </tr>
-      <tr>
-        <td id="L310" class="blob-num js-line-number" data-line-number="310"></td>
-        <td id="LC310" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L311" class="blob-num js-line-number" data-line-number="311"></td>
-        <td id="LC311" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] couldn&#39;t allocate write struct<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L312" class="blob-num js-line-number" data-line-number="312"></td>
-        <td id="LC312" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">2</span>;</td>
-      </tr>
-      <tr>
-        <td id="L313" class="blob-num js-line-number" data-line-number="313"></td>
-        <td id="LC313" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L314" class="blob-num js-line-number" data-line-number="314"></td>
-        <td id="LC314" class="blob-code blob-code-inner js-file-line">	png_infop info_ptr = <span class="pl-c1">png_create_info_struct</span>(png_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L315" class="blob-num js-line-number" data-line-number="315"></td>
-        <td id="LC315" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (!info_ptr)</td>
-      </tr>
-      <tr>
-        <td id="L316" class="blob-num js-line-number" data-line-number="316"></td>
-        <td id="LC316" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L317" class="blob-num js-line-number" data-line-number="317"></td>
-        <td id="LC317" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to allocate info struct<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L318" class="blob-num js-line-number" data-line-number="318"></td>
-        <td id="LC318" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_destroy_write_struct</span>(&amp;png_ptr, <span class="pl-c1">0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L319" class="blob-num js-line-number" data-line-number="319"></td>
-        <td id="LC319" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">3</span>;</td>
-      </tr>
-      <tr>
-        <td id="L320" class="blob-num js-line-number" data-line-number="320"></td>
-        <td id="LC320" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L321" class="blob-num js-line-number" data-line-number="321"></td>
-        <td id="LC321" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L322" class="blob-num js-line-number" data-line-number="322"></td>
-        <td id="LC322" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_set_IHDR</span>(png_ptr, info_ptr, surface-&gt;<span class="pl-smi">x</span>, surface-&gt;<span class="pl-smi">y</span>, surface-&gt;<span class="pl-smi">bpp</span>/surface-&gt;<span class="pl-smi">bypp</span>,</td>
-      </tr>
-      <tr>
-        <td id="L323" class="blob-num js-line-number" data-line-number="323"></td>
-        <td id="LC323" class="blob-code blob-code-inner js-file-line">		PNG_COLOR_TYPE_RGB_ALPHA,</td>
-      </tr>
-      <tr>
-        <td id="L324" class="blob-num js-line-number" data-line-number="324"></td>
-        <td id="LC324" class="blob-code blob-code-inner js-file-line">		PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);</td>
-      </tr>
-      <tr>
-        <td id="L325" class="blob-num js-line-number" data-line-number="325"></td>
-        <td id="LC325" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L326" class="blob-num js-line-number" data-line-number="326"></td>
-        <td id="LC326" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (<span class="pl-c1">setjmp</span>(<span class="pl-c1">png_jmpbuf</span>(png_ptr)))</td>
-      </tr>
-      <tr>
-        <td id="L327" class="blob-num js-line-number" data-line-number="327"></td>
-        <td id="LC327" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L328" class="blob-num js-line-number" data-line-number="328"></td>
-        <td id="LC328" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] png setjump failed or activated<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L329" class="blob-num js-line-number" data-line-number="329"></td>
-        <td id="LC329" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">png_destroy_write_struct</span>(&amp;png_ptr, &amp;info_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L330" class="blob-num js-line-number" data-line-number="330"></td>
-        <td id="LC330" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">4</span>;</td>
-      </tr>
-      <tr>
-        <td id="L331" class="blob-num js-line-number" data-line-number="331"></td>
-        <td id="LC331" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L332" class="blob-num js-line-number" data-line-number="332"></td>
-        <td id="LC332" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_init_io</span>(png_ptr, fp);</td>
-      </tr>
-      <tr>
-        <td id="L333" class="blob-num js-line-number" data-line-number="333"></td>
-        <td id="LC333" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_set_filter</span>(png_ptr, <span class="pl-c1">0</span>, PNG_FILTER_NONE|PNG_FILTER_SUB|PNG_FILTER_PAETH);</td>
-      </tr>
-      <tr>
-        <td id="L334" class="blob-num js-line-number" data-line-number="334"></td>
-        <td id="LC334" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_set_compression_level</span>(png_ptr, Z_BEST_COMPRESSION);</td>
-      </tr>
-      <tr>
-        <td id="L335" class="blob-num js-line-number" data-line-number="335"></td>
-        <td id="LC335" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L336" class="blob-num js-line-number" data-line-number="336"></td>
-        <td id="LC336" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_write_info</span>(png_ptr, info_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L337" class="blob-num js-line-number" data-line-number="337"></td>
-        <td id="LC337" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_set_packing</span>(png_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L338" class="blob-num js-line-number" data-line-number="338"></td>
-        <td id="LC338" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L339" class="blob-num js-line-number" data-line-number="339"></td>
-        <td id="LC339" class="blob-code blob-code-inner js-file-line">	png_byte *row_pointer;</td>
-      </tr>
-      <tr>
-        <td id="L340" class="blob-num js-line-number" data-line-number="340"></td>
-        <td id="LC340" class="blob-code blob-code-inner js-file-line">	png_byte *cr = <span class="pl-k">new</span> png_byte[surface-&gt;<span class="pl-smi">y</span> * surface-&gt;<span class="pl-smi">stride</span>];</td>
-      </tr>
-      <tr>
-        <td id="L341" class="blob-num js-line-number" data-line-number="341"></td>
-        <td id="LC341" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cr == <span class="pl-c1">NULL</span>)</td>
-      </tr>
-      <tr>
-        <td id="L342" class="blob-num js-line-number" data-line-number="342"></td>
-        <td id="LC342" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L343" class="blob-num js-line-number" data-line-number="343"></td>
-        <td id="LC343" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] failed to allocate memory image<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L344" class="blob-num js-line-number" data-line-number="344"></td>
-        <td id="LC344" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> -<span class="pl-c1">5</span>;</td>
-      </tr>
-      <tr>
-        <td id="L345" class="blob-num js-line-number" data-line-number="345"></td>
-        <td id="LC345" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L346" class="blob-num js-line-number" data-line-number="346"></td>
-        <td id="LC346" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; surface-&gt;<span class="pl-smi">y</span>; ++i)</td>
-      </tr>
-      <tr>
-        <td id="L347" class="blob-num js-line-number" data-line-number="347"></td>
-        <td id="LC347" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L348" class="blob-num js-line-number" data-line-number="348"></td>
-        <td id="LC348" class="blob-code blob-code-inner js-file-line">		row_pointer = ((png_byte*)surface-&gt;<span class="pl-smi">data</span>) + i * surface-&gt;<span class="pl-smi">stride</span>;</td>
-      </tr>
-      <tr>
-        <td id="L349" class="blob-num js-line-number" data-line-number="349"></td>
-        <td id="LC349" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (surface-&gt;<span class="pl-smi">bypp</span> == <span class="pl-c1">4</span>)</td>
-      </tr>
-      <tr>
-        <td id="L350" class="blob-num js-line-number" data-line-number="350"></td>
-        <td id="LC350" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L351" class="blob-num js-line-number" data-line-number="351"></td>
-        <td id="LC351" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">memcpy</span>(cr, row_pointer, surface-&gt;<span class="pl-smi">stride</span>);</td>
-      </tr>
-      <tr>
-        <td id="L352" class="blob-num js-line-number" data-line-number="352"></td>
-        <td id="LC352" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">for</span> (<span class="pl-k">int</span> j = <span class="pl-c1">0</span>; j &lt; surface-&gt;<span class="pl-smi">stride</span>; j += <span class="pl-c1">4</span>)</td>
-      </tr>
-      <tr>
-        <td id="L353" class="blob-num js-line-number" data-line-number="353"></td>
-        <td id="LC353" class="blob-code blob-code-inner js-file-line">			{</td>
-      </tr>
-      <tr>
-        <td id="L354" class="blob-num js-line-number" data-line-number="354"></td>
-        <td id="LC354" class="blob-code blob-code-inner js-file-line">				<span class="pl-k">unsigned</span> <span class="pl-k">char</span> tmp = cr[j];</td>
-      </tr>
-      <tr>
-        <td id="L355" class="blob-num js-line-number" data-line-number="355"></td>
-        <td id="LC355" class="blob-code blob-code-inner js-file-line">				cr[j] = cr[j+<span class="pl-c1">2</span>];</td>
-      </tr>
-      <tr>
-        <td id="L356" class="blob-num js-line-number" data-line-number="356"></td>
-        <td id="LC356" class="blob-code blob-code-inner js-file-line">				cr[j+<span class="pl-c1">2</span>] = tmp;</td>
-      </tr>
-      <tr>
-        <td id="L357" class="blob-num js-line-number" data-line-number="357"></td>
-        <td id="LC357" class="blob-code blob-code-inner js-file-line">			}</td>
-      </tr>
-      <tr>
-        <td id="L358" class="blob-num js-line-number" data-line-number="358"></td>
-        <td id="LC358" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">png_write_row</span>(png_ptr, cr);</td>
-      </tr>
-      <tr>
-        <td id="L359" class="blob-num js-line-number" data-line-number="359"></td>
-        <td id="LC359" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L360" class="blob-num js-line-number" data-line-number="360"></td>
-        <td id="LC360" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">else</span></td>
-      </tr>
-      <tr>
-        <td id="L361" class="blob-num js-line-number" data-line-number="361"></td>
-        <td id="LC361" class="blob-code blob-code-inner js-file-line">			<span class="pl-c1">png_write_row</span>(png_ptr, row_pointer);</td>
-      </tr>
-      <tr>
-        <td id="L362" class="blob-num js-line-number" data-line-number="362"></td>
-        <td id="LC362" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L363" class="blob-num js-line-number" data-line-number="363"></td>
-        <td id="LC363" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">delete []</span> cr;</td>
-      </tr>
-      <tr>
-        <td id="L364" class="blob-num js-line-number" data-line-number="364"></td>
-        <td id="LC364" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L365" class="blob-num js-line-number" data-line-number="365"></td>
-        <td id="LC365" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_write_end</span>(png_ptr, info_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L366" class="blob-num js-line-number" data-line-number="366"></td>
-        <td id="LC366" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">png_destroy_write_struct</span>(&amp;png_ptr, &amp;info_ptr);</td>
-      </tr>
-      <tr>
-        <td id="L367" class="blob-num js-line-number" data-line-number="367"></td>
-        <td id="LC367" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L368" class="blob-num js-line-number" data-line-number="368"></td>
-        <td id="LC368" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L369" class="blob-num js-line-number" data-line-number="369"></td>
-        <td id="LC369" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L370" class="blob-num js-line-number" data-line-number="370"></td>
-        <td id="LC370" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">loadSVG</span>(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;result, <span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> cached, <span class="pl-k">int</span> width, <span class="pl-k">int</span> height, <span class="pl-k">float</span> scale)</td>
-      </tr>
-      <tr>
-        <td id="L371" class="blob-num js-line-number" data-line-number="371"></td>
-        <td id="LC371" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L372" class="blob-num js-line-number" data-line-number="372"></td>
-        <td id="LC372" class="blob-code blob-code-inner js-file-line">	result = <span class="pl-c1">nullptr</span>;</td>
-      </tr>
-      <tr>
-        <td id="L373" class="blob-num js-line-number" data-line-number="373"></td>
-        <td id="LC373" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> size = <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L374" class="blob-num js-line-number" data-line-number="374"></td>
-        <td id="LC374" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L375" class="blob-num js-line-number" data-line-number="375"></td>
-        <td id="LC375" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (height &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L376" class="blob-num js-line-number" data-line-number="376"></td>
-        <td id="LC376" class="blob-code blob-code-inner js-file-line">		size = height;</td>
-      </tr>
-      <tr>
-        <td id="L377" class="blob-num js-line-number" data-line-number="377"></td>
-        <td id="LC377" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span> <span class="pl-k">if</span> (scale &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L378" class="blob-num js-line-number" data-line-number="378"></td>
-        <td id="LC378" class="blob-code blob-code-inner js-file-line">		size = (<span class="pl-k">int</span>)(scale * <span class="pl-c1">10</span>);</td>
-      </tr>
-      <tr>
-        <td id="L379" class="blob-num js-line-number" data-line-number="379"></td>
-        <td id="LC379" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L380" class="blob-num js-line-number" data-line-number="380"></td>
-        <td id="LC380" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">char</span> cachefile[<span class="pl-c1">strlen</span>(filename) + <span class="pl-c1">10</span>];</td>
-      </tr>
-      <tr>
-        <td id="L381" class="blob-num js-line-number" data-line-number="381"></td>
-        <td id="LC381" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">sprintf</span>(cachefile, <span class="pl-s"><span class="pl-pds">&quot;</span>%s%d<span class="pl-pds">&quot;</span></span>, filename, size);</td>
-      </tr>
-      <tr>
-        <td id="L382" class="blob-num js-line-number" data-line-number="382"></td>
-        <td id="LC382" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L383" class="blob-num js-line-number" data-line-number="383"></td>
-        <td id="LC383" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached &amp;&amp; (result = <span class="pl-c1">PixmapCache::Get</span>(cachefile)))</td>
-      </tr>
-      <tr>
-        <td id="L384" class="blob-num js-line-number" data-line-number="384"></td>
-        <td id="LC384" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L385" class="blob-num js-line-number" data-line-number="385"></td>
-        <td id="LC385" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L386" class="blob-num js-line-number" data-line-number="386"></td>
-        <td id="LC386" class="blob-code blob-code-inner js-file-line">	NSVGimage *image = <span class="pl-c1">nullptr</span>;</td>
-      </tr>
-      <tr>
-        <td id="L387" class="blob-num js-line-number" data-line-number="387"></td>
-        <td id="LC387" class="blob-code blob-code-inner js-file-line">	NSVGrasterizer *rast = <span class="pl-c1">nullptr</span>;</td>
-      </tr>
-      <tr>
-        <td id="L388" class="blob-num js-line-number" data-line-number="388"></td>
-        <td id="LC388" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">double</span> xscale = <span class="pl-c1">1.0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L389" class="blob-num js-line-number" data-line-number="389"></td>
-        <td id="LC389" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">double</span> yscale = <span class="pl-c1">1.0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L390" class="blob-num js-line-number" data-line-number="390"></td>
-        <td id="LC390" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L391" class="blob-num js-line-number" data-line-number="391"></td>
-        <td id="LC391" class="blob-code blob-code-inner js-file-line">	image = <span class="pl-c1">nsvgParseFromFile</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>px<span class="pl-pds">&quot;</span></span>, <span class="pl-c1">96.0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L392" class="blob-num js-line-number" data-line-number="392"></td>
-        <td id="LC392" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (image == <span class="pl-c1">nullptr</span>)</td>
-      </tr>
-      <tr>
-        <td id="L393" class="blob-num js-line-number" data-line-number="393"></td>
-        <td id="LC393" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L394" class="blob-num js-line-number" data-line-number="394"></td>
-        <td id="LC394" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L395" class="blob-num js-line-number" data-line-number="395"></td>
-        <td id="LC395" class="blob-code blob-code-inner js-file-line">	rast = <span class="pl-c1">nsvgCreateRasterizer</span>();</td>
-      </tr>
-      <tr>
-        <td id="L396" class="blob-num js-line-number" data-line-number="396"></td>
-        <td id="LC396" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (rast == <span class="pl-c1">nullptr</span>)</td>
-      </tr>
-      <tr>
-        <td id="L397" class="blob-num js-line-number" data-line-number="397"></td>
-        <td id="LC397" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L398" class="blob-num js-line-number" data-line-number="398"></td>
-        <td id="LC398" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">nsvgDelete</span>(image);</td>
-      </tr>
-      <tr>
-        <td id="L399" class="blob-num js-line-number" data-line-number="399"></td>
-        <td id="LC399" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L400" class="blob-num js-line-number" data-line-number="400"></td>
-        <td id="LC400" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L401" class="blob-num js-line-number" data-line-number="401"></td>
-        <td id="LC401" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L402" class="blob-num js-line-number" data-line-number="402"></td>
-        <td id="LC402" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (height &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L403" class="blob-num js-line-number" data-line-number="403"></td>
-        <td id="LC403" class="blob-code blob-code-inner js-file-line">		yscale = ((<span class="pl-k">double</span>) height) / image-&gt;<span class="pl-smi">height</span>;</td>
-      </tr>
-      <tr>
-        <td id="L404" class="blob-num js-line-number" data-line-number="404"></td>
-        <td id="LC404" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L405" class="blob-num js-line-number" data-line-number="405"></td>
-        <td id="LC405" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (width &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L406" class="blob-num js-line-number" data-line-number="406"></td>
-        <td id="LC406" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L407" class="blob-num js-line-number" data-line-number="407"></td>
-        <td id="LC407" class="blob-code blob-code-inner js-file-line">		xscale = ((<span class="pl-k">double</span>) width) / image-&gt;<span class="pl-smi">width</span>;</td>
-      </tr>
-      <tr>
-        <td id="L408" class="blob-num js-line-number" data-line-number="408"></td>
-        <td id="LC408" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (height &lt;= <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L409" class="blob-num js-line-number" data-line-number="409"></td>
-        <td id="LC409" class="blob-code blob-code-inner js-file-line">		{</td>
-      </tr>
-      <tr>
-        <td id="L410" class="blob-num js-line-number" data-line-number="410"></td>
-        <td id="LC410" class="blob-code blob-code-inner js-file-line">			yscale = xscale;</td>
-      </tr>
-      <tr>
-        <td id="L411" class="blob-num js-line-number" data-line-number="411"></td>
-        <td id="LC411" class="blob-code blob-code-inner js-file-line">			height = (<span class="pl-k">int</span>)(image-&gt;<span class="pl-smi">height</span> * yscale);</td>
-      </tr>
-      <tr>
-        <td id="L412" class="blob-num js-line-number" data-line-number="412"></td>
-        <td id="LC412" class="blob-code blob-code-inner js-file-line">		}</td>
-      </tr>
-      <tr>
-        <td id="L413" class="blob-num js-line-number" data-line-number="413"></td>
-        <td id="LC413" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L414" class="blob-num js-line-number" data-line-number="414"></td>
-        <td id="LC414" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span> <span class="pl-k">if</span> (height &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L415" class="blob-num js-line-number" data-line-number="415"></td>
-        <td id="LC415" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L416" class="blob-num js-line-number" data-line-number="416"></td>
-        <td id="LC416" class="blob-code blob-code-inner js-file-line">		xscale = yscale;</td>
-      </tr>
-      <tr>
-        <td id="L417" class="blob-num js-line-number" data-line-number="417"></td>
-        <td id="LC417" class="blob-code blob-code-inner js-file-line">		width = (<span class="pl-k">int</span>)(image-&gt;<span class="pl-smi">width</span> * xscale);</td>
-      </tr>
-      <tr>
-        <td id="L418" class="blob-num js-line-number" data-line-number="418"></td>
-        <td id="LC418" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L419" class="blob-num js-line-number" data-line-number="419"></td>
-        <td id="LC419" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span> <span class="pl-k">if</span> (scale &gt; <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L420" class="blob-num js-line-number" data-line-number="420"></td>
-        <td id="LC420" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L421" class="blob-num js-line-number" data-line-number="421"></td>
-        <td id="LC421" class="blob-code blob-code-inner js-file-line">		xscale = (<span class="pl-k">double</span>) scale;</td>
-      </tr>
-      <tr>
-        <td id="L422" class="blob-num js-line-number" data-line-number="422"></td>
-        <td id="LC422" class="blob-code blob-code-inner js-file-line">		yscale = (<span class="pl-k">double</span>) scale;</td>
-      </tr>
-      <tr>
-        <td id="L423" class="blob-num js-line-number" data-line-number="423"></td>
-        <td id="LC423" class="blob-code blob-code-inner js-file-line">		width = (<span class="pl-k">int</span>)(image-&gt;<span class="pl-smi">width</span> * scale);</td>
-      </tr>
-      <tr>
-        <td id="L424" class="blob-num js-line-number" data-line-number="424"></td>
-        <td id="LC424" class="blob-code blob-code-inner js-file-line">		height = (<span class="pl-k">int</span>)(image-&gt;<span class="pl-smi">height</span> * scale);</td>
-      </tr>
-      <tr>
-        <td id="L425" class="blob-num js-line-number" data-line-number="425"></td>
-        <td id="LC425" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L426" class="blob-num js-line-number" data-line-number="426"></td>
-        <td id="LC426" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span></td>
-      </tr>
-      <tr>
-        <td id="L427" class="blob-num js-line-number" data-line-number="427"></td>
-        <td id="LC427" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L428" class="blob-num js-line-number" data-line-number="428"></td>
-        <td id="LC428" class="blob-code blob-code-inner js-file-line">		width = (<span class="pl-k">int</span>)image-&gt;<span class="pl-smi">width</span>;</td>
-      </tr>
-      <tr>
-        <td id="L429" class="blob-num js-line-number" data-line-number="429"></td>
-        <td id="LC429" class="blob-code blob-code-inner js-file-line">		height = (<span class="pl-k">int</span>)image-&gt;<span class="pl-smi">height</span>;</td>
-      </tr>
-      <tr>
-        <td id="L430" class="blob-num js-line-number" data-line-number="430"></td>
-        <td id="LC430" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L431" class="blob-num js-line-number" data-line-number="431"></td>
-        <td id="LC431" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L432" class="blob-num js-line-number" data-line-number="432"></td>
-        <td id="LC432" class="blob-code blob-code-inner js-file-line">	result = <span class="pl-k">new</span> <span class="pl-c1">gPixmap</span>(width, height, <span class="pl-c1">32</span>, cached ? PixmapCache::PixmapDisposed : <span class="pl-c1">NULL</span>, -<span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L433" class="blob-num js-line-number" data-line-number="433"></td>
-        <td id="LC433" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (result == <span class="pl-c1">nullptr</span>)</td>
-      </tr>
-      <tr>
-        <td id="L434" class="blob-num js-line-number" data-line-number="434"></td>
-        <td id="LC434" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L435" class="blob-num js-line-number" data-line-number="435"></td>
-        <td id="LC435" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">nsvgDeleteRasterizer</span>(rast);</td>
-      </tr>
-      <tr>
-        <td id="L436" class="blob-num js-line-number" data-line-number="436"></td>
-        <td id="LC436" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">nsvgDelete</span>(image);</td>
-      </tr>
-      <tr>
-        <td id="L437" class="blob-num js-line-number" data-line-number="437"></td>
-        <td id="LC437" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L438" class="blob-num js-line-number" data-line-number="438"></td>
-        <td id="LC438" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L439" class="blob-num js-line-number" data-line-number="439"></td>
-        <td id="LC439" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L440" class="blob-num js-line-number" data-line-number="440"></td>
-        <td id="LC440" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] loadSVG %s %dx%d from %dx%d<span class="pl-pds">&quot;</span></span>, filename, width, height, (<span class="pl-k">int</span>)image-&gt;<span class="pl-smi">width</span>, (<span class="pl-k">int</span>)image-&gt;<span class="pl-smi">height</span>);</td>
-      </tr>
-      <tr>
-        <td id="L441" class="blob-num js-line-number" data-line-number="441"></td>
-        <td id="LC441" class="blob-code blob-code-inner js-file-line">	<span class="pl-c"><span class="pl-c">//</span> Rasterizes SVG image, returns RGBA image (non-premultiplied alpha)</span></td>
-      </tr>
-      <tr>
-        <td id="L442" class="blob-num js-line-number" data-line-number="442"></td>
-        <td id="LC442" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">nsvgRasterizeFull</span>(rast, image, <span class="pl-c1">0</span>, <span class="pl-c1">0</span>, xscale, yscale, (<span class="pl-k">unsigned</span> <span class="pl-k">char</span>*)result-&gt;<span class="pl-smi">surface</span>-&gt;<span class="pl-smi">data</span>, width, height, width * <span class="pl-c1">4</span>, <span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L443" class="blob-num js-line-number" data-line-number="443"></td>
-        <td id="LC443" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L444" class="blob-num js-line-number" data-line-number="444"></td>
-        <td id="LC444" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (cached)</td>
-      </tr>
-      <tr>
-        <td id="L445" class="blob-num js-line-number" data-line-number="445"></td>
-        <td id="LC445" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">PixmapCache::Set</span>(cachefile, result);</td>
-      </tr>
-      <tr>
-        <td id="L446" class="blob-num js-line-number" data-line-number="446"></td>
-        <td id="LC446" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L447" class="blob-num js-line-number" data-line-number="447"></td>
-        <td id="LC447" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">nsvgDeleteRasterizer</span>(rast);</td>
-      </tr>
-      <tr>
-        <td id="L448" class="blob-num js-line-number" data-line-number="448"></td>
-        <td id="LC448" class="blob-code blob-code-inner js-file-line">	<span class="pl-c1">nsvgDelete</span>(image);</td>
-      </tr>
-      <tr>
-        <td id="L449" class="blob-num js-line-number" data-line-number="449"></td>
-        <td id="LC449" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L450" class="blob-num js-line-number" data-line-number="450"></td>
-        <td id="LC450" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L451" class="blob-num js-line-number" data-line-number="451"></td>
-        <td id="LC451" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L452" class="blob-num js-line-number" data-line-number="452"></td>
-        <td id="LC452" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L453" class="blob-num js-line-number" data-line-number="453"></td>
-        <td id="LC453" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">loadImage</span>(ePtr&lt;<span class="pl-smi">gPixmap</span>&gt; &amp;result, <span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-k">int</span> accel, <span class="pl-k">int</span> width, <span class="pl-k">int</span> height)</td>
-      </tr>
-      <tr>
-        <td id="L454" class="blob-num js-line-number" data-line-number="454"></td>
-        <td id="LC454" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L455" class="blob-num js-line-number" data-line-number="455"></td>
-        <td id="LC455" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (<span class="pl-c1">endsWith</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>.png<span class="pl-pds">&quot;</span></span>))</td>
-      </tr>
-      <tr>
-        <td id="L456" class="blob-num js-line-number" data-line-number="456"></td>
-        <td id="LC456" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">loadPNG</span>(result, filename, accel, <span class="pl-c1">1</span>);</td>
-      </tr>
-      <tr>
-        <td id="L457" class="blob-num js-line-number" data-line-number="457"></td>
-        <td id="LC457" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-c1">endsWith</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>.svg<span class="pl-pds">&quot;</span></span>))</td>
-      </tr>
-      <tr>
-        <td id="L458" class="blob-num js-line-number" data-line-number="458"></td>
-        <td id="LC458" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">loadSVG</span>(result, filename, <span class="pl-c1">1</span>, width, height, <span class="pl-c1">0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L459" class="blob-num js-line-number" data-line-number="459"></td>
-        <td id="LC459" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">else</span> <span class="pl-k">if</span> (<span class="pl-c1">endsWith</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>.jpg<span class="pl-pds">&quot;</span></span>))</td>
-      </tr>
-      <tr>
-        <td id="L460" class="blob-num js-line-number" data-line-number="460"></td>
-        <td id="LC460" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">return</span> <span class="pl-c1">loadJPG</span>(result, filename, <span class="pl-c1">0</span>);</td>
-      </tr>
-      <tr>
-        <td id="L461" class="blob-num js-line-number" data-line-number="461"></td>
-        <td id="LC461" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L462" class="blob-num js-line-number" data-line-number="462"></td>
-        <td id="LC462" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> <span class="pl-c1">0</span>;</td>
-      </tr>
-      <tr>
-        <td id="L463" class="blob-num js-line-number" data-line-number="463"></td>
-        <td id="LC463" class="blob-code blob-code-inner js-file-line">}</td>
-      </tr>
-      <tr>
-        <td id="L464" class="blob-num js-line-number" data-line-number="464"></td>
-        <td id="LC464" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L465" class="blob-num js-line-number" data-line-number="465"></td>
-        <td id="LC465" class="blob-code blob-code-inner js-file-line"><span class="pl-k">int</span> <span class="pl-en">savePNG</span>(<span class="pl-k">const</span> <span class="pl-k">char</span> *filename, <span class="pl-smi">gPixmap</span> *pixmap)</td>
-      </tr>
-      <tr>
-        <td id="L466" class="blob-num js-line-number" data-line-number="466"></td>
-        <td id="LC466" class="blob-code blob-code-inner js-file-line">{</td>
-      </tr>
-      <tr>
-        <td id="L467" class="blob-num js-line-number" data-line-number="467"></td>
-        <td id="LC467" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">int</span> result;</td>
-      </tr>
-      <tr>
-        <td id="L468" class="blob-num js-line-number" data-line-number="468"></td>
-        <td id="LC468" class="blob-code blob-code-inner js-file-line">
-</td>
-      </tr>
-      <tr>
-        <td id="L469" class="blob-num js-line-number" data-line-number="469"></td>
-        <td id="LC469" class="blob-code blob-code-inner js-file-line">	{</td>
-      </tr>
-      <tr>
-        <td id="L470" class="blob-num js-line-number" data-line-number="470"></td>
-        <td id="LC470" class="blob-code blob-code-inner js-file-line">		<span class="pl-c1">eDebug</span>(<span class="pl-s"><span class="pl-pds">&quot;</span>[ePNG] saving to %s<span class="pl-pds">&quot;</span></span>,filename);</td>
-      </tr>
-      <tr>
-        <td id="L471" class="blob-num js-line-number" data-line-number="471"></td>
-        <td id="LC471" class="blob-code blob-code-inner js-file-line">		CFile <span class="pl-smi">fp</span>(filename, <span class="pl-s"><span class="pl-pds">&quot;</span>wb<span class="pl-pds">&quot;</span></span>);</td>
-      </tr>
-      <tr>
-        <td id="L472" class="blob-num js-line-number" data-line-number="472"></td>
-        <td id="LC472" class="blob-code blob-code-inner js-file-line">		<span class="pl-k">if</span> (!fp)</td>
-      </tr>
-      <tr>
-        <td id="L473" class="blob-num js-line-number" data-line-number="473"></td>
-        <td id="LC473" class="blob-code blob-code-inner js-file-line">			<span class="pl-k">return</span> -<span class="pl-c1">1</span>;</td>
-      </tr>
-      <tr>
-        <td id="L474" class="blob-num js-line-number" data-line-number="474"></td>
-        <td id="LC474" class="blob-code blob-code-inner js-file-line">		result = <span class="pl-c1">savePNGto</span>(fp, pixmap);</td>
-      </tr>
-      <tr>
-        <td id="L475" class="blob-num js-line-number" data-line-number="475"></td>
-        <td id="LC475" class="blob-code blob-code-inner js-file-line">	}</td>
-      </tr>
-      <tr>
-        <td id="L476" class="blob-num js-line-number" data-line-number="476"></td>
-        <td id="LC476" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">if</span> (result != <span class="pl-c1">0</span>)</td>
-      </tr>
-      <tr>
-        <td id="L477" class="blob-num js-line-number" data-line-number="477"></td>
-        <td id="LC477" class="blob-code blob-code-inner js-file-line">		<span class="pl-en">::unlink</span>(filename);</td>
-      </tr>
-      <tr>
-        <td id="L478" class="blob-num js-line-number" data-line-number="478"></td>
-        <td id="LC478" class="blob-code blob-code-inner js-file-line">	<span class="pl-k">return</span> result;</td>
-      </tr>
-      <tr>
-        <td id="L479" class="blob-num js-line-number" data-line-number="479"></td>
-        <td id="LC479" class="blob-code blob-code-inner js-file-line">}</td>
+        <td id="LC157" class="blob-code blob-code-inner js-file-line">}</td>
       </tr>
 </table>
 
@@ -3590,7 +2177,7 @@
             Copy permalink
           </clipboard-copy>
         </li>
-        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/openatv/enigma2/blame/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/epng.cpp">View git blame</a></li>
+        <li><a class="dropdown-item js-update-url-with-hash" id="js-view-git-blame" role="menuitem" href="/openatv/enigma2/blame/81bf2159c4ba0251714193e9f686823a3ed4a8b0/lib/gdi/pixmapcache.cpp">View git blame</a></li>
           <li><a class="dropdown-item" id="js-new-issue" role="menuitem" href="/openatv/enigma2/issues/new">Reference in new issue</a></li>
       </ul>
     </details-menu>
@@ -3635,10 +2222,10 @@
   <div class="position-relative d-flex flex-row-reverse flex-lg-row flex-wrap flex-lg-nowrap flex-justify-center flex-lg-justify-between pt-6 pb-2 mt-6 f6 color-text-secondary border-top color-border-secondary ">
     <ul class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
       <li class="mr-3 mr-lg-0">&copy; 2021 GitHub, Inc.</li>
-        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="a32118299e45a135fa376d60ccb522428e279cdf1e0080c0bf0137701cc820ed">Terms</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="4aa9dcfd918a731b94f9a60a4341114bd1e2cdc1d33eaa5b9f4f3bd039dd3b6b">Privacy</a></li>
-        <li class="mr-3 mr-lg-0"><a data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="62776af13af4b446b438032cce11f39a07b9ed090f5d94b38699cce41fa97bf1" href="https://github.com/security">Security</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="7c8c76456319fbd6c6fd1e97737db1e054a5c9b06b5827946b7cd382fc534890">Status</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to terms&quot;,&quot;label&quot;:&quot;text:terms&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="9a125c4b0145de025e87733112fb7e56f8a616a2147a8537e485d4146cd3251c">Terms</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="2ac42c8411223f888e29f99ed1edc51e9b136f34faec2bd757a064046d697c6f">Privacy</a></li>
+        <li class="mr-3 mr-lg-0"><a data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to security&quot;,&quot;label&quot;:&quot;text:security&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="b589e1d78382e1c2b6b1550bd33ec8d251fcb05e3514fb11e695ac7af9301633" href="https://github.com/security">Security</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://www.githubstatus.com/" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to status&quot;,&quot;label&quot;:&quot;text:status&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="21b730af42f9b9913f1951b14cab671475b7e9b57cade9105bd865eac06ae4ea">Status</a></li>
         <li><a data-ga-click="Footer, go to help, text:Docs" href="https://docs.github.com">Docs</a></li>
     </ul>
 
@@ -3648,11 +2235,11 @@
 </svg>
 </a>
     <ul class="list-style-none d-flex flex-wrap col-12 col-lg-5 flex-justify-center flex-lg-justify-between mb-2 mb-lg-0">
-        <li class="mr-3 mr-lg-0"><a href="https://support.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="f9fe11df7f119d460a94a34eb16052a90aec8fccb604de3ec0409603c453bf63">Contact GitHub</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="284ba158e192c10635c8a324b72ab60486daf2d050874ab44242f822daeb1537">Pricing</a></li>
-      <li class="mr-3 mr-lg-0"><a href="https://docs.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="86122f45ac626839d6a5b4d89641b9088725b07979eeeda4aa6dde46417dcd5a">API</a></li>
-      <li class="mr-3 mr-lg-0"><a href="https://services.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="26b2d4c6a29454e7d1a25d7acc6725029f531365b4330a3ba679ac064337fa95">Training</a></li>
-        <li class="mr-3 mr-lg-0"><a href="https://github.blog" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/epng.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="9bd07ff05bed44546f4caad6e70102ad281dc7cb02928453743a397e60398bfc">Blog</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://support.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="1fa3945bab417d03a2fe1539ef3ec541830f50680ec4bf670aa0432b341c276d">Contact GitHub</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://github.com/pricing" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Pricing&quot;,&quot;label&quot;:&quot;text:Pricing&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="e4d3b2df3fa5d8e93397b8560b4d5a9426626b46f7bf59678f5806c428f52ea4">Pricing</a></li>
+      <li class="mr-3 mr-lg-0"><a href="https://docs.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to api&quot;,&quot;label&quot;:&quot;text:api&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="7e24aa79d49d47d433eba4dd1db5d2be182b6451b3124ed2d69dd038d9d5cf47">API</a></li>
+      <li class="mr-3 mr-lg-0"><a href="https://services.github.com" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to training&quot;,&quot;label&quot;:&quot;text:training&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="f422bfb5521bbf258f88193c106ccdb2b392b8d3e6084ce76910f15b25307f58">Training</a></li>
+        <li class="mr-3 mr-lg-0"><a href="https://github.blog" data-hydro-click="{&quot;event_type&quot;:&quot;analytics.event&quot;,&quot;payload&quot;:{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to blog&quot;,&quot;label&quot;:&quot;text:blog&quot;,&quot;originating_url&quot;:&quot;https://github.com/openatv/enigma2/blob/7.0/lib/gdi/pixmapcache.cpp&quot;,&quot;user_id&quot;:6751057}}" data-hydro-click-hmac="f00cfc2dd754a29ef788d8baac03835e608eaa75aa779660aa2453ac7d8d9b42">Blog</a></li>
         <li><a data-ga-click="Footer, go to about, text:about" href="https://github.com/about">About</a></li>
     </ul>
   </div>
