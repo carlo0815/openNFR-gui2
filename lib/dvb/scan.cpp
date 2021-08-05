@@ -31,7 +31,7 @@
 #define SCAN_eDebug(x...) do { if (m_scan_debug) eDebug(x); } while(0)
 #define SCAN_eDebugNoNewLineStart(x...) do { if (m_scan_debug) eDebugNoNewLineStart(x); } while(0)
 #define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
-#define SCAN_eDebugNoNewLineEnd(x...) do { if (m_scan_debug) eDebugNoNewLineEnd(x); } while(0)
+#define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
 
 DEFINE_REF(eDVBScan);
 
@@ -1519,11 +1519,11 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 		{
 			if (it->second.scrambled)
 			{
-				SCAN_eDebugNoNewLineEnd("is scrambled!");
+				SCAN_eDebugNoNewLine("is scrambled!");
 				is_crypted = true;
 			}
 			else
-				SCAN_eDebugNoNewLineEnd("is free");
+				SCAN_eDebugNoNewLine("is free");
 		}
 		SCAN_eDebugNoNewLine("\n");
 
@@ -1550,6 +1550,7 @@ RESULT eDVBScan::processSDT(eDVBNamespace dvbnamespace, const ServiceDescription
 					{
 					/* DISH/BEV servicetypes: */
 					case 128:
+					case 131: /*Sky UK OpenTV EPG channel */ 
 					case 133:
 					case 137:
 					case 144:
