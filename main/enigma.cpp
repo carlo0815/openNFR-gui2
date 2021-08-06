@@ -40,11 +40,6 @@
 
 #include <gst/gst.h>
 
-#include <lib/base/eerroroutput.h>
-ePtr<eErrorOutput> m_erroroutput;
-
-bool verbose = false;
-
 #ifdef OBJECT_DEBUG
 int object_total_remaining;
 
@@ -399,7 +394,6 @@ int main(int argc, char **argv)
 		p.clear();
 		p.flush();
 	}
-	m_erroroutput = NULL;
 	return exit_code;
 }
 
