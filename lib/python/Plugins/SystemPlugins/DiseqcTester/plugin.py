@@ -518,7 +518,7 @@ class DiseqcTester(Screen, TuneTest, ResultParser):
 			self.running = False
 			self["progress_list"].setIndex(0)
 			print("results:", self.results)
-+			print("resultsstatus:", self.resultsstatus)
+			print("resultsstatus:", self.resultsstatus)
 			if self.log:
 				file = open("/media/hdd/diseqctester.log", "w")
 				self.setResultType(ResultParser.TYPE_ALL)
