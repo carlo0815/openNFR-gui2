@@ -204,7 +204,7 @@ class FastScanScreen(ConfigListScreen, Screen):
 			"menu": self.closeRecursive,
 		}, -2)
 
-		providerList = list(x[0] for x in sorted(self.providers.iteritems(), key = operator.itemgetter(0)))
+		providerList = list(x[0] for x in sorted(self.providers.items(), key = operator.itemgetter(0)))
 
 		lastConfiguration = eval(config.misc.fastscan.last_configuration.value)
 		if not lastConfiguration:
