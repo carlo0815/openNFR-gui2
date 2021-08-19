@@ -481,7 +481,7 @@ class PluginDeinstall(Screen):
 	PLUGIN_PREFIX = 'enigma2-plugin-'
 	lastDownloadDate = None
 
-	def __init__(self, session, type = 1, needupdate = True):
+	def __init__(self, session, type = 0, needupdate = True):
 		Screen.__init__(self, session)
 		global pluginfiles
 		self.type = type
