@@ -582,6 +582,7 @@ class PluginDeinstall(Screen):
 							pluginfiles += "\n" 
 							self.listplugininfo(pluginfiles)
 							self.list = []
+				else:
 							self.setuplist.append("%s" % sel.name)
 							list = self.setuplist
 							for item in list:
