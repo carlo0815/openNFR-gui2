@@ -610,6 +610,13 @@ def runScreenTest():
 	profile("wizards")
 	screensToRun = []
 	RestoreSettings = None
+	if config.misc.firstrun.value == True:
+		infolist = []
+		fobj = open("/var/lib/opkg/info/enigma2-plugin-extensions-infopanel.list")
+		for line in fobj:
+			xxxx = line.split("\t")[0]
+			os.system("chattr +i " + xxxx)
+		fobj.close()	
 	if os.path.exists("/media/hdd/images/config/settings") and config.misc.firstrun.value:
 		if autorestoreLoop():
 			RestoreSettings = True
