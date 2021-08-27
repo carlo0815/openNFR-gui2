@@ -634,7 +634,7 @@ class EGWeather(Poll, Converter, object):
 		try:
 			info = self.source.getBoolean()
 			if info:
-			return ''
+				return ''
 			norec = True
 		except:
 			pass
