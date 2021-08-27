@@ -115,7 +115,7 @@ class OMaClockLcd(Renderer):
 			self.fColor = self.fColorm
 		else:
 			self.fColor = self.fColorh
-		int(endX, endY) = self.calc(self.forend, l, r, r1)
+		(endX, endY,) = self.calc(self.forend, l, r, r1)
 		self.line_draw(r, r1, endX, endY)
 
 	def line_draw(self, x0, y0, x1, y1):
