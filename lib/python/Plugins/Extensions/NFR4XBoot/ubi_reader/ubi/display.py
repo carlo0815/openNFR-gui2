@@ -51,7 +51,7 @@ def block(block, tab = '\t'):
 	if not block.ec_hdr.errors:
 		print( '\n')
 		print( '\t%sErase Count Header' % tab)
-		print( '\t%s---------------------' % tab?
+		print( '\t%s---------------------' % tab)
 		ec_hdr(block.ec_hdr, '\t\t%s' % tab)
 	if block.vid_hdr and not block.vid_hdr.errors:
 		print( '\n')
