@@ -641,16 +641,16 @@ class EGWeather(Poll, Converter, object):
 
 		if not info and not norec:
 			try:
-			info = self.source.time
+				info = self.source.time
 			except:
-			pass
+				pass
 
 		if not info and not norec:
 			try:
-			service = self.source.service
-			info = service and service.info()
+				service = self.source.service
+				info = service and service.info()
 			except:
-			pass
+				pass
 
 		if not info and not norec:
 			return ''
