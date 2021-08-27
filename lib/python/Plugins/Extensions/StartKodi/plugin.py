@@ -13,7 +13,7 @@ import os
 #from Components.Ipkg import IpkgComponent
 #from Screens.Ipkg import Ipkg
 from enigma import quitMainloop
-from from .installsomething import InstallSomething
+from .installsomething import InstallSomething
 
 
 
