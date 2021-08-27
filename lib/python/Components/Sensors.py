@@ -29,7 +29,7 @@ class Sensors:
 		for sensorid in list(range(len(self.sensors_list))):
 			if self.sensors_list[sensorid][0] == type:
 				_list.append(sensorid)
-+		return _list
+		return _list
 
 
 	def getSensorType(self, sensorid):
