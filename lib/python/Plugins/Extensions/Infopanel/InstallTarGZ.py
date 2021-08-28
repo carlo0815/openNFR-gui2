@@ -110,17 +110,17 @@ class InfopanelManagerScreen(Screen):
 
 	def OK(self):
 		item = self['menu'].getCurrent()[1]
-		if item is 'one':
+		if item == 'one':
 			self.session.openWithCallback(self.mList, InstallTarGZ)
-		elif item is 'two':
+		elif item == 'two':
 			self.session.openWithCallback(self.mList, InstallIpk)
-		elif item is 'tree':
+		elif item == 'tree':
 			self.session.openWithCallback(self.mList, AdvInstallIpk)
-		elif item is 'seven':
+		elif item == 'seven':
 			self.session.openWithCallback(self.mList, InstallZip)
-		elif item is 'eight':
+		elif item == 'eight':
 			self.session.openWithCallback(self.mList, InstallRar)
-		elif item is 'five':
+		elif item == 'five':
 			os.system('rm -rf /tmp/*.ipk /tmp/*.gz /tmp/*.tgz /tmp/*.zip /tmp/*.rar /media/usb/*.ipk /media/usb/*.gz /media/usb/*.tgz /media/usb/*.zip /media/usb/*.rar /media/hdd/*.ipk /media/hdd/*.gz /media/hdd/*.tgz /media/hdd/*.zip /media/hdd/*.rar /media/mmc/*.ipk /media/mmc/*.gz /media/mmc/*.tgz /media/mmc/*.zip /media/mmc/*.rar /media/sda1/*.ipk /media/sda1/*.gz /media/sda1/*.tgz /media/sda1/*.zip /media/sda1/*.rar')
 			self.mbox = self.session.open(MessageBox, _('All ipk , tar.gz , bh.tgz , nab.tgz , zip , rar Files Removed From /tmp /media/usb /media/hdd /media/mmc /media/sda1'), MessageBox.TYPE_INFO, timeout = 3)
 
