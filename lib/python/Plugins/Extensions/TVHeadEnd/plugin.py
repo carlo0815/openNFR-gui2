@@ -65,17 +65,17 @@ class TVHeadendSetup(Screen):
 		print("[TVHeadend_Setup] returnValue: ", returnValue)
 		
 		if returnValue is not None:
-			if returnValue is "TVHeadend_Setup":
+			if returnValue == "TVHeadend_Setup":
 				self.prombt()
-			elif returnValue is "TVHeadend_Stop":
+			elif returnValue == "TVHeadend_Stop":
 				self.prombt_stop()
-			elif returnValue is "TVHeadend_Setup1":
+			elif returnValue == "TVHeadend_Setup1":
 				os.system("/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/tvheadend.sh start")
 				self.close(None)                                  
-			elif returnValue is "TVHeadend_Stop1":
+			elif returnValue == "TVHeadend_Stop1":
 				os.system("/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/tvheadend.sh stop")
 				self.close(None)
-			elif returnValue is "TVHeadend_Start1":
+			elif returnValue == "TVHeadend_Start1":
 				os.system("/usr/lib/enigma2/python/Plugins/Extensions/TVHeadEnd/tvheadend1.sh &")
 				os.system("killall enigma2")
 				self.close(None)                                                                                         		
