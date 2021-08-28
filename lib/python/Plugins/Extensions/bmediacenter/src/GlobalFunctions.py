@@ -70,7 +70,7 @@ class Showiframe():
 def shortname(movie,showing = None):
 	movielist = movie.split('/')
 	for n in movielist:
-		if n is != "":		
+		if n != "":		
 			movie = n
 	movie = movie.upper()
 	movieback = movie
