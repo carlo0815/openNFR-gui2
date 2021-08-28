@@ -32,6 +32,11 @@ from time import time
 config.pluginfilter = ConfigSubsection()
 config.pluginfilter.kernel = ConfigYesNo(default = False)
 config.pluginfilter.drivers = ConfigYesNo(default = True)
+config.pluginfilter.opennfrskins = ConfigYesNo(default = True)
+config.pluginfilter.bootlogo = ConfigYesNo(default = True)
+config.pluginfilter.bootvideo = ConfigYesNo(default = True)
+config.pluginfilter.radiologo = ConfigYesNo(default = True)
+config.pluginfilter.spinner = ConfigYesNo(default = True)
 config.pluginfilter.extensions = ConfigYesNo(default = True)
 config.pluginfilter.po = ConfigYesNo(default = True)
 config.pluginfilter.m2k = ConfigYesNo(default = True)
@@ -495,6 +500,16 @@ class PluginDownloadBrowser(Screen):
 		self.PLUGIN_PREFIX2 = []
 		if config.pluginfilter.drivers.value:
 			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'drivers')
+		if config.pluginfilter.opennfrskins.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'opennfrskins')
+		if config.pluginfilter.bootlogo.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'bootlogo')
+		if config.pluginfilter.bootvideo.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'bootvideo')
+		if config.pluginfilter.radiologo.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'radiologo')
+		if config.pluginfilter.spinner.value:
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'spinner')
 		if config.pluginfilter.extensions.value:
 			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'extensions')
 		if config.pluginfilter.po.value:
@@ -873,6 +888,12 @@ class PluginFilter(ConfigListScreen, Screen):
 		self.editListEntry = None
 		self.list = []
 		self.list.append(getConfigListEntry(_("drivers"), config.pluginfilter.drivers, _("This allows you to show drivers modules in downloads")))
+		self.list.append(getConfigListEntry(_("opennfrskins"), config.pluginfilter.opennfrskins, _("This allows you to show opennfrskins in downloads")))
+		self.list.append(getConfigListEntry(_("bootlogo"), config.pluginfilter.bootlogo, _("This allows you to show bootlogo in downloads")))
+		self.list.append(getConfigListEntry(_("bootvideo"), config.pluginfilter.bootvideo, _("This allows you to show bootvideo in downloads")))
+		self.list.append(getConfigListEntry(_("radiologo"), config.pluginfilter.radiologo, _("This allows you to show radiologo in downloads")))
+		self.list.append(getConfigListEntry(_("spinner"), config.pluginfilter.spinner, _("This allows you to show spinner in downloads")))
+
 		self.list.append(getConfigListEntry(_("extensions"), config.pluginfilter.extensions, _("This allows you to show extensions modules in downloads")))
 		self.list.append(getConfigListEntry(_("languages"), config.pluginfilter.po, _("This allows you to show languages in downloads")))
 		self.list.append(getConfigListEntry(_("systemplugins"), config.pluginfilter.systemplugins, _("This allows you to show systemplugins modules in downloads")))
