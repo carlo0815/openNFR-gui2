@@ -69,7 +69,7 @@ def copystat(src, dst):
 	if hasattr(os, 'chflags') and hasattr(st, 'st_flags'):
 		try:
 			os.chflags(dst, st.st_flags)
-		except OSError, why:
+		except OSError as why:
 			if not hasattr(errno, 'EOPNOTSUPP') or why.errno != errno.EOPNOTSUPP:
 				raise
 
@@ -155,22 +155,22 @@ def copytree(src, dst, symlinks=False, ignore=None):
 			else:
 				copy2(srcname, dstname)
 			# XXX What about devices, sockets etc.?
-		except (IOError, os.error), why:
+		except (IOError, os.error) as why:
 			errors.append((srcname, dstname, str(why)))
 		# catch the Error from the recursive copytree so that we can
 		# continue with other files
-		except Error, err:
+		except Error as err:
 			errors.extend(err.args[0])
 	try:
 		copystat(src, dst)
-	except OSError, why:
+	except OSError as why:
 		if WindowsError is not None and isinstance(why, WindowsError):
 			# Copying file access times may fail on Windows
 			pass
 		else:
 			errors.extend((src, dst, str(why)))
 	if errors:
-		raise Error, errors
+		raise Error as errors
 
 def rmtree(path, ignore_errors=False, onerror=None):
 	"""Recursively delete a directory tree.
@@ -200,7 +200,7 @@ def rmtree(path, ignore_errors=False, onerror=None):
 	names = []
 	try:
 		names = os.listdir(path)
-	except os.error, err:
+	except os.error as err:
 		onerror(os.listdir, path, sys.exc_info())
 	for name in names:
 		fullname = os.path.join(path, name)
@@ -213,7 +213,7 @@ def rmtree(path, ignore_errors=False, onerror=None):
 		else:
 			try:
 				os.remove(fullname)
-			except os.error, err:
+			except os.error as err:
 				onerror(os.remove, fullname, sys.exc_info())
 	try:
 		os.rmdir(path)
