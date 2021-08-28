@@ -51,7 +51,7 @@ class ExtrasList(MenuList, HTMLComponent, GUIComponent):
 						self.up()
 					else:
 						self.down()
-		except Exception, e:
+		except Exception as e:
 			pass
 	
 		self.last = self.getSelectionIndex()
