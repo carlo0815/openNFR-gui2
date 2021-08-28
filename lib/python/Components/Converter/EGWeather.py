@@ -694,24 +694,24 @@ class EGWeather(Poll, Converter, object):
 						pngname = self.rutapng + '0-fs8.png'
 				text = pngname
 			elif self.type == self.ICONOHOYVFD:
-			if self.iconohoy == '':
-				pngname = ''
-			else:
-				iconogif = self.iconohoy
-				if devtipo() == 0:
-				iconopng = devgificono(iconogif, actual=True)
-				rpng = self.rutavfd
+				if self.iconohoy == '':
+					pngname = ''
 				else:
-				iconopng = iconogif.replace('.jpg', '-fs8.png')
-				rpng = self.rutavfd
-				pondebug('imagen [' + rpng + iconopng + ']')
-				if fileExists(rpng + iconopng):
-				pngname = rpng + iconopng
-				elif fileExists(self.rutavfd + iconogif):
-				pngname = self.rutavfd + iconogif
-				else:
-				pngname = self.rutapng + '0-fs8.png'
-			text = pngname
+					iconogif = self.iconohoy
+					if devtipo() == 0:
+						iconopng = devgificono(iconogif, actual=True)
+						rpng = self.rutavfd
+					else:
+						iconopng = iconogif.replace('.jpg', '-fs8.png')
+						rpng = self.rutavfd
+					pondebug('imagen [' + rpng + iconopng + ']')
+					if fileExists(rpng + iconopng):
+						pngname = rpng + iconopng
+					elif fileExists(self.rutavfd + iconogif):
+						pngname = self.rutavfd + iconogif
+					else:
+						pngname = self.rutapng + '0-fs8.png'
+				text = pngname
 			elif self.type == self.ICONOMAN:
 				if self.iconomanana == '':
 					pngname = ''
