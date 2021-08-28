@@ -447,11 +447,11 @@ class FastZapSetup:
 		try:
 			global PROC_FBC_PATH
 			procPath = "%s/fcc" % PROC_FBC_PATH
-			print "[FastZapSetup] write %s to %s" % (val ,procPath)
+			print("[FastZapSetup] write %s to %s" % (val ,procPath))
 			open(procPath, "w").write(val)
 
-		except Exception, ex:
-			print "[FastZapSetup] exception error : ", ex
+		except Exception as ex:
+			print("[FastZapSetup] exception error : ", ex)
 
 		configElement.save()
 
