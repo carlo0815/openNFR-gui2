@@ -101,7 +101,7 @@ class FastZapSupport:
 			if len(version)!=1 or version[0] != '4':
 #				print "invalid version"
 				return None
-		except Exception asex:
+		except Exception as ex:
 #			print "[fastzapsupport] exception error : ", ex
 			return None
 
