@@ -60,7 +60,7 @@ class DefaultWizard(WizardLanguage, DreamInfoHandler):
 		print("selection made")
 		#self.installPackage(int(index))
 		self.indexList = []
-        for x in list(range(len(self.packagesConfig))):
+		for x in list(range(len(self.packagesConfig))):
 			if self.packagesConfig[x].value:
 				self.indexList.append(x)
 

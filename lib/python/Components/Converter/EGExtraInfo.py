@@ -164,8 +164,8 @@ class EGExtraInfo(Poll, Converter, object):
 	def get_caName(self):
 		try:
 			f = open("/etc/.emuname",'r')
- 			name = f.readline().strip()
- 			f.close()
+			name = f.readline().strip()
+			f.close()
 		except:
 			name = "Common Interface"
 		return name

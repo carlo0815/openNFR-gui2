@@ -11,7 +11,7 @@
 	</setup>
 	<setup key="usage" title="Customize">
 		<item level="0" text="Setup mode" description="Choose which level of menu/settings to display. 'Expert' level shows all items.">config.usage.setup_level</item>
-		<item level="2" text="Enable Startup Bootvideo" description="You can Enable or Disable the Startup Bootvideo.">config.misc.bootvideo</item> 
+		<item level="2" text="Enable Startup Bootvideo" description="You can Enable or Disable the Startup Bootvideo.">config.misc.bootvideo</item>
 		<item level="2" text="Enable Log by Booting " description="You can Enable or Disable the logging into file by booting .">config.start.enabledebug</item> 
 		<item level="0" text="Sort order for menu entries" description="This option allows you to hide and sort menu entries.">config.usage.menu_sort_mode</item>
 		<item level="1" text="Enable teletext caching" description="When enabled, teletext pages will be cached, allowing faster access.">config.usage.enable_tt_caching</item>

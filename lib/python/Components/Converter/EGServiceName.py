@@ -75,8 +75,8 @@ class EGServiceName(Converter, object):
 					  orbital = "DVB-T"
 					elif (transponderData["tuner_type"] == "DVB-C"):
 					  orbital = "DVB-C"
-                except:
-                    orbital = "NONE"
+		except:
+			orbital = "NONE"
 				
 		if self.type == self.NAME:
 			name = ref and info.getName(ref)

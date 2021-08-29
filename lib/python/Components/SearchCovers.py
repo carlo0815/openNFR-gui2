@@ -284,10 +284,10 @@ class BackgroundCoverScanner(Thread):
 		if type == "movie":
 			list = []
 			try:
-                          	list = re.search('poster_path":"(.+?)".*?"original_title":"(.+?)"', str(data), re.S).groups(1)
-                        except:
-                        	list = re.search('original_title":"(.+?)".*?"poster_path":"(.+?)"', str(data), re.S).groups(1)
-                        if list:
+				list = re.search('poster_path":"(.+?)".*?"original_title":"(.+?)"', str(data), re.S).groups(1)
+			except:
+				list = re.search('original_title":"(.+?)".*?"poster_path":"(.+?)"', str(data), re.S).groups(1)
+			if list:
 				self.guilist.append(((title, True, filename),))
 				purl = "http://image.tmdb.org/t/p/%s%s" % (str(config.movielist.cover.themoviedb_coversize.value), str(list[0].replace('\\','')))
 				downloadPage(purl, filename).addCallback(self.countFound).addErrback(self.dataErrorDownload)
@@ -322,7 +322,7 @@ class BackgroundCoverScanner(Thread):
 			if config.movielist.cover.getdescription.value:
 				if season and episode:
 					iurl = "http://www.thetvdb.com/api/2AAF0562E31BCEEC/series/%s/default/%s/%s/de.xml" % (list[0], str(int(season)), str(int(episode)))
-                                        getPage(iurl, headers={'Content-Type':'application/x-www-form-urlencoded'}).addCallback(self.getInfos, id, type, filename).addErrback(self.dataError)
+					getPage(iurl, headers={'Content-Type':'application/x-www-form-urlencoded'}).addCallback(self.getInfos, id, type, filename).addErrback(self.dataError)
 		else:
 			self.notfound += 1
 			if not self.background:
@@ -675,7 +675,7 @@ class FindMovieListScanPath(Screen):
 			self.fullpath = self["folderlist"].getSelection()[0]
 		else:
 			self.fullpath = self["folderlist"].getSelection()[0] + "/"
-	  	self.close(self.fullpath)
+		self.close(self.fullpath)
 
 	def up(self):
 		self["folderlist"].up()

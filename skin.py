@@ -331,20 +331,20 @@ def parseCoordinate(s, e, size=0, font=None):
 	elif s == '*':
 		return None
 	else:
-		if s[0] is 'e':
+		if s[0] == 'e':
 			val = e
 			s = s[1:]
-		elif s[0] is 'c':
+		elif s[0] == 'c':
 			val = e/2
 			s = s[1:]
 		else:
 			val = 0
 		if s:
-			if s[-1] is '%':
+			if s[-1] == '%':
 				val += e * int(s[:-1]) // 100
-			elif s[-1] is 'w':
+			elif s[-1] == 'w':
 				val += fonts[font][3] * int(s[:-1])
-			elif s[-1] is 'h':
+			elif s[-1] == 'h':
 				val += fonts[font][2] * int(s[:-1])
 			else:
 				val += int(s)

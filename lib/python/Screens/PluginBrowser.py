@@ -499,7 +499,7 @@ class PluginDownloadBrowser(Screen):
 		#Create Plugin Filter
 		self.PLUGIN_PREFIX2 = []
 		if config.pluginfilter.drivers.value:
-			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'drivers')			
+			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'drivers')
 		if config.pluginfilter.opennfrskins.value:
 			self.PLUGIN_PREFIX2.append(self.PLUGIN_PREFIX + 'opennfrskins')
 		if config.pluginfilter.bootlogo.value:
@@ -887,7 +887,7 @@ class PluginFilter(ConfigListScreen, Screen):
 	def createSetup(self):
 		self.editListEntry = None
 		self.list = []
-		self.list.append(getConfigListEntry(_("drivers"), config.pluginfilter.drivers, _("This allows you to show drivers modules in downloads")))		
+		self.list.append(getConfigListEntry(_("drivers"), config.pluginfilter.drivers, _("This allows you to show drivers modules in downloads")))
 		self.list.append(getConfigListEntry(_("opennfrskins"), config.pluginfilter.opennfrskins, _("This allows you to show opennfrskins in downloads")))
 		self.list.append(getConfigListEntry(_("bootlogo"), config.pluginfilter.bootlogo, _("This allows you to show bootlogo in downloads")))
 		self.list.append(getConfigListEntry(_("bootvideo"), config.pluginfilter.bootvideo, _("This allows you to show bootvideo in downloads")))

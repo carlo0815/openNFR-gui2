@@ -634,23 +634,23 @@ class EGWeather(Poll, Converter, object):
 		try:
 			info = self.source.getBoolean()
 			if info:
-			return ''
+				return ''
 			norec = True
 		except:
 			pass
 
 		if not info and not norec:
 			try:
-			info = self.source.time
+				info = self.source.time
 			except:
-			pass
+				pass
 
 		if not info and not norec:
 			try:
-			service = self.source.service
-			info = service and service.info()
+				service = self.source.service
+				info = service and service.info()
 			except:
-			pass
+				pass
 
 		if not info and not norec:
 			return ''
@@ -659,77 +659,77 @@ class EGWeather(Poll, Converter, object):
 			self.poll_interval = self.intervalo
 			self.lugar, self.temperatura, self.textohoy, self.textomanana, self.iconohoy, self.iconomanana, self.ahora = cargaDatos(self.type, self.extended)
 			if self.type == self.TIEMPOHOY:
-			text = self.textohoy
+				text = self.textohoy
 			elif self.type == self.AHORA:
-			text = self.ahora
+				text = self.ahora
 			elif self.type == self.TIEMPOMAN:
-			text = self.textomanana
+				text = self.textomanana
 			elif self.type == self.WFLUGAR:
-			text = self.lugar
+				text = self.lugar
 			elif self.type == self.WFTEMP:
-			text = self.temperatura
+				text = self.temperatura
 			elif self.type == self.TEMPERATURAGRADOS:
-			text = self.temperatura.replace('C', '').replace('F', '').replace(' ', '')
+				text = self.temperatura.replace('C', '').replace('F', '').replace(' ', '')
 			elif self.type == self.LUGARGRADOS:
-			if len(self.lugar) > 17:
-				self.lugar = self.lugar[:16] + '...'
-			text = self.lugar + ' ' + self.textohoy.replace('C', '').replace('F', '').replace(' ', '')
+				if len(self.lugar) > 17:
+					self.lugar = self.lugar[:16] + '...'
+				text = self.lugar + ' ' + self.textohoy.replace('C', '').replace('F', '').replace(' ', '')
 			elif self.type == self.ICONOHOY:
-			if self.iconohoy == '':
-				pngname = ''
-			else:
-				iconogif = self.iconohoy
-				if devtipo() == 0:
-				iconopng = devgificono(iconogif, actual=True)
-				rpng = self.rutapngacu
+				if self.iconohoy == '':
+					pngname = ''
 				else:
-				iconopng = iconogif.replace('.jpg', '-fs8.png')
-				rpng = self.rutapngacu
-				pondebug('imagen [' + rpng + iconopng + ']')
-				if fileExists(rpng + iconopng):
-				pngname = rpng + iconopng
-				elif fileExists(self.rutaimagen + iconogif):
-				pngname = self.rutaimagen + iconogif
-				else:
-				pngname = self.rutapng + '0-fs8.png'
-			text = pngname
+					iconogif = self.iconohoy
+					if devtipo() == 0:
+						iconopng = devgificono(iconogif, actual=True)
+						rpng = self.rutapngacu
+					else:
+						iconopng = iconogif.replace('.jpg', '-fs8.png')
+						rpng = self.rutapngacu
+					pondebug('imagen [' + rpng + iconopng + ']')
+					if fileExists(rpng + iconopng):
+						pngname = rpng + iconopng
+					elif fileExists(self.rutaimagen + iconogif):
+						pngname = self.rutaimagen + iconogif
+					else:
+						pngname = self.rutapng + '0-fs8.png'
+				text = pngname
 			elif self.type == self.ICONOHOYVFD:
-			if self.iconohoy == '':
-				pngname = ''
-			else:
-				iconogif = self.iconohoy
-				if devtipo() == 0:
-				iconopng = devgificono(iconogif, actual=True)
-				rpng = self.rutavfd
+				if self.iconohoy == '':
+					pngname = ''
 				else:
-				iconopng = iconogif.replace('.jpg', '-fs8.png')
-				rpng = self.rutavfd
-				pondebug('imagen [' + rpng + iconopng + ']')
-				if fileExists(rpng + iconopng):
-				pngname = rpng + iconopng
-				elif fileExists(self.rutavfd + iconogif):
-				pngname = self.rutavfd + iconogif
-				else:
-				pngname = self.rutapng + '0-fs8.png'
-			text = pngname
+					iconogif = self.iconohoy
+					if devtipo() == 0:
+						iconopng = devgificono(iconogif, actual=True)
+						rpng = self.rutavfd
+					else:
+						iconopng = iconogif.replace('.jpg', '-fs8.png')
+						rpng = self.rutavfd
+					pondebug('imagen [' + rpng + iconopng + ']')
+					if fileExists(rpng + iconopng):
+						pngname = rpng + iconopng
+					elif fileExists(self.rutavfd + iconogif):
+						pngname = self.rutavfd + iconogif
+					else:
+						pngname = self.rutapng + '0-fs8.png'
+				text = pngname
 			elif self.type == self.ICONOMAN:
-			if self.iconomanana == '':
-				pngname = ''
-			else:
-				iconogif = self.iconomanana
-				if devtipo() == 0:
-				iconopng = devgificono(iconogif)
-				rpng = self.rutapngacu
+				if self.iconomanana == '':
+					pngname = ''
 				else:
-				iconopng = iconogif.replace('.jpg', '-fs8.png')
-				rpng = self.rutapngacu
-				if fileExists(rpng + iconopng):
-				pngname = rpng + iconopng
-				elif fileExists(self.rutaimagen + iconogif):
-				pngname = self.rutaimagen + iconogif
-				else:
-				pngname = self.rutapng + '0-fs8.png'
-			text = pngname
+					iconogif = self.iconomanana
+					if devtipo() == 0:
+						iconopng = devgificono(iconogif)
+						rpng = self.rutapngacu
+					else:
+						iconopng = iconogif.replace('.jpg', '-fs8.png')
+						rpng = self.rutapngacu
+					if fileExists(rpng + iconopng):
+						pngname = rpng + iconopng
+					elif fileExists(self.rutaimagen + iconogif):
+						pngname = self.rutaimagen + iconogif
+					else:
+						pngname = self.rutapng + '0-fs8.png'
+				text = pngname
 		if text == '':
 			self.poll_interval = 6000
 		return text
@@ -738,4 +738,4 @@ class EGWeather(Poll, Converter, object):
 
 	def changed(self, what):
 		if what[0] != self.CHANGED_SPECIFIC or what[1] == self.type:
-		Converter.changed(self, what)
+			Converter.changed(self, what)

@@ -177,7 +177,7 @@ class MC_WeatherInfo(Screen):
 			self.showIcon(item.index,item.filename)
 
 	def showIcon(self,index, filename):
-		if index <> -1:
+		if index != -1:
 			self["weekday%s_icon" % index].updateIcon(filename)
 			self["weekday%s_icon" % index].show()
 		else:
