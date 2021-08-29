@@ -1,7 +1,29 @@
 language: cpp
 
 sudo: required
-dist: bionic
+dist: focal
+
+addons:
+  apt:
+    packages:
+    - linux-libc-dev
+    - git
+    - build-essential
+    - automake
+    - libtool
+    - python-dev
+    - zlib1g-dev
+    - gettext
+    - swig
+    - libgstreamer1.0-dev
+    - libgstreamer-plugins-base1.0-dev
+    - libfreetype6-dev
+    - libsigc++-2.0-dev
+    - libfribidi-dev
+    - libssl-dev
+    - libavahi-client-dev
+    - libjpeg-turbo8-dev
+    - libgif-dev
 
 matrix:
   include:

@@ -48,6 +48,10 @@ extern "C" {
 }
 #endif
 
+#ifndef SUBT_TXT_ABNORMAL_PTS_DIFFS
+#define SUBT_TXT_ABNORMAL_PTS_DIFFS 1800000
+#endif
+
 class eStaticServiceDVBInformation: public iStaticServiceInformation
 {
 	DECLARE_REF(eStaticServiceDVBInformation);
@@ -481,7 +485,7 @@ RESULT eStaticServiceDVBPVRInformation::getEvent(const eServiceReference &ref, e
 {
 	if (!ref.path.empty())
 	{
-		if (ref.path.substr(0, 7) == "http://")
+		if (ref.path.find("://") != std::string::npos)
 		{
 			eServiceReference equivalentref(ref);
 			/* this might be a scrambled stream (id + 0x100), force equivalent dvb type */
@@ -936,7 +940,7 @@ RESULT eServiceFactoryDVB::play(const eServiceReference &ref, ePtr<iPlayableServ
 
 RESULT eServiceFactoryDVB::record(const eServiceReference &ref, ePtr<iRecordableService> &ptr)
 {
-	bool isstream = ref.path.substr(0, 7) == "http://";
+	bool isstream = ref.path.find("://") != std::string::npos;
 	ptr = new eDVBServiceRecord((eServiceReferenceDVB&)ref, isstream);
 	return 0;
 }
@@ -1012,7 +1016,7 @@ RESULT eServiceFactoryDVB::lookupService(ePtr<eDVBService> &service, const eServ
 		int err;
 		if ((err = eDVBDB::getInstance()->getService((eServiceReferenceDVB&)ref, service)) != 0)
 		{
-//			eLog(6, "[eServiceFactoryDVB] lookupService getService failed!");
+			eTrace("[eServiceFactoryDVB] lookupService getService failed!");
 			return err;
 		}
 	}
@@ -1027,7 +1031,7 @@ eDVBServicePlay::eDVBServicePlay(const eServiceReference &ref, eDVBService *serv
 	m_have_video_pid(0),
 	m_tune_state(-1),
 	m_noaudio(false),
-	m_is_stream(ref.path.substr(0, 7) == "http://"),
+	m_is_stream(ref.path.find("://") != std::string::npos),
 	m_is_pvr(!ref.path.empty() && !m_is_stream),
 	m_is_paused(0),
 	m_timeshift_enabled(0),
@@ -1038,6 +1042,7 @@ eDVBServicePlay::eDVBServicePlay(const eServiceReference &ref, eDVBService *serv
 	m_skipmode(0),
 	m_fastforward(0),
 	m_slowmotion(0),
+	m_tap_recorder(0),
 	m_cuesheet_changed(0),
 	m_cutlist_enabled(1),
 	m_subtitle_widget(0),
@@ -1773,6 +1778,12 @@ RESULT eDVBServicePlay::timeshift(ePtr<iTimeshiftService> &ptr)
 	return -1;
 }
 
+RESULT eDVBServicePlay::tap(ePtr<iTapService> &ptr)
+{
+	ptr = this;
+	return 0;
+}
+
 RESULT eDVBServicePlay::cueSheet(ePtr<iCueSheet> &ptr)
 {
 	if (m_is_pvr || m_timeshift_enabled)
@@ -2231,11 +2242,7 @@ int eDVBServicePlay::selectAudioStream(int i)
 		int different_pid = program.videoStreams.empty() && program.audioStreams.size() == 1 && program.audioStreams[stream].rdsPid != -1;
 		if (different_pid)
 			rdsPid = program.audioStreams[stream].rdsPid;
-#if HAVE_HISILICON
-		if (different_pid && (!m_rds_decoder || m_rds_decoder->getPid() != rdsPid))
-#else 
 		if (!m_rds_decoder || m_rds_decoder->getPid() != rdsPid)
-#endif
 		{
 			m_rds_decoder = 0;
 			ePtr<iDVBDemux> data_demux;
@@ -2244,6 +2251,7 @@ int eDVBServicePlay::selectAudioStream(int i)
 				m_rds_decoder = new eDVBRdsDecoder(data_demux, different_pid);
 				m_rds_decoder->connectEvent(sigc::mem_fun(*this, &eDVBServicePlay::rdsDecoderEvent), m_rds_decoder_event_connection);
 				m_rds_decoder->start(rdsPid);
+				eDebug("[eDVBServicePlay] Using rds pid %d", rdsPid);
 			}
 		}
 	}
@@ -2309,9 +2317,9 @@ std::string eDVBServicePlay::getText(int x)
 		switch(x)
 		{
 			case RadioText:
-				return convertLatin1UTF8(m_rds_decoder->getRadioText());
+				return m_rds_decoder->getRadioText();
 			case RtpText:
-				return convertLatin1UTF8(m_rds_decoder->getRtpText());
+				return m_rds_decoder->getRtpText();
 		}
 	return "";
 }
@@ -2548,6 +2556,12 @@ RESULT eDVBServicePlay::startTimeshift()
 		fileout << "1";
 	}
 
+	fileout.open("/proc/stb/lcd/symbol_record");
+	if(fileout.is_open())
+	{
+		fileout << "1";
+	}
+
 	delete [] templ;
 
 	if (m_timeshift_fd < 0)
@@ -2588,6 +2602,12 @@ RESULT eDVBServicePlay::stopTimeshift(bool swToLive)
 
 	ofstream fileout;
 	fileout.open("/proc/stb/lcd/symbol_timeshift");
+	if(fileout.is_open())
+	{
+		fileout << "0";
+	}
+	
+	fileout.open("/proc/stb/lcd/symbol_record");
 	if(fileout.is_open())
 	{
 		fileout << "0";
@@ -2648,6 +2668,49 @@ std::string eDVBServicePlay::getTimeshiftFilename()
 		return m_timeshift_file;
 	else
 		return "";
+}
+
+bool eDVBServicePlay::startTapToFD(int fd, const std::vector<int> &pids, int packetsize)
+{
+	ePtr<iDVBDemux> demux;
+
+	eDebug("[eServiceTap] start tap");
+
+	if(m_tap_recorder)
+	{
+		eWarning("[eServiceTap] tap already running");
+		return(false);
+	}
+
+	if (m_service_handler.getDataDemux(demux))
+		return(false);
+
+	demux->createTSRecorder(m_tap_recorder, packetsize, false);
+
+	if(m_tap_recorder == nullptr)
+	{
+		eWarning("[eServiceTap] tap create recorder failed");
+		return(false);
+	}
+
+	m_tap_recorder->setTargetFD(fd);
+	m_tap_recorder->enableAccessPoints(false);
+
+	for(auto i : pids)
+		m_tap_recorder->addPID(i);
+
+	m_tap_recorder->start();
+
+	return(true);
+}
+
+void eDVBServicePlay::stopTapToFD()
+{
+	if(m_tap_recorder != nullptr)
+	{
+		m_tap_recorder->stop();
+		m_tap_recorder = nullptr;
+	}
 }
 
 PyObject *eDVBServicePlay::getCutList()
@@ -3452,7 +3515,7 @@ void eDVBServicePlay::newSubtitlePage(const eDVBTeletextSubtitlePage &page)
 		eDVBTeletextSubtitlePage tmppage = page;
 		tmppage.m_have_pts = true;
 
-		if (abs(tmppage.m_pts - pts) > 20*90000)
+		if (abs(tmppage.m_pts - pts) > SUBT_TXT_ABNORMAL_PTS_DIFFS)
 			tmppage.m_pts = pts; // fix abnormal pts diffs
 
 		tmppage.m_pts += subtitledelay;
@@ -3501,7 +3564,7 @@ void eDVBServicePlay::checkSubtitleTiming()
 		int diff = show_time - pos;
 //		eDebug("[eDVBServicePlay] Subtitle show %d page.pts=%lld pts=%lld diff=%d", type, show_time, pos, diff);
 
-		if (diff < 20*90 || diff > 1800000)
+		if (diff < 20*90 || diff > SUBT_TXT_ABNORMAL_PTS_DIFFS)
 		{
 			if (type == TELETEXT)
 			{
@@ -3528,7 +3591,7 @@ void eDVBServicePlay::newDVBSubtitlePage(const eDVBSubtitlePage &p)
 		pts_t pos = 0;
 		if (m_decoder)
 			m_decoder->getPTS(0, pos);
-		if ( abs(pos-p.m_show_time)>1800000 && (m_is_pvr || m_timeshift_enabled))
+		if ( abs(pos-p.m_show_time)>SUBT_TXT_ABNORMAL_PTS_DIFFS && (m_is_pvr || m_timeshift_enabled))
 		{
 			eDebug("[eDVBServicePlay] Subtitle without PTS and recording");
 			int subtitledelay = eConfigManager::getConfigIntValue("config.subtitles.subtitle_noPTSrecordingdelay", 315000);

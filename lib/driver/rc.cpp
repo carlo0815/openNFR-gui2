@@ -46,6 +46,11 @@ eRCDevice::~eRCDevice()
 	eRCInput::getInstance()->removeDevice(id.c_str());
 }
 
+int eRCDevice::setKeyMapping(const std::unordered_map<unsigned int, unsigned int>& remaps)
+{
+	return eRCInput::remapUnsupported;
+}
+
 eRCDriver::eRCDriver(eRCInput *input): input(input), enabled(1)
 {
 }
@@ -119,11 +124,11 @@ eRCInputEventDriver::eRCInputEventDriver(const char *filename): eRCDriver(eRCInp
 		::ioctl(handle, EVIOCGBIT(0, sizeof(evCaps)), evCaps);
 #if DUMPKEYS
 		int i;
-		eDebug("[eRCInputEventDriver] %s keycaps: ", filename);
+		eDebugNoNewLineStart("[eRCInputEventDriver] %s keycaps: ", filename);
 		for (i = 0; i< sizeof(keyCaps); i++)
 			eDebugNoNewLine(" %02X", keyCaps[i]);
 		eDebugNoNewLine("\n");
-		eDebug("[eRCInputEventDriver] %s evcaps: ", filename);
+		eDebugNoNewLineStart("[eRCInputEventDriver] %s evcaps: ", filename);
 		for (i = 0; i< sizeof(evCaps); i++)
 			eDebugNoNewLine(" %02X", evCaps[i]);
 		eDebugNoNewLine("\n");
@@ -251,6 +256,26 @@ void eRCInput::addDevice(const std::string &id, eRCDevice *dev)
 void eRCInput::removeDevice(const std::string &id)
 {
 	devices.erase(id);
+}
+
+int eRCInput::setKeyMapping(const std::string &id, ePyObject keyRemap)
+{
+	eRCDevice *dev = getDevice(id);
+	if (dev)
+	{
+		std::unordered_map<unsigned int, unsigned int> remaps;
+		if (!PyDict_Check(keyRemap))
+			return remapFormatErr;
+		PyObject *from, *to;
+		Py_ssize_t pos=0;
+		while (PyDict_Next(keyRemap, &pos, &from, &to)) {
+			if (!PyInt_Check(from) || !PyInt_Check(to))
+				return remapFormatErr;
+			remaps[PyInt_AsLong(from)] = PyInt_AsLong(to);
+		}
+		return dev->setKeyMapping(remaps);
+	}
+	return remapNoSuchDevice;
 }
 
 eRCDevice *eRCInput::getDevice(const std::string &id)

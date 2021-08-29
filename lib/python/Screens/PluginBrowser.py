@@ -893,7 +893,6 @@ class PluginFilter(ConfigListScreen, Screen):
 		self.list.append(getConfigListEntry(_("bootvideo"), config.pluginfilter.bootvideo, _("This allows you to show bootvideo in downloads")))
 		self.list.append(getConfigListEntry(_("radiologo"), config.pluginfilter.radiologo, _("This allows you to show radiologo in downloads")))
 		self.list.append(getConfigListEntry(_("spinner"), config.pluginfilter.spinner, _("This allows you to show spinner in downloads")))
-
 		self.list.append(getConfigListEntry(_("extensions"), config.pluginfilter.extensions, _("This allows you to show extensions modules in downloads")))
 		self.list.append(getConfigListEntry(_("languages"), config.pluginfilter.po, _("This allows you to show languages in downloads")))
 		self.list.append(getConfigListEntry(_("systemplugins"), config.pluginfilter.systemplugins, _("This allows you to show systemplugins modules in downloads")))

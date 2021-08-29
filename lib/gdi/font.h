@@ -73,6 +73,7 @@ public:
 	std::string AddFont(const std::string &filename, const std::string &name, int scale, int renderflags = 0);
 	FT_Error FTC_Face_Requester(FTC_FaceID	face_id, FT_Face* aface);
 	int getFont(ePtr<Font> &font, const std::string &face, int size, int tabwidth=-1);
+	std::vector<std::string> getFontFaces();
 	fontRenderClass();
 	~fontRenderClass();
 #endif
@@ -152,8 +153,7 @@ class eTextPara: public iObject
 	void calc_bbox();
 public:
 	eTextPara(eRect area, ePoint start=ePoint(-1, -1))
-		: current_font(0), replacement_font(0), current_face(0), replacement_face(0),
-		fallback_font(0), fallback_face(0),
+	: current_font(0), replacement_font(0), fallback_font(0), current_face(0), replacement_face(0), fallback_face(0),
 		area(area), cursor(start), maximum(0, 0), left(start.x()), charCount(0), totalheight(0),
 		bboxValid(0), doTopBottomReordering(false)
 	{
