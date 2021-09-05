@@ -111,7 +111,7 @@ class BootvideoSetupScreen(Screen):
 			}, 1)
 			
 		self.Mlist = []
-		self.Mlist.append(MenuEntryItem((InfoEntryComponent('no Bootvideo'), _("no Bootvideo"), 'nobootvideo')))
+		self.Mlist.append(MenuEntryItem((InfoEntryComponent('no_Bootvideo'), _("no_Bootvideo"), 'nobootvideo')))
 		for video in bootvideo:
 			self.Mlist.append(MenuEntryItem((InfoEntryComponent('%s' % video), _('%s' % video), '%s' % video)))
 
@@ -158,7 +158,7 @@ class BootvideoSetupScreen(Screen):
 		menu2 = menu1[:-4]
 		os.system("rm /usr/share/bootvideo.mp4")
 		os.system("rm /etc/init.d/bootvideo")
-		if menu1 != "no Bootvideo":
+		if menu1 != "no_Bootvideo":
 			config.misc.bootvideo.value = True
 			os.system("cp /usr/share/enigma2/bootvideos/%s /usr/share/bootvideo.mp4" % menu1)
 			os.system("cp /usr/share/enigma2/bootvideos/%s_bootvideo /etc/init.d/bootvideo" % menu2)
