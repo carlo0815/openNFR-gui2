@@ -21,11 +21,11 @@ from Components.Network import iNetwork
 from Plugins.Plugin import PluginDescriptor
 from enigma import eTimer, eEnv, eConsoleAppContainer
 from Tools.Directories import *
-from os import system, popen, path, makedirs, listdir, access, stat, rename, remove, W_OK, R_OK
 from time import gmtime, strftime, localtime, sleep
 from datetime import date, datetime
 from boxbranding import getBoxType, getMachineBrand, getMachineName, getImageDistro
 import shutil
+import os
 
 boxtype = getBoxType()
 distro = getImageDistro()
