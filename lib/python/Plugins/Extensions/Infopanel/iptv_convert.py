@@ -282,13 +282,13 @@ class IPTV(Screen):
 	def install(self):
 		self.IPTVInstalled = True
 		self.type = "TV"
+		infotext += _('M3U Converter\n')
 		for l in self.iptvlist:
 			self.convert = True
 			file = l 
 			self.IPTV_glob = IPTV_glob(l, file)
 			name_file = self.IPTV_glob.file_filter(l)
 			self.IPTV_glob.Convert_m3u(l, file)
-			infotext = _('M3U Converter\n')
 			infotext += _('IPTV m3u Files convert to bouquetslist')
 			infotext += _('\n\n\n')
 			infotext += _('Update Bouquets and Services')
