@@ -282,7 +282,7 @@ class IPTV(Screen):
 	def install(self):
 		self.IPTVInstalled = True
 		self.type = "TV"
-		infotext += _('M3U Converter\n')
+		infotext = _('M3U Converter\n')
 		for l in self.iptvlist:
 			self.convert = True
 			file = l 
