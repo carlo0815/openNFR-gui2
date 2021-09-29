@@ -14635,3 +14635,6 @@ msgstr "kein openVPN gefunden"
 
 msgid "Link not detected"
 msgstr "Link nicht erkannt"
+
+msgid "Please be patient, the M3U settings are being created. Depending on the system, it can take up to 20 minutes."
+msgstr "Bitte etwas Geduld, die M3U Settings werden erstellt. AbhÃ¤ngig vom System kann es bis zu 20 Minuten dauern."
