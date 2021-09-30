@@ -192,6 +192,7 @@ class IPTV(Screen):
         self["IPTVList"] = MenuList(self.iptvlist)
         self["country"] = Pixmap()
         self["text1"] = Label(_("Select M3U File from /etc/enigma2 to add into TV Bouquet"))
+	self["text2"] = Label(_("Please be patient, the M3U settings are being created. Depending on the system, it can take up to 20 minutes."))
         
         self["actions"] = ActionMap(["OkCancelActions", "WizardActions", "ColorActions", "SetupActions", "NumberActions", "EPGSelectActions"],
         {
