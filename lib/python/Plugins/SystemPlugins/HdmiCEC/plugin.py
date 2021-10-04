@@ -118,11 +118,11 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 		choicelist = []
 		for i in (5,10,15,30,45,60):
 			choicelist.append(("%d" % i, _("%d sec") % i))
-		config.hdmicec.workaround_turnbackon = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
+		#config.hdmicec.workaround_turnbackon = ConfigSelection(default = "0", choices = [("0", _("Disabled"))] + choicelist)
 		config.hdmicec.advanced_settings = ConfigYesNo(default = False)
 		config.hdmicec.default_settings = NoSave(ConfigYesNo(default = False))
 		config.hdmicec.debug = ConfigYesNo(default = False)
-		config.hdmicec.commandline = ConfigYesNo(default = False)
+		#config.hdmicec.commandline = ConfigYesNo(default = False)
 		self.onChangedEntry = [ ]
 		self.list = []
 		ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
@@ -168,10 +168,10 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 					self.list.append(getConfigListEntry(tab + _("Time delay for the repeated transmission"), config.hdmicec.messages_repeat_slowdown, _('The time is multiplied by the current repeat counter.'), ))
 					self.list.append(getConfigListEntry(tab + _("Repeat the standby commands?"), config.hdmicec.messages_repeat_standby, _('Is not necessary in most cases.'), 'refreshlist'))
 				self.list.append(getConfigListEntry(_("Check power and input state from TV"), config.hdmicec.check_tv_state, _('An attempt is made to capture the current TV status. If this is not possible due to incorrect or missing status messages, it may cause the receiver to respond unexpectedly.\nOn the other hand, tries to respond better to different operating conditions.'), ))
-				self.list.append(getConfigListEntry(_("Ignore unexpectedly wakeup and stay in standby"), config.hdmicec.workaround_turnbackon, _("This is a workaround for some devices there wakeup again after switching in standby. The wak up command's from other devices will ignored for few seconds."),))
+				#self.list.append(getConfigListEntry(_("Ignore unexpectedly wakeup and stay in standby"), config.hdmicec.workaround_turnbackon, _("This is a workaround for some devices there wakeup again after switching in standby. The wak up command's from other devices will ignored for few seconds."),))
 			if fileExists("/proc/stb/hdmi/preemphasis"):
 				self.list.append(getConfigListEntry(_("Use HDMI-preemphasis"), config.hdmicec.preemphasis, _('With this setting, you can probably improve the signal quality or eliminate problems that can occur with longer HDMI cables.'),))
-			self.list.append(getConfigListEntry(_("Enable command line function"), config.hdmicec.commandline, _("Activate an way to send individual or specific internal HDMI-CEC commands from the command line. Type on command line 'echo help > %s' and then read the file '%s' for a short help.") %(Components.HdmiCec.cmdfile, Components.HdmiCec.hlpfile), ))
+			#self.list.append(getConfigListEntry(_("Enable command line function"), config.hdmicec.commandline, _("Activate an way to send individual or specific internal HDMI-CEC commands from the command line. Type on command line 'echo help > %s' and then read the file '%s' for a short help.") %(Components.HdmiCec.cmdfile, Components.HdmiCec.hlpfile), ))
 			self.list.append(getConfigListEntry(_("Enable debug log *"), config.hdmicec.debug, _('Allows you to enable the debug log. They contain very detailed information of everything the system does.') + _("\n* Logs location: logs settings, Filename: Enigma2-hdmicec-[date].log"), ))
 
 		self["config"].list = self.list
@@ -182,7 +182,7 @@ class HdmiCECSetupScreen(Screen, ConfigListScreen):
 
 	def advancedSettings(self, mode = None, savevalues = False):
 		advconfigs = ('deepstandby_waitfortimesync', 'tv_standby_notinputactive', 'tv_wakeup_zaptimer', 'tv_wakeup_zapandrecordtimer', 'tv_wakeup_wakeuppowertimer',
-						'workaround_activesource', 'handle_tv_input', 'handle_tv_delaytime', 'messages_repeat', 'check_tv_state', 'workaround_turnbackon')
+						'workaround_activesource', 'handle_tv_input', 'handle_tv_delaytime', 'messages_repeat', 'check_tv_state')
 		cecconf = config.hdmicec.dict()
 		for key in cecconf:
 			if mode == "start":
