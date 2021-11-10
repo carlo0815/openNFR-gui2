@@ -21,7 +21,7 @@ from Components.ConfigList import ConfigListScreen
 from boxbranding import getImageDistro, getMachineBuild, getMachineBrand, getMachineName, getMachineMtdRoot, getMachineMtdKernel
 
 feedurl = 'http://dev.nachtfalke.biz/nfr/feeds'
-imagecat = [6.2,6.3,6.4,6.5,6.6]
+imagecat = [6.2,6.3,6.4,6.5,7.0]
 
 def checkimagefiles(files):
 	return len([x for x in files if 'kernel' in x and '.bin' in x or x in ('zImage', 'uImage', 'root_cfe_auto.bin', 'root_cfe_auto.jffs2', 'oe_kernel.bin', 'oe_rootfs.bin', 'e2jffs2.img', 'rootfs.tar.bz2', 'rootfs.ubi','rootfs.bin')]) == 2
