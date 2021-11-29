@@ -19,6 +19,7 @@ class LCDSkinSelector(Screen):
 	skinlist = []
 	if getBoxType() in ('vuduo2', 'mutant51', 'ax51', 'g300', 'sf4008', 'formuler1'):
 		root = eEnv.resolve("${datadir}/enigma2/display/")
+		root1 = eEnv.resolve("${datadir}/enigma2/display/")
 	else:
 		root = eEnv.resolve("${datadir}/enigma2/display/lcdskins/")
 		root1 = eEnv.resolve("${datadir}/enigma2/display/")
