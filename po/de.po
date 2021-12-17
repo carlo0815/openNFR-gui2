@@ -11144,7 +11144,7 @@ msgid "HddFastRemove"
 msgstr "Laufwerk schnell entfernen"
 
 msgid "Plugin browser"
-msgstr "Plugin Browser"
+msgstr "Plugin Manager"
 
 msgid "Move Plugins back to Box"
 msgstr "Plugins in den Flash verschieben"
@@ -14638,3 +14638,21 @@ msgstr "Link nicht erkannt"
 
 msgid "Please be patient, the M3U settings are being created. Depending on the system, it can take up to 20 minutes."
 msgstr "Bitte etwas Geduld, die M3U Settings werden erstellt. AbhÃ¤ngig vom System kann es bis zu 20 Minuten dauern."
+
+msgid "Run Confirmation"
+msgstr "Bestätigung"
+
+msgid "Are you ready to run the script ?"
+msgstr "Möchten Sie das Skript jetzt starten?"
+
+msgid "Edit mode off"
+msgstr "Edit-Modus aus"
+
+msgid "Edit mode on"
+msgstr "Edit-Modus an"
+
+msgid "Extended PID info"
+msgstr "Erweiterte PID-Info"
+
+msgid "Service info - service & Basic PID Info"
+msgstr "Serviceinfo - Service & Basis-PIDs"
