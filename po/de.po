@@ -14731,3 +14731,6 @@ msgstr "Zurück lang"
 
 msgid "Setup InputDevice"
 msgstr "Eingabegeräte-Einstellungen"
+
+msgid "Network Browser"
+msgstr "Netzwerk Manager"
