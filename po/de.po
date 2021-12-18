@@ -14656,3 +14656,78 @@ msgstr "Erweiterte PID-Info"
 
 msgid "Service info - service & Basic PID Info"
 msgstr "Serviceinfo - Service & Basis-PIDs"
+
+msgid "Volume Step Setup"
+msgstr "Lautstärkeschritte"
+
+msgid "Red Key Long Action"
+msgstr "Funktion der roten Taste (lang)"
+
+msgid "Blue Key Long Action"
+msgstr "Funktion der blauen Taste (lang)"
+
+msgid "Green Key Long Action"
+msgstr "Funktion der grünen Taste (lang)"
+
+msgid "Yellow Key Long Action"
+msgstr "Funktion der gelben Taste (lang)"
+
+msgid "Select M3U File from /etc/enigma2 to add into TV Bouquet"
+msgstr "Wähle M3U-Datei von /etc/enigma2 zur Bouquetkonvertierung aus"
+
+msgid "Install all"
+msgstr "Alle installieren"
+
+msgid "Download IPTV-lists"
+msgstr "Download IPTV-Listen"
+
+msgid "FreeSpace"
+msgstr "Freier Speicher"
+
+msgid "Allow quit movieplayer with exit"
+msgstr "Movieplayer mit EXIT beenden"
+
+msgid "When enabled, it is possible to leave the movieplayer with exit."
+msgstr "Bei 'Ja' kann der Movieplayer mit EXIT beendet werden."
+
+msgid "Enable Startup Bootvideo"
+msgstr "Startvideo aktivieren"
+
+msgid "You can Enable or Disable the Startup Bootvideo."
+msgstr "Das Startvideo kann ein- oder ausgeschaltet werden."
+
+msgid "Enable Log by Booting "
+msgstr "Log-Protokoll beim Neustart aktivieren"
+
+msgid "You can Enable or Disable the logging into file by booting ."
+msgstr "Das Erstellen eines Log-Protokolls beim Start kann ein- oder ausgeschaltet werden."
+
+msgid "Sort order for menu entries"
+msgstr "Sortierung der Menüeinträge"
+
+msgid "This option allows you to hide and sort menu entries."
+msgstr "Die Sortierung und Sichtbarkeit der Menüeinträge kann eingestellt werden."
+
+msgid "Remember last service in PiP"
+msgstr "Letzten Bild im Bild Service merken"
+
+msgid ""
+"Configure if and how long the latest service in the PiP will be remembered."
+msgstr ""
+"Einstellen, ob und wie lange der aktuelle Bild im Bild Service in Erinnerung "
+"bleiben soll."
+
+msgid "AdapterSetupConfiguration "
+msgstr "Adapter-Einstellungen"
+
+msgid "Network Neighbourhood"
+msgstr "Heimnetzgruppe"
+
+msgid "Ready to install %s ?"
+msgstr "Bereit zur Installation der %s?"
+
+msgid "Zurück long"
+msgstr "Zurück lang"
+
+msgid "Setup InputDevice"
+msgstr "Eingabegeräte-Einstellungen"
