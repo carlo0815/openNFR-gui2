@@ -14734,3 +14734,6 @@ msgstr "Eingabegeräte-Einstellungen"
 
 msgid "Network Browser"
 msgstr "Netzwerk Manager"
+
+msgid "MultiBoot Image Selector"
+msgstr "Multiboot-Imageauswahl"
