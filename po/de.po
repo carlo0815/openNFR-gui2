@@ -1714,7 +1714,7 @@ msgid "Complex (allows mixing audio tracks and aspects)"
 msgstr "Komplex (erlaubt Mischen verschiedener Ton- und Bildformate)"
 
 msgid "Composition of the recording filenames"
-msgstr "Zusammensetzung des Dateinamens von Aufnahmen"
+msgstr "Art der Dateinamen von Aufnahmen"
 
 #, python-format
 msgid "Configfile %s saved."
@@ -13481,13 +13481,13 @@ msgstr ""
 "sind in den Aufzeichnungen AIT-Daten enthalten."
 
 msgid "Show recording symbol depending on recording type"
-msgstr "Zeige Aufnahmesymbol, wenn Aufnahmetyp"
+msgstr "Zeige Aufnahmesymbol bei ..."
 
 msgid "Configure whether the 'recording' symbol (in the display skin and LCD skin) is visible for real recordings only or also for streaming and pseuso recordings (e.g. EPGrefresh)."
 msgstr "Legt fest, ob das Aufnahme-Symbol (auf Bildschirm und LCD Display) nur bei echten Aufnahmen sichtbar ist oder auch bei Streaming bzw. Pseudo-Aufnahmen (z.B. EPG Refresh)"
 
 msgid "Show warning before box restart based on recording type"
-msgstr "Zeige Warnung vor Neustart, wenn Aufnahmetyp"
+msgstr "Zeige Warnung vor Neustart bei ..."
 
 msgid "Configure for which types of recordings a warning about active recordings is shown when attempting to restart the box or the GUI."
 msgstr "Legt fest, ob beim Neustart eine Warnung wegen laufender Aufnahmen nur bei echten Aufnahmen erfolgt oder auch bei Streaming bzw. Pseudo-Aufnahmen (z.B. EPG Refresh)"
@@ -14051,7 +14051,7 @@ msgid "TrueType font (full-HD)"
 msgstr "TrueType Zeichensatz (Full-HD)"
 
 msgid "Teletext UseTTF (0=fixed font, 1=TrueType)"
-msgstr "Videotext UseTTF (0=Bitmap-Zeichensatz, 1=TrueType-Zeichensatz)"
+msgstr "Videotext UseTTF (0=fest, 1=skalierbar)"
 
 msgid "Configure whether a fixed font or a scalable TrueType font is used for teletext."
 msgstr "Bestimmt, ob ein fester Zeichensatz oder ein skalierbarer TrueType-Zeichensatz für die Videotext Darstellung verwendet wird."
@@ -14737,3 +14737,12 @@ msgstr "Netzwerk Manager"
 
 msgid "MultiBoot Image Selector"
 msgstr "Multiboot-Imageauswahl"
+
+msgid "Very very short filenames - Warning"
+msgstr "Extrem kurze Namen - Warnung"
+
+msgid "Very short filenames"
+msgstr "Sehr kurze Dateinamen"
+
+msgid "Short filenames with time"
+msgstr "Kurze Dateinamen mit Uhrzeit"
