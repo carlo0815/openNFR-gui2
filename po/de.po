@@ -14746,3 +14746,15 @@ msgstr "Sehr kurze Dateinamen"
 
 msgid "Short filenames with time"
 msgstr "Kurze Dateinamen mit Uhrzeit"
+
+msgid "Move mode on"
+msgstr "verschieben an"
+
+msgid "Move mode off"
+msgstr "verschieben aus"
+
+msgid "hide"
+msgstr "ausblenden"
+
+msgid "show"
+msgstr "einblenden"
