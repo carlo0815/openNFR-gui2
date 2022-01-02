@@ -507,55 +507,55 @@ class SystemNetworkInfo(Screen):
 		self.iface = "eth0"
 		eth0 = about.getIfConfig('eth0')
 		if 'addr' in eth0:
-			self.AboutText += _("IP:") + "\t" + eth0['addr'] + "\n"
+			self.AboutText += _("IP:") + "\t" + "\t" + eth0['addr'] + "\n"
 			if 'netmask' in eth0:
-				self.AboutText += _("Netmask:") + "\t" + eth0['netmask'] + "\n"
+				self.AboutText += _("Netmask:") + "\t" + "\t" + eth0['netmask'] + "\n"
 			if 'hwaddr' in eth0:
-				self.AboutText += _("MAC:") + "\t" + eth0['hwaddr'] + "\n"
+				self.AboutText += _("MAC:") + "\t" + "\t" + eth0['hwaddr'] + "\n"
 			self.iface = 'eth0'
 
 		eth1 = about.getIfConfig('eth1')
 		if 'addr' in eth1:
-			self.AboutText += _("IP:") + "\t" + eth1['addr'] + "\n"
+			self.AboutText += _("IP:") + "\t" + "\t" + eth1['addr'] + "\n"
 			if 'netmask' in eth1:
-				self.AboutText += _("Netmask:") + "\t" + eth1['netmask'] + "\n"
+				self.AboutText += _("Netmask:") + "\t" + "\t" + eth1['netmask'] + "\n"
 			if 'hwaddr' in eth1:
-				self.AboutText += _("MAC:") + "\t" + eth1['hwaddr'] + "\n"
+				self.AboutText += _("MAC:") + "\t" + "\t" + eth1['hwaddr'] + "\n"
 			self.iface = 'eth1'
 
 		ra0 = about.getIfConfig('ra0')
 		if 'addr' in ra0:
-			self.AboutText += _("IP:") + "\t" + ra0['addr'] + "\n"
+			self.AboutText += _("IP:") + "\t" + "\t" + ra0['addr'] + "\n"
 			if 'netmask' in ra0:
-				self.AboutText += _("Netmask:") + "\t" + ra0['netmask'] + "\n"
+				self.AboutText += _("Netmask:") + "\t" + "\t" + ra0['netmask'] + "\n"
 			if 'hwaddr' in ra0:
-				self.AboutText += _("MAC:") + "\t" + ra0['hwaddr'] + "\n"
+				self.AboutText += _("MAC:") + "\t" + "\t" + ra0['hwaddr'] + "\n"
 			self.iface = 'ra0'
 
 		wlan0 = about.getIfConfig('wlan0')
 		if 'addr' in wlan0:
-			self.AboutText += _("IP:") + "\t" + wlan0['addr'] + "\n"
+			self.AboutText += _("IP:") + "\t" + "\t" + wlan0['addr'] + "\n"
 			if 'netmask' in wlan0:
-				self.AboutText += _("Netmask:") + "\t" + wlan0['netmask'] + "\n"
+				self.AboutText += _("Netmask:") + "\t" + "\t" + wlan0['netmask'] + "\n"
 			if 'hwaddr' in wlan0:
-				self.AboutText += _("MAC:") + "\t" + wlan0['hwaddr'] + "\n"
+				self.AboutText += _("MAC:") + "\t" + "\t" + wlan0['hwaddr'] + "\n"
 			self.iface = 'wlan0'
 
 		wlan1 = about.getIfConfig('wlan1')
 		if 'addr' in wlan1:
-			self.AboutText += _("IP:") + "\t" + wlan1['addr'] + "\n"
+			self.AboutText += _("IP:") + "\t" + "\t" + wlan1['addr'] + "\n"
 			if 'netmask' in wlan1:
-				self.AboutText += _("Netmask:") + "\t" + wlan1['netmask'] + "\n"
+				self.AboutText += _("Netmask:") + "\t" + "\t" + wlan1['netmask'] + "\n"
 			if 'hwaddr' in wlan1:
-				self.AboutText += _("MAC:") + "\t" + wlan1['hwaddr'] + "\n"
+				self.AboutText += _("MAC:") + "\t" + "\t" + wlan1['hwaddr'] + "\n"
 			self.iface = 'wlan1'
 
 		rx_bytes, tx_bytes = about.getIfTransferredData(self.iface)
-		self.AboutText += "\n" + _("Bytes received:") + "\t" + rx_bytes + "\n"
-		self.AboutText += _("Bytes sent:") + "\t" + tx_bytes + "\n"
+		self.AboutText += "\n" + _("Bytes received:") + "\t" + "\t" + rx_bytes + "\n"
+		self.AboutText += _("Bytes sent:") + "\t" + "\t" + tx_bytes + "\n"
 
 		hostname = open('/proc/sys/kernel/hostname').read()
-		self.AboutText += "\n" + _("Hostname:") + "\t" + hostname + "\n"
+		self.AboutText += "\n" + _("Hostname:") + "\t" + "\t" + hostname + "\n"
 		self["AboutScrollLabel"] = ScrollLabel(self.AboutText)
 
 
