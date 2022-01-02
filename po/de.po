@@ -14758,3 +14758,6 @@ msgstr "ausblenden"
 
 msgid "show"
 msgstr "einblenden"
+
+msgid "Encryption Type:"
+msgstr "Verschlüsselungstyp:"
