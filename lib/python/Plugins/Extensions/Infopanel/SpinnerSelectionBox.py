@@ -35,7 +35,7 @@ class SpinnerSelectionBox(Screen):
 		</screen>"""
 	def __init__(self, session, title = "", list1 = []):
 		Screen.__init__(self, session)
-
+		Screen.setTitle(self, _("SpinnerSelection"))
 		self["text"] = Label(title)
 		self.list = list1
 		self.summarylist = [] 
