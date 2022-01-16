@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-24 18:35+0100\n"
-"PO-Revision-Date: 2021-05-24 20:57+0200\n"
+"POT-Creation-Date: 2022-01-16 13:35+0100\n"
+"PO-Revision-Date: 2022-01-16 13:35+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14761,3 +14761,21 @@ msgstr "einblenden"
 
 msgid "Encryption Type:"
 msgstr "Verschlüsselungstyp:"
+
+msgid "NetworkInstalledPlugins"
+msgstr "Netzwerkdienste"
+
+msgid "List of Networkplugins with Installedinfo"
+msgstr "Liste der installierten Netzwerkdienste"
+
+msgid "Installed Networkplugins"
+msgstr "Installierte Netzwerkdienste"
+
+msgid ": \t    Installed and running"
+msgstr ": \t    Installiert und aktiv"
+
+msgid ": \t    Installed and not running"
+msgstr ": \t    Installiert und nicht aktiv"
+
+msgid "Fullbackup Images"
+msgstr "Backupimages"
