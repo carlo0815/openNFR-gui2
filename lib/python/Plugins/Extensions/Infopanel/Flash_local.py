@@ -85,20 +85,20 @@ class FlashOnline(Screen):
 
 		def getImages(path, files):
 			try:
-				print(self.imagesList[("Downloaded Images")])
+				print(self.imagesList[_("Downloaded Images")])
 			except:
-				self.imagesList[("Downloaded Images")] = {} 
+				self.imagesList[_("Downloaded Images")] = {} 
 			try:
-				print(self.imagesList[("Fullbackup Images")])
+				print(self.imagesList[_("Fullbackup Images")])
 			except:
-				self.imagesList[("Fullbackup Images")] = {}
+				self.imagesList[_("Fullbackup Images")] = {}
 			for file in [x for x in files if os.path.splitext(x)[1] == ".zip" and box in x]:
 				try:
 					if checkimagefiles([x.split(os.sep)[-1] for x in zipfile.ZipFile(file).namelist()]):
 						if 'backup' in file.split(os.sep)[-1]:
-							self.imagesList[("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
+							self.imagesList[_("Fullbackup Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}
 						else:
-							self.imagesList[("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
+							self.imagesList[_("Downloaded Images")][file] = {'link': file, 'name': file.split(os.sep)[-1]}					
 
 				except:
 					pass
