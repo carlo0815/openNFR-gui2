@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-16 13:35+0100\n"
-"PO-Revision-Date: 2022-01-16 13:35+0200\n"
+"POT-Creation-Date: 2022-01-18 20:35+0100\n"
+"PO-Revision-Date: 2022-01-18 20:35+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14779,3 +14779,33 @@ msgstr ": \t    Installiert und nicht aktiv"
 
 msgid "Fullbackup Images"
 msgstr "Backupimages"
+
+msgid "Flash Local-Online"
+msgstr "Flashen lokal/online"
+
+msgid "Image Local-Online flashen"
+msgstr "Image lokal/online flashen"
+
+msgid "Audio Channel"
+msgstr "Tonspur"
+
+msgid "Auto Volume Level"
+msgstr "Automatische Lautstärke"
+
+msgid "AC3 downmix"
+msgstr "AC3-Downmix"
+
+msgid "DTS downmix"
+msgstr "DTS-Downmix"
+
+msgid "AAC plus downmix"
+msgstr "AAC+-Downmix"
+
+msgid "AAC transcoding"
+msgstr "AAC-Transkodierung"
+
+msgid "AC3 plus transcoding"
+msgstr "AC3+-Transkodierung"
+
+msgid "DTS HD downmix"
+msgstr "DTS-HD-Downmix"
