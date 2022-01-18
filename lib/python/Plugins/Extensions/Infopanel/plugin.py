@@ -72,7 +72,7 @@ config.plugins.infopanel_bluekey.list = ConfigSelection([('0', _("Default (Quick
 config.plugins.infopanel_bluekeylong = ConfigSubsection()
 config.plugins.infopanel_bluekeylong.list = ConfigSelection([('0', _("Default (Infopanel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Softcam Panel"))])
 config.plugins.infopanel_greenkeylong = ConfigSubsection()
-config.plugins.infopanel_greenkeylong.list = ConfigSelection([('0', _("Default (Softcam Panel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
+config.plugins.infopanel_greenkeylong.list = ConfigSelection([('0', _("Default (NetworkInstalledPlugins)")), ('1', _("Default (Softcam Panel)")), ('2', _("HBBTV")), ('3', _("Quickmenu")), ('4', _("Infopanel"))])
 config.plugins.infopanel_yellowkeylong = ConfigSubsection()
 config.plugins.infopanel_yellowkeylong.list = ConfigSelection([('0', _("Default (Softcam Panel)")), ('1', _("HBBTV")), ('2', _("Quickmenu")), ('3', _("Infopanel"))])
 config.plugins.showinfopanelextensions = ConfigYesNo(default=False)

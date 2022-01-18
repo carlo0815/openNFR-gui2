@@ -134,12 +134,15 @@ class OpenNFRGreenPanelLong:
 
 	def showOpenNFRGreenPanelLong(self):
 		if config.plugins.infopanel_greenkeylong.list.value == '0':
+			from Screens.About import NetworkInstalledApp
+			self.session.openWithCallback(self.callEgAction, NetworkInstalledApp)		
+		elif config.plugins.infopanel_greenkeylong.list.value == '1':
 			from Plugins.Extensions.Infopanel.Manager import NFRCamManager
 			self.session.openWithCallback(self.callEgAction, NFRCamManager)	
-		elif config.plugins.infopanel_greenkeylong.list.value == '1':
+		elif config.plugins.infopanel_greenkeylong.list.value == '2':
 			from Screens.InfoBar import InfoBarRedButton
 			InfoBarRedButton.activateRedButton(self)
-		elif config.plugins.infopanel_greenkeylong.list.value == '2':
+		elif config.plugins.infopanel_greenkeylong.list.value == '3':
 			from Plugins.Extensions.Infopanel.QuickMenu import QuickMenu
 			self.session.openWithCallback(self.callEgAction, QuickMenu)
 		else:

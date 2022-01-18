@@ -14,7 +14,7 @@ from Components.SystemInfo import SystemInfo
 from Components.Label import Label
 from enigma import eTimer, getEnigmaVersionString
 from boxbranding import getBoxType, getMachineBrand, getMachineBuild, getMachineName, getImageVersion, getImageBuild, getDriverDate, getOEVersion
-
+from Components.Console import Console
 from Components.Pixmap import MultiPixmap
 from Components.Network import iNetwork
 
@@ -555,7 +555,7 @@ class SystemNetworkInfo(Screen):
 		self.AboutText += _("Bytes sent:") + "\t" + "\t" + tx_bytes + "\n"
 
 		hostname = open('/proc/sys/kernel/hostname').read()
-		self.AboutText += "\n" + _("Hostname:") + "\t" + "\t" + hostname + "\n"
+		self.AboutText += _("Hostname:") + "\t" + "\t" + hostname + "\n"		
 		self["AboutScrollLabel"] = ScrollLabel(self.AboutText)
 
 
@@ -692,7 +692,109 @@ class SystemNetworkInfo(Screen):
 	def createSummary(self):
 		return AboutSummary
 
+class NetworkInstalledApp(Screen):
+	def __init__(self, session):
+		Screen.__init__(self, session)
+		Screen.setTitle(self, _("Installed Networkplugins"))
+		self.skinName = ["SystemNetworkInfo", "About"]
+		
+		OpenNFRVersion = _("OpenNFR %s") % about.getImageVersionString()
+		self["OpenNFRVersion"] = Label(OpenNFRVersion)
+		
+		self["AboutScrollLabel"] = ScrollLabel()
 
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+									{
+										"cancel": self.close,
+										"ok": self.close,
+									})
+									
+		self.AboutText = _("List of Networkplugins with Installedinfo") + '\n\n'
+		self.InstallCheck()
+
+	def InstallCheck(self):
+		self.Console = Console()
+		self.Console.ePopen('/usr/bin/opkg list_installed ', self.checkNetworkState)
+
+	def checkNetworkState(self, str, retval, extra_args):
+		import subprocess
+		import os
+		os.system('ps -ef > /tmp/ps.txt')
+		ftp_process = subprocess.getoutput("grep -i vsftpd /tmp/ps.txt")
+		telnetd_process = subprocess.getoutput("grep -i telnetd /tmp/ps.txt")
+		ipv6_process = subprocess.getoutput("cat /proc/sys/net/ipv6/conf/all/disable_ipv6")		                
+		afp_process = subprocess.getoutput("grep -i afpd /tmp/ps.txt")                
+		sabnzbd_process = subprocess.getoutput("grep -i SABnzbd /tmp/ps.txt")               
+		nfs_process = subprocess.getoutput("grep -i nfsd /tmp/ps.txt")               
+		openvpn_process = subprocess.getoutput("grep -i openvpn /tmp/ps.txt")                
+		samba_process = subprocess.getoutput("grep -i smbd /tmp/ps.txt")              
+		inadyn_process = subprocess.getoutput("grep -i inadyn-mt /tmp/ps.txt")
+		ushare_process = subprocess.getoutput("grep -i ushare /tmp/ps.txt")               
+		minidlna_process = subprocess.getoutput("grep -i minidlnad /tmp/ps.txt")
+		str = six.ensure_str(str)
+		xtext1 = _(": \t    Installed and running") + "\n"		
+		xtext2 = _(": \t    Installed and not running") + "\n"		
+		
+		if ftp_process:	
+			self.AboutText += _("FTP") + xtext1
+		else:                                
+			self.AboutText += _("FTP") + xtext2
+		if telnetd_process:	
+			self.AboutText += _("Telnet") + xtext1
+		else:                                
+			self.AboutText += _("Telnet") + xtext2
+		if ipv6_process == "0":	
+			self.AboutText += _("IPV6") + xtext1
+		else:                                
+			self.AboutText += _("IPV6") + xtext2               		
+		if '-appletalk netatalk' in str:
+			if afp_process:	
+				self.AboutText += _("Appletalk Netatalk") + xtext1
+			else:                                
+				self.AboutText += _("Appletalk Netatalk") + xtext2
+		if 'sabnzbd3' in str:
+			if sabnzbd_process:	
+				self.AboutText += _("SABnzbd") + xtext1
+			else:                                
+				self.AboutText += _("SABnzbd") + xtext2
+		if '-nfs' in str:
+			if nfs_process:	
+				self.AboutText += _("NFS") + xtext1
+			else:                                
+				self.AboutText += _("NFS") + xtext2
+		if 'openvpn' in str:
+			if openvpn_process:	
+				self.AboutText += _("OpenVPN") + xtext1
+			else:                                
+				self.AboutText += _("OpenVPN") + xtext2
+		if '-smbfs-server' in str:
+			if samba_process:	
+				self.AboutText += _("Samba") + xtext1
+			else:                                
+				self.AboutText += _("Samba") + xtext2
+		if 'inadyn-mt' in str:
+			if inadyn_process:	
+				self.AboutText += _("Inadyn") + xtext1
+			else:                                
+				self.AboutText += _("Inadyn") + xtext2
+		if 'ushare' in str:
+			if ushare_process:	
+				self.AboutText += _("uShare") + xtext1
+			else:                                
+				self.AboutText += _("uShare") + xtext2
+		if 'minidlna' in str:
+			if minidlna_process:	
+				self.AboutText += _("MiniDLNA") + xtext1
+			else:                                
+				self.AboutText += _("MiniDLNA") + xtext2
+		self["AboutScrollLabel"].setText(self.AboutText)			
+
+		self["actions"] = ActionMap(["SetupActions", "ColorActions"],
+			{
+				"cancel": self.close,
+				"ok": self.close,
+			})
+			
 class AboutSummary(Screen):
 	def __init__(self, session, parent):
 		Screen.__init__(self, session, parent = parent)
