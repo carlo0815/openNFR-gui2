@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-18 21:20+0100\n"
-"PO-Revision-Date: 2022-01-18 21:20+0200\n"
+"POT-Creation-Date: 2022-01-19 20:50+0100\n"
+"PO-Revision-Date: 2022-01-19 20:50+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14812,3 +14812,48 @@ msgstr "DTS-HD-Downmix"
 
 msgid "Quick Launch Menu"
 msgstr "Schnellstartmenü"
+
+msgid "Model:\t\t%s %s\n"
+msgstr "Modell:\t\t%s %s\n"
+
+msgid "Chipset:\t\tBCM%s"
+msgstr "Chipsatz:\t\tBCM%s"
+
+msgid "CPU:\t\t%s"
+msgstr "Prozessor:\t\t%s"
+
+msgid "Cores:\t\t%s"
+msgstr "Kerne:\t\t%s"
+
+msgid "Drivers:\t\t%s"
+msgstr "Treiber:\t\t%s"
+
+msgid "Enigma (re)starts:\t%d\n"
+msgstr "Enigma (Neu)-Starts:\t%d\n"
+
+msgid "Front Panel:\t\t%s"
+msgstr "Frontpanel:\t\t%s"
+
+msgid "Front Panel:\t\tVersion unknown"
+msgstr "Frontpanel:\t\tVersion unbekannt"
+
+msgid "Installed:\t\t%s"
+msgstr "Installiert:\t\t%s"
+
+msgid "Last Upgrade:\t\t%s"
+msgstr "Letzte Aktualisierung:\t%s"
+
+msgid "based on:\t\t%s"
+msgstr "Basiert auf:\t\t%s"
+
+msgid "Service name"
+msgstr "Sendername"
+
+msgid "Videocodec, size & format"
+msgstr "Codec, Auflösung & Format"
+
+msgid "Namespace & Orbital pos."
+msgstr "Namensraum & Orbitposition"
+
+msgid "Audio PID%s, codec & lang"
+msgstr "Audio-PID%s, Codec & Sprache"
