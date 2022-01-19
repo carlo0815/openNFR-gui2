@@ -37,7 +37,7 @@ from Screens.SimpleSummary import SimpleSummary
 from sys import stdout, exc_info
 
 profile("Bouquets")
-from Components.config import config, configfile, ConfigText, ConfigYesNo, ConfigInteger, NoSave
+from Components.config import config, configfile, ConfigText, ConfigYesNo, ConfigInteger, ConfigDictionarySet, NoSave
 config.misc.load_unlinked_userbouquets = ConfigYesNo(default=False)
 def setLoadUnlinkedUserbouquets(configElement):
 	enigma.eDVBDB.getInstance().setLoadUnlinkedUserbouquets(configElement.value)
@@ -610,13 +610,90 @@ def runScreenTest():
 	profile("wizards")
 	screensToRun = []
 	RestoreSettings = None
-#	if config.misc.firstrun.value == True:
-#		infolist = []
-#		fobj = open("/var/lib/opkg/info/enigma2-plugin-extensions-infopanel.list")
-#		for line in fobj:
-#			xxxx = line.split("\t")[0]
-#			os.system("chattr +i " + xxxx)
-#		fobj.close()	
+	import hashlib
+	import os
+	from os import path
+	from pathlib import Path
+	import fileinput, sys	
+	def md5_update_from_file(filename, hash):
+		assert Path(filename).is_file()
+		with open(str(filename), "rb") as f:
+			for chunk in iter(lambda: f.read(4096), b""):
+				hash.update(chunk)
+		return hash
+
+
+	def md5_file(filename):
+		return md5_update_from_file(filename, hashlib.md5()).hexdigest()
+
+	def md5_update_from_dir(directory, hash):
+		assert Path(directory).is_dir()
+		for path in sorted(Path(directory).iterdir()):
+			hash.update(path.name.encode())
+			if path.is_file():
+				hash = md5_update_from_file(path, hash)
+			elif path.is_dir():
+				hash = md5_update_from_dir(path, hash)
+		return hash
+
+
+	def md5_dir(directory):
+		return md5_update_from_dir(directory, hashlib.md5()).hexdigest()	
+	
+	
+	sha256hash = ()
+	myfilecheck = "/usr/lib/enigma2/python/Plugins/Extensions/Infopanel"
+	sha256save = "/var/lib/opkg/info/enigma2-plugin-extensions-infopanel.sha256"
+	if config.misc.firstrun.value == True:
+		myfile = Path(sha256save)
+		if os.path.isfile(sha256save):
+			os.remove(sha256save)
+		myfile.touch(exist_ok=True)
+		sha256hash = md5_dir(myfilecheck)
+		sha_f = open(sha256save, "a")
+		sha_f.write(sha256hash)
+		sha_f.close()
+	else:
+		if os.path.isfile(sha256save): 
+			sha256hash = md5_dir(myfilecheck)
+			try:
+				sha256read = open(sha256save,'r')
+				sha256hash1 = sha256read.read()
+				print("sha256hash1:", sha256hash1)
+				print("sha256hash:", sha256hash)				
+				if sha256hash == sha256hash1:
+					print("all ok with Infopanel")
+				else:
+					print("Sorry, but you change our Infopanel so we had to disable it!!")
+					sub_menu_sort = NoSave(ConfigDictionarySet())
+					sub_menu_sort.value = config.usage.menu_sort_weight.getConfigValue("mainmenu", "submenu")
+					m_weight = sub_menu_sort.getConfigValue('Infopanel', "sort")
+					m_weight1 = sub_menu_sort.getConfigValue('Infopanel', "hidden")
+					sub_menu_sort.changeConfigValue('Infopanel', "hidden", "1")				
+					config.usage.menu_sort_weight.save()
+					configfile.save()			
+				
+				sha256read.close()
+			
+			except:
+				print("Sorry, but you change our Infopanel so we had to disable it!!")
+				sub_menu_sort = NoSave(ConfigDictionarySet())
+				sub_menu_sort.value = config.usage.menu_sort_weight.getConfigValue("mainmenu", "submenu")
+				m_weight = sub_menu_sort.getConfigValue('Infopanel', "sort")
+				m_weight1 = sub_menu_sort.getConfigValue('Infopanel', "hidden")
+				sub_menu_sort.changeConfigValue('Infopanel', "hidden", "1")				
+				config.usage.menu_sort_weight.save()
+				configfile.save()                                        
+		else:
+			print("Sorry, but you change our Infopanel so we had to disable it!!")
+			sub_menu_sort = NoSave(ConfigDictionarySet())
+			sub_menu_sort.value = config.usage.menu_sort_weight.getConfigValue("mainmenu", "submenu")
+			m_weight = sub_menu_sort.getConfigValue('Infopanel', "sort")
+			m_weight1 = sub_menu_sort.getConfigValue('Infopanel', "hidden")
+			sub_menu_sort.changeConfigValue('Infopanel', "hidden", "1")				
+			config.usage.menu_sort_weight.save()
+			configfile.save()                                                  
+                                                                            	
 	if os.path.exists("/media/hdd/images/config/settings") and config.misc.firstrun.value:
 		if autorestoreLoop():
 			RestoreSettings = True
