@@ -14857,3 +14857,9 @@ msgstr "Namensraum & Orbitposition"
 
 msgid "Audio PID%s, codec & lang"
 msgstr "Audio-PID%s, Codec & Sprache"
+
+msgid "Show movielist"
+msgstr "Zeige Filmliste"
+
+msgid "Quick-Menu"
+msgstr "Quick-Menü"
