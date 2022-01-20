@@ -254,6 +254,7 @@ def getHotkeyFunctions():
 	hotkeyFunctions.append((_("Language"), "Module/Screens.LanguageSelection/LanguageSelection", "Setup"))
 	hotkeyFunctions.append((_("OscamInfo Mainmenu"), "Module/Screens.OScamInfo/OscamInfoMenu", "Plugins"))
 	hotkeyFunctions.append((_("CCcamInfo Mainmenu"), "Module/Screens.CCcamInfo/CCcamInfoMain", "Plugins"))
+	hotkeyFunctions.append((_("Show movielist"), "Module/Screens.MovieSelection/MovieSelection", "Plugins"))
 	hotkeyFunctions.append((_("Movieplayer"), "Infobar/showMoviePlayer", "Plugins"))
 	if os.path.isdir("/etc/ppanels"):
 		for x in [x for x in os.listdir("/etc/ppanels") if x.endswith(".xml")]:
