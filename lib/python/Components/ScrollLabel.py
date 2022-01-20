@@ -1,3 +1,4 @@
+from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
 import skin
@@ -151,9 +152,12 @@ class ScrollLabel(HTMLComponent, GUIComponent):
 		return self.TotalTextHeight <= self.pageHeight or self.curPos == self.TotalTextHeight - self.pageHeight
 
 	def updateScrollbar(self):
-		vis = max(100 * self.pageHeight // self.TotalTextHeight, 3)
-		start = (100 - vis) * self.curPos // (self.TotalTextHeight - self.pageHeight)
-		self.scrollbar.setStartEnd(start, start + vis)
+		try:
+			vis = max(100 * self.pageHeight // self.TotalTextHeight, 3)
+			start = (100 - vis) * self.curPos // (self.TotalTextHeight - self.pageHeight)
+			self.scrollbar.setStartEnd(start, start + vis)
+		except:	
+			print("no division with Zero")                		
 
 	def GUIcreate(self, parent):
 		self.instance = eWidget(parent)
