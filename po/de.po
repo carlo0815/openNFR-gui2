@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-22 11:45+0100\n"
-"PO-Revision-Date: 2022-01-22 11:45+0200\n"
+"POT-Creation-Date: 2022-01-24 20:35+0100\n"
+"PO-Revision-Date: 2022-01-24 20:35+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14869,3 +14869,15 @@ msgstr "Dateiliste"
 
 msgid "System temperature:\t%s"
 msgstr "System-Temperatur:\t%s"
+
+msgid "Disk_Speed"
+msgstr "Geschwindigkeitstest"
+
+msgid "% Flash Used..."
+msgstr "Speicherstatus:"
+
+msgid "Free"
+msgstr "Frei"
+
+msgid "Flash local online"
+msgstr "Flashen online/lokal"
