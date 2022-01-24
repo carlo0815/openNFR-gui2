@@ -421,6 +421,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.onShown.append(self.setWindowTitle)
 		self.service = None
 		self['spaceused'] = ProgressBar()
+		Screen.setTitle(self, _("% Flash Used..."))
 		global pluginlist
 		global videomode
 		global infook
