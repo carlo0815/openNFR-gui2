@@ -11204,9 +11204,6 @@ msgstr ""
 msgid "Restart Network"
 msgstr "Netzwerk neu starten"
 
-msgid "Install Plugins"
-msgstr "Installiere Plugins"
-
 msgid "Please wait while we check your installed plugins..."
 msgstr "Bitte warten, die installierten Plugins werden geprüft..."
 
@@ -11714,9 +11711,6 @@ msgstr "Dateien zum sichern auswählen"
 
 msgid "Select files/folders to backup..."
 msgstr "Dateien und Ordner auswählen..."
-
-msgid "Remove Plugins"
-msgstr "Plugins entfernen"
 
 msgid "Move Plugins"
 msgstr "Plugins verschieben/auslagern"
