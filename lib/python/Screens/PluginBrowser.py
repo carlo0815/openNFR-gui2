@@ -26,9 +26,9 @@ from Plugins.Extensions.Infopanel.PluginWizard import PluginInstall
 from Plugins.Extensions.Infopanel.PluginWizard import PluginDeinstall
 from Tools.Directories import resolveFilename, fileExists, SCOPE_PLUGINS, SCOPE_ACTIVE_SKIN, fileExists, isPluginInstalled
 from Tools.LoadPixmap import LoadPixmap
-
+from Components.ProgressBar import ProgressBar
 from time import time
-
+from os import popen, system, remove, listdir, chdir, getcwd, statvfs, mkdir, path, walk
 config.pluginfilter = ConfigSubsection()
 config.pluginfilter.kernel = ConfigYesNo(default = False)
 config.pluginfilter.drivers = ConfigYesNo(default = True)
@@ -51,6 +51,14 @@ config.pluginfilter.systemplugins = ConfigYesNo(default = True)
 config.pluginfilter.vix = ConfigYesNo(default = False)
 config.pluginfilter.weblinks = ConfigYesNo(default = True)
 config.pluginfilter.userfeed = ConfigText(default = 'http://', fixed_size=False)
+
+def getVarSpaceKb():
+	try:
+		s = statvfs('/')
+	except OSError:
+		return (0, 0)
+
+	return (float(s.f_bfree * (s.f_bsize / 1024)), float(s.f_blocks * (s.f_bsize / 1024)))
 
 def languageChanged():
 	plugins.clearPluginList()
@@ -452,6 +460,7 @@ class PluginDownloadBrowser(Screen):
 		self.check_bootlogo = False
 		self.install_settings_name = ''
 		self.remove_settings_name = ''
+		self['spaceused'] = ProgressBar()
 		self.onChangedEntry = []
 		self["list"].onSelectionChanged.append(self.selectionChanged)
 
@@ -659,8 +668,26 @@ class PluginDownloadBrowser(Screen):
 
 	def runSettingsInstall(self):
 		self.doInstall(self.installFinished, self.install_settings_name)
+		
+	def ConvertSize(self, size):
+		size = int(size)
+		if size >= 1073741824:
+			Size = '%0.2f TB' % (size / 1073741824.0)
+		elif size >= 1048576:
+			Size = '%0.2f GB' % (size / 1048576.0)
+		elif size >= 1024:
+			Size = '%0.2f MB' % (size / 1024.0)
+		else:
+			Size = '%0.2f KB' % size
+		return str(Size)
 
 	def setWindowTitle(self):
+		diskSpace = getVarSpaceKb()
+		percFree = int(diskSpace[0] / diskSpace[1] * 100)
+		percUsed = int((diskSpace[1] - diskSpace[0]) / diskSpace[1] * 100)
+		self.setTitle('%s - %s: %s (%d%%)' % (_('Install plugins'), _('Free'),
+		self.ConvertSize(int(diskSpace[0])), percFree))
+		self['spaceused'].setValue(percUsed)
 		if self.type == self.DOWNLOAD:
 			self.setTitle(_("Install plugins"))
 		elif self.type == self.REMOVE:
