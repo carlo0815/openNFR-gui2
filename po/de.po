@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-24 20:35+0100\n"
-"PO-Revision-Date: 2022-01-24 20:35+0200\n"
+"POT-Creation-Date: 2022-01-27 20:47+0100\n"
+"PO-Revision-Date: 2022-01-27 20:47+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14875,3 +14875,57 @@ msgstr "Frei"
 
 msgid "Flash local online"
 msgstr "Flashen online/lokal"
+
+msgid "AAC software decoding"
+msgstr "AAC-Software-Decodierung"
+
+msgid "EAC3 software decoding"
+msgstr "EAC3-Software-Decodierung"
+
+msgid "AC3 software decoding"
+msgstr "AC3-Software-Decodierung"
+
+msgid "DTS software decoding"
+msgstr "DTS-Software-Decodierung"
+
+msgid "MP3 software decoding"
+msgstr "MP3-Software-Decodierung"
+
+msgid "WMA software decoding"
+msgstr "WMA-Software-Decodierung"
+
+msgid "Stereo downmix"
+msgstr "Stereo-Downmix"
+
+msgid "LPCM injection"
+msgstr "LPCM-Injektion"
+
+msgid "RTMP protocol implementation"
+msgstr "RTMP-Protokollimplementierung"
+
+msgid "German keyboard"
+msgstr "Deutsche Tastatur"
+
+msgid "USB Keyboard Deutsch (QWERTZ-Layout)"
+msgstr "USB-Tastatur Deutsch (QWERTZ-Layout)"
+
+msgid "USB Keyboard English (QWERTY-Layout)"
+msgstr "USB-Tastatur Englisch (QWERTY-Layout)"
+
+msgid "azerty keyboard"
+msgstr "Azerty-Tastatur"
+
+msgid "Default (US)"
+msgstr "Standard (US)"
+
+msgid "US keyboard"
+msgstr "US-Tastatur"
+
+msgid "Dreambox Keyboard Deutsch"
+msgstr "Dreambox-Tastatur Deutsch"
+
+msgid "Transponder Time"
+msgstr "Transponderzeit"
+
+msgid "dreambox advanced remote control"
+msgstr "Erweiterte Dreambox-Fernbedienung"
