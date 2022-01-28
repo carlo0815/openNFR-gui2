@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-27 20:47+0100\n"
-"PO-Revision-Date: 2022-01-27 20:47+0200\n"
+"POT-Creation-Date: 2022-01-28 21:20+0100\n"
+"PO-Revision-Date: 2022-01-28 21:20+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -389,7 +389,7 @@ msgid "1X"
 msgstr "1X"
 
 msgid "1st Infobar timeout"
-msgstr "1. Infobar Timeout"
+msgstr "1. Infobar-Anzeigedauer"
 
 msgid "23.976"
 msgstr ""
@@ -14929,3 +14929,21 @@ msgstr "Transponderzeit"
 
 msgid "dreambox advanced remote control"
 msgstr "Erweiterte Dreambox-Fernbedienung"
+
+msgid "\nFlash on the fly your %s %s."
+msgstr "\nFlashe lokal/online deinen %s %s."
+
+msgid "\nBackup your running %s %s image to HDD or USB."
+msgstr "\nSicher dein aktives %s %s Image auf Festplatte oder USB-Stick."
+
+msgid "Setup your Tuner for TVHeadend"
+msgstr "Konfiguriere den Tuner für TVHeadend"
+
+msgid "This Setup-plugin need Install tvheadendplugin too. Do you want to Install it?"
+msgstr "Es wird zusätzlich das TVHeadendplugin benötigt.\nMöchten Sie es installieren? "
+
+msgid "To start TVHeadend we need a reboot!\nDo you want to reboot now ?"
+msgstr "Zum starten von TVHeadend ist ein Neustart erforderlich!\nMöchten Sie einen Neustart durchführen?"
+
+msgid "Please wait install TVHeadend-BinaryPlugin"
+msgstr "Bitte warten ... TVHeadend-Plugin wird installiert"
