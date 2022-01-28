@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-28 21:20+0100\n"
-"PO-Revision-Date: 2022-01-28 21:20+0200\n"
+"POT-Creation-Date: 2022-01-28 22:45+0100\n"
+"PO-Revision-Date: 2022-01-28 22:45+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14947,3 +14947,6 @@ msgstr "Zum starten von TVHeadend ist ein Neustart erforderlich!\nMöchten Sie e
 
 msgid "Please wait install TVHeadend-BinaryPlugin"
 msgstr "Bitte warten ... TVHeadend-Plugin wird installiert"
+
+msgid "Personalize your NFR_Skin HD (Skin by stein17)"
+msgstr "Konfiguriere deinen NFR_Skin HD (Skin by stein17)"
