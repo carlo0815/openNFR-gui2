@@ -144,7 +144,7 @@ def main(session, **kwargs):
 def Plugins(**kwargs):
 	return PluginDescriptor(
 			name="TVHeadend_Setup",
-			description="Setup your Tuner for TVHeadend",
+			description=_("Setup your Tuner for TVHeadend"),
 			where = PluginDescriptor.WHERE_PLUGINMENU,
 			icon="logo.png",
 			fnc=main)
