@@ -737,6 +737,8 @@ class NFR4XBootImageInstall(Screen, ConfigListScreen):
 				message += "'"
 				if fileExists(pluginpath + '/ex_init.py'):
 					cmd1 = 'python ' + pluginpath + '/ex_init.py'
+				elif fileExists(pluginpath + '/ex_init.pyc'):
+					cmd1 = 'python ' + pluginpath + '/ex_init.pyc'					
 				else:
 					cmd1 = 'python ' + pluginpath + '/ex_init.pyo'
 				cmd = '%s %s %s %s %s %s %s %s %s' % (cmd1,
