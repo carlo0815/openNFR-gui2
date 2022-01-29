@@ -714,7 +714,7 @@ class Infopanel(Screen, InfoBarPiP):
 			else:
 				self.session.open(NfrHD_Config1)
 		elif menu == "PluginReLoad":
-			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py"):
+			if fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.py") or fileExists("/usr/lib/enigma2/python/Plugins/Extensions/Infopanel/PluginReLoad.pyc"):
 				from Plugins.Extensions.Infopanel.PluginReLoad import PluginReLoadConfig
 				self.session.open(PluginReLoadConfig)
 		else:
