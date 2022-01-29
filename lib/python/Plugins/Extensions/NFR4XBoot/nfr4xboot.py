@@ -10,6 +10,7 @@ mediahome = media_nf + '/NFR4XBootI/'
 extensions_path = '/usr/lib/enigma2/python/Plugins/Extensions/'
 extensions_path_extractpy = extensions_path + 'NFR4XBoot/ubi_reader/ubi_extract_files.py'
 extensions_path_extractpyo = extensions_path_extractpy + 'o'
+extensions_path_extractpyc = extensions_path_extractpy + 'c'
 dev_null = ' > /dev/null 2>&1'
 
 def NFR4XBootMainEx(source, target, installsettings, bootquest, zipdelete, getimagefolder, getMachineRootFile, getImageArch):
@@ -166,7 +167,10 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
 				cmd = 'python ' + extensions_path_extractpyo + ' rootfs.bin -o ' + media_nf + '/ubi'
 			else:
 				os.chmod(extensions_path_extractpy, 0o777)
-				cmd = 'python ' + extensions_path_extractpy + ' rootfs.bin -o ' + media_nf + '/ubi'		
+				cmd = 'python ' + extensions_path_extractpy + ' rootfs.bin -o ' + media_nf + '/ubi'
+			else:
+				os.chmod(extensions_path_extractpyc, 0o777)
+				cmd = 'python ' + extensions_path_extractpyc + ' rootfs.bin -o ' + media_nf + '/ubi'				
 			print(cmd)
 			os.system(cmd)
 			os.chdir('/home/root')
