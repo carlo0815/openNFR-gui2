@@ -1742,7 +1742,6 @@ class Info(Screen):
 			info1 = self.Do_cmd("cat", "/tmp/ram.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
-
 		except:
 			self["label1"].setText(_("an internal error has occur"))
 
