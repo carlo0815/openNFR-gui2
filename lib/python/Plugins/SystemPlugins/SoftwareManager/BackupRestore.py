@@ -635,6 +635,7 @@ class RestorePlugins(Screen):
 		self.selectionChanged()
 		self.setTitle(_("Restore Plugins"))
 		if pathexists("/media/hdd/images/config/plugins") and config.misc.firstrun.value:
+			from os import system
 			os.system("rm /media/hdd/images/config/plugins")
 			self.green()
 
