@@ -1722,11 +1722,27 @@ class Info(Screen):
 			self["label1"].setText(_("an internal error has occur"))
 
 	def Free(self):
+		import os
+		os.system('grep -e "MemTotal:" /proc/meminfo > /tmp/ram.txt')
+		os.system('grep -e "MemFree:" /proc/meminfo >> /tmp/ram.txt')
+		os.system('grep -e "Buffers:" /proc/meminfo >> /tmp/ram.txt')
+		os.system('grep -e "^Cached:" /proc/meminfo >> /tmp/ram.txt')
+		os.system('grep -e "SwapTotal:" /proc/meminfo >> /tmp/ram.txt')
+		os.system('grep -e "SwapFree:" /proc/meminfo >> /tmp/ram.txt')
+		os.system('sed -i "G" /tmp/ram.txt')
+		os.system('sed -i "s/ //g" /tmp/ram.txt')
+		os.system('sed -i "s/MemTotal:/Total:\t/" /tmp/ram.txt')
+		os.system('sed -i "s/MemFree:/Free:\t/" /tmp/ram.txt')
+		os.system('sed -i "s/Buffers:/Buffers:\t/" /tmp/ram.txt')
+		os.system('sed -i "s/Cached:/Cache:\t/" /tmp/ram.txt')
+		os.system('sed -i "s/SwapTotal:/Swap:\t/" /tmp/ram.txt')
+		os.system('sed -i "s/SwapFree:/Swap free:\t/" /tmp/ram.txt')
 		try:
 			self["label2"].setText(_("Ram"))
-			info1 = self.Do_cmd("free", None, None)
+			info1 = self.Do_cmd("cat", "/tmp/ram.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
+
 		except:
 			self["label1"].setText(_("an internal error has occur"))
 
