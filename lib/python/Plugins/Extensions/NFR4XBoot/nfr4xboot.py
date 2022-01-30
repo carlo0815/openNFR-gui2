@@ -162,10 +162,7 @@ def NFR4XBootExtract(source, target, zipdelete, getimagefolder, getMachineRootFi
 				os.system('mv %s rootfs.bin'% getMachineRootFile)
 				
 			print('[NFR4XBoot] Extracting UBIFS image and moving extracted image to our target')
-			if os.path.exists(extensions_path_extractpyo):
-				os.chmod(extensions_path_extractpyo, 0o777)
-				cmd = 'python ' + extensions_path_extractpyo + ' rootfs.bin -o ' + media_nf + '/ubi'
-			elif:
+			if os.path.exists(extensions_path_extractpyc):
 				os.chmod(extensions_path_extractpyc, 0o777)
 				cmd = 'python ' + extensions_path_extractpyc + ' rootfs.bin -o ' + media_nf + '/ubi'
 			else:
