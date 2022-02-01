@@ -1746,9 +1746,15 @@ class Info(Screen):
 			self["label1"].setText(_("an internal error has occur"))
 
 	def Cpu(self):
+		import os
+		os.system('cat /proc/cpuinfo > /tmp/cpu.txt')
+		os.system('sed -i "s/CPU implemente/Implemente/" /tmp/cpu.txt')
+		os.system('sed -i "s/CPU architecture/Architecture/" /tmp/cpu.txt')
+		os.system('sed -i "s/.\t\:/\:/" /tmp/cpu.txt')
+		os.system('sed -i "s/\:/\:\t/" /tmp/cpu.txt')
 		try:
 			self["label2"].setText(_("Cpu"))
-			info1 = self.Do_cmd("cat", "/proc/cpuinfo", None, " | sed 's/\t\t/\t/'")
+			info1 = self.Do_cmd("cat", "/tmp/cpu.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
 		except:
