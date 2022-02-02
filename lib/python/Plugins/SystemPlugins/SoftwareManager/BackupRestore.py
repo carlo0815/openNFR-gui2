@@ -635,8 +635,12 @@ class RestorePlugins(Screen):
 		self.selectionChanged()
 		self.setTitle(_("Restore Plugins"))
 		if pathexists("/media/hdd/images/config/plugins") and config.misc.firstrun.value:
-			from os import system
-			os.system("rm /media/hdd/images/config/plugins")
+			from pathlib import Path
+			file_path = Path('/media/hdd/images/config/plugins')
+			try:
+				file_path.unlink()
+			except OSError as e:
+				print("Error: %s : %s" % (file_path, e.strerror))
 			self.green()
 
 	def exit(self):
