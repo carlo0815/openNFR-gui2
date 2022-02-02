@@ -1770,9 +1770,15 @@ class Info(Screen):
 			self["label1"].setText(_("an internal error has occur"))
 
 	def MemInfo(self):
+		import os
+		os.system('cat /proc/meminfo > /tmp/mem.txt')
+		os.system('sed -i "s/ //g" /tmp/mem.txt')
+		os.system('sed -i "s/\:/\:\t\t/" /tmp/mem.txt')
+		os.system('sed -i "s/Inactive(anon)/Inact.(anon)/" /tmp/mem.txt')
+		os.system('sed -i "s/Inactive(file)/Inact.(file)/" /tmp/mem.txt')
 		try:
 			self["label2"].setText(_("MemInfo"))
-			info1 = self.Do_cmd("cat", "/proc/meminfo", None)
+			info1 = self.Do_cmd("cat", "/tmp/mem.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
 		except:
