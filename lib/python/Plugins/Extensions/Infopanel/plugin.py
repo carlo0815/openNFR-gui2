@@ -1680,18 +1680,37 @@ class Info(Screen):
 
 
 	def FreeSpace(self):
+		import os
+		os.system('df -h > /tmp/free.txt')
+		os.system('sed -i "s/^\/dev\///" /tmp/free.txt')
+		os.system('sed -i "s/Available/Free/" /tmp/free.txt')
+		os.system('sed -i "s/ /\t/" /tmp/free.txt')
+		os.system('sed -i -e "s/\t \+/\t/" /tmp/free.txt')
+		os.system('sed -i "s/ /\t\t/" /tmp/free.txt')
+		os.system('sed -i -e "s/\t \+/\t/" /tmp/free.txt')
+		os.system('sed -i "s/ /\t\t/" /tmp/free.txt')
+		os.system('sed -i -e "s/\t \+/\t/" /tmp/free.txt')
+		os.system('sed -i "s/\t\t.*\t\t/\t/" /tmp/free.txt')
+		os.system('sed -i "s/ /\t\t/" /tmp/free.txt')
+		os.system('sed -i -e "s/\t \+/\t/" /tmp/free.txt')
+		os.system('sed -i "s/ /\t\t/" /tmp/free.txt')
+		os.system('sed -i -e "s/\t \+/\t/" /tmp/free.txt')
+		os.system('sed -i "s/\t\t.*\t\t/\t/" /tmp/free.txt')
 		try:
 			self["label2"].setText(_("FreeSpace"))
-			info1 = self.Do_cmd("df", None, "-h")
+			info1 = self.Do_cmd("cat", "/tmp/free.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
 		except:
 			self["label1"].setText(_("an internal error has occur"))
 
 	def Mounts(self):
+		import os
+		os.system('mount > /tmp/mount.txt')
+		os.system('sed -i G /tmp/mount.txt')
 		try:
 			self["label2"].setText(_("Mounts"))
-			info1 = self.Do_cmd("mount", None, None)
+			info1 = self.Do_cmd("cat", "/tmp/mount.txt", None)
 			info1 = self.Do_cut(info1)
 			self["label1"].setText(info1)
 		except:
