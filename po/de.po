@@ -14953,4 +14953,3 @@ msgstr "Konfiguriere deinen NFR_Skin HD (Skin by stein17)"
 
 msgid "Change Configuration mode simple to advanced"
 msgstr "Ändere den Konfigurationsmodus von 'einfach' auf 'erweitert'"
-
