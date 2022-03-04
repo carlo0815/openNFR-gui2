@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-30 09:52+0100\n"
-"PO-Revision-Date: 2022-01-30 09:52+0200\n"
+"POT-Creation-Date: 2022-03-04 19:15+0100\n"
+"PO-Revision-Date: 2022-03-04 19:15+0200\n"
 "Last-Translator: torwald12 <torwald12@team.nachtfalke.biz>\n"
 "Language-Team: AndyBlacburn, j-ot&Trial\n"
 "Language: de\n"
@@ -14950,3 +14950,7 @@ msgstr "Bitte warten ... TVHeadend-Plugin wird installiert"
 
 msgid "Personalize your NFR_Skin HD (Skin by stein17)"
 msgstr "Konfiguriere deinen NFR_Skin HD (Skin by stein17)"
+
+msgid "Change Configuration mode simple to advanced"
+msgstr "Ändere den Konfigurationsmodus von 'einfach' auf 'erweitert'"
+
