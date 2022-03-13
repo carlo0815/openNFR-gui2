@@ -222,7 +222,8 @@ class EasySetup(ConfigListScreen, Screen):
 		if isPluginInstalled("HdmiCEC"):
 			list.append(getConfigListEntry(_('Enable HDMI-CEC Setup?'), config.easysetup.hdmicec, _("Choose your HDMI-CEC config.")))
 		list.append(getConfigListEntry(_('Enable Password change?'), config.easysetup.password, _("Change the rootpassword for login in ftp, telnet and webif.")))
-		list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
+		if SystemInfo["FrontpanelDisplay"]:
+			list.append(getConfigListEntry(_('Enable Display Setup?'), config.easysetup.displaysetup, _("Choose your Display config.")))
 		list.append(getConfigListEntry(_('Enable Position Setup?'), config.wizardsetup.UserInterfacePositioner, _("Choose your OSD Position in TV")))
 		list.append(getConfigListEntry(_('Enable OpenWebif Setup?'), config.wizardsetup.OpenWebifConfig, _("Choose your Openwebif config.")))
 		list.append(getConfigListEntry(_('Enable Install local extension Setup?'), config.wizardsetup.ipkinstall, _("Scan for local extensions and install them.")))
