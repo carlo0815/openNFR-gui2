@@ -14953,3 +14953,9 @@ msgstr "Konfiguriere deinen NFR_Skin HD (Skin by stein17)"
 
 msgid "Change Configuration mode simple to advanced"
 msgstr "Ändere den Konfigurationsmodus von 'einfach' auf 'erweitert'"
+
+msgid "Show crypto icons"
+msgstr "Zeige Verschlüsselung Icon"
+
+msgid "Configure if and how crypto icons will be shown in the channel selection list."
+msgstr "Konfiguriere ob und wie das Verschlüsselungsicon in der Programmliste angezeigt werden soll."
