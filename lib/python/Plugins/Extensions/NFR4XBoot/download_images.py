@@ -212,7 +212,10 @@ class DownloadOnLineImage(Screen):
 			MASCHINEBUILD = boxname
 		elif boxname in ('vusolo4k'):
 			BRANDOEMDROID = 'VU+'  
-			MASCHINEBUILD = boxname			
+			MASCHINEBUILD = boxname	
+		elif boxname in ('anadolmultiboxse'):
+			BRANDOEM = 'anadol'
+			MASCHINEBUILD = 'multiboxse' 			
 		self.distro = distro
 		if self.distro == 'opennfr':
 			self.feed = 'opennfr'
