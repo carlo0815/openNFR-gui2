@@ -44,6 +44,8 @@ print ("")
 print ('----------------------------------------------------------------------->> ')
 try:
 	port = int(sys.argv[1])
+	port1 = int(sys.argv[2])
+	url1 = sys.argv[3]
 except Exception as e:
 	print ('-------->> Warning: Port is not given, will use deafult port: 8080 ')
 	print ('-------->> if you want to use other port, please execute: ')
@@ -54,7 +56,7 @@ except Exception as e:
 if not 1024 < port < 65535:  port = 8080
 serveraddr = ('', port)
 print ('-------->> Now, listening at port ' + str(port) + ' ...')
-print ('-------->> You can visit the URL:   http://localhost:' + str(port))
+print ('-------->> You can visit the Upload-URL:   http://' + url1 + ':' + str(port))
 print ('----------------------------------------------------------------------->> ')
 print ("")
 
@@ -66,8 +68,6 @@ def sizeof_fmt(num):
 	return "%3.1f%s" % (num, 'TB')
 
 def modification_date(filename):
-	# t = os.path.getmtime(filename)
-	# return datetime.datetime.fromtimestamp(t)
 	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(os.path.getmtime(filename)))
 
 class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -235,10 +235,6 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		interface the same as for send_head().
 
 		"""
-		#http.Request.getRequestHostname = new_getRequestHostname
-		import netifaces as ni
-		ni.ifaddresses('eth0')
-		url1 = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 		url = bytes(url1, encoding='UTF-8')
 		try:
 			list = os.listdir(path)
@@ -247,6 +243,8 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 			return None
 		list.sort(key=lambda a: a.lower())
 		f = BytesIO()
+		urlportx = url1 + ":" + str(port1)
+		urlport = bytes(urlportx, encoding='UTF-8')           
 		displaypath = html.escape(urllib.parse.unquote(self.path))
 		f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
 		f.write(('<html>\n<title>OpenNFR FileLoad %s</title>\n' % displaypath).encode())
@@ -263,7 +261,7 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		f.write(b"<input type=\"button\" value=\"/tmp\" onClick=\"location='/tmp/'\">")
 		f.write(b"<input type=\"button\" value=\"/hdd\" onClick=\"location='/hdd/'\">")
 		f.write(b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='../'\"></form>")
-		f.write(b"<input type=\"button\" value=\"delete\" target=\"_blank\" onClick=\"self.location.href='http://%s:8090'\">" % url)        
+		f.write(b"<input type=\"button\" value=\"delete\" target=\"_blank\" onClick=\"self.location.href='http://%s'\">" % urlport)        
 		f.write(b'</form>')
 		f.write(b'<ul></td></tr>')
 		f.write(b'<tr><td valign=top bgcolor="#346ca7" height="65%">')
@@ -368,8 +366,10 @@ class ThreadingServer(ThreadingMixIn, http.server.HTTPServer):
 	pass
 
 def test(HandlerClass = SimpleHTTPRequestHandler,
-	ServerClass = http.server.HTTPServer):
-	http.server.test(HandlerClass, ServerClass)
+         ServerClass = http.server.HTTPServer):
+    server_address = ("", port)
+    httpd = ServerClass(server_address, HandlerClass)
+    httpd.serve_forever()
 
 if __name__ == '__main__':
 	os.chdir("/")

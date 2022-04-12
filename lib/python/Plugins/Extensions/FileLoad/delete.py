@@ -25,7 +25,7 @@ __version__ = "0.1"
 __all__ = ["SimpleHTTPRequestHandler"]
 __author__ = "bones7456 mod by karlchen1963"
 __home_page__ = ""
- 
+
 import os, sys, platform
 import posixpath
 import http.server
@@ -43,18 +43,19 @@ from io import BytesIO
 print ("")
 print ('----------------------------------------------------------------------->> ')
 try:
-	port = 8090   
+	port = int(sys.argv[1])
+	port1 = int(sys.argv[2])
+	url1 = sys.argv[3]
 except Exception as e:
 	print ('-------->> Warning: Port is not given, will use deafult port: 8090 ')
 	print ('-------->> if you want to use other port, please execute: ')
 	print ('-------->> python SimpleHTTPServerWithUpload.py port ')
 	print ("-------->> port is a integer and it's range: 1024 < port < 65535 ")
 	port = 8090
-
 if not 1024 < port < 65535:  port = 8090
 serveraddr = ('', port)
 print ('-------->> Now, listening at port ' + str(port) + ' ...')
-print ('-------->> You can visit the URL:   http://localhost:' + str(port))
+print ('-------->> You can visit the Delete-URL:   http://' + url1 + ':' + str(port))
 print ('----------------------------------------------------------------------->> ')
 print ("")
 
@@ -212,9 +213,6 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		interface the same as for send_head().
 
 		"""
-		import netifaces as ni
-		ni.ifaddresses('eth0')
-		url1 = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 		url = bytes(url1, encoding='UTF-8')		
 		try:
 			list = os.listdir(path)
@@ -224,13 +222,15 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 		list.sort(key=lambda a: a.lower())
 		f = BytesIO()
 		displaypath = html.escape(urllib.parse.unquote(self.path))
+		urlportx = url1 + ":" + str(port1)
+		urlport = bytes(urlportx, encoding='UTF-8')           
 		f.write(b'<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">')
 		f.write(('<html>\n<title>OpenNFR FileLoad %s</title>\n' % displaypath).encode())
 		f.write(b'<body>')
 		f.write(b'<table width="100%" id="table1" height="100%"><tr><td  bgcolor="#4d4d4d" height="15%"><img src="/usr/lib/enigma2/python/Plugins/Extensions/FileLoad/images/NF_Reloaded_Banner.png" width="948" height="130"></td></tr>')
 		f.write(b"<tr><td  bgcolor='#4d4d4d' height='15%'><h2>Directory listing</h2>")
 		f.write(b'<form ENCTYPE=\"multipart/form-data\" method=\"post\">')
-		f.write(b"<input type=\"button\" value=\"HomePage\" onClick=\"self.location.href='http://%s:8000'\">" % url)        
+		f.write(b"<input type=\"button\" value=\"HomePage\" onClick=\"self.location.href='http://%s'\">" % urlport)        
 		f.write(b"<br><br/><input type=\"button\" value=\"Back\" onClick=\"location='../'\"></form>")
 		f.write(b'</form>')
 		f.write(b'<ul></td></tr>')
@@ -250,8 +250,6 @@ class SimpleHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 				# Note: a link to a directory displays with @ and links with /
 			filename = os.getcwd() + '/' + displaypath + displayname
 			f.write(('<table bgcolor="#346ca7"><tr><td width="50%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td><td width="10%%"><form ENCTYPE=\"multipart/form-data\" method=\"post\"><input id=\"del\" type=\"submit\" name=\"%s\" value=\"Delete\" ID=\"Delete\" /></form></td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename), urllib.parse.quote(linkname))).encode())
-			#f.write(('<table bgcolor="#346ca7"><tr><td width="60%%"><a style="color:black;" href="%s">%s</a></td><td width="20%%">%s</td><td width="20%%">%s</td></tr>'% (urllib.parse.quote(linkname), colorName, sizeof_fmt(os.path.getsize(filename)), modification_date(filename))).encode())
-		f.write(b"</table></body></html>")
 		f.write(b"</table></td></tr></table></body></html>")
 		length = f.tell()
 		f.seek(0)
@@ -337,8 +335,10 @@ class ThreadingServer(ThreadingMixIn, http.server.HTTPServer):
 	pass
     
 def test(HandlerClass = SimpleHTTPRequestHandler,
-	ServerClass = http.server.HTTPServer):
-	http.server.test(HandlerClass, ServerClass)
+         ServerClass = http.server.HTTPServer):
+    server_address = ("", port)
+    httpd = ServerClass(server_address, HandlerClass)
+    httpd.serve_forever()
 
 if __name__ == '__main__':
 	os.chdir("/")
