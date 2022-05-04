@@ -28,6 +28,7 @@ from Tools.Directories import *
 from Tools.LoadPixmap import LoadPixmap
 from Tools.WeatherID import get_woeid_from_yahoo
 from Tools import Notifications
+from os import listdir, remove, rename, system, path, symlink, chdir, makedirs
 from Components.AVSwitch import AVSwitch
 import shutil
 import glob
