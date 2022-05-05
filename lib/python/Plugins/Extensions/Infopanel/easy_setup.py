@@ -317,14 +317,14 @@ class EasySetup(ConfigListScreen, Screen):
 		if config.wizardsetup.UserInterfacePositioner.value is True:
 			self.Console = Console()
 			self.Console.ePopen('/usr/bin/showiframe /usr/share/enigma2/hd-testcard.mvi')
-			self.session.openWithCallback(self.run11b, UserInterfacePositioner)  
+			self.session.openWithCallback(self.run11a, UserInterfacePositioner)  
 		else:
 			self.run11a()
 
 	def run11a(self):
 		self.runed = "11a"
 		if config.wizardsetup.OpenWebifConfig.value is True:
-			self.session.openWithCallback(self.run11c, OpenWebifConfig)
+			self.session.openWithCallback(self.run11b, OpenWebifConfig)
 		else:
 			self.run11b()
 
