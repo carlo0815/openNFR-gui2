@@ -100,6 +100,13 @@ from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 self.session.open(NFRPasswdScreen)
 				</code>					
                                 </item>
+							<item level="0" text="Set Consolenprompt" entryID="Consolenprompt">
+				<code>
+from __future__ import division				
+from Plugins.Extensions.Infopanel.TelnetPrompt import TelnetPrompt
+self.session.open(TelnetPrompt)
+				</code>					
+                                </item>                                
 					<item level="0" text="Device Setup" entryID="device_setup"><screen module="NetworkSetup" screen="NetworkAdapterSelection"/></item>
 					<item level="1" text="Mounts Setup" entryID="netmounts_setup"><screen module="NetworkSetup" screen="NetworkMountsMenu"/></item>
 					<item level="2" text="AFP Setup" entryID="netafp_setup"><screen module="NetworkSetup" screen="NetworkAfp"/></item>
