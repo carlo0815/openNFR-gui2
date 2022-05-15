@@ -48,6 +48,7 @@ from Plugins.Extensions.Infopanel.Satloader import Satloader
 from Plugins.Extensions.Infopanel.InstallTarGZ import InfopanelManagerScreen
 from Plugins.Extensions.Infopanel.Flash_local import FlashOnline
 from Plugins.Extensions.Infopanel.TelnetCommand import TelnetCommand
+from Plugins.Extensions.Infopanel.TelnetPrompt import TelnetPrompt
 from Screens.InputBox import PinInput
 from Tools.BoundFunction import boundFunction
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS, SCOPE_SKIN_IMAGE, SCOPE_SKIN
@@ -271,6 +272,7 @@ class QuickMenu(Screen):
 		self.sublist.append(QuickSubMenuEntryComponent("Network Services", _("Setup Network Services"), _("Setup Network Services (Samba, Ftp, NFS, ...)")))
 		self.sublist.append(QuickSubMenuEntryComponent("iperf Net_test", _("Downloadgeschwindigkeit_test"), _("zusaetzlich die iperf.7z aus Extensions/Infopanel/data auf Pc kopieren und mit iperf.exe -s aus Dos fenster starten")))		
 		self.sublist.append(QuickSubMenuEntryComponent("Telnet Command", _("Telnet in Screen"), _("Try Telnet Commands in Gui")))
+		self.sublist.append(QuickSubMenuEntryComponent("Telnet Prompt", _("Set Telnetprompt"), _("set Telnetprompt")))		
 		self["sublist"].l.setList(self.sublist)
 
 #### Network Services Menu ##############################
@@ -543,6 +545,8 @@ class QuickMenu(Screen):
 			self.session.open(Net_test)
 		elif item[0] == _("Telnet Command"):
 			self.session.open(TelnetCommand)
+		elif item[0] == _("Telnet Prompt"):
+			self.session.open(TelnetPrompt)			
 		elif item[0] == _("Samba"):
 			self.session.open(NetworkSamba)
 		elif item[0] == _("NFS"):

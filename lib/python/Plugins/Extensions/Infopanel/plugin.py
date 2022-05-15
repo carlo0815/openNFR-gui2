@@ -621,6 +621,9 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "PasswordChange":
 			from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 			self.session.open(NFRPasswdScreen)
+		elif menu == "SetTelnetPrompt":
+			from Plugins.Extensions.Infopanel.TelnetPrompt import TelnetPrompt
+			self.session.open(TelnetPrompt)			
 		elif menu == "System_Info":
 			self.System()
 		elif menu == "JobManager":
@@ -830,6 +833,7 @@ class Infopanel(Screen, InfoBarPiP):
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("RadiologoManager" ), _("RadiologoManager"), ("radiologomanager")))) 
 		self.tlist.append(MenuEntryItem((InfoEntryComponent ("SpinnerManager" ), _("SpinnerManager"), ("spinnermanager"))))
 		self.tlist.append(MenuEntryItem((InfoEntryComponent('PasswordChange'), _("PasswordChange"), 'PasswordChange')))
+		self.tlist.append(MenuEntryItem((InfoEntryComponent('SetTelnetPrompt'), _("SetTelnetPrompt"), 'SetTelnetPrompt')))                    
 		self["Mlist"].moveToIndex(0)
 		self["Mlist"].l.setList(self.tlist)
 
