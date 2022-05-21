@@ -342,7 +342,7 @@ class MovieList(GUIComponent):
 			# Directory
 			iconSize = pathIconSize
 			iconPosX = listBeginX-1
-			iconPosY = ih/2-iconSize/2
+			iconPosY = ih//2-iconSize//2
 			if iconPosY < iconPosX:
 				iconPosY = iconPosX
 			# Name is full path name
