@@ -48,7 +48,7 @@ class Disks():
 										self.getVendor(res[3]),
 										[ ] ])
 				if len(res[3]) == 7 and res[3][:7] == "mmcblk1":
-					print ("res[3]:", res[3])
+					print(("res[3]:", res[3]))
 					self.disks.append([ res[3],
 										int(res[2]) * 1024,
 										self.isRemovable(res[3][:7]),
@@ -87,7 +87,7 @@ class Disks():
 			fdisk = os.popen(cmd, "r")
 			res = fdisk.read().strip()
 			fdisk.close()
-		if res in self.ptypes.keys():
+		if res in list(self.ptypes.keys()):
 			return self.ptypes[res]
 		return res
 		
@@ -160,7 +160,7 @@ class Disks():
 			res = mount.split(" ")
 			if res and len(res) > 1:
 				if res[0][:8] == "/dev/%s" % device:
-					print ("umount %s" % res[0])
+					print(("umount %s" % res[0]))
 					if os.system("umount %s" % res[0]) != 0:
 						mounts.close()
 						return False
@@ -203,7 +203,7 @@ class Disks():
 	# -1 -> umount failed
 	# -2 -> sfdisk failed
 	def fdisk(self, device, size, type, fstype=0):
-		print ("partitioning device %s" % device)
+		print(("partitioning device %s" % device))
 		if self.isMounted(device):
 			print ("device is mounted... umount")
 			if not self.umount(device):
@@ -220,16 +220,16 @@ class Disks():
 		if type == 0:
 			flow = "0,+,%s\n;\n;\n;\ny\n" % ptype
 		elif type == 1:
-			psize = (size / (1024*1024)) / 2
+			psize = (size // (1024*1024)) // 2
 			flow = "0,%d,%s\n+,+,%s\n;\n;\ny\n" % (psize, ptype, ptype)
 		elif type == 2:
-			psize = ((size / (1024*1024)) / 4) * 3
+			psize = ((size // (1024*1024)) // 4) * 3
 			flow = "0,%d,%s\n+,+,%s\n;\n;\ny\n" % (psize, ptype, ptype)
 		elif type == 3:
-			psize = (size / (1024*1024)) / 3
+			psize = (size // (1024*1024)) // 3
 			flow = "0,%d,%s\n+,%d,%s\n+,+,%s\n;\ny\n" % (psize, ptype, psize, ptype, ptype)
 		elif type == 4:
-			psize = (size / (1024*1024)) / 4
+			psize = (size // (1024*1024)) // 4
 			flow = "0,%d,%s\n+,%d,%s\n+,%d,%s\n+,+,%s\ny\n" % (psize, ptype, psize, ptype, psize, ptype, ptype)
 		
 		cmd = "%s -f -uM /dev/%s" % ("/usr/lib/enigma2/python/Plugins/Extensions/NFR4XBoot/bin/sfdisk", device)
@@ -248,7 +248,7 @@ class Disks():
 	# -2 -> sfdisk failed
 	def chkfs(self, device, partition, fstype=0):
 		fdevice = "%s%d" % (device, partition)
-		print ("checking device %s" % fdevice)
+		print(("checking device %s" % fdevice))
 		if self.isMountedP(device, partition):
 			oldmp = self.getMountedP(device, partition)
 			print ("partition is mounted... umount")
@@ -284,7 +284,7 @@ class Disks():
 			device1 = device
 		dev = "%s%d" % (device1, partition)
 		size = 0
-		print ("devmkfs:", dev)
+		print(("devmkfs:", dev))
 		partitions = open("/proc/partitions")
 		for part in partitions:
 			res = re.sub("\s+", " ", part).strip().split(" ")
@@ -297,7 +297,7 @@ class Disks():
 			return -1
 			
 		if self.isMountedP(device, partition):
-			print
+			print()
 			oldmp = self.getMountedP(device, partition)
 			print ("partition is mounted... umount")
 			if not self.umountP(device, partition):

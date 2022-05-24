@@ -1,5 +1,5 @@
-from __future__ import print_function
-from __future__ import absolute_import
+
+
 from Components.Console import Console
 from os import listdir as os_listdir, path as os_path
 from re import compile as re_compile

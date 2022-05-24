@@ -1,5 +1,5 @@
-from __future__ import absolute_import
-from __future__ import division
+
+
 from Components.GUIComponent import GUIComponent
 
 from enigma import eLabel, eSlider, iFrontendInformation

@@ -1,6 +1,6 @@
-from __future__ import print_function
-from __future__ import absolute_import
-from __future__ import division
+
+
+
 import skin
 from Components.HTMLComponent import HTMLComponent
 from Components.GUIComponent import GUIComponent

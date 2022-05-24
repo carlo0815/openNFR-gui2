@@ -34,7 +34,7 @@ from twisted.web.client import downloadPage
 from twisted.web import client, error as weberror
 from twisted.internet import reactor
 from twisted.internet import defer
-from urllib import urlencode
+from urllib.parse import urlencode
 import sys, os, re, shutil, time
 from threading import Thread
 from os import listdir as os_listdir, path as os_path
@@ -74,7 +74,7 @@ def getCoverPath():
 
 	for dir in dirList:
 		if dir in blockList:
-			print(dir, blockList)
+			print((dir, blockList))
 			continue
 		if os_path.ismount("/media/%s" %(dir)) or (os_path.islink("/media/%s" %(dir)) and os_path.ismount(os_path.realpath("/media/%s" %(dir)))):
 			path = "/media/%s/cover/" % (dir)
@@ -149,7 +149,7 @@ class BackgroundCoverScanner(Thread):
 		self.background = background
 		if not self.scanning:
 			print( "----------------------- Cover Background Scanner -------------------------")
-			print( "Scan Path: %s" % config.movielist.cover.scanpath.value)
+			print(( "Scan Path: %s" % config.movielist.cover.scanpath.value))
 			self.scanning = True
 			if config.movielist.cover.savestyle.value == "opennfr":
 				if not pathExists(config.movielist.cover.coverpath.value):
@@ -216,7 +216,7 @@ class BackgroundCoverScanner(Thread):
 									#if metaName is not None:
 										cleanTitle = re.sub('[Ss][0-9]+[Ee][0-9]+.*[a-zA-Z0-9_]+','', metaName, flags=re.S|re.I)
 										cleanTitle = cleanFile(cleanTitle)
-										print( "cleanTitle:", cleanTitle)
+										print(( "cleanTitle:", cleanTitle))
 										url = 'http://thetvdb.com/api/GetSeries.php?seriesname=%s&language=de' % cleanTitle.replace(' ','%20')
 										data.append(('file', 'serie', filename, cleanTitle, url, None, None))
 									#else:
@@ -333,17 +333,17 @@ class BackgroundCoverScanner(Thread):
 		self.checkDone()
 
 	def checkDone(self):
-		print( self.counting, self.count)
+		print(( self.counting, self.count))
 		if int(self.counting) == int(str(self.count)):
 			elapsed_time = (time.clock() - self.start_time)
 			if not self.background:
 				self.callback_infos("Downloaded %s Cover(s) in %.1f sec." % (str(self.found), elapsed_time))
 				self.callback_finished("Done")
 			self.scanning = False
-			print( "Found:", self.found)
-			print( "Not Found:", self.notfound)
-			print( "Errors:", self.error)
-			print( "Total: %s / %s" % (self.counting, self.count))
+			print(( "Found:", self.found))
+			print(( "Not Found:", self.notfound))
+			print(( "Errors:", self.error))
+			print(( "Total: %s / %s" % (self.counting, self.count)))
 			self.callback_finished(self.count)
 
 	def countFound(self, data):
@@ -375,13 +375,13 @@ class BackgroundCoverScanner(Thread):
 			wFile.close()
 
 	def dataError(self, error):
-		print( "ERROR:", error)
+		print(( "ERROR:", error))
 		self.checkDone()
 
 	def dataErrorInfo(self, error):
 		self.error += 1
 		self.counting += 1
-		print( "ERROR dataErrorInfo:", error)
+		print(( "ERROR dataErrorInfo:", error))
 		if not self.background:
 			self.callback_error(self.error)
 		self.checkDone()
@@ -391,7 +391,7 @@ class BackgroundCoverScanner(Thread):
 		self.counting += 1
 		if not self.background:
 			self.callback_error(self.error)
-		print( "ERROR:", error)
+		print(( "ERROR:", error))
 		self.checkDone()
 
 class fmlcMenuList(GUIComponent, object):
@@ -704,26 +704,26 @@ class FindMovieListScanPath(Screen):
 
 def decodeHtml(text):
 	text = text.replace('&auml;','ÃƒÂ¤')
-	text = text.replace('\u00e4','ÃƒÂ¤')
+	text = text.replace('\\u00e4','ÃƒÂ¤')
 	text = text.replace('&#228;','ÃƒÂ¤')
 	text = text.replace('&Auml;','Ãƒâ€ž')
-	text = text.replace('\u00c4','Ãƒâ€ž')
+	text = text.replace('\\u00c4','Ãƒâ€ž')
 	text = text.replace('&#196;','Ãƒâ€ž')
 	text = text.replace('&ouml;','ÃƒÂ¶')
-	text = text.replace('\u00f6','ÃƒÂ¶')
+	text = text.replace('\\u00f6','ÃƒÂ¶')
 	text = text.replace('&#246;','ÃƒÂ¶')
 	text = text.replace('&ouml;','Ãƒâ€“')
 	text = text.replace('&Ouml;','Ãƒâ€“')
-	text = text.replace('\u00d6','Ãƒâ€“')
+	text = text.replace('\\u00d6','Ãƒâ€“')
 	text = text.replace('&#214;','Ãƒâ€“')
 	text = text.replace('&uuml;','ÃƒÂ¼')
-	text = text.replace('\u00fc','ÃƒÂ¼')
+	text = text.replace('\\u00fc','ÃƒÂ¼')
 	text = text.replace('&#252;','ÃƒÂ¼')
 	text = text.replace('&Uuml;','ÃƒÅ“')
-	text = text.replace('\u00dc','ÃƒÅ“')
+	text = text.replace('\\u00dc','ÃƒÅ“')
 	text = text.replace('&#220;','ÃƒÅ“')
 	text = text.replace('&szlig;','ÃƒÅ¸')
-	text = text.replace('\u00df','ÃƒÅ¸')
+	text = text.replace('\\u00df','ÃƒÅ¸')
 	text = text.replace('&#223;','ÃƒÅ¸')
 	text = text.replace('&amp;','&')
 	text = text.replace('&quot;','\"')
@@ -742,10 +742,10 @@ def decodeHtml(text):
 	text = text.replace('&#039;','\'')
 	text = text.replace('&#39;','\'')
 	text = text.replace('&#160;',' ')
-	text = text.replace('\u00a0',' ')
-	text = text.replace('\u00b4','\'')
-	text = text.replace('\u003d','=')
-	text = text.replace('\u0026','&')
+	text = text.replace('\\u00a0',' ')
+	text = text.replace('\\u00b4','\'')
+	text = text.replace('\\u003d','=')
+	text = text.replace('\\u0026','&')
 	text = text.replace('&#174;','')
 	text = text.replace('&#225;','a')
 	text = text.replace('&#233;','e')
@@ -753,27 +753,27 @@ def decodeHtml(text):
 	text = text.replace('&#8211;',"-")
 	text = text.replace('&#8212;',"Ã¢â‚¬â€")
 	text = text.replace('&mdash;','Ã¢â‚¬â€')
-	text = text.replace('\u2013',"Ã¢â‚¬â€œ")
+	text = text.replace('\\u2013',"Ã¢â‚¬â€œ")
 	text = text.replace('&#8216;',"'")
 	text = text.replace('&#8217;',"'")
 	text = text.replace('&#8220;',"'")
 	text = text.replace('&#8221;','"')
 	text = text.replace('&#8222;',',')
-	text = text.replace('\u014d','Ã…Â')
-	text = text.replace('\u016b','Ã…Â«')
-	text = text.replace('\u201a','\"')
-	text = text.replace('\u2018','\"')
-	text = text.replace('\u201e','\"')
-	text = text.replace('\u201c','\"')
-	text = text.replace('\u201d','\'')
-	text = text.replace('\u2019s','Ã¢â‚¬â„¢')
-	text = text.replace('\u00e0','ÃƒÂ ')
-	text = text.replace('\u00e7','ÃƒÂ§')
-	text = text.replace('\u00e8','ÃƒÂ©')
-	text = text.replace('\u00e9','ÃƒÂ©')
-	text = text.replace('\u00c1','ÃƒÂ')
-	text = text.replace('\u00c6','Ãƒâ€ ')
-	text = text.replace('\u00e1','ÃƒÂ¡')
+	text = text.replace('\\u014d','Ã…Â')
+	text = text.replace('\\u016b','Ã…Â«')
+	text = text.replace('\\u201a','\"')
+	text = text.replace('\\u2018','\"')
+	text = text.replace('\\u201e','\"')
+	text = text.replace('\\u201c','\"')
+	text = text.replace('\\u201d','\'')
+	text = text.replace('\\u2019s','Ã¢â‚¬â„¢')
+	text = text.replace('\\u00e0','ÃƒÂ ')
+	text = text.replace('\\u00e7','ÃƒÂ§')
+	text = text.replace('\\u00e8','ÃƒÂ©')
+	text = text.replace('\\u00e9','ÃƒÂ©')
+	text = text.replace('\\u00c1','ÃƒÂ')
+	text = text.replace('\\u00c6','Ãƒâ€ ')
+	text = text.replace('\\u00e1','ÃƒÂ¡')
 	text = text.replace('&#xC4;','Ãƒâ€ž')
 	text = text.replace('&#xD6;','Ãƒâ€“')
 	text = text.replace('&#xDC;','ÃƒÅ“')
@@ -790,7 +790,7 @@ def decodeHtml(text):
 	text = text.replace("&#x21;","!")
 	text = text.replace("&#x3f;","?")
 	text = text.replace('&#8230;','...')
-	text = text.replace('\u2026','...')
+	text = text.replace('\\u2026','...')
 	text = text.replace('&hellip;','...')
 	text = text.replace('&#8234;','')
 	return text

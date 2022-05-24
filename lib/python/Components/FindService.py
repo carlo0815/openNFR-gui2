@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.FindServiceControlListe import FindServiceControlEntryComponent, FindServiceControlListe 
@@ -72,7 +72,7 @@ class FindService(Screen):
 	def chooseLetter(self):
 		print("choose letter")
 		mylist = []
-		for x in self.servicesList.keys():
+		for x in list(self.servicesList.keys()):
 			if x == chr(SPECIAL_CHAR):
 				x = (_("special characters"), x)
 			else:

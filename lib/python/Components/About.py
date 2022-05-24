@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from Tools.Directories import resolveFilename, SCOPE_SYSETC
 #from Tools.HardwareInfo import HardwareInfo
 from os import path
@@ -243,8 +243,8 @@ def getPythonVersionString():
 			import subprocess
 			status, output = subprocess.getstatusoutput("python3 -V")
 		else:
-			import commands
-			status, output = commands.getstatusoutput("python -V")
+			import subprocess
+			status, output = subprocess.getstatusoutput("python -V")
 		return output.split(' ')[1]
 	except:
 		return _("unknown")

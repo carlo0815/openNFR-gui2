@@ -2,7 +2,7 @@
 # A Job consists of many "Tasks".
 # A task is the run of an external tool, with proper methods for failure handling
 
-from __future__ import print_function
+
 from Tools.CList import CList
 import six
 
@@ -495,7 +495,7 @@ class ToolExistsPrecondition(Condition):
 			path = os.environ.get('PATH', '').split(os.pathsep)
 			path.append(task.cwd + '/')
 		# FIXME PY3 map,filter
-			absolutes = list(filter(lambda _file: os.access(_file, os.X_OK), map(lambda directory, _file = task.cmd: os.path.join(directory, _file), path)))
+			absolutes = list([_file for _file in map(lambda directory, _file = task.cmd: os.path.join(directory, _file), path) if os.access(_file, os.X_OK)])
 			if absolutes:
 				self.realpath = absolutes[0]
 				return True

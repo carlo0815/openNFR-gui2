@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from boxbranding import getMachineBrand
 from Components.config import config, ConfigSelection, ConfigSubsection, ConfigOnOff, ConfigText
 from Components.Language import language

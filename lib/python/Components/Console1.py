@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 import enigma, ctypes, os
 import six
 

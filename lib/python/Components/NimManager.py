@@ -1,5 +1,5 @@
-from __future__ import print_function
-from __future__ import absolute_import
+
+
 import os
 from boxbranding import getBoxType, getBrandOEM, getMachineBrand
 from time import localtime, mktime
@@ -1259,7 +1259,7 @@ class NimManager:
 				entries[current_slot]["isempty"] = True
 		nimfile.close()
 
-		for id, entry in entries.items():
+		for id, entry in list(entries.items()):
 			if not ("name" in entry and "type" in entry):
 				entry["name"] =  _("N/A")
 				entry["type"] = None

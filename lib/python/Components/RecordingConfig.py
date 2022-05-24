@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.config import ConfigInteger, ConfigSelectionNumber, ConfigYesNo, ConfigSubsection, ConfigSelection, config
 from enigma import pNavigation
 from Components.SystemInfo import SystemInfo

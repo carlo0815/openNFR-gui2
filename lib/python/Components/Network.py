@@ -1,5 +1,5 @@
-from __future__ import print_function
-from __future__ import absolute_import
+
+
 import re
 import os
 import netifaces as ni
@@ -172,12 +172,12 @@ class Network:
 						if self.ifaces[currif]["ip"] != ifaces[currif]["address"] and ifaces[currif]["dhcp"] == False:
 							self.ifaces[currif]["ip"] = list(map(int, split[1].split('.')))
 				if split[0] == "netmask":
-					ifaces[currif]["netmask"] = map(int, split[1].split('.'))
+					ifaces[currif]["netmask"] = list(map(int, split[1].split('.')))
 					if "netmask" in self.ifaces[currif]:
 						if self.ifaces[currif]["netmask"] != ifaces[currif]["netmask"] and ifaces[currif]["dhcp"] == False:
 							self.ifaces[currif]["netmask"] = list(map(int, split[1].split('.')))
 				if split[0] == "gateway":
-					ifaces[currif]["gateway"] = map(int, split[1].split('.'))
+					ifaces[currif]["gateway"] = list(map(int, split[1].split('.')))
 					if "gateway" in self.ifaces[currif]:
 						if self.ifaces[currif]["gateway"] != ifaces[currif]["gateway"] and ifaces[currif]["dhcp"] == False:
 							self.ifaces[currif]["gateway"] = list(map(int, split[1].split('.')))
@@ -656,7 +656,7 @@ class Network:
 
 		mask = 1<<31
 		xnet = (1<<32)-1
-		cidr_range = range(0, 32)
+		cidr_range = list(range(0, 32))
 		cidr = int(nmask)
 		if cidr not in list(cidr_range):
 			print('cidr invalid: %d' % cidr)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+
 from twisted.internet import threads
 from Components.config import config
 from enigma import eDBoxLCD, eTimer, iPlayableService, pNavigation, iServiceInformation

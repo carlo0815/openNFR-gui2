@@ -1,6 +1,6 @@
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
+
+
+
 from enigma import eComponentScan, iDVBFrontend, eTimer
 from Components.NimManager import nimmanager as nimmgr
 from Components.Converter.ChannelNumbers import channelnumbers

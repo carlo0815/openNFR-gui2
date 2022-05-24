@@ -17,8 +17,8 @@ class FindServiceControlListe(MenuList):
 
 	def etoggleSelectedLock(self):
 		
-		print ("self.l.getCurrentSelection():", self.l.getCurrentSelection())
-		print ("self.l.getCurrentSelectionIndex():", self.l.getCurrentSelectionIndex())
+		print(("self.l.getCurrentSelection():", self.l.getCurrentSelection()))
+		print(("self.l.getCurrentSelectionIndex():", self.l.getCurrentSelectionIndex()))
 		curSel = self.l.getCurrentSelection()
 		#if curSel[0][2]:
 		if curSel[0]:

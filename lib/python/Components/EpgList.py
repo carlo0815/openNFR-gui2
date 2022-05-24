@@ -1,5 +1,5 @@
-from __future__ import division
-from __future__ import absolute_import
+
+
 from time import localtime, time, strftime
 
 from enigma import eEPGCache, eListbox, eListboxPythonMultiContent, eServiceReference, loadPNG, gFont, getDesktop, eRect, eSize, RT_HALIGN_LEFT, RT_HALIGN_RIGHT, RT_HALIGN_CENTER, RT_VALIGN_CENTER, RT_VALIGN_TOP, RT_WRAP, BT_SCALE, BT_KEEP_ASPECT_RATIO
@@ -474,74 +474,74 @@ class EPGList(HTMLComponent, GUIComponent):
 		if self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
 			if self.type == EPG_TYPE_GRAPH:
 				if self.listHeight > 0:
-					itemHeight = self.listHeight / config.epgselection.graph_itemsperpage.value
+					itemHeight = self.listHeight // config.epgselection.graph_itemsperpage.value
 				else:
 					itemHeight = 54 # some default (270/5)
 				if config.epgselection.graph_heightswitch.value:
-					if ((self.listHeight / config.epgselection.graph_itemsperpage.value) / 3) >= 27:
-						tmp_itemHeight = ((self.listHeight / config.epgselection.graph_itemsperpage.value) // 3)
-					elif ((self.listHeight / config.epgselection.graph_itemsperpage.value) / 2) >= 27:
-						tmp_itemHeight = ((self.listHeight / config.epgselection.graph_itemsperpage.value) // 2)
+					if ((self.listHeight // config.epgselection.graph_itemsperpage.value) // 3) >= 27:
+						tmp_itemHeight = ((self.listHeight // config.epgselection.graph_itemsperpage.value) // 3)
+					elif ((self.listHeight // config.epgselection.graph_itemsperpage.value) // 2) >= 27:
+						tmp_itemHeight = ((self.listHeight // config.epgselection.graph_itemsperpage.value) // 2)
 					else:
 						tmp_itemHeight = 27
 					if tmp_itemHeight < itemHeight:
 						itemHeight = tmp_itemHeight
 					else:
-						if ((self.listHeight / config.epgselection.graph_itemsperpage.value) * 3) <= 45:
-							itemHeight = ((self.listHeight / config.epgselection.graph_itemsperpage.value) * 3)
-						elif ((self.listHeight / config.epgselection.graph_itemsperpage.value) * 2) <= 45:
-							itemHeight = ((self.listHeight / config.epgselection.graph_itemsperpage.value) * 2)
+						if ((self.listHeight // config.epgselection.graph_itemsperpage.value) * 3) <= 45:
+							itemHeight = ((self.listHeight // config.epgselection.graph_itemsperpage.value) * 3)
+						elif ((self.listHeight // config.epgselection.graph_itemsperpage.value) * 2) <= 45:
+							itemHeight = ((self.listHeight // config.epgselection.graph_itemsperpage.value) * 2)
 						else:
 							itemHeight = 45
 			elif self.type == EPG_TYPE_INFOBARGRAPH:
 				if self.listHeight > 0:
-					itemHeight = self.listHeight / config.epgselection.infobar_itemsperpage.value
+					itemHeight = self.listHeight // config.epgselection.infobar_itemsperpage.value
 				else:
 					itemHeight = 54 # some default (270/5)
 			if self.NumberOfRows:
-					itemHeight = self.listHeight / self.NumberOfRows
+					itemHeight = self.listHeight // self.NumberOfRows
 			itemHeight = int(itemHeight)
 			self.l.setItemHeight(itemHeight)
-			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight // itemHeight * itemHeight)))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
 
 		elif self.type == EPG_TYPE_ENHANCED or self.type == EPG_TYPE_SINGLE or self.type == EPG_TYPE_SIMILAR:
 			if self.listHeight > 0:
-				itemHeight = self.listHeight / config.epgselection.enhanced_itemsperpage.value
+				itemHeight = self.listHeight // config.epgselection.enhanced_itemsperpage.value
 			else:
 				itemHeight = 32
 			if itemHeight < 15:
 				itemHeight = 15
 			itemHeight = int(itemHeight)
 			self.l.setItemHeight(itemHeight)
-			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight // itemHeight * itemHeight)))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
 		elif self.type == EPG_TYPE_MULTI:
 			if self.listHeight > 0:
-				itemHeight = self.listHeight / config.epgselection.multi_itemsperpage.value
+				itemHeight = self.listHeight // config.epgselection.multi_itemsperpage.value
 			else:
 				itemHeight = 32
 			if itemHeight < 25:
 				itemHeight = 25
 			itemHeight = int(itemHeight)
 			self.l.setItemHeight(itemHeight)
-			self.instance.resize(eSize(self.listWidth, int(self.listHeight / itemHeight * itemHeight)))
+			self.instance.resize(eSize(self.listWidth, int(self.listHeight // itemHeight * itemHeight)))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
 		elif self.type == EPG_TYPE_INFOBAR:
 			if self.listHeight > 0:
-				itemHeight = self.listHeight / config.epgselection.infobar_itemsperpage.value
+				itemHeight = self.listHeight // config.epgselection.infobar_itemsperpage.value
 			else:
 				itemHeight = 32
 			if itemHeight < 25:
 				itemHeight = 20
 			self.l.setItemHeight(int(itemHeight))
-			self.instance.resize(eSize(self.listWidth, self.listHeight / itemHeight * itemHeight))
+			self.instance.resize(eSize(self.listWidth, self.listHeight // itemHeight * itemHeight))
 			self.listHeight = self.instance.size().height()
 			self.listWidth = self.instance.size().width()
 			self.itemHeight = itemHeight
@@ -592,14 +592,14 @@ class EPGList(HTMLComponent, GUIComponent):
 		self.listSizeWidth = width
 		if self.type == EPG_TYPE_MULTI:
 			xpos = 0
-			w = width / 10 * 3
+			w = width // 10 * 3
 			self.service_rect = Rect(xpos, 0, w-10, height)
 			xpos += w
-			w = width / 10 * 2
+			w = width // 10 * 2
 			self.start_end_rect = Rect(xpos, 0, w-10, height)
-			self.progress_rect = Rect(xpos, int(height/4), w-10, int(height/2))
+			self.progress_rect = Rect(xpos, int(height//4), w-10, int(height//2))
 			xpos += w
-			w = width / 10 * 5
+			w = width // 10 * 5
 			self.descr_rect = Rect(xpos, 0, w+5, height)
 		elif self.type == EPG_TYPE_GRAPH or self.type == EPG_TYPE_INFOBARGRAPH:
 			servicew = 0
@@ -623,9 +623,9 @@ class EPGList(HTMLComponent, GUIComponent):
 				piconWidth = w - 2 * self.serviceBorderWidth
 			self.picon_size = eSize(piconWidth, piconHeight)
 		else:
-			self.weekday_rect = Rect(0, 0, float(width * 10) / 100, height)
-			self.datetime_rect = Rect(self.weekday_rect.width(), 0, float(width * 24) / 100, height)
-			self.descr_rect = Rect(self.datetime_rect.left() + self.datetime_rect.width(), 0, float(width * 66) / 100, height)
+			self.weekday_rect = Rect(0, 0, float(width * 10) // 100, height)
+			self.datetime_rect = Rect(self.weekday_rect.width(), 0, float(width * 24) // 100, height)
+			self.descr_rect = Rect(self.datetime_rect.left() + self.datetime_rect.width(), 0, float(width * 66) // 100, height)
 
 	def calcEntryPosAndWidthHelper(self, stime, duration, start, end, width):
 		xpos = (stime - start) * width // (end - start)
@@ -688,31 +688,31 @@ class EPGList(HTMLComponent, GUIComponent):
 		res = [
 			None, # no private data needed
 			(eListboxPythonMultiContent.TYPE_TEXT, r1.x, r1.y, r1.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, _(strftime("%a", t)), foreColor, foreColorSel, backColor, backColorSel),
-			(eListboxPythonMultiContent.TYPE_TEXT, r2.x, r2.y, r2.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, strftime("%e/%m, %-H:%M", t), foreColor, foreColorSel, backColor, backColorSel)
+			(eListboxPythonMultiContent.TYPE_TEXT, r2.x, r2.y, r2.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, strftime("%e//%m, %-H:%M", t), foreColor, foreColorSel, backColor, backColorSel)
 		]
 		if clock_types:
 			if self.wasEntryAutoTimer and clock_types in (2, 7, 12):
 				if self.screenwidth and self.screenwidth == 1920:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h/2-13), 25, 25, self.clocks[clock_types]),
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-50, (r3.h/2-13), 25, 25, self.autotimericon),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h//2-13), 25, 25, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-50, (r3.h//2-13), 25, 25, self.autotimericon),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-50, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName, foreColor, foreColorSel, backColor, backColorSel)
 						))
 				else:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h/2-11), 21, 21, self.clocks[clock_types]),
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-42, (r3.h/2-11), 21, 21, self.autotimericon),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h//2-11), 21, 21, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-42, (r3.h//2-11), 21, 21, self.autotimericon),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-42, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName, foreColor, foreColorSel, backColor, backColorSel)
 						))
 			else:
 				if self.screenwidth and self.screenwidth == 1920:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h/2-13), 25, 25, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h//2-13), 25, 25, self.clocks[clock_types]),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-25, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName, foreColor, foreColorSel, backColor, backColorSel)
 						))
 				else:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h/2-11), 21, 21, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h//2-11), 21, 21, self.clocks[clock_types]),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-21, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName, foreColor, foreColorSel, backColor, backColorSel)
 						))
 		else:
@@ -730,31 +730,31 @@ class EPGList(HTMLComponent, GUIComponent):
 		res = [
 			None,  # no private data needed
 			(eListboxPythonMultiContent.TYPE_TEXT, r1.x, r1.y, r1.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, _(strftime("%a", t))),
-			(eListboxPythonMultiContent.TYPE_TEXT, r2.x, r2.y, r2.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, strftime("%e/%m, %-H:%M", t))
+			(eListboxPythonMultiContent.TYPE_TEXT, r2.x, r2.y, r2.w, r1.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, strftime("%e//%m, %-H:%M", t))
 		]
 		if clock_types:
 			if self.wasEntryAutoTimer and clock_types in (2, 7, 12):
 				if self.screenwidth and self.screenwidth == 1920:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h/2-13), 25, 25, self.clocks[clock_types]),
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-50, (r3.h/2-13), 25, 25, self.autotimericon),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h//2-13), 25, 25, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-50, (r3.h//2-13), 25, 25, self.autotimericon),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-50, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 					))
 				else:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h/2-11), 21, 21, self.clocks[clock_types]),
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-42, (r3.h/2-11), 21, 21, self.autotimericon),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h//2-11), 21, 21, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-42, (r3.h//2-11), 21, 21, self.autotimericon),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-42, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 					))
 			else:
 				if self.screenwidth and self.screenwidth == 1920:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h/2-13), 25, 25, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-25, (r3.h//2-13), 25, 25, self.clocks[clock_types]),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-25, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 					))
 				else:
 					res.extend((
-						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h/2-11), 21, 21, self.clocks[clock_types]),
+						(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, r3.x+r3.w-21, (r3.h//2-11), 21, 21, self.clocks[clock_types]),
 						(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, r3.w-21, r3.h, 0, RT_HALIGN_LEFT|RT_VALIGN_CENTER, service_name)
 					))
 		else:
@@ -788,12 +788,12 @@ class EPGList(HTMLComponent, GUIComponent):
 				end = localtime(beginTime+duration)
 				res.extend((
 					(eListboxPythonMultiContent.TYPE_TEXT, r4.x, r4.y, r4.w, r4.h, 1, RT_HALIGN_CENTER|RT_VALIGN_CENTER, _("%02d:%02d - %02d:%02d")%(begin[3], begin[4], end[3], end[4])),
-					(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, fact1, r3.h, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, _("%d min") % (duration / 60))
+					(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, fact1, r3.h, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, _("%d min") % (duration // 60))
 				))
 			else:
-				percent = (nowTime - beginTime) * 100 / duration
+				percent = (nowTime - beginTime) * 100 // duration
 				prefix = "+"
-				remaining = ((beginTime+duration) - int(time())) / 60
+				remaining = ((beginTime+duration) - int(time())) // 60
 				if remaining <= 0:
 					prefix = ""
 				res.extend((
@@ -806,25 +806,25 @@ class EPGList(HTMLComponent, GUIComponent):
 					if self.screenwidth and self.screenwidth == 1920:
 						res.extend((
 							(eListboxPythonMultiContent.TYPE_TEXT, r3.x + 135, r3.y, r3.w-185, r3.h, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-25, (r3.h/2-13), 25, 25, self.clocks[clock_types]),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-50, (r3.h/2-13), 25, 25, self.autotimericon)
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-25, (r3.h//2-13), 25, 25, self.clocks[clock_types]),
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-50, (r3.h//2-13), 25, 25, self.autotimericon)
 						))
 					else:
 						res.extend((
 							(eListboxPythonMultiContent.TYPE_TEXT, r3.x + 90, r3.y, r3.w-132, r3.h, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-21, (r3.h/2-11), 21, 21, self.clocks[clock_types]),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-42, (r3.h/2-11), 21, 21, self.autotimericon)
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-21, (r3.h//2-11), 21, 21, self.clocks[clock_types]),
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-42, (r3.h//2-11), 21, 21, self.autotimericon)
 						))
 				else:
 					if self.screenwidth and self.screenwidth == 1920:
 						res.extend((
 							(eListboxPythonMultiContent.TYPE_TEXT, r3.x + 135, r3.y, r3.w-160, r3.h, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-25, (r3.h/2-13), 25, 25, self.clocks[clock_types])
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-25, (r3.h//2-13), 25, 25, self.clocks[clock_types])
 						))
 					else:
 						res.extend((
 							(eListboxPythonMultiContent.TYPE_TEXT, r3.x + 90, r3.y, r3.w-111, r3.h, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName),
-							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-21, (r3.h/2-11), 21, 21, self.clocks[clock_types])
+							(eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, pos-21, (r3.h//2-11), 21, 21, self.clocks[clock_types])
 						))
 			else:
 				res.append((eListboxPythonMultiContent.TYPE_TEXT, r3.x + fact2, r3.y, r3.w-fact2, r3.h, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, EventName))
@@ -1124,8 +1124,8 @@ class EPGList(HTMLComponent, GUIComponent):
 				if clock_types is not None and ewidth > 23:
 					if config.epgselection.graph_rec_icon_height.value != "hide":
 						if config.epgselection.graph_rec_icon_height.value == "middle":
-							RecIconHDheight = top+(height/2)-11
-							RecIconFHDheight = top+(height/2)-13
+							RecIconHDheight = top+(height//2)-11
+							RecIconFHDheight = top+(height//2)-13
 						elif config.epgselection.graph_rec_icon_height.value == "top":
 							RecIconHDheight = top+3
 							RecIconFHDheight = top+3
@@ -1531,7 +1531,7 @@ class TimelineText(HTMLComponent, GUIComponent):
 			service_rect = l.getServiceRect()
 			time_steps = 60 if time_epoch > 180 else 30
 			num_lines = time_epoch // time_steps
-			incWidth = event_rect.width() / num_lines
+			incWidth = event_rect.width() // num_lines
 			timeStepsCalc = time_steps * 60
 
 			nowTime = localtime(time())
@@ -1627,7 +1627,7 @@ class TimelineText(HTMLComponent, GUIComponent):
 
 		now = time()
 		if time_base <= now < (time_base + time_epoch * 60):
-			xpos = int((((now - time_base) * event_rect.width()) / (time_epoch * 60)) - (timeline_now.instance.size().width() / 2))
+			xpos = int((((now - time_base) * event_rect.width()) // (time_epoch * 60)) - (timeline_now.instance.size().width() // 2))
 			old_pos = timeline_now.position
 			new_pos = (xpos + eventLeft, old_pos[1])
 			if old_pos != new_pos:

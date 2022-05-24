@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.MenuList import MenuList
 
 from Tools.Directories import SCOPE_ACTIVE_SKIN, resolveFilename

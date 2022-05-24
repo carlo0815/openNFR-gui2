@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.HTMLComponent import HTMLComponent
 from Components.GUIComponent import GUIComponent
 from Components.VariableText import VariableText
@@ -62,7 +62,7 @@ class Input(VariableText, HTMLComponent, GUIComponent, NumericalTextInput):
 	def setText(self, text):
 		if not len(text):
 			self.currPos = 0
-			self.Text = u""
+			self.Text = ""
 		else:
 			if isinstance(text, str):
 				self.Text = six.ensure_text(text, errors='ignore')
@@ -174,15 +174,15 @@ class Input(VariableText, HTMLComponent, GUIComponent, NumericalTextInput):
 		if not self.maxSize:
 			self.Text = self.Text[0:pos] + self.Text[pos + 1:]
 		elif self.overwrite:
-			self.Text = self.Text[0:pos] + u" " + self.Text[pos + 1:]
+			self.Text = self.Text[0:pos] + " " + self.Text[pos + 1:]
 		else:
-			self.Text = self.Text[0:pos] + self.Text[pos + 1:] + u" "
+			self.Text = self.Text[0:pos] + self.Text[pos + 1:] + " "
 
 	def deleteAllChars(self):
 		if self.maxSize:
-			self.Text = u" " * len(self.Text)
+			self.Text = " " * len(self.Text)
 		else:
-			self.Text = u""
+			self.Text = ""
 		self.currPos = 0
 
 	def tab(self):
@@ -192,7 +192,7 @@ class Input(VariableText, HTMLComponent, GUIComponent, NumericalTextInput):
 			self.deleteAllChars()
 			self.allmarked = False
 		else:
-			self.insertChar(u" ", self.currPos, False, True)
+			self.insertChar(" ", self.currPos, False, True)
 			self.innerright()
 		self.update()
 
@@ -244,7 +244,7 @@ class Input(VariableText, HTMLComponent, GUIComponent, NumericalTextInput):
 		if self.allmarked:
 			self.deleteAllChars()
 			self.allmarked = False
-		self.insertChar(six.unichr(code), self.currPos, False, False)
+		self.insertChar(six.chr(code), self.currPos, False, False)
 		self.innerright()
 		self.update()
 
