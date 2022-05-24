@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 import math
 from Components.Renderer.Renderer import Renderer
 from skin import parseColor

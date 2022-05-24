@@ -1,5 +1,5 @@
 # This converter base on Spaze Team weather converter.
-from __future__ import absolute_import
+
 from Components.Renderer.Renderer import Renderer
 from enigma import ePixmap, eEnv
 from Tools.Directories import fileExists, SCOPE_SKIN_IMAGE, SCOPE_CURRENT_SKIN, resolveFilename

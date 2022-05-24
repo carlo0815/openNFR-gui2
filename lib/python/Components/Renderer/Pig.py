@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 ##
 ## P(icture)i(n)g(raphics) renderer
 ##
