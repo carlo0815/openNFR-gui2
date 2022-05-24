@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.Converter.Converter import Converter
 from enigma import iServiceInformation, iPlayableService
 from Screens.InfoBarGenerics import hasActiveSubservicesForCurrentChannel
@@ -292,9 +292,9 @@ class ServiceInfo(Converter, object):
 				f.close()
 			if not video_rate:
 				video_rate = int(self.getServiceInfoString(info, iServiceInformation.sFrameRate))
-			return video_rate, lambda x: "%d fps" % ((x+500)/1000)
+			return video_rate, lambda x: "%d fps" % ((x+500)//1000)
 		elif self.type == self.TRANSFERBPS:
-			return self.getServiceInfoString(info, iServiceInformation.sTransferBPS, lambda x: "%d kB/s" % (x/1024))
+			return self.getServiceInfoString(info, iServiceInformation.sTransferBPS, lambda x: "%d kB/s" % (x//1024))
 		elif self.type == self.HAS_HBBTV:
 			return info.getInfoString(iServiceInformation.sHBBTVUrl)
 		return ""

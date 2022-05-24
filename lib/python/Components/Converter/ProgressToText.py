@@ -13,10 +13,10 @@ class ProgressToText(Converter, object):
 
 		if self.in_percent:
 			if r:
-				return "%d %%" % (v * 100 / r)
+				return "%d %%" % (v * 100 // r)
 			else:
 				return None
 		else:
-			return "%d / %d" % (v, r)
+			return "%d // %d" % (v, r)
 
 	text = property(getText)

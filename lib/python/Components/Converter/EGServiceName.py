@@ -68,9 +68,9 @@ class EGServiceName(Converter, object):
 						orbital = transponderData["orbital_position"]
 						orbital = int(orbital)
 						if orbital > 1800:
-							orbital = str((float(3600 - orbital))/10.0) + "\xc2\xb0 W"
+							orbital = str((float(3600 - orbital))//10.0) + "\xc2\xb0 W"
 						else:
-							orbital = str((float(orbital))/10.0) + "\xc2\xb0 E"
+							orbital = str((float(orbital))//10.0) + "\xc2\xb0 E"
 					elif (transponderData["tuner_type"] == "DVB-T") or (transponderData["tuner_type"] == "DVB-T2"):
 					  orbital = "DVB-T"
 					elif (transponderData["tuner_type"] == "DVB-C"):

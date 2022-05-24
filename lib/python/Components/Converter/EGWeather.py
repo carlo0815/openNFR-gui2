@@ -1,5 +1,5 @@
 # This converter base on Spaze Team weather converter. 
-from __future__ import absolute_import
+
 from Components.config import config
 from Components.Converter.Converter import Converter
 from Components.Element import cached
@@ -7,7 +7,7 @@ import os
 from enigma import ePixmap
 import time
 from Components.Converter.Poll import Poll
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import string
 from os import environ
 import gettext
@@ -112,7 +112,7 @@ def sinovalido():
 	t1 = dir_stats.st_mtime
 	t2 = time.localtime()
 	tiempsec = time.mktime(t2)
-	diferencia = int(tiempsec - t1) / 60 / 60
+	diferencia = int(tiempsec - t1) // 60 // 60
 	if diferencia > 1 or diferencia < 0:
 		pondebug('' + ' archivo caducado :: dif:' + str(diferencia) + ' :: fecha:' + devfecha(time.localtime(dir_stats.st_mtime)) + ' :: ahora:' + devfecha(None))
 		if diferencia > 5 or diferencia < 0:
@@ -156,7 +156,7 @@ def devxml():
 				if fileExists('/tmp/tempwf.xml'):
 					return
 				if devtipo() == 0:
-					url = 'http://www.google.com/ig/api?weather=%s&hl=%s' % (urllib.quote(nomw), lanw)
+					url = 'http://www.google.com/ig/api?weather=%s&hl=%s' % (urllib.parse.quote(nomw), lanw)
 				else:
 					url = 'http://www.foreca.%s/%s/%s' % (lanw, pais, nomw)
 				pondebug('devxml url:' + str(url))
@@ -421,7 +421,7 @@ def devinfowheather(extendido):
 		return devinfoacu(rettemp, extendido)
 	sourceEncoding = 'iso-8859-1'
 	targetEncoding = 'utf-8'
-	ret = unicode(rettemp, sourceEncoding).encode(targetEncoding)
+	ret = str(rettemp, sourceEncoding).encode(targetEncoding)
 	infoactual = devXml(ret, 'current_conditions')
 	infolugar = devXml(ret, 'forecast_information')
 	infohoy = devXml(ret, 'forecast_conditions')

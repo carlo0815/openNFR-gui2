@@ -136,9 +136,9 @@ class ExtendedServiceInfo(Converter, object):
 						orbital = int(frontendData["orbital_position"])
 		
 		if orbital > 1800:
-			return str((float(3600 - orbital))/10.0) + "Â°W"
+			return str((float(3600 - orbital))//10.0) + "Â°W"
 		elif orbital > 0:
-			return str((float(orbital))/10.0) + "Â°E"
+			return str((float(orbital))//10.0) + "Â°E"
 		return ""
 
 	def getTunerInfo(self, service):
@@ -150,18 +150,18 @@ class ExtendedServiceInfo(Converter, object):
 			frontendData = (feinfo and feinfo.getAll(True))
 			if (frontendData is not None):
 				if (frontendData.get("tuner_type") == "DVB-C"):
-					frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
-					symbolrate = str(int(frontendData.get("symbol_rate", 0) / 1000))
+					frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
+					symbolrate = str(int(frontendData.get("symbol_rate", 0) // 1000))
 					polarisation_i = 0
 					tunerinfo = (frequency + " " + symbolrate)
 				if (frontendData.get("tuner_type") == "DVB-T"):
-					frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
-					symbolrate = str(int(frontendData.get("symbol_rate", 0) / 1000))
+					frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
+					symbolrate = str(int(frontendData.get("symbol_rate", 0) // 1000))
 					polarisation_i = 0
 					tunerinfo = (frequency + " " + symbolrate)
 				if (frontendData.get("tuner_type") == "DVB-S"):
-					frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
-					symbolrate = str(int(frontendData.get("symbol_rate", 0) / 1000))
+					frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
+					symbolrate = str(int(frontendData.get("symbol_rate", 0) // 1000))
 					polarisation_i = frontendData.get("polarization")
 					fec_i = frontendData.get("fec_inner")
 					tunerinfo = (frequency + " " + ar_pol[polarisation_i] + " " + ar_fec[fec_i] + " " + symbolrate)

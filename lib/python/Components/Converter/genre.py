@@ -4,7 +4,7 @@
 # some broadcaster do define other types so this list
 # may grow or be replaced..
 #
-from __future__ import absolute_import
+
 maintype = [	_("Reserved"),
 		_("Movie/Drama"),
 		_("News Current Affairs"),

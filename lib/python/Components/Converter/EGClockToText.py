@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
+
 from Components.Converter.Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
@@ -45,9 +45,9 @@ class EGClockToText(Converter, object):
 
 		# handle durations
 		if self.type == self.IN_MINUTES:
-			return "%d min" % (time / 60)
+			return "%d min" % (time // 60)
 		elif self.type == self.AS_LENGTH:
-			return "%d:%02d" % (time / 60, time % 60)
+			return "%d:%02d" % (time // 60, time % 60)
 		elif self.type == self.TIMESTAMP:
 			return str(time)
 		

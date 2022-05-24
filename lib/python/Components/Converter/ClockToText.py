@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.Converter.Converter import Converter
 from time import localtime, strftime
 from Components.Element import cached
@@ -75,19 +75,19 @@ class ClockToText(Converter, object):
 
 		# handle durations
 		if self.type == self.IN_MINUTES:
-			return ngettext("%d Min", "%d Mins", (time / 60)) % (time / 60)
+			return ngettext("%d Min", "%d Mins", (time // 60)) % (time // 60)
 		elif self.type == self.AS_LENGTH:
 			if time < 0:
 				return ""
-			return "%d:%02d" % (time / 60, time % 60)
+			return "%d:%02d" % (time // 60, time % 60)
 		elif self.type == self.AS_LENGTHHOURS:
 			if time < 0:
 				return ""
-			return "%d:%02d" % (time / 3600, time / 60 % 60)
+			return "%d:%02d" % (time // 3600, time // 60 % 60)
 		elif self.type == self.AS_LENGTHSECONDS:
 			if time < 0:
 				return ""
-			return "%d:%02d:%02d" % (time / 3600, time / 60 % 60, time % 60)
+			return "%d:%02d:%02d" % (time // 3600, time // 60 % 60, time % 60)
 		elif self.type == self.TIMESTAMP:
 			return str(time)
 
@@ -104,10 +104,10 @@ class ClockToText(Converter, object):
 			d = _("%A %e %B %Y")
 		elif self.type == self.FULL:
 			# TRANSLATORS: long date representation short dayname daynum short monthname hour:minute in strftime() format! See 'man strftime'
-			d = _("%a %e/%m  %-H:%M")
+			d = _("%a %e//%m  %-H:%M")
 		elif self.type == self.SHORT_DATE:
 			# TRANSLATORS: short date representation short dayname daynum short monthname in strftime() format! See 'man strftime'
-			d = _("%a %e/%m")
+			d = _("%a %e//%m")
 		elif self.type == self.LONG_DATE:
 			# TRANSLATORS: long date representations dayname daynum monthname in strftime() format! See 'man strftime'
 			d = _("%A %e %B")
@@ -116,7 +116,7 @@ class ClockToText(Converter, object):
 			d = _("%a %e %B %Y")
 		elif self.type == self.VFD:
 			# TRANSLATORS: VFD hour:minute daynum short monthname in strftime() format! See 'man strftime'
-			d = _("%k:%M %e/%m")
+			d = _("%k:%M %e//%m")
 		elif self.type == self.FORMAT:
 			d = self.fmt_string
 		else:

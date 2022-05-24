@@ -1,8 +1,8 @@
 # Based on PliExtraInfo
 # Recoded for Black Pole by meo.
 
-from __future__ import print_function
-from __future__ import absolute_import
+
+
 from enigma import iServiceInformation
 from Components.Converter.Converter import Converter
 from Components.Element import cached
@@ -127,7 +127,7 @@ class EGExtraInfo(Poll, Converter, object):
 							if line.find('msec') != -1:
 								line = line.split(' ')
 								if line[0]:
-									time = " (%ss)" % (float(line[0])/1000)
+									time = " (%ss)" % (float(line[0])//1000)
 									continue
 						data['address'] = source 
 						data['ecm_time'] = time

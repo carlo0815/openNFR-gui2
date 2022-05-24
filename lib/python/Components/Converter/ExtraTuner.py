@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+
 from Components.config import config, ConfigText
 from Components.Converter.Converter import Converter
 from Components.Element import cached
@@ -94,8 +94,8 @@ class ExtraTuner(Converter, object):
 			frontendData = (feinfo and feinfo.getAll(True))
 			if (frontendData is not None):
 				if ((frontendData.get("tuner_type") == "DVB-S") or (frontendData.get("tuner_type") == "DVB-C")):
-					frequency = (str((frontendData.get("frequency") / 1000)) + " MHz")
-					symbolrate = str(int(frontendData.get("symbol_rate", 0) / 1000))
+					frequency = (str((frontendData.get("frequency") // 1000)) + " MHz")
+					symbolrate = str(int(frontendData.get("symbol_rate", 0) // 1000))
 					if (frontendData.get("tuner_type") == "DVB-S"):
 						try:	
 							orb = {
