@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 from Components.Sensors import sensors
 
 from enigma import eTimer
