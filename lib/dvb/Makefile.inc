@@ -11,12 +11,15 @@ dvb_libenigma_dvb_a_SOURCES = \
 	dvb/dvbtime.cpp \
 	dvb/eit.cpp \
 	dvb/epgcache.cpp \
+	dvb/epgchanneldata.cpp \
+	dvb/epgtransponderdatareader.cpp \
 	dvb/esection.cpp \
 	dvb/fastscan.cpp \
 	dvb/filepush.cpp \
 	dvb/frontend.cpp \
 	dvb/frontendparms.cpp \
 	dvb/metaparser.cpp \
+	dvb/opentv.cpp \
 	dvb/pesparse.cpp \
 	dvb/pmt.cpp \
 	dvb/pvrparse.cpp \
@@ -51,6 +54,8 @@ dvbinclude_HEADERS = \
 	dvb/dvbtime.h \
 	dvb/eit.h \
 	dvb/epgcache.h \
+	dvb/epgchanneldata.h \
+	dvb/epgtransponderdatareader.h \
 	dvb/esection.h \
 	dvb/fastscan.h \
 	dvb/filepush.h \
@@ -61,6 +66,7 @@ dvbinclude_HEADERS = \
 	dvb/isection.h \
 	dvb/list.h \
 	dvb/metaparser.h \
+	dvb/opentv.h \
 	dvb/pesparse.h \
 	dvb/pmt.h \
 	dvb/pvrparse.h \

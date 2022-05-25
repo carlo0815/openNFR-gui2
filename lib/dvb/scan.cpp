@@ -31,7 +31,6 @@
 #define SCAN_eDebug(x...) do { if (m_scan_debug) eDebug(x); } while(0)
 #define SCAN_eDebugNoNewLineStart(x...) do { if (m_scan_debug) eDebugNoNewLineStart(x); } while(0)
 #define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
-#define SCAN_eDebugNoNewLine(x...) do { if (m_scan_debug) eDebugNoNewLine(x); } while(0)
 
 DEFINE_REF(eDVBScan);
 
@@ -47,7 +46,7 @@ eDVBScan::eDVBScan(iDVBChannel *channel, bool usePAT, bool debug)
 	,m_scan_debug(debug)
 {
 	if (m_channel->getDemux(m_demux))
-		SCAN_eDebug("scan: failed to allocate demux!");
+		SCAN_eDebug("[eDVBScan] failed to allocate demux!");
 	m_channel->connectStateChange(sigc::mem_fun(*this, &eDVBScan::stateChange), m_stateChanged_connection);
 	m_lcn_file = NULL;
 }
@@ -470,7 +469,7 @@ void eDVBScan::PMTready(int err)
 				case 0x02: // MPEG 2 video
 					isvideo = 1;
 					forced_video = 1;
-					//break; fall through !!!
+					[[fallthrough]];
 				case 0x03: // MPEG 1 audio
 				case 0x04: // MPEG 2 audio
 				case 0x0f: // MPEG 2 AAC
@@ -480,6 +479,7 @@ void eDVBScan::PMTready(int err)
 						forced_audio = 1;
 						isaudio = 1;
 					}
+					[[fallthrough]];
 				case 0x06: // PES Private
 				case 0x81: // user private
 				case 0xEA: // TS_PSI_ST_SMPTE_VC1
@@ -507,22 +507,23 @@ void eDVBScan::PMTready(int err)
 								isvideo = 1;
 								break;
 							case REGISTRATION_DESCRIPTOR: /* some services don't have a separate AC3 descriptor */
-							{
-								RegistrationDescriptor *d = (RegistrationDescriptor*)(*desc);
-								switch (d->getFormatIdentifier())
 								{
-								case 0x44545331 ... 0x44545333: // DTS1/DTS2/DTS3
-								case 0x41432d33: // == 'AC-3'
-								case 0x42535344: // == 'BSSD' (LPCM)
-									isaudio = 1;
-									break;
-								case 0x56432d31: // == 'VC-1'
-									isvideo = 1;
-									break;
-								default:
-									break;
+									RegistrationDescriptor *d = (RegistrationDescriptor*)(*desc);
+									switch (d->getFormatIdentifier())
+									{
+									case 0x44545331 ... 0x44545333: // DTS1/DTS2/DTS3
+									case 0x41432d33: // == 'AC-3'
+									case 0x42535344: // == 'BSSD' (LPCM)
+										isaudio = 1;
+										break;
+									case 0x56432d31: // == 'VC-1'
+										isvideo = 1;
+										break;
+									default:
+										break;
+									}
 								}
-							}
+								[[fallthrough]];
 							default:
 								break;
 							}
@@ -530,6 +531,7 @@ void eDVBScan::PMTready(int err)
 						if (tag == CA_DESCRIPTOR)
 							is_scrambled = 1;
 					}
+					[[fallthrough]];
 				default:
 					break;
 				}
@@ -640,7 +642,7 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 	{
 		eDVBFrontendParametersCable parm;
 		feparm->getDVBC(parm);
-		SCAN_eDebug("[eDVBScan] try to add %d %d %d %d",
+		SCAN_eDebug("[eDVBScan] try to add cable %d %d %d %d",
 			parm.frequency, parm.symbol_rate, parm.modulation, parm.fec_inner);
 		break;
 	}
@@ -648,7 +650,7 @@ void eDVBScan::addChannelToScan(iDVBFrontendParameters *feparm)
 	{
 		eDVBFrontendParametersTerrestrial parm;
 		feparm->getDVBT(parm);
-		SCAN_eDebug("[eDVBScan] try to add %d %d %d %d %d %d %d %d",
+		SCAN_eDebug("[eDVBScan] try to add terres %d %d %d %d %d %d %d %d",
 			parm.frequency, parm.modulation, parm.transmission_mode, parm.hierarchy,
 			parm.guard_interval, parm.code_rate_LP, parm.code_rate_HP, parm.bandwidth);
 		break;
@@ -848,6 +850,7 @@ void eDVBScan::channelDone()
 							break; // when current locked transponder is no satellite transponder ignore this descriptor
 
 						S2SatelliteDeliverySystemDescriptor &d = (S2SatelliteDeliverySystemDescriptor&)**desc;
+						[[fallthrough]];
 					}
 					case SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR:
 					{
@@ -1156,17 +1159,18 @@ void eDVBScan::channelDone()
 				case iDVBFrontend::feTerrestrial:
 				case iDVBFrontend::feCable:
 				case iDVBFrontend::feATSC:
-				{
-					ePtr<iDVBFrontend> fe;
-					if (!m_channel->getFrontend(fe))
 					{
-						int frequency = fe->readFrontendData(iFrontendInformation_ENUMS::frequency);
-//						eDebug("[eDVBScan] add tuner data for tsid %04x, onid %04x, ns %08x",
-//							m_chid_current.transport_stream_id.get(), m_chid_current.original_network_id.get(),
-//							m_chid_current.dvbnamespace.get());
-						m_tuner_data.insert(std::pair<eDVBChannelID, int>(m_chid_current, frequency));
+						ePtr<iDVBFrontend> fe;
+						if (!m_channel->getFrontend(fe))
+						{
+							int frequency = fe->readFrontendData(iFrontendInformation_ENUMS::frequency);
+	//						eDebug("[eDVBScan] add tuner data for tsid %04x, onid %04x, ns %08x",
+	//							m_chid_current.transport_stream_id.get(), m_chid_current.original_network_id.get(),
+	//							m_chid_current.dvbnamespace.get());
+							m_tuner_data.insert(std::pair<eDVBChannelID, int>(m_chid_current, frequency));
+						}
 					}
-				}
+					[[fallthrough]];
 				default:
 					break;
 			}

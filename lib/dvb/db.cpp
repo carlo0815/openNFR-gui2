@@ -115,9 +115,9 @@ RESULT eBouquet::moveService(const eServiceReference &ref, unsigned int pos)
 	while (source != dest)
 	{
 		if (forward)
-			std::iter_swap(source++, source);
+			std::iter_swap(source++, source); // NOSONAR
 		else
-			std::iter_swap(source--, source);
+			std::iter_swap(source--, source); // NOSONAR
 	}
 	eDVBDB::getInstance()->renumberBouquet();
 	return 0;
@@ -1322,23 +1322,20 @@ eDVBDB::eDVBDB()
 PyObject *eDVBDB::readSatellites(ePyObject sat_list, ePyObject sat_dict, ePyObject tp_dict)
 {
 	if (!PyDict_Check(tp_dict)) {
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readSatellites arg 2 is not a python dict");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readSatellites arg 2 is not a python dict");
+		//eDebug("[eDVBDB] readSatellites arg 2 is not a python dict");
 		return NULL;
 	}
 	else if (!PyDict_Check(sat_dict))
 	{
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readSatellites arg 1 is not a python dict");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readSatellites arg 1 is not a python dict");
+		//eDebug("[eDVBDB] readSatellites arg 1 is not a python dict");
 		return NULL;
 	}
 	else if (!PyList_Check(sat_list))
 	{
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readSatellites arg 0 is not a python list");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readSatellites arg 0 is not a python list");
+		//eDebug("[eDVBDB] readSatellites arg 0 is not a python list");
 		return NULL;
 	}
 
@@ -1519,16 +1516,14 @@ PyObject *eDVBDB::readSatellites(ePyObject sat_list, ePyObject sat_dict, ePyObje
 PyObject *eDVBDB::readCables(ePyObject cab_list, ePyObject tp_dict)
 {
 	if (!PyDict_Check(tp_dict)) {
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readCables arg 1 is not a python dict");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readCables arg 1 is not a python dict");
+		//eDebug("[eDVBDB] readCables arg 1 is not a python dict");
 		return NULL;
 	}
 	else if (!PyList_Check(cab_list))
 	{
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readCables arg 0 is not a python list");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readCables arg 0 is not a python list");
+		//eDebug("[eDVBDB] readCables arg 0 is not a python list");
 		return NULL;
 	}
 
@@ -1671,16 +1666,14 @@ PyObject *eDVBDB::readCables(ePyObject cab_list, ePyObject tp_dict)
 PyObject *eDVBDB::readTerrestrials(ePyObject ter_list, ePyObject tp_dict)
 {
 	if (!PyDict_Check(tp_dict)) {
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readTerrestrials arg 1 is not a python dict");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readTerrestrials arg 1 is not a python dict");
+		//eDebug("[eDVBDB] readTerrestrials arg 1 is not a python dict");
 		return NULL;
 	}
 	else if (!PyList_Check(ter_list))
 	{
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readTerrestrials arg 0 is not a python list");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readTerrestrials arg 0 is not a python list");
+		//eDebug("[eDVBDB] readTerrestrials arg 0 is not a python list");
 		return NULL;
 	}
 
@@ -1855,16 +1848,14 @@ PyObject *eDVBDB::readTerrestrials(ePyObject ter_list, ePyObject tp_dict)
 PyObject *eDVBDB::readATSC(ePyObject atsc_list, ePyObject tp_dict)
 {
 	if (!PyDict_Check(tp_dict)) {
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readATSC arg 1 is not a python dict");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readATSC arg 1 is not a python dict");
+		//eDebug("[eDVBDB] readATSC arg 1 is not a python dict");
 		return NULL;
 	}
 	else if (!PyList_Check(atsc_list))
 	{
-		PyErr_SetString(PyExc_StandardError,
-			"type error");
-			eDebug("[eDVBDB] readATSC arg 0 is not a python list");
+		PyErr_SetString(PyExc_TypeError, "[eDVBDB] readATSC arg 0 is not a python list");
+		//eDebug("[eDVBDB] readATSC arg 0 is not a python list");
 		return NULL;
 	}
 
@@ -2493,7 +2484,6 @@ int eDVBDBQueryBase::compareLessEqual(const eServiceReferenceDVB &a, const eServ
 	default:
 		return 1;
 	}
-	return 0;
 }
 
 eDVBDBQuery::eDVBDBQuery(eDVBDB *db, const eServiceReference &source, eDVBChannelQuery *query)

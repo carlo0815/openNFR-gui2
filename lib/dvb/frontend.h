@@ -146,6 +146,7 @@ private:
 	int m_timeoutCount; // needed for timeout
 	int m_retryCount; // diseqc retry for rotor
 	int m_configRetuneNoPatEntry;
+	int m_debuglevel;
 
 	void feEvent(int);
 	void timeout();
@@ -229,7 +230,6 @@ public:
 	void setEnabled(bool enable) { m_enabled = enable; }
 	bool is_multistream();
 	std::string getCapabilities();
-	std::string getCapabilities(fe_delivery_system_t delsys);
 	bool has_prev() { return (m_data[LINKED_PREV_PTR] != -1); }
 	bool has_next() { return (m_data[LINKED_NEXT_PTR] != -1); }
 
