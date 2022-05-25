@@ -13,7 +13,7 @@
 eBackgroundFileEraser *eBackgroundFileEraser::instance;
 
 eBackgroundFileEraser::eBackgroundFileEraser():
-	messages(this,1),
+	messages(this,1, "eBackgroundFileEraser"),
 	stop_thread_timer(eTimer::create(this)),
 	erase_speed(20 << 20),
 	erase_flags(ERASE_FLAG_HDD)
@@ -35,13 +35,19 @@ eBackgroundFileEraser::~eBackgroundFileEraser()
 	messages.send(Message());
 	if (instance==this)
 		instance=0;
-	kill();  // i dont understand why this is needed .. in ~eThread::eThread is a kill() to..
+	// Wait for the thread to complete. Must do that here,
+	// because in C++ the object will be demoted after this
+	// returns.
+	kill();
 }
 
 void eBackgroundFileEraser::thread()
 {
 	hasStarted();
-	nice(5);
+	if (nice(5) == -1)
+	{
+		eDebug("[eBackgroundFileEraser] thread failed to modify scheduling priority (%m)");
+	}
 	setIoPrio(IOPRIO_CLASS_BE, 7);
 	reset();
 	runLoop();
@@ -96,7 +102,7 @@ void eBackgroundFileEraser::gotMessage(const Message &msg )
 			{
 				if (st.st_size > erase_speed)
 				{
-					int fd = ::open(c_filename, O_WRONLY|O_SYNC);
+					int fd = ::open(c_filename, O_WRONLY|O_SYNC); //NOSONAR
 					if (fd == -1)
 					{
 						eDebug("[eBackgroundFileEraser] Cannot open %s for writing: %m", c_filename);
@@ -107,7 +113,10 @@ void eBackgroundFileEraser::gotMessage(const Message &msg )
 						if (::unlink(c_filename) == 0)
 							unlinked = true;
 						st.st_size -= st.st_size % erase_speed; // align on erase_speed
-						::ftruncate(fd, st.st_size);
+						if (::ftruncate(fd, st.st_size) != 0)
+						{
+							eDebug("[eBackgroundFileEraser] Failed to truncate %s: %m", c_filename);
+						}
 						usleep(500000); // even if truncate fails, wait a moment
 						while ((st.st_size > erase_speed) && (erase_flags != 0))
 						{
