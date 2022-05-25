@@ -12,7 +12,7 @@ public:
 	ePoint( int xpos, int ypos );
 	ePoint( float xpos, float ypos );
 	ePoint( float xpos, int ypos );
-	ePoint( int xpos, float ypos );	
+	ePoint( int xpos, float ypos );
 
 	bool   isNull()	const;
 

@@ -86,6 +86,8 @@ static void adjustBlitThreshold(unsigned int cputime, int area)
 #endif
 #endif
 
+#define ALPHA_TEST_MASK 0xFF000000
+
 gLookup::gLookup()
 	:size(0), lookup(0)
 {
@@ -384,7 +386,7 @@ void gPixmap::fill(const gRegion &region, const gRGB &color)
 				while (x--)
 					*dst++=col;
 			}
-		}	else
+		} else
 			eWarning("[gPixmap] couldn't rgbfill %d bpp", surface->bpp);
 	}
 }
@@ -497,8 +499,8 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 	{
 		ASSERT(src.size().width());
 		ASSERT(src.size().height());
-		scale_x = pos.size().width() * FIX / src.size().width();
-		scale_y = pos.size().height() * FIX / src.size().height();
+		scale_x = pos.size().width() * FIX / src.size().width(); //NOSONAR
+		scale_y = pos.size().height() * FIX / src.size().height(); //NOSONAR
 		if (flag & blitKeepAspectRatio)
 		{
 			if (scale_x > scale_y)
@@ -558,7 +560,7 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 
 	for (unsigned int i=0; i<clip.rects.size(); ++i)
 	{
-//		eDebug("clip rect: %d %d %d %d", clip.rects[i].x(), clip.rects[i].y(), clip.rects[i].width(), clip.rects[i].height());
+//		eDebug("[gPixmap] clip rect: %d %d %d %d", clip.rects[i].x(), clip.rects[i].y(), clip.rects[i].width(), clip.rects[i].height());
 		eRect area = pos; /* pos is the virtual (pre-clipping) area on the dest, which can be larger/smaller than src if scaling is enabled */
 		area&=clip.rects[i];
 		area&=eRect(ePoint(0, 0), size());
@@ -827,14 +829,10 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 			{
 				if (flag & blitAlphaTest)
 				{
-					int width=area.width();
-#if defined(__aarch64__)
-					unsigned int *src=(unsigned int*)srcptr;
-					unsigned int *dst=(unsigned int*)dstptr;
-#else
-					unsigned long *src=(unsigned long*)srcptr;
-					unsigned long *dst=(unsigned long*)dstptr;
-#endif
+					int width = area.width();
+					uint32_t *src = srcptr;
+					uint32_t *dst = dstptr;
+
 					while (width--)
 					{
 						if (!((*src)&0xFF000000))
@@ -854,7 +852,8 @@ void gPixmap::blit(const gPixmap &src, const eRect &_pos, const gRegion &clip, i
 						dst->alpha_blend(*src++);
 						++dst;
 					}
-				} else
+				}
+				else
 					memcpy(dstptr, srcptr, area.width()*surface->bypp);
 				srcptr = (uint32_t*)((uint8_t*)srcptr + src.surface->stride);
 				dstptr = (uint32_t*)((uint8_t*)dstptr + surface->stride);
