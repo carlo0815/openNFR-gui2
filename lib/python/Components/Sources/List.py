@@ -1,8 +1,8 @@
-
-from Components.Sources.Source import Source
 from Components.Element import cached
+from Components.Sources.Source import Source
 
-class List(Source, object):
+
+class List(Source):
 	"""The datasource of a listbox. Currently, the format depends on the used converter. So
 if you put a simple string list in here, you need to use a StringList converter, if you are
 using a "multi content list styled"-list, you need to use the StaticMultiList converter, and
@@ -10,42 +10,49 @@ setup the "fonts".
 
 This has been done so another converter could convert the list to a different format, for example
 to generate HTML."""
-	def __init__(self, list=[ ], enableWrapAround=False, item_height=25, fonts=[ ]):
-		Source.__init__(self)
-		self.__list = list
-		self.onSelectionChanged = [ ]
-		self.item_height = item_height
-		self.fonts = fonts
-		self.disable_callbacks = False
-		self.enableWrapAround = enableWrapAround
-		self.__style = "default" # style might be an optional string which can be used to define different visualisations in the skin
 
-	def setList(self, list):
-		self.__list = list
+	# NOTE: The calling arguments enableWraparound, item_height and fonts are not
+	# used but remain here so that calling code does not need to be modified.
+	# The enableWrapAround function is correctly handles by the C++ code and the 
+	# use of the enableWrapAround="1" attribute in the skin. Similarly the 
+	# itemHeight and font specifications are handled by the skin.
+	#
+	def __init__(self, list=[], enableWrapAround=False, item_height=25, fonts=[]):
+		Source.__init__(self)
+		self.listData = list
+		self.onSelectionChanged = []
+		self.disableCallbacks = False
+		self.listStyle = "default"  # Style might be an optional string which can be used to define different visualizations in the skin.
+
+	def setList(self, listData):
+		self.listData = listData
 		self.changed((self.CHANGED_ALL,))
 
-	list = property(lambda self: self.__list, setList)
+	list = property(lambda self: self.listData, setList)
+
+	def updateList(self, listData):
+		"""Changes the list without changing the selection or emitting changed Events"""
+		maxIndex = len(listData) - 1
+		oldIndex = min(self.index, maxIndex)
+		self.disableCallbacks = True
+		self.setList(listData)
+		self.index = oldIndex
+		self.disableCallbacks = False
 
 	def entry_changed(self, index):
-		if not self.disable_callbacks:
+		if not self.disableCallbacks:
 			self.downstream_elements.entry_changed(index)
 
 	def modifyEntry(self, index, data):
-		self.__list[index] = data
+		self.listData[index] = data
 		self.entry_changed(index)
 
-	def count(self):
-		return len(self.__list)
-
 	def selectionChanged(self, index):
-		if self.disable_callbacks:
+		if self.disableCallbacks:
 			return
-
-		# update all non-master targets
-		for x in self.downstream_elements:
+		for x in self.downstream_elements:  # Update all non-master targets.
 			if x is not self.master:
 				x.index = index
-
 		for x in self.onSelectionChanged:
 			x()
 
@@ -55,81 +62,80 @@ to generate HTML."""
 
 	current = property(getCurrent)
 
+	@cached
+	def getIndex(self):
+		return self.master.index if self.master is not None else 0  # None - The 0 is a hack to avoid badly written code from crashing!
+
 	def setIndex(self, index):
 		if self.master is not None:
 			self.master.index = index
 			self.selectionChanged(index)
 
-	@cached
-	def getIndex(self):
-		if self.master is not None:
-			return self.master.index
-		else:
-			return 0
+	index = property(getIndex, setIndex)
 
 	setCurrentIndex = setIndex
 
-	index = property(getIndex, setIndex)
-
-	def selectNext(self):
-		if self.getIndex() + 1 >= self.count():
-			if self.enableWrapAround:
-				self.index = 0
-		else:
-			self.index += 1
-		self.setIndex(self.index)
-
-	def selectPrevious(self):
-		if self.getIndex() - 1 < 0:
-			if self.enableWrapAround:
-				self.index = self.count() - 1
-		else:
-			self.index -= 1
-		self.setIndex(self.index)
-
 	@cached
 	def getStyle(self):
-		return self.__style
+		return self.listStyle
 
 	def setStyle(self, style):
-		if self.__style != style:
-			self.__style = style
+		if self.listStyle != style:
+			self.listStyle = style
 			self.changed((self.CHANGED_SPECIFIC, "style"))
 
 	style = property(getStyle, setStyle)
 
-	def updateList(self, list):
-		"""Changes the list without changing the selection or emitting changed Events"""
-		max_index = len(list) - 1
-		old_index = min(max_index, self.index)
-		self.disable_callbacks = True
-		self.list = list
-		self.index = old_index
-		self.disable_callbacks = False
-
-	def pageUp(self):
-		if self.getIndex() == 0:
-			self.index = self.count() - 1
-		elif self.getIndex() - 10 < 0:
-			self.index = 0
-		else:
-			self.index -= 10
-		self.setIndex(self.index)
-
-	def pageDown(self):
-		if self.getIndex() == self.count() - 1:
-			self.index = 0
-		elif self.getIndex() + 10 >= self.count():
-			self.index = self.count() - 1
-		else:
-			self.index += 10
-		self.setIndex(self.index)
-
-	def up(self):
-		self.selectPrevious()
-		
-	def down(self):
-		self.selectNext()
-
 	def getSelectedIndex(self):
 		return self.getIndex()
+
+	def count(self):
+		return len(self.listData)
+
+	def selectPrevious(self):  # This is a hack to protect code that was modified to use the previous up/down hack!
+		self.up()
+
+	def selectNext(self):  # This is a hack to protect code that was modified to use the previous up/down hack!
+		self.down()
+
+	def top(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.moveTop)
+		except AttributeError:
+			return
+
+	def pageUp(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.pageUp)
+		except AttributeError:
+			return
+
+	def up(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.moveUp)
+		except AttributeError:
+			return
+
+	def down(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.moveDown)
+		except AttributeError:
+			return
+
+	def pageDown(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.pageDown)
+		except AttributeError:
+			return
+
+	def bottom(self):
+		try:
+			instance = self.master.master.instance
+			instance.moveSelection(instance.moveEnd)
+		except AttributeError:
+			return
