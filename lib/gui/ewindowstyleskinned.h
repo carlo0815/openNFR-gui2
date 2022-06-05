@@ -57,18 +57,27 @@ public:
 
 	enum {
 		colBackground,
-		colLabelForeground,
+		colForeground,
 		colListboxBackground,
 		colListboxForeground,
-		colListboxSelectedBackground,
-		colListboxSelectedForeground,
-		colListboxMarkedBackground,
-		colListboxMarkedForeground,
-		colListboxMarkedAndSelectedBackground,
-		colListboxMarkedAndSelectedForeground,
+		colListboxBackgroundSelected,
+		colListboxForegroundSelected,
+		colListboxBackgroundMarked,
+		colListboxForegroundMarked,
+		colListboxBackgroundMarkedSelected,
+		colListboxForegroundMarkedSelected,
 
 		colWindowTitleForeground,
 		colWindowTitleBackground,
+
+		colScrollbarForeground,
+		colScrollbarBackground, // Currently not used because it is not working.
+		colScrollbarBorder,
+
+		colSliderForeground,
+		colSliderBackground, // Currently not used because it is not working.
+		colSliderBorder,
+
 		colMax
 	};
 

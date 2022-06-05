@@ -102,8 +102,16 @@ public:
 		showOnDemand,
 		showAlways,
 		showNever,
-		showLeft
+		showLeftOnDemand,
+		showLeftAlways
 	};
+
+	enum {
+		byPage,
+		byLine
+	};
+
+	void setScrollbarScroll(int scroll);
 	void setScrollbarMode(int mode);
 	void setWrapAround(bool);
 
@@ -166,16 +174,20 @@ public:
 	void setSliderBorderWidth(int size);
 	void setSliderForegroundColor(gRGB &col);
 
-	static void setScrollbarStyle(int width = -1, int offset = -1) { 
-			if (width != -1)
-				Defaultwidth = width; 
-			if (offset != -1)
-				Defaultoffset = offset; 
+	static void setDefaultScrollbarStyle(int width, int offset, int borderwidth, int scroll, int mode, bool enablewraparound) { 
+			DefaultScrollBarWidth = width; 
+			DefaultScrollBarOffset = offset; 
+			DefaultScrollBarBorderWidth = borderwidth; 
+			DefaultScrollBarScroll = scroll; 
+			DefaultWrapAround = enablewraparound;
+			DefaultScrollBarMode = mode;
 		}
 
 	bool getWrapAround() { return m_enabled_wrap_around; }
+	int getScrollbarMode() { return m_scrollbar_mode; }
 	int getScrollbarWidth() { return m_scrollbar_width; }
 	int getScrollbarOffset() { return m_scrollbar_offset; }
+	int getScrollbarBorderWidth() { return m_scrollbar_border_width; }
 	int getItemHeight() { return m_itemheight; }
 	bool getSelectionEnable() {return m_selection_enabled; }
 	gFont* getFont() {return m_style.m_font; }
@@ -202,18 +214,20 @@ protected:
 	void recalcSize();
 
 private:
-	static int getDefaultwidth() { return Defaultwidth; }
-	static int getDefaultoffset() { return Defaultoffset; }
+	static int DefaultScrollBarWidth;
+	static int DefaultScrollBarOffset;
+	static int DefaultScrollBarBorderWidth;
+	static int DefaultScrollBarScroll;
+	static int DefaultScrollBarMode;
+	static bool DefaultWrapAround;
 
-	static int Defaultwidth;
-	static int Defaultoffset;
-
-	int m_scrollbar_mode, m_prev_scrollbar_page;
+	int m_scrollbar_mode, m_prev_scrollbar_page, m_scrollbar_scroll;
 	bool m_content_changed;
 	bool m_enabled_wrap_around;
 
 	int m_scrollbar_width;
 	int m_scrollbar_offset;
+	int m_scrollbar_border_width;
 	int m_top, m_selected;
 	int m_itemheight;
 	int m_items_per_page;

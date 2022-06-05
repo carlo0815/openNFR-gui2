@@ -1,11 +1,18 @@
 #include <lib/gui/eslider.h>
 
+int eSlider::DefaultSliderBorderWidth = 0;
+
 eSlider::eSlider(eWidget *parent)
 	:eWidget(parent), m_have_border_color(false), m_have_foreground_color(false),
-	m_have_sliderborder_color(false), m_have_sliderforeground_color(false), m_have_sliderborder_width(false),
 	m_min(0), m_max(0), m_value(0), m_start(0), m_orientation(orHorizontal), m_orientation_swapped(0),
-	m_border_width(0), m_sliderborder_width(0)
+	m_border_width(0), m_scrollbar(false)
 {
+	m_border_width = eSlider::DefaultSliderBorderWidth;
+}
+
+void eSlider::setIsScrollbar()
+{
+	m_scrollbar = true;
 }
 
 void eSlider::setPixmap(ePtr<gPixmap> &pixmap)
@@ -50,49 +57,6 @@ void eSlider::setForegroundColor(const gRGB &color)
 	invalidate();
 }
 
-void eSlider::setSliderBorderWidth(int pixel)
-{
-	m_sliderborder_width = pixel;
-	m_have_sliderborder_width = true;
-	invalidate();
-}
-
-void eSlider::setScrollbarSliderPicture(ePtr<gPixmap> &pixmap)
-{
-	setScrollbarSliderPicture(pixmap.operator->());
-}
-
-void eSlider::setScrollbarSliderPicture(gPixmap *pixmap)
-{
-	m_pixmap = pixmap;
-	event(evtChangedSlider);
-}
-
-void eSlider::setScrollbarBackgroundPicture(ePtr<gPixmap> &pixmap)
-{
-	setScrollbarBackgroundPicture(pixmap.operator->());
-}
-
-void eSlider::setScrollbarBackgroundPicture(gPixmap *pixmap)
-{
-	m_backgroundpixmap = pixmap;
-	invalidate();
-}
-
-void eSlider::setSliderBorderColor(const gRGB &color)
-{
-	m_sliderborder_color = color;
-	m_have_sliderborder_color = true;
-	invalidate();
-}
-
-void eSlider::setSliderForegroundColor(const gRGB &color)
-{
-	m_sliderforeground_color = color;
-	m_have_sliderforeground_color = true;
-	invalidate();
-}
-
 void eSlider::setAlphatest(int alphatest)
 {
 	m_alphatest = alphatest;
@@ -114,18 +78,19 @@ int eSlider::event(int event, void *data, void *data2)
 
 		gPainter &painter = *(gPainter*)data2;
 
-		style->setStyle(painter, eWindowStyle::styleLabel); // TODO - own style
 
 		if (m_backgroundpixmap)
 		{
 			painter.blit(m_backgroundpixmap, ePoint(0, 0), eRect(), isTransparent() ? gPainter::BT_ALPHATEST : 0);
 		}
 
+		// TODO : do we need this here if m_pixmap is not null
+		// TODO : check why background color not working
+		style->setStyle(painter, m_scrollbar ? eWindowStyle::styleScollbar : eWindowStyle::styleSlider );
+
 		if (!m_pixmap)
 		{
-			if (m_have_sliderforeground_color)
-				painter.setForegroundColor(m_sliderforeground_color);
-			else if (m_have_foreground_color)
+			if (m_have_foreground_color)
 				painter.setForegroundColor(m_foreground_color);
 			painter.fill(m_currently_filled);
 		}
@@ -134,20 +99,19 @@ int eSlider::event(int event, void *data, void *data2)
 
 // border
 
-		if (m_have_sliderborder_color)
-			painter.setForegroundColor(m_sliderborder_color);
-		else if (m_have_border_color)
-			painter.setForegroundColor(m_border_color);
+		if(m_border_width>0) {
 
-		int border_width;
-		if(m_have_sliderborder_width)
-			border_width = m_sliderborder_width;
-		else
-			border_width = m_border_width;
-		painter.fill(eRect(0, 0, s.width(), border_width));
-		painter.fill(eRect(0, border_width, border_width, s.height() - border_width));
-		painter.fill(eRect(border_width, s.height() - border_width, s.width() - border_width, border_width));
-		painter.fill(eRect(s.width() - border_width, border_width, border_width, s.height() - border_width));
+			if (m_have_border_color)
+				painter.setForegroundColor(m_border_color);
+			else {
+				style->setStyle(painter, m_scrollbar ? eWindowStyle::styleScollbarBorder : eWindowStyle::styleSliderBorder );
+			}
+
+			painter.fill(eRect(0, 0, s.width(), m_border_width));
+			painter.fill(eRect(0, m_border_width, m_border_width, s.height() - m_border_width));
+			painter.fill(eRect(m_border_width, s.height() - m_border_width, s.width() - m_border_width, m_border_width));
+			painter.fill(eRect(s.width() - m_border_width, m_border_width, m_border_width, s.height() - m_border_width));
+		}
 
 		return 0;
 	}
