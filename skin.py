@@ -8,7 +8,7 @@ import os
 from os import path, remove, listdir
 
 profile("LOAD:enigma_skin")
-from enigma import eSize, ePoint, eRect, gFont, eWindow, eLabel, ePixmap, eWindowStyleManager, addFont, gRGB, eWindowStyleSkinned, getDesktop
+from enigma import BT_ALPHABLEND, BT_ALPHATEST, BT_HALIGN_CENTER, BT_HALIGN_LEFT, BT_HALIGN_RIGHT, BT_KEEP_ASPECT_RATIO, BT_SCALE, BT_VALIGN_BOTTOM, BT_VALIGN_CENTER, BT_VALIGN_TOP, addFont, eLabel, eListbox, ePixmap, ePoint, eRect, eSize, eSlider, eWindow, eWindowStyleManager, eWindowStyleSkinned, getDesktop, gFont, getFontFaces, gMainDC, gRGB
 from Components.config import ConfigSubsection, ConfigText, config, ConfigYesNo, ConfigSelection, ConfigNothing, configfile
 from Components.Converter.Converter import Converter
 from Components.Sources.Source import Source, ObsoleteSource
@@ -514,7 +514,7 @@ class AttributeParser:
 		self.guiObject.setPixmap(ptr)
 	def backgroundPixmap(self, value):
 		ptr = loadPixmap(value, self.desktop)
-		self.guiObject.setBackgroundPicture(ptr)
+		self.guiObject.setBackgroundPixmap(ptr)
 	def selectionPixmap(self, value):
 		ptr = loadPixmap(value, self.desktop)
 		self.guiObject.setSelectionPicture(ptr)
@@ -523,7 +523,7 @@ class AttributeParser:
 		self.guiObject.setSliderPicture(ptr)
 	def scrollbarbackgroundPixmap(self, value):
 		ptr = loadPixmap(value, self.desktop)
-		self.guiObject.setScrollbarBackgroundPicture(ptr)
+		self.guiObject.setScrollbarBackgroundPixmap(ptr)
 	def alphatest(self, value):
 		self.guiObject.setAlphatest(
 			{ "on": 1,
@@ -773,7 +773,15 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 				borderWidth = int(borderwidth)
 			face = eSubtitleWidget.__dict__[get_attr("name")]
 			eSubtitleWidget.setFontStyle(face, font, haveColor, foregroundColor, borderColor, borderWidth)
-
+	colorNameConversions = {
+		"LabelForeground": "Foreground",
+		"ListboxMarkedBackground": "ListboxBackgroundMarked",
+		"ListboxMarkedForeground": "ListboxForegroundMarked",
+		"ListboxMarkedAndSelectedBackground": "ListboxBackgroundMarkedSelected",
+		"ListboxMarkedAndSelectedForeground": "ListboxForegroundMarkedSelected",
+		"ListboxSelectedBackground": "ListboxBackgroundSelected",
+		"ListboxSelectedForeground": "ListboxForegroundSelected"
+	}
 	for windowstyle in skin.findall("windowstyle"):
 		style = eWindowStyleSkinned()
 		style_id = windowstyle.attrib.get("id")
@@ -808,16 +816,17 @@ def loadSingleSkinData(desktop, skin, path_prefix):
 					except:
 						pass
 				#print "  borderset:", bpName, filename
+			
 		for color in windowstyle.findall("color"):
-			get_attr = color.attrib.get
-			colorType = get_attr("name")
-			color = parseColor(get_attr("color"))
+			name = color.attrib.get("name")
+			name = colorNameConversions.get(name, name)
+			color = parseColor(color.attrib.get("color"))
 			try:
-				style.setColor(eWindowStyleSkinned.__dict__["col" + colorType], color)
+				style.setColor(eWindowStyleSkinned.__dict__["col%s" % name], color)
 			except:
-				raise SkinError("Unknown color %s" % colorType)
+				raise SkinError("Unknown color %s" % name )
 				#pass
-			#print "  color:", type, color
+			#print "  color:", name , color
 		x = eWindowStyleManager.getInstance()
 		x.setStyle(style_id, style)
 	for margin in skin.findall("margin"):
