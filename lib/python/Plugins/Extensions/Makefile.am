@@ -14,6 +14,10 @@ if VUULTIMO4K
 SUBDIRS += MiniTV QuadPip
 endif
 
+if VUDUO4KSE
+SUBDIRS += MiniTV QuadPip
+endif
+
 if GB7252
 SUBDIRS += QuadPip
 endif
