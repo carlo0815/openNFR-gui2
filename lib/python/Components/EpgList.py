@@ -791,7 +791,7 @@ class EPGList(HTMLComponent, GUIComponent):
 					(eListboxPythonMultiContent.TYPE_TEXT, r3.x, r3.y, fact1, r3.h, 1, RT_HALIGN_RIGHT|RT_VALIGN_CENTER, _("%d min") % (duration // 60))
 				))
 			else:
-				percent = (nowTime - beginTime) * 100 // duration
+				percent = int((nowTime - beginTime) * 100 // duration)
 				prefix = "+"
 				remaining = ((beginTime+duration) - int(time())) // 60
 				if remaining <= 0:
@@ -1286,7 +1286,7 @@ class EPGList(HTMLComponent, GUIComponent):
 	def fillSingleEPG(self, service):
 		t = time()
 		epg_time = t - config.epg.histminutes.value*60
-		test = [ 'RIBDT', (service.ref.toString(), 0, epg_time, -1) ]
+		test = [ 'RIBDT', (service.ref.toString(), 0, int(epg_time), -1) ]
 		self.list = self.queryEPG(test)
 		self.l.setList(self.list)
 		if t != epg_time:
@@ -1299,7 +1299,7 @@ class EPGList(HTMLComponent, GUIComponent):
 		self.selectionChanged()
 
 	def fillMultiEPG(self, services, stime=None):
-		test = [ (service.ref.toString(), 0, stime) for service in services ]
+		test = [ (service.ref.toString(), 0, int(stime)) for service in services ]
 		test.insert(0, 'X0RIBDTCn')
 		self.list = self.queryEPG(test)
 		self.l.setList(self.list)
