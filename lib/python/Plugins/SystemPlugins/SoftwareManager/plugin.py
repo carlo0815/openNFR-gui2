@@ -39,7 +39,8 @@ from Tools.LoadPixmap import LoadPixmap
 from Tools.NumericalTextInput import NumericalTextInput
 from .ImageBackup import ImageBackup, TimerImageManager, AutoImageManagerTimer, ImageManagerautostart
 from .ImageWizard import ImageWizard
-from .Multibootmgr import MultiBootWizard
+#from .Multibootmgr import MultiBootWizard
+from Screens.MultiBootManager import MultiBootManager
 from .BackupRestore import BackupSelection, RestoreMenu, BackupScreen, RestoreScreen, getBackupPath, getOldBackupPath, getBackupFilename, Dream_BackupScreen
 #from .BackupRestore import InitConfig as BackupRestore_InitConfig
 from .SoftwareTools import iSoftwareTools

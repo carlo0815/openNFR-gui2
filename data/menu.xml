@@ -100,6 +100,13 @@ from Plugins.Extensions.Infopanel.easy_setup import NFRPasswdScreen
 self.session.open(NFRPasswdScreen)
 				</code>					
                                 </item>
+							<item level="0" text="Set Consolenprompt" entryID="Consolenprompt">
+				<code>
+from __future__ import division				
+from Plugins.Extensions.Infopanel.TelnetPrompt import TelnetPrompt
+self.session.open(TelnetPrompt)
+				</code>					
+                                </item>                                
 					<item level="0" text="Device Setup" entryID="device_setup"><screen module="NetworkSetup" screen="NetworkAdapterSelection"/></item>
 					<item level="1" text="Mounts Setup" entryID="netmounts_setup"><screen module="NetworkSetup" screen="NetworkMountsMenu"/></item>
 					<item level="2" text="AFP Setup" entryID="netafp_setup"><screen module="NetworkSetup" screen="NetworkAfp"/></item>
@@ -237,7 +244,7 @@ self.session.openWithCallback(msgClosed, FactoryReset)
 			<item text="Deep standby" requires="DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="Shutdown" requires="!DeepstandbySupport" entryID="deep_standby" endtext="&gt;&lt;"><screen module="Standby" screen="TryQuitMainloop">1</screen></item>
 			<item text="Recovery Mode" requires="RecoveryMode" entryID="maintenance_mode"> endtext="&gt;&lt;<screen module="Standby" screen="TryQuitMainloop">16</screen></item>
-			<item weight="6" level="0" text="Multiboot Image Selector" entryID="multibootselector" requires="canMultiBoot"><screen module="MultiBootSelector" screen="MultiBootSelector">1</screen></item>
+			<item weight="6" level="0" text="Multiboot Image Manager" entryID="multibootmanager" requires="canMultiBoot"><screen module="MultiBootManager" screen="MultiBootManager">1</screen></item>
 			<!--item weight="7" level="0" text="SDroot" entryID="SDswap" requires="HasSDswap"><screen module="SDswap" screen="SDswap">1</screen></item-->
 			<item level="0" requires="loadcidriver" text="Reboot with CI+ Driver">
 <code>

@@ -30,7 +30,7 @@ from Components.Sources.Progress import Progress
 from Components.Button import Button
 from Components.ActionMap import ActionMap
 from Screens.VirtualKeyBoard import VirtualKeyBoard
-from Plugins.SystemPlugins.SoftwareManager.Multibootmgr import MultiBootWizard
+from Screens.MultiBootManager import MultiBootManager
 from Screens.Hotkey import HotkeySetup
 from Components.MultiContent import MultiContentEntryText, MultiContentEntryPixmapAlphaTest
 from boxbranding import getBoxType, getMachineName, getMachineBrand, getBrandOEM  
@@ -667,7 +667,7 @@ class Infopanel(Screen, InfoBarPiP):
 		elif menu == "flash-local":
 			self.session.open(FlashOnline)
 		elif menu == "multiboot-manager":
-			self.session.open(MultiBootWizard)
+			self.session.open(MultiBootManager)
 		elif menu == "MultiQuickButton":
 			self.session.open(MultiQuickButton)
 		elif menu == "MountManager":
