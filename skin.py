@@ -517,7 +517,7 @@ class AttributeParser:
 		self.guiObject.setBackgroundPixmap(ptr)
 	def selectionPixmap(self, value):
 		ptr = loadPixmap(value, self.desktop)
-		self.guiObject.setSelectionPicture(ptr)
+		self.guiObject.setSelectionPixmap(ptr)
 	def sliderPixmap(self, value):
 		ptr = loadPixmap(value, self.desktop)
 		self.guiObject.setSliderPicture(ptr)
