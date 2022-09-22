@@ -14962,3 +14962,6 @@ msgstr "Konfiguriere ob und wie das Verschlüsselungsicon in der Programmliste a
 
 msgid "Set Consolenprompt"
 msgstr "Konsolenprompt-Einstellung"
+
+msgid "Service info - tuner setting values"
+msgstr "Senderinfos - Tunereinstellungen"
