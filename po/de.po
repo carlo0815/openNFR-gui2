@@ -14965,3 +14965,9 @@ msgstr "Konsolenprompt-Einstellung"
 
 msgid "Service info - tuner setting values"
 msgstr "Senderinfos - Tunereinstellungen"
+
+msgid "Tuner setting values"
+msgstr "Tunereinstellungen"
+
+msgid "Tuner live values"
+msgstr "Tuner-Livewerte"
