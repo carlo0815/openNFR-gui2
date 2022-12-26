@@ -14971,3 +14971,9 @@ msgstr "Tunereinstellungen"
 
 msgid "Tuner live values"
 msgstr "Tuner-Livewerte"
+
+msgid "Disable intro screen"
+msgstr "Begrüßungsbildschirm abschalten"
+
+msgid "execute cuts (requires MovieCut plugin)"
+msgstr "Filmschnitt ausführen (erfordert das MovieCut-Plugin)"
