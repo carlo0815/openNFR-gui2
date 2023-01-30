@@ -14977,3 +14977,6 @@ msgstr "Begrüßungsbildschirm abschalten"
 
 msgid "execute cuts (requires MovieCut plugin)"
 msgstr "Filmschnitt ausführen (erfordert das MovieCut-Plugin)"
+
+msgid "Select Location"
+msgstr "Speicherort auswählen"
