@@ -71,10 +71,8 @@ class Satloader(Screen):
 
 	def onLayoutFinished(self):
 		self.list.clearList()
-		self.list.addSelection("Lyngsat", b"http://satellites.satloader.net/lyngsat", 0, None)
-		self.list.addSelection("Satbeams", b"http://satellites.satloader.net/satbeams", 1, None)
-		self.list.addSelection("Kingofsat", b"http://satellites.satloader.net/kingofsat", 2, None)
-		self.list.addSelection("Kingofsat (feeds)", b"http://satellites.satloader.net/kingofsat/feeds", 3, None)
+		self.list.addSelection("Lyngsat", b"http://raw.githubusercontent.com/OpenPLi/tuxbox-xml/master/xml", 0, None)
+		self.list.addSelection("Oe-alliance", b"https://raw.githubusercontent.com/oe-alliance/oe-alliance-tuxbox-common/master/src", 1, None)
 		self["info"].setText("%s" %(_("Press ok or green button to install satellites.xml")))
 
 	def btnRed(self):
